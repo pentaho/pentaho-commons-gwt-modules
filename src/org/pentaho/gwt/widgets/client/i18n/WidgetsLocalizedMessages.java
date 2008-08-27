@@ -1038,4 +1038,20 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    * @gwt.key deleteSchedules
    */
   String deleteSchedules();
+  
+  /**
+   * Translated "Add Item".
+   * 
+   * @return translated "Add Item"
+   * @gwt.key addItem
+   */
+  String addItem();
+  
+  /**
+   * Translated "Delete Items".
+   * 
+   * @return translated "Delete Items"
+   * @gwt.key deleteItems
+   */
+  String deleteItems();
 }
