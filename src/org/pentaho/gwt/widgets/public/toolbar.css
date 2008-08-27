@@ -67,7 +67,28 @@
 	margin: 0px;	
 }
 
-
 .toolbar-button-disabled{
-	background-color: #EEE;
+  background-color: #EEE;
+  padding: 1px;
+  margin: 1px;
+}
+
+.toolbar-button-disabled-hovering{
+  border: 1px solid #AAA;
+  margin: 0px;
+}
+
+.toolbar-combo-button-disabled{
+  margin: 1px;
+  padding:3px;
+  padding-right:14px;
+  background-color: #EEE;
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-image: url("style/images/comboArrow.png");
+}
+
+.toolbar-combo-button-hovering{
+  border: 1px solid #AAA;
+  margin: 0px;  
 }

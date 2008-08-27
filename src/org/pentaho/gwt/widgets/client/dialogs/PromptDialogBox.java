@@ -30,10 +30,10 @@ public class PromptDialogBox extends DialogBox {
   IDialogCallback callback;
   IDialogValidatorCallback validatorCallback;
   Widget content;
-
-  public PromptDialogBox(String title, Widget content, String okText, String cancelText, boolean autoHide, boolean modal) {
+  final FlexTable dialogContent = new FlexTable();
+  
+  public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
     super(autoHide, modal);
-    this.content = content;
     setText(title);
     Button ok = new Button(okText);
     ok.addClickListener(new ClickListener() {
@@ -62,15 +62,7 @@ public class PromptDialogBox extends DialogBox {
       });
       dialogButtonPanel.add(cancel);
     }
-    FlexTable dialogContent = new FlexTable();
-    // dialogContent.setWidth("400px");
-    if (content != null) {
-      dialogContent.getFlexCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
-      dialogContent.setWidget(0, 0, content);
-      content.setHeight("100%");
-      content.setWidth("100%");
-    }
+    
     if (content instanceof FocusWidget) {
       setFocusWidget((FocusWidget) content);
     }
@@ -89,6 +81,12 @@ public class PromptDialogBox extends DialogBox {
     setWidget(dialogContent);
   }
 
+  public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal, Widget content) {
+
+    this(title, okText, cancelText, autoHide, modal);
+    setContent(content);
+  }
+  
   public boolean onKeyDownPreview(char key, int modifiers) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
@@ -115,12 +113,19 @@ public class PromptDialogBox extends DialogBox {
     return callback;
   }
 
+  public void setContent(Widget content){
+    this.content = content;
+    if (content != null) {
+      dialogContent.getFlexCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
+      dialogContent.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
+      dialogContent.setWidget(0, 0, content);
+      content.setHeight("100%");
+      content.setWidth("100%");
+    }
+  }
+  
   public Widget getContent() {
     return content;
-  }
-
-  public void setContent(Widget content) {
-    this.content = content;
   }
 
   public void setCallback(IDialogCallback callback) {

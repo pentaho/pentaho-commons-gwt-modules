@@ -5,7 +5,7 @@ import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 public class ColorPickerDialog extends PromptDialogBox {
 
   public ColorPickerDialog(String startHex) {
-    super("Color Chooser", new ColorPicker(), "OK", "Cancel", false, true);
+    super("Color Chooser", "OK", "Cancel", false, true, new ColorPicker());
     ColorPicker colorPicker = (ColorPicker) getContent();
     try {
       colorPicker.setHex(startHex);
