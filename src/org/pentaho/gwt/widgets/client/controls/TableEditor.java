@@ -20,7 +20,7 @@ public class TableEditor extends VerticalPanel {
   private Button addBtn = new Button( "+" ); //$NON-NLS-1$
   private ListBox actionLb = new ListBox();
   private ErrorLabel errorLabel = null;
-  private ICallback<TableEditor> onSelectCallback = null;
+  private ICallback<TableEditor> onSelectHandler = null;
   private static int DEFAULT_NUM_VISIBLE_ITEMS = 10;
   private ICallback<TableEditor> onAddHandler = null;
   private ICallback<TableEditor> onDeleteHandler = null;
@@ -50,8 +50,8 @@ public class TableEditor extends VerticalPanel {
     
     actionLb.addClickListener( new ClickListener() {
       public void onClick(Widget arg0) {
-        if ( null != onSelectCallback ) {
-          onSelectCallback.onHandle( localThis );
+        if ( null != onSelectHandler ) {
+          onSelectHandler.onHandle( localThis );
         }
       }
     });
@@ -138,8 +138,8 @@ public class TableEditor extends VerticalPanel {
     onDeleteHandler = handler;
   }
   
-  public void setOnSelectCallback( ICallback<TableEditor> onSelectCallback ) {
-    this.onSelectCallback = onSelectCallback;
+  public void setOnSelectHandler( ICallback<TableEditor> onSelectHandler ) {
+    this.onSelectHandler = onSelectHandler;
   }
 
   public void setErrorMsg( String errorMsg ) {
