@@ -32,7 +32,7 @@ public class ToolTip extends PopupPanel implements MouseListener{
 
   public void onMouseEnter(Widget sender) {
     timer.schedule(delay);
-    this.setPopupPosition(sender.getAbsoluteLeft()+sender.getOffsetWidth()+3, sender.getAbsoluteTop()+sender.getOffsetHeight()+3);
+    this.setPopupPosition(sender.getAbsoluteLeft()+sender.getOffsetWidth()-3, sender.getAbsoluteTop()+sender.getOffsetHeight()+2);
   }
 
   public void onMouseLeave(Widget sender) {
