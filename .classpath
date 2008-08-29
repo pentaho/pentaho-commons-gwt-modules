@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test-src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="dev-lib/win/gwt-dev-windows-1.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-datepicker-r17.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-user-1.5.1.jar"/>
 	<classpathentry kind="lib" path="test-lib/junit-4.4.jar"/>
