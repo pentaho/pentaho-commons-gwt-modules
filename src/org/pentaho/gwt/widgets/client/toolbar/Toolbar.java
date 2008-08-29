@@ -29,8 +29,12 @@ public class Toolbar extends HorizontalPanel{
   
   public Toolbar(){
     this.setStylePrimaryName("toolbar");   //$NON-NLS-1$
-    add(bar);
+    this.setVerticalAlignment(ALIGN_MIDDLE);
+    
+    bar.setVerticalAlignment(ALIGN_MIDDLE);
     bar.setSpacing(1);
+    add(bar);
+    
     setWidth("100%");   //$NON-NLS-1$
     setHeight("100%");  //$NON-NLS-1$
   }

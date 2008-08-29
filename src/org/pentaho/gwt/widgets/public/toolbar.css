@@ -1,9 +1,16 @@
 
 .toolbar{
-	border: 1px dotted black;
-	background-color: #DDD;
 	width:100%;
-	height:100%;
+	height:100%;	
+	vertical-align: middle;
+	background-color: # #d8d8d8;
+	background-image: url(style/images/subtoolbar_bg.png);
+	border-top: none;
+	border-left: none;
+	border-left: none;	
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #848484
 }
 
 .toolbar-group-label-disabled{	
@@ -15,6 +22,7 @@
 }
 
 .toolbar-button{
+	background-color: transparent;
 	margin: 1px; 
 	padding:3px;
 }
@@ -58,6 +66,7 @@
 	background-position: right center;
 	background-repeat: no-repeat;
 	background-image: url("style/images/comboArrow.png");
+	background-color: transparent;
 }
 
 .toolbar-combo-button-hovering{
@@ -68,9 +77,7 @@
 }
 
 .toolbar-button-disabled{
-  background-color: #EEE;
-  padding: 1px;
-  margin: 1px;
+  background-color: transparent;
 }
 
 .toolbar-button-disabled-hovering{
@@ -80,9 +87,8 @@
 
 .toolbar-combo-button-disabled{
   margin: 1px;
-  padding:3px;
   padding-right:14px;
-  background-color: #EEE;
+  background-color: transparent;
   background-position: right center;
   background-repeat: no-repeat;
   background-image: url("style/images/comboArrow.png");
