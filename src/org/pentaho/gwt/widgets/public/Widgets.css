@@ -72,3 +72,15 @@ which java class/code the style is associated with */
 	width: 22px;
 }
 /* end snb */
+
+.tooltip{
+	padding: 5px;
+	border: 1px solid #666;
+	background-color: #FAFAFA;
+}
+
+.tooltip-label{
+  color: #444;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: .8em;
+}
