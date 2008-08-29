@@ -40,10 +40,10 @@ public class PromptDialogBox extends DialogBox {
 
       public void onClick(Widget sender) {
         if (validatorCallback == null || (validatorCallback != null && validatorCallback.validate())) {
-          hide();
           if (callback != null) {
             callback.okPressed();
           }
+          hide();
         }
       }
     });
@@ -54,10 +54,10 @@ public class PromptDialogBox extends DialogBox {
       cancel.addClickListener(new ClickListener() {
 
         public void onClick(Widget sender) {
-          hide();
           if (callback != null) {
             callback.cancelPressed();
           }
+          hide();
         }
       });
       dialogButtonPanel.add(cancel);
