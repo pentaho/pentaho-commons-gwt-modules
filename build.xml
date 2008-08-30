@@ -13,7 +13,7 @@
 	  This build file is used to create the Pentaho GWT Widgets project
 		and works with the common_build.xml file.
 	</description>
-
+	
 	<!-- Define the default location of the common build file -->
 	<property name="common.build.file" value="./common_build.xml" 
 		description="This is the location of the standardized common_build.xml file"/>
@@ -28,10 +28,7 @@
     --> 
 	
 	<!-- Additional properties for GWT builds -->
-	<property name="dev-lib.dir"       value="${basedir}/dev-lib"   description="Directory for development-only libraries" />
-	<property name="mac.dev-lib.dir"   value="${dev-lib.dir}/mac"   description="Directory for mac-only development libraries" />
-	<property name="win.dev-lib.dir"   value="${dev-lib.dir}/win"   description="Directory for windows-only development libraries" />
-	<property name="linux.dev-lib.dir" value="${dev-lib.dir}/linux" description="Directory for unix-only development libraries" />
+	<property name="debuglib.dir"       value="${basedir}/debug-lib"   description="Directory for development-only libraries" />
 
   <!--=======================================================================
       resolve
@@ -39,7 +36,7 @@
       Resolves all the ivy dependencies. This has been modified from the
       original so that it may resolve development-only dependencies.
       ====================================================================-->
-	<target name="resolve" depends="resolve-default, resolve-test, resolve-dev" description="Retrieves all the dependent libraries" />
+	<target name="resolve" depends="resolve-default, resolve-test, resolve-debugtools" description="Retrieves all the dependent libraries" />
 
   <!--=======================================================================
       resolve-dev
@@ -47,24 +44,29 @@
       Resolve all the ivy dependencies that are development-only
       dependencies.
       ====================================================================-->
-	<target name="resolve-dev" depends="resolve-init" description="Retrieves default configuration dependencies">
-    <ivy:retrieve conf="dev"       pattern="${lib.dir}/[module]-[revision].[ext]" />
-    <ivy:retrieve conf="dev-mac"   pattern="${mac.dev-lib.dir}/[module]-[revision].[ext]" />
-		<ivy:retrieve conf="dev-win"   pattern="${win.dev-lib.dir}/[module]-[revision].[ext]" />
-		<ivy:retrieve conf="dev-linux" pattern="${linux.dev-lib.dir}/[module]-[revision].[ext]" />
-	</target>
-	
-  <!--=======================================================================
-      clean-jars
-      
-      Removes all the libraries that have been downloaded for this project
-      using the ivy dependencies.
-      ====================================================================-->
-  <target name="clean-jars" description="Cleans the libraries that have been downloaded">
-    <delete dir="${lib.dir}" />
-    <delete dir="${testlib.dir}" />
-    <delete dir="${dev-lib.dir}" />
-  </target>
+	<target name="resolve-debugtools" depends="resolve-init" description="Retrieves default configuration dependencies">
+		<property name="ivy.debug.config" value="debugtools-win"/>
+		<condition property="ivy.debug.config" value="debugtools-mac">
+			<os family="mac"/>
+		</condition>
+		<condition property="ivy.debug.config" value="debugtools-linux">
+			<os family="unix"/>
+		</condition>
 
+        <ivy:retrieve conf="debugtools"          pattern="${debuglib.dir}/[module]-[revision].[ext]" />
+        <ivy:retrieve conf="${ivy.debug.config}" pattern="${debuglib.dir}/[module]-[revision].[ext]" />
+	</target>
+
+	  <!--=======================================================================
+		    clean-jars
+		    
+		    Removes all the libraries that have been downloaded for this project
+		    using the ivy dependencies.
+		    ====================================================================-->
+	  <target name="clean-jars" description="Cleans the libraries that have been downloaded">
+	    <delete dir="${lib.dir}" />
+	    <delete dir="${testlib.dir}" />
+	    <delete dir="${debuglib.dir}" />
+	  </target>
 
 </project>
