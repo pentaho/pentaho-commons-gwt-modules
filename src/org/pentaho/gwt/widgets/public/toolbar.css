@@ -24,7 +24,6 @@
 .toolbar-button{
 	background-color: transparent;
 	margin: 1px; 
-	padding:3px;
 }
 
 .toolbar-button-hovering{
@@ -36,7 +35,6 @@
 
 .toolbar-toggle-button{
 	margin: 1px;
-	padding:3px;
 }
 
 .toolbar-toggle-button-down{
@@ -55,13 +53,11 @@
 	border: 1px solid #AAA;
 	background-color: #E8E8E8;
 	cursor: pointer;
-	padding:3px;
 	margin: 0px;
 }
 
 .toolbar-combo-button{
 	margin: 1px;
-	padding:3px;
 	padding-right:14px;
 	background-position: right center;
 	background-repeat: no-repeat;
@@ -78,6 +74,7 @@
 
 .toolbar-button-disabled{
   background-color: transparent;
+  margin: 1px;
 }
 
 .toolbar-button-disabled-hovering{
