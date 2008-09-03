@@ -163,3 +163,30 @@ which java class/code the style is associated with */
   background: url('style/images/button_middle_disabled.png') repeat-x;
 }
 
+.gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked {
+  cursor: hand;
+  cursor: pointer;
+  background-image:url(style/images/checkbox.png);
+  background-position:6px 50%;
+  background-repeat:no-repeat;
+  padding:5px 20px 5px 25px;
+}
+
+.gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected {
+  background-color: #d0d0d0;  
+  vertical-align: bottom;
+}
+
+.gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked {
+  cursor: hand;
+  cursor: pointer;
+  background-image:url(style/images/checkbox-empty.png);
+  background-position:6px 50%;
+  background-repeat:no-repeat;
+  padding:5px 20px 5px 25px;
+}
+
+.gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected {
+  background-color: #d0d0d0;  
+  vertical-align: bottom;
+}
