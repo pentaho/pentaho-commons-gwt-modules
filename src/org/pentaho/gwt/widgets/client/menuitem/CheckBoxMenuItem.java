@@ -20,8 +20,8 @@ public class CheckBoxMenuItem extends MenuItem {
     }
   }
 
-  public void isChecked() {
-
+  public boolean isChecked() {
+    return checked;
   }
 
 }
