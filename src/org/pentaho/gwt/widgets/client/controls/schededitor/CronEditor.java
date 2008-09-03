@@ -2,10 +2,10 @@ package org.pentaho.gwt.widgets.client.controls.schededitor;
 
 import java.util.Date;
 
-import org.pentaho.gwt.widgets.client.Widgets;
 import org.pentaho.gwt.widgets.client.controls.DateRangeEditor;
 import org.pentaho.gwt.widgets.client.controls.ErrorLabel;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
@@ -26,7 +26,7 @@ public class CronEditor extends VerticalPanel implements IChangeHandler {
   private DateRangeEditor dateRangeEditor = null;
   private ErrorLabel cronLabel = null;
   private ICallback<IChangeHandler> onChangeHandler;
-  private static final WidgetsLocalizedMessages MSGS = Widgets.getLocalizedMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   
   public CronEditor() {
     Label l = new Label( MSGS.cronLabel() );

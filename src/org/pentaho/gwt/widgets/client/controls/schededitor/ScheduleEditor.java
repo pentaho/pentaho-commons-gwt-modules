@@ -20,10 +20,10 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pentaho.gwt.widgets.client.Widgets;
 import org.pentaho.gwt.widgets.client.controls.ErrorLabel;
 import org.pentaho.gwt.widgets.client.controls.schededitor.RecurrenceEditor.TemporalValue;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.CronParseException;
@@ -47,7 +47,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
-  private static final WidgetsLocalizedMessages MSGS = Widgets.getLocalizedMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
 
   public enum ScheduleType {
     RUN_ONCE(0, MSGS.runOnce()), 

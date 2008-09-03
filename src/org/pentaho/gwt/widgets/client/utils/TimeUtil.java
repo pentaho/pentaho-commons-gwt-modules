@@ -5,14 +5,14 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pentaho.gwt.widgets.client.Widgets;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class TimeUtil {
 
-  private static final WidgetsLocalizedMessages MSGS = Widgets.getLocalizedMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   public static final int HOURS_IN_DAY = 24;
 
   public static final int MINUTES_IN_HOUR = 60;

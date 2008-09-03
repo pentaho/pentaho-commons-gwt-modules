@@ -15,7 +15,8 @@
  */
 package org.pentaho.gwt.widgets.client.dialogs;
 
-import com.google.gwt.user.client.ui.Button;
+import org.pentaho.gwt.widgets.client.buttons.RoundedButton;
+
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
@@ -35,7 +36,7 @@ public class PromptDialogBox extends DialogBox {
   public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
     super(autoHide, modal);
     setText(title);
-    Button ok = new Button(okText);
+    RoundedButton ok = new RoundedButton(okText);
     ok.addClickListener(new ClickListener() {
 
       public void onClick(Widget sender) {
@@ -48,10 +49,10 @@ public class PromptDialogBox extends DialogBox {
       }
     });
     final HorizontalPanel dialogButtonPanel = new HorizontalPanel();
-    dialogButtonPanel.setStyleName("dialogButtonPanel");
+    dialogButtonPanel.setSpacing(2);
     dialogButtonPanel.add(ok);
     if (cancelText != null) {
-      Button cancel = new Button(cancelText);
+      RoundedButton cancel = new RoundedButton(cancelText);
       cancel.addClickListener(new ClickListener() {
 
         public void onClick(Widget sender) {
@@ -63,19 +64,25 @@ public class PromptDialogBox extends DialogBox {
       });
       dialogButtonPanel.add(cancel);
     }
+    HorizontalPanel dialogButtonPanelWrapper = new HorizontalPanel();
+    if (okText != null && cancelText != null) {
+      dialogButtonPanelWrapper.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+    } else {
+      dialogButtonPanelWrapper.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+    }
+    dialogButtonPanelWrapper.setStyleName("dialogButtonPanel");
+    dialogButtonPanelWrapper.setWidth("100%");
+    dialogButtonPanelWrapper.add(dialogButtonPanel);
     
     if (content instanceof FocusWidget) {
       setFocusWidget((FocusWidget) content);
     }
+    dialogContent.setCellPadding(0);
+    dialogContent.setCellSpacing(0);
     dialogContent.getFlexCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_TOP);
     dialogContent.getFlexCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_LEFT);
     // add button panel
-    dialogContent.setWidget(2, 0, dialogButtonPanel);
-    if (okText != null && cancelText != null) {
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_RIGHT);
-    } else {
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
-    }
+    dialogContent.setWidget(2, 0, dialogButtonPanelWrapper);
     dialogContent.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_BOTTOM);
     // dialogContent.getFlexCellFormatter().setColSpan(2, 0, 2);
     dialogContent.setWidth("100%");
@@ -120,6 +127,7 @@ public class PromptDialogBox extends DialogBox {
       dialogContent.getFlexCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
       dialogContent.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
       dialogContent.setWidget(0, 0, content);
+      content.getElement().setAttribute("margin", "5px");
       content.setHeight("100%");
       content.setWidth("100%");
     }

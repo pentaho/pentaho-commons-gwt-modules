@@ -1,7 +1,7 @@
 package org.pentaho.gwt.widgets.client.controls;
 
-import org.pentaho.gwt.widgets.client.Widgets;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.utils.ListBoxUtils;
 
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class TableEditor extends VerticalPanel {
   
-  private static final WidgetsLocalizedMessages MSGS = Widgets.getLocalizedMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   private Button deleteBtn = new Button( "-" ); //$NON-NLS-1$
   private Button addBtn = new Button( "+" ); //$NON-NLS-1$
   private ListBox actionLb = new ListBox();
