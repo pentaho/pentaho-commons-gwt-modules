@@ -28,50 +28,27 @@
       FOUND IN common_build.xml.
     -->
 
-  <!-- Additional properties for GWT builds -->
-  <property name="debuglib.dir" value="${basedir}/debug-lib" description="Directory for development-only libraries" />
-
   <!--=======================================================================
       resolve
-      
-      Resolves all the ivy dependencies. This has been modified from the
-      original so that it may resolve development-only dependencies.
-      ====================================================================-->
-  <target name="resolve"
-          depends="resolve-default, resolve-test, resolve-debugtools"
-          description="Retrieves all the dependent libraries" />
-
-  <!--=======================================================================
-      resolve-dev
       
       Resolve all the ivy dependencies that are development-only
       dependencies.
       ====================================================================-->
-  <target name="resolve-debugtools" depends="resolve-init" description="Retrieves default configuration dependencies">
-    <property name="ivy.debug.config" value="debugtools-win" />
-    <condition property="ivy.debug.config" value="debugtools-mac">
+  <target name="resolve" depends="resolve-init" description="Retrieves all the dependent libraries">
+  	<ant antfile="${basedir}/common_build.xml" target="resolve"/>
+  	
+    <property name="ivy.codegen.config" value="codegen-win" />
+    <condition property="ivy.codegen.config" value="codegen-mac">
       <os family="mac" />
     </condition>
-    <condition property="ivy.debug.config" value="debugtools-linux">
+    <condition property="ivy.codegen.config" value="codegen-linux">
       <os family="unix" />
     </condition>
 
-    <ivy:resolve conf="debugtools" />
-    <ivy:retrieve conf="debugtools" pattern="${debuglib.dir}/[module]-[revision].[ext]" />
-    <ivy:resolve conf="${ivy.debug.config}" />
-    <ivy:retrieve conf="${ivy.debug.config}" pattern="${debuglib.dir}/[module]-[revision].[ext]" />
-  </target>
-
-  <!--=======================================================================
-		    clean-jars
-		    
-		    Removes all the libraries that have been downloaded for this project
-		    using the ivy dependencies.
-		    ====================================================================-->
-  <target name="clean-jars" description="Cleans the libraries that have been downloaded">
-    <delete dir="${lib.dir}" />
-    <delete dir="${testlib.dir}" />
-    <delete dir="${debuglib.dir}" />
+    <ivy:resolve conf="codegen" />
+    <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision].[ext]" />
+    <ivy:resolve conf="${ivy.codegen.config}" />
+    <ivy:retrieve conf="${ivy.codegen.config}" pattern="${lib.dir}/[module]-[revision].[ext]" />
   </target>
 
 </project>

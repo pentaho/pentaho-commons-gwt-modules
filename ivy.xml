@@ -4,11 +4,11 @@
     
     <configurations>
     	<conf name="default"/>
-    	<conf name="test"             visibility="private"/>
-    	<conf name="debugtools"       visibility="private"/>
-    	<conf name="debugtools-mac"   visibility="private" extends="debugtools"/>
-    	<conf name="debugtools-win"   visibility="private" extends="debugtools"/>
-    	<conf name="debugtools-linux" visibility="private" extends="debugtools"/>
+    	<conf name="test"          visibility="private"/>
+    	<conf name="codegen"       visibility="private"/>
+    	<conf name="codegen-mac"   visibility="private" extends="codegen"/>
+    	<conf name="codegen-win"   visibility="private" extends="codegen"/>
+    	<conf name="codegen-linux" visibility="private" extends="codegen"/>
     </configurations>
     
     <dependencies defaultconf="default->default">
@@ -19,9 +19,9 @@
         <!--  Testing dependencies -->
         <dependency org="junit"          name="junit"          rev="4.4" conf="test->default"/>
 
-        <!--  Debug dependencies -->
-        <dependency org="com.google.gwt" name="gwt-dev"  rev="1.5.2" m:classifier="mac"      conf="debugtools-mac->default"/>
-        <dependency org="com.google.gwt" name="gwt-dev"  rev="1.5.2" m:classifier="windows"  conf="debugtools-win->default"/>
-        <dependency org="com.google.gwt" name="gwt-dev"  rev="1.5.2" m:classifier="linux"    conf="debugtools-linux->default"/>
+        <!--  Code generation dependencies -->
+        <dependency org="com.google.gwt" name="gwt-dev"  rev="1.5.2" m:classifier="mac"      conf="codegen-mac->default"/>
+        <dependency org="com.google.gwt" name="gwt-dev"  rev="1.5.2" m:classifier="windows"  conf="codegen-win->default"/>
+        <dependency org="com.google.gwt" name="gwt-dev"  rev="1.5.2" m:classifier="linux"    conf="codegen-linux->default"/>
     </dependencies>
 </ivy-module>
