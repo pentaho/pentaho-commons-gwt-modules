@@ -169,7 +169,7 @@ which java class/code the style is associated with */
   background-image:url(style/images/checkbox.png);
   background-position:6px 50%;
   background-repeat:no-repeat;
-  padding:5px 20px 5px 25px;
+  padding:3px 20px 3px 20px;
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected {
@@ -183,7 +183,7 @@ which java class/code the style is associated with */
   background-image:url(style/images/checkbox-empty.png);
   background-position:6px 50%;
   background-repeat:no-repeat;
-  padding:5px 20px 5px 25px;
+  padding:3px 20px 3px 20px;
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected {

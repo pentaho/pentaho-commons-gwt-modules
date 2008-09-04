@@ -102,17 +102,26 @@ public class ToolbarButton {
           return;
         }
         button.addStyleName(stylePrimaryName+"-down");    //$NON-NLS-1$
-        command.execute();
-        button.removeStyleName(stylePrimaryName+"-down");   //$NON-NLS-1$
       }
       public void onMouseEnter(Widget arg0) {
+        if(!enabled){
+          return;
+        }
         button.addStyleName(stylePrimaryName+"-hovering");    //$NON-NLS-1$
       }
       public void onMouseLeave(Widget arg0) {
+        if(!enabled){
+          return;
+        }
         button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
       }
       public void onMouseUp(Widget arg0, int arg1, int arg2) {
+        if(!enabled){
+          return;
+        }
         button.removeStyleName(stylePrimaryName+"-down");   //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
+        command.execute();
       }
       public void onMouseMove(Widget arg0, int arg1, int arg2) {}
     });

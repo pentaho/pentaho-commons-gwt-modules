@@ -96,6 +96,16 @@ public class Toolbar extends HorizontalPanel{
     }
   }
   
+  /**
+   * Add a special spacer element to the toolbar.
+   * @param the amount of space to add
+   */
+  public void addSpacer(int spacerAmount){
+    SimplePanel panel = new SimplePanel();
+    bar.add(panel);
+    bar.setCellWidth(panel, spacerAmount + "px");  //$NON-NLS-1$
+  }
+  
   
   /**
    * Enable or Disable the toolbar. If passed in false it will disable all buttons, if true it 
