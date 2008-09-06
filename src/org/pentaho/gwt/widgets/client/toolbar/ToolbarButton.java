@@ -1,5 +1,7 @@
 package org.pentaho.gwt.widgets.client.toolbar;
 
+import org.pentaho.gwt.widgets.client.text.ToolTip;
+
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -30,6 +32,7 @@ public class ToolbarButton {
   protected FocusPanel eventWrapper = new FocusPanel();
   protected String stylePrimaryName = "toolbar-button";    //$NON-NLS-1$
   protected Command command;
+  protected String toolTip;
   
   /**
    * Constructs a toolbar button with an image and a label
@@ -99,17 +102,26 @@ public class ToolbarButton {
           return;
         }
         button.addStyleName(stylePrimaryName+"-down");    //$NON-NLS-1$
-        command.execute();
-        button.removeStyleName(stylePrimaryName+"-down");   //$NON-NLS-1$
       }
       public void onMouseEnter(Widget arg0) {
+        if(!enabled){
+          return;
+        }
         button.addStyleName(stylePrimaryName+"-hovering");    //$NON-NLS-1$
       }
       public void onMouseLeave(Widget arg0) {
+        if(!enabled){
+          return;
+        }
         button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
       }
       public void onMouseUp(Widget arg0, int arg1, int arg2) {
+        if(!enabled){
+          return;
+        }
         button.removeStyleName(stylePrimaryName+"-down");   //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
+        command.execute();
       }
       public void onMouseMove(Widget arg0, int arg1, int arg2) {}
     });
@@ -269,6 +281,24 @@ public class ToolbarButton {
     this.command = cmd;
   }
   
+  /**
+   * Sets the text to be displayed in a hover-tip when a user hovers over the button
+   * 
+   * @param toolTip String
+   */
+  public void setToolTip(String toolTip){
+    this.toolTip = toolTip;
+    eventWrapper.addMouseListener(new ToolTip(toolTip, 1000));
+  }
+  
+  /**
+   * Gets the text to be displayed in a hover-tip when a user hovers over the button
+   * 
+   * @return String tooltip
+   */
+  public String getToolTip(){
+    return toolTip;
+  }
   
   
 }

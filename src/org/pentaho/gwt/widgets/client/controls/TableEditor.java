@@ -1,5 +1,7 @@
 package org.pentaho.gwt.widgets.client.controls;
 
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.utils.ListBoxUtils;
 
@@ -13,11 +15,12 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class TableEditor extends VerticalPanel {
   
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   private Button deleteBtn = new Button( "-" ); //$NON-NLS-1$
   private Button addBtn = new Button( "+" ); //$NON-NLS-1$
   private ListBox actionLb = new ListBox();
   private ErrorLabel errorLabel = null;
-  private ICallback<TableEditor> onSelectCallback = null;
+  private ICallback<TableEditor> onSelectHandler = null;
   private static int DEFAULT_NUM_VISIBLE_ITEMS = 10;
   private ICallback<TableEditor> onAddHandler = null;
   private ICallback<TableEditor> onDeleteHandler = null;
@@ -27,6 +30,10 @@ public class TableEditor extends VerticalPanel {
     DockPanel buttonPanel = new DockPanel();
     deleteBtn.addStyleName( "deleteBtn" ); //$NON-NLS-1$
     addBtn.addStyleName( "addBtn" ); //$NON-NLS-1$
+    
+    addBtn.setTitle(MSGS.addItem());
+    deleteBtn.setTitle(MSGS.deleteItems());
+    
     buttonPanel.add(deleteBtn, DockPanel.EAST);
     buttonPanel.add(addBtn, DockPanel.EAST);
     
@@ -43,8 +50,8 @@ public class TableEditor extends VerticalPanel {
     
     actionLb.addClickListener( new ClickListener() {
       public void onClick(Widget arg0) {
-        if ( null != onSelectCallback ) {
-          onSelectCallback.onHandle( localThis );
+        if ( null != onSelectHandler ) {
+          onSelectHandler.onHandle( localThis );
         }
       }
     });
@@ -131,8 +138,8 @@ public class TableEditor extends VerticalPanel {
     onDeleteHandler = handler;
   }
   
-  public void setOnSelectCallback( ICallback<TableEditor> onSelectCallback ) {
-    this.onSelectCallback = onSelectCallback;
+  public void setOnSelectHandler( ICallback<TableEditor> onSelectHandler ) {
+    this.onSelectHandler = onSelectHandler;
   }
 
   public void setErrorMsg( String errorMsg ) {

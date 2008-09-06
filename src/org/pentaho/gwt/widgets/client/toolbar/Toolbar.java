@@ -29,8 +29,12 @@ public class Toolbar extends HorizontalPanel{
   
   public Toolbar(){
     this.setStylePrimaryName("toolbar");   //$NON-NLS-1$
-    add(bar);
+    this.setVerticalAlignment(ALIGN_MIDDLE);
+    
+    bar.setVerticalAlignment(ALIGN_MIDDLE);
     bar.setSpacing(1);
+    add(bar);
+    
     setWidth("100%");   //$NON-NLS-1$
     setHeight("100%");  //$NON-NLS-1$
   }
@@ -90,6 +94,16 @@ public class Toolbar extends HorizontalPanel{
       default:
         //add error logging message
     }
+  }
+  
+  /**
+   * Add a special spacer element to the toolbar.
+   * @param the amount of space to add
+   */
+  public void addSpacer(int spacerAmount){
+    SimplePanel panel = new SimplePanel();
+    bar.add(panel);
+    bar.setCellWidth(panel, spacerAmount + "px");  //$NON-NLS-1$
   }
   
   

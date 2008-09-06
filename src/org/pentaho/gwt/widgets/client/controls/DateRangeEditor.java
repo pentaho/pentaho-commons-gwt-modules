@@ -2,9 +2,9 @@ package org.pentaho.gwt.widgets.client.controls;
 
 import java.util.Date;
 
-import org.pentaho.gwt.widgets.client.Widgets;
 import org.pentaho.gwt.widgets.client.containers.SimpleGroupBox;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class DateRangeEditor extends SimpleGroupBox implements IChangeHandler {
 
-  private static final WidgetsLocalizedMessages MSGS = Widgets.getLocalizedMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   private static final String END_DATE_RB_GROUP = "end-date-group"; //$NON-NLS-1$
 
   private DatePickerEx startDatePicker = null;

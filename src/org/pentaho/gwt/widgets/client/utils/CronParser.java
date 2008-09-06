@@ -17,8 +17,8 @@ package org.pentaho.gwt.widgets.client.utils;
 
 import java.util.EnumSet;
 
-import org.pentaho.gwt.widgets.client.Widgets;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
 /**
  * 
@@ -27,7 +27,7 @@ import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
  */
 public class CronParser {
 
-  private static final WidgetsLocalizedMessages MSGS = Widgets.getLocalizedMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   private String cronStr;
   private RecurrenceType recurrenceType = RecurrenceType.EveryWeekday;
   private int startSecond = -1;

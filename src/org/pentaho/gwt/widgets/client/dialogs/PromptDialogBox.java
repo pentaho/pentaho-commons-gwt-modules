@@ -15,7 +15,8 @@
  */
 package org.pentaho.gwt.widgets.client.dialogs;
 
-import com.google.gwt.user.client.ui.Button;
+import org.pentaho.gwt.widgets.client.buttons.RoundedButton;
+
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
@@ -30,65 +31,70 @@ public class PromptDialogBox extends DialogBox {
   IDialogCallback callback;
   IDialogValidatorCallback validatorCallback;
   Widget content;
-
-  public PromptDialogBox(String title, Widget content, String okText, String cancelText, boolean autoHide, boolean modal) {
+  final FlexTable dialogContent = new FlexTable();
+  
+  public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
     super(autoHide, modal);
-    this.content = content;
     setText(title);
-    Button ok = new Button(okText);
+    RoundedButton ok = new RoundedButton(okText);
     ok.addClickListener(new ClickListener() {
 
       public void onClick(Widget sender) {
         if (validatorCallback == null || (validatorCallback != null && validatorCallback.validate())) {
-          hide();
           if (callback != null) {
             callback.okPressed();
           }
+          hide();
         }
       }
     });
     final HorizontalPanel dialogButtonPanel = new HorizontalPanel();
+    dialogButtonPanel.setSpacing(2);
     dialogButtonPanel.add(ok);
     if (cancelText != null) {
-      Button cancel = new Button(cancelText);
+      RoundedButton cancel = new RoundedButton(cancelText);
       cancel.addClickListener(new ClickListener() {
 
         public void onClick(Widget sender) {
-          hide();
           if (callback != null) {
             callback.cancelPressed();
           }
+          hide();
         }
       });
       dialogButtonPanel.add(cancel);
     }
-    FlexTable dialogContent = new FlexTable();
-    // dialogContent.setWidth("400px");
-    if (content != null) {
-      dialogContent.getFlexCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
-      dialogContent.setWidget(0, 0, content);
-      content.setHeight("100%");
-      content.setWidth("100%");
+    HorizontalPanel dialogButtonPanelWrapper = new HorizontalPanel();
+    if (okText != null && cancelText != null) {
+      dialogButtonPanelWrapper.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
+    } else {
+      dialogButtonPanelWrapper.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
     }
+    dialogButtonPanelWrapper.setStyleName("dialogButtonPanel");
+    dialogButtonPanelWrapper.setWidth("100%");
+    dialogButtonPanelWrapper.add(dialogButtonPanel);
+    
     if (content instanceof FocusWidget) {
       setFocusWidget((FocusWidget) content);
     }
+    dialogContent.setCellPadding(0);
+    dialogContent.setCellSpacing(0);
     dialogContent.getFlexCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_TOP);
     dialogContent.getFlexCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_LEFT);
     // add button panel
-    dialogContent.setWidget(2, 0, dialogButtonPanel);
-    if (okText != null && cancelText != null) {
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_RIGHT);
-    } else {
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
-    }
+    dialogContent.setWidget(2, 0, dialogButtonPanelWrapper);
     dialogContent.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_BOTTOM);
     // dialogContent.getFlexCellFormatter().setColSpan(2, 0, 2);
     dialogContent.setWidth("100%");
     setWidget(dialogContent);
   }
 
+  public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal, Widget content) {
+
+    this(title, okText, cancelText, autoHide, modal);
+    setContent(content);
+  }
+  
   public boolean onKeyDownPreview(char key, int modifiers) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
@@ -115,12 +121,20 @@ public class PromptDialogBox extends DialogBox {
     return callback;
   }
 
+  public void setContent(Widget content){
+    this.content = content;
+    if (content != null) {
+      dialogContent.getFlexCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
+      dialogContent.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
+      dialogContent.setWidget(0, 0, content);
+      content.getElement().setAttribute("margin", "5px");
+      content.setHeight("100%");
+      content.setWidth("100%");
+    }
+  }
+  
   public Widget getContent() {
     return content;
-  }
-
-  public void setContent(Widget content) {
-    this.content = content;
   }
 
   public void setCallback(IDialogCallback callback) {
