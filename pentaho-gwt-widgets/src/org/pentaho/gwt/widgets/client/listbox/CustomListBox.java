@@ -1,10 +1,8 @@
 package org.pentaho.gwt.widgets.client.listbox;
 
+import com.allen_sauer.gwt.dnd.client.DragController;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.ui.*;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
@@ -46,7 +44,7 @@ import java.util.List;
  * 
  */
 @SuppressWarnings("deprecation")
-public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener, FocusListener, KeyboardListener{
+public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener, FocusListener, KeyboardListener, ListItemListener {
   private List<ListItem> items = new ArrayList<ListItem>();
   private int selectedIndex = -1;
   private DropDownArrow arrow = new DropDownArrow();
@@ -71,11 +69,14 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   @SuppressWarnings("unused")
   private String primaryStyleName;
   private String height, width;
-  private String popupHeight, popupWidth;
+  private String popupHeight;
+  private String popupWidth;
   private boolean suppressLayout;
   
   private boolean enabled = true;
   private String val;
+  private Command command;
+  private DragController dragController;
 
 
   public CustomListBox(){
@@ -151,23 +152,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   }-*/;
 
   /**
-   * Only {@link: DefaultListItem} and Strings (as labels) may be passed into this Widget
-   */
-  @Override
-  public void add(Widget child) {
-    throw new UnsupportedOperationException(
-        "This panel does not support no-arg add()"); //$NON-NLS-1$
-  }
-  
-  /**
-   * Convenience method to support the more conventional method of child attachment
-   * @param listItem
-   */
-  public void add(ListItem listItem){
-    this.addItem(listItem);
-  }
-
-  /**
    * Removes the passed in ListItem
    *
    * @param listItem item to remove
@@ -220,7 +204,8 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
    */
   public void addItem(ListItem item){
     items.add(item);
-    item.setListBox(this);
+
+    item.setListItemListener(this);
 
     // If first one added, set selectedIndex to 0        
     if(items.size() == 1){
@@ -229,10 +214,17 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     if(suppressLayout == false){
       updateUI();
     }
-    
 
+    if(dragController != null){
+      dragController.makeDraggable(item.getWidget());
+    }
   }
-  
+
+  @Override
+  public void add(Widget w) {
+    addItem((ListItem) w);
+  }
+
   /**
    * Call this method with true will suppress the re-laying out of the widget after every add/remove. 
    * This is useful when adding a large batch of items to the listbox.
@@ -262,7 +254,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   public void addItem(String label){
     DefaultListItem item = new DefaultListItem(label);
     items.add(item);
-    item.setListBox(this);
+    item.setListItemListener(this);
 
     // If first one added, set selectedIndex to 0
     if(items.size() == 1){
@@ -271,7 +263,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     if(suppressLayout == false){
       updateUI();
     }
-    
+    if(dragController != null){
+      dragController.makeDraggable(item.getWidget());
+    }
   }
 
 
@@ -303,6 +297,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       fPanel.remove(listScrollPanel);
       fPanel.add(dropGrid);
     }
+
     if(suppressLayout == false){
       updateUI();
     }
@@ -407,7 +402,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       listPanel.add(w);
       listPanel.setCellWidth(w, "100%"); //$NON-NLS-1$
     }
-    if(height == null){
+    if(height == null && this.items.size() > 0){
       maxHeight = Math.round(maxHeight / this.items.size());
     }
 
@@ -641,6 +636,15 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   }
 
   /**
+   * Returns the number of listitems in the box
+   *
+   * @return number of children
+   */
+  public int getSize(){
+    return this.items.size();
+  }
+
+  /**
    * Returns the currently selected item
    *
    * @return currently selected Item
@@ -758,6 +762,22 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
   }
 
+  public void setCommand(Command command) {
+    this.command = command;
+  }
+  // ====================================== Listener Implementations =========================== //
+
+  public void itemSelected(ListItem listItem) {
+    setSelectedItem(listItem);
+  }
+
+  public void doAction(ListItem listItem) {
+    if(command != null){
+      command.execute();
+    }
+  }
+
+
   // ======================================= Inner Classes ===================================== //
 
   /**
@@ -819,6 +839,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         this.setStylePrimaryName("combo-arrow-disabled"); //$NON-NLS-1$
         img.setUrl(GWT.getModuleBaseURL() + "arrow_disabled.png"); //$NON-NLS-1$
       }
+
     }
   }
 
@@ -874,5 +895,19 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   public boolean isEnabled(){
     return this.enabled;
   }
-  
+
+  public Widget createProxy(){
+    DefaultListItem item = new DefaultListItem();
+    item.setText(getSelectedItem().getText());
+    return item;
+  }
+
+  public void setDragController(DragController controller){
+    dragController = controller;
+    if(this.items.size() > 0){
+      for(ListItem item : items){
+        dragController.makeDraggable(item.getWidget());
+      }
+    }
+  }
 }

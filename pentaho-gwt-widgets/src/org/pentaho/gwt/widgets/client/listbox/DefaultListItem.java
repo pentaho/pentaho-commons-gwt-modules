@@ -1,5 +1,8 @@
 package org.pentaho.gwt.widgets.client.listbox;
 
+import com.gargoylesoftware.htmlunit.javascript.regexp.HtmlUnitRegExpProxy;
+import com.google.gwt.event.dom.client.*;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.DOM;
@@ -12,26 +15,34 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
  * Date: Mar 9, 2009
  * Time: 11:28:45 AM
  */
-public class DefaultListItem  implements ListItem<Object> {
+public class DefaultListItem extends HorizontalPanel implements ListItem<Object> {
 
   private String text = ""; //$NON-NLS-1$
-  private CustomListBox listBox;
   private Widget widget;
   private Widget dropWidget;
   private Image img;
   private Widget extraWidget;
   private String baseStyleName = "custom-list"; //$NON-NLS-1$
   private Object value;
+  private ListItemListener listItemListener;
+  private String styleName = "custom-list";
+  private Object backingObject;
+  private Image dragIndicator;
 
   public DefaultListItem(){
-
+    init();
   }
 
   public DefaultListItem(String str){
-    this();
     this.text = str;
     this.value = this.text;
+    init();
+  }
+
+  private void init(){
     createWidgets();
+    this.sinkEvents(Event.MOUSEEVENTS);
+    this.setStylePrimaryName(styleName);
   }
 
 
@@ -61,7 +72,7 @@ public class DefaultListItem  implements ListItem<Object> {
   public void setStylePrimaryName(String style){
     baseStyleName = style;
     dropWidget.setStylePrimaryName(style+"-item"); //$NON-NLS-1$
-    widget.setStylePrimaryName(style+"-item"); //$NON-NLS-1$
+    super.setStylePrimaryName(style+"-item"); //$NON-NLS-1$
 
   }
 
@@ -71,11 +82,10 @@ public class DefaultListItem  implements ListItem<Object> {
    */
   private void createWidgets(){
 
-    HorizontalPanel hbox = new WrapperPanel(baseStyleName+"-item"); //$NON-NLS-1$
-    formatWidget(hbox);
-    widget = hbox;
+    formatWidget(this);
+    widget = this;
 
-    hbox = new HorizontalPanel();
+    HorizontalPanel hbox = new HorizontalPanel();
     hbox.setStylePrimaryName(baseStyleName+"-item"); //$NON-NLS-1$
     formatWidget(hbox);
     dropWidget = hbox;
@@ -116,6 +126,26 @@ public class DefaultListItem  implements ListItem<Object> {
     panel.setWidth("100%"); //$NON-NLS-1$
   }
 
+  public void onBrowserEvent(Event event) {
+    int code = event.getTypeInt();
+    switch(code){
+      case Event.ONMOUSEOVER:
+        this.addStyleDependentName("hover"); //$NON-NLS-1$
+        break;
+      case Event.ONMOUSEOUT:
+        this.removeStyleDependentName("hover"); //$NON-NLS-1$
+        break;
+      case Event.ONMOUSEUP:
+        listItemListener.itemSelected(DefaultListItem.this);
+        this.removeStyleDependentName("hover"); //$NON-NLS-1$
+      case Event.ONDBLCLICK:
+        listItemListener.doAction(DefaultListItem.this);
+      default:
+        break;
+    }
+    super.onBrowserEvent(event);
+  }
+
   public Widget getWidgetForDropdown() {
     return dropWidget;
   }
@@ -143,7 +173,7 @@ public class DefaultListItem  implements ListItem<Object> {
     try{
     widget.addStyleDependentName("selected"); //$NON-NLS-1$
     } catch(Exception e){
-      
+      e.printStackTrace();
     }
   }
 
@@ -151,39 +181,10 @@ public class DefaultListItem  implements ListItem<Object> {
     try{
       widget.removeStyleDependentName("selected"); //$NON-NLS-1$
     } catch(Exception e){
+      e.printStackTrace();
       
     }
   }
-
-  private class WrapperPanel extends HorizontalPanel {
-
-    public WrapperPanel(String styleName){
-      this.sinkEvents(Event.MOUSEEVENTS);
-      if(styleName == null){
-        styleName = "custom-list-item"; //$NON-NLS-1$
-      }
-      this.setStylePrimaryName(styleName);
-    }
-
-    @Override
-      public void onBrowserEvent(Event event) {
-        int code = event.getTypeInt();
-        switch(code){
-          case Event.ONMOUSEOVER:
-            this.addStyleDependentName("hover"); //$NON-NLS-1$
-            break;
-          case Event.ONMOUSEOUT:
-            this.removeStyleDependentName("hover"); //$NON-NLS-1$
-            break;
-          case Event.ONMOUSEUP:
-            listBox.setSelectedItem(DefaultListItem.this);
-            this.removeStyleDependentName("hover"); //$NON-NLS-1$
-          default:
-            break;
-        }
-        super.onBrowserEvent(event);
-      }
-    }
 
   public String getText() {
     return text;
@@ -193,17 +194,83 @@ public class DefaultListItem  implements ListItem<Object> {
     this.text = text;
   }
 
-  public CustomListBox getListBox() {
-    return listBox;
-  }
-
-  public void setListBox(CustomListBox listBox) {
-    this.listBox = listBox;
-  }
-
   private static class WrapperWidget extends Widget{
     public WrapperWidget(Element ele){
       this.setElement(ele);
     }
+  }
+
+  public void setListItemListener(ListItemListener listener) {
+    this.listItemListener = listener;
+  }
+
+
+  /**
+   * DND required methods below
+   */
+  public HandlerRegistration addMouseUpHandler( MouseUpHandler handler ) {
+    return addDomHandler(handler, MouseUpEvent.getType());
+  }
+
+  public HandlerRegistration addMouseOutHandler( MouseOutHandler handler ) {
+    return addDomHandler(handler, MouseOutEvent.getType());
+  }
+
+  public HandlerRegistration addMouseMoveHandler( MouseMoveHandler handler ) {
+    return addDomHandler(handler, MouseMoveEvent.getType());
+  }
+
+  public HandlerRegistration addMouseWheelHandler( MouseWheelHandler handler ) {
+    return addDomHandler(handler, MouseWheelEvent.getType());
+  }
+
+  public HandlerRegistration addMouseOverHandler( MouseOverHandler handler ) {
+    return addDomHandler(handler, MouseOverEvent.getType());
+  }
+
+  public HandlerRegistration addMouseDownHandler( MouseDownHandler handler ) {
+    return addDomHandler(handler, MouseDownEvent.getType());
+  }
+
+  private void makeDraggable(){
+    clear();
+    dragIndicator = new Image("drop_invalid.png");
+    add(dragIndicator);
+    Label label = new Label(text);
+    add(label);
+    this.setCellWidth(dragIndicator,"16px");
+    this.setCellVerticalAlignment(dragIndicator, HasVerticalAlignment.ALIGN_MIDDLE);
+    addStyleDependentName("proxy");
+  }
+
+  public void setDropValid(boolean valid){
+    if(valid){
+      addStyleDependentName("proxy-valid");
+      dragIndicator.setUrl("drop_valid.png");
+    } else {
+      removeStyleDependentName("proxy-valid");
+      dragIndicator.setUrl("drop_invalid.png");
+    }
+  }
+
+  public Widget makeProxy(Widget ele) {
+    DefaultListItem item = new DefaultListItem(this.getText());
+    item.setWidth(this.getElement().getOffsetWidth()+"px");
+    item.makeDraggable();
+    removeStyleDependentName("hover"); //$NON-NLS-1$
+    return item;
+  }
+
+  public void setBackingObject(Object backingObject) {
+    this.backingObject = backingObject;
+  }
+
+  public Object getDragObject() {
+    return backingObject;
+  }
+
+  public void notifyDragFinished() {
+    // TODO: implement callbacks to support "move" operations
+    //listItemListener.notifyDragFinished();
   }
 }

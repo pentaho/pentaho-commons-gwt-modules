@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module>
+<module rename-to="Samples">
 
       <!-- Inherit the core Web Toolkit stuff.                         -->
       <inherits name='org.pentaho.gwt.widgets.Widgets'/>
       <inherits name='com.google.gwt.user.User'/>
       <!-- required for date picker control -->
-      <inherits name='org.zenika.widget.DatePickerModule'/>
-
       <inherits name='com.google.gwt.widgetideas.WidgetIdeas'/>
       <inherits name='com.google.gwt.widgetideas.ScrollTable'/>
 
