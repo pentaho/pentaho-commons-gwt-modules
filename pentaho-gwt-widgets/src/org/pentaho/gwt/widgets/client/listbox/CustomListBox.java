@@ -383,7 +383,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
    * Called by updateUI when the list is not a drop-down (visible row count > 1)
    */
   private void updateList(){
-    popupVbox.clear();
+    listPanel.clear();
     maxHeight = 0;
     maxWidth = 0;
 
