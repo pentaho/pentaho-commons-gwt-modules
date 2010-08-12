@@ -805,6 +805,17 @@ body{
   background-color: #BEBEBE;
 }
 
+
+.custom-list-item-proxy{
+  opacity: 0.85;
+  filter: alpha(opacity=85);
+  background-color:#FCCECF;
+  z-index:1500;
+}
+.custom-list-item-proxy-valid{
+  background-color: #D6FCD3;
+}
+
 /* end resizable dialogbox styles ------------------------------------------------ */
 
 .customListBoxTdFix{

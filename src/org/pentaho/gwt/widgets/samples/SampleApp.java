@@ -1,5 +1,9 @@
 package org.pentaho.gwt.widgets.samples;
 
+import com.allen_sauer.gwt.dnd.client.DragContext;
+import com.allen_sauer.gwt.dnd.client.DragController;
+import com.allen_sauer.gwt.dnd.client.PickupDragController;
+import com.allen_sauer.gwt.dnd.client.VetoDragException;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -9,6 +13,7 @@ import org.pentaho.gwt.widgets.client.controls.ColorPicker;
 import org.pentaho.gwt.widgets.client.controls.ColorPickerListener;
 import org.pentaho.gwt.widgets.client.listbox.CustomListBox;
 import org.pentaho.gwt.widgets.client.listbox.DefaultListItem;
+import org.pentaho.gwt.widgets.client.ui.Draggable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,7 +26,59 @@ public class SampleApp implements EntryPoint {
   @SuppressWarnings("deprecation")
   public void onModuleLoad() {
 
+
+    DragController dragController = new PickupDragController(RootPanel.get(), false)
+        {
+
+      {
+        setBehaviorDragProxy(true);
+        setBehaviorDragStartSensitivity(5);
+
+      }
+      private Widget proxy;
+
+      @Override
+      protected void restoreSelectedWidgetsStyle() {
+      }
+
+      @Override
+      protected void saveSelectedWidgetsLocationAndStyle() {
+      }
+
+      @Override
+      protected void restoreSelectedWidgetsLocation() {
+      }
+
+      @Override
+      public void dragStart() {
+        super.dragStart();
+      }
+
+      @Override
+      public void dragEnd() {
+        proxy.removeFromParent();
+        proxy = null;
+      }
+
+
+      @Override
+      protected Widget newDragProxy(DragContext
+        context) {
+        proxy = ((Draggable) context.draggable).makeProxy(context.draggable);
+        return proxy;
+      }
+
+
+      @Override
+      public void previewDragEnd() throws VetoDragException {
+
+      }
+    };
+
     final CustomListBox list = new CustomListBox();
+
+    list.setDragController(dragController);
+
 
     list.addItem("Alberta");
     list.addItem("Atlanta");
@@ -33,16 +90,8 @@ public class SampleApp implements EntryPoint {
     list.addItem("Atlanta");
     list.addItem("San Francisco");
     list.addItem("Alberta");
-    list.addItem("Atlanta");
-    list.addItem("San Francisco");
-    list.add("Alberta");
-    list.add("Atlanta");
-    list.add("San Francisco");
-    list.add("Alberta");
-    list.add("Atlanta");
-    list.add("San Francisco");
     list.addItem(new DefaultListItem("Testing", new Image("16x16sample.png")));
-    list.add(new DefaultListItem("Testing 2", new CheckBox()));
+    list.addItem(new DefaultListItem("Testing 2", new CheckBox()));
 
 //    list.setVisibleRowCount(6);
 
@@ -61,6 +110,8 @@ public class SampleApp implements EntryPoint {
 
 
     final CustomListBox list2 = new CustomListBox();
+
+    list2.setDragController(dragController);
 
     list2.addItem("Alberta");
     list2.addItem("Atlanta");
@@ -82,8 +133,8 @@ public class SampleApp implements EntryPoint {
     list2.add("San Francisco");
     list2.add(new DefaultListItem("Testing", new Image("16x16sample.png")));
     list2.addItem(new DefaultListItem("Testing 2", new CheckBox()));
-
-    list2.setEditable(true);
+    list2.setVisibleRowCount(6);
+    //list2.setEditable(true);
     list2.setValue("Bogus");
 
 

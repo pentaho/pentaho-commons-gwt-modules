@@ -1,6 +1,8 @@
 package org.pentaho.gwt.widgets.client.listbox;
 
+import com.google.gwt.event.dom.client.HasAllMouseHandlers;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.ui.Draggable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,7 +10,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Date: Mar 9, 2009
  * Time: 11:17:00 AM
  */
-public interface ListItem<T> {
+public interface ListItem<T> extends HasAllMouseHandlers, Draggable {
 
   /**
    * Returns the widget representation of this ListItem.
@@ -28,8 +30,8 @@ public interface ListItem<T> {
   void onHoverExit();
   void onSelect();
   void onDeselect();
-  void setListBox(CustomListBox listbox);
   void setStylePrimaryName(String style);
+  void setListItemListener(ListItemListener listener);
   String getText();
-  
+
 }
