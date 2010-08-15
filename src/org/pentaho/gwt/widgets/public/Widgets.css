@@ -810,7 +810,7 @@ body{
   opacity: 0.85;
   filter: alpha(opacity=85);
   background-color:#FCCECF;
-  z-index:1500;
+  z-index:1500 !important;
 }
 .custom-list-item-proxy-valid{
   background-color: #D6FCD3;
