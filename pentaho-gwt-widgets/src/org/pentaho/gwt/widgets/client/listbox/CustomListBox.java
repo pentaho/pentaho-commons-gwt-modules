@@ -207,7 +207,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     item.setListItemListener(this);
 
-    // If first one added, set selectedIndex to 0        
+    // If first one added, set selectedIndex to 0
     if(items.size() == 1 && this.visible == 1){
       setSelectedIndex(0);
     }
@@ -590,7 +590,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     int prevIdx = selectedIndex;
     if(idx >= 0){
       selectedIndex = idx;
-      if(this.isAttached()){
+      if(this.isAttached() || visible != 1){
         items.get(idx).onSelect();
       }
 
