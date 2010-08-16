@@ -1,6 +1,7 @@
 package org.pentaho.gwt.widgets.client.listbox;
 
 import com.gargoylesoftware.htmlunit.javascript.regexp.HtmlUnitRegExpProxy;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.*;
@@ -234,7 +235,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
 
   private void makeDraggable(){
     clear();
-    dragIndicator = new Image("drop_invalid.png");
+    dragIndicator = new Image(GWT.getModuleBaseURL()+"drop_invalid.png");
     add(dragIndicator);
     Label label = new Label(text);
     add(label);
@@ -246,10 +247,10 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
   public void setDropValid(boolean valid){
     if(valid){
       addStyleDependentName("proxy-valid");
-      dragIndicator.setUrl("drop_valid.png");
+      dragIndicator.setUrl(GWT.getModuleBaseURL()+"drop_valid.png");
     } else {
       removeStyleDependentName("proxy-valid");
-      dragIndicator.setUrl("drop_invalid.png");
+      dragIndicator.setUrl(GWT.getModuleBaseURL()+"drop_invalid.png");
     }
   }
 
