@@ -888,6 +888,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   
   public void setEnabled(boolean enabled){
     this.enabled = enabled;
+    if (editableTextBox != null) {
+      editableTextBox.setEnabled(enabled);
+    }
     arrow.setEnabled(enabled);
     this.setStylePrimaryName((this.enabled) ? "custom-list" : "custom-list-disabled"); //$NON-NLS-1$ //$NON-NLS-2$
   }
