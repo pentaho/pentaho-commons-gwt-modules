@@ -837,8 +837,8 @@ public class FileChooser extends VerticalPanel {
   }-*/;
 
   public native String getWebAppRoot()/*-{
-    if($wnd.WEB_CONTEXT_BASE){
-      return $wnd.WEB_CONTEXT_BASE+"/";
+    if($wnd.CONTEXT_PATH){
+      return $wnd.CONTEXT_PATH;
     }
     return "";
   }-*/;
