@@ -146,7 +146,7 @@ html, body{
   border: 1px solid #666;
   background-color: #FAFAFA;
   max-width: 150px;
-  z-index: 200;
+  z-index: 2000;
 }
 
 .tooltip-label{
