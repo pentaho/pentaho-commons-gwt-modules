@@ -153,7 +153,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
         }    
         url = mypath + url;
       }
-      Image img = new Image(url);
+      Image img = new Image("style/images/toolbarDivider.png");
       bar.add(img);
       bar.setCellVerticalAlignment(img, ALIGN_MIDDLE);
       break;
