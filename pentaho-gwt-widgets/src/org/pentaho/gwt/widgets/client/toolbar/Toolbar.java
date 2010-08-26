@@ -55,8 +55,9 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
 
     bar.setVerticalAlignment(ALIGN_MIDDLE);
     bar.setSpacing(1);
+    bar.setWidth("100%");
     super.add(bar);
-
+    super.setCellWidth(bar, "100%");
     setWidth("100%"); //$NON-NLS-1$
   }
 
@@ -110,8 +111,9 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
     bar.add(p);
     //spacer now passed in as panel
     if(p instanceof SimplePanel){
-      if(p.getStyleName().equals("spacer")){ //$NON-NLS-1$
-        //TODO: handle flex spacer;
+      String flex = p.getElement().getAttribute("flex");
+      if(flex != null){
+        bar.setCellWidth(p, "100%");
       }
     }
   }
