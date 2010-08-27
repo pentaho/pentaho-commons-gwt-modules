@@ -809,11 +809,11 @@ body{
 .custom-list-item-proxy{
   opacity: 0.85;
   filter: alpha(opacity=85);
-  background-color:#FCCECF;
+  border: 1px dashed #999 !important;
+  background: transparent;
   z-index:1500 !important;
 }
 .custom-list-item-proxy-valid{
-  background-color: #D6FCD3;
 }
 
 /* end resizable dialogbox styles ------------------------------------------------ */
@@ -959,4 +959,5 @@ td.datePickerMonth {
   cursor: pointer;
   padding: 0px 4px;
 }
+
 /* GWT Date Picker - END */	

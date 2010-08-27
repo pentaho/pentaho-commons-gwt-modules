@@ -256,7 +256,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
 
   public Widget makeProxy(Widget ele) {
     DefaultListItem item = new DefaultListItem(this.getText());
-    item.setWidth(this.getElement().getOffsetWidth()+"px");
+    item.setWidth("20px");
     item.makeDraggable();
     removeStyleDependentName("hover"); //$NON-NLS-1$
     return item;
