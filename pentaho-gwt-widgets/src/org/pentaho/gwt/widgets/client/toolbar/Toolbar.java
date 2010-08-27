@@ -27,6 +27,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 /**
  * Displays a collection of buttons in a standard toolbar view. Also supports ToolbarGroup objects that manage related buttons.
@@ -112,7 +113,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
     //spacer now passed in as panel
     if(p instanceof SimplePanel){
       String flex = p.getElement().getAttribute("flex");
-      if(flex != null){
+      if(StringUtils.isEmpty(flex) ==  false && Integer.parseInt(flex) > 0){
         bar.setCellWidth(p, "100%");
       }
     }
