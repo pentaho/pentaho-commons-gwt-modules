@@ -142,19 +142,8 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   public void add(int key) {
     switch (key) {
     case Toolbar.SEPARATOR:
-      String url = "mantle/style/images/toolbarDivider.png"; //$NON-NLS-1$
-      if (GWT.isScript()) {
-        String mypath = Window.Location.getPath();
-        if (!mypath.endsWith("/")) { //$NON-NLS-1$
-          mypath = mypath.substring(0, mypath.lastIndexOf("/") + 1); //$NON-NLS-1$
-        }
-        mypath = mypath.replaceAll("/mantle/", "/"); //$NON-NLS-1$ //$NON-NLS-2$
-        if (!mypath.endsWith("/")) { //$NON-NLS-1$
-          mypath = "/" + mypath; //$NON-NLS-1$
-        }    
-        url = mypath + url;
-      }
-      Image img = new Image("style/images/toolbarDivider.png");
+      
+      Image img = new Image(GWT.getModuleBaseURL()+"style/images/toolbarDivider.png");
       bar.add(img);
       bar.setCellVerticalAlignment(img, ALIGN_MIDDLE);
       break;
