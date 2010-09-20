@@ -56,18 +56,18 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
    * @param img
    */
   public DefaultListItem(String str, Image img){
-    this();
     this.text = str;
     this.value = this.text;
     this.img = img;
     createWidgets();
+    this.setStylePrimaryName(styleName);
   }
 
   public DefaultListItem(String str, Widget widget){
-    this();
     this.text = str;
     this.extraWidget = widget;
     createWidgets();
+    this.setStylePrimaryName(styleName);
   }
 
   public void setStylePrimaryName(String style){
