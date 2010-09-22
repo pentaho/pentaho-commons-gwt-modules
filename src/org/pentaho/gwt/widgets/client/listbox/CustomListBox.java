@@ -369,11 +369,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       editableTextBox.sinkEvents(Event.KEYEVENTS);
       editableTextBox.sinkEvents(Event.MOUSEEVENTS);
       selectedWidget = editableTextBox;
-      onChange(editableTextBox);
 
     }
     this.setTdStyles(selectedWidget.getElement());
-    selectedItemWrapper.getElement().getStyle().setProperty("overflow", "hidden"); //$NON-NLS-1$ //$NON-NLS-2$
+   // selectedItemWrapper.getElement().getStyle().setProperty("overflow", "hidden"); //$NON-NLS-1$ //$NON-NLS-2$
     selectedItemWrapper.clear();
     selectedItemWrapper.add(selectedWidget);
     dropGrid.setWidget(0,0, selectedItemWrapper);
@@ -456,6 +455,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       //TODO: move "10" to a static member  
       dropGrid.setWidth(maxWidth + (spacing*4) + maxHeight + "px"); //adding a little more room with the 10  //$NON-NLS-1$
       this.popupWidth = maxWidth + (spacing*4) + maxHeight + "px"; //$NON-NLS-1$
+
     } else if(width.equals("100%")){ //$NON-NLS-1$
       dropGrid.setWidth("100%"); //$NON-NLS-1$
       this.popupWidth = maxWidth + (spacing*4) + maxHeight + "px"; //$NON-NLS-1$
@@ -468,7 +468,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         w = Integer.parseInt(this.width.replace("%","")); //$NON-NLS-1$ //$NON-NLS-2$
       }
       selectedItemWrapper.setWidth( (w - (averageHeight + (this.spacing*6))) + "px" ); //$NON-NLS-1$
+
     }
+    
 
     // Store the the size of the popup to respect MaxDropVisible now that we know the item height
     // This cannot be set here as the popup is not visible :(
@@ -479,6 +481,8 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     } else {
       this.popupHeight = null;//ElementUtils.getSize(popupVbox.getElement()).height+ "px"; //$NON-NLS-1$
     }
+
+
   }
 
   /**
@@ -582,7 +586,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       throw new RuntimeException("Index out of bounds: "+ idx); //$NON-NLS-1$
     }
     // De-Select the current
-    if(selectedIndex > -1 && this.isAttached()){
+    if(selectedIndex > -1 ){
       items.get(selectedIndex).onDeselect();
     }
 
@@ -590,9 +594,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     int prevIdx = selectedIndex;
     if(idx >= 0){
       selectedIndex = idx;
-      if(this.isAttached() || visible != 1){
-        items.get(idx).onSelect();
-      }
+      items.get(idx).onSelect();
 
       this.val = null;
       updateSelectedDropWidget();
