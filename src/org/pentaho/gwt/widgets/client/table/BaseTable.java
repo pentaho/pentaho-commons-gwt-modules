@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.google.gwt.gen2.table.client.AbstractScrollTable;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
@@ -219,7 +220,7 @@ public class BaseTable extends Composite {
       createTable(tableHeaderNames, columnWidths, new Object[0][0], ResizePolicy.FIXED_WIDTH, selectionPolicy);
 
       this.parentPanel.add(scrollTable);
-      scrollTable.fillWidth();
+      //scrollTable.fillWidth();
 
       initWidget(parentPanel);
 
@@ -260,6 +261,7 @@ public class BaseTable extends Composite {
     final FlexCellFormatter cellFormatter = tableHeader.getFlexCellFormatter();
     for (int i = 0; i < tableHeaderNames.length; i++) {
       tableHeader.setHTML(0, i, tableHeaderNames[i]);
+      tableHeader.setColumnWidth(i, columnWidths[i]);
       cellFormatter.setHorizontalAlignment(0, i, HasHorizontalAlignment.ALIGN_LEFT);
       cellFormatter.setWordWrap(0, i, false);
     }
@@ -338,6 +340,7 @@ public class BaseTable extends Composite {
     scrollTable.setResizePolicy(resizePolicy);
     scrollTable.setCellPadding(0);
     scrollTable.setCellSpacing(0);
+    scrollTable.setScrollPolicy(ScrollTable.ScrollPolicy.BOTH);
 
     // Set column comparators
     if (columnComparators != null) {
@@ -367,7 +370,7 @@ public class BaseTable extends Composite {
     if (scrollTableWidth != null) {
       scrollTable.setWidth(scrollTableWidth);
     }
-    scrollTable.fillWidth();
+//    scrollTable.fillWidth();
   }
 
   /**
@@ -590,7 +593,7 @@ public class BaseTable extends Composite {
       public void execute() {
         if (scrollTable != null) {
           parentPanel.setWidth(width);
-          scrollTable.fillWidth();
+          //scrollTable.fillWidth();
           scrollTable.redraw();
         }
       }
