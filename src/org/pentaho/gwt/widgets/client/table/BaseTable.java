@@ -261,7 +261,7 @@ public class BaseTable extends Composite {
     final FlexCellFormatter cellFormatter = tableHeader.getFlexCellFormatter();
     for (int i = 0; i < tableHeaderNames.length; i++) {
       tableHeader.setHTML(0, i, tableHeaderNames[i]);
-      tableHeader.setColumnWidth(i, columnWidths[i]);
+//      tableHeader.setColumnWidth(i, columnWidths[i]);
       cellFormatter.setHorizontalAlignment(0, i, HasHorizontalAlignment.ALIGN_LEFT);
       cellFormatter.setWordWrap(0, i, false);
     }
@@ -637,5 +637,24 @@ public class BaseTable extends Composite {
   @Deprecated
   public void setTableWidth(final String width) {
     setWidth(width);
+  }
+
+
+  public void replaceRow(int row, Object[] data){
+    for (int j = 0; j < data.length; j++) {
+      Object value = data[j];
+
+      if (value != null) {
+        if (value instanceof String) {
+          dataGrid.setHTML(row, j, value.toString());
+        } else if (value instanceof Widget) {
+          dataGrid.setWidget(row, j, (Widget) value);
+        } else {
+          System.err.print(MSGS.invalidDataGridTypeSet());
+          Window.alert(MSGS.invalidDataGridTypeSet());
+          return;
+        }
+      }
+    }
   }
 }

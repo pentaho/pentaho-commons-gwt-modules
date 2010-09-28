@@ -135,6 +135,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         }
       }
     };
+    editableTextBox.setStylePrimaryName("custom-list-textbox");
 
   }
 

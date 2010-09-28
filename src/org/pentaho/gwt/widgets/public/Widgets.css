@@ -776,6 +776,9 @@ body{
   background-color: #ddd;
 }
 
+.custom-list-textbox{
+  border-size: none;
+}
 
 .drop-popup{
   background: white;
