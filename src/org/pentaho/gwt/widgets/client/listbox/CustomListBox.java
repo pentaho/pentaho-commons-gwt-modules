@@ -879,6 +879,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     this.val = text;
     if(editable){
       editableTextBox.setText(text);
+      selectedIndex = -1;
       this.onChange(editableTextBox);
     }
   }
