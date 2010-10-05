@@ -439,6 +439,7 @@ public class BaseTable extends Composite {
    * Makes this table fill all available width.
    */
   public void fillWidth() {
+    tableHeader.setWidth("100%");
     scrollTable.fillWidth();
   }
 
