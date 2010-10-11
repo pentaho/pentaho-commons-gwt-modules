@@ -525,6 +525,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       
       if(this.popupWidth != null){
         this.popupScrollPanel.getElement().getStyle().setProperty("width", Math.max(this.getElement().getOffsetWidth()-2, this.maxWidth+10)+"px"); //$NON-NLS-1$ //$NON-NLS-2$
+        popup.getElement().getStyle().setProperty("width", this.popupWidth);
       }
       
       scrollSelectedItemIntoView();
