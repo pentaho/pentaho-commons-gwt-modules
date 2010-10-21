@@ -27,5 +27,9 @@
       
       <!-- Specify the app entry point class.                   -->
 	  <entry-point class='org.pentaho.gwt.widgets.client.WidgetModule'/>
+    <entry-point class='org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint'/>
+
+    <public path="public"/>
+    <public path="client/filechooser/public"/>
       
 </module>
