@@ -402,7 +402,7 @@ public class FileChooser extends VerticalPanel {
     navigationBar.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
     navigationBar.add(upDirImage);
     navigationBar.setCellWidth(upDirImage, "100%"); //$NON-NLS-1$
-    DOM.setStyleAttribute(upDirImage.getElement(), "margin-left", "4px"); //$NON-NLS-1$	//$NON-NLS-2$
+    DOM.setStyleAttribute(upDirImage.getElement(), "marginLeft", "4px"); //$NON-NLS-1$	//$NON-NLS-2$
     navigationBar.setWidth("100%"); //$NON-NLS-1$
 
     locationBar.add(navigationBar);
