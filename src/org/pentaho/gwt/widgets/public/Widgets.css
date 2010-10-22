@@ -79,6 +79,10 @@ html, body{
   font-color: #000000;
 }
 
+.drop-popup > .popupContent > div {
+  border: 1px solid gray;
+}
+
 .blue-current-month-selected {
   background-color: #848484;
 }
@@ -784,7 +788,6 @@ body{
 
 .drop-popup{
   background: white;
-  border: 1px solid gray;
   z-index: 1350;
   width: auto;
 }
