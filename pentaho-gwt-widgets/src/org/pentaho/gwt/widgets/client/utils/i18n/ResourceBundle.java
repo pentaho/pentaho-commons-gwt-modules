@@ -168,10 +168,10 @@ public class ResourceBundle {
     // we do not want attempt to load that bundle..
     if (attemptLocalizedFetches && supportedLanguages == null) {
       // load supported_languages bundle
-      supportedLanguagesBundle.loadBundle(path, "supported_languages", false, supportedLangCallback); //$NON-NLS-1$
+      supportedLanguagesBundle.loadBundle(path, bundleName+ "_supported_languages", false, supportedLangCallback); //$NON-NLS-1$
     } else {
       // simulate callback
-      supportedLangCallback.bundleLoaded("supported_languages"); //$NON-NLS-1$
+      supportedLangCallback.bundleLoaded(bundleName+ "_supported_languages"); //$NON-NLS-1$
     }
     
   }
