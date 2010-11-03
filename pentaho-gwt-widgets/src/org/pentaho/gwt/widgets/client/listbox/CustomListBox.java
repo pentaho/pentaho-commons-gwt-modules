@@ -136,7 +136,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       }
     };
     editableTextBox.setStylePrimaryName("custom-list-textbox");
-
   }
 
   private native void setTdStyles(Element ele)/*-{
@@ -369,7 +368,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       editableTextBox.setWidth("100%"); //$NON-NLS-1$
       editableTextBox.sinkEvents(Event.KEYEVENTS);
       editableTextBox.sinkEvents(Event.MOUSEEVENTS);
-      editableTextBox.selectAll();
       selectedWidget = editableTextBox;
 
     }
@@ -539,7 +537,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       popupShowing = true;
     } else {
       popup.hide();
-      fPanel.setFocus(true);
+      //fPanel.setFocus(true);
     }
   }
 
@@ -605,10 +603,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       items.get(idx).onSelect();
 
       this.val = null;
-      updateSelectedDropWidget();
       if(visible == 1 && this.isAttached()){
         scrollSelectedItemIntoView();
       }
+      updateSelectedDropWidget();
     }
     
     if(this.suppressLayout == false && prevIdx != idx){
@@ -737,7 +735,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     if(isEnabled() == false){
       return;
     }
-     fPanel.setFocus(true);
+     //fPanel.setFocus(true);
   }
 
   public void onLostFocus(Widget widget) {}
