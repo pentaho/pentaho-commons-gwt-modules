@@ -783,7 +783,7 @@ body{
 }
 
 .custom-list-textbox{
-  border-size: none;
+  border: none;
 }
 
 .drop-popup{
@@ -967,5 +967,9 @@ td.datePickerMonth {
   overflow-y: scroll !important;
 }
 
+input[type=text]:focus,
+input[type=password]:focus {
+  outline: 0 none;
+}
 
 /* GWT Date Picker - END */
