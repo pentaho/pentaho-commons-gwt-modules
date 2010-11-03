@@ -250,7 +250,7 @@ html, body{
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected {
-  background-color: #d0d0d0;  
+  background-color: #d0d0d0;
   vertical-align: bottom;
 }
 
@@ -264,7 +264,7 @@ html, body{
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected {
-  background-color: #d0d0d0;  
+  background-color: #d0d0d0;
   vertical-align: bottom;
 }
 
@@ -272,7 +272,7 @@ html, body{
   color: gray;
   cursor: Default;
   padding:3px 20px 3px 20px;
-  vertical-align: bottom; 
+  vertical-align: bottom;
 }
 
 .gwt-MenuItem {
@@ -301,7 +301,7 @@ html, body{
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem-selected {
   border: 1px solid #848484;
-  background-color: #ececec;  
+  background-color: #ececec;
   color: black;
   padding: 2px 5px 4px;
   vertical-align: bottom;
@@ -316,7 +316,7 @@ html, body{
 }
 .gwt-MenuBar-horizontal .gwt-MenuItemSeparator .menuSeparatorInner {
   width: 1px;
-  background: white; 
+  background: white;
 }
 
 
@@ -324,7 +324,7 @@ html, body{
 
 
 .gwt-MenuBar-vertical {
-  background-color: #ffffff;  
+  background-color: #ffffff;
   margin-top: 0px;
   margin-left: 0px;
   border-top: 1px solid #848484;
@@ -342,8 +342,8 @@ html, body{
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-selected {
-  background-color: #d0d0d0;  
-  color: black;  
+  background-color: #d0d0d0;
+  color: black;
   vertical-align: bottom;
 }
 
@@ -352,7 +352,7 @@ html, body{
   border-top: 2px solid white;
   border-bottom: 2px solid white;
   height: 5px;
-  
+
 }
 .gwt-MenuBar-vertical .gwt-MenuItemSeparator .menuSeparatorInner {
   height: 1px;
@@ -531,9 +531,9 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
   background-color:  #000000;
   z-index:250;
   filter:alpha(opacity=20)
-  
+
   cursor: wait;
-} 
+}
 
 .dialogButtonPanel {
   border-top: 1px solid #848484;
@@ -546,7 +546,7 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
   z-index: 1000;
   position: absolute;
   font-size: 16px;
-  font-family: Tahoma, Helvetica, Arial, sans-serif;  
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
 }
 
 .gwt-DialogBox .Caption {
@@ -568,14 +568,14 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
 }
 
 .login-dialog {
-  z-index: 2000;	
+  z-index: 2000;
  }
- 
+
  .error-login-dialog {
-  z-index: 2100;	
+  z-index: 2100;
  }
- 
-/* Begin Wizard Styles ------------------------------------------------------ */ 
+
+/* Begin Wizard Styles ------------------------------------------------------ */
 .pentaho-wizard-deck-panel {
 	height: 80%;
 	width: 100%;
@@ -621,7 +621,7 @@ body{
 	font-family:Tahoma,Arial,Helvetica,sans-serif;
 }
 .nowrap{
-  white-space: nowrap;	
+  white-space: nowrap;
 }
 
 /* begin file chooser styles ------------------------------------------------ */
@@ -862,22 +862,22 @@ body{
 	background-color: white;
 	cursor: pointer;
 	}
-	
+
 	.color-swatch:hover{
   border: 1px solid #bbb;
   padding: 3px;
   background-color: #eee;
   cursor: pointer;
   }
-  
+
   .color-swatch-center{
   height: 10px;
   width: 10px;
   }
-	
-	
-/* GWT Date Picker - BEGIN */	
-	
+
+
+/* GWT Date Picker - BEGIN */
+
 .gwt-DateBox input {
   width: 8em;
 }
@@ -963,4 +963,9 @@ td.datePickerMonth {
   padding: 0px 4px;
 }
 
-/* GWT Date Picker - END */	
+.gwt-ScrollTable .dataWrapper {
+  overflow-y: scroll !important;
+}
+
+
+/* GWT Date Picker - END */
