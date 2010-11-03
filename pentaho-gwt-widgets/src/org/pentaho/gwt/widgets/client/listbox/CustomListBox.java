@@ -369,6 +369,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       editableTextBox.setWidth("100%"); //$NON-NLS-1$
       editableTextBox.sinkEvents(Event.KEYEVENTS);
       editableTextBox.sinkEvents(Event.MOUSEEVENTS);
+      editableTextBox.selectAll();
       selectedWidget = editableTextBox;
 
     }
@@ -377,6 +378,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     selectedItemWrapper.clear();
     selectedItemWrapper.add(selectedWidget);
     dropGrid.setWidget(0,0, selectedItemWrapper);
+    if(editable){
+      editableTextBox.setFocus(true);
+      editableTextBox.selectAll();
+    }
   }
 
   /**
