@@ -41,7 +41,7 @@ import java.util.List;
  * User: NBaker
  * Date: Mar 9, 2009
  * Time: 11:01:57 AM
- * 
+ *
  */
 @SuppressWarnings("deprecation")
 public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener, FocusListener, KeyboardListener, ListItemListener {
@@ -72,7 +72,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private String popupHeight;
   private String popupWidth;
   private boolean suppressLayout;
-  
+
   private boolean enabled = true;
   private String val;
   private Command command;
@@ -100,7 +100,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     fPanel.add(dropGrid);
     fPanel.setHeight("100%"); //$NON-NLS-1$
     super.add(fPanel);
-    
+
     popupScrollPanel.add(popupVbox);
     popupScrollPanel.getElement().getStyle().setProperty("overflowX","hidden"); //$NON-NLS-1$ //$NON-NLS-2$
     popupVbox.setWidth("100%"); //$NON-NLS-1$
@@ -115,7 +115,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     setTdStyles(this.getElement());
     setTdStyles(listPanel.getElement());
-    
+
     editableTextBox = new TextBox(){
       @Override
       public void onBrowserEvent(Event event) {
@@ -136,7 +136,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       }
     };
     editableTextBox.setStylePrimaryName("custom-list-textbox");
-
   }
 
   private native void setTdStyles(Element ele)/*-{
@@ -189,7 +188,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   public void clear(){
     removeAll();
   }
-  
+
   /**
    * Convenience method to support the more conventional method of child attachment
    * @param label
@@ -227,15 +226,15 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   }
 
   /**
-   * Call this method with true will suppress the re-laying out of the widget after every add/remove. 
+   * Call this method with true will suppress the re-laying out of the widget after every add/remove.
    * This is useful when adding a large batch of items to the listbox.
    */
   public void setSuppressLayout(boolean supress){
     this.suppressLayout = supress;
     if(! suppressLayout){
-  
+
       if(selectedIndex < 0 && this.items.size() > 0){
-        this.setSelectedIndex(0); // notifies listeners 
+        this.setSelectedIndex(0); // notifies listeners
       } else {
         // just notify listeners something has changed.
         for(ChangeListener l : listeners){
@@ -272,7 +271,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
   /**
    * Returns a list of current ListItems.
-   * 
+   *
    * @return List of ListItems
    */
   public List<ListItem> getItems(){
@@ -358,7 +357,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         selectedWidget = items.get(0).getWidgetForDropdown();
       }
     } else {
-      
+
       if(this.val != null){
         editableTextBox.setText(this.val);
       } else if(selectedIndex >= 0){
@@ -377,6 +376,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     selectedItemWrapper.clear();
     selectedItemWrapper.add(selectedWidget);
     dropGrid.setWidget(0,0, selectedItemWrapper);
+    if(editable){
+      editableTextBox.setFocus(true);
+      editableTextBox.selectAll();
+    }
   }
 
   /**
@@ -430,7 +433,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     maxWidth = 0;
     averageHeight = 0; // Actually used to set the width of the arrow
     popupHeight = null;
-    
+
     int totalHeight = 0;
     for(ListItem li : this.items){
       Widget w = li.getWidget();
@@ -439,7 +442,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       maxWidth = Math.max(maxWidth,rect.width);
       maxHeight = Math.max(maxHeight,rect.height);
       totalHeight += rect.height;
-      
+
       // Add it to the dropdown
       popupVbox.add(w);
       popupVbox.setCellWidth(w, "100%"); //$NON-NLS-1$
@@ -453,7 +456,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     // Set the size of the drop-down based on the largest list item
     if(width == null){
-      //TODO: move "10" to a static member  
+      //TODO: move "10" to a static member
       dropGrid.setWidth(maxWidth + (spacing*4) + maxHeight + "px"); //adding a little more room with the 10  //$NON-NLS-1$
       this.popupWidth = maxWidth + (spacing*4) + maxHeight + "px"; //$NON-NLS-1$
 
@@ -471,13 +474,13 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       selectedItemWrapper.setWidth( (w - (averageHeight + (this.spacing*6))) + "px" ); //$NON-NLS-1$
 
     }
-    
+
 
     // Store the the size of the popup to respect MaxDropVisible now that we know the item height
     // This cannot be set here as the popup is not visible :(
 
     if(maxDropVisible > 0 && items.size() > maxDropVisible){
-      // (Lesser of maxDropVisible or items size) * (Average item height + spacing value) 
+      // (Lesser of maxDropVisible or items size) * (Average item height + spacing value)
       this.popupHeight = (Math.min(this.maxDropVisible, this.items.size()) * (averageHeight + (this.spacing * 2) )) + "px"; //$NON-NLS-1$
     } else {
       this.popupHeight = null;//ElementUtils.getSize(popupVbox.getElement()).height+ "px"; //$NON-NLS-1$
@@ -492,20 +495,20 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private void togglePopup(){
     if(popupShowing == false){
 
-      // This delayed instantiation works around a problem with the underlying GWT widgets that 
+      // This delayed instantiation works around a problem with the underlying GWT widgets that
       // throw errors positioning when the GWT app is loaded in a frame that's not visible.
-      
+
       if(popup == null){
         popup = new DropPopupPanel();
         popup.addPopupListener(this);
         popup.add(popupScrollPanel);
       }
-      
+
       int x = this.getElement().getAbsoluteLeft();
       int y = this.getElement().getAbsoluteTop() + this.getElement().getOffsetHeight() + 1;
       int windowH = Window.getClientHeight();
       int windowW = Window.getClientWidth();
-      
+
       Rectangle popupSize = ElementUtils.getSize(popup.getElement());
       if(y + popupSize.height > windowH){
         y = windowH - popupSize.height;
@@ -513,34 +516,34 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       if(x + popupSize.width > windowW){
         x = windowW - popupSize.width;
       }
-      
+
       popup.setPopupPosition(x, y);
-      
+
       popup.show();
 
       // Set the size of the popup calculated in updateDropDown().
       if(this.popupHeight != null){
         this.popupScrollPanel.getElement().getStyle().setProperty("height", this.popupHeight); //$NON-NLS-1$
       }
-      
+
       if(this.popupWidth != null){
         String w = Math.max(this.getElement().getOffsetWidth()-2, this.maxWidth+10) + "px";
         this.popupScrollPanel.getElement().getStyle().setProperty("width", w); //$NON-NLS-1$ //$NON-NLS-2$
         popup.getElement().getStyle().setProperty("width", w);
       }
-      
+
       scrollSelectedItemIntoView();
 
       popupShowing = true;
     } else {
       popup.hide();
-      fPanel.setFocus(true);
+      //fPanel.setFocus(true);
     }
   }
 
   private void scrollSelectedItemIntoView(){
 
-    // Scroll to view currently selected widget  
+    // Scroll to view currently selected widget
     //DOM.scrollIntoView(this.getSelectedItem().getWidget().getElement());
     // Side effect of the previous call scrolls the scrollpanel to the right. Compensate here
     //popupScrollPanel.setHorizontalScrollPosition(0);
@@ -576,7 +579,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       }
     }
     setSelectedIndex(items.indexOf(item));
-     
+
   }
 
   /**
@@ -600,12 +603,12 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       items.get(idx).onSelect();
 
       this.val = null;
-      updateSelectedDropWidget();
       if(visible == 1 && this.isAttached()){
         scrollSelectedItemIntoView();
       }
+      updateSelectedDropWidget();
     }
-    
+
     if(this.suppressLayout == false && prevIdx != idx){
       for(ChangeListener l : listeners){
         l.onChange(this);
@@ -732,7 +735,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     if(isEnabled() == false){
       return;
     }
-     fPanel.setFocus(true);
+     //fPanel.setFocus(true);
   }
 
   public void onLostFocus(Widget widget) {}
@@ -876,7 +879,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         : null;
     }
   }
-  
+
   public void setValue(String text){
     this.val = text;
     if(editable){
@@ -891,7 +894,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       l.onChange(this);
     }
   }
-  
+
   public void setEnabled(boolean enabled){
     this.enabled = enabled;
     if (editableTextBox != null) {
@@ -900,7 +903,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     arrow.setEnabled(enabled);
     this.setStylePrimaryName((this.enabled) ? "custom-list" : "custom-list-disabled"); //$NON-NLS-1$ //$NON-NLS-2$
   }
-  
+
   public boolean isEnabled(){
     return this.enabled;
   }
