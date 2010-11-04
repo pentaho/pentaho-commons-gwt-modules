@@ -55,7 +55,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private ScrollPanel listScrollPanel = new ScrollPanel();
 
   // Members for drop-down style
-  private Grid dropGrid = new Grid(1,2);
+  private FlexTable dropGrid= new FlexTable();
   private boolean popupShowing = false;
   private DropPopupPanel popup;
   private PopupList popupVbox = new PopupList();
@@ -83,6 +83,8 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     dropGrid.getColumnFormatter().setWidth(0, "100%"); //$NON-NLS-1$
     dropGrid.setWidget(0,1, arrow);
+    dropGrid.getElement().getStyle().setProperty("tableLayout", "fixed");
+    arrow.getElement().getParentElement().getStyle().setProperty("width", "20px");
     dropGrid.setCellPadding(0);
     dropGrid.setCellSpacing(1);
     updateUI();
@@ -360,15 +362,19 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     } else {
       String previousVal = editableTextBox.getText();
       String newVal = "";
-      if(this.val != null && previousVal.equals(this.val) == false){
-        editableTextBox.setText(this.val);
+
+
+
+      if(this.val != null){
         newVal = this.val;
-      } else if(selectedIndex >= 0 && previousVal.equals(items.get(selectedIndex).getValue().toString()) == false){
-        editableTextBox.setText(items.get(selectedIndex).getValue().toString());
+      } else if(selectedIndex >= 0){
         newVal = items.get(selectedIndex).getValue().toString();
-      } else if(items.size() > 0 && previousVal.equals(items.get(0).getValue().toString()) == false){
-        editableTextBox.setText(items.get(0).getValue().toString());
+      } else if(items.size() > 0){
         newVal = items.get(0).getValue().toString();
+      }
+
+      if(previousVal.equals(newVal) == false){
+        editableTextBox.setText(newVal);
       }
       if(previousVal != null && previousVal.equals(newVal)){
         updateMade = false;
