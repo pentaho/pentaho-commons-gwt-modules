@@ -784,6 +784,7 @@ body{
 
 .custom-list-textbox{
   border: none;
+  overflow:hidden;
 }
 
 .drop-popup{
