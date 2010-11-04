@@ -350,6 +350,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private SimplePanel selectedItemWrapper = new SimplePanel();
   private void updateSelectedDropWidget(){
     Widget selectedWidget = new Label(""); //Default to show in case of empty sets? //$NON-NLS-1$
+    boolean updateMade = true;
     if(editable == false){ // only show their widget if editable is false
       if(selectedIndex >= 0){
         selectedWidget = items.get(selectedIndex).getWidgetForDropdown();
@@ -357,13 +358,20 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         selectedWidget = items.get(0).getWidgetForDropdown();
       }
     } else {
-
-      if(this.val != null){
+      String previousVal = editableTextBox.getText();
+      String newVal = "";
+      if(this.val != null && previousVal.equals(this.val) == false){
         editableTextBox.setText(this.val);
-      } else if(selectedIndex >= 0){
+        newVal = this.val;
+      } else if(selectedIndex >= 0 && previousVal.equals(items.get(selectedIndex).getValue().toString()) == false){
         editableTextBox.setText(items.get(selectedIndex).getValue().toString());
-      } else if(items.size() > 0){
+        newVal = items.get(selectedIndex).getValue().toString();
+      } else if(items.size() > 0 && previousVal.equals(items.get(0).getValue().toString()) == false){
         editableTextBox.setText(items.get(0).getValue().toString());
+        newVal = items.get(0).getValue().toString();
+      }
+      if(previousVal != null && previousVal.equals(newVal)){
+        updateMade = false;
       }
       editableTextBox.setWidth("100%"); //$NON-NLS-1$
       editableTextBox.sinkEvents(Event.KEYEVENTS);
@@ -376,7 +384,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     selectedItemWrapper.clear();
     selectedItemWrapper.add(selectedWidget);
     dropGrid.setWidget(0,0, selectedItemWrapper);
-    if(editable){
+    if(editable && updateMade){
       editableTextBox.setFocus(true);
       editableTextBox.selectAll();
     }
