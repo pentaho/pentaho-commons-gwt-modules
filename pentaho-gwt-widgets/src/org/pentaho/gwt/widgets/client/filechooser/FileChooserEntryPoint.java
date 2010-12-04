@@ -46,6 +46,17 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
      alert(ex);
    }
   }-*/;
+
+  public native void notifyCallbackCanceled(JavaScriptObject callback)
+  /*-{
+   try {
+     callback.dialogCanceled();
+   } catch (ex) {
+     alert(ex);
+   }
+  }-*/;
+
+
   
   public void openFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
     FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.OPEN, selectedPath, false, true);
@@ -54,6 +65,9 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
         notifyCallback(callback, solution, path, name, localizedFileName);
       }
       public void fileSelectionChanged(String solution, String path, String name) {
+      }
+      public void dialogCanceled(){
+        notifyCallbackCanceled(callback);
       }
     });
     dialog.center();    
@@ -66,6 +80,9 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
         notifyCallback(callback, solution, path, name, localizedFileName);
       }
       public void fileSelectionChanged(String solution, String path, String name) {
+      }
+      public void dialogCanceled(){
+        notifyCallbackCanceled(callback);
       }
     });
     dialog.center();    
