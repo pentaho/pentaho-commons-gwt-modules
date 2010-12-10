@@ -899,7 +899,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
 	/**
 	 * Set the Hue, Saturation and Value (Brightness) variables. This will automatically populate the Red, Green, Blue, and Hexadecimal fields, too.
 	 *
-	 * HSV represents points in the RGB color space, which attempt to describe perceptual color relationships more accurately than RGB. HSV describes colors as points in a cylinder whose central axis ranges from black at the bottom to white at the top with neutral colors between them, where angle around the axis corresponds to “hue”, distance from the axis corresponds to “saturation”, and distance along the axis corresponds to “lightness”, “value”, or “brightness”.
+	 * HSV represents points in the RGB color space, which attempt to describe perceptual color relationships more accurately than RGB. HSV describes colors as points in a cylinder whose central axis ranges from black at the bottom to white at the top with neutral colors between them, where angle around the axis corresponds to hue, distance from the axis corresponds to saturation, and distance along the axis corresponds to lightness, value, or brightness.
 	 * @param hue angle - valid range is 0-359
 	 * @param saturation percent - valid range is 0-100
 	 * @param value percent (Brightness) - valid range is 0-100
