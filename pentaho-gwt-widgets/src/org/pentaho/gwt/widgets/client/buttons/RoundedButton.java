@@ -143,9 +143,9 @@ public class RoundedButton extends Widget implements HasClickHandlers{
 
     if (prevVal && enabled) {
       return;
-    } else if (prevVal && !enabled) {
+    } else if (!enabled) {
       this.addStyleDependentName("disabled"); //$NON-NLS-1$
-    } else {
+    } else if(enabled) {
       this.removeStyleDependentName("disabled"); //$NON-NLS-1$
     }
   }
