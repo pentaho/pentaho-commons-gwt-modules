@@ -173,7 +173,7 @@ public class ResourceBundle {
       // simulate callback
       supportedLangCallback.bundleLoaded(bundleName+ "_supported_languages"); //$NON-NLS-1$
     }
-    
+
   }
 
   private void initCallbacks() {
@@ -404,7 +404,7 @@ public class ResourceBundle {
   }
 
   public boolean isSupportedLanguage(String languageCode) {
-    if (supportedLanguages == null || supportedLanguages.size() == 0) {
+    if (supportedLanguages == null) {
       // if supportedLocales is null or empty, then we have no idea what we support
       // so we'll force try anything
       return true;
