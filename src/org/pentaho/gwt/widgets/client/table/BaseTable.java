@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.gwt.gen2.table.client.AbstractScrollTable;
+import com.google.gwt.user.client.ui.*;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
@@ -34,13 +35,6 @@ import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.SourcesTableEvents;
-import com.google.gwt.user.client.ui.TableListener;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.table.client.FixedWidthFlexTable;
 import com.google.gwt.widgetideas.table.client.FixedWidthGrid;
 import com.google.gwt.widgetideas.table.client.ScrollTable;
@@ -329,13 +323,21 @@ public class BaseTable extends Composite {
     });
   }
 
+  private boolean scrollingFixInPlace = false;
   /**
    * Creates and initializes the scroll table. 
    */
   private void createScrollTable(ResizePolicy resizePolicy) {
 
     scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class));
-    
+    scrollTable.addScrollListener(new ScrollListener(){
+      public void onScroll(Widget widget, int scrollLeft, int scrollTop) {
+        if(!scrollingFixInPlace){
+          tableHeader.getElement().getParentElement().setAttribute("id","tableHeaderWrapper"+ Math.round(Math.random() * 10000));
+          scrollingFixInPlace = true;
+        }
+      }
+    });
 
     scrollTable.setResizePolicy(resizePolicy);
     scrollTable.setCellPadding(0);
@@ -371,6 +373,8 @@ public class BaseTable extends Composite {
       scrollTable.setWidth(scrollTableWidth);
     }
 //    scrollTable.fillWidth();
+    scrollingFixInPlace = false; // Mark the need to "fix" IE headerTableWrapper
+
   }
 
   /**
@@ -480,6 +484,10 @@ public class BaseTable extends Composite {
     parentPanel.clear();
     createTable(tableHeaderNames, columnWidths, rowAndColumnValues);
     parentPanel.add(scrollTable);
+
+    // Fix for table headers not scrolling in IE. Giving the DIV an ID makes it work. This is all related to the fact
+    // that we're running in Quirks-mode in IE.
+
   }
 
   /**
