@@ -309,6 +309,9 @@ public class TimeUtil {
     if ( hour > MAX_HOUR ) {
       hour -= MAX_HOUR;
     }
+    if (hour == 0) {
+      hour = MAX_HOUR;
+    }
     return Integer.toString( hour ) + ":" + parts[1] + ":" + parts[2];  //$NON-NLS-1$//$NON-NLS-2$
   }
   
