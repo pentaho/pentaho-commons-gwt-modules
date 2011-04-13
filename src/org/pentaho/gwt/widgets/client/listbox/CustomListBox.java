@@ -8,6 +8,7 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -77,6 +78,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private String val;
   private Command command;
   private DragController dragController;
+  private boolean multiSelect;
 
 
   public CustomListBox(){
@@ -173,6 +175,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   public void removeAll(){
     this.items.clear();
     this.selectedIndex = -1;
+    this.selectedItems.clear();
 
     if(this.suppressLayout == false){
       for(ChangeListener l : listeners){
@@ -562,6 +565,11 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     // Side effect of the previous call scrolls the scrollpanel to the right. Compensate here
     //popupScrollPanel.setHorizontalScrollPosition(0);
 
+    if(this.visible > 1){
+      this.listScrollPanel.ensureVisible(items.get(selectedIndex).getWidget());
+      return;
+    }
+
     // if the position of the selected item is greater than the height of the scroll area plus it's scroll offset
     if( ((this.selectedIndex + 1) * this.averageHeight) > popupScrollPanel.getOffsetHeight() + popupScrollPanel.getScrollPosition()){
       popupScrollPanel.setScrollPosition( (((this.selectedIndex ) * this.averageHeight) - popupScrollPanel.getOffsetHeight()) + averageHeight );
@@ -596,6 +604,60 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
   }
 
+  private List<ListItem> selectedItems = new ArrayList<ListItem>();
+  private void handleSelection(ListItem item, Event evt){
+    if(!evt.getCtrlKey() && !evt.getShiftKey() && !evt.getMetaKey()){
+      for(ListItem itm : selectedItems){
+        itm.onDeselect();
+      }
+      if(selectedIndex > -1){
+        items.get(selectedIndex).onDeselect();
+      }
+      selectedItems.clear();
+      item.onSelect();
+      if(!selectedItems.contains(item)){
+        selectedItems.add(item);
+      }
+      int prevIdx = selectedIndex;
+      selectedIndex = items.indexOf(item);
+
+      scrollSelectedItemIntoView();
+    } else if(evt.getShiftKey()){
+      int idxOfNewSelection = items.indexOf(item);
+      int startIdx = Math.min(selectedIndex, idxOfNewSelection);
+      int endIndex = Math.max(selectedIndex, idxOfNewSelection);
+
+      for(int i=startIdx; i<=endIndex; i++){
+        if(!selectedItems.contains(items.get(i))){
+          selectedItems.add(items.get(i));
+        }
+        items.get(i).onSelect();
+      }
+
+    } else if(evt.getCtrlKey() || evt.getMetaKey()){
+      if(selectedItems.remove(item)){
+        item.onDeselect();
+      } else {
+        item.onSelect();
+
+        if(!selectedItems.contains(item)){
+          selectedItems.add(item);
+        }
+      }
+    } else {
+      if(!selectedItems.contains(item)){
+        selectedItems.add(item);
+      }
+    }
+
+    if(this.suppressLayout == false){
+      for(ChangeListener l : listeners){
+        l.onChange(this);
+      }
+    }
+
+  }
+
   /**
    * Selects the ListItem at the given index (zero-based)
    *
@@ -624,6 +686,33 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
 
     if(this.suppressLayout == false && prevIdx != idx){
+      for(ChangeListener l : listeners){
+        l.onChange(this);
+      }
+    }
+  }
+
+  public void setSelectedIndices(int[] indices){
+    if(multiSelect == false){
+//      throw new IllegalStateException("Cannot select more than one item in a combobox");
+      if(indices.length > 0){
+        setSelectedIndex(indices[0]);
+      }
+      return;
+    }
+    for(ListItem item : selectedItems){
+      item.onDeselect();
+    }
+    selectedItems.clear();
+    for(int i=0; i<indices.length; i++){
+      int idx = indices[i];
+      if(idx >= 0 && idx < items.size()){
+        items.get(idx).onSelect();
+        selectedItems.add(items.get(idx));
+      }
+    }
+
+    if(this.suppressLayout == false){
       for(ChangeListener l : listeners){
         l.onChange(this);
       }
@@ -678,6 +767,19 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     return items.get(selectedIndex);
   }
+
+  public List<ListItem> getSelectedItems(){
+    return new ArrayList<ListItem>(selectedItems);
+  }
+
+  public int[] getSelectedIndices(){
+    int[] selectedIndices = new int[selectedItems.size()];
+    for(int i=0; i<selectedItems.size(); i++){
+      selectedIndices[i] = items.indexOf(selectedItems.get(i));
+    }
+    return selectedIndices;
+  }
+
 
   @Override
   public void setStylePrimaryName(String s) {
@@ -754,7 +856,12 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
   public void onLostFocus(Widget widget) {}
 
-  public void onKeyDown(Widget widget, char c, int i) {}
+  private int shiftOriginIdx = -1;
+  public void onKeyDown(Widget widget, char c, int i) {
+    if(c == 16){ //shift
+      shiftOriginIdx = selectedIndex;
+    }
+  }
 
   public void onKeyPress(Widget widget, char c, int i) {}
 
@@ -762,17 +869,94 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     if(isEnabled() == false){
       return;
     }
+    if(c == 16){
+      shiftOriginIdx = -1;
+    }
+    boolean fireEvents = false;
     switch(c){
       case 38: // UP
-
         if(selectedIndex > 0){
-          setSelectedIndex(selectedIndex - 1);
-        }
+
+          if(multiSelect && !Event.getCurrentEvent().getShiftKey()){
+            for(ListItem itm : selectedItems){
+              itm.onDeselect();
+            }
+            selectedItems.clear();
+            ListItem itm = items.get(selectedIndex - 1);
+            selectedIndex = selectedIndex - 1;
+            itm.onSelect();
+            if(!selectedItems.contains(itm)){
+              selectedItems.add(itm);
+            }
+            fireEvents = true;
+            this.listScrollPanel.ensureVisible(itm.getWidget());
+          } else if(multiSelect && Event.getCurrentEvent().getShiftKey()){
+
+
+              ListItem itm = items.get(selectedIndex - 1);
+
+              if(!selectedItems.contains(itm)){
+                selectedItems.add(itm);
+              }
+              itm.onSelect();
+              this.listScrollPanel.ensureVisible(itm.getWidget());
+
+              ListItem prevItem = items.get(selectedIndex);
+              if(selectedIndex != shiftOriginIdx && shiftOriginIdx < selectedIndex && selectedItems.contains(prevItem)){
+                selectedItems.remove(prevItem);
+                prevItem.onDeselect();
+              }
+
+              selectedIndex = selectedIndex - 1;
+
+              fireEvents = true;
+            } else {
+              setSelectedIndex(selectedIndex - 1);
+              scrollSelectedItemIntoView();
+            }
+          }
+
 
         break;
       case 40: // Down
         if(selectedIndex < items.size() -1){
-          setSelectedIndex(selectedIndex + 1);
+          if(multiSelect && !Event.getCurrentEvent().getShiftKey()){
+            for(ListItem itm : selectedItems){
+              itm.onDeselect();
+            }
+            selectedItems.clear();
+            ListItem itm = items.get(selectedIndex + 1);
+            selectedIndex = selectedIndex + 1;
+            itm.onSelect();
+            if(!selectedItems.contains(itm)){
+              selectedItems.add(itm);
+            }
+            fireEvents = true;
+            this.listScrollPanel.ensureVisible(itm.getWidget());
+          } else if(multiSelect && Event.getCurrentEvent().getShiftKey()){
+
+            ListItem itm = items.get(selectedIndex + 1);
+
+            if(!selectedItems.contains(itm)){
+              selectedItems.add(itm);
+            }
+            itm.onSelect();
+
+            ListItem prevItem = items.get(selectedIndex);
+            if(selectedIndex != shiftOriginIdx && shiftOriginIdx > selectedIndex && selectedItems.contains(prevItem)){
+              selectedItems.remove(prevItem);
+              prevItem.onDeselect();
+            }
+
+            this.listScrollPanel.ensureVisible(itm.getWidget());
+            
+            selectedIndex = selectedIndex + 1;
+
+            fireEvents = true;
+          } else {
+            setSelectedIndex(selectedIndex + 1);
+            scrollSelectedItemIntoView();
+          }
         }
         break;
       case 27: // ESC
@@ -781,6 +965,23 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
           togglePopup();
         }
         break;
+      case 65: // A
+        if(Event.getCurrentEvent().getCtrlKey()){
+          for(ListItem item : items){
+            item.onSelect();
+          }
+          selectedItems.clear();
+          selectedItems.addAll(items);
+
+          fireEvents = true;
+        }
+        break;
+
+    }
+    if(fireEvents && this.suppressLayout == false){
+      for(ChangeListener l : listeners){
+        l.onChange(this);
+      }
     }
   }
 
@@ -789,8 +990,13 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   }
   // ====================================== Listener Implementations =========================== //
 
-  public void itemSelected(ListItem listItem) {
-    setSelectedItem(listItem);
+  public void itemSelected(ListItem listItem, Event event) {
+    fPanel.setFocus(true);
+    if(multiSelect){
+      handleSelection(listItem, event);
+    } else {
+      setSelectedItem(listItem);
+    }
   }
 
   public void doAction(ListItem listItem) {
@@ -935,5 +1141,13 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         dragController.makeDraggable(item.getWidget());
       }
     }
+  }
+
+  public boolean isMultiSelect() {
+    return multiSelect;
+  }
+
+  public void setMultiSelect(boolean multiSelect) {
+    this.multiSelect = multiSelect;
   }
 }
