@@ -137,7 +137,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
         this.removeStyleDependentName("hover"); //$NON-NLS-1$
         break;
       case Event.ONMOUSEUP:
-        listItemListener.itemSelected(DefaultListItem.this);
+        listItemListener.itemSelected(DefaultListItem.this, event);
         this.removeStyleDependentName("hover"); //$NON-NLS-1$
       case Event.ONDBLCLICK:
         listItemListener.doAction(DefaultListItem.this);

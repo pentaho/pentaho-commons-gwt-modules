@@ -93,7 +93,7 @@ public class SampleApp implements EntryPoint {
     list.addItem(new DefaultListItem("Testing", new Image("16x16sample.png")));
     list.addItem(new DefaultListItem("Testing 2", new CheckBox()));
 
-//    list.setVisibleRowCount(6);
+//   list.setVisibleRowCount(6);
 
     list.addChangeListener(new ChangeListener(){
       public void onChange(Widget widget) {
@@ -137,10 +137,24 @@ public class SampleApp implements EntryPoint {
     //list2.setEditable(true);
     list2.setValue("Bogus");
 
+    list2.setMultiSelect(true);
+
+    final Label selected = new Label();
+    list2.addChangeListener(new ChangeListener(){
+      @Override
+      public void onChange(Widget widget) {
+        int[] sels = list2.getSelectedIndices();
+        selected.setText("");
+        for(int i=0; i<sels.length; i++){
+          selected.setText(selected.getText()+", "+sels[i]);
+        }
+      }
+    });
 
     RootPanel.get().add(new Label(""));
     RootPanel.get().add(new Label("Combo2: "));
     RootPanel.get().add(list2);
+    RootPanel.get().add(selected);
 
     
     CustomListBox list3 = new CustomListBox();
