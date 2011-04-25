@@ -802,13 +802,12 @@ body{
 }
 
 .custom-list-item-hover{
-  background-color: #DDD;
+  background-color: #ceedfa;
 }
 
 .custom-list-item-selected{
-  background-color: #BEBEBE;
+  background-color: #1dbeff;
 }
-
 
 .custom-list-item-proxy{
   opacity: 0.85;
