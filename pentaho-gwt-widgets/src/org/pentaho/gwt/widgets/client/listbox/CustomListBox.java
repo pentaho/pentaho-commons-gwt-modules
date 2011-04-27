@@ -674,7 +674,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
 
     selectedItems.clear();
-    if(idx >= 0){
+    if(idx >= 0 && items.size() > idx){
       selectedItems.add(items.get(idx));
     }
 
