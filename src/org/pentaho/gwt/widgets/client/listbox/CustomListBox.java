@@ -8,7 +8,6 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -429,6 +428,8 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     // we only care about this if the user has specified a visible row count and no heihgt
     if(height == null){
       this.listScrollPanel.setHeight((this.visible * (maxHeight + spacing)) + "px"); //$NON-NLS-1$
+    } else {
+      this.listScrollPanel.setHeight(height);
     }
     if(width == null){
       this.fPanel.setWidth(maxWidth + 40 + "px"); //20 is scrollbar space //$NON-NLS-1$
