@@ -537,27 +537,61 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
 
 .dialogButtonPanel {
   border-top: 1px solid #848484;
-  background-color: #ececec;
+  /*background-color: #ececec;*/
 }
 
 .gwt-DialogBox {
-  background-color: #ececec;
-  border: 1px solid #848484;
+  border: 1px solid rgba(255, 255, 255, 0.59375);
   z-index: 1000;
   position: absolute;
   font-size: 16px;
   font-family: Tahoma, Helvetica, Arial, sans-serif;
+
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  border-radius:7px;
+  -moz-box-shadow:2px 2px 6px 1px #000000;
+  -webkit-box-shadow:2px 2px 6px 1px #000000;
+  box-shadow:2px 2px 6px 1px #000000;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 8px 0px 8px;
+
 }
 
 .gwt-DialogBox .Caption {
-  background-image: url(style/images/subtoolbar_bg.png);
-  background-color: #d3d3d3;
-  color: black;
+  background: black;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAA),
+        color-stop(0.10, #888),
+        color-stop(0.50, #3f3f3f),
+        color-stop(0.55, #000),
+        color-stop(0.90, #121212)
+    );
+    background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+  font-size: 14px;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  color: white;
   cursor: move;
-  border-bottom: 1px solid #848484;
+
+  -moz-box-shadow: white 0px 0px 1px 1px inset;
+  -webkit-box-shadow: white 0px 0px 1px 1px inset;
+  box-shadow: white 0px 0px 1px 1px inset;
+  padding: 6px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  
   text-align: left;
-  padding: 6px 0px 6px 5px;
+	text-shadow: 0px 0px 2px black;
 }
+
+
+.gwt-DialogBox .dialogTopCenterInner {
+}
+
 
 .gwt-DialogBox .dialogMiddleCenter {
   height: 100%;
@@ -565,6 +599,27 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
 
 .gwt-DialogBox .dialogMiddleCenterInner {
   height: 100%;
+}
+
+.gwt-DialogBox .dialogMiddleLeft {
+  display: none;
+}
+.gwt-DialogBox .dialogMiddleRight {
+  display: none;
+}
+
+.gwt-DialogBox .dialogTopLeft {
+  display: none;
+}
+.gwt-DialogBox .dialogTopRight {
+  display: none;
+}
+
+.gwt-DialogBox .dialogBottomLeft {
+  display: none;
+}
+.gwt-DialogBox .dialogBottomRight {
+  display: none;
 }
 
 .login-dialog {
