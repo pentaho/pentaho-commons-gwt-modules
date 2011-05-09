@@ -126,7 +126,10 @@
 					lastChild.css('margin-bottom', 0);
 					*/
 				} else {
-					elem.css('width', '');
+					if(!elem.attr("scrollException")){
+					    elem.css('width', '');
+					}
+					
 
 					maintainAtBottom = settings.stickToBottom && isCloseToBottom();
 					maintainAtRight  = settings.stickToRight  && isCloseToRight();
