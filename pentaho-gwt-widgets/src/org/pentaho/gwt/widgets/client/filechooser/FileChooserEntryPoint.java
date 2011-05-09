@@ -70,7 +70,7 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
         notifyCallbackCanceled(callback);
       }
     });
-    dialog.center();    
+    dialog.center();
   }
   
   public void saveFileChooserDialog(final JavaScriptObject callback, String selectedPath) {

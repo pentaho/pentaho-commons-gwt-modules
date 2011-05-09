@@ -1,0 +1,877 @@
+
+html, body{
+  margin: 0px;
+  padding: 0px;
+}
+
+div{
+	outline:0px;
+  hideFocus: true;
+}
+
+img{
+	outline: 0px;
+  -moz-user-focus: none;
+  user-focus: none;
+}
+.pentaho-button  {
+   background: #000000;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAA),
+        color-stop(0.10, #888),
+        color-stop(0.50, #3f3f3f),
+        color-stop(0.55, #000),
+        color-stop(0.90, #121212)
+    );
+    background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+
+
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666',endColorstr='#000000');
+
+    font-family: Arial, Helvetica, sans-serif;
+	  font-size: .75em;
+	  color: #ffffff;
+	  padding: 5px 14px;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	  border: 1px solid #333;
+    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+    -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+    white-space:nowrap;
+	  text-shadow: 0px 0px 2px rgba(000,000,000,1);
+    cursor: pointer;
+  }
+.pentaho-button:hover {
+
+   background: -moz-linear-gradient(#B5B5B5, #999 10%, #444 50%, #222 55%, #252525 90%) repeat scroll 0 0 transparent;
+
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #B5B5B5),
+        color-stop(0.10, #999),
+        color-stop(0.50, #444),
+        color-stop(0.55, #222),
+        color-stop(0.90, #252525)
+    );
+   }
+.pentaho-button:active {
+   background: -moz-linear-gradient(#C8C8C8, #AAA 10%, #666 50%, #353535 55%, #3F3F3F 90%) repeat scroll 0 0 transparent;
+
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #C8C8C8),
+        color-stop(0.10, #AAA),
+        color-stop(0.50, #666),
+        color-stop(0.55, #353535),
+        color-stop(0.90, #3F3F3F)
+    );
+   }
+
+.pentaho-button:hover {
+  background-color: #ffcc99;
+}
+.pentaho-button-disabled {
+  color: #888;
+  background-color: #ccc;
+  cursor: default;
+}
+.pentaho-button-disabled:hover {
+   background: #000000;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAA),
+        color-stop(0.10, #888),
+        color-stop(0.50, #3f3f3f),
+        color-stop(0.55, #000),
+        color-stop(0.90, #121212)
+    );
+    background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+  color: #888;
+  cursor: default;
+}
+
+.pentaho-dialog {
+  border: 1px solid rgba(255, 255, 255, 0.59375);
+  z-index: 1000;
+  position: absolute;
+  font-size: 16px;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+
+  -moz-border-radius:7px;
+  -webkit-border-radius:7px;
+  border-radius:7px;
+  -moz-box-shadow:2px 2px 6px 1px #000000;
+  -webkit-box-shadow:2px 2px 6px 1px #000000;
+  box-shadow:2px 2px 6px 1px #000000;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 8px 0px 8px;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77ffffff',endColorstr='#77ffffff');
+  zoom: 1;
+
+}
+
+.pentaho-dialog .Caption {
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAA),
+        color-stop(0.10, #888),
+        color-stop(0.50, #3f3f3f),
+        color-stop(0.55, #000),
+        color-stop(0.90, #121212)
+    );
+
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%);
+  font-size: 14px;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
+  color: white;
+  cursor: move;
+
+  -moz-box-shadow: white 0px 0px 1px 1px inset;
+  -webkit-box-shadow: white 0px 0px 1px 1px inset;
+  box-shadow: white 0px 0px 1px 1px inset;
+  padding: 6px;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+
+  text-align: left;
+  text-shadow: 0px 0px 2px black;
+  zoom:1;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFAAAAAA',endColorstr='#FF121212');
+
+}
+
+.dialog-content{
+  border: 1px solid black;
+  background: #DDD;
+}
+
+.dialog-button-panel{
+  padding: 2px 0px;
+}
+.pentaho-dialog .dialogTopCenterInner {
+}
+
+
+.pentaho-dialog .dialogMiddleCenter {
+  height: 100%;
+}
+
+.pentaho-dialog .dialogMiddleCenterInner {
+  height: 100%;
+}
+
+.pentaho-dialog .dialogMiddleLeft {
+  display: none;
+}
+.pentaho-dialog .dialogMiddleRight {
+  display: none;
+}
+
+.pentaho-dialog .dialogTopLeft {
+  display: none;
+}
+.pentaho-dialog .dialogTopRight {
+  display: none;
+}
+
+.pentaho-dialog .dialogBottomLeft {
+  display: none;
+}
+.pentaho-dialog .dialogBottomRight {
+  display: none;
+}
+
+.login-dialog {
+  z-index: 2000;
+ }
+
+ .error-login-dialog {
+  z-index: 2100;
+ }
+.glasspane{
+	position: absolute;
+  background-color: black;
+
+  /* IE8 css hack for opacity */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=20)";
+  filter:alpha(opacity=20);
+  opacity: 0.2;
+
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 300;
+  margin: 0px;
+  padding: 0px;
+  display: none;
+}
+
+
+
+.pentaho-tabBar .pentaho-tabWidget {
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0.50, rgba(255, 255, 255, 0.199219)),
+        color-stop(0.50, rgba(0, 0, 0, 0.1))
+    );
+
+    background: -moz-linear-gradient(rgba(255, 255, 255, 0.199219) 50%, rgba(0, 0, 0, 0.1) 50%) repeat scroll 0 0 transparent;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .75em;
+    color: #ffffff;
+    padding: 3px 15px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top: solid 1px #ffffff;
+    border-left: solid 1px #ffffff;
+    border-right: solid 1px #ffffff;
+    border-bottom: solid 1px #8D8D8D;
+   -moz-box-shadow: black 0px 0px 1px 1px;
+   -webkit-box-shadow: black 0px 0px 1px 1px;
+    box-shadow: 0 0 0 1px #000;
+    white-space:nowrap;
+    text-shadow: 0px 0px 2px rgba(000,000,000,1);
+    cursor: pointer;
+    height: 24px
+}
+
+.pentaho-tabBar .pentaho-tabWidgetLabel {
+	font: normal 12px tahoma, arial, helvetica;
+  margin: 0px;
+  padding-bottom: 0px;
+ }
+
+.pentaho-tabBar .pentaho-tabWidget-selected {
+    background: #000000;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAA),
+        color-stop(0.10, #888),
+        color-stop(0.50, #3f3f3f),
+        color-stop(0.55, #000),
+        color-stop(0.90, #121212)
+    );
+
+    background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: .75em;
+    color: #ffffff;
+    padding: 3px 15px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-left: solid 1px #ffffff;
+    border-right: solid 1px #ffffff;
+    border-top: solid 1px #ffffff;
+    border-bottom: 1px solid transparent;
+
+   -moz-box-shadow: black 0px 0px 3px 1px;
+   -webkit-box-shadow: black 0px 0px 3px 1px;
+    box-shadow: 0 0 3px 1px #000;
+    white-space:nowrap;
+    text-shadow: 0px 0px 2px rgba(000,000,000,1);
+    cursor: pointer;
+    height: 24px
+}
+
+.pentaho-tabPanel .gwt-TabPanelBottom {
+  background-color: #e2e2e2;
+  border-top:none;
+  border-right:1px solid #8d8d8d;
+  border-left:1px solid #8d8d8d;
+  border-bottom:1px solid #8d8d8d;
+  padding: 0px;
+}
+
+.pentaho-tabBar {
+  background-image: url(images/dialog_tab_bg.png);
+  background-repeat: repeat-x;
+  height: 24px;
+}
+
+
+
+.pentaho-tabBar .gwt-TabBarFirst-wrapper{
+  background-color: none;
+  border-bottom: 1px solid #8D8D8D;
+}
+
+.pentaho-tabBar .gwt-TabBarFirst {
+  background-color: none;
+}
+
+.pentaho-tabBar .gwt-TabBarRest {
+  background-color: none;
+
+}
+.pentaho-tabBar .gwt-TabBarRest-wrapper{
+  border-bottom: 1px solid #8D8D8D;
+}
+
+
+.pentaho-tabBar .tab-spacer {
+  background-color: none;
+  height: 4px;
+  width: 4px;
+}
+
+.pentaho-tabBar .tab-spacer-wrapper {
+  border-bottom: 1px solid #8D8D8D;
+
+}
+
+
+.pentaho-tabBar .gwt-TabBarItem {
+  /*background-color: #e2e2e2;*/
+  border: none none 1px solid #8d8d8d none;
+  margin-right: 2px;
+  cursor: hand;
+  height: 24px;
+  margin: 0px;
+  border: none none 1px solid black none;
+  padding:0px;
+}
+
+.pentaho-tabBar .gwt-TabBarItem-selected {
+  /*background-color: #e2e2e2;*/
+  color: black;
+  border: none;
+  cursor: pointer;
+  height: 24px;
+  margin: 0px;
+  font-weight:normal;
+  padding:0px;
+}
+
+
+/* ======================= GWT Scroll Table =========================== */
+.headerTable >tbody > tr > td{
+  padding:2px;
+}
+.gwt-ScrollTable {
+  border: 1px solid #848484;
+  overflow:hidden;
+}
+
+.gwt-ScrollTable .headerWrapper {
+  background: #d2d2d2 repeat-x scroll left bottom;
+  padding-right: 0px;
+}
+
+.gwt-ScrollTable .footerWrapper {
+  background: #858585;
+  border-top: 1px solid #848484;
+}
+
+.gwt-ScrollTable .dataWrapper {
+  width: 100% !important;
+  overflow-y: scroll !important;
+}
+
+.gwt-ScrollTable .dataTable td {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.gwt-ScrollTable .headerTable td {
+  font-weight: normal;
+  color: #000000;
+  border-right: 1px solid #848484;
+}
+
+.gwt-ScrollTable .headerTable-disabled td {
+  font-weight: normal;
+  color: #000000;
+  border-right: 0px;
+}
+
+.gwt-ScrollTable .dataTable tr {
+  background: white;
+}
+
+.gwt-ScrollTable .dataTable-disabled tr {
+  background: white;
+}
+
+.gwt-ScrollTable .dataTable td {
+  border-bottom: 1px solid #BEBEBE;
+  border-right: 1px solid #BEBEBE;
+  padding: 2px;
+}
+
+.gwt-ScrollTable .dataTable-disabled td {
+  border-bottom: 0px;
+}
+
+.gwt-ScrollTable .dataTable tr.hovering {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ScrollTable .dataTable-disabled tr.hovering {
+  cursor: default;
+}
+
+.gwt-ScrollTable .dataTable td.hovering {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ScrollTable .dataTable-disabled td.hovering {
+  cursor: default;
+}
+
+.gwt-ScrollTable .dataTable tr.selected {
+  background: #1dbeff none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .dataTable tr:hover{
+  background: #ceedfa none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .pagingOptions {
+  background: #e8e8e8 none repeat scroll 0% 0%;
+  border-right: 1px solid #848484;
+  border-top: 1px solid #848484;
+  padding: 1px 0px;
+}
+
+.gwt-ScrollTable .pagingOptions .errorLabel {
+  color: red;
+}
+
+.gwt-CellEditor {
+  background: white none repeat scroll 0% 0%;
+  border: 3px solid #BEBEBE;
+  padding: 4px;
+}
+
+.gwt-CellEditor td {
+  padding: 4px;
+}
+
+/* ======================= GWT Scroll Table =========================== */
+
+
+/* ======================= Behins Scrollbar Styles ========================= */
+/*
+ * CSS Styles that are needed by jScrollPane for it to operate correctly.
+ *
+ * Include this stylesheet in your site or copy and paste the styles below into your stylesheet - jScrollPane
+ * may not operate correctly without them.
+ */
+
+.jspContainer
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.jspPane
+{
+	position: absolute;
+}
+
+.jspVerticalBar
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 16px;
+	height: 100%;
+	background: none;
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0, transparent),color-stop(1, #666));
+
+
+}
+
+.jspHorizontalBar
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 16px;
+	background: none;
+  background: -webkit-gradient(linear,left top,right top,color-stop(0, transparent),color-stop(1, #666));
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+	margin: 0;
+	padding: 0;
+}
+
+.jspCap
+{
+	display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+	float: left;
+}
+
+.jspTrack
+{
+	position: relative;
+}
+
+.jspDrag
+{
+	background: #bbd;
+	position: relative;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+}
+
+.jspHorizontalBar .jspTrack{
+  background: -webkit-gradient(linear,left top,left bottom,color-stop(0, #333),color-stop(0.50, #777),color-stop(1, #333));
+  background: -moz-linear-gradient(top, #333, #777 50%, #333 100%);
+
+  border-top: 1px solid #b5b5b5;
+  border-bottom: 1px solid #b5b5b5;
+  -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+
+}
+
+
+.jspVerticalBar .jspTrack{
+  background: -webkit-gradient(linear,left top,right top,color-stop(0, #333),color-stop(0.50, #777),color-stop(1, #333));
+  background: -moz-linear-gradient(left, #333, #777 50%, #333 100%);
+
+  border-left: 1px solid #b5b5b5;
+  border-right: 1px solid #b5b5b5;
+  -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+	float: left;
+	height: 100%;
+}
+
+.jspArrow
+{
+	background: #50506d;
+	text-indent: -20000px;
+	display: block;
+	cursor: pointer;
+}
+
+.jspArrow.jspDisabled
+{
+	cursor: default;
+	background: #80808d;
+}
+
+.jspVerticalBar .jspArrow
+{
+	height: 16px;
+}
+
+.jspVerticalBar .jspArrowDown{
+
+	  -webkit-border-bottom-left-radius: 4px;
+	  -webkit-border-bottom-right-radius: 4px;
+
+	  -moz-border-radius-bottomleft: 4px;
+	  -moz-border-radius-bottomright: 4px;
+
+
+    border: 1px solid #b5b5b5;
+    -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0, #282828),
+        color-stop(0.50, #353535),
+        color-stop(1, #282828)
+    );
+
+    background: -moz-linear-gradient(top, #282828, #353535 50%, #282828 100%);
+}
+
+.jspVerticalBar .jspArrowUp{
+
+	  -webkit-border-top-left-radius: 4px;
+	  -webkit-border-top-right-radius: 4px;
+
+	  -moz-border-radius-topleft: 4px;
+	  -moz-border-radius-topright: 4px;
+
+
+    border: 1px solid #b5b5b5;
+    -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0, #282828),
+        color-stop(0.50, #353535),
+        color-stop(1, #282828)
+    );
+
+    background: -moz-linear-gradient(top, #282828, #353535 50%, #282828 100%);
+}
+
+.jspHorizontalBar .jspArrowLeft{
+
+	  -webkit-border-top-left-radius: 4px;
+	  -webkit-border-bottom-left-radius: 4px;
+
+	  -moz-border-radius-topleft: 4px;
+	  -moz-border-radius-bottomleft: 4px;
+
+
+    border: 1px solid #b5b5b5;
+    -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #282828),
+        color-stop(0.50, #353535),
+        color-stop(1, #282828)
+    );
+
+    background: -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+}
+
+.jspHorizontalBar .jspArrowRight{
+
+	  -webkit-border-top-right-radius: 4px;
+	  -webkit-border-bottom-right-radius: 4px;
+
+	  -moz-border-radius-topright: 4px;
+	  -moz-border-radius-bottomright: 4px;
+
+
+    border: 1px solid #b5b5b5;
+    -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #282828),
+        color-stop(0.50, #353535),
+        color-stop(1, #282828)
+    );
+
+    background: -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+}
+
+.jspHorizontalBar .jspArrow
+{
+	width: 16px;
+	float: left;
+	height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+	outline: none;
+}
+
+.jspVerticalBar .jspDrag{
+
+  width: 9px;
+  margin-left: 1px;
+	-webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
+  -moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
+
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0, #111),
+        color-stop(0.50, #222),
+        color-stop(1, #111)
+    );
+
+    background: -moz-linear-gradient(left, #111, #222 50%, #111 100%);
+}
+
+
+.jspHorizontalBar .jspDrag{
+
+  height: 9px;
+  margin-top: 1px;
+	-webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
+  -moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #111),
+        color-stop(0.50, #222),
+        color-stop(1, #111)
+    );
+    background: -moz-linear-gradient(top, #111, #222 50%, #111 100%);
+}
+
+.jspCorner
+{
+	background: #eeeef4;
+	float: left;
+	height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner
+{
+	margin: 0 -3px 0 0;
+}
+
+/* ======================= End Scrollbar Styles ========================= */
+
+
+/* ======================= Toolbar Styles ========================= */
+
+.toolbar{
+	width:100%;
+	height:100%;
+	vertical-align: middle;
+	background-color: # #d8d8d8;
+	background-image: url(images/subtoolbar_bg.png);
+  background-repeat: repeat-x;
+  background-position: top center;
+	border-top: none;
+	border-left: none;
+	border-left: none;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #848484
+}
+
+.toolbar-group-label-disabled{
+	color: #777;
+}
+
+.toolbar-group-label{
+	color: #000;
+}
+
+.toolbar-button{
+	background-color: transparent;
+	margin: 1px;
+}
+
+
+
+.toolbar-button-hovering{
+	background-color: #E8E8E8;
+	border: 1px solid #AAA;
+	cursor: pointer;
+	margin: 0px;
+}
+
+.toolbar-toggle-button{
+	margin: 1px;
+}
+
+.toolbar-toggle-button-down{
+	border: 1px inset grey;
+	background-color: #E8E8E8;
+	margin: 0px;
+}
+
+.toolbar-toggle-button-down-hovering{
+	background-color: #E8E8E8;
+	margin: 0px;
+	cursor: pointer;
+}
+
+.toolbar-toggle-button-hovering{
+	border: 1px solid #AAA;
+	background-color: #E8E8E8;
+	cursor: pointer;
+	margin: 0px;
+}
+
+.toolbar-combo-button{
+	margin: 1px;
+	padding-right:14px;
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-image: url("images/comboArrow.png");
+	background-color: transparent;
+}
+
+.toolbar-combo-button-hovering{
+	background-color: #E8E8E8;
+	border: 1px solid #AAA;
+	cursor: pointer;
+	margin: 0px;
+}
+
+.toolbar-button-disabled{
+  background-color: transparent;
+  margin: 1px;
+}
+
+.toolbar-button-disabled-hovering{
+}
+
+.toolbar-combo-button-disabled{
+  margin: 1px;
+  padding-right:14px;
+  background-color: transparent;
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-image: url("images/comboArrow.png");
+}
+
+.toolbar-combo-button-hovering{
+  border: 1px solid #AAA;
+  margin: 0px;
+}
+
+/* ======================= End Toolbar Styles ========================= */
+
+

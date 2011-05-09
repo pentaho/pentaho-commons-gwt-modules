@@ -206,6 +206,11 @@ public class ElementUtils {
     
   }
 
+  public static native void replaceScrollbars(String className)/*-{
+    try{
+      $wnd.$("."+className).jScrollPane({showArrows: true, reinitialiseOnImageLoad: true, autoReinitialise: true, autoReinitialiseDelay: 150});
+    } catch(e){alert(e);}
+  }-*/;
 }
 
 
