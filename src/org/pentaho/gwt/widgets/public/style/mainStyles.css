@@ -402,9 +402,21 @@ img{
 }
 
 .gwt-ScrollTable .headerTable td {
-  font-weight: normal;
-  color: #000000;
-  border-right: 1px solid #848484;
+    font-weight: normal;
+    color: #FFFFFF;
+    border-right: 1px solid #848484;
+    background: #000000;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #AAA),
+        color-stop(0.10, #888),
+        color-stop(0.50, #3f3f3f),
+        color-stop(0.55, #000),
+        color-stop(0.90, #121212)
+    );
+    background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
 }
 
 .gwt-ScrollTable .headerTable-disabled td {
