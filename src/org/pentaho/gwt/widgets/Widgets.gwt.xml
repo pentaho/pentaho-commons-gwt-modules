@@ -7,7 +7,7 @@
       <!-- required for date picker control -->
       <inherits name='com.google.gwt.widgetideas.WidgetIdeas'/>
       <inherits name='com.google.gwt.widgetideas.ScrollTable'/>
-	
+
       <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
 	
       <!-- Inherit the default GWT style sheet.  You can change       -->
@@ -20,10 +20,6 @@
       <!-- Other module inherits                                      -->
 
       <!-- Specify the application specific style sheet.              -->
-      <stylesheet src='Widgets.css' />
-      <stylesheet src='toolbar.css' />
-      <stylesheet src='ScrollTable.css' />
-      
       <!-- Specify the app entry point class.                   -->
 	  <entry-point class='org.pentaho.gwt.widgets.client.WidgetModule'/>
     <entry-point class='org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint'/>
