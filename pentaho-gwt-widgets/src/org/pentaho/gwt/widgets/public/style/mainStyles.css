@@ -413,12 +413,14 @@ img{
 }
 
 .gwt-ScrollTable .dataTable td {
+  font-size:.85em;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .gwt-ScrollTable .headerTable td {
     font-weight: normal;
+    font-size:.85em;
     color: #FFFFFF;
     border-right: 1px solid #848484;
     background: #000000;
@@ -433,6 +435,7 @@ img{
         color-stop(0.90, #121212)
     );
     background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+    overflow:hidden;
 }
 
 .gwt-ScrollTable .headerTable-disabled td {
