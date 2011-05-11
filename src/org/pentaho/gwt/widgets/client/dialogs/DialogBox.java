@@ -47,6 +47,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     this.autoHide = autoHide;
     this.modal = modal;
     addPopupListener(this);
+    setStylePrimaryName("pentaho-dialog");
   }
 
   public boolean onKeyDownPreview(char key, int modifiers) {
