@@ -429,14 +429,9 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
   cursor: wait;
 }
 
-.dialogButtonPanel {
-  border-top: 1px solid #848484;
-  /*background-color: #ececec;*/
+.dialogButtonPanel button{
+  margin-left: 3px
 }
-
-
-
-
 
 /* Begin Wizard Styles ------------------------------------------------------ */
 .pentaho-wizard-deck-panel {
@@ -611,29 +606,67 @@ body{
   white-space: nowrap;
 }
 
+.custom-list-item input[type='text'] {
+  height: normal;
+}
+
 .combo-arrow{
   padding: 4px;
-  background: url("arrow_slice.png");
-  background-repeat: repeat-x;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #AAA),
+      color-stop(0.10, #888),
+      color-stop(0.50, #3f3f3f),
+      color-stop(0.55, #000),
+      color-stop(0.90, #121212)
+  );
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%);
   border: 1px outset gray;
   cursor: pointer;
 }
 
+.combo-arrow div{
+  background-image: url('style/images/scroll_bottom_arrow.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 8px;
+  width: 10px;
+}
+
 .combo-arrow-disabled{
   padding: 4px;
-  background: url("arrow_slice.png");
-  background-repeat: repeat-x;
-  border-left: 1px solid #ececec;
-  border-top: 1px solid #ececec;
-  border-right: 1px solid #808080;
-  border-bottom: 1px solid #808080;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #AAA),
+      color-stop(0.10, #888),
+      color-stop(0.50, #8d8d8d),
+      color-stop(0.55, #727272),
+      color-stop(0.90, #747474)
+  );
+  background: -moz-linear-gradient(#AAA, #BBB 10%, #8d8d8d 50%, #727272 55%, #747474 90%);
+
+  border: 1px outset gray;
+}
+
+
+.combo-arrow-disabled div{
+  background-image: url('style/images/scroll_bottom_arrow.png');
+  background-position: center center;
+  background-repeat: no-repeat;
   cursor: pointer;
+  height: 8px;
+  width: 10px;
 }
 
 .custom-list{
  padding: 0px;
   margin: 0px;
-  border: 1px solid gray;
+  border: 1px solid #333;
   background-color: white;
 }
 
@@ -658,6 +691,7 @@ body{
 
 .custom-list-item{
   background-color: white;
+  font-size: .85em;
 }
 
 .custom-list-disabled-item{
@@ -675,6 +709,7 @@ body{
 .custom-list-item-proxy{
   opacity: 0.85;
   filter: alpha(opacity=85);
+  font-size: .85em;
   border: 1px dashed #999 !important;
   background: transparent;
   z-index:1500 !important;
