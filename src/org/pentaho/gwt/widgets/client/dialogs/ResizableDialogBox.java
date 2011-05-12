@@ -29,6 +29,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.Button;
 
 @SuppressWarnings("deprecation")
 public class ResizableDialogBox {
@@ -59,7 +60,8 @@ public class ResizableDialogBox {
     WindowController windowController = new WindowController(boundaryPanel);
 
     // content wrapper
-    RoundedButton ok = new RoundedButton(okText);
+    Button ok = new Button(okText);
+    ok.setStylePrimaryName("pentaho-button");
     ok.getElement().setAttribute("id", "okButton"); //$NON-NLS-1$ //$NON-NLS-2$
     ok.addClickListener(new ClickListener() {
 
@@ -79,7 +81,8 @@ public class ResizableDialogBox {
     dialogButtonPanel.setSpacing(2);
     dialogButtonPanel.add(ok);
     if (cancelText != null) {
-      RoundedButton cancel = new RoundedButton(cancelText);
+      Button cancel = new Button(cancelText);
+      cancel.setStylePrimaryName("pentaho-button");
       cancel.getElement().setAttribute("id", "cancelButton"); //$NON-NLS-1$ //$NON-NLS-2$
       cancel.addClickListener(new ClickListener() {
 

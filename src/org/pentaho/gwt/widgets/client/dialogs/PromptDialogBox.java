@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.Button;
 
 @SuppressWarnings("deprecation")
 public class PromptDialogBox extends DialogBox {
@@ -38,13 +39,14 @@ public class PromptDialogBox extends DialogBox {
   IDialogValidatorCallback validatorCallback;
   Widget content;
   final FlexTable dialogContent = new FlexTable();
-  protected RoundedButton okButton = null;
-  protected RoundedButton cancelButton = null;
+  protected Button okButton = null;
+  protected Button cancelButton = null;
 
   public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
     super(autoHide, modal);
     setText(title);
-    okButton = new RoundedButton(okText);
+    okButton = new Button(okText);
+    okButton.setStylePrimaryName("pentaho-button");
     okButton.getElement().setAttribute("id", "okButton"); //$NON-NLS-1$ //$NON-NLS-2$
     okButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
@@ -55,7 +57,8 @@ public class PromptDialogBox extends DialogBox {
     dialogButtonPanel.setSpacing(2);
     dialogButtonPanel.add(okButton);
     if (cancelText != null) {
-      cancelButton = new RoundedButton(cancelText);
+      cancelButton = new Button(cancelText);
+      cancelButton.setStylePrimaryName("pentaho-button");
       cancelButton.getElement().setAttribute("id", "cancelButton"); //$NON-NLS-1$ //$NON-NLS-2$
       cancelButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
