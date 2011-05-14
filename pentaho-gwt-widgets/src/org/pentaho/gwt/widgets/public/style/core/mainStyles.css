@@ -250,153 +250,69 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   display: none;
 }
 
-.pentaho-tabBar .pentaho-tabWidget {
-  display: block;
-  float: left;
+.pentaho-tabWidget {
+    display: block;
+    float: left;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, rgba(125, 125, 125, 0.2)),
+        color-stop(0.50, rgba(140, 140, 140, 0.25)),
+        color-stop(1, rgba(0, 0, 0, 0.2))
+    );
 
-  /* Safari/Chrome */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.50, rgba(255, 255, 255, 0.199219)), color-stop(0.50, rgba(0, 0, 0, 0.1)));
-  /* Firefox */
-  background: -moz-linear-gradient(rgba(255, 255, 255, 0.199219) 50%, rgba(0, 0, 0, 0.1) 50%) repeat scroll 0 0 transparent;
-
-  font-size: .85em;
-  color: #ffffff;
-  padding: 3px 15px;
-
-  /* Firefox */
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  /* Safari/Chrome */
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-
-  border-top-right-radius: 5px;
-  border-top-right-radius: 5px;
-  border-top: solid 1px #ffffff;
-  border-left: solid 1px #ffffff;
-  border-right: solid 1px #ffffff;
-  border-bottom: solid 1px #8D8D8D;
-
-  /* Firefox */
-  -moz-box-shadow: black 0px 0px 1px 1px;
-  /* Safari/Chrome */
-  -webkit-box-shadow: black 0px 0px 1px 1px;
-  /* Standard Form */
-  box-shadow: 0 0 0 1px #000;
-
-  white-space: nowrap;
-  text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
-  cursor: pointer;
-  margin-right: 5px;
+    background: -moz-linear-gradient(rgba(125, 125, 125, 0.2) 0%, rgba(140, 140, 140, 0.25) 50%, rgba(0,0,0,0.2) 100%);
+    color: black;
+    padding: 4px 15px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top: solid 1px #000;
+    border-left: solid 1px #000;
+    border-right: solid 1px #000;
+    border-bottom: none;
+    -moz-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
+    -webkit-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
+     box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
+    cursor: pointer;
+    margin-left:5px;
 }
 
-.pentaho-tabBar .pentaho-tabWidgetLabel {
-  font: normal 12px tahoma, arial, helvetica;
+.pentaho-tabWidgetLabel {
   margin: 0px;
   padding-bottom: 0px;
-}
+  font-size: 0.85em;
+  text-shadow: 0px 0px 1px rgba(000,000,000,.3);
+  white-space:nowrap;
+  font-size: 9pt;
+ }
 
-.pentaho-tabBar .pentaho-tabWidget-selected {
-  display: block;
-  float: left;
-  background: #000000;
-  /* Safari/Chrome */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
 
-  /* Firefox */
-  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+.pentaho-tabWidget-selected {
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #333333),
+      color-stop(0.10, #454545),
+      color-stop(0.50, #3f3f3f),
+      color-stop(0.55, #000),
+      color-stop(0.90, #121212)
+  );
 
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: .85em;
+  background: -moz-linear-gradient(#333333, #454545 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+
   color: #ffffff;
-  padding: 3px 15px;
-  /* Firefox */
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  /* Safari/Chrome */
-  -webkit-border-top-left-radius: 5px;
-  -webkit-border-top-right-radius: 5px;
-  /* Standard Form */
-  border-top-right-radius: 5px;
-  border-top-right-radius: 5px;
-  border-left: solid 1px #ffffff;
-  border-right: solid 1px #ffffff;
-  border-top: solid 1px #ffffff;
-  border-bottom: none;/* solid transparent;*/
-
-  /* Firefox */
-  -moz-box-shadow: black 0px 0px 3px 1px;
-  /* Safari/Chrome */
-  -webkit-box-shadow: black 0px 0px 3px 1px;
-  /* Standard Form */
-  box-shadow: 0 0 3px 1px #000;
-  white-space: nowrap;
-  text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
-  cursor: pointer;
-  margin-right: 5px;
 }
 
-.pentaho-tabPanel .gwt-TabPanelBottom {
-  background-color: #e2e2e2;
-  border-top: none;
-  border-right: 1px solid #8d8d8d;
-  border-left: 1px solid #8d8d8d;
-  border-bottom: 1px solid #8d8d8d;
-  padding: 0px;
-}
-
-.pentaho-tabBar {
-}
-
-.pentaho-tabBar .gwt-TabBarFirst-wrapper {
-  background-color: none;
-  border-bottom: 1px solid #8D8D8D;
-}
-
-.pentaho-tabBar .gwt-TabBarFirst {
-  background-color: none;
-}
-
-.pentaho-tabBar .gwt-TabBarRest {
-  background-color: none;
-
-}
-
-.pentaho-tabBar .gwt-TabBarRest-wrapper {
-  border-bottom: 1px solid #8D8D8D;
-}
-
-.pentaho-tabBar .tab-spacer {
-  background-color: none;
-  height: 4px;
-  width: 4px;
-}
-
-.pentaho-tabBar .tab-spacer-wrapper {
-  border-bottom: 1px solid #8D8D8D;
-  display: none;
-}
-
-.pentaho-tabBar .gwt-TabBarItem {
-/*background-color: #e2e2e2;*/
-  border: none none 1px solid #8d8d8d none;
-  margin-right: 2px;
-  cursor: hand;
-  height: 24px;
-  margin: 0px;
-  border: none none 1px solid black none;
-  padding: 0px;
-}
-
-.pentaho-tabBar .gwt-TabBarItem-selected {
-/*background-color: #e2e2e2;*/
-  color: black;
-  border: none;
-  cursor: pointer;
-  height: 24px;
-  margin: 0px;
-  font-weight: normal;
-  padding: 0px;
+.pentaho-tabPanel{
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  border-top: 3px solid rgba(0, 0, 0, 0.7);
+  clear:both;
 }
 
 /* ======================= GWT Scroll Table =========================== */
