@@ -7,6 +7,12 @@ which java class/code the style is associated with */
 /* begin recurrence dialog ------------------------------------------------------*/
 
 
+/* killing some intermediate styles for tabs that aren't desired */
+.gwt-TabBarFirst-wrapper{
+  display: none;
+}
+
+
 .schedule-editor-caption-panel {
   margin-top: 6px;
   padding: 5px;
