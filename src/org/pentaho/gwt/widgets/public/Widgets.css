@@ -634,7 +634,7 @@ body{
 }
 
 .combo-arrow div{
-  background-image: url('style/images/scroll_bottom_arrow.png');
+  background-image: url('style/core/images/scroll_bottom_arrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -661,7 +661,7 @@ body{
 
 
 .combo-arrow-disabled div{
-  background-image: url('style/images/scroll_bottom_arrow.png');
+  background-image: url('style/core/images/scroll_bottom_arrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -877,3 +877,120 @@ input[type=password]:focus {
 }
 
 /* GWT Date Picker - END */
+
+/* ======================= GWT Scroll Table =========================== */
+.headerTable >tbody > tr > td {
+  padding: 2px;
+}
+
+.gwt-ScrollTable {
+  border: 1px solid #848484;
+  overflow: hidden;
+}
+
+.gwt-ScrollTable .headerWrapper {
+  background: #d2d2d2 repeat-x scroll left bottom;
+  padding-right: 0px;
+}
+
+.gwt-ScrollTable .footerWrapper {
+  background: #858585;
+  border-top: 1px solid #848484;
+}
+
+.gwt-ScrollTable .dataWrapper {
+  width: 100% !important;
+  overflow-y: scroll !important;
+}
+
+.gwt-ScrollTable .dataTable td {
+  font-size: .85em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.gwt-ScrollTable .headerTable td {
+  font-weight: normal;
+  font-size: .85em;
+  color: #FFFFFF;
+  border-right: 1px solid #848484;
+  background: #000000;
+  /* Safari/Chrome */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
+  /* Firefox */
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+  overflow: hidden;
+}
+
+.gwt-ScrollTable .headerTable-disabled td {
+  font-weight: normal;
+  color: #000000;
+  border-right: 0px;
+}
+
+.gwt-ScrollTable .dataTable tr {
+  background: white;
+}
+
+.gwt-ScrollTable .dataTable-disabled tr {
+  background: white;
+}
+
+.gwt-ScrollTable .dataTable td {
+  border-bottom: 1px solid #BEBEBE;
+  border-right: 1px solid #BEBEBE;
+  padding: 2px;
+}
+
+.gwt-ScrollTable .dataTable-disabled td {
+  border-bottom: 0px;
+}
+
+.gwt-ScrollTable .dataTable tr.hovering {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ScrollTable .dataTable-disabled tr.hovering {
+  cursor: default;
+}
+
+.gwt-ScrollTable .dataTable td.hovering {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.gwt-ScrollTable .dataTable-disabled td.hovering {
+  cursor: default;
+}
+
+.gwt-ScrollTable .dataTable tr.selected {
+  background: #1dbeff none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .dataTable tr:hover {
+  background: #ceedfa none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .pagingOptions {
+  background: #e8e8e8 none repeat scroll 0% 0%;
+  border-right: 1px solid #848484;
+  border-top: 1px solid #848484;
+  padding: 1px 0px;
+}
+
+.gwt-ScrollTable .pagingOptions .errorLabel {
+  color: red;
+}
+
+.gwt-CellEditor {
+  background: white none repeat scroll 0% 0%;
+  border: 3px solid #BEBEBE;
+  padding: 4px;
+}
+
+.gwt-CellEditor td {
+  padding: 4px;
+}
+
+/* ======================= GWT Scroll Table =========================== */
