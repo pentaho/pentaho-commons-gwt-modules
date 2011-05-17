@@ -35,7 +35,9 @@ img {
 label {
 font-size: .85em;
 }
-
+.pentaho-page-background {
+  background: url('images/bg_blue_gray_perf.png') repeat-x top left;
+}
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
 .pentaho-button {
   /* fallback color */
