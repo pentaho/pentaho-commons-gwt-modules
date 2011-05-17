@@ -19,7 +19,7 @@ function includeResources(requestedResourceCollection, actualResourceTree, root)
     var baseName = requestedResourceCollection[i];
     var selectedTheme = active_theme;
     
-    if(! actualResourceTree[selectedTheme] || actualResourceTree[selectedTheme].indexOf(baseName) < 0){
+    if(! actualResourceTree[selectedTheme] || jQuery.inArray(baseName, actualResourceTree[selectedTheme]) < 0){
       selectedTheme = "core";
     }
   
