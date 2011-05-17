@@ -278,6 +278,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     -moz-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
     -webkit-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
      box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
+     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#66FFFFFF', endColorstr = '#33FFFFFF', GradientType=0);
     cursor: pointer;
     margin-left:5px;
 }
@@ -304,6 +305,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   );
 
   background: -moz-linear-gradient(#333333, #454545 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#5555555', endColorstr = '#121212', GradientType=0);
 
   color: #ffffff;
 }
@@ -338,6 +340,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   width: 16px;
   height: 100%;
   background: transparent;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#666666', endColorstr = '#666666', GradientType=1);
 
 }
 
@@ -348,14 +351,15 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   width: 100%;
   height: 16px;
   background: transparent;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#666666', endColorstr = '#666666', GradientType=1);
 }
 
-.jspVerticalBar *,
+/*.jspVerticalBar *,
 .jspHorizontalBar * {
   margin: 0;
   padding: 0;
 }
-
+*/
 .jspCap {
   display: none;
 }
@@ -386,7 +390,8 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   border-bottom: 1px solid #b5b5b5;
   /* Safari/Chrome */
   -webkit-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
-
+  
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#777777', endColorstr = '#999999');
 }
 
 .jspVerticalBar .jspTrack {
@@ -403,6 +408,8 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
+  
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7777777', endColorstr = '#9999999', GradientType=1);
 }
 
 .jspHorizontalBar .jspTrack,
@@ -412,7 +419,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .jspArrow {
-  background: #50506d;
   text-indent: -20000px;
   display: block;
   cursor: pointer;
@@ -420,7 +426,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .jspArrow.jspDisabled {
   cursor: default;
-  background: #80808d;
 }
 
 .jspVerticalBar .jspArrow {
@@ -468,7 +473,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
-
+  
   background: url("images/scroll_top_arrow.png") center center no-repeat;
   /* Safari/Chrome */
   background: url("images/scroll_top_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
@@ -494,11 +499,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
-
+  
+  background: url("images/scroll_left_arrow.png") center center no-repeat;
   /* Safari/Chrome */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("images/scroll_left_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+  background: url("images/scroll_left_arrow.png") center center no-repeat, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
 }
 
 .jspHorizontalBar .jspArrowRight {
@@ -523,17 +529,18 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
-
+  
+  background: url("images/scroll_right_arrow.png") center center no-repeat;
   /* Safari/Chrome */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("images/scroll_right_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+  background: url("images/scroll_right_arrow.png") center center no-repeat, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
 }
 
 .jspHorizontalBar .jspArrow {
   width: 16px;
   float: left;
-  height: 100%;
+  height: 16px;
 }
 
 .jspVerticalBar .jspArrow:focus {
@@ -542,8 +549,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .jspVerticalBar .jspDrag {
 
-  width: 9px;
-  margin-left: 1px;
+  width: 8px;
   /* Safari/Chrome */
   -webkit-border-radius: 5px;
   /* Firefox */
@@ -563,12 +569,13 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background: url("images/scroll_grabber.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
   /* Firefox */
   background: url("images/scroll_grabber.png") center center no-repeat, -moz-linear-gradient(left, #111, #222 50%, #111 100%);
+  
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#777777', endColorstr = '#5555555', GradientType=1);
 }
 
 .jspHorizontalBar .jspDrag {
 
-  height: 9px;
-  margin-top: 1px;
+  height: 8px;
   /* Safari/Chrome */
   -webkit-border-radius: 5px;
   /* Firefox */
@@ -585,10 +592,20 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
 
   /* Firefox */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
-  /* Safari/Chrome */
-  background: -moz-linear-gradient(top, #111, #222 50%, #111 100%);
+  background: url("images/scroll_grabber_horz.png") center center no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
+  /* Safari/Chrome */ 
+  background: url("images/scroll_grabber_horz.png") center center no-repeat,  -moz-linear-gradient(top, #111, #222 50%, #111 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7777777', endColorstr = '#555555');
 }
+
+.jspHorizontalBar .jspTrack{
+  padding-top: 2px;
+}
+
+.jspVerticalBar .jspTrack{
+  padding-left: 2px;
+}
+
 
 .jspCorner {
   background: #eeeef4;
