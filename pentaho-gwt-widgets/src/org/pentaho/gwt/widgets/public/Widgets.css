@@ -868,7 +868,7 @@ td.datePickerMonth {
 }
 
 .gwt-ScrollTable .dataWrapper {
-  overflow-y: scroll !important;
+  overflow: auto;
 }
 
 input[type=text]:focus,
@@ -900,7 +900,7 @@ input[type=password]:focus {
 
 .gwt-ScrollTable .dataWrapper {
   width: 100% !important;
-  overflow-y: scroll !important;
+  overflow: auto;
 }
 
 .gwt-ScrollTable .dataTable td {

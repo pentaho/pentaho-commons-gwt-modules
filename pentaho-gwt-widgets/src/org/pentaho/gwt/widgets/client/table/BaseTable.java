@@ -27,6 +27,7 @@ import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
@@ -487,7 +488,7 @@ public class BaseTable extends Composite {
 
     // Fix for table headers not scrolling in IE. Giving the DIV an ID makes it work. This is all related to the fact
     // that we're running in Quirks-mode in IE.
-
+    ElementUtils.replaceScrollbars("dataWrapper");
   }
 
   /**
