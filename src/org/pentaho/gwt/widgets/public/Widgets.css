@@ -966,11 +966,11 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .dataTable tr.selected {
-  background: #1dbeff none repeat scroll 0% 0%;
+  background: #5ed95e none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
-  background: #ceedfa none repeat scroll 0% 0%;
+  background: #a9eac9 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .pagingOptions {
