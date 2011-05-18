@@ -296,7 +296,7 @@ which java class/code the style is associated with */
 .gwt-MenuBar-horizontal {
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem {
-  color: black;
+  color: white;
   padding: 3px 6px 5px;
   vertical-align: bottom;
   border: 1px;
