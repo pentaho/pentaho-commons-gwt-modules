@@ -77,7 +77,6 @@ which java class/code the style is associated with */
 }
 
 .popupContent {
-  font-family: Tahoma, Ariel, Helvetica, san-serif;
   font-color: #000000;
 }
 
@@ -95,7 +94,6 @@ which java class/code the style is associated with */
 
 .blue-month-line {
   background-color: #D2D2D2;
-  font-family: Tahoma, Ariel, Helvetica, san-serif;
   font-color: #000000;
   color: #000000;
 }
@@ -157,7 +155,6 @@ which java class/code the style is associated with */
 
 .tooltip-label{
   color: #444;
-  font-family: Tahoma, Arial, sans-serif;
   font-size: .8em;
 }
 
@@ -167,7 +164,6 @@ which java class/code the style is associated with */
 }
 
 .roundedbutton-label{
-  font-family: Tahoma, Arial, sans-serif;
   font-size:.8em;
   line-height: 24px;
   color: #000
@@ -194,7 +190,6 @@ which java class/code the style is associated with */
 }
 
 .roundedbutton-label-over{
-  font-family: Tahoma, Arial, sans-serif;
   font-size:.8em;
   line-height: 24px;
   color: #525252
@@ -217,7 +212,6 @@ which java class/code the style is associated with */
 }
 
 .roundedbutton-label-disabled{
-  font-family: Tahoma, Arial, sans-serif;
   font-size:.8em;
   line-height: 24px;
   color: #525252
@@ -482,7 +476,6 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
 /* End Wizard Styles -------------------------------------------------------- */
 
 body{
-	font-family:Tahoma,Arial,Helvetica,sans-serif;
 }
 .nowrap{
   white-space: nowrap;
@@ -904,7 +897,7 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .dataTable td {
-  font-size: .85em;
+/*  font-size: .85em; */
   overflow: hidden;
   white-space: nowrap;
 }
