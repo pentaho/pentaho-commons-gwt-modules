@@ -47,9 +47,6 @@ font-size: .85em;
   /* Firefox */
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
 
-  /* IE 7-9 */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#666666', endColorstr = '#000000');
-
   font-size: .75em;
   color: #ffffff;
   padding: 5px 14px;
@@ -73,6 +70,9 @@ font-size: .85em;
   white-space: nowrap;
   text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
   cursor: pointer;
+}
+.IE .pentaho-button {
+  background: url('images/bg_title.png') repeat-x;
 }
 
 /* Applies the green glow to buttons */
@@ -126,11 +126,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
   background: rgba(255, 255, 255, 0.5);
   padding: 8px 8px 0px 8px;
-  /* IE - simulated partialy transparent background with a gradient */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#77ffffff', endColorstr = '#77ffffff');
-  /* IE fix to get filter to render */
-  zoom: 1;
-
+}
+.IE .pentaho-dialog {
+  background: url('images/wt_transparent.png') repeat;
 }
 /* Secondary style applied to pentaho-dialog elements to add a continuous 8px padding. */
 .pentaho-dialog-buttonless {
@@ -161,11 +159,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* bottom border supplied by .dialog-content */
   text-align: left;
   text-shadow: 0px 0px 2px black;
-  /* IE 7-9 */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF121212');
-
-  /* IE fix to get filter to render */
-  zoom: 1;
+}
+.IE .pentaho-dialog .Caption {
+  background: url('images/bg_title.png') repeat-x;
 }
 
 .pentaho-dialog .button-panel{
@@ -284,9 +280,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     -moz-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
     -webkit-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
      box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
-     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#66FFFFFF', endColorstr = '#33FFFFFF', GradientType=0);
     cursor: pointer;
     margin-left:5px;
+}
+.IE .pentaho-tabWidget {
+  /*background: url('images/bg_title.png') repeat-x;*/
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -312,11 +310,13 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   );
 
   background: -moz-linear-gradient(#333333, #454545 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#5555555', endColorstr = '#121212', GradientType=0);
 
   color: #ffffff;
 }
 
+.IE .pentaho-tabWidget-selected {
+  background: url('images/bg_title.png') repeat-x;
+}
 
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
   margin: 0px;
@@ -742,10 +742,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background: -webkit-linear-gradient(top, #1a1a1a 0%,#333333 50%,#000000 51%,#000000 100%); /* Chrome10+,Safari5.1+ */
   background: -o-linear-gradient(top, #1a1a1a 0%,#333333 50%,#000000 51%,#000000 100%); /* Opera11.10+ */
   background: -ms-linear-gradient(top, #1a1a1a 0%,#333333 50%,#000000 51%,#000000 100%); /* IE10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF000000');
   background: linear-gradient(top, #1a1a1a 0%,#333333 50%,#000000 51%,#000000 100%); /* W3C */
   zoom: 1;
 
+}
+.IE .pentaho-titled-toolbar {
+  background: url('images/bg_title.png') repeat-x;
 }
 
 .pentaho-titled-toolbar .pentaho-titled-toolbar-label {
@@ -763,9 +765,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background-color: #000;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
-
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF121212');
-  zoom: 1;
+}
+.IE .pentaho-gradient {
+  background: url('images/bg_title.png') repeat-x;
 }
 
 .pentaho-rounded-panel {
@@ -778,8 +780,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 6px 1px #000000;
   background: rgba(255, 255, 255, 0.2);
   padding: 4px 4px 4px 4px;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#77ffffff', endColorstr = '#77ffffff');
-  zoom: 1;
+}
+.IE .pentaho-rounded-panel {
+  background: url('images/wt_transparent.png') repeat;
 }
 
 .pentaho-shine {
@@ -789,10 +792,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   
   background: -moz-linear-gradient(rgba(170, 170, 170, 0.34), rgba(135, 135, 135, 0.34) 10%, rgba(50, 50, 50, 0.04) 50%, rgba(0, 0, 0, 0.25) 52%, rgba(0, 0, 0, 0.25) 80%, rgba(10, 10, 10, 0.04) 100%) repeat scroll 0 0 transparent;
 
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF121212');
-  zoom: 1;
 }
-
+.IE .pentaho-shine {
+  background: url('images/wt_transparent.png') repeat;
+}
 .pentaho-background {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -809,11 +812,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background-color: #444;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
-
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF121212');
-  zoom: 1;
 }
-
+.IE .pentaho-tooltip-background {
+  background: url('images/wt_transparent.png') repeat;
+}
 .pentaho-tooltip-contents {
   background-color: #dddddd;
   padding: 4px;
