@@ -611,6 +611,7 @@ body{
 
 .combo-arrow{
   padding: 4px;
+  background: #888;
   background: -webkit-gradient(
       linear,
       left top,
@@ -624,6 +625,10 @@ body{
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%);
   border: 1px outset gray;
   cursor: pointer;
+  font-size:0px;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#888888', endColorstr = '#121212');
+  zoom:1;
 }
 
 .combo-arrow div{
@@ -633,6 +638,7 @@ body{
   cursor: pointer;
   height: 8px;
   width: 10px;
+  font-size:0px;
 }
 
 .combo-arrow-disabled{
@@ -650,6 +656,7 @@ body{
   background: -moz-linear-gradient(#AAA, #BBB 10%, #8d8d8d 50%, #727272 55%, #747474 90%);
 
   border: 1px outset gray;
+  font-size:0px;
 }
 
 
@@ -660,6 +667,7 @@ body{
   cursor: pointer;
   height: 8px;
   width: 10px;
+  font-size:0px;
 }
 
 .custom-list{
