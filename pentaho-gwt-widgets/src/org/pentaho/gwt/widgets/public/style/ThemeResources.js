@@ -7,6 +7,14 @@ if(window.location.href.indexOf("theme=") > -1){
   active_theme = window.location.href.substring(startIdx, endIdx);
 }
 
+var originalOnLoad = window.onload;
+window.onload = function () {
+  if (originalOnLoad) {
+    originalOnLoad();
+  }
+  customizeThemeStyling();
+}
+
 includeResources(phoConfig.theme_resources.core, core_theme_tree, PENTAHO_STYLE_ROOT);
 includeResources(phoConfig.theme_resources.local, module_theme_tree, MODULE_STYLE_ROOT);
 
@@ -37,5 +45,12 @@ function includeResources(requestedResourceCollection, actualResourceTree, root)
 
       docHead.appendChild(styleTag);
     }
+  }
+}
+
+function customizeThemeStyling() {
+  // if it is IE, inject an IE class to the body tag to allow for custom IE css by --> .IE .myclass {}
+  if (document.all) {
+    document.getElementsByTagName("body")[0].className += " IE";
   }
 }
