@@ -375,7 +375,6 @@ public class BaseTable extends Composite {
     }
 //    scrollTable.fillWidth();
     scrollingFixInPlace = false; // Mark the need to "fix" IE headerTableWrapper
-    dataGrid.getParent().addStyleName("scroll-panel");
   }
 
   /**
