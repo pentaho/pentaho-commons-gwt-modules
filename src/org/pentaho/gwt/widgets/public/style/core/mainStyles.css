@@ -767,3 +767,59 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#77ffffff', endColorstr = '#77ffffff');
   zoom: 1;
 }
+
+.pentaho-shine {
+  background-color: none;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(170, 170, 170, 0.25)), color-stop(0.10, rgba(136, 136, 136, 0.25)), color-stop(0.50, rgba(63, 63, 63, 0.25)), color-stop(0.55, rgba(0, 0, 0, 0.25)), color-stop(0.90, rgba(18, 18, 18, 0.25)));
+  background: -moz-linear-gradient(rgba(170, 170, 170, 0.25), rgba(136, 136, 136, 0.25) 10%, rgba(63, 63, 63, 0.25) 50%, rgba(0, 0, 0, 0.25) 55%, rgba(18, 18, 18, 0.25) 90%) repeat scroll 0 0 transparent;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF121212');
+  zoom: 1;
+}
+
+.pentaho-background {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pentaho-padding-sm {
+    padding: 4px;
+}
+
+.pentaho-padding-lg {
+    padding: 8px;
+}
+
+.pentaho-tooltip-background {
+  background-color: #444;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FFAAAAAA', endColorstr = '#FF121212');
+  zoom: 1;
+}
+
+.pentaho-tooltip-contents {
+  background-color: #dddddd;
+  padding: 4px;
+  border: 1px solid #808080;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.pentaho-shadow {
+  -moz-box-shadow: 2px 2px 6px 1px #000000;
+  -webkit-box-shadow: 2px 2px 6px 1px #000000;
+  box-shadow: 2px 2px 6px 1px #000000;
+}
+
+.pentaho-rounded-panel2 {
+  border: 1px solid rgba(255, 255, 255, 0.59375);
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+}
+
+.contrast-color {
+    white;
+}
