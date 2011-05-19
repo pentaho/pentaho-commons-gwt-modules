@@ -923,6 +923,10 @@ input[type=password]:focus {
   overflow: hidden;
 }
 
+.IE .gwt-ScrollTable .headerTable td {
+  background: url('style/images/header_20px.png') repeat-x;
+}
+
 .gwt-ScrollTable .headerTable-disabled td {
   font-weight: normal;
   color: #000000;
