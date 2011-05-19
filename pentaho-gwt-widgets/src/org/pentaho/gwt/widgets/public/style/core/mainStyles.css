@@ -868,5 +868,25 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .contrast-color {
-    white;
+    color: white;
+}
+
+.contrast-background {
+    background-color: #222222;
+}
+
+.section-header-outer {
+    padding: 1px;
+    background-color: #222222
+}
+
+.section-header-middle {
+    padding: 1px;
+}
+
+.section-header-inner {
+    color: white;
+    border: 1px solid #888888; 
+    vertical-align:middle;
+    padding-left: 4px;
 }
