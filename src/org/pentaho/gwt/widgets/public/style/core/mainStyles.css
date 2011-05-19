@@ -19,7 +19,7 @@ html, body {
   margin: 0px;
   padding: 0px;
   font-family: Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 div {
@@ -284,7 +284,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     margin-left:5px;
 }
 .IE .pentaho-tabWidget {
-  /*background: url('images/bg_title.png') repeat-x;*/
+  background: url('images/tab_off.png') repeat-x;
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -315,7 +315,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .IE .pentaho-tabWidget-selected {
-  background: url('images/bg_title.png') repeat-x;
+  background: url('images/tab_on.png') repeat-x;
 }
 
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
