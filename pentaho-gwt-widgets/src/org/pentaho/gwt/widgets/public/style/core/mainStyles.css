@@ -867,6 +867,21 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   border-radius: 0px 0px 7px 7px;
 }
 
+.pentaho-shadow-right-side {
+  -moz-box-shadow: 4px 3px 6px 0px #000000;
+  -webkit-box-shadow: 4px 3px 6px 0px #000000;
+  box-shadow: 4px 3px 6px 0px #000000;
+}
+
+.pentaho-rounded-panel-right {
+  border-top: 1px solid rgba(255, 255, 255, 0.59375);
+  border-right: 1px solid rgba(255, 255, 255, 0.59375);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.59375);
+  -moz-border-radius: 0px 7px 7px 0px;
+  -webkit-border-radius: 0px 7px 7px 0px;
+  border-radius: 0px 7px 7px 0px; 
+}
+
 .contrast-color {
     color: white;
 }
