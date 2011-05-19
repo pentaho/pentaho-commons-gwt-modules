@@ -427,9 +427,12 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     // we only care about this if the user has specified a visible row count and no heihgt
     if(height == null){
-      this.listScrollPanel.setHeight((this.visible * (maxHeight + spacing)) + "px"); //$NON-NLS-1$
+      int h = (this.visible * (maxHeight + spacing));
+      this.listScrollPanel.setHeight(h + "px"); //$NON-NLS-1$
+      fPanel.setHeight(h+"px");
     } else {
       this.listScrollPanel.setHeight(height);
+      fPanel.setHeight(height);
     }
     if(width == null){
       this.fPanel.setWidth(maxWidth + 40 + "px"); //20 is scrollbar space //$NON-NLS-1$
