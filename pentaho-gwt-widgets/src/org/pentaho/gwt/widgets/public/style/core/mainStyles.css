@@ -128,6 +128,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   padding: 8px 8px 0px 8px;
 }
 .IE .pentaho-dialog {
+  border: 1px solid #000000;
   background: url('images/wt_transparent.png') repeat;
 }
 /* Secondary style applied to pentaho-dialog elements to add a continuous 8px padding. */
