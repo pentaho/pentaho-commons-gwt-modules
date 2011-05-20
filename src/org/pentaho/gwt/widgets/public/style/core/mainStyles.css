@@ -72,7 +72,8 @@ font-size: .85em;
   cursor: pointer;
 }
 .IE .pentaho-button {
-  background: url('images/bg_title.png') repeat-x;
+  height: 30px;
+  background: url('images/bg_btn.png') repeat-x;
 }
 
 /* Applies the green glow to buttons */
@@ -81,12 +82,18 @@ font-size: .85em;
   -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(129, 219, 17, 1) inset;
   box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(129, 219, 17, 1) inset;
 }
+.IE .pentaho-button:hover {
+  background: url('images/bg_btn_hover.png') repeat-x;
+}
 
 /* Just lightening it up a bit */
 .pentaho-button:active {
   background: -moz-linear-gradient(#C8C8C8, #AAA 10%, #666 50%, #353535 55%, #3F3F3F 90%) repeat scroll 0 0 transparent;
 
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C8C8C8), color-stop(0.10, #AAA), color-stop(0.50, #666), color-stop(0.55, #353535), color-stop(0.90, #3F3F3F));
+}
+.IE .pentaho-button:active {
+  background: url('images/bg_btn_active.png') repeat-x;
 }
 
 /* lighter gray with white text */
@@ -101,6 +108,9 @@ font-size: .85em;
   -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.2) inset;
   box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.2) inset;
   text-shadow: 0px 0px 2px rgba(000, 000, 000, 4);
+}
+.IE .pentaho-button[disabled] {
+  background: url('images/bg_btn_disabled.png') repeat-x;
 }
 
 /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
