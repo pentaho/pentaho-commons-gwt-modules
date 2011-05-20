@@ -357,7 +357,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   height: 100%;
   background: transparent;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#666666', endColorstr = '#666666', GradientType=1);
-
+  font-size: 0px;
 }
 
 .jspHorizontalBar {
@@ -368,6 +368,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   height: 16px;
   background: transparent;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#666666', endColorstr = '#666666', GradientType=1);
+  font-size: 0px;
 }
 
 /*.jspVerticalBar *,
@@ -466,7 +467,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
 
-  background: url("images/scroll_bottom_arrow.png") center center no-repeat;
+  background: url("images/scroll_bottom_arrow.png") no-repeat center center;
   /* Safari/Chrome */
   background: url("images/scroll_bottom_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
@@ -490,11 +491,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   
-  background: url("images/scroll_top_arrow.png") center center no-repeat;
+  background: url("images/scroll_top_arrow.png") no-repeat center center;
   /* Safari/Chrome */
-  background: url("images/scroll_top_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("images/scroll_top_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_top_arrow.png") center center no-repeat, -moz-linear-gradient(top, #282828, #353535 50%, #282828 100%);
+  background: url("images/scroll_top_arrow.png") no-repeat center center, -moz-linear-gradient(top, #282828, #353535 50%, #282828 100%);
 
 }
 
@@ -516,11 +517,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   
-  background: url("images/scroll_left_arrow.png") center center no-repeat;
+  background: url("images/scroll_left_arrow.png") no-repeat center center;
   /* Safari/Chrome */
-  background: url("images/scroll_left_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("images/scroll_left_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_left_arrow.png") center center no-repeat, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+  background: url("images/scroll_left_arrow.png") no-repeat center center, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
 }
 
 .jspHorizontalBar .jspArrowRight {
@@ -546,11 +547,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
   
-  background: url("images/scroll_right_arrow.png") center center no-repeat;
+  background: url("images/scroll_right_arrow.png") no-repeat center center;  
+  background-repeat: no-repeat;
   /* Safari/Chrome */
-  background: url("images/scroll_right_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("images/scroll_right_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_right_arrow.png") center center no-repeat, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+  background: url("images/scroll_right_arrow.png") no-repeat center center, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
 }
 
 .jspHorizontalBar .jspArrow {
@@ -582,9 +584,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
 
   /* Safari/Chrome */
-  background: url("images/scroll_grabber.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
+  background: url("images/scroll_grabber.png") no-repeat center center, -webkit-gradient(linear, left top, right top, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
   /* Firefox */
-  background: url("images/scroll_grabber.png") center center no-repeat, -moz-linear-gradient(left, #111, #222 50%, #111 100%);
+  background: url("images/scroll_grabber.png") no-repeat center center, -moz-linear-gradient(left, #111, #222 50%, #111 100%);
   
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#777777', endColorstr = '#5555555', GradientType=1);
 }
@@ -608,9 +610,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
 
   /* Firefox */
-  background: url("images/scroll_grabber_horz.png") center center no-repeat, -webkit-gradient(linear, left top, left bottom, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
+  background: url("images/scroll_grabber_horz.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
   /* Safari/Chrome */ 
-  background: url("images/scroll_grabber_horz.png") center center no-repeat,  -moz-linear-gradient(top, #111, #222 50%, #111 100%);
+  background: url("images/scroll_grabber_horz.png")  no-repeat center center,  -moz-linear-gradient(top, #111, #222 50%, #111 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7777777', endColorstr = '#555555');
 }
 
@@ -879,7 +881,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   border-bottom: 1px solid rgba(255, 255, 255, 0.59375);
   -moz-border-radius: 0px 7px 7px 0px;
   -webkit-border-radius: 0px 7px 7px 0px;
-  border-radius: 0px 7px 7px 0px; 
+  border-radius: 0px 7px 7px 0px;
 }
 
 .contrast-color {
@@ -901,7 +903,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .section-header-inner {
     color: white;
-    border: 1px solid #888888; 
+    border: 1px solid #888888;
     vertical-align:middle;
     padding-left: 4px;
 }
