@@ -884,6 +884,14 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   border-radius: 0px 7px 7px 0px;
 }
 
+.pentaho-rounded-panel-top-right {
+  border-top: 1px solid rgba(255, 255, 255, 0.59375);
+  border-right: 1px solid rgba(255, 255, 255, 0.59375);
+  -moz-border-radius: 0px 7px 0px 0px;
+  -webkit-border-radius: 0px 7px 0px 0px;
+  border-radius: 0px 7px 0px 0px;
+}
+
 .contrast-color {
     color: white;
 }
