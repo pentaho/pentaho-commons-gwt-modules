@@ -843,16 +843,16 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-shadow {
-  -moz-box-shadow: 2px 2px 6px 1px #000000;
-  -webkit-box-shadow: 2px 2px 6px 1px #000000;
-  box-shadow: 2px 2px 6px 1px #000000;
+  -moz-box-shadow: 2px 2px 6px 1px #848484;
+  -webkit-box-shadow: 2px 2px 6px 1px #848484;
+  box-shadow: 2px 2px 6px 1px #848484;
 }
 
 
 .pentaho-shadow-no-offset {
-  -moz-box-shadow: 1px 1px 5px 0px #000000;
-  -webkit-box-shadow: 1px 1px 5px 0px #000000;
-  box-shadow: 1px 1px 5px 0px #000000;
+  -moz-box-shadow: 1px 1px 5px 0px #848484;
+  -webkit-box-shadow: 1px 1px 5px 0px #848484;
+  box-shadow: 1px 1px 5px 0px #848484;
 }
 
 .pentaho-rounded-panel2 {
