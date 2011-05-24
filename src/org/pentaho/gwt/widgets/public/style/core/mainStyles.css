@@ -179,6 +179,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   padding:3px 0px 2px 0px; width: 100%; 
 }
 
+.pentaho-dialog .button-panel .pentaho-button{
+  margin-left: 5px;
+}
+
 .dialog-content {
   border: 1px solid black;
   background: #d4d6db;
