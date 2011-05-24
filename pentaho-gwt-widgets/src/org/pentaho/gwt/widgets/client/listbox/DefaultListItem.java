@@ -1,13 +1,12 @@
 package org.pentaho.gwt.widgets.client.listbox;
 
-import com.gargoylesoftware.htmlunit.javascript.regexp.HtmlUnitRegExpProxy;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.*;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 /**
@@ -18,6 +17,8 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
  */
 public class DefaultListItem extends HorizontalPanel implements ListItem<Object> {
 
+  private static final String DROP_INVALID_PNG = "drop_invalid.png";
+  private static final String DROP_VALID_PNG = "drop_valid.png";
   private String text = ""; //$NON-NLS-1$
   private Widget widget;
   private Widget dropWidget;
@@ -235,7 +236,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
 
   private void makeDraggable(){
     clear();
-    dragIndicator = new Image(GWT.getModuleBaseURL()+"drop_invalid.png");
+    dragIndicator = new Image(GWT.getModuleBaseURL()+DROP_INVALID_PNG);
     add(dragIndicator);
     Label label = new Label(text);
     add(label);
@@ -247,10 +248,10 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
   public void setDropValid(boolean valid){
     if(valid){
       addStyleDependentName("proxy-valid");
-      dragIndicator.setUrl(GWT.getModuleBaseURL()+"drop_valid.png");
+      dragIndicator.setUrl(GWT.getModuleBaseURL()+ DROP_VALID_PNG);
     } else {
       removeStyleDependentName("proxy-valid");
-      dragIndicator.setUrl(GWT.getModuleBaseURL()+"drop_invalid.png");
+      dragIndicator.setUrl(GWT.getModuleBaseURL()+ DROP_INVALID_PNG);
     }
   }
 
