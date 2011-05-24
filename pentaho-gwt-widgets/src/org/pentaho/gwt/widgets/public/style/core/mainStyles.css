@@ -813,6 +813,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.IE .pentaho-background {
+	background: url('images/wt_transparent.png') repeat;
+}
+
 .pentaho-padding-sm {
     padding: 4px;
 }
@@ -875,9 +879,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-rounded-panel-bottom-lr {
-  -moz-border-radius: 0px 0px 7px 7px;
-  -webkit-border-radius: 0px 0px 7px 7px;
-  border-radius: 0px 0px 7px 7px;
+  -moz-border-radius: 0px 0px 5px 5px;
+  -webkit-border-radius: 0px 0px 5px 5px;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .pentaho-shadow-right-side {
