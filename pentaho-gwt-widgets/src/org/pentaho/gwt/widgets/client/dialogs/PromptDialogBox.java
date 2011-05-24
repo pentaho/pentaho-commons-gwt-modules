@@ -19,9 +19,8 @@
  */
 package org.pentaho.gwt.widgets.client.dialogs;
 
-import org.pentaho.gwt.widgets.client.buttons.RoundedButton;
-
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
@@ -30,7 +29,6 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.Button;
 
 @SuppressWarnings("deprecation")
 public class PromptDialogBox extends DialogBox {
@@ -122,6 +120,7 @@ public class PromptDialogBox extends DialogBox {
       dialogContent.getFlexCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_MIDDLE);
       dialogContent.getFlexCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
       dialogContent.setWidget(0, 0, content);
+      dialogContent.getCellFormatter().setStyleName(0, 0, "dialog-content");
       DOM.setStyleAttribute(dialogContent.getCellFormatter().getElement(0,0), "padding", "5px 10px 10px 10px"); //$NON-NLS-1$ //$NON-NLS-2$
       content.setHeight("100%"); //$NON-NLS-1$
       content.setWidth("100%"); //$NON-NLS-1$
