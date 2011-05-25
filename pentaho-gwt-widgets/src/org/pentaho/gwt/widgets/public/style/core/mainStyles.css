@@ -78,9 +78,9 @@ font-size: .85em;
 
 /* Applies the green glow to buttons */
 .pentaho-button:hover {
-  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(129, 219, 17, 1) inset;
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(129, 219, 17, 2) inset;
   -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(129, 219, 17, 1) inset;
-  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(129, 219, 17, 1) inset;
+  box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 2px rgba(110, 210, 2, 1) inset;
 }
 .IE .pentaho-button:hover {
   background: url('images/bg_btn_hover.png') repeat-x;
@@ -274,12 +274,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
         linear,
         left top,
         left bottom,
-        color-stop(0, rgba(125, 125, 125, 0.2)),
-        color-stop(0.50, rgba(140, 140, 140, 0.25)),
-        color-stop(1, rgba(0, 0, 0, 0.2))
+        color-stop(0, rgba(255, 255, 255, 0.4)),
+        color-stop(0.7, rgba(196, 211, 215, 0.4)),
+        color-stop(1, rgba(200, 218, 218, 0.3))
     );
 
-    background: -moz-linear-gradient(rgba(125, 125, 125, 0.2) 0%, rgba(140, 140, 140, 0.25) 50%, rgba(0,0,0,0.2) 100%);
+    background:-moz-linear-gradient(rgba(255, 255, 255, 0.4) 0%, rgba(187, 196, 199, 0.3) 50%, #787878 100%);
     color: black;
     padding: 4px 15px;
     -moz-border-radius-topleft: 5px;
@@ -288,15 +288,15 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     -webkit-border-top-right-radius: 5px;
     border-top-right-radius: 5px;
     border-top-right-radius: 5px;
-    border-top: solid 1px #555;
-    border-left: solid 1px #555;
-    border-right: solid 1px #555;
+    border-top: solid 1px #333;
+    border-left: solid 1px #333;
+    border-right: solid 1px #333;
     border-bottom: none;
     -moz-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
     -webkit-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
      box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
     cursor: pointer;
-    margin-left:5px;
+    margin-left:3px;
 }
 .IE .pentaho-tabWidget {
   background: url('images/tab_off.png') repeat-x;
@@ -305,8 +305,8 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
   margin: 0px;
   padding-bottom: 0px;
-  font-size: 12px;
-  text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;
+  font-size: .85em;
+  /*text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;*/
   white-space:nowrap;
  }
  
@@ -324,7 +324,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
       color-stop(0.90, #121212)
   );
 
-  background: -moz-linear-gradient(#333333, #454545 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+  background: -moz-linear-gradient(#CCCCCC, #454545 3%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
 
   color: #ffffff;
 }
@@ -336,7 +336,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
   margin: 0px;
   padding-bottom: 0px;
-  font-size: 12px;
+  font-size: .85em;
   text-shadow: 0px 0px 1px rgba(000,000,000,.3);
   white-space:nowrap;
   color: #ffffff;
@@ -848,16 +848,16 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-shadow {
-  -moz-box-shadow: 2px 2px 6px 1px #848484;
-  -webkit-box-shadow: 2px 2px 6px 1px #848484;
-  box-shadow: 2px 2px 6px 1px #848484;
+  -moz-box-shadow: 2px 2px 6px 1px #000000;
+  -webkit-box-shadow: 2px 2px 6px 1px #000000;
+  box-shadow: 2px 2px 6px 1px #000000;
 }
 
 
 .pentaho-shadow-no-offset {
-  -moz-box-shadow: 1px 1px 5px 0px #848484;
-  -webkit-box-shadow: 1px 1px 5px 0px #848484;
-  box-shadow: 1px 1px 5px 0px #848484;
+  -moz-box-shadow: 1px 1px 5px 0px #000000;
+  -webkit-box-shadow: 1px 1px 5px 0px #000000;
+  box-shadow: 1px 1px 5px 0px #000000;
 }
 
 .pentaho-rounded-panel2 {
@@ -884,9 +884,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-rounded-panel-bottom-lr {
-  -moz-border-radius: 0px 0px 5px 5px;
-  -webkit-border-radius: 0px 0px 5px 5px;
-  border-radius: 0px 0px 5px 5px;
+  -moz-border-radius: 0px 0px 7px 7px;
+  -webkit-border-radius: 0px 0px 7px 7px;
+  border-radius: 0px 0px 7px 7px;
 }
 
 .pentaho-shadow-right-side {

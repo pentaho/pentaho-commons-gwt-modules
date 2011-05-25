@@ -246,7 +246,7 @@ which java class/code the style is associated with */
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected {
-  background-color: #d0d0d0;
+  background-color: #cbefa3;
   vertical-align: bottom;
 }
 
@@ -260,7 +260,7 @@ which java class/code the style is associated with */
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected {
-  background-color: #d0d0d0;
+  background-color: #cbefa3;
   vertical-align: bottom;
 }
 
@@ -297,7 +297,7 @@ which java class/code the style is associated with */
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem-selected {
   border: 1px solid #848484;
-  background-color: #ececec;
+  background-color: #cbefa3;
   color: black;
   padding: 2px 5px 4px;
   vertical-align: bottom;
@@ -338,7 +338,7 @@ which java class/code the style is associated with */
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-selected {
-  background-color: #d0d0d0;
+  background-color: #cbefa3;
   color: black;
   vertical-align: bottom;
 }
@@ -361,7 +361,7 @@ which java class/code the style is associated with */
   padding-right: 4px;
 }
 .gwt-MenuBar-vertical .subMenuIcon-selected {
-  background-color: #d0d0d0;
+  background-color: #cbefa3;
 }
 
 
@@ -706,11 +706,11 @@ body{
 }
 
 .custom-list-item-hover{
-  background-color: #A9EAC9;
+  background-color: #87df27;
 }
 
 .custom-list-item-selected{
-  background-color: #5ED95E;
+  background-color: #cbefa3;
 }
 
 .custom-list-item-proxy{
@@ -970,11 +970,11 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .dataTable tr.selected {
-  background: #5ed95e none repeat scroll 0% 0%;
+  background: #cbefa3 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
-  background: #a9eac9 none repeat scroll 0% 0%;
+  background: #87df27 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .pagingOptions {
