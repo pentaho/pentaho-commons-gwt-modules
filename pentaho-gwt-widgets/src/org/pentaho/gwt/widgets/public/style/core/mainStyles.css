@@ -863,6 +863,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 
+.pentaho-shadow-inset-glow {
+  -moz-box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  -webkit-box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
+}
+
 .pentaho-shadow-no-offset {
   -moz-box-shadow: 1px 1px 5px 0px #000000;
   -webkit-box-shadow: 1px 1px 5px 0px #000000;
@@ -908,17 +914,25 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   border-top: 1px solid rgba(255, 255, 255, 0.59375);
   border-right: 1px solid rgba(255, 255, 255, 0.59375);
   border-bottom: 1px solid rgba(255, 255, 255, 0.59375);
-  -moz-border-radius: 0px 7px 7px 0px;
-  -webkit-border-radius: 0px 7px 7px 0px;
-  border-radius: 0px 7px 7px 0px;
+  -moz-border-radius: 0px 5px 5px 0px;
+  -webkit-border-radius: 0px 5px 5px 0px;
+  border-radius: 0px 5px 5px 0px;
 }
 
 .pentaho-rounded-panel-top-right {
   border-top: 1px solid rgba(255, 255, 255, 0.59375);
   border-right: 1px solid rgba(255, 255, 255, 0.59375);
-  -moz-border-radius: 0px 7px 0px 0px;
-  -webkit-border-radius: 0px 7px 0px 0px;
-  border-radius: 0px 7px 0px 0px;
+  -moz-border-radius: 0px 5px 0px 0px;
+  -webkit-border-radius: 0px 5px 0px 0px;
+  border-radius: 0px 5px 0px 0px;
+}
+
+.pentaho-rounded-panel-top-left {
+  border-top: 1px solid rgba(0, 0, 0, 1);
+  border-left: 1px solid rgba(0, 0, 0, 1);
+  -moz-border-radius: 5px 0px 0px 0px;
+  -webkit-border-radius: 5px 0px 0px 0px;
+  border-radius: 5px 0px 0px 0px;
 }
 
 .pentaho-disclosure-panel .header td {
