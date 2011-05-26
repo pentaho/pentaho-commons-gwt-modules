@@ -72,11 +72,19 @@ public class PentahoTab extends SimplePanel {
     this.content = content;
   }
 
+  protected PentahoTabPanel getTabPanel() {
+    return tabPanel;
+  }
+
+  protected void setTabPanel(PentahoTabPanel tabPanel) {
+    this.tabPanel = tabPanel;
+  }
+
   public void onBrowserEvent(Event event) {
     if ((DOM.eventGetType(event) & Event.ONDBLCLICK) == Event.ONDBLCLICK) {
-      onDoubleClick();
+      onDoubleClick(event);
     } else if (DOM.eventGetButton(event) == Event.BUTTON_RIGHT) {
-      onRightClick();
+      onRightClick(event);
     } else if (DOM.eventGetButton(event) == Event.BUTTON_LEFT) {
       if (event.getEventTarget().toString().toLowerCase().indexOf("image") == -1) {
         fireTabSelected();
@@ -85,10 +93,10 @@ public class PentahoTab extends SimplePanel {
     super.onBrowserEvent(event);
   }
 
-  public void onDoubleClick() {
+  public void onDoubleClick(Event event) {
   }
 
-  public void onRightClick() {
+  public void onRightClick(Event event) {
   }
 
   public void setSelected(boolean selected) {
@@ -115,11 +123,11 @@ public class PentahoTab extends SimplePanel {
     return label.getTitle();
   }
 
-  private void closeTab() {
+  protected void closeTab() {
     tabPanel.closeTab(this, true);
   }
 
-  private void fireTabSelected() {
+  protected void fireTabSelected() {
     tabPanel.selectTab(this);
   }
 
