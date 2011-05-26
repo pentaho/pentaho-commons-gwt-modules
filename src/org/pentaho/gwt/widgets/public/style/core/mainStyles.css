@@ -348,6 +348,14 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   clear:both;
 }
 
+.pentaho-tab-deck-panel {
+  border: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.pentaho-tabWidget-close {
+  padding-left: 3px;
+}
+
 /* ======================= Behins Scrollbar Styles ========================= */
 /*
  * CSS Styles that are needed by jScrollPane for it to operate correctly.
