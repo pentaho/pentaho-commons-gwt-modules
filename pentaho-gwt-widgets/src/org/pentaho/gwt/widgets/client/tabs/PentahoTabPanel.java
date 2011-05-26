@@ -14,9 +14,9 @@ public class PentahoTabPanel extends VerticalPanel {
   public PentahoTabPanel() {
     setStylePrimaryName("pentaho-tab-panel");
     tabBar.setStylePrimaryName("pentaho-tab-bar");
-    tabDeck.setStylePrimaryName("pentaho-tab-deck-panel");
     add(tabBar);
     add(tabDeck);
+    tabDeck.getElement().getParentElement().setClassName("pentaho-tab-deck-panel");
   }
 
   public void addTab(String text, String tooltip, boolean closeable, Widget content) {
