@@ -101,6 +101,22 @@ public class PentahoTabPanel extends VerticalPanel {
     return -1;
   }
 
+  protected FlowPanel getTabBar() {
+    return tabBar;
+  }
+
+  protected void setTabBar(FlowPanel tabBar) {
+    this.tabBar = tabBar;
+  }
+
+  protected DeckPanel getTabDeck() {
+    return tabDeck;
+  }
+
+  protected void setTabDeck(DeckPanel tabDeck) {
+    this.tabDeck = tabDeck;
+  }
+
   public PentahoTab getSelectedTab() {
     return selectedTab;
   }
