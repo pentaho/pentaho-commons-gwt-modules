@@ -281,7 +281,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
     background:-moz-linear-gradient(rgba(255, 255, 255, 0.4) 0%, rgba(187, 196, 199, 0.3) 50%, #787878 100%);
     color: black;
-    padding: 4px 15px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     -webkit-border-top-left-radius: 5px;
@@ -296,7 +295,8 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     -webkit-box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
      box-shadow: rgba(255,255,255,.35) 0px 1px 1px 1px inset;
     cursor: pointer;
-    margin-left:3px;
+	margin-left: 2px;
+	padding: 4px 8px;
 }
 .IE .pentaho-tabWidget {
   background: url('images/tab_off.png') repeat-x;
@@ -305,7 +305,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
   margin: 0px;
   padding-bottom: 0px;
-  font-size: .85em;
+  font-size: .8em;
   /*text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;*/
   white-space:nowrap;
  }
@@ -336,8 +336,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
   margin: 0px;
   padding-bottom: 0px;
-  font-size: .85em;
-  text-shadow: 0px 0px 1px rgba(000,000,000,.3);
+  font-size: .8em;
   white-space:nowrap;
   color: #ffffff;
  }
@@ -355,7 +354,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-tabWidget-close {
-  margin-left: 3px;
+    margin-left: 4px;
 }
 
 /* ======================= Behins Scrollbar Styles ========================= */
