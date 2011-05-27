@@ -21,6 +21,7 @@ package org.pentaho.gwt.widgets.client.dialogs;
 
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
 
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FocusPanel;
@@ -67,7 +68,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     // pageBackground.setSize("100%", "100%");
     if (pageBackground == null) {
       pageBackground = new FocusPanel();
-      pageBackground.setStyleName("modalDialogPageBackground"); //$NON-NLS-1$
+      pageBackground.setStyleName("glasspane"); //$NON-NLS-1$
       pageBackground.addClickListener(new ClickListener() {
 
         public void onClick(Widget sender) {
@@ -75,6 +76,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
           if (clickCount > 2) {
             clickCount = 0;
             pageBackground.setVisible(false);
+            pageBackground.getElement().getStyle().setDisplay(Display.NONE);
           }
         }
       });
@@ -84,6 +86,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     if (modal && !centerCalled) {
       pageBackground.setSize("100%", Window.getClientHeight() + Window.getScrollTop() + "px"); //$NON-NLS-1$ //$NON-NLS-2$
       pageBackground.setVisible(true);
+      pageBackground.getElement().getStyle().setDisplay(Display.BLOCK);
       dialogDepthCount++;
       centerCalled = true;
     }
