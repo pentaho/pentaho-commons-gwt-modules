@@ -780,10 +780,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .pentaho-titled-toolbar .pentaho-titled-toolbar-label {
   color: white;
+  font-size: 0.8em;
 }
 
 
-/* ======================= End Toolbar Styles ========================= */
 
 .pentaho-transparent {
   background-color: transparent;
@@ -906,9 +906,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-shadow-right-side {
-  -moz-box-shadow: 4px 3px 6px 0px #000000;
-  -webkit-box-shadow: 4px 3px 6px 0px #000000;
-  box-shadow: 4px 3px 6px 0px #000000;
+  -moz-box-shadow: 2px 2px 4px 0 #000000;
+  -webkit-box-shadow: 2px 2px 4px 0 #000000;
+  box-shadow: 2px 2px 4px 0 #000000;
 }
 
 .pentaho-rounded-panel-right {
@@ -939,6 +939,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-disclosure-panel .header td {
 	text-shadow: 1px 2px 2px rgba(22, 24, 27, 0.5);
 	color: white;
+	font-size: 0.8em;
 }
 
 .pentaho-disclosure-panel-open {
@@ -1022,4 +1023,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     border: 1px solid #888888;
     vertical-align:middle;
     padding-left: 4px;
+}
+
+/* ======================= File Chooser Styles ========================= */
+.pentaho-file-chooser-selection {
+	background-color: #cbefa3;
 }

@@ -154,7 +154,7 @@ which java class/code the style is associated with */
 }
 
 .tooltip-label{
-  color: #444;
+  color: #000000;
   font-size: .8em;
 }
 
@@ -236,6 +236,22 @@ which java class/code the style is associated with */
 
 /* end menubar/menuitem styles ------------------------------------------------------*/
 
+.gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected:hover {
+  background-color: #87df27;
+}
+ 
+.gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected:hover {
+  background-color: #87df27;
+}
+ 
+gwt-MenuBar-horizontal .gwt-MenuItem-selected:hover {
+background-color: #87df27;
+}
+ 
+.gwt-MenuBar-vertical .gwt-MenuItem-selected:hover {
+  background-color:  #87df27;
+}
+
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked {
   cursor: hand;
   cursor: pointer;
@@ -294,21 +310,17 @@ which java class/code the style is associated with */
   padding: 3px 6px 5px;
   vertical-align: bottom;
   border: 1px;
+  
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem-selected {
-  border: 1px solid #848484;
+  border: 1px solid #000000;
   background-color: #cbefa3;
   color: black;
   padding: 2px 5px 4px;
   vertical-align: bottom;
 }
 .gwt-MenuBar-horizontal .gwt-MenuItemSeparator {
-  width: 1px;
-  padding: 0px;
-  margin: 0px;
-  border: 0px;
-  border-left: 1px solid #888888;
-  background: white;
+  border-left: 1px solid #000000;
 }
 .gwt-MenuBar-horizontal .gwt-MenuItemSeparator .menuSeparatorInner {
   width: 1px;
@@ -323,12 +335,12 @@ which java class/code the style is associated with */
   background-color: #ffffff;
   margin-top: 0px;
   margin-left: 0px;
-  border-top: 1px solid #848484;
+  border-top: 1px solid #000;
   border-right: 1px solid #000000;
   border-bottom: 1px solid #000000;
-  border-left: 1px solid #848484;
+  border-left: 1px solid #000;
   padding: 2px;
-}
+ }
 .gwt-MenuBar-vertical table {
   border-collapse: collapse;
 }
@@ -351,9 +363,7 @@ which java class/code the style is associated with */
 
 }
 .gwt-MenuBar-vertical .gwt-MenuItemSeparator .menuSeparatorInner {
-  height: 1px;
-  overflow: hidden;
-  border-top: 1px solid #777;
+  border-top: 1px solid #000;
 }
 
 

@@ -46,6 +46,11 @@ public class FrameUtils {
           if(visible){
             if(frame.style.display == "none"){   //don't do anything unless you need to
               frame.style.display = "" ;         //Show frame
+              if (frame.style.height == "100%") {
+                // force the frame to reload
+                frame.style.height = "99%";
+                frame.style.height = "100%";
+              }
               
               // have to reload the frame, as the plug-in doesn't re-render when visibility is returned!
               frame.contentWindow.location.href = frame.contentWindow.location.href;   
