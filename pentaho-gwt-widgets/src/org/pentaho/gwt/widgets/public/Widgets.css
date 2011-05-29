@@ -891,7 +891,7 @@ input[type=password]:focus {
 
 /* ======================= GWT Scroll Table =========================== */
 .headerTable >tbody > tr > td {
-  padding: 2px;
+  padding: 2px 2px 2px 4px;
 }
 
 .gwt-ScrollTable {
@@ -922,7 +922,7 @@ input[type=password]:focus {
 
 .gwt-ScrollTable .headerTable td {
   font-weight: normal;
-  font-size: .85em;
+  font-size: .8em;
   color: #FFFFFF;
   border-right: 1px solid #848484;
   background: #000000;
@@ -1006,6 +1006,13 @@ input[type=password]:focus {
 
 .gwt-CellEditor td {
   padding: 4px;
+}
+
+.listbox-scroll-panel {
+  position:relative;
+  overflow:auto;
+  height:100%;
+  width:100%;
 }
 
 /* ======================= GWT Scroll Table =========================== */
