@@ -35,6 +35,14 @@ img {
 label {
 font-size: .85em;
 }
+
+.scroll-panel{
+  position:relative;
+  overflow:auto;
+  height:100%;
+  width:100%;
+}
+
 .pentaho-page-background {
   background: url('images/bg_blue_gray_perf.png') repeat-x top left;
 }
@@ -152,7 +160,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Firefox */
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%);
 
-  font-size: .9em;
+  font-size: .8em;
   color: white;
   cursor: move;
 
