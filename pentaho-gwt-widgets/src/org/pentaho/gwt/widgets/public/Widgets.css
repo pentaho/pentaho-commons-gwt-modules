@@ -297,7 +297,6 @@ background-color: #87df27;
   cursor: default;
 }
 .gwt-MenuBar .gwt-MenuItem {
-  text-shadow: black 1px 1px 2px;
   cursor: pointer;
 }
 .gwt-MenuBar .gwt-MenuItem-selected {
@@ -307,6 +306,7 @@ background-color: #87df27;
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem {
   color: white;
+  text-shadow: black 1px 1px 2px;
   padding: 3px 6px 5px;
   vertical-align: bottom;
   border: 1px;
@@ -498,12 +498,10 @@ body{
   border-right: 1px solid #848484;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: 0.8em;
 }
 .fileChooserCell {
   background-color: white;
   padding: 1px 5px;
-  font-size: 0.8em;
 }
 
 
