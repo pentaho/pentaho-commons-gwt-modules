@@ -813,9 +813,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius: 7px;
-  -moz-box-shadow: 2px 2px 6px 1px #000000;
-  -webkit-box-shadow: 2px 2px 6px 1px #000000;
-  box-shadow: 2px 2px 6px 1px #000000;
+  -moz-box-shadow: 2px 2px 6px 1px #333333;
+  -webkit-box-shadow: 2px 2px 6px 1px #333333;
+  box-shadow: 2px 2px 6px 1px #333333;
   background: rgba(255, 255, 255, 0.2);
   padding: 4px 4px 4px 4px;
 }
@@ -868,22 +868,22 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-shadow {
-  -moz-box-shadow: 2px 2px 6px 1px #000000;
-  -webkit-box-shadow: 2px 2px 6px 1px #000000;
-  box-shadow: 2px 2px 6px 1px #000000;
+  -moz-box-shadow: 1px 1px 5px 1px #333333;
+  -webkit-box-shadow: 1px 1px 5px 1px #333333;
+  box-shadow: 1px 1px 5px 1px #333333;
 }
 
 
 .pentaho-shadow-inset-glow {
-  -moz-box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
-  -webkit-box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
-  box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  -moz-box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  -webkit-box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255,255,255,.6) inset;
 }
 
 .pentaho-shadow-no-offset {
-  -moz-box-shadow: 1px 1px 5px 0px #000000;
-  -webkit-box-shadow: 1px 1px 5px 0px #000000;
-  box-shadow: 1px 1px 5px 0px #000000;
+  -moz-box-shadow: 1px 1px 5px 0px #333333;
+  -webkit-box-shadow: 1px 1px 5px 0px #333333;
+  box-shadow: 1px 1px 5px 0px #333333;
 }
 
 .pentaho-rounded-panel2 {
@@ -904,9 +904,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -webkit-border-radius: 5px;
   border-radius: 5px;
   
-  -moz-box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
-  -webkit-box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
-  box-shadow: 1px 1px 5px 0px #000000, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  -moz-box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  -webkit-box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255,255,255,.6) inset;
+  box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255,255,255,.6) inset;
 }
 
 .pentaho-rounded-panel-bottom-lr {
@@ -916,9 +916,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-shadow-right-side {
-  -moz-box-shadow: 2px 2px 4px 0 #000000;
-  -webkit-box-shadow: 2px 2px 4px 0 #000000;
-  box-shadow: 2px 2px 4px 0 #000000;
+  -moz-box-shadow: 2px 2px 4px 0 #333333;
+  -webkit-box-shadow: 2px 2px 4px 0 #333333;
+  box-shadow: 2px 2px 4px 0 #333333;
 }
 
 .pentaho-rounded-panel-right {
@@ -954,7 +954,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .pentaho-disclosure-panel-open {
 	width: 100%;
-	padding: 5px 0 0;
+	padding: 6px 6px 0px 6px;
 }
 
 .pentaho-disclosure-panel-open .header {
@@ -975,16 +975,16 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius: 7px;
-  -moz-box-shadow: 2px 2px 6px 1px #000000;
-  -webkit-box-shadow: 2px 2px 6px 1px #000000;
-  box-shadow: 2px 2px 6px 1px #000000;
+  -moz-box-shadow: 2px 2px 6px 1px #333333;
+  -webkit-box-shadow: 2px 2px 6px 1px #333333;
+  box-shadow: 2px 2px 6px 1px #333333;
   padding: 4px 4px 4px 4px;
 }
 
 
 .pentaho-disclosure-panel-closed {
 	width: 100%;
-	padding: 5px 0 0;
+	padding: 6px 6px 0px 6px;
 }
 
 .pentaho-disclosure-panel-closed .header {
@@ -1005,9 +1005,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius: 7px;
-  -moz-box-shadow: 2px 2px 6px 1px #000000;
-  -webkit-box-shadow: 2px 2px 6px 1px #000000;
-  box-shadow: 2px 2px 6px 1px #000000;
+  -moz-box-shadow: 2px 2px 6px 1px #333333;
+  -webkit-box-shadow: 2px 2px 6px 1px #333333;
+  box-shadow: 2px 2px 6px 1px #333333;
   padding: 4px 4px 4px 4px;
 }
 
