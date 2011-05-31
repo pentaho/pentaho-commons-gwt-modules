@@ -449,6 +449,7 @@ public class FileChooser extends VerticalPanel {
     DOM.setStyleAttribute(filesScroller.getElement(), "border", "1px solid #707070"); //$NON-NLS-1$ //$NON-NLS-2$
 
     FlexTable filesListTable = new FlexTable();
+    filesListTable.setWidth("100%");
     filesListTable.setCellSpacing(0);
     Label nameLabel = new Label(FileChooserEntryPoint.messages.getString("name"), false);
     nameLabel.setStyleName("fileChooserHeader"); //$NON-NLS-1$
@@ -528,6 +529,7 @@ public class FileChooser extends VerticalPanel {
     myNameLabel.sinkEvents(Event.ONDBLCLICK | Event.ONCLICK);
     myNameLabel.sinkEvents(Event.ONMOUSEOVER | Event.ONMOUSEOUT);
     myNameLabel.setTitle(attributeMap.get(LOCALIZED_FILE_NAME));
+    myNameLabel.setStyleName("fileChooserCellLabel");
 
     HorizontalPanel fileNamePanel = new HorizontalPanel();
     Image fileImage = new Image() {
