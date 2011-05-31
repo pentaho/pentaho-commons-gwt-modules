@@ -23,6 +23,9 @@ import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.DOM;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ElementUtils {
 
   public static final int LEFT = 0;
@@ -206,11 +209,45 @@ public class ElementUtils {
     
   }
 
-  public static native void replaceScrollbars(String className)/*-{
+  public static void replaceScrollbars(String className){
+    replaceScrollbarsJS(className);
+  }
+
+  public static void replaceScrollbars(Element ele){
+    replaceScrollbarsJS(ele);
+  }
+
+  public static void reinitializeScrollbars(Element parentEle, String[] classNames){
+
+    String selector = ".dummy";
+    for(String name : classNames){
+      if(StringUtils.isEmpty(name)){
+        continue;
+      }
+      selector += ", ."+name;
+    }
+    reinitializeScrollbarsJS(parentEle,  selector);
+  }
+
+  private static native void reinitializeScrollbarsJS(Element ele, String classNames)/*-{
     try{
-      $wnd.$("."+className).jScrollPane({showArrows: true, reinitialiseOnImageLoad: true, autoReinitialise: true, autoReinitialiseDelay: 150});
+      $wnd.$(ele).find(classNames).jScrollPane({showArrows: true});
     } catch(e){alert(e);}
   }-*/;
+
+  private static native void replaceScrollbarsJS(Element ele)/*-{
+    try{
+      $wnd.$(ele).jScrollPane({showArrows: true});
+    } catch(e){alert(e);}
+  }-*/;
+
+  private static native void replaceScrollbarsJS(String className)/*-{
+    try{
+      $wnd.$("."+className).jScrollPane({showArrows: true});
+    } catch(e){alert(e);}
+  }-*/;
+
+
 }
 
 
