@@ -487,7 +487,7 @@ public class BaseTable extends Composite {
 
     // Fix for table headers not scrolling in IE. Giving the DIV an ID makes it work. This is all related to the fact
     // that we're running in Quirks-mode in IE.
-    ElementUtils.replaceScrollbars("dataWrapper");
+    ElementUtils.replaceScrollbars(dataGrid.getElement().getParentElement());
   }
 
   /**
