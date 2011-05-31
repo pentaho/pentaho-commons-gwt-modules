@@ -297,7 +297,7 @@ background-color: #87df27;
   cursor: default;
 }
 .gwt-MenuBar .gwt-MenuItem {
-  cursor: hand;
+  text-shadow: black 1px 1px 2px;
   cursor: pointer;
 }
 .gwt-MenuBar .gwt-MenuItem-selected {
