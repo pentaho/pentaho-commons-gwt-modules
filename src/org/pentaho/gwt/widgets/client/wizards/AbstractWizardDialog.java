@@ -19,11 +19,11 @@
  */
 package org.pentaho.gwt.widgets.client.wizards;
 
-import org.pentaho.gwt.widgets.client.buttons.RoundedButton;
 import org.pentaho.gwt.widgets.client.dialogs.DialogBox;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -60,10 +60,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   private static final String CANCEL_BTN_STYLE = "pentaho-wizard-cancel-button"; //$NON-NLS-1$
   
   // gui elements
-  RoundedButton backButton = new RoundedButton(MSGS.back());
-  RoundedButton nextButton = new RoundedButton(MSGS.next());
-  RoundedButton cancelButton = new RoundedButton(MSGS.cancel());
-  RoundedButton finishButton = new RoundedButton(MSGS.finish());
+  Button backButton = new Button(MSGS.back());
+  Button nextButton = new Button(MSGS.next());
+  Button cancelButton = new Button(MSGS.cancel());
+  Button finishButton = new Button(MSGS.finish());
 
   ListBox steps = new ListBox();
   DeckPanel wizardDeckPanel = new DeckPanel();
