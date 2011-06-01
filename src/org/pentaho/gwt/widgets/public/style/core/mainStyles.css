@@ -1052,6 +1052,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 6px 1px #333333;
   background: rgba(255, 255, 255, 0.2);
 }
+
 .IE .pentaho-launcher-panel-shadowed {
   background: url('images/wt_transparent.png') repeat;
 }
@@ -1062,6 +1063,20 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background: -moz-linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35) 43%, rgba(255, 255, 255, 0.15) 43%, rgba(255, 255, 255, 0.15) 100%) repeat scroll 0 0 transparent;
 }
  
-.IE . pentaho-launcher-shine {
+.IE .pentaho-launcher-shine {
   background: url('images/shine_bg.png') repeat;
+}
+
+/* ======================= Login Styles ========================= */
+.login-panel {
+	height: 100%;
+	width: 100%;
+	font-size: 0.85em;
+	text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;
+	padding: 5px;
+}
+
+.login-panel-label {
+	font-size: 0.85em;
+	text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;
 }
