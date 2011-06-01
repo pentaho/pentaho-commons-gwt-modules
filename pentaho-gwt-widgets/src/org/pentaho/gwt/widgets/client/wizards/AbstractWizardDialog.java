@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -93,6 +94,11 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    */
   protected void init() {
  
+    backButton.setStyleName("pentaho-button");
+    nextButton.setStyleName("pentaho-button");
+    cancelButton.setStyleName("pentaho-button");
+    finishButton.setStyleName("pentaho-button");
+	  
     nextButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         int oldIndex = steps.getSelectedIndex();  // The panel currently being displayed
@@ -179,6 +185,12 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    */
   protected void layout() {    
     // Create the overall container to be displayed in the dialog
+	  
+	SimplePanel deckWrapper = new SimplePanel();
+	deckWrapper.setHeight("100%");
+	deckWrapper.setWidth("100%");
+	deckWrapper.setStyleName("dialog-content");
+	  
     DockPanel content = new DockPanel();
     
     // Create the Steps and add it to the content
@@ -191,7 +203,8 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     
     // Add the wizardPanels to the Deck and add the deck to the content
 //    wizardDeckPanel.setSize("70%", "100%");
-    content.add(wizardDeckPanel, DockPanel.CENTER);
+	deckWrapper.setWidget(wizardDeckPanel);
+    content.add(deckWrapper, DockPanel.CENTER);
     wizardDeckPanel.addStyleName(WIZARD_DECK_PANEL);
     
     // Add the control buttons
