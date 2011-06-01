@@ -360,8 +360,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   border-right: 1px solid rgba(0, 0, 0, 0.7);
   border-bottom: 1px solid rgba(0, 0, 0, 0.7);
   border-left: 1px solid rgba(0, 0, 0, 0.7);
-  background: url('images/tab_panel_bg.png');
   height: 100%;
+}
+
+.pucContentDeck .pentaho-tab-deck-panel {
+  background: url('images/tab_panel_bg.png');
 }
 
 .pentaho-tabWidget-close {
