@@ -923,7 +923,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-rounded-panel-right {
-  border: 1px solid black;
   border-top: 1px solid rgba(255, 255, 255, 0.59375);
   border-right: 1px solid rgba(255, 255, 255, 0.59375);
   border-bottom: 1px solid rgba(255, 255, 255, 0.59375);
@@ -933,7 +932,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-rounded-panel-top-right {
-  border: 1px solid black;
   border-top: 1px solid rgba(255, 255, 255, 0.59375);
   border-right: 1px solid rgba(255, 255, 255, 0.59375);
   -moz-border-radius: 0px 5px 0px 0px;
