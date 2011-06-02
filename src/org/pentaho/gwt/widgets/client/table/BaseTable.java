@@ -472,13 +472,7 @@ public class BaseTable extends Composite {
     createTable(tableHeaderNames, columnWidths, rowAndColumnValues);
     parentPanel.add(scrollTable);
 
-    // Fix for table headers not scrolling in IE. Giving the DIV an ID makes it work. This is all related to the fact
-    // that we're running in Quirks-mode in IE.
-    SimplePanel wrapper = new SimplePanel();
-    wrapper.setStylePrimaryName("table-scroll-panel");
-    com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
-    wrapper.getElement().appendChild(dataGrid.getElement());
-    dataWrapperElement.appendChild(wrapper.getElement());
+    scrollBarFix();
   }
 
   /**
@@ -659,4 +653,18 @@ public class BaseTable extends Composite {
       }
     }
   }
+
+  private void scrollBarFix() {
+    if (dataGrid.getRowCount() > 0) {
+      com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
+      String classAttribute = DOM.getElementAttribute((Element) dataWrapperElement, "class");
+      if (classAttribute != null && classAttribute.contains("dataWrapper")) {
+        SimplePanel wrapper = new SimplePanel();
+        wrapper.setStylePrimaryName("table-scroll-panel");
+        wrapper.getElement().appendChild(dataGrid.getElement());
+        dataWrapperElement.appendChild(wrapper.getElement());
+      }
+    }
+  }
+
 }
