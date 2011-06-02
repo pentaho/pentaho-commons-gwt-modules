@@ -16,32 +16,10 @@
  */
 package org.pentaho.gwt.widgets.client.table;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import com.google.gwt.gen2.table.client.AbstractScrollTable;
-import com.google.gwt.user.client.ui.*;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
-import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
-import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
-
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.DeferredCommand;
-import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.widgetideas.table.client.FixedWidthFlexTable;
-import com.google.gwt.widgetideas.table.client.FixedWidthGrid;
-import com.google.gwt.widgetideas.table.client.ScrollTable;
-import com.google.gwt.widgetideas.table.client.SortableGrid;
-import com.google.gwt.widgetideas.table.client.SourceTableSelectionEvents;
-import com.google.gwt.widgetideas.table.client.TableSelectionListener;
+import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.ui.*;
+import com.google.gwt.widgetideas.table.client.*;
 import com.google.gwt.widgetideas.table.client.ScrollTable.ResizePolicy;
 import com.google.gwt.widgetideas.table.client.SelectionGrid.SelectionPolicy;
 import com.google.gwt.widgetideas.table.client.SortableGrid.ColumnSorter;
@@ -49,6 +27,16 @@ import com.google.gwt.widgetideas.table.client.SortableGrid.ColumnSorterCallback
 import com.google.gwt.widgetideas.table.client.TableModel.ColumnSortList;
 import com.google.gwt.widgetideas.table.client.overrides.FlexTable.FlexCellFormatter;
 import com.google.gwt.widgetideas.table.client.overrides.HTMLTable.CellFormatter;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
+import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -329,7 +317,6 @@ public class BaseTable extends Composite {
    * Creates and initializes the scroll table. 
    */
   private void createScrollTable(ResizePolicy resizePolicy) {
-
     scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class));
     scrollTable.addScrollListener(new ScrollListener(){
       public void onScroll(Widget widget, int scrollLeft, int scrollTop) {
@@ -487,7 +474,11 @@ public class BaseTable extends Composite {
 
     // Fix for table headers not scrolling in IE. Giving the DIV an ID makes it work. This is all related to the fact
     // that we're running in Quirks-mode in IE.
-    ElementUtils.replaceScrollbars(dataGrid.getElement().getParentElement());
+    SimplePanel wrapper = new SimplePanel();
+    wrapper.setStylePrimaryName("table-scroll-panel");
+    com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
+    wrapper.getElement().appendChild(dataGrid.getElement());
+    dataWrapperElement.appendChild(wrapper.getElement());
   }
 
   /**
@@ -604,6 +595,7 @@ public class BaseTable extends Composite {
           parentPanel.setWidth(width);
           //scrollTable.fillWidth();
           scrollTable.redraw();
+          ElementUtils.replaceScrollbars("table-scroll-panel");
         }
       }
     });
@@ -625,6 +617,7 @@ public class BaseTable extends Composite {
         if (scrollTable != null) {
           scrollTable.setHeight(height);
           scrollTable.redraw();
+          ElementUtils.replaceScrollbars("table-scroll-panel");
         }
       }
     });
