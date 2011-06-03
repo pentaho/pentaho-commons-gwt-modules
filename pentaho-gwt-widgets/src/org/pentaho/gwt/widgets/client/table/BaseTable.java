@@ -589,7 +589,6 @@ public class BaseTable extends Composite {
           parentPanel.setWidth(width);
           //scrollTable.fillWidth();
           scrollTable.redraw();
-          ElementUtils.replaceScrollbars("table-scroll-panel");
         }
       }
     });
@@ -611,7 +610,6 @@ public class BaseTable extends Composite {
         if (scrollTable != null) {
           scrollTable.setHeight(height);
           scrollTable.redraw();
-          ElementUtils.replaceScrollbars("table-scroll-panel");
         }
       }
     });
@@ -658,11 +656,22 @@ public class BaseTable extends Composite {
     if (dataGrid.getRowCount() > 0) {
       com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
       String classAttribute = DOM.getElementAttribute((Element) dataWrapperElement, "class");
+      if (classAttribute == null || "".equals(classAttribute)) {
+        // try className -> IE
+        classAttribute = DOM.getElementAttribute((Element) dataWrapperElement, "className");
+      }
       if (classAttribute != null && classAttribute.contains("dataWrapper")) {
         SimplePanel wrapper = new SimplePanel();
         wrapper.setStylePrimaryName("table-scroll-panel");
         wrapper.getElement().appendChild(dataGrid.getElement());
         dataWrapperElement.appendChild(wrapper.getElement());
+
+        DeferredCommand.addCommand(new Command() {
+          public void execute() {
+            ElementUtils.replaceScrollbars("table-scroll-panel");
+          }
+        });
+
       }
     }
   }
