@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -51,14 +52,6 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
   private static final String WIZARD_BUTTON_PANEL = "pentaho-wizard-button-panel"; //$NON-NLS-1$
 
-  private static final String BACK_BTN_STYLE = "pentaho-wizard-back-button"; //$NON-NLS-1$
-
-  private static final String NEXT_BTN_STYLE = "pentaho-wizard-next-button"; //$NON-NLS-1$
-
-  private static final String FINISH_BTN_STYLE = "pentaho-wizard-finish-button"; //$NON-NLS-1$
-
-  private static final String CANCEL_BTN_STYLE = "pentaho-wizard-cancel-button"; //$NON-NLS-1$
-  
   // gui elements
   Button backButton = new Button(MSGS.back());
   Button nextButton = new Button(MSGS.next());
@@ -93,6 +86,11 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    */
   protected void init() {
  
+    backButton.setStyleName("pentaho-button");
+    nextButton.setStyleName("pentaho-button");
+    cancelButton.setStyleName("pentaho-button");
+    finishButton.setStyleName("pentaho-button");
+	  
     nextButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
         int oldIndex = steps.getSelectedIndex();  // The panel currently being displayed
@@ -179,6 +177,12 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    */
   protected void layout() {    
     // Create the overall container to be displayed in the dialog
+	  
+	SimplePanel deckWrapper = new SimplePanel();
+	deckWrapper.setHeight("100%");
+	deckWrapper.setWidth("100%");
+	deckWrapper.setStyleName("dialog-content");
+	  
     DockPanel content = new DockPanel();
     
     // Create the Steps and add it to the content
@@ -191,7 +195,8 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     
     // Add the wizardPanels to the Deck and add the deck to the content
 //    wizardDeckPanel.setSize("70%", "100%");
-    content.add(wizardDeckPanel, DockPanel.CENTER);
+	deckWrapper.setWidget(wizardDeckPanel);
+    content.add(deckWrapper, DockPanel.CENTER);
     wizardDeckPanel.addStyleName(WIZARD_DECK_PANEL);
     
     // Add the control buttons
@@ -199,13 +204,9 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     wizardButtonPanel.setSpacing(2);
     // If we have only one button then we dont need to show the back and next button.
     wizardButtonPanel.add(backButton);
-    backButton.addStyleName(BACK_BTN_STYLE);
     wizardButtonPanel.add(nextButton);
-    nextButton.addStyleName(NEXT_BTN_STYLE);
     wizardButtonPanel.add(finishButton);
-    finishButton.addStyleName(FINISH_BTN_STYLE);
     wizardButtonPanel.add(cancelButton);
-    cancelButton.addStyleName(CANCEL_BTN_STYLE);
     wizardButtonPanel.addStyleName(WIZARD_BUTTON_PANEL);
 
     HorizontalPanel wizardButtonPanelWrapper = new HorizontalPanel();
