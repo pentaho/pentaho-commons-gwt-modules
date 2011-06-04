@@ -1,14 +1,14 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the 
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software 
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
  * Foundation.
  *
- * You should have received a copy of the GNU Lesser General Public License along with this 
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html 
- * or from the Free Software Foundation, Inc., 
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
@@ -233,6 +233,7 @@ public class BaseTable extends Composite {
     createDataGrid(selectionPolicy);
     createScrollTable(resizePolicy);
     populateDataGrid(columnWidths, rowAndColumnValues);
+
   }
 
   /**
@@ -326,11 +327,13 @@ public class BaseTable extends Composite {
         super.redraw();    //To change body of overridden methods use File | Settings | File Templates.
 
         if(scrollWrapper == null){
-          return;
+          scrollBarFix();
         }
 
         DeferredCommand.addCommand(new Command() {
           public void execute() {
+            scrollWrapper.setHeight(scrollWrapper.getElement().getParentElement().getOffsetHeight()+"px");
+
             ElementUtils.replaceScrollbars(scrollWrapper.getElement());
           }
         });
@@ -387,6 +390,9 @@ public class BaseTable extends Composite {
    */
   private void populateDataGrid(int[] columnWidths, Object[][] rowAndColumnValues) {
 
+    while(dataGrid.getRowCount() > 0){
+      dataGrid.removeRow(0);
+    }
     // Set table values
     for (int i = 0; i < rowAndColumnValues.length; i++) {
       for (int j = 0; j < rowAndColumnValues[i].length; j++) {
@@ -436,7 +442,7 @@ public class BaseTable extends Composite {
         }
       }
     }
-
+    scrollTable.redraw();
     DeferredCommand.addCommand(new Command() {
       public void execute() {
         internalSelectionListener.onAllRowsDeselected(dataGrid);
@@ -486,11 +492,7 @@ public class BaseTable extends Composite {
    * the rows.
    */
   public void populateTable(Object[][] rowAndColumnValues) {
-    parentPanel.clear();
-    createTable(tableHeaderNames, columnWidths, rowAndColumnValues);
-    parentPanel.add(scrollTable);
-
-    scrollBarFix();
+    populateDataGrid(columnWidths, rowAndColumnValues);
   }
 
   /**
@@ -605,6 +607,7 @@ public class BaseTable extends Composite {
       public void execute() {
         if (scrollTable != null) {
           parentPanel.setWidth(width);
+          scrollTable.setWidth(width);
           //scrollTable.fillWidth();
           scrollTable.redraw();
         }
@@ -679,6 +682,9 @@ public class BaseTable extends Composite {
 
   private SimplePanel scrollWrapper;
   private void scrollBarFix() {
+    if(dataGrid == null){
+      return;
+    }
     final com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
     String classAttribute = dataWrapperElement.getClassName();
     if (classAttribute != null && classAttribute.contains("dataWrapper")) {
