@@ -17,8 +17,9 @@
 package org.pentaho.gwt.widgets.client.table;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Node;
+import com.google.gwt.dom.client.*;
 import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.widgetideas.table.client.*;
 import com.google.gwt.widgetideas.table.client.ScrollTable.ResizePolicy;
@@ -318,7 +319,23 @@ public class BaseTable extends Composite {
    * Creates and initializes the scroll table.
    */
   private void createScrollTable(ResizePolicy resizePolicy) {
-    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class));
+    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class)){
+
+      @Override
+      public void redraw() {
+        super.redraw();    //To change body of overridden methods use File | Settings | File Templates.
+
+        if(scrollWrapper == null){
+          return;
+        }
+
+        DeferredCommand.addCommand(new Command() {
+          public void execute() {
+            ElementUtils.replaceScrollbars(scrollWrapper.getElement());
+          }
+        });
+      }
+    };
     scrollTable.addScrollListener(new ScrollListener(){
       public void onScroll(Widget widget, int scrollLeft, int scrollTop) {
         if(!scrollingFixInPlace){
@@ -660,26 +677,19 @@ public class BaseTable extends Composite {
     }
   }-*/;
 
+  private SimplePanel scrollWrapper;
   private void scrollBarFix() {
     final com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
     String classAttribute = dataWrapperElement.getClassName();
     if (classAttribute != null && classAttribute.contains("dataWrapper")) {
-      final SimplePanel wrapper = new SimplePanel();
-      wrapper.setStylePrimaryName("table-scroll-panel");
+      scrollWrapper = new SimplePanel();
+      scrollWrapper.setStylePrimaryName("table-scroll-panel");
       Node firstChild = dataWrapperElement.getFirstChild();
       firstChild.removeFromParent();
 
-      wrapper.getElement().appendChild(firstChild);
-      dataWrapperElement.appendChild(wrapper.getElement());
+      scrollWrapper.getElement().appendChild(firstChild);
+      dataWrapperElement.appendChild(scrollWrapper.getElement());
 
-      DeferredCommand.addCommand(new Command() {
-        public void execute() {
-          inspectEle(dataWrapperElement);
-          wrapper.setHeight(dataWrapperElement.getOffsetHeight()+"px");
-          ElementUtils.replaceScrollbars(wrapper.getElement());
-
-        }
-      });
 
     }
   }

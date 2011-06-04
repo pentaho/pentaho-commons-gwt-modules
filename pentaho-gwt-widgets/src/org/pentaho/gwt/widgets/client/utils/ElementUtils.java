@@ -20,6 +20,8 @@ package org.pentaho.gwt.widgets.client.utils;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.DOM;
 
@@ -209,24 +211,37 @@ public class ElementUtils {
     
   }
 
-  public static void replaceScrollbars(String className){
-    replaceScrollbarsJS(className);
-  }
+  public static void replaceScrollbars(final String className){
+    DeferredCommand.addCommand(new Command() {
+      public void execute() {
+        replaceScrollbarsJS(className);
 
-  public static void replaceScrollbars(Element ele){
-    replaceScrollbarsJS(ele);
-  }
-
-  public static void reinitializeScrollbars(Element parentEle, String[] classNames){
-
-    String selector = ".dummy";
-    for(String name : classNames){
-      if(StringUtils.isEmpty(name)){
-        continue;
       }
-      selector += ", ."+name;
-    }
-    reinitializeScrollbarsJS(parentEle,  selector);
+    });
+  }
+
+  public static void replaceScrollbars(final Element ele){
+    DeferredCommand.addCommand(new Command() {
+      public void execute() {
+        replaceScrollbarsJS(ele);
+      }
+    });
+  }
+
+  public static void reinitializeScrollbars(final Element parentEle, final String[] classNames){
+
+    DeferredCommand.addCommand(new Command() {
+      public void execute() {
+        String selector = ".dummy";
+        for(String name : classNames){
+          if(StringUtils.isEmpty(name)){
+            continue;
+          }
+          selector += ", ."+name;
+        }
+        reinitializeScrollbarsJS(parentEle,  selector);
+      }
+    });
   }
 
   private static native void reinitializeScrollbarsJS(Element ele, String classNames)/*-{
