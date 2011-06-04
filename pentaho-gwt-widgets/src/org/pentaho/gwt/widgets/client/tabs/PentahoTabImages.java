@@ -12,7 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright 2008 Pentaho Corporation.  All rights reserved.
+ * Copyright 2011 Pentaho Corporation.  All rights reserved.
+ * 
+ * @author Michael D'Amour
+ * 
  */
 package org.pentaho.gwt.widgets.client.tabs;
 
