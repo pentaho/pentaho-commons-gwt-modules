@@ -910,7 +910,9 @@ input[type=password]:focus {
 
 .gwt-ScrollTable .dataWrapper {
   width: 100% !important;
-  overflow: auto;
+  position:relative;
+  overflow:hidden !important;
+  height:100%;
 }
 
 .gwt-ScrollTable .dataTable td {
@@ -1015,3 +1017,10 @@ input[type=password]:focus {
 }
 
 /* ======================= GWT Scroll Table =========================== */
+
+.table-scroll-panel {
+  position:relative;
+  overflow:auto;
+  height:100%;
+  width:100%;
+}

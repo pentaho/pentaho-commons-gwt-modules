@@ -323,10 +323,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
     if(visible > 1){
       updateList();
+      ElementUtils.replaceScrollbars(listScrollPanel.getElement());
     } else {
       updateDropDown();
     }
-    ElementUtils.replaceScrollbars(listScrollPanel.getElement());
     
   }
 
