@@ -673,13 +673,6 @@ public class BaseTable extends Composite {
     }
   }
 
-  private native void inspectEle(com.google.gwt.dom.client.Element e)/*-{
-    console.log(e.offsetHeight);
-    if(window.isDebug){
-      debugger;
-    }
-  }-*/;
-
   private SimplePanel scrollWrapper;
   private void scrollBarFix() {
     if(dataGrid == null){
