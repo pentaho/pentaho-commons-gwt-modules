@@ -23,13 +23,14 @@ public class FrameUtils {
    * @param visible
    */
   private static native void toggleEmbedVisibility(Element frame, boolean visible)/*-{
-    
+    if(! window.globalStorage){
+      return;
+    }
     try{
       var doc = (frame.contentWindow.document || frame.contentDocument);
       
       if(doc == null)
       {
-        //IE you're ok anyway
         return;
       }
       
@@ -51,9 +52,7 @@ public class FrameUtils {
                 frame.style.height = "99%";
                 frame.style.height = "100%";
               }
-              
-              // have to reload the frame, as the plug-in doesn't re-render when visibility is returned!
-              frame.contentWindow.location.href = frame.contentWindow.location.href;   
+
             }
           } else {
             frame.style.display = "none" ;  //hide frame
