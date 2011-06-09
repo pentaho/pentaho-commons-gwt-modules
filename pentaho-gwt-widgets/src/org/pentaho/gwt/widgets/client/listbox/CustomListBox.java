@@ -819,10 +819,12 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     this.height = s;
     // user has specified height, focusPanel needs to be 100%;
     this.fPanel.setHeight(s);
+    this.listScrollPanel.setHeight("100%"); //$NON-NLS-1$
     if(visible == 1){
       this.setVisibleRowCount(15);
     }
     super.setHeight(s);
+    updateUI();
   }
 
   @Override
@@ -835,6 +837,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       dropGrid.setWidth("100%");  //$NON-NLS-1$
     }
     super.setWidth(s);
+    updateUI();
   }
 
   // ======================================= Listener methods ===================================== //
