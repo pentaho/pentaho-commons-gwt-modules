@@ -245,18 +245,27 @@ public class ElementUtils {
   }
 
   private static native void reinitializeScrollbarsJS(Element ele, String classNames)/*-{
+    if(!$wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
+      return;
+    }
     try{
       $wnd.$(ele).find(classNames).jScrollPane({showArrows: true});
     } catch(e){alert(e);}
   }-*/;
 
   private static native void replaceScrollbarsJS(Element ele)/*-{
+    if(!$wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
+      return;
+    }
     try{
       $wnd.$(ele).jScrollPane({showArrows: true});
     } catch(e){alert(e);}
   }-*/;
 
   private static native void replaceScrollbarsJS(String className)/*-{
+    if(!$wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
+      return;
+    }
     try{
       $wnd.$("."+className).jScrollPane({showArrows: true});
     } catch(e){alert(e);}
