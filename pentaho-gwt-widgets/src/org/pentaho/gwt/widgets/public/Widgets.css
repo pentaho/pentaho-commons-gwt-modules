@@ -80,7 +80,7 @@ which java class/code the style is associated with */
   font-color: #000000;
 }
 
-.drop-popup > .popupContent > div {
+.drop-popup .listbox-scroll-panel {
   border: 1px solid gray;
 }
 
