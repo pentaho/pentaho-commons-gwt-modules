@@ -315,6 +315,10 @@ public class BaseTable extends Composite {
     });
   }
 
+  private native int getScrollLeft(Element ele)/*-{
+     return $(ele).data("jsp").getContentPositionX();
+  }-*/;
+
   private boolean scrollingFixInPlace = false;
   /**
    * Creates and initializes the scroll table.
@@ -337,6 +341,13 @@ public class BaseTable extends Composite {
             ElementUtils.replaceScrollbars(scrollWrapper.getElement());
           }
         });
+      }
+
+      @Override
+      protected void scrollTables(boolean baseHeader) {
+        if(isFakeScrollbarActive() == false){
+          super.scrollTables(baseHeader);
+        }
       }
     };
     scrollTable.addScrollListener(new ScrollListener(){
@@ -673,7 +684,6 @@ public class BaseTable extends Composite {
     }
   }
 
-
   private SimplePanel scrollWrapper;
   private void scrollBarFix() {
     if(dataGrid == null){
@@ -689,8 +699,22 @@ public class BaseTable extends Composite {
 
       scrollWrapper.getElement().appendChild(firstChild);
       dataWrapperElement.appendChild(scrollWrapper.getElement());
-
-
     }
+    setupScrollListeners(scrollWrapper.getElement(), scrollTable.getHeaderTable().getElement().getParentElement());
   }
+
+  private native void setupScrollListeners(Element ele, com.google.gwt.dom.client.Element target)/*-{
+
+    if($wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
+      $wnd.$(ele).bind("jsp-scroll-x", function(event){
+        var x = $wnd.$(ele).data("jsp").getContentPositionX();
+        target.scrollLeft = x;
+      });
+    }
+  }-*/;
+
+  private native boolean isFakeScrollbarActive()/*-{
+    return ($wnd.jQuery && $wnd.$.fn.jScrollPane) !== "undefined";
+  }-*/;
+
 }
