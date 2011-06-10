@@ -964,16 +964,19 @@ input[type=password]:focus {
 
 .gwt-ScrollTable .dataTable tr.hovering {
   cursor: pointer;
+  background: #87df27 none repeat scroll 0% 0%;
   cursor: hand;
 }
 
 .gwt-ScrollTable .dataTable-disabled tr.hovering {
   cursor: default;
+  background: #87df27 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable td.hovering {
   cursor: pointer;
   cursor: hand;
+  background: #87df27 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable-disabled td.hovering {
