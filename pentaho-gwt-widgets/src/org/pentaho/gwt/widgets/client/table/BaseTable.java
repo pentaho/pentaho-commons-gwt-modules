@@ -329,7 +329,9 @@ public class BaseTable extends Composite {
       @Override
       public void redraw() {
         super.redraw();    //To change body of overridden methods use File | Settings | File Templates.
-
+        if(isFakeScrollbarActive() == false){
+          return;
+        }
         if(scrollWrapper == null){
           scrollBarFix();
         }
@@ -705,7 +707,7 @@ public class BaseTable extends Composite {
 
   private native void setupScrollListeners(Element ele, com.google.gwt.dom.client.Element target)/*-{
 
-    if($wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
+    if($wnd.jQuery && $wnd.$.fn.jScrollPane){
       $wnd.$(ele).bind("jsp-scroll-x", function(event){
         var x = $wnd.$(ele).data("jsp").getContentPositionX();
         target.scrollLeft = x;
@@ -714,7 +716,7 @@ public class BaseTable extends Composite {
   }-*/;
 
   private native boolean isFakeScrollbarActive()/*-{
-    return ($wnd.jQuery && $wnd.$.fn.jScrollPane) !== "undefined";
+    return (typeof($wnd.jQuery) !== "undefined" && typeof($wnd.$.fn.jScrollPane) !== "undefined");
   }-*/;
 
 }
