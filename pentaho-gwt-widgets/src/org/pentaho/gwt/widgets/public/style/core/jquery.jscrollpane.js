@@ -785,7 +785,7 @@
 			function scrollToX(destX, animate)
 			{
 				var percentScrolled = destX / (contentWidth - paneWidth);
-				positionDragX(percentScrolled * dragMaxX, animate);
+				positionDragX(percentScrolled * horizontalDrag.width(), animate);
 			}
 
 			function scrollToElement(ele, stickToTop, animate)
@@ -870,7 +870,9 @@
 					mwEvent,
 					function (event, delta, deltaX, deltaY) {
 						var dX = horizontalDragPosition, dY = verticalDragPosition;
-						jsp.scrollBy(deltaX * settings.mouseWheelSpeed, -deltaY * settings.mouseWheelSpeed, false);
+						if(deltaY != 0) { jsp.scrollByY(-deltaY * settings.mouseWheelSpeed); }
+ 	          if(deltaX != 0) { jsp.scrollByX(deltaX * settings.mouseWheelSpeed); }
+
 						// return true if there was no movement so rest of screen can scroll
 						return dX == horizontalDragPosition && dY == verticalDragPosition;
 					}
