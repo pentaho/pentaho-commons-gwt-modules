@@ -779,7 +779,7 @@
 			function scrollToY(destY, animate)
 			{
 				var percentScrolled = destY / (contentHeight - paneHeight);
-				positionDragY(percentScrolled * dragMaxY, animate);
+				positionDragY(percentScrolled * verticalDrag.height(), animate);
 			}
 
 			function scrollToX(destX, animate)
