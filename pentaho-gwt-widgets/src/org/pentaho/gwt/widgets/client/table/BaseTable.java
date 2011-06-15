@@ -315,10 +315,6 @@ public class BaseTable extends Composite {
     });
   }
 
-  private native int getScrollLeft(Element ele)/*-{
-     return $(ele).data("jsp").getContentPositionX();
-  }-*/;
-
   private boolean scrollingFixInPlace = false;
   /**
    * Creates and initializes the scroll table.
@@ -709,10 +705,14 @@ public class BaseTable extends Composite {
 
     if($wnd.jQuery && $wnd.$.fn.jScrollPane){
       $wnd.$(ele).bind("jsp-scroll-x", function(event){
-        var x = $wnd.$(ele).data("jsp").getContentPositionX();
-        target.scrollLeft = x;
+        var data = $wnd.$(ele).data("jsp");
+        if(data != null){
+          var x = data.getContentPositionX();
+          target.scrollLeft = x;
+         }
       });
     }
+
   }-*/;
 
   private native boolean isFakeScrollbarActive()/*-{
