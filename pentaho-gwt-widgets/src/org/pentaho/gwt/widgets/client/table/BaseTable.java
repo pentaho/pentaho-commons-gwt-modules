@@ -697,6 +697,9 @@ public class BaseTable extends Composite {
 
       scrollWrapper.getElement().appendChild(firstChild);
       dataWrapperElement.appendChild(scrollWrapper.getElement());
+      if(isFakeScrollbarActive()){
+        dataWrapperElement.getStyle().setProperty("overflow", "hidden");
+      }
     }
     setupScrollListeners(scrollWrapper.getElement(), scrollTable.getHeaderTable().getElement().getParentElement());
   }
