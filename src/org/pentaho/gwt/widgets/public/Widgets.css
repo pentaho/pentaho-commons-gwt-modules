@@ -911,7 +911,7 @@ input[type=password]:focus {
 .gwt-ScrollTable .dataWrapper {
   width: 100% !important;
   position:relative;
-  overflow:hidden !important;
+  overflow: auto;
   height:100%;
 }
 
