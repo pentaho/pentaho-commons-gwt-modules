@@ -1142,24 +1142,24 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-menuitem {
-    background-color: #ffffff;
+	background-color: #ffffff;
     padding: 2px;
-    color:#000000;
+	color:#000000;
 }
 
 .pentaho-menuitem-label {
 }
 
-.pentaho-menuitem-hover {
-    background-color: #87df27;
-    color:#000000;
+.pentaho-menuitem.pentaho-menuitem-hover {
+	background-color: #87df27;
+	color:#000000;
     padding: 2px;
     cursor: default;
 }
 
 .pentaho-menu-outer {
-    background-color: #ffffff;
-    color:#000000;
+	background-color: #ffffff;
+	color:#000000;
     border: 1px solid #000000;
     padding: 2px;
 }
@@ -1178,13 +1178,13 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-checkmenuitem {
     width: 16px;
     height: 16px;
-    background: url('images/checkbox-empty.png') no-repeat center;
+	background: url('images/checkbox-empty.png') no-repeat center;
 }
 
-.pentaho-checkmenuitem-checked {
+.pentaho-checkmenuitem.menuitem-checked {
     width: 16px;
     height: 16px;
-    background: url('images/checkbox.png') no-repeat center;
+	background: url('images/checkbox.png') no-repeat center;
 }
 
 .pentaho-menuitem-disabled {
@@ -1204,10 +1204,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-editbutton-disabled {
+.pentaho-editbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/edit_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-addbutton {
@@ -1217,10 +1218,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-addbutton-disabled {
+.pentaho-addbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/add_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-deletebutton {
@@ -1230,13 +1232,14 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-deletebutton-disabled {
+.pentaho-deletebutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/remove_disabled.png') no-repeat center;
+    cursor: default;
 }
 
-.pentaho-closebutton-hover {
+.pentaho-closebutton.pentaho-imagebutton-hover {
     width: 16px;
     height: 16px;
 	background: url('images/close_sm.png') no-repeat center;
@@ -1247,6 +1250,14 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     width: 16px;
     height: 16px;
 	background: url('images/close_sm_disabled.png') no-repeat center;
+    cursor: pointer;
+}
+
+.pentaho-closebutton.pentaho-imagebutton-disabled {
+    width: 16px;
+    height: 16px;
+	background: url('images/close_sm_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-closebutton-big {
@@ -1256,10 +1267,18 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-closebutton-big-hover {
+.pentaho-closebutton-big.pentaho-imagebutton-disabled {
+    width: 30px;
+    height: 30px;
+	background: url('images/close_big.png') no-repeat center;
+    cursor: default;
+}
+
+.pentaho-closebutton-big.pentaho-imagebutton-hover {
     width: 30px;
     height: 30px;
 	background: url('images/close_big_hover.png') no-repeat center;
+    cursor: pointer;
 }
 
 .pentaho-undobutton {
@@ -1269,10 +1288,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-undobutton-disabled {
+.pentaho-undobutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/undo_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-redobutton {
@@ -1282,10 +1302,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-redobutton-disabled {
+.pentaho-redobutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/redo_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-downbutton {
@@ -1295,10 +1316,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-downbutton-disabled {
+.pentaho-downbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/16x16_down_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-upbutton {
@@ -1308,10 +1330,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-upbutton-disabled {
+.pentaho-upbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/16x16_up_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-optionsbutton {
@@ -1321,10 +1344,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-optionsbutton-disabled {
+.pentaho-optionsbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/options_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-left-lgbutton {
@@ -1334,10 +1358,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-left-lgbutton-disabled {
+.pentaho-left-lgbutton.pentaho-imagebutton-disabled {
     width: 26px;
     height: 33px;
 	background: url('images/lg_arrow_left_off.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-right-lgbutton {
@@ -1347,10 +1372,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-right-lgbutton-disabled {
+.pentaho-right-lgbutton.pentaho-imagebutton-disabled {
     width: 26px;
     height: 33px;
 	background: url('images/lg_arrow_right_off.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-forecolorbutton {
@@ -1360,10 +1386,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-forecolorbutton-disabled {
+.pentaho-forecolorbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/font_color_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-backcolorbutton {
@@ -1373,10 +1400,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-backcolorbutton-disabled {
+.pentaho-backcolorbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/back_color_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-filterbutton {
@@ -1386,10 +1414,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-filterbutton-disabled {
+.pentaho-filterbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
 	background: url('images/filter_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-layoutbutton {
@@ -1406,17 +1435,18 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-pagebackbutton-hover {
+.pentaho-pagebackbutton.pentaho-imagebutton-hover {
     width: 18px;
     height: 18px;
 	background: url('images/page_back_over.png') no-repeat center;
     cursor: pointer;
 }
 
-.pentaho-pagebackbutton-disabled {
+.pentaho-pagebackbutton.pentaho-imagebutton-disabled {
     width: 18px;
     height: 18px;
 	background: url('images/page_back_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-pagenextbutton {
@@ -1426,17 +1456,18 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
-.pentaho-pagenextbutton-hover {
+.pentaho-pagenextbutton.pentaho-imagebutton-hover {
     width: 18px;
     height: 18px;
 	background: url('images/page_forward_over.png') no-repeat center;
     cursor: pointer;
 }
 
-.pentaho-pagenextbutton-disabled {
+.pentaho-pagenextbutton.pentaho-imagebutton-disabled {
     width: 18px;
     height: 18px;
 	background: url('images/page_forward_disabled.png') no-repeat center;
+    cursor: default;
 }
 
 .pentaho-toolbar-separator {
