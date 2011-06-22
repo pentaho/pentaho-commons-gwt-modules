@@ -1142,40 +1142,53 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-menuitem {
-	background-color: #ffffff;
-	color:#000000;
+    background-color: #ffffff;
     padding: 2px;
+    color:#000000;
 }
 
 .pentaho-menuitem-label {
-    padding-left: 16px;
 }
 
 .pentaho-menuitem-hover {
-	background-color: #87df27;
-	color:#000000;
+    background-color: #87df27;
+    color:#000000;
     padding: 2px;
     cursor: default;
 }
 
-.pentaho-menu {
-	background-color: #ffffff;
-	color:#000000;
+.pentaho-menu-outer {
+    background-color: #ffffff;
+    color:#000000;
     border: 1px solid #000000;
+    padding: 2px;
+}
+
+.pentaho-menu-separator {
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+    height: 5px;
+    padding: 0;
+}
+
+.pentaho-menu-separator-inner {
+    border-top: 1px solid #000000;
 }
 
 .pentaho-checkmenuitem {
     width: 16px;
     height: 16px;
-	background-image: url('images/checkbox-empty.png');
-	background-position: 0px;
+    background: url('images/checkbox-empty.png') no-repeat center;
 }
 
 .pentaho-checkmenuitem-checked {
     width: 16px;
     height: 16px;
-	background-image: url('images/checkbox.png');
-	background-position: 0px;
+    background: url('images/checkbox.png') no-repeat center;
+}
+
+.pentaho-menuitem-disabled {
+    color: #808080;
 }
 
 .pentaho-droppanel {
