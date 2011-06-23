@@ -695,7 +695,7 @@ body{
 }
 
 .custom-list-textbox{
-  border: none;
+  border: none !important;
   overflow:hidden;
 }
 
