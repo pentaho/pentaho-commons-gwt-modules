@@ -722,7 +722,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   margin: 1px;
 }
 
-.toolbar-button-hovering {
+.toolbar-button.toolbar-button-hovering {
   background-color: #E8E8E8;
   border: 1px solid #AAA;
   cursor: pointer;
@@ -987,7 +987,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 	padding: 6px 6px 0px 6px;
 }
 
-.pentaho-disclose-dropdown {
+.pentaho-disclosure-panel-dropdown {
     padding: 0px 10px 0px 10px; 
     overflow: hidden; 
 }
@@ -1117,6 +1117,17 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .panel-content {
   background: #d4d6db;
+}
+
+.pentaho-listbox-tb {
+	border-top: 1px solid #9f9f9f; 
+	border-bottom: 1px solid #9f9f9f; 
+    background-color: white
+}
+
+.pentaho-listbox {
+	border: 1px solid #9f9f9f;      
+    background-color: white
 }
 
 .pentaho-listitem {
@@ -1470,6 +1481,17 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: default;
 }
 
+.pentaho-trashbutton {
+    width: 128px;
+    height: 150px;
+	background: url('images/trashcan.png') no-repeat center;
+}
+
+.pentaho-trashbutton.pentaho-imagebutton-hover {
+	background: url('images/trashcan_full.png') no-repeat center;
+    cursor: pointer;
+}
+
 .pentaho-toolbar-separator {
     width: 1px;
     height: 18px;
@@ -1555,4 +1577,59 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
+}
+
+.dragDropTargetArea.highlightTarget {
+	background-color: #cbefa3;
+}
+
+.dragDropTargetArea {
+	background-color: #ffffff;
+    border: 1px solid #464f57;
+    padding: 2px;
+}
+
+.dragDropTargetAreaHint {
+    color: #898b8f;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/* styles for splash/logo dialogs */
+.splash-content {
+  /* fallback color */
+  background: #000000;
+  /* Safari/Chrome */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #000000), color-stop(0.9, #666666));
+  /* Firefox */
+  background: -moz-linear-gradient(#000000, #666666 90%) repeat scroll 0 0 transparent;
+
+  /* IE 7-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#000000', endColorstr = '#666666');
+}
+
+.splashimage {
+    padding-top: 25px;
+}
+
+.splashtitle {
+    padding-top: 25px;
+    color: white;
+    font-size: 1.3em;
+    vertical-align: top;
+    heightx: 60px;
+}
+
+.splashtext {
+    color: white;
+    padding-left: 30px;
+    padding-top: 25px;
+    vertical-align: top;
+    line-height: 2em;
+}
+
+/* this style can be used to force padding on an element so the shadow of its child element can be seen */
+.pentaho-shadow-padding {
+    padding-right: 8px; 
+    padding-bottom: 8px;
 }
