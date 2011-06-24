@@ -27,6 +27,7 @@ public interface FileChooserImages extends ImageBundle, TreeImages {
   AbstractImagePrototype file();
   AbstractImagePrototype file_report();
   AbstractImagePrototype file_analysis();
+  AbstractImagePrototype file_analyzer();
   AbstractImagePrototype file_url();
   AbstractImagePrototype file_action();
   AbstractImagePrototype folder();

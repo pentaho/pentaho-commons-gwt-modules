@@ -549,6 +549,8 @@ public class FileChooser extends VerticalPanel {
         FileChooserImages.images.file_analysis().applyTo(fileImage);
       } else if (fileName.endsWith(".url")) { //$NON-NLS-1$
         FileChooserImages.images.file_url().applyTo(fileImage);
+      } else if (fileName.endsWith("xanalyzer")) {
+        FileChooserImages.images.file_analyzer().applyTo(fileImage);
       } else {
         FileChooserImages.images.file_action().applyTo(fileImage);
       }
