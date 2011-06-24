@@ -497,10 +497,12 @@ body{
   border-right: 1px solid #848484;
   padding-left: 5px;
   padding-right: 5px;
+  font-size: .85em;
 }
 .fileChooserCell {
   background-color: white;
   padding: 1px 5px;
+  font-size: .85em;
 }
 
 
@@ -508,6 +510,7 @@ body{
   background-color: white;
   padding-left: 5px;
   padding-right: 5px;
+  font-size: .85em;
 }
 
 /* end file chooser styles ------------------------------------------------ */
