@@ -16,9 +16,7 @@
  */
 package org.pentaho.gwt.widgets.login.client;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
@@ -47,10 +45,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
 
 public class LoginDialog extends PromptDialogBox {
 
@@ -71,6 +65,8 @@ public class LoginDialog extends PromptDialogBox {
   private static boolean showNewWindowOption = false;
 
   private static boolean openInNewWindowDefault = false;
+  
+  private static LoginDialog loginDialog;
 
   private static LinkedHashMap<String, String[]> defaultUsers = new LinkedHashMap<String, String[]>();
   
@@ -241,9 +237,9 @@ public class LoginDialog extends PromptDialogBox {
   }
 
   public static void performLogin(final AsyncCallback callback) {
-    LoginDialog dialog = new LoginDialog(callback, false);
-    dialog.show();
-    dialog.center();
+    loginDialog = new LoginDialog(callback, false);
+    loginDialog.show();
+    loginDialog.center();
   }
 
   private Widget buildLoginPanel(boolean openInNewWindowDefault) {
@@ -362,5 +358,13 @@ public class LoginDialog extends PromptDialogBox {
     String[] pathArray = Window.Location.getPath().split("/");
     // TODO Figure out how this webAppPath will work in a root web app
     return  "/" + pathArray[1] + "/";
+ }
+  
+ public static boolean isHidden() {
+   if(loginDialog == null) {
+     return true;
+   } else {
+     return  !loginDialog.isShowing();  
+   }
  }
 }

@@ -98,33 +98,35 @@ public class AuthenticatedGwtServiceUtil {
    * or user is successfully authenticated
    *  */
   private static void doLogin(final IAuthenticatedGwtCommand command, final AsyncCallback theirCallback) {
-    LoginDialog.performLogin(new AsyncCallback<Object>() {
-
-      public void onFailure(Throwable caught) {
-        if(caught instanceof AuthenticationFailedException) {
-        MessageDialogBox dialogBox = new MessageDialogBox(
-            Messages.getString("error"), Messages.getString("invalidLogin"), false, false, true); //$NON-NLS-1$ //$NON-NLS-2$
-        dialogBox.addStyleName("error-login-dialog");
-        dialogBox.setCallback(new IDialogCallback() {
-          public void cancelPressed() {
-            // do nothing
+    if(LoginDialog.isHidden()) {
+      LoginDialog.performLogin(new AsyncCallback<Object>() {
+  
+        public void onFailure(Throwable caught) {
+          if(caught instanceof AuthenticationFailedException) {
+          MessageDialogBox dialogBox = new MessageDialogBox(
+              Messages.getString("error"), Messages.getString("invalidLogin"), false, false, true); //$NON-NLS-1$ //$NON-NLS-2$
+          dialogBox.addStyleName("error-login-dialog");
+          dialogBox.setCallback(new IDialogCallback() {
+            public void cancelPressed() {
+              // do nothing
+            }
+  
+            public void okPressed() {
+              doLogin(command, theirCallback);
+            }
+  
+          });
+          dialogBox.center();
+          } else if(caught instanceof AuthenticationCanceledException) {
+            theirCallback.onFailure(caught);
           }
-
-          public void okPressed() {
-            doLogin(command, theirCallback);
-          }
-
-        });
-        dialogBox.center();
-        } else if(caught instanceof AuthenticationCanceledException) {
-          theirCallback.onFailure(caught);
         }
-      }
-
-      public void onSuccess(Object result) {
-        invokeCommand(command, theirCallback);
-      }
-
-    });
+  
+        public void onSuccess(Object result) {
+          invokeCommand(command, theirCallback);
+        }
+  
+      });
+    }
   }
 }
