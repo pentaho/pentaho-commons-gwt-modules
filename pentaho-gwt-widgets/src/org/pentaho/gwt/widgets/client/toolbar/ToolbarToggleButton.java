@@ -168,8 +168,10 @@ public class ToolbarToggleButton extends ToolbarButton {
     });
     eventWrapper.addMouseListener(new MouseListener(){
       public void onMouseDown(Widget arg0, int arg1, int arg2) {
-        button.addStyleName(stylePrimaryName+"-down-hovering");    //$NON-NLS-1$ 
-        button.addStyleName(stylePrimaryName+"-hovering");    //$NON-NLS-1$   
+        if (enabled) {
+          button.addStyleName(stylePrimaryName+"-down-hovering");    //$NON-NLS-1$ 
+          button.addStyleName(stylePrimaryName+"-hovering");    //$NON-NLS-1$
+        }
       }
       public void onMouseEnter(Widget arg0) {
         if(enabled){
