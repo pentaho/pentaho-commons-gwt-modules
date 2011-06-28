@@ -1115,6 +1115,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 	text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;
 }
 
+.pentaho-light-text {
+    color: #888888;
+}
+
 .panel-content {
   background: #d4d6db;
 }
@@ -1439,6 +1443,13 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: pointer;
 }
 
+.pentaho-contextmenubutton {
+    width: 15px;
+    height: 15px;
+	background: url('images/options_menu_arrow.png') no-repeat center;
+    cursor: pointer;
+}
+
 .pentaho-pagebackbutton {
     width: 18px;
     height: 18px;
@@ -1633,3 +1644,64 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     padding-right: 8px; 
     padding-bottom: 8px;
 }
+
+.pentaho-dropdownbutton-outer {
+  padding: 4px;
+  background: #888;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #AAA),
+      color-stop(0.10, #888),
+      color-stop(0.50, #3f3f3f),
+      color-stop(0.55, #000),
+      color-stop(0.90, #121212)
+  );
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%);
+  border: 1px outset gray;
+  cursor: pointer;
+  font-size:0px;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#888888', endColorstr = '#121212');
+  zoom:1;
+}
+
+.pentaho-dropdownbutton-outer.pentaho-disabled {
+  padding: 4px;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #AAA),
+      color-stop(0.10, #888),
+      color-stop(0.50, #8d8d8d),
+      color-stop(0.55, #727272),
+      color-stop(0.90, #747474)
+  );
+  background: -moz-linear-gradient(#AAA, #BBB 10%, #8d8d8d 50%, #727272 55%, #747474 90%);
+
+  border: 1px outset gray;
+  font-size:0px;
+}
+
+.pentaho-dropdownbutton-inner {
+  background-image: url('images/scroll_bottom_arrow.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 8px;
+  width: 10px;
+  font-size:0px;
+}
+
+.pentaho-dropdownbutton-inner.pentaho-disabled {
+  background-image: url('images/scroll_bottom_arrow.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 8px;
+  width: 10px;
+  font-size:0px;
+}
+
