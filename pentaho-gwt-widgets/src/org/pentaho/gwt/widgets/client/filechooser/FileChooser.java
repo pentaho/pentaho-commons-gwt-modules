@@ -786,8 +786,13 @@ public class FileChooser extends VerticalPanel {
     initUI(false);
   }
 
-  public boolean doesSelectedFileExist() {
-    String path = "/" + getFullPath(); //$NON-NLS-1$
+  /**
+   * Tokenize a path by "/".
+   * 
+   * @param path Path to tokenize.
+   * @return List of path elements tokenized by "/".
+   */
+  private List<String> buildPathSegments(final String path) {
     // find the selected item from the list
     List<String> pathSegments = new ArrayList<String>();
     if (path != null) {
@@ -801,11 +806,44 @@ public class FileChooser extends VerticalPanel {
       }
       pathSegments.add(path.substring(path.lastIndexOf("/") + 1)); //$NON-NLS-1$
     }
+    return pathSegments;
+  }
+
+  /**
+   * Get the names of all files in the given path.
+   * 
+   * @param path Path to query for files
+   * @return List of file names in the given path.
+   */
+  public List<String> getFilesInPath(final String path) {
+    List<String> pathSegments = buildPathSegments(path);
+    List<String> fileNames = new ArrayList<String>();
+    TreeItem treeItem = getTreeItem(pathSegments);
+    if (treeItem != null) {
+      for (int i = 0; i < treeItem.getChildCount(); i ++) {
+        @SuppressWarnings("unchecked")
+        HashMap<String, Object> attributeMap = (HashMap<String, Object>) treeItem.getChild(i).getUserObject();
+        final boolean isDir = "true".equals(attributeMap.get("isDirectory")); //$NON-NLS-1$ //$NON-NLS-2$
+        if (!isDir) {
+          fileNames.add((String) attributeMap.get(ACTUAL_FILE_NAME));
+        }
+      }
+    }
+    return fileNames;
+  }
+
+  public boolean doesSelectedFileExist() {
+    return doesFileExist("/" + getFullPath()); //$NON-NLS-1$)
+  }
+
+  public boolean doesFileExist(final String path) {
+    final List<String> pathSegments = buildPathSegments(path);
+    final String name = pathSegments.get(pathSegments.size() - 1);
     TreeItem treeItem = getTreeItem(pathSegments);
     if (treeItem != null) {
       @SuppressWarnings("unchecked")
       HashMap<String, Object> attributeMap = (HashMap<String, Object>) treeItem.getUserObject();
-      if (getActualFileName().equals(attributeMap.get(ACTUAL_FILE_NAME))) {
+      if (name.equals(attributeMap.get(ACTUAL_FILE_NAME))) {
         return true;
       }
     }

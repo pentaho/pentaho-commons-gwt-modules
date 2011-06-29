@@ -17,8 +17,13 @@
 package org.pentaho.gwt.widgets.client.filechooser;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.pentaho.gwt.widgets.client.dialogs.*;
+import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
@@ -125,8 +130,16 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     return fileChooser.isShowSearch();
   }
 
+  public List<String> getFilesInPath(final String path) {
+    return fileChooser.getFilesInPath(path);
+  }
+
   public boolean doesSelectedFileExist() {
     return fileChooser.doesSelectedFileExist();
+  }
+
+  public boolean doesFileExist(final String path) {
+    return fileChooser.doesFileExist(path);
   }
 
   public FileFilter getFileFilter() {
