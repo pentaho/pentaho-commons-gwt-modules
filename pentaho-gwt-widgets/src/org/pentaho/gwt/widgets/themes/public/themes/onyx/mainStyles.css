@@ -937,6 +937,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.pentaho-toolbar-background {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 .IE .pentaho-background {
 	background: url('images/wt_transparent.png') repeat;
 }
@@ -1228,7 +1232,13 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: default;
 }
 
-.pentaho-listitem-hover {
+.pentaho-listitem-disabled {
+    background-color: ##ffffff;
+	color:#808080;
+    cursor: default;
+}
+
+.pentaho-listitem.pentaho-listitem-hover {
     background-color: #cbefa3;
 	color:#000000;
     cursor: default;
@@ -1768,7 +1778,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-dropdownbutton-inner {
-  background-image: url('images/scroll_bottom_arrow.png');
+  background-image: url('images/combo_drop_arrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -1778,7 +1788,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-dropdownbutton-inner.pentaho-disabled {
-  background-image: url('images/scroll_bottom_arrow.png');
+  background-image: url('images/combo_drop_arrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
