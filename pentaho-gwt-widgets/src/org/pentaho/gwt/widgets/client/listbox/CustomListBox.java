@@ -6,6 +6,7 @@ import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.ui.*;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +144,14 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     editableTextBox.setStylePrimaryName("custom-list-textbox");
   }
 
+  public void setTableLayout(String tableLayout) {
+    if (StringUtils.isEmpty(tableLayout)) {
+      dropGrid.getElement().getStyle().clearProperty("tableLayout");
+    } else {
+      dropGrid.getElement().getStyle().setProperty("tableLayout", tableLayout);
+    }
+  }
+  
   private native void setTdStyles(Element ele)/*-{
   var tds = ele.getElementsByTagName("td");
     for( var i=0; i< tds.length; i++){
@@ -369,8 +378,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       String previousVal = editableTextBox.getText();
       String newVal = "";
 
-
-
       if(this.val != null){
         newVal = this.val;
       } else if(selectedIndex >= 0){
@@ -478,13 +485,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       averageHeight = Math.round(totalHeight / items.size());
     }
 
-
     // Set the size of the drop-down based on the largest list item
     if(width == null){
-      //TODO: move "10" to a static member
-      dropGrid.setWidth(maxWidth + (spacing*4) + maxHeight + "px"); //adding a little more room with the 10  //$NON-NLS-1$
-      this.popupWidth = maxWidth + (spacing*4) + maxHeight + "px"; //$NON-NLS-1$
-
+      dropGrid.setWidth((maxWidth + 60) + "px"); 
+      this.popupWidth = maxWidth + 60 + "px"; //$NON-NLS-1$
     } else if(width.equals("100%")){ //$NON-NLS-1$
       dropGrid.setWidth("100%"); //$NON-NLS-1$
       this.popupWidth = maxWidth + (spacing*4) + maxHeight + "px"; //$NON-NLS-1$
