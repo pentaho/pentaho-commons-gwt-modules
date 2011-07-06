@@ -817,35 +817,46 @@
 				// loop through parents adding the offset top of any elements that are relatively positioned between
 				// the focused element and the jspPane so we can get the true distance from the top
 				// of the focused element to the top of the scrollpane...
+                
+                eleTop = e.offset().top;
+                eleLeft = e.offset().left;
 				while (!e.is('.jspPane')) {
-					eleTop += e.position().top;
-					eleLeft += e.position().left;
 					e = e.offsetParent();
 					if (/^body|html$/i.test(e[0].nodeName)) {
 						// we ended up too high in the document structure. Quit!
 						return;
 					}
 				}
+                if(e.is('.jspPane')){
+                    eleTop = eleTop - e.offset().top;
+                    eleLeft = eleLeft - e.offset().left - e.scrollLeft;
+                } else {
+                    eleTop = 0;
+                    eleLeft = 0;
+                }
 
 				viewportTop = contentPositionY();
+                console.log("eleTop: "+eleTop);
+                console.log("contentPositionY: "+viewportTop);
 				maxVisibleEleTop = viewportTop + paneHeight;
-				if (eleTop < viewportTop || stickToTop) { // element is above viewport
+				if (eleTop - viewportTop < 0 || stickToTop) { // element is above viewport
 					destY = eleTop - settings.verticalGutter;
 				} else if (eleTop + eleHeight > maxVisibleEleTop) { // element is below viewport
 					destY = eleTop - paneHeight + eleHeight + settings.verticalGutter;
 				}
-				if (destY) {
+                console.log("scrolling to:"+destY);
+				if (typeof(destY) != "undefined") {
 					scrollToY(destY, animate);
 				}
 
 				viewportLeft = contentPositionX();
 	            maxVisibleEleLeft = viewportLeft + paneWidth;
-	            if (eleLeft < viewportLeft || stickToTop) { // element is to the left of viewport
+	            if (eleLeft - viewportLeft < 0 || stickToTop) { // element is to the left of viewport
 	                destX = eleLeft - settings.horizontalGutter;
 	            } else if (eleLeft + eleWidth > maxVisibleEleLeft) { // element is to the right viewport
 	                destX = eleLeft - paneWidth + eleWidth + settings.horizontalGutter;
 	            }
-	            if (destX) {
+	            if (typeof(destX) != "undefined") {
 	                scrollToX(destX, animate);
 	            }
 
