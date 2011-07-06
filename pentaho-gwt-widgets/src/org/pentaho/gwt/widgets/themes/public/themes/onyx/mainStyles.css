@@ -36,6 +36,17 @@ label {
 font-size: .85em;
 }
 
+fieldset {
+  padding: 0px;
+  width: auto;
+  border: 1px solid #888;
+}
+
+input[type='text'] {
+  border: 1px solid #333;
+  height: 20px;
+}
+
 .scroll-panel{
   position:relative;
   overflow:auto;
@@ -278,17 +289,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .dialog-content {
   border: 1px solid black;
   background: #d4d6db;
-}
-
-.dialog-content fieldset {
-  padding: 0px;
-  width: auto;
-  border: 1px solid #888;
-}
-
-.dialog-content input[type='text'] {
-  border: 1px solid #333;
-  height: 20px;
 }
 
 .dialog-button-panel {
