@@ -1179,8 +1179,8 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
  
 .pentaho-launcher-shine {
   background-color: none;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), color-stop(0.1, rgba(255, 255, 255, 0.35)), color-stop(0.43, rgba(255, 255, 255, 0.35)), color-stop(0.43, rgba(255, 255, 255, 0.15)), to(rgba(255, 255, 255, 0.15)));
-  background: -moz-linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35) 43%, rgba(255, 255, 255, 0.15) 43%, rgba(255, 255, 255, 0.15) 100%) repeat scroll 0 0 transparent;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), to(rgba(255, 255, 255, 0.15)));
+  background: -moz-linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15) 100%) repeat scroll 0 0 transparent;
 }
  
 .IE .pentaho-launcher-shine {
