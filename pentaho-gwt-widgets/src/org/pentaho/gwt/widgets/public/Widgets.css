@@ -644,7 +644,7 @@ body{
 }
 
 .combo-arrow div{
-  background-image: url('style/core/images/scroll_bottom_arrow.png');
+  background-image: url('style/images/comboArrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
