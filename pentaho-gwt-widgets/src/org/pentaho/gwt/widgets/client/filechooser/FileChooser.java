@@ -544,13 +544,19 @@ public class FileChooser extends VerticalPanel {
       String fileName = attributeMap.get("name"); //$NON-NLS-1$
 
       if (fileName.endsWith("waqr.xaction")) { //$NON-NLS-1$
-        FileChooserImages.images.file_report().applyTo(fileImage);
+        FileChooserImages.images.file_waqr_report().applyTo(fileImage);
       } else if (fileName.endsWith("analysisview.xaction")) { //$NON-NLS-1$
         FileChooserImages.images.file_analysis().applyTo(fileImage);
       } else if (fileName.endsWith(".url")) { //$NON-NLS-1$
         FileChooserImages.images.file_url().applyTo(fileImage);
       } else if (fileName.endsWith("xanalyzer")) {
         FileChooserImages.images.file_analyzer().applyTo(fileImage);
+      } else if (fileName.endsWith("prpti")) {
+        FileChooserImages.images.file_pir_report().applyTo(fileImage);
+      } else if (fileName.endsWith("prpt")) {
+        FileChooserImages.images.file_prpt_report().applyTo(fileImage);
+      } else if (fileName.endsWith("xdash")) {
+        FileChooserImages.images.file_dashboard().applyTo(fileImage);
       } else {
         FileChooserImages.images.file_action().applyTo(fileImage);
       }
