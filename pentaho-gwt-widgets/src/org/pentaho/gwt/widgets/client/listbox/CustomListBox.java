@@ -96,8 +96,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     listScrollPanel.setHeight("100%"); //$NON-NLS-1$
     listScrollPanel.setWidth("100%"); //$NON-NLS-1$
     listScrollPanel.getElement().getStyle().setProperty("overflowX","hidden"); //$NON-NLS-1$ //$NON-NLS-2$
-    listScrollPanel.setStylePrimaryName("listbox-scroll-panel");
-    popupScrollPanel.setStylePrimaryName("listbox-scroll-panel");
     //listScrollPanel.getElement().getStyle().setProperty("padding",spacing+"px");
     listPanel.setSpacing(spacing);
     listPanel.setWidth("100%"); //$NON-NLS-1$
@@ -332,11 +330,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
     if(visible > 1){
       updateList();
-      ElementUtils.replaceScrollbars(listScrollPanel.getElement());
     } else {
       updateDropDown();
     }
-    
   }
 
   /**
@@ -487,7 +483,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
     // Set the size of the drop-down based on the largest list item
     if(width == null){
-      dropGrid.setWidth((maxWidth + 60) + "px"); 
+      dropGrid.setWidth((maxWidth + 60) + "px");
       this.popupWidth = maxWidth + 60 + "px"; //$NON-NLS-1$
     } else if(width.equals("100%")){ //$NON-NLS-1$
       dropGrid.setWidth("100%"); //$NON-NLS-1$

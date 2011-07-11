@@ -211,67 +211,6 @@ public class ElementUtils {
     
   }
 
-  public static void replaceScrollbars(final String className){
-    DeferredCommand.addCommand(new Command() {
-      public void execute() {
-        replaceScrollbarsJS(className);
-
-      }
-    });
-  }
-
-  public static void replaceScrollbars(final Element ele){
-    DeferredCommand.addCommand(new Command() {
-      public void execute() {
-        replaceScrollbarsJS(ele);
-      }
-    });
-  }
-
-  public static void reinitializeScrollbars(final Element parentEle, final String[] classNames){
-
-    DeferredCommand.addCommand(new Command() {
-      public void execute() {
-        String selector = ".dummy";
-        for(String name : classNames){
-          if(StringUtils.isEmpty(name)){
-            continue;
-          }
-          selector += ", ."+name;
-        }
-        reinitializeScrollbarsJS(parentEle,  selector);
-      }
-    });
-  }
-
-  private static native void reinitializeScrollbarsJS(Element ele, String classNames)/*-{
-    if(!$wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
-      return;
-    }
-    try{
-      $wnd.$(ele).find(classNames).jScrollPane({showArrows: true});
-    } catch(e){alert(e);}
-  }-*/;
-
-  private static native void replaceScrollbarsJS(Element ele)/*-{
-    if(!$wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
-      return;
-    }
-    try{
-      $wnd.$(ele).jScrollPane({showArrows: true});
-    } catch(e){alert(e);}
-  }-*/;
-
-  private static native void replaceScrollbarsJS(String className)/*-{
-    if(!$wnd.jQuery || !$wnd.jQuery.fn.jScrollPane){
-      return;
-    }
-    try{
-      $wnd.$("."+className).jScrollPane({showArrows: true});
-    } catch(e){alert(e);}
-  }-*/;
-
-
 }
 
 

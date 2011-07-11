@@ -1,14 +1,14 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * This program is free software; you can redistribute it and/or modify it under the 
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software 
  * Foundation.
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
+ * You should have received a copy of the GNU Lesser General Public License along with this 
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html 
+ * or from the Free Software Foundation, Inc., 
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
@@ -16,12 +16,32 @@
  */
 package org.pentaho.gwt.widgets.client.table;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.*;
-import com.google.gwt.user.client.*;
-import com.google.gwt.user.client.Element;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import com.google.gwt.gen2.table.client.AbstractScrollTable;
 import com.google.gwt.user.client.ui.*;
-import com.google.gwt.widgetideas.table.client.*;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
+import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.DeferredCommand;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.widgetideas.table.client.FixedWidthFlexTable;
+import com.google.gwt.widgetideas.table.client.FixedWidthGrid;
+import com.google.gwt.widgetideas.table.client.ScrollTable;
+import com.google.gwt.widgetideas.table.client.SortableGrid;
+import com.google.gwt.widgetideas.table.client.SourceTableSelectionEvents;
+import com.google.gwt.widgetideas.table.client.TableSelectionListener;
 import com.google.gwt.widgetideas.table.client.ScrollTable.ResizePolicy;
 import com.google.gwt.widgetideas.table.client.SelectionGrid.SelectionPolicy;
 import com.google.gwt.widgetideas.table.client.SortableGrid.ColumnSorter;
@@ -29,25 +49,15 @@ import com.google.gwt.widgetideas.table.client.SortableGrid.ColumnSorterCallback
 import com.google.gwt.widgetideas.table.client.TableModel.ColumnSortList;
 import com.google.gwt.widgetideas.table.client.overrides.FlexTable.FlexCellFormatter;
 import com.google.gwt.widgetideas.table.client.overrides.HTMLTable.CellFormatter;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
-import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
-import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
  * Core reusable, table widget for displaying tabular data that is
  * based on a composite of a ScrollTable and a FixedWidthGrid.
- *
+ * 
  * <p>
  * Usage Notes:
- *
+ * 
  * <p>
  * <ul>
  * <li>You must call the populateTable or populateTableWithSimpleMessage method
@@ -72,7 +82,7 @@ public class BaseTable extends Composite {
   private ScrollTable scrollTable;
 
   private FixedWidthFlexTable tableHeader;
-
+  
   private FixedWidthGrid dataGrid;
 
   private String[] tableHeaderNames;
@@ -156,14 +166,14 @@ public class BaseTable extends Composite {
   private List<TableSelectionListener> tableSelectionListeners = new ArrayList<TableSelectionListener>();
 
   /**
-   * Simple constructor.
+   * Simple constructor. 
    */
   public BaseTable(String[] tableHeaderNames, int[] columnWidths) {
     this(tableHeaderNames, columnWidths, null);
   }
 
   /**
-   * Simple constructor.
+   * Simple constructor. 
    */
   public BaseTable(String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators) {
     this(tableHeaderNames, columnWidths, columnComparators, null);
@@ -171,9 +181,9 @@ public class BaseTable extends Composite {
 
   /**
    * Main constructor.
-   *
+   * 
    * Note: For column width values, use -1 to not specify a column width.
-   * Note: For column comparators individually, a null value will disable sorting for that column.  If you set
+   * Note: For column comparators individually, a null value will disable sorting for that column.  If you set 
    *         the columnComparators array to null, all columns will be populated with the default column comparator.
    */
   public BaseTable(String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators,
@@ -191,7 +201,7 @@ public class BaseTable extends Composite {
         this.selectionPolicy = selectionPolicy;
       }
 
-      // Set column comparators to default if columnComparators is null
+      // Set column comparators to default if columnComparators is null 
       if (columnComparators == null) {
         this.columnComparators = new BaseColumnComparator[tableHeaderNames.length];
 
@@ -216,7 +226,7 @@ public class BaseTable extends Composite {
 
   /**
    * Creates a table with the given headers, column widths, and row/column values using the default
-   * resize policy of RESIZE_POLICY_FIXED_WIDTH.
+   * resize policy of RESIZE_POLICY_FIXED_WIDTH. 
    */
   private void createTable(String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues) {
     createTable(tableHeaderNames, columnWidths, rowAndColumnValues, ScrollTable.ResizePolicy.FIXED_WIDTH,
@@ -224,16 +234,15 @@ public class BaseTable extends Composite {
   }
 
   /**
-   * Creates a table with the given headers, column widths, row/column values, and resize policy.
+   * Creates a table with the given headers, column widths, row/column values, and resize policy. 
    */
   private void createTable(String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues,
-      ResizePolicy resizePolicy, SelectionPolicy selectionPolicy)
+      ResizePolicy resizePolicy, SelectionPolicy selectionPolicy) 
   {
     createTableHeader(tableHeaderNames, columnWidths);
     createDataGrid(selectionPolicy);
     createScrollTable(resizePolicy);
     populateDataGrid(columnWidths, rowAndColumnValues);
-
   }
 
   /**
@@ -258,7 +267,7 @@ public class BaseTable extends Composite {
   }
 
   /**
-   * Creates and initializes the data grid.
+   * Creates and initializes the data grid. 
    */
   private void createDataGrid(SelectionPolicy selectionPolicy) {
 
@@ -287,7 +296,7 @@ public class BaseTable extends Composite {
     };
 
     dataGrid.setWidth("100%");
-
+    
     // Set style
     if (selectionPolicy == null) {
       dataGrid.setSelectionPolicy(SelectionPolicy.ONE_ROW);
@@ -317,37 +326,11 @@ public class BaseTable extends Composite {
 
   private boolean scrollingFixInPlace = false;
   /**
-   * Creates and initializes the scroll table.
+   * Creates and initializes the scroll table. 
    */
   private void createScrollTable(ResizePolicy resizePolicy) {
-    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class)){
 
-      @Override
-      public void redraw() {
-        super.redraw();    //To change body of overridden methods use File | Settings | File Templates.
-        if(isFakeScrollbarActive() == false){
-          return;
-        }
-        if(scrollWrapper == null){
-          scrollBarFix();
-        }
-
-        DeferredCommand.addCommand(new Command() {
-          public void execute() {
-            scrollWrapper.setHeight(scrollWrapper.getElement().getParentElement().getOffsetHeight()+"px");
-
-            ElementUtils.replaceScrollbars(scrollWrapper.getElement());
-          }
-        });
-      }
-
-      @Override
-      protected void scrollTables(boolean baseHeader) {
-        if(isFakeScrollbarActive() == false){
-          super.scrollTables(baseHeader);
-        }
-      }
-    };
+    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class));
     scrollTable.addScrollListener(new ScrollListener(){
       public void onScroll(Widget widget, int scrollLeft, int scrollTop) {
         if(!scrollingFixInPlace){
@@ -378,7 +361,7 @@ public class BaseTable extends Composite {
     if (this.scrollTableHeight != null) {
       this.setHeight(scrollTableHeight);
     }
-
+    
     if (columnWidths != null && columnWidths.length > 0) {
       for (int i = 0; i < columnWidths.length; i++) {
         if (columnWidths[i] > 0) {
@@ -386,16 +369,17 @@ public class BaseTable extends Composite {
         }
       }
     }
-
+    
     if (scrollTableWidth != null) {
       scrollTable.setWidth(scrollTableWidth);
     }
 //    scrollTable.fillWidth();
     scrollingFixInPlace = false; // Mark the need to "fix" IE headerTableWrapper
+
   }
 
   /**
-   * Populates the data grid with data then sets the column widths.
+   * Populates the data grid with data then sets the column widths. 
    */
   private void populateDataGrid(int[] columnWidths, Object[][] rowAndColumnValues) {
 
@@ -498,28 +482,28 @@ public class BaseTable extends Composite {
 
   /**
    * Creates the table using the default values specified in the constructor but with new data for
-   * the rows.
+   * the rows. 
    */
   public void populateTable(Object[][] rowAndColumnValues) {
     populateDataGrid(columnWidths, rowAndColumnValues);
   }
 
   /**
-   * Adds an additional table listener in addition to the default listener.
+   * Adds an additional table listener in addition to the default listener. 
    */
   public void addTableListener(TableListener listener) {
     tableListeners.add(listener);
   }
 
   /**
-   * Adds an additional table selection listener in addition to the default listener.
+   * Adds an additional table selection listener in addition to the default listener. 
    */
   public void addTableSelectionListener(TableSelectionListener listener) {
     tableSelectionListeners.add(listener);
   }
 
   /**
-   * Adds a listener to fire when a user double-clicks on a table row.
+   * Adds a listener to fire when a user double-clicks on a table row. 
    */
   public void addDoubleClickListener(TableListener listener) {
     doubleClickListeners.add(listener);
@@ -681,45 +665,4 @@ public class BaseTable extends Composite {
       }
     }
   }
-
-  private SimplePanel scrollWrapper;
-  private void scrollBarFix() {
-    if(dataGrid == null){
-      return;
-    }
-    final com.google.gwt.dom.client.Element dataWrapperElement = dataGrid.getElement().getParentElement();
-    String classAttribute = dataWrapperElement.getClassName();
-    if (classAttribute != null && classAttribute.contains("dataWrapper")) {
-      scrollWrapper = new SimplePanel();
-      scrollWrapper.setStylePrimaryName("table-scroll-panel");
-      Node firstChild = dataWrapperElement.getFirstChild();
-      firstChild.removeFromParent();
-
-      scrollWrapper.getElement().appendChild(firstChild);
-      dataWrapperElement.appendChild(scrollWrapper.getElement());
-      if(isFakeScrollbarActive()){
-        dataWrapperElement.getStyle().setProperty("overflow", "hidden");
-      }
-    }
-    setupScrollListeners(scrollWrapper.getElement(), scrollTable.getHeaderTable().getElement().getParentElement());
-  }
-
-  private native void setupScrollListeners(Element ele, com.google.gwt.dom.client.Element target)/*-{
-
-    if($wnd.jQuery && $wnd.$.fn.jScrollPane){
-      $wnd.$(ele).bind("jsp-scroll-x", function(event){
-        var data = $wnd.$(ele).data("jsp");
-        if(data != null){
-          var x = data.getContentPositionX();
-          target.scrollLeft = x;
-         }
-      });
-    }
-
-  }-*/;
-
-  private native boolean isFakeScrollbarActive()/*-{
-    return (typeof($wnd.jQuery) !== "undefined" && typeof($wnd.$.fn.jScrollPane) !== "undefined");
-  }-*/;
-
 }
