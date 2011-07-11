@@ -237,19 +237,19 @@ which java class/code the style is associated with */
 /* end menubar/menuitem styles ------------------------------------------------------*/
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected:hover {
-  background-color: #87df27;
+  background-color: #cbefa3;
 }
  
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected:hover {
-  background-color: #87df27;
+  background-color: #cbefa3;
 }
  
 gwt-MenuBar-horizontal .gwt-MenuItem-selected:hover {
-background-color: #87df27;
+background-color: #cbefa3;
 }
  
 .gwt-MenuBar-vertical .gwt-MenuItem-selected:hover {
-  background-color:  #87df27;
+  background-color:  #cbefa3;
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked {
@@ -262,7 +262,7 @@ background-color: #87df27;
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected {
-  background-color: #cbefa3;
+  background-color: #dbdbdb;
   vertical-align: bottom;
 }
 
@@ -276,7 +276,7 @@ background-color: #87df27;
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked-selected {
-  background-color: #cbefa3;
+  background-color: #dbdbdb;
   vertical-align: bottom;
 }
 
@@ -313,7 +313,7 @@ background-color: #87df27;
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem-selected {
   border: 1px solid #000000;
-  background-color: #cbefa3;
+  background-color: #dbdbdb;
   color: black;
   padding: 2px 5px 4px;
   vertical-align: bottom;
@@ -349,7 +349,7 @@ background-color: #87df27;
 }
 
 .gwt-MenuBar-vertical .gwt-MenuItem-selected {
-  background-color: #cbefa3;
+  background-color: #dbdbdb;
   color: black;
   vertical-align: bottom;
 }
@@ -370,7 +370,7 @@ background-color: #87df27;
   padding-right: 4px;
 }
 .gwt-MenuBar-vertical .subMenuIcon-selected {
-  background-color: #cbefa3;
+  background-color: #dbdbdb;
 }
 
 
@@ -547,7 +547,7 @@ body{
 .dragdrop-proxy {
 }
 .dragdrop-selected,.dragdrop-dragging,.dragdrop-proxy {
-  	background-color: #CBEFA3;
+  	background-color: #dbdbdb;
   	filter: alpha(opacity=100);
   	opacity: 1;
 }
@@ -718,11 +718,11 @@ body{
 }
 
 .custom-list-item-hover{
-  background-color: #87df27;
+  background-color: #cbefa3;
 }
 
 .custom-list-item-selected{
-  background-color: #cbefa3;
+  background-color: #dbdbdb;
 }
 
 .custom-list-item-proxy{
@@ -967,19 +967,19 @@ input[type=password]:focus {
 
 .gwt-ScrollTable .dataTable tr.hovering {
   cursor: pointer;
-  background: #87df27 none repeat scroll 0% 0%;
+  background: #cbefa3 none repeat scroll 0% 0%;
   cursor: hand;
 }
 
 .gwt-ScrollTable .dataTable-disabled tr.hovering {
   cursor: default;
-  background: #87df27 none repeat scroll 0% 0%;
+  background: #cbefa3 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable td.hovering {
   cursor: pointer;
   cursor: hand;
-  background: #87df27 none repeat scroll 0% 0%;
+  background: #cbefa3 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable-disabled td.hovering {
@@ -987,11 +987,11 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .dataTable tr.selected {
-  background: #cbefa3 none repeat scroll 0% 0%;
+  background: #dbdbdb none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
-  background: #87df27 none repeat scroll 0% 0%;
+  background: #cbefa3 none repeat scroll 0% 0%;
 }
 
 .gwt-ScrollTable .pagingOptions {
