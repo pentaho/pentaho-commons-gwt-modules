@@ -434,6 +434,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
  }
 
 .pentaho-tabPanel{
+  border: 1px solid black;
+  border-top: 3px solid black;
+
   border: 1px solid rgba(0, 0, 0, 0.7);
   border-top: 3px solid rgba(0, 0, 0, 0.7);
   clear:both;
