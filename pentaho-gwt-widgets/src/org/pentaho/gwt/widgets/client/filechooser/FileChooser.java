@@ -140,12 +140,12 @@ public class FileChooser extends VerticalPanel {
     }
   }
 
-  public FileChooser(FileChooserMode mode, String selectedPath) {
+  public FileChooser(FileChooserMode mode, String selectedPath, IDialogCallback callback) {
     this();
     this.mode = mode;
     this.selectedPath = selectedPath;
     try {
-      fetchRepositoryDocument(null);
+      fetchRepositoryDocument(callback);
     } catch (RequestException e) {
       Window.alert(e.toString());
     }

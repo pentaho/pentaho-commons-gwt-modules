@@ -45,7 +45,15 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   public FileChooserDialog(FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal, String title, String okText) {
     super(title, okText, FileChooserEntryPoint.messages.getString("Cancel"), false, true);
       
-    fileChooser = new FileChooser(mode, selectedPath);
+    fileChooser = new FileChooser(mode, selectedPath, new IDialogCallback(){
+      public void cancelPressed() {
+
+      }
+
+      public void okPressed() {
+        center();
+      }
+    });
     this.setContent(fileChooser);
     fileChooser.setWidth("100%"); //$NON-NLS-1$
     setValidatorCallback(new IDialogValidatorCallback() {
