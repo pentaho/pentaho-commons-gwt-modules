@@ -1030,3 +1030,7 @@ input[type=password]:focus {
   height:100%;
   width:100%;
 }
+
+.hide-h-scrolling{
+    overflow-x: hidden;
+}

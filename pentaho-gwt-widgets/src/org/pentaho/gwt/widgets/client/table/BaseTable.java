@@ -665,4 +665,8 @@ public class BaseTable extends Composite {
       }
     }
   }
+
+  public void suppressHorizontalScrolling(){
+    dataGrid.addStyleName("hide-h-scrolling");
+  }
 }
