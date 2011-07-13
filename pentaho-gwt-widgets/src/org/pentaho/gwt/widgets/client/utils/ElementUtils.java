@@ -211,6 +211,19 @@ public class ElementUtils {
     
   }
 
+
+  public static void setupButtonHoverEffect() {
+    setupHoverEffectJS();
+  }
+  private static native void setupHoverEffectJS()/*-{
+    if(!$wnd.jQuery || !$wnd.setupJsButtonHover){
+      return;
+    }
+    try{
+      $wnd.setupJsButtonHover();
+    } catch(e){alert(e);}
+  }-*/;
+
 }
 
 

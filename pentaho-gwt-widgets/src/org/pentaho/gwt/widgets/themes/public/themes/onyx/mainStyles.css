@@ -105,6 +105,9 @@ input[type='text'] {
 .IE .pentaho-button:hover {
   background: url('images/bg_btn_hover.png') repeat-x;
 }
+.IE .pentaho-button-hover {
+  background: url('images/bg_btn_hover.png') repeat-x;
+}
 
 /* Just lightening it up a bit */
 .pentaho-button:active {
