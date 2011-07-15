@@ -1302,7 +1302,8 @@ input:focus {
 
 .pentaho-listbox {
 	border: 1px solid #9f9f9f;      
-    background-color: white
+    background-color: white;
+    overflow: auto;
 }
 
 .pentaho-listitem {
