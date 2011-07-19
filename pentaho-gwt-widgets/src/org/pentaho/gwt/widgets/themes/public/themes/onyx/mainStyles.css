@@ -93,7 +93,7 @@ input[type='text'] {
 }
 .IE .pentaho-button {
   height: 30px;
-  background: url('images/bg_btn.png') repeat-x;
+  background: #000000 url('images/bg_btn.png') repeat-x;
   background-position: center center;
 }
 
