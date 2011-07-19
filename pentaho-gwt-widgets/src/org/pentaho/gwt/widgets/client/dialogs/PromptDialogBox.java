@@ -52,7 +52,7 @@ public class PromptDialogBox extends DialogBox {
       }
     });
     final HorizontalPanel dialogButtonPanel = new HorizontalPanel();
-    dialogButtonPanel.setSpacing(2);
+    dialogButtonPanel.setSpacing(0);
     dialogButtonPanel.add(okButton);
     if (cancelText != null) {
       cancelButton = new Button(cancelText);
