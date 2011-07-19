@@ -33,7 +33,7 @@ img {
   user-focus: none;
 }
 label {
-font-size: .85em;
+font-size: .86em;
 }
 
 fieldset {
@@ -1288,13 +1288,13 @@ input:focus {
 .login-panel {
 	height: 100%;
 	width: 100%;
-	font-size: 0.85em;
+	font-size: 0.86em;
 	text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;
 	padding: 5px;
 }
 
 .login-panel-label {
-	font-size: 0.85em;
+	font-size: 0.86em;
 	text-shadow: rgba(255, 255, 255, 0.398438) 0px 1px 0px;
 }
 

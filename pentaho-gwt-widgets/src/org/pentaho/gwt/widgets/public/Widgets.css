@@ -497,12 +497,12 @@ body{
   border-right: 1px solid #848484;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: .85em;
+  font-size: .86em;
 }
 .fileChooserCell {
   background-color: white;
   padding: 1px 5px;
-  font-size: .85em;
+  font-size: .86em;
 }
 
 
@@ -510,7 +510,7 @@ body{
   background-color: #cbefa3;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: .85em;
+  font-size: .86em;
 }
 
 /* end file chooser styles ------------------------------------------------ */
@@ -710,7 +710,7 @@ body{
 
 .custom-list-item{
   background-color: white;
-  font-size: .85em;
+  font-size: .86em;
 }
 
 .custom-list-disabled-item{
@@ -728,7 +728,7 @@ body{
 .custom-list-item-proxy{
   opacity: 0.85;
   filter: alpha(opacity=85);
-  font-size: .85em;
+  font-size: .86em;
   border: 1px dashed #999 !important;
   background: transparent;
   z-index:1500 !important;
@@ -745,7 +745,7 @@ body{
 
 
 .customButton {
-  font-size: 0.85em;
+  font-size: 0.86em;
   border: 1px outset #ccc;
   background-color: #ddd;
 }
