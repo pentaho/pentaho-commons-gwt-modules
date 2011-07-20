@@ -616,6 +616,9 @@ body{
 .custom-list-item {
   white-space: nowrap;
 }
+.custom-list-item .gwt-Label {
+  white-space: nowrap;
+}
 
 .custom-list-item input[type='text'] {
   height: normal;
