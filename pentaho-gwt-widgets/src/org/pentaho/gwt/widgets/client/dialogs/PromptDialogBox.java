@@ -71,7 +71,7 @@ public class PromptDialogBox extends DialogBox {
     } else {
       dialogButtonPanelWrapper.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
     }
-    dialogButtonPanelWrapper.setStyleName("dialogButtonPanel"); //$NON-NLS-1$
+    dialogButtonPanelWrapper.setStyleName("button-panel"); //$NON-NLS-1$
     dialogButtonPanelWrapper.setWidth("100%"); //$NON-NLS-1$
     dialogButtonPanelWrapper.add(dialogButtonPanel);
 
@@ -80,11 +80,10 @@ public class PromptDialogBox extends DialogBox {
     }
     dialogContent.setCellPadding(0);
     dialogContent.setCellSpacing(0);
-    dialogContent.getFlexCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_TOP);
-    dialogContent.getFlexCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_LEFT);
+    dialogContent.getFlexCellFormatter().setHeight(0, 0, "100%");
     // add button panel
-    dialogContent.setWidget(2, 0, dialogButtonPanelWrapper);
-    dialogContent.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_BOTTOM);
+    dialogContent.setWidget(1, 0, dialogButtonPanelWrapper);
+    dialogContent.getCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_BOTTOM);
     // dialogContent.getFlexCellFormatter().setColSpan(2, 0, 2);
     dialogContent.setWidth("100%"); //$NON-NLS-1$
     setWidget(dialogContent);
