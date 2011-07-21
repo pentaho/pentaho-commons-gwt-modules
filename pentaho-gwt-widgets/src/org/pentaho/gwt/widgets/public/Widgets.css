@@ -170,19 +170,19 @@ which java class/code the style is associated with */
 }
 
 .roundedbutton-right{
-  background: url('style/images/button_right.png');
+  background: url('../themes/public/themes/images/button_right.png');
   width: 7px;
   height: 27px;
 }
 
 .roundedbutton-left{
-  background: url('style/images/button_left.png');
+  background: url('../themes/public/themes/images/button_left.png');
   width: 7px;
   height: 27px;
 }
 
 .roundedbutton-slice{
-  background: url('style/images/button_middle.png') repeat-x;
+  background: url('../themes/public/themes/images/button_middle.png') repeat-x;
 }
 
 .roundedbutton-over{
@@ -196,19 +196,19 @@ which java class/code the style is associated with */
 }
 
 .roundedbutton-right-over{
-  background: url('style/images/button_right_over.png');
+  background: url('../themes/public/themes/images/button_right_over.png');
   width: 7px;
   height: 27px;
 }
 
 .roundedbutton-left-over{
-  background: url('style/images/button_left_over.png');
+  background: url('../themes/public/themes/images/button_left_over.png');
   width: 7px;
   height: 27px;
 }
 
 .roundedbutton-slice-over{
-  background: url('style/images/button_middle_over.png') repeat-x;
+  background: url('../themes/public/themes/images/button_middle_over.png') repeat-x;
 }
 
 .roundedbutton-label-disabled{
@@ -218,19 +218,19 @@ which java class/code the style is associated with */
 }
 
 .roundedbutton-right-disabled{
-  background: url('style/images/button_right_disabled.png');
+  background: url('../themes/public/themes/images/button_right_disabled.png');
   width: 7px;
   height: 27px;
 }
 
 .roundedbutton-left-disabled{
-  background: url('style/images/button_left_disabled.png');
+  background: url('../themes/public/themes/images/button_left_disabled.png');
   width: 7px;
   height: 27px;
 }
 
 .roundedbutton-slice-disabled{
-  background: url('style/images/button_middle_disabled.png') repeat-x;
+  background: url('../themes/public/themes/images/button_middle_disabled.png') repeat-x;
 }
 
 
@@ -255,7 +255,7 @@ background-color: #cbefa3;
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked {
   cursor: hand;
   cursor: pointer;
-  background-image:url(style/images/checkbox.png);
+  background-image:url(../themes/public/themes/images/checkbox.png);
   background-position:6px 50%;
   background-repeat:no-repeat;
   padding:3px 20px 3px 20px;
@@ -269,7 +269,7 @@ background-color: #cbefa3;
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-unchecked {
   cursor: hand;
   cursor: pointer;
-  background-image:url(style/images/checkbox-empty.png);
+  background-image:url(../themes/public/themes/images/checkbox-empty.png);
   background-position:6px 50%;
   background-repeat:no-repeat;
   padding:3px 20px 3px 20px;
@@ -575,7 +575,7 @@ body{
 
 .resizable-WindowPanel .resizable-WindowPanel-header {
   padding: 5px;
-  background-image: url(style/images/subtoolbar_bg.png);
+  background-image: url(../themes/public/themes/images/subtoolbar_bg.png);
   color: black;
   overflow: hidden;
   cursor: move;
@@ -647,7 +647,7 @@ body{
 }
 
 .combo-arrow div{
-  background-image: url('style/images/comboArrow.png');
+  background-image: url('../themes/public/themes/images/comboArrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -941,7 +941,7 @@ input[type=password]:focus {
 }
 
 .IE .gwt-ScrollTable .headerTable td {
-  background: url('style/images/header_20px.png') repeat-x;
+  background: url('../themes/public/themes/images/header_20px.png') repeat-x;
 }
 
 .gwt-ScrollTable .headerTable-disabled td {
