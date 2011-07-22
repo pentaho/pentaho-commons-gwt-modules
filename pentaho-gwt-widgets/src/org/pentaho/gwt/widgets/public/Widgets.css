@@ -885,7 +885,7 @@ input[type=password]:focus {
 .gwt-ScrollTable .dataTable td {
   border-bottom: 1px solid #BEBEBE;
   border-right: 1px solid #BEBEBE;
-  padding: 2px;
+  padding: 2px 2px 2px 4px;
 }
 
 .gwt-ScrollTable .dataTable-disabled td {
