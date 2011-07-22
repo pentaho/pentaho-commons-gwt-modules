@@ -1320,25 +1320,26 @@ input:focus {
 
 .pentaho-listitem {
     background-color: #ffffff;
-	color:#000000;
+    color:#000000;
     cursor: default;
 }
 
 .pentaho-listitem-selected {
     background-color: #dbdbdb;
-	color:#000000;
+    color:#000000;
     cursor: default;
+    outline:  none;
 }
 
 .pentaho-listitem-disabled {
-    background-color: ##ffffff;
-	color:#808080;
+    background-color: #ffffff;
+    color:#808080;
     cursor: default;
 }
 
 .pentaho-listitem.pentaho-listitem-hover {
     background-color: #cbefa3;
-	color:#000000;
+    color:#000000;
     cursor: default;
 }
 
@@ -1347,9 +1348,9 @@ input:focus {
 }
 
 .pentaho-menuitem {
-	background-color: #ffffff;
-    padding: 2px;
-	color:#000000;
+  background-color: #ffffff;
+  padding: 2px;
+  color:#000000;
 }
 
 .pentaho-menuitem-label {

@@ -29,7 +29,7 @@ Dialog title, section header: bevel color - #d6d7d6
 Buttons, tabs, dialog titles, table headers: background - gradient from #e6e6e6/#e6e6e6/#d8d8d8/#d8d8d8, IE(buttons) =images/bg_btn.png IE(tabs)=images/tab_on.png
 Buttons, tabs, dialog titles: disabled - gradient from Gainsboro/Gray/DimGray, IE=images/bg_btn_disabled.png
 Tabs (not selected): background - gradient from FloralWhite/Gainsboro/LightSkyBlue IE=images/tab_off.png
-Tab panel Ð background IE=images/tab_panel_bg.png
+Tab panel ï¿½ background IE=images/tab_panel_bg.png
 
 Buttons: hover - #CCC,  IE=images/bg_btn_hover.png
 Shadow: #747474
@@ -1203,37 +1203,38 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-listitem {
-    background-color: white;
-	color:black;
-    cursor: default;
+  background-color: white;
+  color:black;
+  cursor: default;
 }
 
 .pentaho-listitem-selected {
-    background-color: #e4e5e4;
+  background-color: #e4e5e4;
 	color:black;
-    cursor: default;
+  cursor: default;
+  outline: none;
 }
 
 .pentaho-listitem-disabled {
-    background-color: white;
-	color:black;
-    cursor: default;
+  background-color: white;
+  color:black;
+  cursor: default;
 }
 
 .pentaho-listitem.pentaho-listitem-hover {
-    background-color: #f5f5f5;
-	color:black;
-    cursor: default;
+  background-color: #f5f5f5;
+  color:black;
+  cursor: default;
 }
 
 .pentaho-listitem-hover {
-    background-color: #f5f5f5;
-	color:black;
-    cursor: default;
+  background-color: #f5f5f5;
+  color:black;
+  cursor: default;
 }
 
 .pentaho-listitem-label {
-    padding-left: 4px;
+  padding-left: 4px;
 }
 
 .pentaho-menuitem {
