@@ -55,7 +55,7 @@ input[type='text'] {
 }
 
 .pentaho-page-background {
-  background: url('../images/bg_pentaho_default.png') repeat-x top left;
+  background: url('images/bg_pentaho_default.png') repeat-x top left;
   background-color: #303030;
 }
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
@@ -93,7 +93,7 @@ input[type='text'] {
 }
 .IE .pentaho-button {
   height: 30px;
-  background: #000000 url('../images/bg_btn.png') repeat-x;
+  background: #000000 url('images/bg_btn.png') repeat-x;
   background-position: center center;
 }
 
@@ -117,7 +117,7 @@ input[type='text'] {
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C8C8C8), color-stop(0.10, #AAA), color-stop(0.50, #666), color-stop(0.55, #353535), color-stop(0.90, #3F3F3F));
 }
 .IE .pentaho-button:active {
-  background: url('../images/bg_btn_active.png') repeat-x;
+  background: url('images/bg_btn_active.png') repeat-x;
 }
 
 /* lighter gray with white text */
@@ -134,7 +134,7 @@ input[type='text'] {
   text-shadow: 0px 0px 2px rgba(000, 000, 000, 4);
 }
 .IE .pentaho-button.disabled{
-  background: url('../images/bg_btn_disabled.png') repeat-x;
+  background: url('images/bg_btn_disabled.png') repeat-x;
   cursor:default;
 }
 
@@ -179,7 +179,7 @@ input[type='text'] {
   -webkit-border-radius: 5px 5px 5px 5px;
 }
 .IE .pentaho-toggle-button-single {
-  background: url('../images/bg_btn.png') repeat-x;
+  background: url('images/bg_btn.png') repeat-x;
   background-position: center center;
 }
 .pentaho-toggle-button-horizontal-first {
@@ -228,7 +228,7 @@ input[type='text'] {
 }
 
 .IE .pentaho-toggle-button-up, .IE .pentaho-toggle-button-up-disabled {
-  background: url('../images/bg_btn.png') repeat-x;
+  background: url('images/bg_btn.png') repeat-x;
   background-position: center center;
 }
 
@@ -263,7 +263,7 @@ input[type='text'] {
 }
 
 .IE .pentaho-toggle-button-down, .IE .pentaho-toggle-button-down-disabled {
-  background: url('../images/bg_btn_selected.png') repeat-x;
+  background: url('images/bg_btn_selected.png') repeat-x;
   background-position: center center;
 }
 
@@ -330,7 +330,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   text-shadow: 0px 0px 2px black;
 }
 .IE .pentaho-dialog .Caption {
-  background: url('../images/bg_title.png') repeat-x;
+  background: url('images/bg_title.png') repeat-x;
 }
 
 .pentaho-dialog .button-panel{
@@ -968,7 +968,7 @@ input:focus {
 }
 
 .IE .pentaho-titled-toolbar {
-  background: url('../images/bg_title.png') repeat-x;
+  background: url('images/bg_title.png') repeat-x;
 }
 
 .pentaho-titled-toolbar .pentaho-titled-toolbar-label {
@@ -988,7 +988,7 @@ input:focus {
 }
 
 .IE .pentaho-bottom-bar {
-  background: url('../images/bg_bottom_bar.png') repeat-x 0px -4px;
+  background: url('images/bg_bottom_bar.png') repeat-x 0px -4px;
 }
 
 .pentaho-transparent {
@@ -1001,7 +1001,7 @@ input:focus {
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
 }
 .IE .pentaho-gradient {
-  background: url('../images/bg_title.png') repeat-x;
+  background: url('images/bg_title.png') repeat-x;
 }
 
 .pentaho-rounded-panel {
@@ -1185,7 +1185,6 @@ input:focus {
   background: -webkit-linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* Chrome10+,Safari5.1+ */
   background: -o-linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* Opera11.10+ */
   background: -ms-linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* IE10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FF464E56', endColorstr = '#FF000000');
   background: linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* W3C */
   zoom: 1;  
 
@@ -1198,7 +1197,10 @@ input:focus {
   box-shadow: 2px 2px 6px 1px #333333;
   padding: 4px 4px 4px 4px;
 }
-
+.IE .pentaho-disclosure-panel-open .header {
+  border: none;
+  background: url("images/bg_btn.png")
+}
 
 .pentaho-disclosure-panel-closed {
 	width: 100%;
@@ -1215,7 +1217,6 @@ input:focus {
   background: -webkit-linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* Chrome10+,Safari5.1+ */
   background: -o-linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* Opera11.10+ */
   background: -ms-linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* IE10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FF464E56', endColorstr = '#FF000000');
   background: linear-gradient(top, #535a62 0%,#535a64 49%,#535a62 50%,#464e56 51%,#464e56 100%); /* W3C */
   zoom: 1;  
   
@@ -1228,7 +1229,10 @@ input:focus {
   box-shadow: 2px 2px 6px 1px #333333;
   padding: 4px 4px 4px 4px;
 }
-
+.IE .pentaho-disclosure-panel-closed .header {
+  border: none;
+  background: url("images/bg_btn.png")
+}
 .contrast-color {
     color: white;
 }
