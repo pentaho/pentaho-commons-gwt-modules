@@ -241,6 +241,8 @@ input[type='text'] {
 
 .IE .pentaho-toggle-button-up-hovering {
   border: 1px solid #73FF02;
+  background: url('images/bg_btn.png') repeat-x;
+  background-position: center center;
 }
 
 
@@ -269,6 +271,8 @@ input[type='text'] {
 
 .IE .pentaho-toggle-button-down-hovering {
   border: 1px solid #73FF02;
+  background: url('images/bg_btn_selected.png') repeat-x;
+  background-position: center center;
 }
 
 /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
