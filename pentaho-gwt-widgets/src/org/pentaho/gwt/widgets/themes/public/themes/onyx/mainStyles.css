@@ -1345,7 +1345,7 @@ input:focus {
     cursor: default;
 }
 
-.pentaho-listitem.pentaho-listitem-hover {
+.pentaho-listitem-hover {
     background-color: #cbefa3;
     color:#000000;
     cursor: default;
