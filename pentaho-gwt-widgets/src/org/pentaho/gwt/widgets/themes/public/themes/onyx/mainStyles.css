@@ -870,6 +870,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -webkit-user-select: none; 
   outline:none;
 }
+.IE .toolbar-button {
+  border: 1px solid transparent;
+}
 
 input:focus {
     outline: none;
@@ -885,13 +888,19 @@ input:focus {
   -webkit-user-select: none; 
   outline:none;
 }
-
+.IE .toolbar-button.toolbar-button-hovering {
+  background: none;
+  border: 1px solid #00ff00;
+}
 .toolbar-toggle-button {
   border: 1px solid rgba(0, 0, 0, 0);
   margin: 0px;
   width: 22px;
   height: 22px;
   -webkit-user-select: none; 
+}
+.IE .toolbar-toggle-button {
+  border: 1px solid transparent;
 }
 
 .toolbar-toggle-button-down {
@@ -902,6 +911,9 @@ input:focus {
   height: 22px;
   -webkit-user-select: none; 
 }
+.IE .toolbar-toggle-button-down {
+  border: 1px solid #888 !important; /* override the transparent value set in toolbar-toggle-button*/
+}
 
 .toolbar-toggle-button-down-hovering {
   border: 1px solid #00ff00;
@@ -909,9 +921,21 @@ input:focus {
   margin: 0px;
   cursor: pointer;
 }
+.IE .toolbar-toggle-button-down-hovering {
+  border: 1px solid #00ff00 !important;
+  background: none;
+  margin: 0px;
+  cursor: pointer;
+}
 
 .toolbar-toggle-button-hovering {
   background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #00ff00;
+  cursor: pointer;
+  margin: 0px;
+}
+.IE .toolbar-toggle-button-hovering {
+  background: none;
   border: 1px solid #00ff00;
   cursor: pointer;
   margin: 0px;
