@@ -116,7 +116,6 @@ font-size: .85em;
 .IE .pentaho-button {
   height: 30px;
   background: url('images/bg_btn.png') repeat-x;
-display: block;
 }
 
 /* Applies the green glow to buttons */
@@ -349,7 +348,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 	padding: 4px 8px;
 }
 .IE .pentaho-tabWidget {
- /*background: url('images/tab_off.png') repeat-x;*/
+ background: url('images/tab_off.png') repeat-x;
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -375,7 +374,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .IE .pentaho-tabWidget-selected {
-  /*background: url('images/tab_on.png') repeat-x;*/
+ background: url('images/tab_on.png') repeat-x;
 }
 
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
@@ -980,6 +979,10 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 .clearfix .pentaho-titled-toolbar{
 	border: solid 1px #848484;
+	  color: #000;
+}
+#fieldList #fieldListHeading #availableFields {
+    color: #000;
 }
 
 .reportMain  .pentaho-titled-toolbar{
@@ -987,6 +990,7 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 .IE .pentaho-titled-toolbar {
   background: url('images/bg_title.png') repeat-x;
+  background-color:#e6e5e5;
 }
 
 .pentaho-titled-toolbar .pentaho-titled-toolbar-label {
@@ -1304,7 +1308,7 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 
 .IE .pentaho-launcher-shine {
-  /* background: url('images/container_bg.png') repeat;*/
+  background: url('images/container_bg.png') repeat;
 }
 
 /* ======================= Login Styles ========================= */
