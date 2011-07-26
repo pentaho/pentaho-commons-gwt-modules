@@ -401,7 +401,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pucContentDeck .pentaho-tab-deck-panel {
- background: url('images/tab_panel_bg.png');
+ background: url('../images/tab_panel_bg.png');
    border: 1px solid rgba(223, 223, 223); /**/
 }
 
@@ -544,11 +544,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
 
-  background: url("images/scroll_bottom_arrow.png") no-repeat center center;
+  background: url("../images/scroll_bottom_arrow.png") no-repeat center center;
   /* Safari/Chrome */
-  background: url("images/scroll_bottom_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("../images/scroll_bottom_arrow.png") center center no-repeat, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_bottom_arrow.png") no-repeat scroll center center, -moz-linear-gradient(center top , #282828, #353535 50%, #282828 100%);
+  background: url("../images/scroll_bottom_arrow.png") no-repeat scroll center center, -moz-linear-gradient(center top , #282828, #353535 50%, #282828 100%);
 
 }
 
@@ -568,11 +568,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
 
-  background: url("images/scroll_top_arrow.png") no-repeat center center;
+  background: url("../images/scroll_top_arrow.png") no-repeat center center;
   /* Safari/Chrome */
-  background: url("images/scroll_top_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("../images/scroll_top_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, right top, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_top_arrow.png") no-repeat center center, -moz-linear-gradient(top, #282828, #353535 50%, #282828 100%);
+  background: url("../images/scroll_top_arrow.png") no-repeat center center, -moz-linear-gradient(top, #282828, #353535 50%, #282828 100%);
 
 }
 
@@ -594,11 +594,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
 
-  background: url("images/scroll_left_arrow.png") no-repeat center center;
+  background: url("../images/scroll_left_arrow.png") no-repeat center center;
   /* Safari/Chrome */
-  background: url("images/scroll_left_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("../images/scroll_left_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_left_arrow.png") no-repeat center center, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+  background: url("../images/scroll_left_arrow.png") no-repeat center center, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
 }
 
 .jspHorizontalBar .jspArrowRight {
@@ -624,12 +624,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   /* Standard Form */
   box-shadow: black 0px 0px 1px, rgba(0, 0, 0, 0.699219) 0px 0px 1px inset;
 
-  background: url("images/scroll_right_arrow.png") no-repeat center center;
+  background: url("../images/scroll_right_arrow.png") no-repeat center center;
   background-repeat: no-repeat;
   /* Safari/Chrome */
-  background: url("images/scroll_right_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
+  background: url("../images/scroll_right_arrow.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #282828), color-stop(0.50, #353535), color-stop(1, #282828));
   /* Firefox */
-  background: url("images/scroll_right_arrow.png") no-repeat center center, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
+  background: url("../images/scroll_right_arrow.png") no-repeat center center, -moz-linear-gradient(left, #282828, #353535 50%, #282828 100%);
 }
 
 .jspHorizontalBar .jspArrow {
@@ -661,9 +661,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
 
   /* Safari/Chrome */
-  background: url("images/scroll_grabber.png") no-repeat center center, -webkit-gradient(linear, left top, right top, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
+  background: url("../images/scroll_grabber.png") no-repeat center center, -webkit-gradient(linear, left top, right top, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
   /* Firefox */
-  background: url("images/scroll_grabber.png") no-repeat center center, -moz-linear-gradient(left, #111, #222 50%, #111 100%);
+  background: url("../images/scroll_grabber.png") no-repeat center center, -moz-linear-gradient(left, #111, #222 50%, #111 100%);
 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#777777', endColorstr = '#5555555', GradientType=1);
 }
@@ -687,9 +687,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 0 0 3px rgba(255, 255, 255, 1) inset;
 
   /* Firefox */
-  background: url("images/scroll_grabber_horz.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
+  background: url("../images/scroll_grabber_horz.png") no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #111), color-stop(0.50, #222), color-stop(1, #111));
   /* Safari/Chrome */
-  background: url("images/scroll_grabber_horz.png")  no-repeat center center,  -moz-linear-gradient(top, #111, #222 50%, #111 100%);
+  background: url("../images/scroll_grabber_horz.png")  no-repeat center center,  -moz-linear-gradient(top, #111, #222 50%, #111 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7777777', endColorstr = '#555555');
 }
 
@@ -722,7 +722,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   height: 100%;
   vertical-align: middle;
   background-color: #d8d8d8;
-  background-image: url(images/subtoolbar_bg.png);
+  background-image: url(../images/subtoolbar_bg.png);
   background-repeat: repeat-x;
   background-position: top center;
   border-top: none;
@@ -793,7 +793,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   padding-right: 14px;
   background-position: right center;
   background-repeat: no-repeat;
-  background-image: url("images/comboArrow.png");
+  background-image: url("../images/comboArrow.png");
   background-color: transparent;
 }
 
@@ -818,7 +818,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   background-color: transparent;
   background-position: right center;
   background-repeat: no-repeat;
-  background-image: url("images/comboArrow.png");
+  background-image: url("../images/comboArrow.png");
 }
 
 .toolbar-combo-button-hovering {
@@ -1167,13 +1167,13 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 .pentaho-disclosure-panel-openicon {
     width: 16px;
     height: 16px;
-    background: url('images/disclosure_open.png') no-repeat scroll transparent;
+    background: url('../images/disclosure_open.png') no-repeat scroll transparent;
 }
 
 .pentaho-disclosure-panel-closeicon {
     width: 16px;
     height: 16px;
-    background: url('images/disclosure_close.png') no-repeat scroll transparent;
+    background: url('../images/disclosure_close.png') no-repeat scroll transparent;
 }
 
 .pentaho-disclosure-panel-open {
@@ -1413,13 +1413,13 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 .pentaho-checkmenuitem {
     width: 16px;
     height: 16px;
-	background: url('images/checkbox-empty.png') no-repeat center;
+	background: url('../images/checkbox-empty.png') no-repeat center;
 }
 
 .pentaho-checkmenuitem.menuitem-checked {
     width: 16px;
     height: 16px;
-	background: url('images/checkbox.png') no-repeat center;
+	background: url('../images/checkbox.png') no-repeat center;
 }
 
 .pentaho-menuitem-disabled {
@@ -1435,298 +1435,298 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 .pentaho-editbutton {
     width: 16px;
     height: 16px;
-	background: url('images/edit.png') no-repeat center;
+	background: url('../images/edit.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-editbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/edit_disabled.png') no-repeat center;
+	background: url('../images/edit_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-addbutton {
     width: 16px;
     height: 16px;
-	background: url('images/add.png') no-repeat center;
+	background: url('../images/add.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-addbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/add_disabled.png') no-repeat center;
+	background: url('../images/add_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-deletebutton {
     width: 16px;
     height: 16px;
-	background: url('images/remove.png') no-repeat center;
+	background: url('../images/remove.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-deletebutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/remove_disabled.png') no-repeat center;
+	background: url('../images/remove_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-closebutton.pentaho-imagebutton-hover {
     width: 16px;
     height: 16px;
-	background: url('images/close_sm.png') no-repeat center;
+	background: url('../images/close_sm.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-closebutton {
     width: 16px;
     height: 16px;
-	background: url('images/close_sm_disabled.png') no-repeat center;
+	background: url('../images/close_sm_disabled.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-closebutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/close_sm_disabled.png') no-repeat center;
+	background: url('../images/close_sm_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-closebutton-big {
     width: 30px;
     height: 30px;
-	background: url('images/close_big.png') no-repeat center;
+	background: url('../images/close_big.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-closebutton-big.pentaho-imagebutton-disabled {
     width: 30px;
     height: 30px;
-	background: url('images/close_big.png') no-repeat center;
+	background: url('../images/close_big.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-closebutton-big.pentaho-imagebutton-hover {
     width: 30px;
     height: 30px;
-	background: url('images/close_big_hover.png') no-repeat center;
+	background: url('../images/close_big_hover.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-undobutton {
     width: 16px;
     height: 16px;
-	background: url('images/undo.png') no-repeat center;
+	background: url('../images/undo.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-undobutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/undo_disabled.png') no-repeat center;
+	background: url('../images/undo_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-redobutton {
     width: 16px;
     height: 16px;
-	background: url('images/redo.png') no-repeat center;
+	background: url('../images/redo.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-redobutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/redo_disabled.png') no-repeat center;
+	background: url('../images/redo_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-downbutton {
     width: 16px;
     height: 16px;
-	background: url('images/16x16_down.png') no-repeat center;
+	background: url('../images/16x16_down.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-downbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/16x16_down_disabled.png') no-repeat center;
+	background: url('../images/16x16_down_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-upbutton {
     width: 16px;
     height: 16px;
-	background: url('images/16x16_up.png') no-repeat center;
+	background: url('../images/16x16_up.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-upbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/16x16_up_disabled.png') no-repeat center;
+	background: url('../images/16x16_up_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-optionsbutton {
     width: 16px;
     height: 16px;
-	background: url('images/options.png') no-repeat center;
+	background: url('../images/options.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-optionsbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/options_disabled.png') no-repeat center;
+	background: url('../images/options_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-left-lgbutton {
     width: 26px;
     height: 33px;
-	background: url('images/lg_arrow_left_on.png') no-repeat center;
+	background: url('../images/lg_arrow_left_on.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-left-lgbutton.pentaho-imagebutton-disabled {
     width: 26px;
     height: 33px;
-	background: url('images/lg_arrow_left_off.png') no-repeat center;
+	background: url('../images/lg_arrow_left_off.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-right-lgbutton {
     width: 26px;
     height: 33px;
-	background: url('images/lg_arrow_right_on.png') no-repeat center;
+	background: url('../images/lg_arrow_right_on.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-right-lgbutton.pentaho-imagebutton-disabled {
     width: 26px;
     height: 33px;
-	background: url('images/lg_arrow_right_off.png') no-repeat center;
+	background: url('../images/lg_arrow_right_off.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-forecolorbutton {
     width: 16px;
     height: 16px;
-	background: url('images/font_color.png') no-repeat center;
+	background: url('../images/font_color.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-forecolorbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/font_color_disabled.png') no-repeat center;
+	background: url('../images/font_color_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-backcolorbutton {
     width: 16px;
     height: 16px;
-	background: url('images/back_color.png') no-repeat center;
+	background: url('../images/back_color.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-backcolorbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/back_color_disabled.png') no-repeat center;
+	background: url('../images/back_color_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-filterbutton {
     width: 16px;
     height: 16px;
-	background: url('images/filter.png') no-repeat center;
+	background: url('../images/filter.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-filterbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-	background: url('images/filter_disabled.png') no-repeat center;
+	background: url('../images/filter_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-layoutbutton {
     width: 16px;
     height: 16px;
-	background: url('images/field_layout.png') no-repeat center;
+	background: url('../images/field_layout.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-contextmenubutton {
     width: 15px;
     height: 15px;
-	background: url('images/options_menu_arrow.png') no-repeat center;
+	background: url('../images/options_menu_arrow.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-pagebackbutton {
     width: 18px;
     height: 18px;
-	background: url('images/page_back.png') no-repeat center;
+	background: url('../images/page_back.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-pagebackbutton.pentaho-imagebutton-hover {
     width: 18px;
     height: 18px;
-	background: url('images/page_back_over.png') no-repeat center;
+	background: url('../images/page_back_over.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-pagebackbutton.pentaho-imagebutton-disabled {
     width: 18px;
     height: 18px;
-	background: url('images/page_back_disabled.png') no-repeat center;
+	background: url('../images/page_back_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-pagenextbutton {
     width: 18px;
     height: 18px;
-	background: url('images/page_forward.png') no-repeat center;
+	background: url('../images/page_forward.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-pagenextbutton.pentaho-imagebutton-hover {
     width: 18px;
     height: 18px;
-	background: url('images/page_forward_over.png') no-repeat center;
+	background: url('../images/page_forward_over.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-pagenextbutton.pentaho-imagebutton-disabled {
     width: 18px;
     height: 18px;
-	background: url('images/page_forward_disabled.png') no-repeat center;
+	background: url('../images/page_forward_disabled.png') no-repeat center;
     cursor: default;
 }
 
 .pentaho-trashbutton {
     width: 128px;
     height: 150px;
-	background: url('images/trashcan.png') no-repeat center;
+	background: url('../images/trashcan.png') no-repeat center;
 }
 
 .pentaho-trashbutton.pentaho-imagebutton-hover {
-	background: url('images/trashcan_full.png') no-repeat center;
+	background: url('../images/trashcan_full.png') no-repeat center;
     cursor: pointer;
 }
 
 .pentaho-toolbar-separator {
     width: 1px;
     height: 18px;
-	background: url('images/toolbar_separator.png') no-repeat center;
+	background: url('../images/toolbar_separator.png') no-repeat center;
 }
 
 .pentaho-table content {
@@ -1774,14 +1774,14 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 
 .treenode-open {
-    background: url('images/minus.gif');
+    background: url('../images/minus.gif');
     width: 16px;
     height: 16px;
     float: left;
 }
 
 .treenode-closed {
-    background: url('images/plus.gif');
+    background: url('../images/plus.gif');
     width: 16px;
     height: 16px;
     float: left;
@@ -1794,7 +1794,7 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 
 .fieldlist-filtered-field {
-  background-image: url('images/filter_sm.png');
+  background-image: url('../images/filter_sm.png');
   background-repeat: no-repeat;
   background-position: 2px 2px;
 }
@@ -1905,7 +1905,7 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 
 .pentaho-dropdownbutton-inner {
-  background-image: url('images/combo_drop_arrow.png');
+  background-image: url('../images/combo_drop_arrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -1915,7 +1915,7 @@ background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #72727
 }
 
 .pentaho-dropdownbutton-inner.pentaho-disabled {
-  background-image: url('images/combo_drop_arrow.png');
+  background-image: url('../images/combo_drop_arrow.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
