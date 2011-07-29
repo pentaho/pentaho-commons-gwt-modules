@@ -343,7 +343,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     border-top: solid 1px #8b8b8b;
     border-left: solid 1px #8b8b8b;
     border-right: solid 1px #8b8b8b;
-    border-bottom: 1px solid #ddd;
     cursor: pointer;
     margin-left: 2px;
     padding: 4px 8px;
@@ -370,7 +369,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e5e5e5', endColorstr = '#848484', GradientType = 0); /* IE6-9 */
     background: linear-gradient(top, rgba(229, 229, 229, 1) 0%, rgba(255, 255, 255, 1) 2%, rgba(219, 219, 219, 1) 6%, rgba(229, 229, 229, 1) 46%, rgba(188, 188, 188, 1) 52%, rgba(132, 132, 132, 1) 100%); /* W3C */
     color: #000;
-    border-bottom: 1px solid #848484;
     border-top: solid 1px #8b8b8b;
     border-left: solid 1px #8b8b8b;
     border-right: solid 1px #8b8b8b;
