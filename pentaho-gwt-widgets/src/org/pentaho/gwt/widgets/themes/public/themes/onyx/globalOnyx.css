@@ -453,7 +453,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     background: -webkit-linear-gradient(top, rgba(63, 63, 63, 1) 0%, rgba(39, 39, 39, 1) 80%, rgba(0, 0, 0, 1) 100%); /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top, rgba(63, 63, 63, 1) 0%, rgba(39, 39, 39, 1) 80%, rgba(0, 0, 0, 1) 100%); /* Opera11.10+ */
     background: -ms-linear-gradient(top, rgba(63, 63, 63, 1) 0%, rgba(39, 39, 39, 1) 80%, rgba(0, 0, 0, 1) 100%); /* IE10+ */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#3f3f3f', endColorstr = '#000000', GradientType = 0); /* IE6-9 */
     background: linear-gradient(top, rgba(63, 63, 63, 1) 0%, rgba(39, 39, 39, 1) 80%, rgba(0, 0, 0, 1) 100%); /* W3C */
     cursor: pointer;
     margin-left: 2px;
@@ -490,7 +489,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     background: -webkit-linear-gradient(top, rgba(79, 79, 79, 1) 0%, rgba(198, 198, 198, 0.98) 2%, rgba(142, 142, 142, 0.92) 7%, rgba(141, 141, 141, 0.88) 10%, rgba(124, 124, 124, 0.93) 47%, rgba(96, 96, 96, 0.93) 49%, rgba(84, 84, 84, 0.94) 59%, rgba(43, 43, 43, 1) 100%); /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top, rgba(79, 79, 79, 1) 0%, rgba(198, 198, 198, 0.98) 2%, rgba(142, 142, 142, 0.92) 7%, rgba(141, 141, 141, 0.88) 10%, rgba(124, 124, 124, 0.93) 47%, rgba(96, 96, 96, 0.93) 49%, rgba(84, 84, 84, 0.94) 59%, rgba(43, 43, 43, 1) 100%); /* Opera11.10+ */
     background: -ms-linear-gradient(top, rgba(79, 79, 79, 1) 0%, rgba(198, 198, 198, 0.98) 2%, rgba(142, 142, 142, 0.92) 7%, rgba(141, 141, 141, 0.88) 10%, rgba(124, 124, 124, 0.93) 47%, rgba(96, 96, 96, 0.93) 49%, rgba(84, 84, 84, 0.94) 59%, rgba(43, 43, 43, 1) 100%); /* IE10+ */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#4f4f4f', endColorstr = '#2b2b2b', GradientType = 0); /* IE6-9 */
     background: linear-gradient(top, rgba(79, 79, 79, 1) 0%, rgba(198, 198, 198, 0.98) 2%, rgba(142, 142, 142, 0.92) 7%, rgba(141, 141, 141, 0.88) 10%, rgba(124, 124, 124, 0.93) 47%, rgba(96, 96, 96, 0.93) 49%, rgba(84, 84, 84, 0.94) 59%, rgba(43, 43, 43, 1) 100%); /* W3C */
     color: #ffffff;
 }
