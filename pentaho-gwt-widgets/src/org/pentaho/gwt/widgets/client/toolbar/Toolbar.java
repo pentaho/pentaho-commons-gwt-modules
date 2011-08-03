@@ -143,7 +143,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
     switch (key) {
     case Toolbar.SEPARATOR:
       
-      Image img = new Image(GWT.getModuleBaseURL()+"style/images/toolbarDivider.png");
+      Image img = new Image(GWT.getModuleBaseURL()+"images/toolbarDivider.png");
       bar.add(img);
       bar.setCellVerticalAlignment(img, ALIGN_MIDDLE);
       break;
