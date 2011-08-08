@@ -829,7 +829,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     /* fallback color */
     background: #aaa;
     /* Safari/Chrome */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #727272), color-stop(0.10, #7e7e7e), color-stop(0.50, #666), color-stop(0.55, #333333), color-stop(0.90, #2a2a2a));
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #eceeee), color-stop(0.10, #f4f5f5), color-stop(0.50, #e3ebed), color-stop(0.55, #d4dee0), color-stop(0.90, #d1d5d6));
     /* Firefox */
     background: -moz-linear-gradient(#eceeee, #f4f5f5 10%, #e3ebed 50%, #d4dee0 55%, #d1d5d6 90%) repeat scroll 0 0 transparent;
 
@@ -944,7 +944,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     background: #669335; /* Old browsers */
     background: -moz-linear-gradient(#cbe5ef, #d5f3fe 10%, #c5ebfa 50%, #acdef1 55%, #a2cedf 90%) repeat scroll 0 0 transparent;
 
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C8C8C8), color-stop(0.10, #AAA), color-stop(0.50, #666), color-stop(0.55, #353535), color-stop(0.90, #3F3F3F)); /* Chrome,Safari4+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #cbe5ef), color-stop(0.10, #d5f3fe), color-stop(0.50, #c5ebfa), color-stop(0.55, #acdef1), color-stop(0.90, #a2cedf)); /* Chrome,Safari4+ */
 
     /* review these */
     /* */
