@@ -26,7 +26,7 @@ public class ColorPicker extends Image{
   private String selectedColor = "#FFF"; //$NON-NLS-1$
   
   public ColorPicker(){
-    super(GWT.getModuleBaseURL()+"style/images/color_picker_frame.gif"); //$NON-NLS-1$
+    super(GWT.getModuleBaseURL()+"images/color_picker_frame.gif"); //$NON-NLS-1$
     this.getElement().getStyle().setProperty("backgroundColor", "#fff"); //$NON-NLS-1$  //$NON-NLS-2$
     this.getElement().getStyle().setProperty("cursor", "pointer"); //$NON-NLS-1$  //$NON-NLS-2$
     this.addMouseUpHandler(new MouseUpHandler(){
