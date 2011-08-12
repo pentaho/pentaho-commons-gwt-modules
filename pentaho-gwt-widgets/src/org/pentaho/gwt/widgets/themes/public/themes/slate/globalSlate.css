@@ -2146,6 +2146,9 @@ box-shadow: 2px 2px 6px 1px #747474;*/
     background: linear-gradient(top, #e0e0e0 0%, #e6e5e551%, #d4d4d4 100%); /* W3C */
 }
 
+.IE .gwt-ScrollTable .headerTable td {
+    background: url('images/tab_on.png') repeat-x;
+}
 .objectTree h2 {
     color: #000;
 }
