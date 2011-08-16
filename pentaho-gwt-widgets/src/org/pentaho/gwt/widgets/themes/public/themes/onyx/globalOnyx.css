@@ -982,7 +982,6 @@ input:focus {
 
 .toolbar-button-disabled {
     background-color: transparent;
-    margin: 1px;
 }
 
 .toolbar-button-disabled-hovering {
