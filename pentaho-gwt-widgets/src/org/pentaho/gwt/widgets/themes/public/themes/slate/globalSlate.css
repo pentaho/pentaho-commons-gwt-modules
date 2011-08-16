@@ -804,7 +804,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .toolbar-button-disabled {
     background-color: transparent;
-    margin: 1px;
 }
 
 .toolbar-button-disabled-hovering {
