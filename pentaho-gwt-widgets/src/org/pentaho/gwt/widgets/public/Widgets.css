@@ -823,6 +823,13 @@ input[type=password]:focus {
   padding: 2px 2px 2px 4px;
 }
 
+/* fix for BISERVER-6446, data table in webkit wasn't liing up with header */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .gwt-ScrollTable .dataWrapper .dataTable {
+    width: 0px !important;
+  }
+}
+
 .gwt-ScrollTable {
   border: 1px solid #848484;
   overflow: hidden;
