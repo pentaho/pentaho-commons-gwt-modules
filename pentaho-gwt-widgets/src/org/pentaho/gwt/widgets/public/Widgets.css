@@ -829,6 +829,9 @@ input[type=password]:focus {
     width: 0px !important;
   }
 }
+.IE .gwt-ScrollTable .dataWrapper .dataTable {
+  width: 0px !important;
+}
 
 .gwt-ScrollTable {
   border: 1px solid #848484;
