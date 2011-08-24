@@ -451,6 +451,10 @@ public class BaseTable extends Composite {
     scrollTable.fillWidth();
   }
 
+  public void noFill() {
+    scrollTable.addStyleName("table-no-fill");
+  }
+
   /**
    * Displays a message to the user in the table instead of
    * data.
