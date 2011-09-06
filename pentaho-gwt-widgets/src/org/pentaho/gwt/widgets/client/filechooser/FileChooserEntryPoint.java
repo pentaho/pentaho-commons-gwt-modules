@@ -38,15 +38,14 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
     setupNativeHooks(this);
   }
 
-  public native void notifyCallback(JavaScriptObject callback, String solution, String path, String name, String localizedFileName)
+  public native void notifyCallback(JavaScriptObject callback, RepositoryFile file)
   /*-{
    try {
-     callback.fileSelected(solution, path, name, localizedFileName);
+     callback.fileSelected(file);
    } catch (ex) {
-     alert(ex);
    }
   }-*/;
-
+  
   public native void notifyCallbackCanceled(JavaScriptObject callback)
   /*-{
    try {
@@ -55,31 +54,29 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
      alert(ex);
    }
   }-*/;
-
-
   
   public void openFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
     FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.OPEN, selectedPath, false, true);
     dialog.addFileChooserListener(new FileChooserListener() {
-      public void fileSelected(String solution, String path, String name, String localizedFileName) {
-        notifyCallback(callback, solution, path, name, localizedFileName);
+      public void fileSelected(RepositoryFile file) {
+        notifyCallback(callback, file);
       }
-      public void fileSelectionChanged(String solution, String path, String name) {
+      public void fileSelectionChanged(RepositoryFile file) {
       }
       public void dialogCanceled(){
         notifyCallbackCanceled(callback);
-      }
+      }      
     });
-    dialog.center();
+    dialog.center();    
   }
   
   public void saveFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
     FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.SAVE, selectedPath, false, true);
     dialog.addFileChooserListener(new FileChooserListener() {
-      public void fileSelected(String solution, String path, String name, String localizedFileName) {
-        notifyCallback(callback, solution, path, name, localizedFileName);
+      public void fileSelected(RepositoryFile file) {
+        notifyCallback(callback, file);
       }
-      public void fileSelectionChanged(String solution, String path, String name) {
+      public void fileSelectionChanged(RepositoryFile file) {
       }
       public void dialogCanceled(){
         notifyCallbackCanceled(callback);

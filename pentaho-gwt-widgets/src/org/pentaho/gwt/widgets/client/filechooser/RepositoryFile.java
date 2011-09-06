@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * JAXB-safe version of {@code RepositoryFile}. ({@code RepositoryFile} has no zero-arg constructor and no public 
  * mutators.)
@@ -47,6 +48,7 @@ public class RepositoryFile implements Serializable {
     protected String lockOwner;
     protected String lockMessage;
     protected Date lockDate;
+    protected long fileSize;
     protected String owner;
     protected int ownerType = -1;
     protected String title;
@@ -141,6 +143,12 @@ public class RepositoryFile implements Serializable {
     }
     public void setOwner(String owner) {
       this.owner = owner;
+    }
+    public long getFileSize() {
+      return fileSize;
+    }
+    public void setFileSize(long fileSize) {
+      this.fileSize = fileSize;
     }
     public int getOwnerType() {
       return ownerType;
