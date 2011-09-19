@@ -21,6 +21,7 @@ import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
 import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 
 public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCallback {
@@ -31,7 +32,7 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
     if (messages == null) {
       messages = new ResourceBundle();
     }
-    messages.loadBundle("messages/", "filechooser_messages", true, FileChooserEntryPoint.this); //$NON-NLS-1$ //$NON-NLS-2$
+    messages.loadBundle(GWT.getModuleBaseURL() + "messages/", "filechooser_messages", true, FileChooserEntryPoint.this); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public void bundleLoaded(String bundleName) {

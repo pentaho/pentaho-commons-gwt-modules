@@ -23,6 +23,7 @@ import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 import org.pentaho.gwt.widgets.login.client.messages.Messages;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -42,7 +43,7 @@ public class LoginEntryPoint implements EntryPoint, IResourceBundleLoadCallback 
   public void onModuleLoad() {
     ResourceBundle messages = new ResourceBundle();
     Messages.setResourceBundle(messages); 
-    messages.loadBundle("messages/", "LoginMessages", true, LoginEntryPoint.this); //$NON-NLS-1$ //$NON-NLS-2$
+    messages.loadBundle(GWT.getHostPageBaseURL() + "messages/", "LoginMessages", true, LoginEntryPoint.this); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public void bundleLoaded(String bundleName) {
