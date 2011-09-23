@@ -157,7 +157,7 @@ public class FileChooser extends VerticalPanel {
 
   public void fetchRepository(final IDialogCallback completedCallback) throws RequestException {
     RequestBuilder builder = null;
-    builder = new RequestBuilder(RequestBuilder.GET, "/api/repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
+    builder = new RequestBuilder(RequestBuilder.GET, "api/repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
     RequestCallback callback = new RequestCallback() {
 
       public void onError(Request request, Throwable exception) {
