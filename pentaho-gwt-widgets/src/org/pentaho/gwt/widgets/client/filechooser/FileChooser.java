@@ -155,9 +155,13 @@ public class FileChooser extends VerticalPanel {
     }
   }
 
+  private native String getFullyQualifiedURL()/*-{
+  return $wnd.FULL_QUALIFIED_URL;
+  }-*/;
+
   public void fetchRepository(final IDialogCallback completedCallback) throws RequestException {
     RequestBuilder builder = null;
-    builder = new RequestBuilder(RequestBuilder.GET, "../../repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
+    builder = new RequestBuilder(RequestBuilder.GET, getFullyQualifiedURL()+  "api/repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
     RequestCallback callback = new RequestCallback() {
 
       public void onError(Request request, Throwable exception) {
