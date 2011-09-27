@@ -19,7 +19,7 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import java.util.EventListener;
 
 public interface FileChooserListener extends EventListener {
-  public void fileSelected(RepositoryFile file);
-  public void fileSelectionChanged(RepositoryFile file);
+  public void fileSelected(RepositoryFile file, String filePath, String fileName, String title);
+  public void fileSelectionChanged(RepositoryFile file, String filePath, String fileName, String title);
   public void dialogCanceled();
 }

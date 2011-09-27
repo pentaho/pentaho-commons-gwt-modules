@@ -39,10 +39,10 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
     setupNativeHooks(this);
   }
 
-  public native void notifyCallback(JavaScriptObject callback, RepositoryFile file)
+  public native void notifyCallback(JavaScriptObject callback, RepositoryFile file, String filePath, String fileName, String title)
   /*-{
    try {
-     callback.fileSelected(file);
+     callback.fileSelected(file, filePath, fileName, title);
    } catch (ex) {
    }
   }-*/;
@@ -59,10 +59,10 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
   public void openFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
     FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.OPEN, selectedPath, false, true);
     dialog.addFileChooserListener(new FileChooserListener() {
-      public void fileSelected(RepositoryFile file) {
-        notifyCallback(callback, file);
+      public void fileSelected(RepositoryFile file, String filePath, String fileName, String title) {
+        notifyCallback(callback, file, filePath, fileName, title);
       }
-      public void fileSelectionChanged(RepositoryFile file) {
+      public void fileSelectionChanged(RepositoryFile file, String filePath, String fileName, String title) {
       }
       public void dialogCanceled(){
         notifyCallbackCanceled(callback);
@@ -74,10 +74,10 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
   public void saveFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
     FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.SAVE, selectedPath, false, true);
     dialog.addFileChooserListener(new FileChooserListener() {
-      public void fileSelected(RepositoryFile file) {
-        notifyCallback(callback, file);
+      public void fileSelected(RepositoryFile file, String filePath, String fileName, String title) {
+        notifyCallback(callback, file, filePath, fileName, title);
       }
-      public void fileSelectionChanged(RepositoryFile file) {
+      public void fileSelectionChanged(RepositoryFile file, String filePath, String fileName, String title) {
       }
       public void dialogCanceled(){
         notifyCallbackCanceled(callback);

@@ -193,18 +193,18 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     return true;
   }
 
-  public void fileSelected(RepositoryFile file) {
+  public void fileSelected(RepositoryFile file, String filePath, String fileName, String title) {
     if (isFileNameValid()) {
       for (FileChooserListener listener : listeners) {
-        listener.fileSelected(file);
+        listener.fileSelected(file, filePath, fileName, title);
       }
       this.hide();
     }
   }
 
-  public void fileSelectionChanged(RepositoryFile file) {
+  public void fileSelectionChanged(RepositoryFile file, String filePath, String fileName, String title) {
     for (FileChooserListener listener : listeners) {
-      listener.fileSelectionChanged(file);
+      listener.fileSelectionChanged(file, filePath, fileName, title);
     }
   }
 

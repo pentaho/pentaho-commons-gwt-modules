@@ -578,21 +578,23 @@ public class FileChooser extends VerticalPanel {
 
   public void fireFileSelected(RepositoryFile file) {
     for (FileChooserListener listener : listeners) {
-      listener.fileSelected(file);
+      listener.fileSelected(file, file.getPath(), (mode != null && mode.equals(FileChooserMode.SAVE) ? actualFileName: file.getName()), file.getTitle());
     }
   }
 
   public void fireFileSelected() {
     for (FileChooserListener listener : listeners) {
       RepositoryFileTree tree = (RepositoryFileTree) selectedTreeItem.getUserObject();
-      listener.fileSelected(tree.getFile());
+      RepositoryFile file = tree.getFile();
+      listener.fileSelected(file, file.getPath(), (mode != null && mode.equals(FileChooserMode.SAVE) ? actualFileName: file.getName()), file.getTitle());
     }
   }
 
   public void fireFileSelectionChanged() {
     for (FileChooserListener listener : listeners) {
       RepositoryFileTree tree = (RepositoryFileTree) selectedTreeItem.getUserObject();
-      listener.fileSelectionChanged(tree.getFile());
+      RepositoryFile file = tree.getFile();
+      listener.fileSelectionChanged(file, file.getPath(), (mode != null && mode.equals(FileChooserMode.SAVE) ? actualFileName: file.getName()), file.getTitle());
     }
   }
 
