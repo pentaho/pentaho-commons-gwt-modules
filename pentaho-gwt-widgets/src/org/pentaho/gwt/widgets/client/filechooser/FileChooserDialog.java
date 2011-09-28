@@ -63,6 +63,9 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     IDialogCallback callback = new IDialogCallback() {
 
       public void cancelPressed() {
+        for (FileChooserListener listener : listeners) {
+          listener.dialogCanceled();
+        }
       }
 
       public void okPressed() {
@@ -71,6 +74,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
     };
     setCallback(callback);
+    fileChooser.addFileChooserListener(this);
   }
 
   public FileChooserDialog(FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide, boolean modal, String title, String okText) {
