@@ -1,0 +1,11 @@
+<module rename-to="formatter">
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.user.User'/>
+	<inherits name='com.google.gwt.xml.XML'/>
+	<inherits name="com.google.gwt.i18n.I18N"/>
+	<inherits name="org.pentaho.gwt.widgets.client.utils.module.ModuleUtils"/>
+
+    <source path=""/>
+    <entry-point class="org.pentaho.gwt.widgets.client.formatter.JSTextFormatterEntryPoint"/>
+    
+ </module>
