@@ -34,7 +34,7 @@
       
       Performs the required gwt compiles
       ====================================================================-->
-  <target name="gwt-compile" depends="gwt-compile-widgets,gwt-compile-filechooser"/>
+  <target name="gwt-compile" depends="gwt-compile-widgets,gwt-compile-filechooser,gwt-compile-formatter"/>
     
   <target name="gwt-compile-widgets">
     <ant antfile="${gwt.common.build.file}" target="gwt-compile">
@@ -48,4 +48,9 @@
     </ant>
   </target>
 
+  <target name="gwt-compile-formatter">
+  	<ant antfile="${gwt.common.build.file}" target="gwt-compile">
+  		<property name="gwt-module.path" value="org.pentaho.gwt.widgets.client.formatter.JSTextFormatter" />
+	</ant>
+	</target>
 </project>
