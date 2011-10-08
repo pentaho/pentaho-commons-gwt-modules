@@ -30,9 +30,13 @@ public class JSTextFormatterEntryPoint implements EntryPoint {
   }
 
   private native void addNativeMethods()/*-{
-    $wnd.createFormatter = function(type, pattern) {
-      return @org.pentaho.gwt.widgets.client.formatter.JSTextFormatterFactory::createFormatter(Ljava/lang/String;Ljava/lang/String;)(type, pattern);
+    $wnd.jsTextFormatter = {
+      createFormatter: function(type, pattern) {
+        return @org.pentaho.gwt.widgets.client.formatter.JSTextFormatterFactory::createFormatter(Ljava/lang/String;Ljava/lang/String;)(type, pattern);
+      },
+      createDefaultDateFormatter: function() {
+        return @org.pentaho.gwt.widgets.client.formatter.JSDateTextFormatter::createDefaultDateFormatter()();
+      }
     }
   }-*/;
-
 }

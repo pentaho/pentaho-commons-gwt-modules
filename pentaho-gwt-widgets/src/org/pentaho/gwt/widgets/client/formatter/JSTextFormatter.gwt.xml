@@ -8,4 +8,24 @@
     <source path=""/>
     <entry-point class="org.pentaho.gwt.widgets.client.formatter.JSTextFormatterEntryPoint"/>
     
+    <!-- This set of locales is here to support various number, date and currency formats -->
+    <extend-property name="locale" values="de"/>
+    <extend-property name="locale" values="en"/>
+    <extend-property name="locale" values="en_GB"/>
+    <extend-property name="locale" values="en_US"/>
+    <extend-property name="locale" values="es"/>
+    <extend-property name="locale" values="ar"/>
+    <extend-property name="locale" values="fi"/>
+    <extend-property name="locale" values="fr"/>
+    <extend-property name="locale" values="it"/>
+    <extend-property name="locale" values="ja"/>
+    <extend-property name="locale" values="ko"/>
+    <extend-property name="locale" values="nl"/>
+    <extend-property name="locale" values="no"/>
+    <extend-property name="locale" values="pt"/>
+    <extend-property name="locale" values="ru"/>
+    <extend-property name="locale" values="sv"/>
+    <extend-property name="locale" values="zh_CN"/>
+    <extend-property name="locale" values="zh_TW"/>
+    
  </module>
