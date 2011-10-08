@@ -32,8 +32,19 @@ public class JSDateTextFormatter implements JSTextFormatter
 
   public JSDateTextFormatter(final String pattern)
   {
-    this.dateFormat = DateTimeFormat.getFormat(pattern);
+    this(DateTimeFormat.getFormat(pattern));
+  }
+  
+  public JSDateTextFormatter(final DateTimeFormat format) {
+    this.dateFormat = format;
     setupNativeFunctions(getInstance());
+  }
+
+  /**
+   * Create a date formatter using the default "long date" format. This is predefined per locale.
+   */
+  public static JSDateTextFormatter createDefaultDateFormatter() {
+    return new JSDateTextFormatter(DateTimeFormat.getLongDateFormat());
   }
   
   private static native void setupNativeFunctions(final JavaScriptObject obj)/*-{
