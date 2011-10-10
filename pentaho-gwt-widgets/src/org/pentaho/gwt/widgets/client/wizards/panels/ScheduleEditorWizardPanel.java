@@ -91,6 +91,10 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     return scheduleEditor.getScheduleType();
   }
   
+  public ScheduleEditor getScheduleEditor() {
+    return scheduleEditor;
+  }
+  
   /**
    * @return
    */

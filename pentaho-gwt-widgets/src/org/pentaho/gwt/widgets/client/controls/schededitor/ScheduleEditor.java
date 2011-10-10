@@ -405,8 +405,17 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       case RUN_ONCE:
         Date startDate = runOnceEditor.getStartDate();
         String startTime  = runOnceEditor.getStartTime();
-        Date startDateTime = TimeUtil.getDateTime( startTime, startDate );
-        return startDateTime;
+        String[] times = startTime.split(":");
+        int hour = Integer.parseInt(times[0]);
+        int minute = Integer.parseInt(times[1]);
+        if (startTime.indexOf("PM") >= 0) {
+          hour += 12;
+        }
+        
+        startDate.setHours(hour);
+        startDate.setMinutes(minute);
+        startDate.setSeconds(0);
+        return startDate;
       case SECONDS: // fall through
       case MINUTES: // fall through
       case HOURS: // fall through

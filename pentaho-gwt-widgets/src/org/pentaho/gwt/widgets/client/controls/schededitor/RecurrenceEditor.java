@@ -16,9 +16,11 @@
  */
 package org.pentaho.gwt.widgets.client.controls.schededitor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.pentaho.gwt.widgets.client.controls.DateRangeEditor;
@@ -615,6 +617,16 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       }
     }
     
+    public List<DayOfWeek> getCheckedDays() {
+      ArrayList<DayOfWeek> checkedDays = new ArrayList<DayOfWeek>();
+      for ( DayOfWeek d : EnumSet.range( DayOfWeek.SUN, DayOfWeek.SAT) ) {
+        CheckBox cb = dayToCheckBox.get( d );
+        if ( cb.isChecked() ) {
+          checkedDays.add(d);
+        }
+      }
+      return checkedDays;
+    }
     /**
      * 
      * @param valueOfSunday int used to adjust the starting point of the weekday sequence.
@@ -623,11 +635,8 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
      */
     public String getCheckedDaysAsString( int valueOfSunday ) {
       StringBuilder sb = new StringBuilder();
-      for ( DayOfWeek d : EnumSet.range( DayOfWeek.SUN, DayOfWeek.SAT) ) {
-        CheckBox cb = dayToCheckBox.get( d );
-        if ( cb.isChecked() ) {
-          sb.append( Integer.toString( d.value()+valueOfSunday ) ).append( "," ); //$NON-NLS-1$
-        }
+      for ( DayOfWeek d : getCheckedDays()) {
+        sb.append( Integer.toString( d.value()+valueOfSunday ) ).append( "," ); //$NON-NLS-1$
       }
       sb.deleteCharAt( sb.length()-1 );
       return sb.toString();
@@ -1094,6 +1103,66 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     }
   }
   
+  public boolean isEveryNDays() {
+    return (temporalState == TemporalValue.DAILY) && dailyEditor.isEveryNDays();
+  }
+  
+  public MonthOfYear getSelectedMonth() {
+    MonthOfYear selectedMonth = null;
+    if ((temporalState == TemporalValue.YEARLY) && yearlyEditor.isNthDayNameOfMonthName()) {
+      selectedMonth = yearlyEditor.getMonthOfYear1();
+    } else if ((temporalState == TemporalValue.YEARLY) && yearlyEditor.isEveryMonthOnNthDay()) {
+      selectedMonth = yearlyEditor.getMonthOfYear0();
+    }
+    return selectedMonth;
+  }
+  
+  public List<DayOfWeek> getSelectedDaysOfWeek() {
+    ArrayList<DayOfWeek> selectedDaysOfWeek = new ArrayList<DayOfWeek>();
+    if ((temporalState == TemporalValue.DAILY) && !dailyEditor.isEveryNDays()) {
+      selectedDaysOfWeek.add(DayOfWeek.MON);
+      selectedDaysOfWeek.add(DayOfWeek.TUES);
+      selectedDaysOfWeek.add(DayOfWeek.WED);
+      selectedDaysOfWeek.add(DayOfWeek.THUR);
+      selectedDaysOfWeek.add(DayOfWeek.FRI);
+    } else if (temporalState == TemporalValue.WEEKLY) {
+      selectedDaysOfWeek.addAll(weeklyEditor.getCheckedDays());
+    } else if ((temporalState == TemporalValue.MONTHLY) && monthlyEditor.isNthDayNameOfMonth()) {
+      selectedDaysOfWeek.add(monthlyEditor.getDayOfWeek());
+    } else if ((temporalState == TemporalValue.YEARLY) && yearlyEditor.isNthDayNameOfMonthName()) {
+      selectedDaysOfWeek.add(yearlyEditor.getDayOfWeek());
+    }
+    return selectedDaysOfWeek;
+  }
+  
+  public WeekOfMonth getSelectedWeekOfMonth() {
+    WeekOfMonth selectedWeekOfMonth = null;
+    if ((temporalState == TemporalValue.MONTHLY) && monthlyEditor.isNthDayNameOfMonth()) {
+      selectedWeekOfMonth = monthlyEditor.getWeekOfMonth();
+    } else if ((temporalState == TemporalValue.YEARLY) && yearlyEditor.isNthDayNameOfMonthName()) {
+      selectedWeekOfMonth = yearlyEditor.getWeekOfMonth();
+    }
+    return selectedWeekOfMonth;
+  }
+  
+  public Integer getSelectedDayOfMonth() {
+    Integer selectedDayOfMonth = null;    
+    if ((temporalState == TemporalValue.MONTHLY) && monthlyEditor.isDayNOfMonth()) {
+      try {
+        selectedDayOfMonth = Integer.parseInt(monthlyEditor.getDayOfMonth());
+      } catch (Exception ex) {
+        
+      }
+    } else if ((temporalState == TemporalValue.YEARLY) && yearlyEditor.isEveryMonthOnNthDay()) {
+      try {
+        selectedDayOfMonth = Integer.parseInt(yearlyEditor.getDayOfMonth());
+      } catch (Exception ex) {
+        
+      }
+    }
+    return selectedDayOfMonth;
+  }
+  
   /**
    * 
    * @return
@@ -1247,7 +1316,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
   public void setEndBy() {
     dateRangeEditor.setEndBy();
   }
-
+  
   public TemporalValue getTemporalState() {
     return temporalState;
   }

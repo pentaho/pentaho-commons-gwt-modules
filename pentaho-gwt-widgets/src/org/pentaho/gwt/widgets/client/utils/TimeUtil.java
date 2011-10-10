@@ -412,7 +412,11 @@ public class TimeUtil {
   
   public static Date zeroTimePart( Date dateTime ) {
     //TODO sbarkdull, use StringBuilder
-    return getDateTime( get0thTime(), dateTime );
+    Date newDate = (Date)dateTime.clone();
+    newDate.setHours(0);
+    newDate.setSeconds(0);
+    newDate.setMinutes(0);
+    return newDate;
   }
   
   /**
