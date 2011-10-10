@@ -68,7 +68,6 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
         notifyCallbackCanceled(callback);
       }      
     });
-    dialog.center();    
   }
   
   public void saveFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
@@ -83,7 +82,6 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
         notifyCallbackCanceled(callback);
       }
     });
-    dialog.center();    
   }
   
   public native void setupNativeHooks(FileChooserEntryPoint fileChooserEntryPoint)
