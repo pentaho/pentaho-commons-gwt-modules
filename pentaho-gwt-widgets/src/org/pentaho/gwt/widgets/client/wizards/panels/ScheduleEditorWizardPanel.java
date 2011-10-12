@@ -102,18 +102,6 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     return scheduleEditor.getCronString();
   }
   
-  public String getTriggerName() {
-    return scheduleEditor.getName();
-  }
-  
-  public String getTriggerGroup() {
-    return scheduleEditor.getGroupName();
-  }
-  
-  public String getDescription() {
-    return scheduleEditor.getDescription();
-  }
-
   public Date getStartDate() {
     return scheduleEditor.getStartDate();
   }

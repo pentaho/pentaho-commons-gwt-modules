@@ -122,22 +122,11 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   private static Map<TemporalValue, ScheduleType> temporalValueToScheduleTypeMap = createTemporalValueToScheduleTypeMap();
   private static Map<ScheduleType, TemporalValue> scheduleTypeToTemporalValueMap = createScheduleTypeMapToTemporalValue();
   
-  private TextBox nameTb = new TextBox();
-  private TextBox groupNameTb = new TextBox();
-  private TextBox descriptionTb = new TextBox();
   private ListBox scheduleCombo = null;
   
-  // validation labels
-  private ErrorLabel nameLabel;
-  private ErrorLabel groupNameLabel;
-  private ErrorLabel descriptionLabel;
-
 //  private String cronStr = null;
 //  private String repeatInSecs = null;
   
-  private static final String DEFAULT_NAME = ""; //$NON-NLS-1$
-  private static final String DEFAULT_GROUP_NAME = ""; //$NON-NLS-1$
-  private static final String DEFAULT_DESCRIPTION = ""; //$NON-NLS-1$
   private ICallback<IChangeHandler> onChangeHandler = null;
 
   public ScheduleEditor() {
@@ -145,35 +134,12 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
     
-    int rowNum = 0;
-    nameLabel = new ErrorLabel( new Label( MSGS.nameColon() ) );
-    nameLabel.setStyleName(SCHEDULE_LABEL);
-    add( nameLabel );
-    add( nameTb );
-    nameTb.setWidth("70%"); //$NON-NLS-1$
-    
-    rowNum++;
-    groupNameLabel = new ErrorLabel( new Label( MSGS.groupColon() ) );
-    groupNameLabel.setStyleName(SCHEDULE_LABEL);
-    add( groupNameLabel );
-    add( groupNameTb );
-    groupNameTb.setWidth("70%"); //$NON-NLS-1$
-
-    rowNum++;
-    descriptionLabel = new ErrorLabel( new Label( MSGS.descriptionColon() ) );
-    descriptionLabel.setStyleName(SCHEDULE_LABEL);
-    add( descriptionLabel );
-    descriptionTb.setStyleName( "scheduleDescription" ); //$NON-NLS-1$
-    add( descriptionTb );
-
-    rowNum++;
     scheduleCombo = createScheduleCombo();
     Label l = new Label( MSGS.recurrenceColon() );
     l.setStyleName(SCHEDULE_LABEL);
     add( l );
     add( scheduleCombo );
 
-    rowNum++;
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%"); //$NON-NLS-1$
     add( vp );
@@ -204,10 +170,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   }
 
   public void reset( Date now ) {
-    setName( DEFAULT_NAME );
-    setGroupName( DEFAULT_GROUP_NAME );
-    setDescription( DEFAULT_DESCRIPTION );
-    
     runOnceEditor.reset( now );
     recurrenceEditor.reset( now );
     cronEditor.reset( now );
@@ -215,30 +177,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     setScheduleType( ScheduleType.RUN_ONCE );
   }
   
-  public String getName() {
-    return nameTb.getText();
-  }
-  
-  public void setName( String name ) {
-    nameTb.setText( name );
-  }
-  
-  public String getGroupName() {
-    return groupNameTb.getText();
-  }
-  
-  public void setGroupName( String groupName ) {
-    groupNameTb.setText( groupName );
-  }
-  
-  public String getDescription() {
-    return descriptionTb.getText();
-  }
-  
-  public void setDescription( String description ) {
-    descriptionTb.setText( description );
-  }
-
   public String getCronString() {
     switch ( getScheduleType() ) {
       case RUN_ONCE:
@@ -487,22 +425,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     }
   }
   
-  /**
-   * @param errorMsg String null or "" to clear the error msg, else
-   * set the error msg to <param>errorMsg</param>.
-   */
-  public void setNameError( String errorMsg ) {
-    nameLabel.setErrorMsg( errorMsg );
-  }
-  
-  public void setGroupNameError( String errorMsg ) {
-    groupNameLabel.setErrorMsg( errorMsg );
-  }
-  
-  public void setDescriptionError( String errorMsg ) {
-    descriptionLabel.setErrorMsg( errorMsg );
-  }
-  
   private static Map<TemporalValue, ScheduleType> createTemporalValueToScheduleTypeMap() {
     Map<TemporalValue, ScheduleType> m = new HashMap<TemporalValue, ScheduleType>();
 
@@ -540,8 +462,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   }
   
   public void setFocus() {
-    nameTb.setFocus( true );
-    nameTb.setSelectionRange( 0, nameTb.getText().length() );
+    scheduleCombo.setFocus( true );
   }
   
   public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
@@ -556,15 +477,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   
   private void configureOnChangeHandler() {
     final ScheduleEditor localThis = this;
-    KeyboardListener keyboardListener = new KeyboardListener() {
-      public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-      }
-      public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-      }
-      public void onKeyUp(Widget sender, char keyCode, int modifiers) {
-        localThis.changeHandler();
-      }
-    };
     ChangeListener changeListener = new ChangeListener() {
       public void onChange(Widget sender) {
         localThis.changeHandler();
@@ -575,9 +487,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
         localThis.changeHandler();
       }
     };
-    nameTb.addKeyboardListener( keyboardListener );
-    groupNameTb.addKeyboardListener( keyboardListener );
-    descriptionTb.addKeyboardListener( keyboardListener );
     scheduleCombo.addChangeListener( changeListener );
     runOnceEditor.setOnChangeHandler( handler );
     recurrenceEditor.setOnChangeHandler( handler );

@@ -110,7 +110,7 @@ public class CronParser {
   public static boolean isDayOfWeekField( String fld ) {
     return fld.matches( MATCH_DAY_OF_WEEK_FIELD_RE );
   }
-  private static final String MATCH_YEAR_FIELD_RE = "^[0-9]{1,4}$"; //$NON-NLS-1$
+  private static final String MATCH_YEAR_FIELD_RE = "^\\*|[0-9]{1,4}$"; //$NON-NLS-1$
   public static boolean isYearField( String fld ) {
     return fld.matches( MATCH_YEAR_FIELD_RE );
   }

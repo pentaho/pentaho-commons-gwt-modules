@@ -39,13 +39,6 @@ public class ScheduleEditorValidator implements IUiValidator {
   public boolean isValid() {
     boolean isValid = true;
     
-    if ( StringUtils.isEmpty( schedEd.getName() ) ) {
-      isValid = false;
-    }
-    if ( StringUtils.isEmpty( schedEd.getGroupName() ) ) {
-      isValid = false;
-    }
-
     switch ( schedEd.getScheduleType() ) {
       case RUN_ONCE:
         isValid &= runOnceEditorValidator.isValid();
@@ -69,8 +62,6 @@ public class ScheduleEditorValidator implements IUiValidator {
   }
 
   public void clear() {
-    schedEd.setNameError( null );
-    schedEd.setGroupNameError( null );
     recurrenceEditorValidator.clear();
     runOnceEditorValidator.clear();
     cronEditorValidator.clear();
