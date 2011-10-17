@@ -851,6 +851,11 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     cursor: hand;
 }
 
+.pentaho-toggle-button button{
+    background: transparent;
+    border:none;
+}
+
 .pentaho-toggle-button-horizontal {
     margin: 2px 0px 2px 0px;
 }
