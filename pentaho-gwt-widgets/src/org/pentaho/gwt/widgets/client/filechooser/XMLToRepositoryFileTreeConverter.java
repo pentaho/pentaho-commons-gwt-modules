@@ -34,6 +34,17 @@ import com.google.gwt.xml.client.NodeList;
       return fileTree;
     }
     
+    public List<RepositoryFile> getTrashFiles(String xmlData) {
+      Document doc = getXMLDocumentFromString(xmlData);
+      List<RepositoryFile> trashFiles = new ArrayList<RepositoryFile>();
+      NodeList nodes = doc.getChildNodes();
+      for (int i=0; i<nodes.getLength(); i++) {
+        RepositoryFile trashItem = getRepositoryFileFromXmlElement(nodes.item(i));
+        trashFiles.add(trashItem);
+      }
+      return trashFiles;
+    }
+    
   
     private final String getName(Element repoFile) {
       return getNodeValueByTagName(repoFile, "name");
