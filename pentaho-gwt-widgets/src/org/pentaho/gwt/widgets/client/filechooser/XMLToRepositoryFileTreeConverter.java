@@ -37,7 +37,7 @@ import com.google.gwt.xml.client.NodeList;
     public List<RepositoryFile> getTrashFiles(String xmlData) {
       Document doc = getXMLDocumentFromString(xmlData);
       List<RepositoryFile> trashFiles = new ArrayList<RepositoryFile>();
-      NodeList nodes = doc.getChildNodes();
+      NodeList nodes = doc.getElementsByTagName("repositoryFileDto");
       for (int i=0; i<nodes.getLength(); i++) {
         RepositoryFile trashItem = getRepositoryFileFromXmlElement(nodes.item(i));
         trashFiles.add(trashItem);
