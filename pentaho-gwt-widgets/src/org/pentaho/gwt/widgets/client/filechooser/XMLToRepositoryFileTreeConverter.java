@@ -17,7 +17,6 @@ import com.google.gwt.xml.client.NodeList;
    */
   public class XMLToRepositoryFileTreeConverter {
     String xmlText;
-    String dateFormat = "MM-dd-yyyy";
 
     public RepositoryFileTree getRepositoryFileTree(Element element) {
       RepositoryFileTree fileTree = new RepositoryFileTree();
@@ -138,7 +137,8 @@ import com.google.gwt.xml.client.NodeList;
       // parse the date
       Date date = null;
         try {
-          date = DateTimeFormat.getFormat("MM/dd/yyyy HH:mm:ss").parse(dateTimeString);
+          Long timeInMillis = Long.parseLong(dateTimeString);
+          date = new Date(timeInMillis);
         } catch (Exception e) {
           return null;
         }
