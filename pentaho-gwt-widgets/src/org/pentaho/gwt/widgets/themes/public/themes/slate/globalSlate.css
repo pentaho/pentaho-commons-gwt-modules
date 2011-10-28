@@ -1083,14 +1083,20 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     /*background: url('images/wt_transparent.png') repeat;*/
 }
 
+
 .pentaho-tooltip-contents {
-    background-color: #ececec;
+    background-color: #dedede;
     padding: 4px;
-    border: 1px solid #808080;
-    /**/
+    border: 1px solid #848484;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6), 0 0 3px rgba(255, 255, 255, 1) inset;
+    /* Firefox */
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6), 0 0 3px rgba(255, 255, 255, 1) inset;
+    /* Standard Form */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6), 0 0 3px rgba(255, 255, 255, 1) inset;
 }
 
 .pentaho-shadow {
