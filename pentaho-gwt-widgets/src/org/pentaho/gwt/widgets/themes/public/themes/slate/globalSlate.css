@@ -854,6 +854,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-toggle-button button{
     background: transparent;
     border:none;
+    color: inherit;
 }
 
 .pentaho-toggle-button-horizontal {

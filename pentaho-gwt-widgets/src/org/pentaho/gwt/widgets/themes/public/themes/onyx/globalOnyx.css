@@ -175,6 +175,7 @@ input[type='text'] {
 .pentaho-toggle-button button{
     background: transparent;
     border:none;
+    color: inherit;
 }
 
 .pentaho-toggle-button-horizontal {
