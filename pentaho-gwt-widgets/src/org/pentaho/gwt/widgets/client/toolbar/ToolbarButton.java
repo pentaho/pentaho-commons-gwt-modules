@@ -51,6 +51,7 @@ public class ToolbarButton {
   protected FocusPanel eventWrapper = new FocusPanel();
   protected String stylePrimaryName = "toolbar-button";    //$NON-NLS-1$
   protected Command command;
+  protected ToolTip toolTipWidget;
   protected String toolTip;
   protected Image downImage;
   protected Image downImageDisabled;
@@ -349,7 +350,11 @@ public class ToolbarButton {
    */
   public void setToolTip(String toolTip){
     this.toolTip = toolTip;
-    eventWrapper.addMouseListener(new ToolTip(toolTip, 1000));
+    if (toolTipWidget != null) {
+      eventWrapper.removeMouseListener(toolTipWidget);
+    }
+    toolTipWidget = new ToolTip(toolTip, 1000);
+    eventWrapper.addMouseListener(toolTipWidget);
   }
   
   /**
