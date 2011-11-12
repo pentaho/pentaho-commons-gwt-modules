@@ -16,15 +16,15 @@
  */
 package org.pentaho.gwt.widgets.client.controls;
 
-import java.util.Date;
-
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.user.client.ui.CellPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 
@@ -34,7 +34,7 @@ import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
  */
 
 public class DateTimePicker extends FlowPanel implements IChangeHandler {
-  private DefaultFormat format = new DefaultFormat(DateTimeFormat.getShortDateFormat());
+  private DefaultFormat format = new DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT));
   private DatePickerEx datePicker = new DatePickerEx(format);
   private TimePicker timePicker = new TimePicker();
   private ICallback<IChangeHandler> onChangeHandler = null;
@@ -45,14 +45,16 @@ public class DateTimePicker extends FlowPanel implements IChangeHandler {
   
   public DateTimePicker( Layout layout ) {
     super();
-    Panel p = ( Layout.HORIZONTAL == layout )
+    CellPanel p = ( Layout.HORIZONTAL == layout )
       ? new HorizontalPanel()
       : new VerticalPanel();
     add( p );
     datePicker.getDatePicker().setWidth( "12ex" ); //$NON-NLS-1$
     p.add( datePicker.getDatePicker() );
+    p.setCellVerticalAlignment(datePicker.getDatePicker(), HasVerticalAlignment.ALIGN_MIDDLE);
     //timePicker.setWidth( "100%" );
     p.add( timePicker );
+    p.setCellVerticalAlignment(timePicker, HasVerticalAlignment.ALIGN_MIDDLE);
     configureOnChangeHandler();
   }
 
