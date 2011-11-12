@@ -16,8 +16,11 @@
  */
 package org.pentaho.gwt.widgets.client.controls;
 
+import java.util.Date;
+
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
@@ -79,6 +82,17 @@ public class DateTimePicker extends FlowPanel implements IChangeHandler {
     
     datePicker.setOnChangeHandler(handler);
     timePicker.setOnChangeHandler(handler);
+  }
+  
+  public Date getDate() {
+    Date date = datePicker.getSelectedDate();
+    if (timePicker.getTimeOfDay().equals(TimeOfDay.AM)) {
+      date.setHours(Integer.parseInt(timePicker.getHour()));
+    } else {
+      date.setHours(Integer.parseInt(timePicker.getHour())+12);
+    }
+    date.setMinutes(Integer.parseInt(timePicker.getMinute()));
+    return date;
   }
   
 }
