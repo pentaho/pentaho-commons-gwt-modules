@@ -77,23 +77,32 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     scheduleEditor.setOnChangeHandler( chHandler );
   }
   
-  public HashMap<String, String> getParams() {
-    HashMap<String, String> params = new HashMap<String, String>();
-    JsArray<JsSchedulingParameter> jsParams = getJsParams();
-    for (int i = 0; i < jsParams.length(); i++) {
-      JsSchedulingParameter jsParam = jsParams.get(i);
-      params.put(jsParam.getName(), jsParam.getValue());
-    }
-    return params;  
-  }
-  
-  private native JsArray<JsSchedulingParameter> getJsParams() /*-{
+  public native JsArray<JsSchedulingParameter> getParams() /*-{
     var params = $doc.getElementById('schedulerParamsFrame').contentWindow.getParams();
     var paramEntries = new Array();
     for (var key in params) {
-      paramEntries.push({name: key,
-       value: params[key]
-      });
+      var type = null;
+      var value = null;
+      if (typeof params[key] == 'number') {
+        type = "number";
+        value = '' + params[key];
+      } else if (typeof params[key] == 'boolean') {
+        type = "boolean";
+        value = (params[key] ? "true" : "false");
+      } else if (params[key] instanceof Date) {
+        type = "date";
+        value DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]);
+      } else if (params[key] instanceof String) {
+        type = "string";
+        value = params[key];
+      }
+      if (type != null) {
+        paramEntries.push({
+          name: key,
+          value: params[key],
+          type: type
+        });
+      }
     }
     return paramEntries;
   }-*/;

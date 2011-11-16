@@ -20,4 +20,11 @@ public class JsSchedulingParameter extends JavaScriptObject implements IScheduli
     return this.value = value;
   }-*/;
 
+  public final native String getType() /*-{
+    return this.type;
+  }-*/;
+
+  public final native void setType(String type) /*-{
+    this.type = type;
+  }-*/;
 }
