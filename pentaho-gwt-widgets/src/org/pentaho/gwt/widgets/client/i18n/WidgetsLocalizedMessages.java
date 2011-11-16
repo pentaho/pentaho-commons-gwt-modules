@@ -96,6 +96,15 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String search();
 
   /**
+   * Translated "Search".
+   * 
+   * @return translated "Search"
+  
+   */
+  @DefaultMessage("Parameters")
+  String parameters();
+  
+  /**
    * Translated "Specify a name.".
    * 
    * @return translated "Specify a name."
