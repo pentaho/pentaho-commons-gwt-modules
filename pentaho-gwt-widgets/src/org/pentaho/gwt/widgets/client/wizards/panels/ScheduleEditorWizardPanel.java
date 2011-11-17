@@ -91,7 +91,7 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
         value = (params[key] ? "true" : "false");
       } else if (params[key] instanceof Date) {
         type = "date";
-        value DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]);
+        value = DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]);
       } else if (params[key] instanceof String) {
         type = "string";
         value = params[key];
