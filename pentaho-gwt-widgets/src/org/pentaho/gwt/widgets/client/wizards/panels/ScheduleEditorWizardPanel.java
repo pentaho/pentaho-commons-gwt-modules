@@ -92,14 +92,14 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
       } else if (params[key] instanceof Date) {
         type = "date";
         value = DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]);
-      } else if (params[key] instanceof String) {
+      } else if (typeof params[key] == 'string') {
         type = "string";
         value = params[key];
       }
       if (type != null) {
         paramEntries.push({
           name: key,
-          value: params[key],
+          stringValue: value,
           type: type
         });
       }
