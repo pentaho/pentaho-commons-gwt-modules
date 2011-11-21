@@ -83,6 +83,18 @@ public class DateTimePicker extends FlowPanel implements IChangeHandler {
     datePicker.setOnChangeHandler(handler);
     timePicker.setOnChangeHandler(handler);
   }
+
+  private boolean enabled = true;
+  
+  public boolean isEnabled() {
+    return enabled;
+  }
+  
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
+    datePicker.getDatePicker().setEnabled(enabled);
+    timePicker.setEnabled(enabled);
+  }
   
   public Date getDate() {
     Date date = datePicker.getSelectedDate();
@@ -94,5 +106,6 @@ public class DateTimePicker extends FlowPanel implements IChangeHandler {
     date.setMinutes(Integer.parseInt(timePicker.getMinute()));
     return date;
   }
+  
   
 }

@@ -185,4 +185,11 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
     minuteLB.addChangeListener( changeListener );
     timeOfDayLB.addChangeListener( changeListener );
   }
+  
+  public void setEnabled(boolean enabled) {
+    hourLB.setEnabled(enabled);
+    minuteLB.setEnabled(enabled);
+    timeOfDayLB.setEnabled(enabled);
+  }
+  
 }
