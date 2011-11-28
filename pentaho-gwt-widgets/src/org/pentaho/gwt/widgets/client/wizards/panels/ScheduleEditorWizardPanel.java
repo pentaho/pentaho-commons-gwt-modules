@@ -20,7 +20,6 @@
 package org.pentaho.gwt.widgets.client.wizards.panels;
 
 import java.util.Date;
-import java.util.HashMap;
 
 import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor;
 import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor.ScheduleType;
@@ -31,10 +30,6 @@ import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
 import org.pentaho.gwt.widgets.client.wizards.panels.validators.ScheduleEditorValidator;
 
-import com.google.gwt.core.client.JsArray;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.CaptionPanel;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -49,20 +44,12 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   
   ScheduleEditor scheduleEditor = new ScheduleEditor();
   ScheduleEditorValidator scheduleEditorValidator;
-  boolean parametersComplete = true;
-  CaptionPanel parametersCaptionPanel = new CaptionPanel(MSGS.parameters());
-  Frame parametersFrame;
-  String scheduledFilePath;
   
-  
-  public ScheduleEditorWizardPanel(String scheduledFile) {
+  public ScheduleEditorWizardPanel() {
     super();
-    scheduledFilePath = scheduledFile;
     scheduleEditorValidator = new ScheduleEditorValidator(scheduleEditor);
     init();
     layout();
-    ScheduleEditorWizardPanel thisInstance = this;
-    registerSchedulingCallbacks(thisInstance);
   }
 
   /**
@@ -76,59 +63,13 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     };
     scheduleEditor.setOnChangeHandler( chHandler );
   }
-  
-  public native JsArray<JsSchedulingParameter> getParams() /*-{
-    var params = $doc.getElementById('schedulerParamsFrame').contentWindow.getParams();
-    var paramEntries = new Array();
-    for (var key in params) {
-      var type = null;
-      var value = null;
-      if (typeof params[key] == 'number') {
-        type = "number";
-        value = '' + params[key];
-      } else if (typeof params[key] == 'boolean') {
-        type = "boolean";
-        value = (params[key] ? "true" : "false");
-      } else if (params[key] instanceof Date) {
-        type = "date";
-        value = DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]);
-      } else if (typeof params[key] == 'string') {
-        type = "string";
-        value = params[key];
-      }
-      if (type != null) {
-        paramEntries.push({
-          name: key,
-          stringValue: value,
-          type: type
-        });
-      }
-    }
-    return paramEntries;
-  }-*/;
-  
-  public native void schedulerParamsLoadedCallback(String filePath) /*-{
-    $doc.getElementById('schedulerParamsFrame').contentWindow.initSchedulingParams(filePath, $wnd.schedulerParamsCompleteCallback);
-  }-*/;
-  
-  public void schedulerParamsCompleteCallback(boolean complete) {
-    parametersComplete = complete;
-    setCanContinue(scheduleEditorValidator.isValid() && complete);
-    setCanFinish(scheduleEditorValidator.isValid() && complete);
-  }
-  
-  private native void registerSchedulingCallbacks(ScheduleEditorWizardPanel thisInstance)/*-{
-    $wnd.schedulerParamsLoadedCallback = function(filePath) {thisInstance.@org.pentaho.gwt.widgets.client.wizards.panels.ScheduleEditorWizardPanel::schedulerParamsLoadedCallback(Ljava/lang/String;)(filePath)};
-    $wnd.schedulerParamsCompleteCallback = function(flag) {thisInstance.@org.pentaho.gwt.widgets.client.wizards.panels.ScheduleEditorWizardPanel::schedulerParamsCompleteCallback(Z)(flag)};
-  }-*/;
-  
+
   /**
    * 
    */
   private void layout() {
     this.addStyleName(PENTAHO_SCHEDULE);
-    this.add(scheduleEditor, WEST);
-    this.add(parametersCaptionPanel, CENTER);
+    this.add(scheduleEditor, CENTER);
     panelWidgetChanged(null);
   }
 
@@ -142,8 +83,8 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
 
   protected void panelWidgetChanged(Widget changedWidget) {
 //    System.out.println("Widget Changed: " + changedWidget + " can continue: " + scheduleEditorValidator.isValid());
-    setCanContinue(scheduleEditorValidator.isValid() && parametersComplete);
-    setCanFinish(scheduleEditorValidator.isValid() && parametersComplete);
+    this.setCanContinue(scheduleEditorValidator.isValid());
+    this.setCanFinish(scheduleEditorValidator.isValid());
   }
   
   public ScheduleType getScheduleType() {
@@ -185,22 +126,4 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     scheduleEditor.setFocus();
   }
   
-  public void setParametersUrl(String url) {
-    if (url == null) {
-      if (parametersFrame != null) {
-        parametersCaptionPanel.remove(parametersFrame);
-        parametersFrame = null;
-      }
-    } else {
-      if (parametersFrame == null) {
-        parametersFrame = new Frame();
-        parametersCaptionPanel.add(parametersFrame);
-        DOM.setElementAttribute(parametersFrame.getElement(), "onload", "schedulerParamsLoadedCallback('" + scheduledFilePath + "')");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        DOM.setElementAttribute(parametersFrame.getElement(), "id", "schedulerParamsFrame"); //$NON-NLS-1$ //$NON-NLS-2$
-        parametersFrame.setUrl(url);
-      } else if (!url.equals(parametersFrame.getUrl())) {
-        parametersFrame.setUrl(url);
-      }
-    }
-  }
 }

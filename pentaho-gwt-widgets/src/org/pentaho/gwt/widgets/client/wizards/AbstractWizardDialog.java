@@ -53,10 +53,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   private static final String WIZARD_BUTTON_PANEL = "pentaho-wizard-button-panel"; //$NON-NLS-1$
 
   // gui elements
-  Button backButton = new Button(MSGS.back());
-  Button nextButton = new Button(MSGS.next());
-  Button cancelButton = new Button(MSGS.cancel());
-  Button finishButton = new Button(MSGS.finish());
+  protected Button backButton = new Button(MSGS.back());
+  protected Button nextButton = new Button(MSGS.next());
+  protected Button cancelButton = new Button(MSGS.cancel());
+  protected Button finishButton = new Button(MSGS.finish());
 
   ListBox steps = new ListBox();
   DeckPanel wizardDeckPanel = new DeckPanel();
@@ -93,52 +93,25 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 	  
     nextButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        int oldIndex = steps.getSelectedIndex();  // The panel currently being displayed
-        int newIndex = oldIndex + 1;              // The panel that is going to be displayed
-        // Get the actors (next and previous panels)
-        IWizardPanel nextPanel = (IWizardPanel)wizardDeckPanel.getWidget(newIndex);
-        IWizardPanel previousPanel = (IWizardPanel)wizardDeckPanel.getWidget(oldIndex);
-        if (!onNext(nextPanel, previousPanel)) {
-          return;
-        }
-        // Update the Listeners
-        previousPanel.removeWizardPanelListener(AbstractWizardDialog.this);
-        nextPanel.addWizardPanelListener(AbstractWizardDialog.this);
-        // Update the GUI with the current widget index;
-        updateGUI(newIndex);
+        nextClicked();
       }
     });
     
     backButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        int oldIndex = wizardDeckPanel.getVisibleWidget();
-        int newIndex = oldIndex - 1;              // The panel that is going to be displayed  
-        // Get the actors (next and previous panels)
-        IWizardPanel previousPanel = (IWizardPanel)wizardDeckPanel.getWidget(newIndex);
-        IWizardPanel currentPanel = (IWizardPanel)wizardDeckPanel.getWidget(oldIndex);
-        if (!onPrevious(previousPanel, currentPanel)) {
-          return;
-        }
-        // Update the Listeners
-        currentPanel.removeWizardPanelListener(AbstractWizardDialog.this);
-        previousPanel.addWizardPanelListener(AbstractWizardDialog.this);
-        // Update the GUI with the current widget index;
-        updateGUI(newIndex);
+        backClicked();
       }
     });
     
     cancelButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        canceled = true;
-        AbstractWizardDialog.this.hide();
+        cancelClicked();
       }     
     });
     
     finishButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        if (onFinish()) {
-          AbstractWizardDialog.this.hide();
-        }
+        finishClicked();
       }
     });
     
@@ -146,6 +119,68 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     
   }
 
+  protected boolean enableNext(int index) {
+    return ((IWizardPanel)wizardDeckPanel.getWidget(index)).canContinue() && index < wizardDeckPanel.getWidgetCount() -1;
+  }
+  
+  protected boolean enableBack(int index) {
+    return index > 0;
+  }
+  
+  protected boolean showNext(int index) {
+    return wizardDeckPanel.getWidgetCount() > 1;
+  }
+  
+  protected boolean showBack(int index) {
+    return wizardDeckPanel.getWidgetCount() > 1;
+  }
+  
+  protected boolean showFinish(int index) {
+    return true;
+  }
+  
+  protected void nextClicked() {
+    int oldIndex = steps.getSelectedIndex();  // The panel currently being displayed
+    int newIndex = oldIndex + 1;              // The panel that is going to be displayed
+    // Get the actors (next and previous panels)
+    IWizardPanel nextPanel = (IWizardPanel)wizardDeckPanel.getWidget(newIndex);
+    IWizardPanel previousPanel = (IWizardPanel)wizardDeckPanel.getWidget(oldIndex);
+    if (!onNext(nextPanel, previousPanel)) {
+      return;
+    }
+    // Update the Listeners
+    previousPanel.removeWizardPanelListener(AbstractWizardDialog.this);
+    nextPanel.addWizardPanelListener(AbstractWizardDialog.this);
+    // Update the GUI with the current widget index;
+    updateGUI(newIndex);
+  }
+  
+  protected void backClicked() {
+    int oldIndex = wizardDeckPanel.getVisibleWidget();
+    int newIndex = oldIndex - 1;              // The panel that is going to be displayed  
+    // Get the actors (next and previous panels)
+    IWizardPanel previousPanel = (IWizardPanel)wizardDeckPanel.getWidget(newIndex);
+    IWizardPanel currentPanel = (IWizardPanel)wizardDeckPanel.getWidget(oldIndex);
+    if (!onPrevious(previousPanel, currentPanel)) {
+      return;
+    }
+    // Update the Listeners
+    currentPanel.removeWizardPanelListener(AbstractWizardDialog.this);
+    previousPanel.addWizardPanelListener(AbstractWizardDialog.this);
+    // Update the GUI with the current widget index;
+    updateGUI(newIndex);
+  }
+  
+  protected void finishClicked() {
+    if (onFinish()) {
+      AbstractWizardDialog.this.hide();
+    }
+  }
+  
+  protected void cancelClicked() {
+    canceled = true;
+    AbstractWizardDialog.this.hide();
+  }
   
   /**
    * @param index of the widget that will be shown.
@@ -155,16 +190,17 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    */
   protected void updateGUI(int index) {
     stepsList.setVisible(wizardDeckPanel.getWidgetCount() > 1);
-    backButton.setVisible(wizardDeckPanel.getWidgetCount() > 1);
-    nextButton.setVisible(wizardDeckPanel.getWidgetCount() > 1);
+    finishButton.setVisible(showFinish(index));
+    backButton.setVisible(showBack(index));
+    nextButton.setVisible(showNext(index));
     // Updates the selected step
     steps.setSelectedIndex(index);
     // Shows the current IWizardPanel
     wizardDeckPanel.showWidget(index);
     // Enables the next button if the current IWizardPanel can continue and we're not at the last IWizardPanel
-    nextButton.setEnabled(((IWizardPanel)wizardDeckPanel.getWidget(index)).canContinue() && index < wizardDeckPanel.getWidgetCount() -1);
+    nextButton.setEnabled(enableNext(index));
     // Back button always enabled unless we're on the first IWizardPanel
-    backButton.setEnabled(index > 0);
+    backButton.setEnabled(enableBack(index));
     // Current IWizardPanel can finish at any step.
     finishButton.setEnabled(((IWizardPanel)wizardDeckPanel.getWidget(index)).canFinish());
     
