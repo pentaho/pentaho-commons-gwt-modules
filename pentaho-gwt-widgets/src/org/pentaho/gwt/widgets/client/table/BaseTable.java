@@ -21,13 +21,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.google.gwt.gen2.table.client.AbstractScrollTable;
-import com.google.gwt.user.client.ui.*;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Command;
@@ -36,17 +33,25 @@ import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.ScrollListener;
+import com.google.gwt.user.client.ui.SourcesTableEvents;
+import com.google.gwt.user.client.ui.TableListener;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.table.client.FixedWidthFlexTable;
 import com.google.gwt.widgetideas.table.client.FixedWidthGrid;
 import com.google.gwt.widgetideas.table.client.ScrollTable;
-import com.google.gwt.widgetideas.table.client.SortableGrid;
-import com.google.gwt.widgetideas.table.client.SourceTableSelectionEvents;
-import com.google.gwt.widgetideas.table.client.TableSelectionListener;
 import com.google.gwt.widgetideas.table.client.ScrollTable.ResizePolicy;
 import com.google.gwt.widgetideas.table.client.SelectionGrid.SelectionPolicy;
+import com.google.gwt.widgetideas.table.client.SortableGrid;
 import com.google.gwt.widgetideas.table.client.SortableGrid.ColumnSorter;
 import com.google.gwt.widgetideas.table.client.SortableGrid.ColumnSorterCallback;
+import com.google.gwt.widgetideas.table.client.SourceTableSelectionEvents;
 import com.google.gwt.widgetideas.table.client.TableModel.ColumnSortList;
+import com.google.gwt.widgetideas.table.client.TableSelectionListener;
 import com.google.gwt.widgetideas.table.client.overrides.FlexTable.FlexCellFormatter;
 import com.google.gwt.widgetideas.table.client.overrides.HTMLTable.CellFormatter;
 
@@ -672,5 +677,25 @@ public class BaseTable extends Composite {
 
   public void suppressHorizontalScrolling(){
     dataGrid.addStyleName("hide-h-scrolling");
+  }
+  
+  public boolean isSortingEnabled() {
+    return scrollTable.isSortingEnabled();
+  }
+  
+  public void setSortingEnabled(boolean enabled) {
+    scrollTable.setSortingEnabled(enabled);
+  }
+  
+  public void setColumnSortable(int column, boolean sortable) {
+    scrollTable.setColumnSortable(column, sortable);
+  }
+
+  public boolean isColumnSortable(int column) {
+    return scrollTable.isColumnSortable(column);
+  }
+  
+  public void sortColumn(int column, boolean ascending) {
+    dataGrid.sortColumn(column, ascending);
   }
 }
