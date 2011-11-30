@@ -245,7 +245,7 @@ public class BaseTable extends Composite {
       ResizePolicy resizePolicy, SelectionPolicy selectionPolicy) 
   {
     createTableHeader(tableHeaderNames, columnWidths);
-    createDataGrid(selectionPolicy);
+    createDataGrid(selectionPolicy, tableHeaderNames.length);
     createScrollTable(resizePolicy);
     populateDataGrid(columnWidths, rowAndColumnValues);
   }
@@ -274,9 +274,9 @@ public class BaseTable extends Composite {
   /**
    * Creates and initializes the data grid. 
    */
-  private void createDataGrid(SelectionPolicy selectionPolicy) {
+  private void createDataGrid(SelectionPolicy selectionPolicy, int numOfColumns) {
 
-    dataGrid = new FixedWidthGrid() {
+    dataGrid = new FixedWidthGrid(0, numOfColumns) {
       @Override
       public void onBrowserEvent(Event event) {
         Element td = this.getEventTargetCell(event);
@@ -698,4 +698,9 @@ public class BaseTable extends Composite {
   public void sortColumn(int column, boolean ascending) {
     dataGrid.sortColumn(column, ascending);
   }
+  
+  public void sortColumn(int column) {
+    dataGrid.sortColumn(column);
+  }
+  
 }
