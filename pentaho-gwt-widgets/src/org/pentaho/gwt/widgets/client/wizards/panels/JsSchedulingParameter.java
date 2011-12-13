@@ -1,6 +1,7 @@
 package org.pentaho.gwt.widgets.client.wizards.panels;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArrayString;
 
 public class JsSchedulingParameter extends JavaScriptObject implements ISchedulingParameter {
 
@@ -8,7 +9,7 @@ public class JsSchedulingParameter extends JavaScriptObject implements IScheduli
     return this.name;
   }-*/;
 
-  public final native String getStringValue() /*-{
+  public final native JsArrayString getStringValue() /*-{
     return this.stringValue;
   }-*/;
 
@@ -16,7 +17,7 @@ public class JsSchedulingParameter extends JavaScriptObject implements IScheduli
     this.name = name;
   }-*/;
 
-  public final native void setStringValue(String value) /*-{
+  public final native void setStringValue(JsArrayString value) /*-{
     return this.stringValue = value;
   }-*/;
 

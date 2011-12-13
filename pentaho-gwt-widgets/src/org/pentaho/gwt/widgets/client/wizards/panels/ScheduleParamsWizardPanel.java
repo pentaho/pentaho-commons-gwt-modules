@@ -44,6 +44,7 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
   Label scheduleDescription = new Label();
   Frame parametersFrame;
   String scheduledFilePath;  
+
   
   public ScheduleParamsWizardPanel(String scheduledFile) {
     super();
@@ -65,19 +66,48 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     var paramEntries = new Array();
     for (var key in params) {
       var type = null;
-      var value = null;
-      if (typeof params[key] == 'number') {
+      var value = new Array();
+      if (Object.prototype.toString.apply(params[key]) === '[object Array]') {
+        var theArray = params[key];
+        if (theArray.length > 0) {
+           for(var i=0; i < theArray.length; i++) {
+            if (typeof theArray[i] == 'number') {
+              if (type == null) {
+                type = "number[]";
+              }
+              value.push('' + theArray[i]);
+            } else if (typeof theArray[i] == 'boolean') {
+              if (type == null) {
+                type = "boolean[]";
+              }
+              value.push(theArray[i] ? "true" : "false");
+            } else if (typeof theArray[i] instanceof Date) {
+              if (type == null) {
+                type = "date[]";
+              }
+              value.push(DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(theArray[i]));
+            } else if (typeof theArray[i] == 'string') {
+              if (type == null) {
+                type = "string[]"
+              }
+              value.push(theArray[i]);
+            } else if (theArray[i] == null) {
+              value.push(null);
+            }     
+          }
+        }
+      } else if (typeof params[key] == 'number') {
         type = "number";
-        value = '' + params[key];
+        value.push('' + params[key]);
       } else if (typeof params[key] == 'boolean') {
         type = "boolean";
-        value = (params[key] ? "true" : "false");
+        value.push(params[key] ? "true" : "false");
       } else if (params[key] instanceof Date) {
         type = "date";
-        value = DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]);
+        value.push(DateTimeFormat.getFormat(PredefinedFormat.ISO_8601).format(params[key]));
       } else if (typeof params[key] == 'string') {
         type = "string";
-        value = params[key];
+        value.push(params[key]);
       }
       if (type != null) {
         paramEntries.push({
@@ -112,6 +142,8 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     this.addStyleName(PENTAHO_SCHEDULE);
     this.add(scheduleDescription, NORTH);
     this.add(parametersCaptionPanel, CENTER);
+    this.setCellHeight(parametersCaptionPanel, "100%");
+    parametersCaptionPanel.setHeight("100%");
   }
 
   /* (non-Javadoc)
@@ -132,6 +164,7 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
       if (parametersFrame == null) {
         parametersFrame = new Frame();
         parametersCaptionPanel.add(parametersFrame);
+        parametersFrame.setHeight("94%"); //$NON-NLS-1$
         DOM.setElementAttribute(parametersFrame.getElement(), "onload", "schedulerParamsLoadedCallback('" + scheduledFilePath + "')");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         DOM.setElementAttribute(parametersFrame.getElement(), "id", "schedulerParamsFrame"); //$NON-NLS-1$ //$NON-NLS-2$
         parametersFrame.setUrl(url);

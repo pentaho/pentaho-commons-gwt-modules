@@ -59,7 +59,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   protected Button finishButton = new Button(MSGS.finish());
 
   ListBox steps = new ListBox();
-  DeckPanel wizardDeckPanel = new DeckPanel();
+  protected DeckPanel wizardDeckPanel = new DeckPanel();
   VerticalPanel stepsList = new VerticalPanel();
 
   private IWizardPanel[] wizardPanels;
@@ -258,6 +258,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     add(content);
     content.setWidth("100%"); //$NON-NLS-1$
     content.setHeight("100%"); //$NON-NLS-1$
+    content.setCellHeight(deckWrapper, "98%");
   }
 
   /**

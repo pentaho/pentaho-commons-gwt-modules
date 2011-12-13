@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
@@ -89,13 +91,14 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
   private DateRangeEditor dateRangeEditor = null;
   
   private TemporalValue temporalState = null;
+  private DeckPanel deckPanel = null;
   
   private static final String SPACE = " "; //$NON-NLS-1$
   
   private static int VALUE_OF_SUNDAY = 1;
   private ICallback<IChangeHandler> onChangeHandler;
 
-  private Map<TemporalValue, Panel> temporalPanelMap = new HashMap<TemporalValue, Panel>();
+  private Map<TemporalValue, Panel> temporalPanelMap = new LinkedHashMap<TemporalValue, Panel>();
 
   public enum TemporalValue {
     SECONDS(0, MSGS.seconds()), 
@@ -341,11 +344,10 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     CaptionPanel recurrenceGB = new CaptionPanel(MSGS.recurrencePattern() );
     recurrenceGB.setStyleName(SCHEDULE_EDITOR_CAPTION_PANEL);
 
-    VerticalPanel p = new VerticalPanel();
-    recurrenceGB.add(p);
+    deckPanel = new DeckPanel();
+    recurrenceGB.add(deckPanel);
 
     secondlyEditor = new SecondlyRecurrenceEditor();
-    secondlyEditor.setVisible(true);
     minutelyEditor = new MinutelyRecurrenceEditor();
     hourlyEditor = new HourlyRecurrenceEditor();
     dailyEditor = new DailyRecurrenceEditor();
@@ -355,14 +357,16 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     createTemporalMap();
 
-    p.add(secondlyEditor);
-    p.add(minutelyEditor);
-    p.add(hourlyEditor);
+    deckPanel.add(secondlyEditor);
+    deckPanel.add(minutelyEditor);
+    deckPanel.add(hourlyEditor);
     
-    p.add(dailyEditor);
-    p.add(weeklyEditor);
-    p.add(monthlyEditor);
-    p.add(yearlyEditor);
+    deckPanel.add(dailyEditor);
+    deckPanel.add(weeklyEditor);
+    deckPanel.add(monthlyEditor);
+    deckPanel.add(yearlyEditor);
+    
+    deckPanel.showWidget(0);
 
     return recurrenceGB;
   }
@@ -386,7 +390,6 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     private ICallback<IChangeHandler> onChangeHandler;
     
     public SimpleRecurrencePanel( String strLabel ) {
-      setVisible(false);
 
       HorizontalPanel hp = new HorizontalPanel();
       Label l = new Label( MSGS.every() );
@@ -477,8 +480,6 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     private ICallback<IChangeHandler> onChangeHandler;
     
     public DailyRecurrenceEditor() {
-      setVisible(false);
-
       HorizontalPanel hp = new HorizontalPanel();
       everyNDaysRb.setStyleName("recurrenceRadioButton"); //$NON-NLS-1$
       everyNDaysRb.setChecked(true);
@@ -579,7 +580,6 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     
     public WeeklyRecurrenceEditor() {
       setStyleName("weeklyRecurrencePanel"); //$NON-NLS-1$
-      setVisible(false);
 
       Label l = new Label( MSGS.recurEveryWeek() );
       everyWeekOnLabel = new ErrorLabel( l );
@@ -721,7 +721,6 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     private ICallback<IChangeHandler> onChangeHandler;
     
     public MonthlyRecurrenceEditor() {
-      setVisible(false);
       setSpacing(6);
 
       HorizontalPanel hp = new HorizontalPanel();
@@ -861,7 +860,6 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     private static final String YEARLY_RB_GROUP = "yearly-group"; //$NON-NLS-1$
     public YearlyRecurrenceEditor() {
-      setVisible(false);
       setSpacing(6);
 
       HorizontalPanel p = new HorizontalPanel();
@@ -1041,9 +1039,13 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
   }
 
   private void selectTemporalPanel(TemporalValue selectedTemporalValue) {
+    int i = 0;
     for ( Map.Entry<TemporalValue, Panel> me : temporalPanelMap.entrySet() ) {
-      boolean bShow = me.getKey().equals( selectedTemporalValue );
-      me.getValue().setVisible( bShow );
+      if (me.getKey().equals( selectedTemporalValue )) {
+        deckPanel.showWidget(i);
+        break;
+      }
+      i++;
     }
   }
   
