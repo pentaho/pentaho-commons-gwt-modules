@@ -85,7 +85,12 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    * but should NEVER be called more than once during the lifecycle of the object
    */
   protected void init() {
- 
+
+    backButton.getElement().setId("wizard-back-button");
+    nextButton.getElement().setId("wizard-next-button");
+    cancelButton.getElement().setId("wizard-cancel-button");
+    finishButton.getElement().setId("wizard-finish-button");
+    
     backButton.setStyleName("pentaho-button");
     nextButton.setStyleName("pentaho-button");
     cancelButton.setStyleName("pentaho-button");
