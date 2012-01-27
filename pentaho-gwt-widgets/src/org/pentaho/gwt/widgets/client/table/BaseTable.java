@@ -17,6 +17,7 @@
 package org.pentaho.gwt.widgets.client.table;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -82,6 +83,8 @@ public class BaseTable extends Composite {
   public static final BaseColumnComparator DEFAULT_COLUMN_COMPARATOR = BaseColumnComparator
       .getInstance(ColumnComparatorTypes.STRING_NOCASE);
 
+  
+  
   private Panel parentPanel = new VerticalPanel();
 
   private ScrollTable scrollTable;
@@ -103,7 +106,11 @@ public class BaseTable extends Composite {
   private SelectionPolicy selectionPolicy;
 
   private BaseColumnComparator[] columnComparators;
-
+  
+  private Collection tableElements;
+  
+  private BaseTableColumnSorter baseTableColumnSorter;
+  
   private final TableListener internalDoubleClickListener = new TableListener() {
     public void onCellClicked(SourcesTableEvents sender, int row, int cell) {
       for (TableListener listener : doubleClickListeners) {
@@ -184,6 +191,8 @@ public class BaseTable extends Composite {
     this(tableHeaderNames, columnWidths, columnComparators, null);
   }
 
+  
+ 
   /**
    * Main constructor.
    * 
@@ -316,7 +325,8 @@ public class BaseTable extends Composite {
     dataGrid.addTableSelectionListener(internalSelectionListener);
 
     dataGrid.sinkEvents(Event.ONDBLCLICK);
-    dataGrid.setColumnSorter(new BaseTableColumnSorter());
+    baseTableColumnSorter = new BaseTableColumnSorter();
+    dataGrid.setColumnSorter(baseTableColumnSorter);
 
     if (this.selectionPolicy == null) {
       dataGrid.setStylePrimaryName("disabled"); //$NON-NLS-1$
@@ -386,8 +396,14 @@ public class BaseTable extends Composite {
   /**
    * Populates the data grid with data then sets the column widths. 
    */
+  private void populateDataGrid(int[] columnWidths, Object[][] rowAndColumnValues, Collection tableElements) {
+    this.tableElements = tableElements;
+    populateDataGrid(columnWidths, rowAndColumnValues);
+  }
+  /**
+   * Populates the data grid with data then sets the column widths. 
+   */
   private void populateDataGrid(int[] columnWidths, Object[][] rowAndColumnValues) {
-
     while(dataGrid.getRowCount() > 0){
       dataGrid.removeRow(0);
     }
@@ -426,14 +442,14 @@ public class BaseTable extends Composite {
       for (int j = 0; j < rowAndColumnValues[i].length; j++) {
         Object value = rowAndColumnValues[i][j];
         Element element = null;
-
         try {
           element = cellFormatter.getElement(i, j);
+          element.setAttribute("ordinal", Integer.toString(i));
         } catch (Exception e) {
+          
         }
 
         if (element != null) {
-
           if (value != null && value instanceof String && !value.equals("&nbsp;")) { //$NON-NLS-1$
             element.setTitle(value.toString());
           }
@@ -493,10 +509,18 @@ public class BaseTable extends Composite {
    * Creates the table using the default values specified in the constructor but with new data for
    * the rows. 
    */
+  public void populateTable(Object[][] rowAndColumnValues, Collection objects) {
+    populateDataGrid(columnWidths, rowAndColumnValues, objects);
+  }
+
+  /**
+   * Creates the table using the default values specified in the constructor but with new data for
+   * the rows. 
+   */
   public void populateTable(Object[][] rowAndColumnValues) {
     populateDataGrid(columnWidths, rowAndColumnValues);
   }
-
+  
   /**
    * Adds an additional table listener in addition to the default listener. 
    */
@@ -558,6 +582,18 @@ public class BaseTable extends Composite {
    */
   final class BaseTableColumnSorter extends ColumnSorter {
 
+    private void sortObjectCollection(List<Element> elements) {
+      if(BaseTable.this.tableElements != null && BaseTable.this.tableElements.size() > 0) {
+        List objects = new ArrayList();
+        Object[] tableElementArray = BaseTable.this.tableElements.toArray();
+        for(Element element:elements) {
+          int idx = Integer.parseInt(element.getParentElement().getAttribute("ordinal"));
+          objects.add(tableElementArray[idx]);
+        }
+        BaseTable.this.tableElements.clear();
+        BaseTable.this.tableElements.addAll(objects);
+      }
+    }
     public void onSortColumn(SortableGrid grid, ColumnSortList sortList, ColumnSorterCallback callback) {
 
       // Get the primary column and sort order
@@ -576,7 +612,9 @@ public class BaseTable extends Composite {
             columnComparators != null && columnComparators[column] != null ? columnComparators[column]
                 : DEFAULT_COLUMN_COMPARATOR);
       }
-
+      
+      sortObjectCollection(tdElems);
+      
       // Convert tdElems to trElems, reversing if needed
       Element[] trElems = new Element[tdElems.size()];
       if (ascending) {
@@ -591,6 +629,7 @@ public class BaseTable extends Composite {
       }
 
       callback.onSortingComplete(trElems);
+      
     }
   };
 
