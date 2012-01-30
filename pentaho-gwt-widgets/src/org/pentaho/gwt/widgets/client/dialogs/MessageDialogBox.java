@@ -27,4 +27,8 @@ public class MessageDialogBox extends PromptDialogBox {
   public MessageDialogBox(String title, String message, boolean isHTML, boolean autoHide, boolean modal) {
     super(title, "OK", null, autoHide, modal, isHTML?new HTML(message):new Label(message)); //$NON-NLS-1$
   }
+  
+  public MessageDialogBox(String title, String message, boolean isHTML, boolean autoHide, boolean modal, String okText, String notOkText, String cancelText) {
+    super(title, okText, notOkText, cancelText, autoHide, modal, isHTML?new HTML(message):new Label(message)); //$NON-NLS-1$
+  }
 }

@@ -104,6 +104,11 @@ public class PromptDialogBox extends DialogBox {
     setWidget(dialogContent);
   }
   
+  public PromptDialogBox(String title, String okText, String notOkText, String cancelText, boolean autoHide, boolean modal, Widget content) {
+    this(title, okText, notOkText, cancelText, autoHide, modal);
+    setContent(content);
+  }
+  
   public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
     this(title, okText, null, cancelText, autoHide, modal);
   }
