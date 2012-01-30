@@ -19,7 +19,9 @@ package org.pentaho.gwt.widgets.client.table;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
@@ -107,8 +109,10 @@ public class BaseTable extends Composite {
 
   private BaseColumnComparator[] columnComparators;
   
-  private Collection tableElements;
+  private Collection objects;
   
+  private Map<Element, Object> objectElementMap;
+
   private BaseTableColumnSorter baseTableColumnSorter;
   
   private final TableListener internalDoubleClickListener = new TableListener() {
@@ -192,7 +196,12 @@ public class BaseTable extends Composite {
   }
 
   
- 
+  public BaseTable(String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators,
+      SelectionPolicy selectionPolicy, TableColumnSortListener sortListener) {
+      this(tableHeaderNames, columnWidths, columnComparators, selectionPolicy);
+      baseTableColumnSorter.setTableColumnSortListener(sortListener);
+  }
+  
   /**
    * Main constructor.
    * 
@@ -396,8 +405,8 @@ public class BaseTable extends Composite {
   /**
    * Populates the data grid with data then sets the column widths. 
    */
-  private void populateDataGrid(int[] columnWidths, Object[][] rowAndColumnValues, Collection tableElements) {
-    this.tableElements = tableElements;
+  private void populateDataGrid(int[] columnWidths, Object[][] rowAndColumnValues, Collection objects) {
+    this.objects = objects;
     populateDataGrid(columnWidths, rowAndColumnValues);
   }
   /**
@@ -438,24 +447,37 @@ public class BaseTable extends Composite {
 
     // Set cell styles/tooltip for data grid cells
     final CellFormatter cellFormatter = dataGrid.getCellFormatter();
+    objectElementMap = new HashMap<Element,Object>();
+    Object[] objectArray = null;
+    if(objects != null) {
+      objectArray = objects.toArray();
+    }
+    
     for (int i = 0; i < rowAndColumnValues.length; i++) {
+      Object object = null;
+      if(objectArray != null) {
+        object = objectArray[i];
+      }
       for (int j = 0; j < rowAndColumnValues[i].length; j++) {
         Object value = rowAndColumnValues[i][j];
         Element element = null;
         try {
           element = cellFormatter.getElement(i, j);
-          element.setAttribute("ordinal", Integer.toString(i));
         } catch (Exception e) {
-          
         }
 
         if (element != null) {
+
           if (value != null && value instanceof String && !value.equals("&nbsp;")) { //$NON-NLS-1$
             element.setTitle(value.toString());
           }
         }
+        if(object != null) {
+          objectElementMap.put(element, object);          
+        }
       }
     }
+    baseTableColumnSorter.setObjectMap(objectElementMap);
     scrollTable.redraw();
     DeferredCommand.addCommand(new Command() {
       public void execute() {
@@ -582,17 +604,24 @@ public class BaseTable extends Composite {
    */
   final class BaseTableColumnSorter extends ColumnSorter {
 
-    private void sortObjectCollection(List<Element> elements) {
-      if(BaseTable.this.tableElements != null && BaseTable.this.tableElements.size() > 0) {
-        List objects = new ArrayList();
-        Object[] tableElementArray = BaseTable.this.tableElements.toArray();
-        for(Element element:elements) {
-          int idx = Integer.parseInt(element.getParentElement().getAttribute("ordinal"));
-          objects.add(tableElementArray[idx]);
+    private Map<Element, Object> objMap;
+    
+    private TableColumnSortListener sortListener; 
+    
+    public void setTableColumnSortListener(TableColumnSortListener sortListener) {
+      this.sortListener = sortListener;
+    }
+    public void setObjectMap(Map<Element, Object> objMap) {
+      this.objMap = objMap;
+    }
+    private List sortObjectCollection(List<Element> elements) {
+      List objects = new ArrayList();
+      for(Element element:elements) {
+        if(objMap.containsKey(element)) {
+          objects.add(objMap.get(element));
         }
-        BaseTable.this.tableElements.clear();
-        BaseTable.this.tableElements.addAll(objects);
       }
+      return objects;
     }
     public void onSortColumn(SortableGrid grid, ColumnSortList sortList, ColumnSorterCallback callback) {
 
@@ -613,23 +642,25 @@ public class BaseTable extends Composite {
                 : DEFAULT_COLUMN_COMPARATOR);
       }
       
-      sortObjectCollection(tdElems);
       
       // Convert tdElems to trElems, reversing if needed
       Element[] trElems = new Element[tdElems.size()];
+      List<Element> sortedTdElement = new ArrayList<Element>();
+      
       if (ascending) {
         for (int i = 0; i < tdElems.size(); i++) {
           trElems[i] = DOM.getParent(tdElems.get(i));
+          sortedTdElement.add(tdElems.get(i));
         }
       } else {
         int maxElem = tdElems.size() - 1;
         for (int i = 0; i <= maxElem; i++) {
           trElems[i] = DOM.getParent(tdElems.get(maxElem - i));
+          sortedTdElement.add(tdElems.get(maxElem - i));
         }
       }
-
       callback.onSortingComplete(trElems);
-      
+      sortListener.onSortingComplete(sortObjectCollection(sortedTdElement));
     }
   };
 
