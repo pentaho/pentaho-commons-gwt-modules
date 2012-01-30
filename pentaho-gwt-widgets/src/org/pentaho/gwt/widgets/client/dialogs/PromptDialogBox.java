@@ -38,9 +38,10 @@ public class PromptDialogBox extends DialogBox {
   Widget content;
   final FlexTable dialogContent = new FlexTable();
   protected Button okButton = null;
+  protected Button notOkButton = null;
   protected Button cancelButton = null;
 
-  public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
+  public PromptDialogBox(String title, String okText, String notOkText, String cancelText, boolean autoHide, boolean modal) {
     super(autoHide, modal);
     setText(title);
     okButton = new Button(okText);
@@ -51,9 +52,23 @@ public class PromptDialogBox extends DialogBox {
         onOk();
       }
     });
+    
     final HorizontalPanel dialogButtonPanel = new HorizontalPanel();
     dialogButtonPanel.setSpacing(0);
     dialogButtonPanel.add(okButton);
+    
+    if (notOkText != null) {
+      notOkButton = new Button(notOkText);
+      notOkButton.setStylePrimaryName("pentaho-button");
+      notOkButton.getElement().setAttribute("id", "notOkButton"); //$NON-NLS-1$ //$NON-NLS-2$
+      notOkButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          onCancel();
+        }
+      });
+      dialogButtonPanel.add(notOkButton);
+    }
+    
     if (cancelText != null) {
       cancelButton = new Button(cancelText);
       cancelButton.setStylePrimaryName("pentaho-button");
@@ -87,6 +102,10 @@ public class PromptDialogBox extends DialogBox {
     // dialogContent.getFlexCellFormatter().setColSpan(2, 0, 2);
     dialogContent.setWidth("100%"); //$NON-NLS-1$
     setWidget(dialogContent);
+  }
+  
+  public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal) {
+    this(title, okText, null, cancelText, autoHide, modal);
   }
 
   public PromptDialogBox(String title, String okText, String cancelText, boolean autoHide, boolean modal, Widget content) {
@@ -152,6 +171,16 @@ public class PromptDialogBox extends DialogBox {
       }
       hide();
     }
+  }
+  
+  protected void onNotOk() {
+    try {
+      if (callback instanceof IThreeButtonDialogCallback) {
+        ((IThreeButtonDialogCallback)callback).notOkPressed();
+      }
+    } catch (Throwable dontCare) {
+    }
+    hide();
   }
   
   protected void onCancel() {
