@@ -95,6 +95,9 @@ public class FileChooser extends VerticalPanel {
   private static final String LOCALIZED_FILE_NAME = "localized-name"; //$NON-NLS-1$
   private FileFilter fileFilter;
 
+  private boolean submitOnEnter = true;
+
+
   public FileChooser() {
     fileNameTextBox.getElement().setId("fileNameTextBox");
     
@@ -115,7 +118,7 @@ public class FileChooser extends VerticalPanel {
 
       public void onKeyUp(Widget sender, char keyCode, int modifiers) {
         actualFileName = fileNameTextBox.getText();
-        if (keyCode == KeyboardListener.KEY_ENTER) {
+        if (keyCode == KeyboardListener.KEY_ENTER && isSubmitOnEnter()) {
           fireFileSelected();
         }
       }
@@ -518,7 +521,7 @@ public class FileChooser extends VerticalPanel {
             handleFileClicked(item, isDir, event, this.getElement());
           }
           break;
-        case Event.ONMOUSEOUT:
+          case Event.ONMOUSEOUT:
           this.removeStyleDependentName("over"); //$NON-NLS-1$
           break;
         }
@@ -876,6 +879,15 @@ public class FileChooser extends VerticalPanel {
     initUI(false);
   }
 
+  public void setSubmitOnEnter(boolean submitOnEnter) {
+    this.submitOnEnter = submitOnEnter;
+  }
+
+  public boolean isSubmitOnEnter() {
+    return submitOnEnter;
+  }
+
+
   /**
    * Safari Mobile behaves differently than browsers on a computer. These rules may extend to other mobile browsers.
    * @return
@@ -890,6 +902,5 @@ public class FileChooser extends VerticalPanel {
     }
     return "";
   }-*/;
-
 
 }
