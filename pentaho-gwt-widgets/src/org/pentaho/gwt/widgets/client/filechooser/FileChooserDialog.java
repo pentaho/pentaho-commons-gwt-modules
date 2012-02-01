@@ -19,6 +19,7 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.ui.KeyboardListener;
 import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
@@ -35,6 +36,8 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
   private FileChooser fileChooser;
   private FileFilter filter;
+
+  private boolean submitOnEnter = true;
 
   public FileChooserDialog(FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal) {
     this(mode, selectedPath, autoHide, modal, mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString("Open") : FileChooserEntryPoint.messages.getString("Save"), mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString("Open") : FileChooserEntryPoint.messages.getString("Save")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -236,4 +239,29 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     fileChooser.fileNameTextBox.setFocus(true);
   }
 
+  public boolean isSubmitOnEnter() {
+    return submitOnEnter;
+  }
+
+  public void setSubmitOnEnter(boolean submitOnEnter) {
+    this.submitOnEnter = submitOnEnter;
+    fileChooser.setSubmitOnEnter(submitOnEnter);
+  }
+
+  @Override
+  public boolean onKeyDownPreview(char key, int modifiers) {
+    // Use the popup's key preview hooks to close the dialog when either
+    // enter or escape is pressed.
+    switch (key) {
+      case KeyboardListener.KEY_ENTER:
+        if(isSubmitOnEnter()) {
+          onOk();
+        }
+        break;
+      case KeyboardListener.KEY_ESCAPE:
+        onCancel();
+        break;
+    }
+    return true;
+  }
 }

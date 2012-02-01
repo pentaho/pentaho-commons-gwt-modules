@@ -83,6 +83,9 @@ public class FileChooser extends VerticalPanel {
 
   private FileFilter fileFilter;
 
+  private boolean submitOnEnter = true;
+
+
   public FileChooser() {
     fileNameTextBox.getElement().setId("fileNameTextBox");
     
@@ -103,7 +106,7 @@ public class FileChooser extends VerticalPanel {
 
       public void onKeyUp(Widget sender, char keyCode, int modifiers) {
         actualFileName = fileNameTextBox.getText();
-        if (keyCode == KeyboardListener.KEY_ENTER) {
+        if (keyCode == KeyboardListener.KEY_ENTER && isSubmitOnEnter()) {
           if(mode != FileChooserMode.SAVE) {
             fireFileSelected(search(fileTree, actualFileName));  
           } else {
@@ -675,6 +678,14 @@ public class FileChooser extends VerticalPanel {
     setSelectedPath(path);
     initUI();
     fireFileSelectionChanged();
+  }
+
+  public void setSubmitOnEnter(boolean submitOnEnter) {
+    this.submitOnEnter = submitOnEnter;
+  }
+
+  public boolean isSubmitOnEnter() {
+    return submitOnEnter;
   }
   /**
    * Safari Mobile behaves differently than browsers on a computer. These rules may extend to other mobile browsers.
