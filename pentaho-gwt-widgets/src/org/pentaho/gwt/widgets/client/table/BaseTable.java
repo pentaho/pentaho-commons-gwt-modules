@@ -330,7 +330,17 @@ public class BaseTable extends Composite {
    */
   private void createScrollTable(ResizePolicy resizePolicy) {
 
-    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class));
+    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class)){
+      protected void resizeTablesVerticallyNow() {
+
+        // Give the data wrapper all remaining height
+        int totalHeight = DOM.getElementPropertyInt(getElement(), "clientHeight");
+        if(totalHeight == 0){
+          return;
+        }
+        super.resizeTablesVerticallyNow();
+      }
+    };
     scrollTable.addScrollListener(new ScrollListener(){
       public void onScroll(Widget widget, int scrollLeft, int scrollTop) {
         if(!scrollingFixInPlace){
