@@ -62,10 +62,10 @@ import com.google.gwt.widgetideas.table.client.overrides.HTMLTable.CellFormatter
  * <p>
  * Core reusable, table widget for displaying tabular data that is
  * based on a composite of a ScrollTable and a FixedWidthGrid.
- * 
+ *
  * <p>
  * Usage Notes:
- * 
+ *
  * <p>
  * <ul>
  * <li>You must call the populateTable or populateTableWithSimpleMessage method
@@ -92,7 +92,7 @@ public class BaseTable extends Composite {
   private ScrollTable scrollTable;
 
   private FixedWidthFlexTable tableHeader;
-  
+
   private FixedWidthGrid dataGrid;
 
   private String[] tableHeaderNames;
@@ -204,7 +204,7 @@ public class BaseTable extends Composite {
   
   /**
    * Main constructor.
-   * 
+   *
    * Note: For column width values, use -1 to not specify a column width.
    * Note: For column comparators individually, a null value will disable sorting for that column.  If you set 
    *         the columnComparators array to null, all columns will be populated with the default column comparator.
@@ -260,7 +260,7 @@ public class BaseTable extends Composite {
    * Creates a table with the given headers, column widths, row/column values, and resize policy. 
    */
   private void createTable(String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues,
-      ResizePolicy resizePolicy, SelectionPolicy selectionPolicy) 
+      ResizePolicy resizePolicy, SelectionPolicy selectionPolicy)
   {
     createTableHeader(tableHeaderNames, columnWidths);
     createDataGrid(selectionPolicy, tableHeaderNames.length);
@@ -319,7 +319,7 @@ public class BaseTable extends Composite {
     };
 
     dataGrid.setWidth("100%");
-    
+
     // Set style
     if (selectionPolicy == null) {
       dataGrid.setSelectionPolicy(SelectionPolicy.ONE_ROW);
@@ -354,7 +354,17 @@ public class BaseTable extends Composite {
    */
   private void createScrollTable(ResizePolicy resizePolicy) {
 
-    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class));
+    scrollTable = new ScrollTable(dataGrid, tableHeader, (BaseTableImages) GWT.create(BaseTableImages.class)){
+      protected void resizeTablesVerticallyNow() {
+
+        // Give the data wrapper all remaining height
+        int totalHeight = DOM.getElementPropertyInt(getElement(), "clientHeight");
+        if(totalHeight == 0){
+          return;
+        }
+        super.resizeTablesVerticallyNow();
+      }
+    };
     scrollTable.addScrollListener(new ScrollListener(){
       public void onScroll(Widget widget, int scrollLeft, int scrollTop) {
         if(!scrollingFixInPlace){
@@ -385,7 +395,7 @@ public class BaseTable extends Composite {
     if (this.scrollTableHeight != null) {
       this.setHeight(scrollTableHeight);
     }
-    
+
     if (columnWidths != null && columnWidths.length > 0) {
       for (int i = 0; i < columnWidths.length; i++) {
         if (columnWidths[i] > 0) {
@@ -393,7 +403,7 @@ public class BaseTable extends Composite {
         }
       }
     }
-    
+
     if (scrollTableWidth != null) {
       scrollTable.setWidth(scrollTableWidth);
     }
