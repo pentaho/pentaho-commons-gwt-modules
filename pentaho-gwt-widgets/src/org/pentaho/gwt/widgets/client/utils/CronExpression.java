@@ -718,7 +718,7 @@ public class CronExpression {
       }
     } else if (type == DAY_OF_WEEK) {
       if ((val == 0 || val > 7 || end > 7) && (val != ALL_SPEC_INT) && (val != NO_SPEC_INT)) {
-        throw new ParseException(MSGS.cronInvalidDOWValue(), -1);
+        throw new ParseException(MSGS.cronInvalidDayOfWeekValue(), -1);
       }
     }
 
