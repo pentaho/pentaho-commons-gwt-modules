@@ -1417,4 +1417,71 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage("Steps:")  
   String steps();
+  
+  @DefaultMessage("cronExpression cannot be null")
+  String cronExpressionNull();
+
+  @DefaultMessage("Unexpected end of expression.")
+  String cronUnexpectedEndOfExpression();
+
+  @DefaultMessage("Illegal cron expression format ({0})")
+  String cronIllegalExpressionFormat(String arg0);
+
+  @DefaultMessage("Invalid Month value: {0}")
+  String cronInvalidMonthValue(String arg0);
+
+  @DefaultMessage("Invalid Day-of-Week value: {0}")
+  String cronInvalidDOWValue(String arg0);
+
+  @DefaultMessage("Invalid Day-of-Week sequence: {0} > {1}")
+  String cronInvalidDOWSequence(String arg0, String arg1);
+
+  @DefaultMessage("A numeric value between 1 and 5 must follow the # option")
+  String cronIllegalHashFollowingNumeric();
+
+  @DefaultMessage("Illegal characters for this position: {0}")
+  String cronIllegalCharactersForPosition(String arg0);
+
+  @DefaultMessage("Illegal character after {0}: {1}")
+  String cronIllegalCharacterAfter(String arg0, String arg1);
+
+  @DefaultMessage("? can only be specfied for Day-of-Month or Day-of-Week.")
+  String cronIllegalQuestionMark();
+
+  @DefaultMessage("/ must be followed by an integer.")
+  String cronIllegalSlash();
+
+  @DefaultMessage("Unexpected end of string.")
+  String cronUnexpectedEndOfString();
+
+  @DefaultMessage("Increment > {0} : {1} ")
+  String cronIllegalIncrement(String arg0, String arg1);
+
+  @DefaultMessage("Unexpected character: {0}")
+  String cronUnexpectedCharacter(String arg0);
+
+  @DefaultMessage("{0} option is not valid here. (pos {1})")
+  String cronOptionIsNotValidHere(String arg0, String arg1);
+
+
+  @DefaultMessage("Unexpected character {0} after /")
+  String cronUnexpectedCharacterAfterSlash(String arg0);
+
+  @DefaultMessage("Minute and Second values must be between 0 and 59")
+  String cronInvalidMinuteSecondValue();
+
+  @DefaultMessage("Hour values must be between 0 and 23")
+  String cronInvalidHourValue();
+
+  @DefaultMessage("Day of month values must be between 1 and 31")
+  String cronInvalidDayOfMonthValue();
+
+  @DefaultMessage("Month values must be between 1 and 12")
+  String cronInvalidMonthValue();
+
+  @DefaultMessage("Day-of-Week values must be between 1 and 7")
+  String cronInvalidDOWValue();
+
+
+
 }
