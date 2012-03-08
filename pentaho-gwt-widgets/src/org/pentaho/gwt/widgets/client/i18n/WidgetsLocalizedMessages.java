@@ -1477,7 +1477,7 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String cronInvalidDayOfMonthValue();
 
   @DefaultMessage("Month values must be between 1 and 12")
-  String cronInvalidMonthValue();
+  String cronInvalidMonthValueGeneral();
 
   @DefaultMessage("Day-of-Week values must be between 1 and 7")
   String cronInvalidDayOfWeekValue();

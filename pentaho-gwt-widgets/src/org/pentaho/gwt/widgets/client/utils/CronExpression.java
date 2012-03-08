@@ -714,7 +714,7 @@ public class CronExpression {
       }
     } else if (type == MONTH) {
       if ((val < 1 || val > 12 || end > 12) && (val != ALL_SPEC_INT)) {
-        throw new ParseException(MSGS.cronInvalidMonthValue(), -1);
+        throw new ParseException(MSGS.cronInvalidMonthValueGeneral(), -1);
       }
     } else if (type == DAY_OF_WEEK) {
       if ((val == 0 || val > 7 || end > 7) && (val != ALL_SPEC_INT) && (val != NO_SPEC_INT)) {
