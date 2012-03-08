@@ -32,6 +32,7 @@ import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.CronParseException;
 import org.pentaho.gwt.widgets.client.utils.CronParser;
+import org.pentaho.gwt.widgets.client.utils.CronExpression;
 import org.pentaho.gwt.widgets.client.utils.EnumException;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 
@@ -264,12 +265,13 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
    */
   public void setCronString( String cronStr ) throws CronParseException {
 
+    // Try original simplistic parser...
     CronParser cp = new CronParser( cronStr );
     String recurrenceStr = null;
     try {
       recurrenceStr = cp.parseToRecurrenceString(); // throws CronParseException
     } catch( CronParseException e ) {
-      if ( !CronParser.isValidCronString( cronStr ) ) {
+      if ( !CronExpression.isValidExpression( cronStr ) ) { // Parse with proper expression parser
         throw e;
       }
       recurrenceStr = null; // valid cronstring, not parse-able to recurrence string
