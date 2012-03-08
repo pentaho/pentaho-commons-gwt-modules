@@ -478,6 +478,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     text-shadow: 0px 1px 1px #222;
 }
 
+.dialog-content .pentaho-tabWidget .pentaho-tabWidgetLabel {
+  font-size: 1em;
+}
 .pentaho-tabWidget-selected {
     border-top: solid 1px #222;
     border-left: solid 1px #222;
@@ -506,7 +509,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
     margin: 0px;
     padding-bottom: 0px;
-    font-size: .8em;
     white-space: nowrap;
     color: #FFF;
     text-shadow: 0px 1px 1px #000;
