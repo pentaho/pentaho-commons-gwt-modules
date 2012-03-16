@@ -114,7 +114,7 @@ label {
 }
 
 .IE .pentaho-button {
-    height: 30px;
+    height: auto;
     background: url('images/bg_btn.png') repeat-x;
 }
 
