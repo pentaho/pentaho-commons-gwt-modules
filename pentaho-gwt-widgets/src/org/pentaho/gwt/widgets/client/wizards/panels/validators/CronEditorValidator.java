@@ -20,7 +20,7 @@
 package org.pentaho.gwt.widgets.client.wizards.panels.validators;
 
 import org.pentaho.gwt.widgets.client.controls.schededitor.CronEditor;
-import org.pentaho.gwt.widgets.client.utils.CronParser;
+import org.pentaho.gwt.widgets.client.utils.CronExpression;
 
 public class CronEditorValidator implements IUiValidator {
 
@@ -35,7 +35,7 @@ public class CronEditorValidator implements IUiValidator {
   public boolean isValid() {
     boolean isValid = true;
     
-    if ( !CronParser.isValidCronString( editor.getCronString() ) ) {
+    if ( !CronExpression.isValidExpression( editor.getCronString() ) ) {
       isValid = false;
     }
     isValid &= dateRangeEditorValidator.isValid();
