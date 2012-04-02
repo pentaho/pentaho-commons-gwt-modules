@@ -95,7 +95,7 @@ input[type='text'] {
 
 .IE .pentaho-button {
     height: auto;
-    background: #000000 url('images/bg_btn.png') repeat-x;
+    background: #000000 url('images/bg_btn.png') repeat-x left center;
     background-position: center center;
 }
 
@@ -122,7 +122,7 @@ input[type='text'] {
 }
 
 .IE .pentaho-button:active {
-    background: url('images/bg_btn_active.png') repeat-x;
+    background: url('images/bg_btn_active.png') repeat-x left center;
 }
 
 /* lighter gray with white text */
@@ -140,7 +140,7 @@ input[type='text'] {
 }
 
 .IE .pentaho-button.disabled {
-    background: url('images/bg_btn_disabled.png') repeat-x;
+    background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
 }
 

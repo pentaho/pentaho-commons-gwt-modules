@@ -115,7 +115,7 @@ label {
 
 .IE .pentaho-button {
     height: auto;
-    background: url('images/bg_btn.png') repeat-x;
+    background: url('images/bg_btn.png') repeat-x left center;
 }
 
 /* Applies the green glow to buttons */
@@ -128,7 +128,7 @@ label {
 }
 
 .IE .pentaho-button:hover {
-    background: url('images/bg_btn_hover.png') repeat-x;
+    background: url('images/bg_btn_hover.png') repeat-x left center;
 }
 
 /* Just lightening it up a bit */
@@ -139,7 +139,7 @@ label {
 }
 
 .IE .pentaho-button:active {
-    background: url('images/bg_btn_active.png') repeat-x;
+    background: url('images/bg_btn_active.png') repeat-x left center;
 }
 
 /* lighter gray with white text */
@@ -157,7 +157,7 @@ label {
 }
 
 .IE .pentaho-button.disabled {
-    background: url('images/bg_btn_disabled.png') repeat-x;
+    background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
 }
 
