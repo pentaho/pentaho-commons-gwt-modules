@@ -974,3 +974,37 @@ input[type=password]:focus {
 .hide-h-scrolling{
     overflow-x: hidden;
 }
+
+
+.popupContent {
+  background-image:url(image/bottom_tail.png);
+  background-position:left bottom;
+  border-radius:4px 4px 4px 4px;	
+}
+
+.validation-message-label {
+  color: white;
+  background-color: red;
+  padding: 4px;
+}
+
+.validation-image {
+   background-position: center center;
+   width: 18;
+}
+
+.validation-image-panel {
+
+}
+
+.validation-image-panel-valid {
+   background-image:url(images/valid.png);
+   background-position: center center;
+   background-repeat: no-repeat;
+}
+
+.validation-image-panel-invalid {
+   background-image:url(images/invalid.png);
+   background-position: center center;
+   background-repeat: no-repeat;
+}
