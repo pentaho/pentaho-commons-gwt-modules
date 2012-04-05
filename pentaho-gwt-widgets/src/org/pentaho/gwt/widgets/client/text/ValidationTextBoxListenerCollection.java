@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.ui.Widget;
 
-public class ValidatableTextBoxListenerCollection extends ArrayList<IValidatableTextBoxListener> {
+public class ValidationTextBoxListenerCollection extends ArrayList<IValidationTextBoxListener> {
 
   /**
    * 
@@ -17,7 +17,7 @@ public class ValidatableTextBoxListenerCollection extends ArrayList<IValidatable
    * @param Widget that the event is being fired.
    */
   public void fireOnSuccess(Widget widget) {
-    for (IValidatableTextBoxListener listener : this) {
+    for (IValidationTextBoxListener listener : this) {
       listener.onSuccess(widget);
     }
   }
@@ -28,7 +28,7 @@ public class ValidatableTextBoxListenerCollection extends ArrayList<IValidatable
    * @param Widget that the event is being fired.
    */
   public void fireOnFailure(Widget widget) {
-    for (IValidatableTextBoxListener listener : this) {
+    for (IValidationTextBoxListener listener : this) {
       listener.onFailure(widget);
     }
   }

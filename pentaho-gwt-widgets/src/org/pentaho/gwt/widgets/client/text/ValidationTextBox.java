@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class ValidatableTextBox extends HorizontalPanel implements IValidatableTextBox{
+public class ValidationTextBox extends HorizontalPanel implements IValidationTextBox{
 
   private TextBox textBox;
   
@@ -25,13 +25,13 @@ public class ValidatableTextBox extends HorizontalPanel implements IValidatableT
   
   private Image image;
   
-  private ValidatableTextBoxKeyUpHandlerCollection handlers;
+  private ValidationTextBoxKeyUpHandlerCollection handlers;
   
-  private ValidatableTextBoxListenerCollection listeners;
+  private ValidationTextBoxListenerCollection listeners;
   
   private static final int DEFAULT_OFFSET = 5;
   
-  public ValidatableTextBox() {
+  public ValidationTextBox() {
     textBox = new TextBox();
     textBox.addKeyUpHandler(new KeyUpHandler() {
       
@@ -62,7 +62,7 @@ public class ValidatableTextBox extends HorizontalPanel implements IValidatableT
   
   public void addKeyUpHandler(KeyUpHandler handler) {
     if (handlers == null) {
-      handlers = new ValidatableTextBoxKeyUpHandlerCollection();
+      handlers = new ValidationTextBoxKeyUpHandlerCollection();
     }
     handlers.add(handler);
   }
@@ -83,21 +83,21 @@ public class ValidatableTextBox extends HorizontalPanel implements IValidatableT
     }
   }
 
-  public void addValidatableTextBoxListener(IValidatableTextBoxListener listener) {
+  public void addValidatableTextBoxListener(IValidationTextBoxListener listener) {
     if (listeners == null) {
-      listeners = new ValidatableTextBoxListenerCollection();
+      listeners = new ValidationTextBoxListenerCollection();
     }
     listeners.add(listener);
   }
 
-  public void removeValidatableTextBoxListener(IValidatableTextBoxListener listener) {
+  public void removeValidatableTextBoxListener(IValidationTextBoxListener listener) {
     if (listeners != null) {
       listeners.remove(listener);
     }
   }
 
   /**
-   * Fire all current {@link IValidatableTextBoxListener}.
+   * Fire all current {@link IValidationTextBoxListener}.
    */
   void fireOnSuccess() {
     if (listeners != null) {
@@ -106,7 +106,7 @@ public class ValidatableTextBox extends HorizontalPanel implements IValidatableT
   }
 
   /**
-   * Fire all current {@link IValidatableTextBoxListener}.
+   * Fire all current {@link IValidationTextBoxListener}.
    */
   void fireOnFailure() {
     if (listeners != null) {
@@ -164,7 +164,9 @@ public class ValidatableTextBox extends HorizontalPanel implements IValidatableT
   
   public void setValue(String value) {
     textBox.setValue(value);
-    performValidation();
+    if(value != null && value.length() > 0) {
+      performValidation();      
+    }
   }
   
   public String getText() {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 
-public class ValidatableTextBoxKeyUpHandlerCollection extends ArrayList<KeyUpHandler> {
+public class ValidationTextBoxKeyUpHandlerCollection extends ArrayList<KeyUpHandler> {
 
   /**
    * 
