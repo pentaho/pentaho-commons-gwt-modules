@@ -30,6 +30,8 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
   
   private ValidationTextBoxListenerCollection listeners;
   
+  private static final int DEFAULT_OFFSET = 9;
+  
   public ValidationTextBox() {
     textBox = new TextBox();
     textBox.addKeyUpHandler(new KeyUpHandler() {
@@ -200,7 +202,7 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
         absLeft = textBox.getAbsoluteLeft();
         absTop = textBox.getAbsoluteTop();
         offHeight = textBox.getOffsetHeight();
-        popupPanel.setPopupPosition(absLeft, absTop - offHeight - 1 >= 0 ? absTop - offHeight - 1: absTop);
+        popupPanel.setPopupPosition(absLeft, absTop - offHeight - DEFAULT_OFFSET >= 0 ? absTop - offHeight - DEFAULT_OFFSET: absTop);
       }
     });      
     popupPanel.show(); 
