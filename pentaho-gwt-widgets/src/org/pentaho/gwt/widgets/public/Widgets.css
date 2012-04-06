@@ -975,35 +975,53 @@ input[type=password]:focus {
     overflow-x: hidden;
 }
 
-
-.popupContent {
-  background-image:url(image/bottom_tail.png);
-  background-position:left bottom;
+.validation-textbox-left-image-buffer {
+	width: 5px;
+}
+.validation-textbox-tail-image {
+  background-image: url(images/error_red_arrow.png);
+  background-position: bottom bottom;
   border-radius:4px 4px 4px 4px;	
+  height: 10px;
+  width: 12px;
+  background-repeat: no-repeat;
 }
 
-.validation-message-label {
-  color: white;
-  background-color: red;
-  padding: 4px;
-}
 
-.validation-image {
+.validation-textbox-message-label {
+	color: white;
+	background: linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
+	padding: 4px;
+	font-family: arial, helvetica, sans-serif;
+	border: 1px solid red;
+	border-radius: 4px;
+	text-shadow: 0px -1px 0px #830202;
+	background: -moz-linear-gradient(top, #FF6464 0%, #FF7070 50%, #BF0600 51%, red 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF6464), color-stop(50%,#FF7070), color-stop(51%,#BF0600), color-stop(100%,red));
+	background: -webkit-linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
+	background: -o-linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
+	background: -ms-linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
+	background: linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
+} 
+
+
+
+.validation-textbox-image {
    background-position: center center;
-   width: 18;
+   width: 18px;
 }
 
-.validation-image-panel {
+.validation-textbox-image-panel {
 
 }
 
-.validation-image-panel-valid {
+.validation-textbox-image-panel-valid {
    background-image:url(images/valid.png);
    background-position: center center;
    background-repeat: no-repeat;
 }
 
-.validation-image-panel-invalid {
+.validation-textbox-image-panel-invalid {
    background-image:url(images/invalid.png);
    background-position: center center;
    background-repeat: no-repeat;

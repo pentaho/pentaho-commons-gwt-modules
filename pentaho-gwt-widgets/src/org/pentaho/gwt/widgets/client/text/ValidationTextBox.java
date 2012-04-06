@@ -3,6 +3,8 @@ package org.pentaho.gwt.widgets.client.text;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -10,14 +12,13 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ValidationTextBox extends HorizontalPanel implements IValidationTextBox{
 
   private TextBox textBox;
   
   private PopupPanel popupPanel;
-  
-  private Label validationMessageLabel;
   
   private String validationMessage;
   
@@ -28,8 +29,6 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
   private ValidationTextBoxKeyUpHandlerCollection handlers;
   
   private ValidationTextBoxListenerCollection listeners;
-  
-  private static final int DEFAULT_OFFSET = 5;
   
   public ValidationTextBox() {
     textBox = new TextBox();
@@ -42,8 +41,28 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
       }
     });
 
-    imagePanel = new SimplePanel();
-    imagePanel.setStylePrimaryName("validation-image-panel"); //$NON-NLS-1$
+    imagePanel = new SimplePanel() {
+
+      @Override
+      public void onBrowserEvent(Event event) {
+        super.onBrowserEvent(event);
+        switch (DOM.eventGetType(event)) {
+          case Event.ONMOUSEOVER: {
+            if(!validate()) {
+              showMessagePopup();
+            }
+            break;
+          }
+
+          case Event.ONMOUSEOUT: {
+            hideMessagePopup();
+            break;
+          }
+        }
+      }
+    };
+    imagePanel.setStylePrimaryName("validation-textbox-image-panel"); //$NON-NLS-1$
+    imagePanel.sinkEvents(Event.ONMOUSEOVER | Event.ONMOUSEOUT);
     this.add(textBox);
     textBox.setWidth("100%");
     this.setCellWidth(textBox, "100%");
@@ -51,10 +70,8 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
     SimplePanel hSpacer = new SimplePanel();
     hSpacer.setWidth("10px");
     this.add(hSpacer);
-    validationMessageLabel = new Label();
-    validationMessageLabel.setStyleName("validation-message-label"); //$NON-NLS-1$
     image = new Image(GWT.getModuleBaseURL() + "images/spacer.gif"); //$NON-NLS-1$
-    image.setStylePrimaryName("validation-image");
+    image.setStylePrimaryName("validation-textbox-image");
     imagePanel.add(image);
     imagePanel.addStyleDependentName("invalid");
     this.add(imagePanel);
@@ -119,26 +136,12 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
       fireOnFailure();
       imagePanel.removeStyleDependentName("valid");
       imagePanel.addStyleDependentName("invalid");
-      validationMessageLabel.setText(getValidationMessage());
-      popupPanel = new PopupPanel(true, false);
-      popupPanel.setWidget(validationMessageLabel);
-      popupPanel.setPopupPositionAndShow(new PositionCallback() {
-        public void setPosition(int offsetWidth, int offsetHeight) {
-          int absLeft = -1;
-          int absTop = -1;
-          int offHeight = -1;
-          absLeft = textBox.getAbsoluteLeft();
-          absTop = textBox.getAbsoluteTop();
-          offHeight = textBox.getOffsetHeight();
-          popupPanel.setPopupPosition(absLeft, absTop - offHeight - DEFAULT_OFFSET >= 0 ? absTop - offHeight - DEFAULT_OFFSET: absTop);
-        }
-      });      
-      popupPanel.show();
+      showMessagePopup();
     } else {
       fireOnSuccess();
       imagePanel.removeStyleDependentName("invalid");
       imagePanel.addStyleDependentName("valid"); 
-      popupPanel.hide();
+      hideMessagePopup();
     }
   }
   
@@ -172,4 +175,41 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
   public String getText() {
     return textBox.getText();
   }
+  
+  private void showMessagePopup() {
+    Label validationMessageLabel = new Label();
+    validationMessageLabel.setStyleName("validation-textbox-message-label"); //$NON-NLS-1$
+    validationMessageLabel.setText(getValidationMessage());
+    VerticalPanel messagePanel = new VerticalPanel();
+    messagePanel.add(validationMessageLabel);
+    HorizontalPanel bottomPanel = new HorizontalPanel();
+    SimplePanel hSpacer = new SimplePanel();
+    hSpacer.setStylePrimaryName("validation-textbox-left-image-buffer"); //$NON-NLS-1$
+    bottomPanel.add(hSpacer);
+    SimplePanel tailImagePanel = new SimplePanel();
+    tailImagePanel.setStylePrimaryName("validation-textbox-tail-image"); //$NON-NLS-1$
+    bottomPanel.add(tailImagePanel);
+    messagePanel.add(bottomPanel);
+    popupPanel = new PopupPanel(true, false);
+    popupPanel.setWidget(messagePanel);
+    popupPanel.setPopupPositionAndShow(new PositionCallback() {
+      public void setPosition(int offsetWidth, int offsetHeight) {
+        int absLeft = -1;
+        int absTop = -1;
+        int offHeight = -1;
+        absLeft = textBox.getAbsoluteLeft();
+        absTop = textBox.getAbsoluteTop();
+        offHeight = textBox.getOffsetHeight();
+        popupPanel.setPopupPosition(absLeft, absTop - offHeight - 1 >= 0 ? absTop - offHeight - 1: absTop);
+      }
+    });      
+    popupPanel.show(); 
+  }
+  
+  private void hideMessagePopup() {
+    if(popupPanel != null) {
+      popupPanel.hide();      
+    }
+  }
+  
 }
