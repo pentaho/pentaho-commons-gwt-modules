@@ -67,6 +67,8 @@ label {
     font-size: .85em;
 }
 
+*:focus {outline: none;}
+
 .scroll-panel {
     position: relative;
     overflow: auto;

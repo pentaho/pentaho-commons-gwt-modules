@@ -47,6 +47,8 @@ input[type='text'] {
     border: 1px solid #333;
 }
 
+*:focus {outline: none;}
+
 .scroll-panel {
     position: relative;
     overflow: auto;
