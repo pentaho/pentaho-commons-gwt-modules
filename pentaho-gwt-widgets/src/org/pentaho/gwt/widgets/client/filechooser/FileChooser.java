@@ -16,51 +16,25 @@
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.*;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.*;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.NodeList;
+import com.google.gwt.xml.client.XMLParser;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.images.FileChooserImages;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.http.client.Request;
-import com.google.gwt.http.client.RequestBuilder;
-import com.google.gwt.http.client.RequestCallback;
-import com.google.gwt.http.client.RequestException;
-import com.google.gwt.http.client.Response;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.ChangeListener;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.KeyboardListener;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.MouseListener;
-import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
-import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.SuggestBox;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Tree;
-import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
+import java.util.*;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -100,14 +74,14 @@ public class FileChooser extends VerticalPanel {
 
   public FileChooser() {
     fileNameTextBox.getElement().setId("fileNameTextBox");
-    
+
     // workaround webkit browsers quirk of not being able to set focus in a widget by clicking on it  
-    fileNameTextBox.addClickHandler(new ClickHandler() {      
+    fileNameTextBox.addClickHandler(new ClickHandler() {
       public void onClick(ClickEvent event) {
         fileNameTextBox.setFocus(true);
       }
     });
-    
+
     fileNameTextBox.addKeyboardListener(new KeyboardListener() {
 
       public void onKeyDown(Widget sender, char keyCode, int modifiers) {
@@ -511,19 +485,16 @@ public class FileChooser extends VerticalPanel {
     final Label myNameLabel = new Label(finalFileName, false) {
       public void onBrowserEvent(Event event) {
         switch (event.getTypeInt()) {
-        case Event.ONCLICK:
-        case Event.ONDBLCLICK:
-          handleFileClicked(item, isDir, event, this.getElement());
-          break;
-        case Event.ONMOUSEOVER:
-          this.addStyleDependentName("over"); //$NON-NLS-1$
-          if(isMobileSafari()){
+          case Event.ONCLICK:
+          case Event.ONDBLCLICK:
             handleFileClicked(item, isDir, event, this.getElement());
-          }
-          break;
+            break;
+          case Event.ONMOUSEOVER:
+            this.addStyleDependentName("over"); //$NON-NLS-1$
+            break;
           case Event.ONMOUSEOUT:
-          this.removeStyleDependentName("over"); //$NON-NLS-1$
-          break;
+            this.removeStyleDependentName("over"); //$NON-NLS-1$
+            break;
         }
       }
     };
@@ -589,8 +560,6 @@ public class FileChooser extends VerticalPanel {
       eventWeCareAbout = true;
     } else if ((DOM.eventGetType(event) & Event.ONCLICK) == Event.ONCLICK) {
       eventWeCareAbout = true;
-    } else if(isMobileSafari() && (DOM.eventGetType(event) & Event.ONMOUSEOVER) == Event.ONMOUSEOVER){
-      eventWeCareAbout = true;
     }
     if (eventWeCareAbout) {
       setFileSelected(true);
@@ -628,7 +597,7 @@ public class FileChooser extends VerticalPanel {
       }
     }
     // double click
-    if ((DOM.eventGetType(event) & Event.ONDBLCLICK) == Event.ONDBLCLICK || (isMobileSafari() && (DOM.eventGetType(event) & Event.ONMOUSEOVER) == Event.ONMOUSEOVER)) {
+    if ((DOM.eventGetType(event) & Event.ONDBLCLICK) == Event.ONDBLCLICK) {
       if (isDir) {
         initUI(false);
       } else {
@@ -797,7 +766,7 @@ public class FileChooser extends VerticalPanel {
 
   /**
    * Tokenize a path by "/".
-   * 
+   *
    * @param path Path to tokenize.
    * @return List of path elements tokenized by "/".
    */
@@ -820,7 +789,7 @@ public class FileChooser extends VerticalPanel {
 
   /**
    * Get the names of all files in the given path.
-   * 
+   *
    * @param path Path to query for files
    * @return List of file names in the given path.
    */
