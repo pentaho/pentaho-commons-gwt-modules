@@ -996,6 +996,7 @@ input[type=password]:focus {
 	border: 1px solid red;
 	border-radius: 4px;
 	text-shadow: 0px -1px 0px #830202;
+	font-size: .85em;
 	background: -moz-linear-gradient(top, #FF6464 0%, #FF7070 50%, #BF0600 51%, red 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF6464), color-stop(50%,#FF7070), color-stop(51%,#BF0600), color-stop(100%,red));
 	background: -webkit-linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
@@ -1025,4 +1026,35 @@ input[type=password]:focus {
    background-image:url(images/invalid.png);
    background-position: center center;
    background-repeat: no-repeat;
+}
+
+.action-bar {
+	background: none repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    height: 50px;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    bottom: 0;
+    margin: 0;
+}
+
+
+
+.action-button-bar {
+    background: -moz-linear-gradient(center top , #1A1A1A 0%, #333333 50%, black 51%, black 100%) repeat scroll 0 0 transparent;
+    padding: 10px;
+    text-align: right;
+}
+
+.progress-indicator-widget {
+	
+}
+
+.progress-image {
+	padding-right: 36px;
+	padding-top: 5px;
+	height: auto;
+	width: auto;
 }
