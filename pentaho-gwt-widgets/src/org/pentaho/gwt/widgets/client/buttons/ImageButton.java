@@ -37,7 +37,7 @@ public class ImageButton extends Image {
   private String disabledUrl;
 
   public ImageButton(String enabledUrl, String disabledUrl, String tooltip) {
-    this(enabledUrl, disabledUrl, tooltip, -1, -1);
+    this(enabledUrl, disabledUrl, tooltip, 0, 0);
   }
 
   public ImageButton() {
