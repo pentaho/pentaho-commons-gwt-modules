@@ -13,7 +13,6 @@ public class ActionBar extends SimplePanel {
 
   public static final int DEFAULT_HEIGHT = 50;
   public static final double DURATION = 0.5;
-  public static final int DELAY_TIME = 1000;
   public enum State {
     EXPAND, COLLAPSE
   }
@@ -42,7 +41,7 @@ public class ActionBar extends SimplePanel {
     buttonPanel.setCellVerticalAlignment(widget, HorizontalPanel.ALIGN_MIDDLE);
   }
  
-  public void collapse() {
+  public void collapse(int delay) {
     if(state != State.COLLAPSE) {
       height = this.getOffsetHeight();
       if(height <= 0) {
@@ -52,12 +51,12 @@ public class ActionBar extends SimplePanel {
           new Rule("end{height: 0px;}"));    
       collapseEffect.setEffectElement(this.getElement());
       collapseEffect.setDuration(DURATION);
-      collapseEffect.play(DELAY_TIME);
+      collapseEffect.play(delay);
       setState(state.COLLAPSE);
     }
   }
 
-  public void expand() {
+  public void expand(int delay) {
     if(state != State.EXPAND) {
       height = this.getOffsetHeight();
       if(height <= 0) {
@@ -67,7 +66,7 @@ public class ActionBar extends SimplePanel {
           new Rule("end{height:" + (height) + "px;}"));
       expandEffect.setEffectElement(this.getElement());
       expandEffect.setDuration(DURATION);
-      expandEffect.play();
+      expandEffect.play(delay);
       setState(state.EXPAND);
     }
   }
@@ -81,9 +80,6 @@ public class ActionBar extends SimplePanel {
   public void setState(State state) {
     this.state = state;
   }
-  
-  private void delay() {
-    
-  }
+
 }
 

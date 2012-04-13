@@ -1029,7 +1029,7 @@ input[type=password]:focus {
 }
 
 .action-bar {
-	background: none repeat scroll 0 0 transparent;
+    background: -moz-linear-gradient(center top , #1A1A1A 0%, #333333 50%, #000000 51%, #000000 100%) repeat scroll 0 0 transparent;
     color: #FFFFFF;
     height: 50px;
     margin: 0;
@@ -1039,8 +1039,6 @@ input[type=password]:focus {
     bottom: 0;
     margin: 0;
 }
-
-
 
 .action-button-bar {
     background: -moz-linear-gradient(center top , #1A1A1A 0%, #333333 50%, black 51%, black 100%) repeat scroll 0 0 transparent;
