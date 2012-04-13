@@ -1,5 +1,8 @@
 package org.pentaho.gwt.widgets.client.text;
 
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.Rectangle;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
@@ -189,7 +192,9 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
     hSpacer.setStylePrimaryName("validation-textbox-left-image-buffer"); //$NON-NLS-1$
     bottomPanel.add(hSpacer);
     SimplePanel tailImagePanel = new SimplePanel();
-    tailImagePanel.setStylePrimaryName("validation-textbox-tail-image"); //$NON-NLS-1$
+    image = new Image(GWT.getModuleBaseURL() + "images/spacer.gif"); //$NON-NLS-1$
+    image.setStylePrimaryName("validation-textbox-tail-image"); //$NON-NLS-1$
+    tailImagePanel.add(image);
     bottomPanel.add(tailImagePanel);
     messagePanel.add(bottomPanel);
     popupPanel = new PopupPanel(true, false);
@@ -198,11 +203,10 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
       public void setPosition(int offsetWidth, int offsetHeight) {
         int absLeft = -1;
         int absTop = -1;
-        int offHeight = -1;
         absLeft = textBox.getAbsoluteLeft();
         absTop = textBox.getAbsoluteTop();
-        offHeight = textBox.getOffsetHeight();
-        popupPanel.setPopupPosition(absLeft, absTop - offHeight - DEFAULT_OFFSET >= 0 ? absTop - offHeight - DEFAULT_OFFSET: absTop);
+        Rectangle popupSize = ElementUtils.getSize(popupPanel.getElement());
+        popupPanel.setPopupPosition(absLeft, absTop - popupSize.height >= 0 ? absTop - popupSize.height: absTop);
       }
     });      
     popupPanel.show(); 
