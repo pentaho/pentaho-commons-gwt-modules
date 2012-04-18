@@ -41,7 +41,7 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
       
       @Override
       public void onKeyUp(KeyUpEvent event) {
-        performValidation();
+        performValidation(true);
         fireOnKeyUp(event);
       }
     });
@@ -136,12 +136,14 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
     }
   }
   
-  private void performValidation() {
+  private void performValidation(boolean showPopUp) {
     if(!validate()) {
       fireOnFailure();
       imagePanel.removeStyleDependentName("valid");
       imagePanel.addStyleDependentName("invalid");
-      showMessagePopup();
+      if(showPopUp) {
+    	  showMessagePopup();
+      }
     } else {
       fireOnSuccess();
       imagePanel.removeStyleDependentName("invalid");
@@ -172,9 +174,7 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
   
   public void setValue(String value) {
     textBox.setValue(value);
-    if(value != null && value.length() > 0) {
-      performValidation();      
-    }
+    performValidation(false);      
   }
   
   public String getText() {
