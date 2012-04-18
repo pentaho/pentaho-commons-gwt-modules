@@ -39,7 +39,7 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
       
       @Override
       public void onKeyUp(KeyUpEvent event) {
-        performValidation();
+        performValidation(true);
         fireOnKeyUp(event);
       }
     });
@@ -134,12 +134,14 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
     }
   }
   
-  private void performValidation() {
+  private void performValidation(boolean showPopUp) {
     if(!validate()) {
       fireOnFailure();
       imagePanel.removeStyleDependentName("valid");
       imagePanel.addStyleDependentName("invalid");
-      showMessagePopup();
+      if(showPopUp) {
+    	  showMessagePopup();
+      }
     } else {
       fireOnSuccess();
       imagePanel.removeStyleDependentName("invalid");
@@ -170,9 +172,7 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
   
   public void setValue(String value) {
     passwordTextBox.setValue(value);
-    if(value != null && value.length() > 0) {
-      performValidation();      
-    }
+    performValidation(false);      
   }
   
   public String getText() {
