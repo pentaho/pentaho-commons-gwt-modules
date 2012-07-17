@@ -1961,3 +1961,130 @@ input:focus {
     font-size: 0px;
 }
 
+.tundra .dijitArrowButtonInner {
+  background:url("../images/comboArrow.png") no-repeat scroll 0 center;
+  width: 16px;
+  height: 16px;
+  /*margin: 0 4px 0 4px;*/
+}
+.dialog-content .dijitComboBox .dijitArrowButton {
+  /* fallback color */
+  background: #000000;
+  /* Safari/Chrome */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
+  /* Firefox */
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+
+  font-size: .75em;
+  color: #ffffff;
+
+  /* Standard form */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  /* Firefox */
+  -moz-border-top-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+
+  /* Safari/Chrome */
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+
+  border: 1px solid #333;
+
+  /* Safari/Chrome */
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+  /* Firefox */
+  -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+  /* Standard form */
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+
+  white-space: nowrap;
+  text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
+  cursor: pointer;
+}
+
+.IE .dialog-content .dijitComboBox .dijitArrowButton {
+  height: auto;
+  background: #000000 url('images/bg_btn.png') repeat-x left center;
+  background-position: center center;
+}
+
+.dialog-content .dijitComboBox .dijitArrowButton input[type='text'] {
+  border: none;
+  height: 20px !important;
+}
+
+.dijitComboBox {
+  /* Standard form */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  /* Firefox */
+  -moz-border-top-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+
+  /* Safari/Chrome */
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+}
+
+.pentaho-chart-icon-large {
+  background: url("../images/chart.png") no-repeat;
+  height: 48px;
+  width: 48px;
+}
+.pentaho-settings-icon-large {
+  background: url("../images/settings.png") no-repeat;
+  height: 48px;
+  width: 48px;
+}
+.pentaho-settings-complete-icon-large {
+  background: url("../images/settings_done.png") no-repeat;
+  height: 48px;
+  width: 48px;
+}
+.pentaho-play-icon-large {
+  background: url("../images/play.png") no-repeat;
+  height: 48px;
+  width: 48px;
+}
+.pentaho-play-complete-icon-large {
+  background: url("../images/play_done.png") no-repeat;
+  height: 48px;
+  width: 48px;
+}
+/* FieldsetPane styles - start */
+.pentaho-fieldset-pane {
+
+}
+.pentaho-fieldset-pane-header {
+  border-bottom: 2px #BBB solid;
+  overflow:visible;
+  height: 12px;
+  margin: 5px 0 10px 0;
+}
+.pentaho-fieldset-pane-header .pentaho-fieldset-pane-title {
+  padding: 0 5px;
+  background-color: #d4d6db;
+  font-size: 18px;
+}
+/* pentaho fieldset pane styles - end */
+
+.disabledpane {
+  top: auto;
+  left: auto;
+  position: absolute;
+  /* bg color is the same as panel-content so it will blend in */
+  background-color: #d4d6db;
+  /* IE8 css hack for opacity */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=65)";
+  filter: alpha(opacity = 65);
+  opacity: 0.65;
+  height: 100%;
+  width: 100%;
+  z-index: 300;
+  margin: 0px;
+  padding: 0px;
+  display: none;
+}
