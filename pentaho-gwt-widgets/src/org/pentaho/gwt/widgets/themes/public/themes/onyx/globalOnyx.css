@@ -2093,3 +2093,7 @@ input:focus {
   padding: 0px;
   display: none;
 }
+
+.tundra .dijitTabContainerTopNone {
+  margin-left: 3px;
+}
