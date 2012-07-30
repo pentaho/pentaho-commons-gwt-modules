@@ -2029,6 +2029,58 @@ input:focus {
   -webkit-border-bottom-right-radius: 5px;
 }
 
+
+.dijitSelect {
+  /* Standard form */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  /* Firefox */
+  -moz-border-top-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+
+  /* Safari/Chrome */
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+}
+.tundra .dijitSelect .dijitArrowButton {
+  /* fallback color */
+  background: #000000;
+  /* Safari/Chrome */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
+  /* Firefox */
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+
+  font-size: .75em;
+  color: #ffffff;
+
+  border: none;
+
+  /* Standard form */
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  /* Firefox */
+  -moz-border-top-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+
+  /* Safari/Chrome */
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+
+
+  /* Safari/Chrome */
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+  /* Firefox */
+  -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+  /* Standard form */
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+
+  white-space: nowrap;
+  text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
+  cursor: pointer;
+}
+
 .pentaho-chart-icon-large {
   background: url("../images/chart.png") no-repeat;
   height: 48px;
@@ -2091,4 +2143,20 @@ input:focus {
 
 .tundra .dijitTabContainerTopNone {
   margin-left: 3px;
+}
+
+.tundra .dijitTabCloseButton {
+  background: url("../images/close_sm_disabled.png") no-repeat;
+  height: 16px;
+  width: 16px;
+}
+
+.tundra .dijitTabCloseButtonHover {
+  background: url("../images/close_sm.png") no-repeat;
+  height: 16px;
+  width: 16px;
+}
+
+.tundra .dijitTabInnerDiv {
+  padding: 2px;
 }
