@@ -1,0 +1,39 @@
+/* Sencha looking context menus */
+.tundra .dijitMenuItem td {
+	padding: 6px 2px;
+}
+
+.pentaho-menu .pentaho-menuitem .dijitMenuItemLabel{
+	font-size: 16px;
+}
+
+.dijitPopup {
+	padding: 6px;
+	border-radius: 6px;
+	background-color: black;
+}
+/* End Sencha looking context menus */
+
+/* Layout Panel */
+.gem {
+	padding: 6px 5px;
+}
+.gem .gem-label {
+	font-size: 1em;
+}
+
+/* Panel chrome */
+.tundra .dijitSplitContainer-dijitContentPane, .tundra .dijitBorderContainer-dijitContentPane {
+	padding: 0;
+}
+.pentaho-padding-lg {
+	padding: 0;
+}
+
+/* Misc */
+.tundra .dijitButtonText{
+	font-weight: bold;
+}
+.pentaho-button {
+	padding: 9px;
+}
