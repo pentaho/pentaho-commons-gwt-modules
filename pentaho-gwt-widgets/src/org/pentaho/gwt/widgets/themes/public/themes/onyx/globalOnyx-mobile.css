@@ -4,7 +4,7 @@
 }
 
 .pentaho-menu .pentaho-menuitem .dijitMenuItemLabel{
-	font-size: 16px;
+	font-size: 15px;
 }
 
 .dijitPopup {
@@ -36,4 +36,9 @@
 }
 .pentaho-button {
 	padding: 9px;
+}
+
+.tundra .section-header-inner {
+	height: 1.9em;
+	padding-top: 12px;
 }
