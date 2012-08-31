@@ -22,6 +22,10 @@
 	font-size: 1em;
 }
 
+.pentahoPropertiesPanel .caption-text {
+	font-size: 1em;
+}
+
 /* Panel chrome */
 .tundra .dijitSplitContainer-dijitContentPane, .tundra .dijitBorderContainer-dijitContentPane {
 	padding: 0;
