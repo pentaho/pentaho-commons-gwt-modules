@@ -1123,9 +1123,9 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     ArrayList<DayOfWeek> selectedDaysOfWeek = new ArrayList<DayOfWeek>();
     if ((temporalState == TemporalValue.DAILY) && !dailyEditor.isEveryNDays()) {
       selectedDaysOfWeek.add(DayOfWeek.MON);
-      selectedDaysOfWeek.add(DayOfWeek.TUES);
+      selectedDaysOfWeek.add(DayOfWeek.TUE);
       selectedDaysOfWeek.add(DayOfWeek.WED);
-      selectedDaysOfWeek.add(DayOfWeek.THUR);
+      selectedDaysOfWeek.add(DayOfWeek.THU);
       selectedDaysOfWeek.add(DayOfWeek.FRI);
     } else if (temporalState == TemporalValue.WEEKLY) {
       selectedDaysOfWeek.addAll(weeklyEditor.getCheckedDays());

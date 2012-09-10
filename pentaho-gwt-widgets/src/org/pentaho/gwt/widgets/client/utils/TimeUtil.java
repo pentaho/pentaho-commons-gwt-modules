@@ -92,9 +92,9 @@ public class TimeUtil {
   public enum DayOfWeek {
     SUN(0, MSGS.sunday() ),
     MON(1, MSGS.monday() ),
-    TUES(2, MSGS.tuesday() ),
+    TUE(2, MSGS.tuesday() ),
     WED(3, MSGS.wednesday() ),
-    THUR(4, MSGS.thursday() ),
+    THU(4, MSGS.thursday() ),
     FRI(5, MSGS.friday() ), 
     SAT(6, MSGS.saturday() );
 
@@ -108,7 +108,7 @@ public class TimeUtil {
     private final String name;
 
     private static DayOfWeek[] week = { 
-      SUN, MON, TUES, WED, THUR, FRI, SAT 
+      SUN, MON, TUE, WED, THU, FRI, SAT 
     };
 
     public int value() {

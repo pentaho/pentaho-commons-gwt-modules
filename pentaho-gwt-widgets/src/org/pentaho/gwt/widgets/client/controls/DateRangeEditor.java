@@ -23,7 +23,12 @@ import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -53,11 +58,13 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
   
   private ErrorLabel startLabel = null;
   private ICallback<IChangeHandler> onChangeHandler = null;
+  private static int uniqueInstanceNumber=0;
 
   public DateRangeEditor( Date date ) {
 
     super( MSGS.rangeOfRecurrence() );
     this.addStyleName(SCHEDULE_EDITOR_CAPTION_PANEL);
+    uniqueInstanceNumber += 1;
     
     HorizontalPanel outerHP = new HorizontalPanel();
     add( outerHP );
@@ -159,15 +166,15 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     public EndDatePanel( Date date ) {
       final EndDatePanel localThis = this;
   
-      noEndDateRb = new RadioButton(END_DATE_RB_GROUP, MSGS.noEndDateLabel() );
+      noEndDateRb = new RadioButton(END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.noEndDateLabel() );
       noEndDateRb.setStyleName("recurrenceRadioButton"); //$NON-NLS-1$
-      noEndDateRb.setChecked(true);
+      noEndDateRb.setValue(true);
       add(noEndDateRb);
       HorizontalPanel hp = new HorizontalPanel();
       add(hp);
   
       HorizontalPanel endByPanel = new HorizontalPanel();
-      endByRb = new RadioButton(END_DATE_RB_GROUP, MSGS.endByLabel() );
+      endByRb = new RadioButton(END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.endByLabel() );
       endByRb.setStyleName("recurrenceRadioButton"); //$NON-NLS-1$
       endByPanel.add(endByRb);
       DefaultFormat format = new DefaultFormat(DateTimeFormat.getShortDateFormat());
@@ -203,8 +210,8 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     }
     
     public void setNoEndDate() {
-      endByRb.setChecked( false );
-      noEndDateRb.setChecked( true );
+      endByRb.setValue(false);
+      noEndDateRb.setValue( true );
       endDatePicker.getDatePicker().setEnabled( false );
     }
     
@@ -213,13 +220,13 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     }
     
     public void setEndBy() {
-      noEndDateRb.setChecked( false );
-      endByRb.setChecked( true );
+      noEndDateRb.setValue( false );
+      endByRb.setValue( true );
       endDatePicker.getDatePicker().setEnabled( true );
     }
     
     public boolean isNoEndDate() {
-      return noEndDateRb.isChecked();
+      return noEndDateRb.getValue();
     }
     
     public Date getDate() {

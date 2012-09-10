@@ -120,8 +120,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   private CronEditor cronEditor = null;
   // TODO sbarkdull, can this be static?
   private Map<ScheduleType, Panel> scheduleTypeMap = new HashMap<ScheduleType, Panel>();
-  private static Map<TemporalValue, ScheduleType> temporalValueToScheduleTypeMap = createTemporalValueToScheduleTypeMap();
-  private static Map<ScheduleType, TemporalValue> scheduleTypeToTemporalValueMap = createScheduleTypeMapToTemporalValue();
+  private Map<TemporalValue, ScheduleType> temporalValueToScheduleTypeMap = createTemporalValueToScheduleTypeMap();
+  private Map<ScheduleType, TemporalValue> scheduleTypeToTemporalValueMap = createScheduleTypeMapToTemporalValue();
   
   private ListBox scheduleCombo = null;
   
@@ -401,8 +401,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   }
 
   public void setEndBy() {
+  	cronEditor.setEndBy();
     recurrenceEditor.setEndBy();
-    cronEditor.setEndBy();
   }
 
   private void handleScheduleChange() throws EnumException {
@@ -455,11 +455,11 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     return m;
   }
   
-  private static ScheduleType temporalValueToScheduleType( TemporalValue tv ) {
+  private ScheduleType temporalValueToScheduleType( TemporalValue tv ) {
     return temporalValueToScheduleTypeMap.get( tv );
   }
   
-  private static TemporalValue scheduleTypeToTemporalValue( ScheduleType st ) {
+  private TemporalValue scheduleTypeToTemporalValue( ScheduleType st ) {
     return scheduleTypeToTemporalValueMap.get( st );
   }
   
