@@ -4,7 +4,7 @@
 }
 
 .pentaho-menu .pentaho-menuitem .dijitMenuItemLabel{
-	font-size: 16px;
+	font-size: 15px;
 }
 
 .dijitPopup {
@@ -22,6 +22,10 @@
 	font-size: 1em;
 }
 
+.pentahoPropertiesPanel .caption-text {
+	font-size: 1em;
+}
+
 /* Panel chrome */
 .tundra .dijitSplitContainer-dijitContentPane, .tundra .dijitBorderContainer-dijitContentPane {
 	padding: 0;
@@ -34,6 +38,53 @@
 .tundra .dijitButtonText{
 	font-weight: bold;
 }
-.pentaho-button {
-	padding: 9px;
+/* prompt buttons */
+.pentaho-button, .pentaho-toggle-button  {
+	border: 1px solid #2B2A2A;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(46, 39, 35, 0.8)), color-stop(51%,rgba(70, 64, 56, 0.8)), color-stop(53%,rgba(36, 31, 27, 0.8)), color-stop(100%,rgba(22, 19, 15, 0.8))), url('../images/bg-buttons.png') repeat-y top center;
+	-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7);
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
+}
+.pentaho-button:hover, .pentaho-toggle-button:hover, .pentaho-toggle-button-down, .pentaho-toggle-button-down-disabled, .pentaho-toggle-button-down-hovering {
+	border: 1px solid #828c2b;
+   background-image:none;
+	background-color:#aebb38;
+	 background:-webkit-linear-gradient(top, #828c2b ,#aebb38 50%);
+	background: linear-gradient(top, #828c2b ,#aebb38 50%);
+	box-shadow:0 0 1px 1px rgba(255, 255, 255, .4) inset;
+ -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+.pentaho-button:active {
+   background-image:none;
+	background-color:#aebb38;
+	background: -webkit-linear-gradient(top, #828c2b ,#aebb38 50%);
+	background:linear-gradient(top, #828c2b ,#aebb38 50%);
+	box-shadow:0 0 -1px 1px rgba(0, 0, 0, .4);
+  -webkit-box-shadow:0 0 -1px 1px rgba(0, 0, 0, .4);
+}
+.pentaho-toggle-button button{
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
+}
+.pentaho-toggle-button-down button {
+text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+color: #000 !important;
+}
+/* end prompt buttons */
+
+.tundra .section-header-inner {
+	height: 1.9em;
+	padding-top: 12px;
+}
+
+/* analyzer selection toolbar bg for ipad  */
+.reportArea #selectionFilterPanel {
+	opacity: 1 !important;
+	height: 27px !important;
+	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, .6), 0 0 1px 1px rgba(255, 255, 255, .2) inset !important;
+}
+/* analyzer prompt panel style for iPad */
+.reportFilter {
+	background: url('./images/bg-lists.jpg') top left !important;
+	background-repeat:repeat;
 }
