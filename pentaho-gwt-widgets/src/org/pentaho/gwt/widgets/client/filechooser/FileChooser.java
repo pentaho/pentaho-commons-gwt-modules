@@ -711,7 +711,9 @@ public class FileChooser extends VerticalPanel {
   }
 
   public String getSolution() {
-    if (getSelectedPath().indexOf("/", 1) == -1) { //$NON-NLS-1$
+    if(getSelectedPath() == null){
+      return null;
+    } else if (getSelectedPath().indexOf("/", 1) == -1) { //$NON-NLS-1$
       return getSelectedPath().substring(1);
     } else {
       return getSelectedPath().substring(1, getSelectedPath().indexOf("/", 1)); //$NON-NLS-1$
