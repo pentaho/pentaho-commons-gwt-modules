@@ -145,6 +145,10 @@ input[type='text'] {
     background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
 }
+.IE .pentaho-button[disabled] {
+  background: url('images/bg_btn_disabled.png') repeat-x left center;
+  cursor: default;
+}
 
 .pentaho-toggle-button {
     /* fallback color */
