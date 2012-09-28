@@ -116,3 +116,11 @@ color: #000 !important;
 	border-top: 1px solid #3b352f;
 	background: transparent;
 }
+.pentaho-dialog .button-panel {
+    padding: 3px 8px 6px 0px;
+    width: 100%;
+}
+
+.pentaho-tabPanel {
+	background: rgba(71, 51, 19, 0.3);
+}
