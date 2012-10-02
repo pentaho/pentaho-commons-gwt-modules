@@ -44,7 +44,9 @@
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(46, 39, 35, 0.8)), color-stop(51%,rgba(70, 64, 56, 0.8)), color-stop(53%,rgba(36, 31, 27, 0.8)), color-stop(100%,rgba(22, 19, 15, 0.8))), url('./images/bg-buttons.png') repeat-y top center;
 	-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7);
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
-	font-size: 18px;
+	font-size: 14px;
+	color: #EDE3D0;
+	font-weight: bold;
 }
 .pentaho-button:hover, .pentaho-toggle-button:hover, .pentaho-toggle-button-down, .pentaho-toggle-button-down-disabled, .pentaho-toggle-button-down-hovering {
 	border: 1px solid #828c2b;
@@ -66,6 +68,9 @@
 }
 .pentaho-toggle-button button{
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
+font-size: 14px;
+font-weight: bold;
+padding: 5px 8px;
 }
 .pentaho-toggle-button-down button {
 text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) !important;
@@ -77,11 +82,17 @@ color: #000 !important;
 	height: 1.9em;
 	padding-top: 12px;
 }
+/* make drop down prompts larger on iPad */
+select {
+ font-size: 14px;
+ padding: 2px;
+ margin: 8px 0 0 0;
+}
 
 /* analyzer selection toolbar bg for ipad  */
 .reportArea #selectionFilterPanel {
 	opacity: 1 !important;
-	height: 27px !important;
+	height: auto !important;
 	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, .6), 0 0 1px 1px rgba(255, 255, 255, .2) inset !important;
 }
 /* analyzer prompt panel style for iPad */
@@ -105,7 +116,8 @@ color: #000 !important;
 .pentaho-dialog .Caption {
 	background: -webkit-linear-gradient(top,  rgba(255,255,255,.20) 0%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.08) 100%),  url('../images/bg-title-bar.jpg') repeat-x top center, #3b3228;
   /*box-shadow:0 0 1px 1px rgba(255, 255, 255, .2) inset;*/
-     font-size: 22px;
+     font-size: 18px;
+	 font-weight: bold;
     color: #EDE3D0;
     cursor: move;
     text-align: center;
