@@ -78,6 +78,11 @@ color: #000 !important;
 }
 /* end prompt buttons */
 
+.pentaho-button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(46, 39, 35, 0.8)), color-stop(51%,rgba(70, 64, 56, 0.8)), color-stop(53%,rgba(36, 31, 27, 0.8)), color-stop(100%,rgba(22, 19, 15, 0.8))), url('./images/bg-buttons.png') repeat-y top center;
+	-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7);
+}
+
 .tundra .section-header-inner {
 	height: 1.9em;
 	padding-top: 12px;
