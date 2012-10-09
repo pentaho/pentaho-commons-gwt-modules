@@ -48,7 +48,7 @@
 	color: #EDE3D0;
 	font-weight: bold;
 }
-.pentaho-button:hover, .pentaho-toggle-button:hover, .pentaho-toggle-button-down, .pentaho-toggle-button-down-disabled, .pentaho-toggle-button-down-hovering {
+.pentaho-toggle-button-down, .pentaho-toggle-button-down-disabled, .pentaho-toggle-button-down-hovering {
 	border: 1px solid #828c2b;
    background-image:none;
 	background-color:#aebb38;
