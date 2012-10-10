@@ -145,6 +145,10 @@ input[type='text'] {
     background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
 }
+.IE .pentaho-button[disabled] {
+  background: url('images/bg_btn_disabled.png') repeat-x left center;
+  cursor: default;
+}
 
 .pentaho-toggle-button {
     /* fallback color */
@@ -2139,6 +2143,10 @@ input:focus {
   margin: 0px;
   padding: 0px;
   display: none;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .tundra .dijitTabContainerTopNone {
