@@ -72,31 +72,33 @@ public class RepositoryFile implements Serializable {
 	public RepositoryFile(JSONObject jso) {
 		super();
 		JSONObject rftdo = jso.isObject();
-		JSONObject repositoryFileJSON = rftdo.get("repositoryFileDto").isObject();
+		JSONObject repositoryFileJSON = rftdo.get("repositoryFileDto") != null ? rftdo.get("repositoryFileDto").isObject() : jso;
+		//JSONObject repositoryFileJSON = rftdo.get("repositoryFileDto").isObject();
+
 		folder = JSONValueToBoolean(repositoryFileJSON, "folder");
 		creatorId = JSONValueToString(repositoryFileJSON, "creatorId");
+		this.createdDate = JSONValueToDate(repositoryFileJSON, "createdDate");
+		this.fileSize = JSONValueToLong(repositoryFileJSON, "fileSize");
+		this.hidden = JSONValueToBoolean(repositoryFileJSON, "hidden");
+		this.id = JSONValueToString(repositoryFileJSON, "id");
+		this.locale = JSONValueToString(repositoryFileJSON, "locale");
+		this.locked = JSONValueToBoolean(repositoryFileJSON, "locked");
+		this.name = JSONValueToString(repositoryFileJSON, "name");
+		this.ownerType = JSONValueToInt(repositoryFileJSON, "ownerType");
+		this.path = JSONValueToString(repositoryFileJSON, "path");
+		this.title = JSONValueToString(repositoryFileJSON, "title");
+		this.versionId = JSONValueToString(repositoryFileJSON, "versionId");
 		if (!folder) {
 			this.description = JSONValueToString(repositoryFileJSON, "description");
-			this.createdDate = JSONValueToDate(repositoryFileJSON, "createdDate");
 			this.deletedDate = JSONValueToDate(repositoryFileJSON, "deletedDate");
 			this.lastModifiedDate = JSONValueToDate(repositoryFileJSON, "lastModifiedDate");
 			this.lockDate = JSONValueToDate(repositoryFileJSON, "lockDate");
-			this.fileSize = JSONValueToLong(repositoryFileJSON, "fileSize");
-			this.hidden = JSONValueToBoolean(repositoryFileJSON, "hidden");
-			this.id = JSONValueToString(repositoryFileJSON, "id");
-			this.locale = JSONValueToString(repositoryFileJSON, "locale");
-			this.locked = JSONValueToBoolean(repositoryFileJSON, "locked");
 			this.lockMessage = JSONValueToString(repositoryFileJSON, "lockMessage");
 			this.lockOwner = JSONValueToString(repositoryFileJSON, "lockOwner");
-			this.name = JSONValueToString(repositoryFileJSON, "name");
 			this.originalParentFolderId = JSONValueToString(repositoryFileJSON, "originalParentFolderId");
 			this.originalParentFolderPath = JSONValueToString(repositoryFileJSON, "originalParentFolderPath");
 			this.owner = JSONValueToString(repositoryFileJSON, "owner");
-			this.ownerType = JSONValueToInt(repositoryFileJSON, "ownerType");
-			this.path = JSONValueToString(repositoryFileJSON, "path");
-			this.title = JSONValueToString(repositoryFileJSON, "title");
 			this.versioned = JSONValueToBoolean(repositoryFileJSON, "versioned");
-			this.versionId = JSONValueToString(repositoryFileJSON, "versionId");
 		}
 	}
 

@@ -144,6 +144,7 @@ public class FileChooser extends VerticalPanel {
   public void fetchRepository(final IDialogCallback completedCallback) throws RequestException {
     RequestBuilder builder = null;
     builder = new RequestBuilder(RequestBuilder.GET, getFullyQualifiedURL()+  "api/repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
+    builder.setHeader("Accept", "application/json");
     RequestCallback callback = new RequestCallback() {
 
       public void onError(Request request, Throwable exception) {
@@ -152,8 +153,8 @@ public class FileChooser extends VerticalPanel {
 
       public void onResponseReceived(Request request, Response response) {
         if (response.getStatusCode() == Response.SC_OK) {
-          String xmlData = response.getText(); 
-          XMLToRepositoryFileTreeConverter converter = new XMLToRepositoryFileTreeConverter(xmlData); 
+          String jsonData = response.getText(); 
+          JsonToRepositoryFileTreeConverter converter = new JsonToRepositoryFileTreeConverter(jsonData); 
           repositoryTree = TreeBuilder.buildSolutionTree(converter.getTree(), showHiddenFiles, showLocalizedFileNames, fileFilter);
           selectedTreeItem = repositoryTree.getItem(0);
           initUI();
