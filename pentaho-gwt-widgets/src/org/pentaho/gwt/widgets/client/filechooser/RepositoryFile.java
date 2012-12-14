@@ -72,8 +72,9 @@ public class RepositoryFile implements Serializable {
 	public RepositoryFile(JSONObject jso) {
 		super();
 		JSONObject rftdo = jso.isObject();
+		//There are times the web service wraps the json RepositoryFile with repsitoryFileDto and times when it does not.
+		//The following line mitigates this so it doesn't care what form it is getting.
 		JSONObject repositoryFileJSON = rftdo.get("repositoryFileDto") != null ? rftdo.get("repositoryFileDto").isObject() : jso;
-		//JSONObject repositoryFileJSON = rftdo.get("repositoryFileDto").isObject();
 
 		folder = JSONValueToBoolean(repositoryFileJSON, "folder");
 		creatorId = JSONValueToString(repositoryFileJSON, "creatorId");
@@ -146,14 +147,15 @@ public class RepositoryFile implements Serializable {
 		// parse the date
 		Date date = null;
 		try {
-			date = DateTimeFormat.getFormat("MM/dd/yyyy HH:mm:ss").parse(
-					dateTimeString);
+			//date = DateTimeFormat.getFormat("MM/dd/yyyy HH:mm:ss").parse(dateTimeString);
+      Long timeInMillis = Long.parseLong(dateTimeString);
+      date = new Date(timeInMillis);
 		} catch (Exception e) {
 			return null;
 		}
 		return date;
 	}
-
+	
 	public String getName() {
 		return name;
 	}

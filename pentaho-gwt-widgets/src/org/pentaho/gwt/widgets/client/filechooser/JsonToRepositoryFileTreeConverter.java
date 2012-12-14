@@ -72,14 +72,11 @@ public class JsonToRepositoryFileTreeConverter {
 			for (int i = 0; i < jsaChildren.size(); i++) {
 				RepositoryFileTree repositoryFileTree = new RepositoryFileTree();
 				JSONObject child = jsaChildren.get(i).isObject();
-				// process the folder name for the children, or individual file
+
+				// process the folder name for the children, or the individual file as a single child
 				JSONValue childValue = child.get("file");
-				if (childValue == null) {
-					Window.alert("Got a null file value");
-				}
 				RepositoryFile repositoryFile = new RepositoryFile(
 						childValue.isObject());
-				//System.out.println(repositoryFile.getPath());
 				repositoryFileTree.setFile(repositoryFile);
 				if (!repositoryFile.isFolder()) {
 					// Adding single file to the tree
@@ -89,7 +86,7 @@ public class JsonToRepositoryFileTreeConverter {
 					childValue = child.get("children");
 					if (childValue != null) {
 						RepositoryFileTree childChildren = processChildren(repositoryFileTree, child);
-						//System.out.println("Adding " + childChildren.getFile().getPath()
+						//System.out.println("Adding folder " + childChildren.getFile().getPath()
 						//		+ " to " + parent.getFile().getPath());
 						children.add(childChildren);
 					}
