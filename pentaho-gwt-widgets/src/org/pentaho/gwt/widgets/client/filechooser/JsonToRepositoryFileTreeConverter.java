@@ -89,6 +89,10 @@ public class JsonToRepositoryFileTreeConverter {
 						//System.out.println("Adding folder " + childChildren.getFile().getPath()
 						//		+ " to " + parent.getFile().getPath());
 						children.add(childChildren);
+					} else {
+					  // we have to add empty folders too
+					  repositoryFileTree.setChildren(new ArrayList<RepositoryFileTree>());
+	          children.add(repositoryFileTree);
 					}
 				}
 			}
