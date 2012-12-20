@@ -99,12 +99,18 @@ public class FileChooser extends VerticalPanel {
   }
 
   private RepositoryFile search(RepositoryFileTree tree, String actualFileName) {
-    RepositoryFile file = tree.getFile();
-    if(file != null && !file.isFolder() && file.getName().equals(actualFileName)) {
-      return file;
-    }
-    for(RepositoryFileTree treeItem: tree.getChildren()) {
-      search(treeItem, actualFileName);
+    try {
+      RepositoryFile file = tree.getFile();
+      if(file != null && !file.isFolder() && file.getName().equals(actualFileName)) {
+        return file;
+      }
+      if(file != null) {
+        for(RepositoryFileTree treeItem: tree.getChildren()) {
+          search(treeItem, actualFileName);
+        }
+      }
+    } catch(Exception e) {
+      return null;      
     }
     return null;
   }
