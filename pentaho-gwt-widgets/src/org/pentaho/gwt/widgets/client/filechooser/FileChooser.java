@@ -201,6 +201,8 @@ public class FileChooser extends VerticalPanel {
       }
       pathSegments.add(path.substring(path.lastIndexOf("/") + 1)); //$NON-NLS-1$
     }
+    
+    selectedTreeItem = getTreeItem(pathSegments);
     navigationListBox = new ListBox();
     navigationListBox.getElement().setId("navigationListBox");
     navigationListBox.setWidth("350px"); //$NON-NLS-1$
