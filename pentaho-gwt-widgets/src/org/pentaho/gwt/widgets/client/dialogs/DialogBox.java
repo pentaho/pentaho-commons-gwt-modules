@@ -88,7 +88,6 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
       pageBackground.setVisible(true);
       pageBackground.getElement().getStyle().setDisplay(Display.BLOCK);
       dialogDepthCount++;
-      centerCalled = true;
     }
     if (focusWidget != null) {
       focusWidget.setFocus(true);
@@ -98,7 +97,10 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     FrameUtils.toggleEmbedVisibility(false);
     
     // Notify listeners that we're showing a dialog (hide PDFs, flash).
-    GlassPane.getInstance().show();
+    if (!centerCalled) {
+    	GlassPane.getInstance().show();
+    }
+    centerCalled = true;
   }
 
   public void show() {
