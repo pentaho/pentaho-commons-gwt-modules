@@ -96,6 +96,7 @@ public class DateTimePicker extends FlowPanel implements IChangeHandler {
     timePicker.setEnabled(enabled);
   }
   
+  @SuppressWarnings("deprecation")
   public Date getDate() {
     Date date = datePicker.getSelectedDate();
     if (timePicker.getTimeOfDay().equals(TimeOfDay.AM)) {

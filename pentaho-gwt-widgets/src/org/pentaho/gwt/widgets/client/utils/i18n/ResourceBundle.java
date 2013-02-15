@@ -23,6 +23,7 @@ import java.util.Set;
 import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.http.client.Header;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -30,7 +31,6 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 
@@ -147,7 +147,7 @@ public class ResourceBundle {
         currentAttemptUrl = ResourceBundle.this.path + bundleName + PROPERTIES_EXTENSION + getUrlExtras();
         if (bundleCache.containsKey(currentAttemptUrl)) {
           // call in a separate timeout, to simulate the request builder call as closely as possible
-          DeferredCommand.addCommand(new Command() {
+          Scheduler.get().scheduleDeferred(new Command() {
             public void execute() {
               baseCallback.onResponseReceived(null, new FakeResponse(bundleCache.get(currentAttemptUrl)));
             }

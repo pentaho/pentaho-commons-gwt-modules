@@ -186,7 +186,6 @@ public class FileChooser extends VerticalPanel {
     setFileSelected(false);
 
     String path = this.selectedPath;
-    final String finalPath = path;
 
     // find the selected item from the list
     List<String> pathSegments = new ArrayList<String>();
@@ -530,7 +529,6 @@ public class FileChooser extends VerticalPanel {
     for (String segment : pathSegments) {
       for (int i = 0; i < selectedItem.getChildCount(); i++) {
         TreeItem item = selectedItem.getChild(i);
-        @SuppressWarnings("unchecked")
         RepositoryFileTree tree = (RepositoryFileTree) item.getUserObject();        
         if (segment.equals(tree.getFile().getName())) {
           selectedItem = item;

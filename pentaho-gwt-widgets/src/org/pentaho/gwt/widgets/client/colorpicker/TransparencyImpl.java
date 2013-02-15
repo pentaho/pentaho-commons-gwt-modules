@@ -193,16 +193,14 @@ import com.google.gwt.user.client.Element;
  */
 public class TransparencyImpl
 {
-  @SuppressWarnings("unchecked")
   // Caches the original DXImageTransform.Microsoft.AlphaImageLoader settings for IE6
-	static Map map = new HashMap();
+	static Map<Element, String> map = new HashMap<Element, String>();
 
 	/* Given a DOM element, set the transparency value, with 100 being fully opaque and
 	 * 0 being fully transparent
 	 * @param elem A com.google.gwt.user.client.Element object
 	 * @param alpha An alpha value
 	 */
-  @SuppressWarnings("unchecked")
 	public static void setTransparency(Element elem, int alpha)
 	{
 		float ieVersion = getIEVersion();

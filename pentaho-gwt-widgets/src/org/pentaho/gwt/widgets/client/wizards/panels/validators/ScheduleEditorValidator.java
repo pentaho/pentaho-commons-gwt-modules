@@ -20,7 +20,6 @@
 package org.pentaho.gwt.widgets.client.wizards.panels.validators;
 
 import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor;
-import org.pentaho.gwt.widgets.client.utils.StringUtils;
 
 @SuppressWarnings("deprecation")
 public class ScheduleEditorValidator implements IUiValidator {

@@ -24,7 +24,6 @@ import java.util.Date;
 import org.pentaho.gwt.widgets.client.datepicker.PentahoDatePicker;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
-import org.pentaho.gwt.widgets.client.utils.StringUtils;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;

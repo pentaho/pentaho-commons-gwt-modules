@@ -21,6 +21,7 @@ import java.util.Date;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 
 /**
  * Formatter to handle converting JavaScript Dates to/from a String. To bridge the gap between GWT and JavaScript 
@@ -44,7 +45,7 @@ public class JSDateTextFormatter implements JSTextFormatter
    * Create a date formatter using the default "long date" format. This is predefined per locale.
    */
   public static JSDateTextFormatter createDefaultDateFormatter() {
-    return new JSDateTextFormatter(DateTimeFormat.getLongDateFormat());
+    return new JSDateTextFormatter(DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG));
   }
   
   private static native void setupNativeFunctions(final JavaScriptObject obj)/*-{

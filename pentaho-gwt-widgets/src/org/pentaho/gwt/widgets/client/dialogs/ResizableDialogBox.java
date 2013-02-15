@@ -16,22 +16,21 @@
  */
 package org.pentaho.gwt.widgets.client.dialogs;
 
-import org.pentaho.gwt.widgets.client.buttons.RoundedButton;
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.Button;
 
-@SuppressWarnings("deprecation")
 public class ResizableDialogBox {
 
   private AbsolutePanel boundaryPanel;
@@ -63,9 +62,10 @@ public class ResizableDialogBox {
     Button ok = new Button(okText);
     ok.setStylePrimaryName("pentaho-button");
     ok.getElement().setAttribute("id", "okButton"); //$NON-NLS-1$ //$NON-NLS-2$
-    ok.addClickListener(new ClickListener() {
+    ok.addClickHandler(new ClickHandler() {
 
-      public void onClick(Widget sender) {
+      @Override
+      public void onClick(ClickEvent event) {
         if (validatorCallback == null || (validatorCallback != null && validatorCallback.validate())) {
           try {
             if (callback != null) {
@@ -84,9 +84,9 @@ public class ResizableDialogBox {
       Button cancel = new Button(cancelText);
       cancel.setStylePrimaryName("pentaho-button");
       cancel.getElement().setAttribute("id", "cancelButton"); //$NON-NLS-1$ //$NON-NLS-2$
-      cancel.addClickListener(new ClickListener() {
-
-        public void onClick(Widget sender) {
+      cancel.addClickHandler(new ClickHandler() {
+        
+        public void onClick(ClickEvent event) {
           try {
             if (callback != null) {
               callback.cancelPressed();
@@ -128,7 +128,7 @@ public class ResizableDialogBox {
   public void hide() {
     boundaryPanel.clear();
     RootPanel.get().remove(boundaryPanel);
-    //show <embeds>
+    // show <embeds>
     FrameUtils.toggleEmbedVisibility(true);
   }
 
@@ -141,7 +141,7 @@ public class ResizableDialogBox {
     top = (Window.getClientHeight() - windowPanel.getOffsetHeight()) >> 1;
     boundaryPanel.clear();
     boundaryPanel.add(windowPanel, Window.getScrollLeft() + left, Window.getScrollTop() + top);
-    //hide <embeds>
+    // hide <embeds>
     FrameUtils.toggleEmbedVisibility(false);
   }
 
@@ -180,5 +180,5 @@ public class ResizableDialogBox {
   public void setPixelSize(int width, int height) {
     windowPanel.setPixelSize(width, height);
   }
-  
+
 }

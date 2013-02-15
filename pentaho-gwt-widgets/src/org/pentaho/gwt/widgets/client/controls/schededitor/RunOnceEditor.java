@@ -27,6 +27,7 @@ import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
@@ -43,7 +44,7 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
   private static final String SCHEDULER_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
   
   private TimePicker startTimePicker = new TimePicker();
-  private DefaultFormat format = new DefaultFormat(DateTimeFormat.getShortDateFormat()); 
+  private DefaultFormat format = new DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)); 
   private DatePickerEx startDatePicker = new DatePickerEx(format);
   private static final String DEFAULT_START_HOUR = "12"; //$NON-NLS-1$
   private static final String DEFAULT_START_MINUTE = "00"; //$NON-NLS-1$

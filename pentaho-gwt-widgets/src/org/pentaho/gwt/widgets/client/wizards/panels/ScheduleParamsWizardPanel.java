@@ -25,6 +25,7 @@ import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
 
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Label;
@@ -135,6 +136,13 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     $wnd.schedulerParamsCompleteCallback = function(flag) {thisInstance.@org.pentaho.gwt.widgets.client.wizards.panels.ScheduleParamsWizardPanel::schedulerParamsCompleteCallback(Z)(flag)};
   }-*/;
   
+  private native void addOnLoad(Element ele, String scheduledFilePath)
+  /*-{
+    ele.onload = function() {
+      $wnd.schedulerParamsLoadedCallback(scheduledFilePath);
+    };
+  }-*/;  
+  
   /**
    * 
    */
@@ -165,7 +173,9 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
         parametersFrame = new Frame();
         parametersCaptionPanel.add(parametersFrame);
         parametersFrame.setHeight("94%"); //$NON-NLS-1$
-        DOM.setElementAttribute(parametersFrame.getElement(), "onload", "schedulerParamsLoadedCallback('" + scheduledFilePath + "')");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        
+        //DOM.setElementAttribute(parametersFrame.getElement(), "onload", "schedulerParamsLoadedCallback('" + scheduledFilePath + "')");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        addOnLoad(parametersFrame.getElement(), scheduledFilePath);
         DOM.setElementAttribute(parametersFrame.getElement(), "id", "schedulerParamsFrame"); //$NON-NLS-1$ //$NON-NLS-2$
         parametersFrame.setUrl(url);
       } else if (!url.equals(parametersFrame.getUrl())) {

@@ -23,12 +23,7 @@ import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -205,6 +200,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
       endDatePicker.getDatePicker().setValue( d );
     }
     
+    @SuppressWarnings("unused")
     public DatePickerEx getEndDatePicker() {
       return endDatePicker;
     }
@@ -216,7 +212,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     }
     
     public boolean isEndBy() {
-      return endByRb.isChecked();
+      return endByRb.getValue();
     }
     
     public void setEndBy() {

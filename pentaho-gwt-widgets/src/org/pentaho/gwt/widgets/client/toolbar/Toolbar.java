@@ -19,15 +19,15 @@ package org.pentaho.gwt.widgets.client.toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 /**
  * Displays a collection of buttons in a standard toolbar view. Also supports ToolbarGroup objects that manage related buttons.

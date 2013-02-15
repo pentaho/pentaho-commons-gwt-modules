@@ -19,7 +19,6 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.user.client.ui.KeyboardListener;
 import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
@@ -27,6 +26,8 @@ import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
+import com.google.gwt.user.client.ui.KeyboardListener;
 
 public class FileChooserDialog extends PromptDialogBox implements FileChooserListener {
 
