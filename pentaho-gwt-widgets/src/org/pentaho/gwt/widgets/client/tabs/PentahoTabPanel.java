@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class PentahoTabPanel extends VerticalPanel {
 
   private FlowPanel tabBar = new FlowPanel();
-  private DeckPanel tabDeck = new DeckPanel();
+  private DeckPanel tabDeck = new AlwaysVisibleDeckPanel();
   private PentahoTab selectedTab;
 
   public PentahoTabPanel() {
@@ -143,4 +143,6 @@ public class PentahoTabPanel extends VerticalPanel {
   public void setSelectedTab(PentahoTab selectedTab) {
     this.selectedTab = selectedTab;
   }
+
+
 }
