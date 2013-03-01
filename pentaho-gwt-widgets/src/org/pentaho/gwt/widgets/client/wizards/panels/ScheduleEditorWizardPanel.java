@@ -34,17 +34,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author wseyler
- *
+ * 
  */
 public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
 
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
-  
+
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
-  
+
   ScheduleEditor scheduleEditor = new ScheduleEditor();
   ScheduleEditorValidator scheduleEditorValidator;
-  
+
   public ScheduleEditorWizardPanel() {
     super();
     scheduleEditorValidator = new ScheduleEditorValidator(scheduleEditor);
@@ -57,11 +57,11 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
    */
   private void init() {
     ICallback<IChangeHandler> chHandler = new ICallback<IChangeHandler>() {
-      public void onHandle(IChangeHandler se ) {
+      public void onHandle(IChangeHandler se) {
         panelWidgetChanged(ScheduleEditorWizardPanel.this);
       }
     };
-    scheduleEditor.setOnChangeHandler( chHandler );
+    scheduleEditor.setOnChangeHandler(chHandler);
   }
 
   /**
@@ -73,7 +73,9 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     panelWidgetChanged(null);
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanel#getName()
    */
   public String getName() {
@@ -82,42 +84,43 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   }
 
   protected void panelWidgetChanged(Widget changedWidget) {
-//    System.out.println("Widget Changed: " + changedWidget + " can continue: " + scheduleEditorValidator.isValid());
+    // System.out.println("Widget Changed: " + changedWidget + " can continue: " + scheduleEditorValidator.isValid());
     this.setCanContinue(scheduleEditorValidator.isValid());
     this.setCanFinish(scheduleEditorValidator.isValid());
   }
-  
+
   public ScheduleType getScheduleType() {
     return scheduleEditor.getScheduleType();
   }
-  
+
   public ScheduleEditor getScheduleEditor() {
     return scheduleEditor;
   }
-  
+
   /**
    * @return
    */
   public String getCronString() {
     return scheduleEditor.getCronString();
   }
-  
+
   public Date getStartDate() {
     return scheduleEditor.getStartDate();
   }
-  
+
   public String getStartTime() {
     return scheduleEditor.getStartTime();
   }
-  
+
   public Date getEndDate() {
     return scheduleEditor.getEndDate();
   }
-  
+
   public int getRepeatCount() {
     // Repeate forever
     return -1;
   }
+
   public String getRepeatInterval() {
     return scheduleEditor.getRepeatInSecs().toString();
   }
@@ -125,5 +128,5 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   public void setFocus() {
     scheduleEditor.setFocus();
   }
-  
+
 }
