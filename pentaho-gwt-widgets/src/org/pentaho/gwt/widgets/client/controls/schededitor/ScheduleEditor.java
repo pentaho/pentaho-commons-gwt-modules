@@ -38,6 +38,7 @@ import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -111,6 +112,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     }
   } /* end enum */
 
+  private TextBox scheduleNameTextBox = new TextBox();
   private RunOnceEditor runOnceEditor = null;
   private RecurrenceEditor recurrenceEditor = null;
   private CronEditor cronEditor = null;
@@ -130,6 +132,11 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     super();
     
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
+    
+    Label scheduleNameLabel = new Label("Schedule Name:");
+    scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
+    add( scheduleNameLabel );
+    add(scheduleNameTextBox);
     
     scheduleCombo = createScheduleCombo();
     Label l = new Label( MSGS.recurrenceColon() );
@@ -172,6 +179,14 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     cronEditor.reset( now );
     
     setScheduleType( ScheduleType.RUN_ONCE );
+  }
+  
+  public String getScheduleName() {
+    return scheduleNameTextBox.getText();
+  }
+
+  public void setScheduleName(String scheduleName) {
+    scheduleNameTextBox.setText(scheduleName);
   }
   
   public String getCronString() {
@@ -489,5 +504,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     runOnceEditor.setOnChangeHandler( handler );
     recurrenceEditor.setOnChangeHandler( handler );
     cronEditor.setOnChangeHandler( handler );
+    scheduleNameTextBox.addChangeListener(changeListener);
   }
 }
