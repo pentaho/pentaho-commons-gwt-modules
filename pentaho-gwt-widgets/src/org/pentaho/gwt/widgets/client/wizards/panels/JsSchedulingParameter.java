@@ -22,6 +22,9 @@ import com.google.gwt.core.client.JsArrayString;
 
 public class JsSchedulingParameter extends JavaScriptObject implements ISchedulingParameter {
 
+  protected JsSchedulingParameter() {
+  }
+  
   public final native String getName() /*-{
     return this.name;
   }-*/;
