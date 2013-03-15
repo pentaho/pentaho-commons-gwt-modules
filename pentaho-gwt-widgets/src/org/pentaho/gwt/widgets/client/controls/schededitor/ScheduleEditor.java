@@ -475,7 +475,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   }
   
   public void setFocus() {
-    scheduleCombo.setFocus( true );
+    scheduleNameTextBox.setFocus( true );
   }
   
   public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
