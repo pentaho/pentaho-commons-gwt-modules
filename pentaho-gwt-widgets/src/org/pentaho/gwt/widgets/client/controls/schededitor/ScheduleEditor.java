@@ -24,16 +24,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pentaho.gwt.widgets.client.controls.schededitor.RecurrenceEditor.TemporalValue;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
-import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
-import org.pentaho.gwt.widgets.client.utils.CronExpression;
-import org.pentaho.gwt.widgets.client.utils.CronParseException;
-import org.pentaho.gwt.widgets.client.utils.CronParser;
-import org.pentaho.gwt.widgets.client.utils.EnumException;
-
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -41,76 +31,25 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+import org.pentaho.gwt.widgets.client.utils.CronExpression;
+import org.pentaho.gwt.widgets.client.utils.CronParseException;
+import org.pentaho.gwt.widgets.client.utils.CronParser;
+import org.pentaho.gwt.widgets.client.utils.EnumException;
 
 /**
- * 
+ *
  * @author Steven Barkdull
  *
  */
 @SuppressWarnings("deprecation")
-public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
+public class ScheduleEditor extends AbstractScheduleEditor {
 
-  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
+//  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
 
   private static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
-  
-  public enum ScheduleType {
-    RUN_ONCE(0, MSGS.runOnce()),
-    SECONDS(1, MSGS.seconds()), 
-    MINUTES(2, MSGS.minutes()), 
-    HOURS(3, MSGS.hours()), 
-    DAILY(4, MSGS.daily()), 
-    WEEKLY(5, MSGS.weekly()), 
-    MONTHLY(6, MSGS.monthly()), 
-    YEARLY(7, MSGS.yearly()),
-    CRON(8, MSGS.cron());
 
-    private ScheduleType(int value, String name) {
-      this.value = value;
-      this.name = name;
-    }
-
-    private final int value;
-
-    private final String name;
-
-    private static ScheduleType[] scheduleValue = {
-      RUN_ONCE,
-      SECONDS, 
-      MINUTES, 
-      HOURS,
-      DAILY, 
-      WEEKLY, 
-      MONTHLY, 
-      YEARLY,
-      CRON
-    };
-
-    public int value() {
-      return value;
-    }
-
-    public String toString() {
-      return name;
-    }
-
-    public static ScheduleType get(int idx) {
-      return scheduleValue[idx];
-    }
-
-    public static int length() {
-      return scheduleValue.length;
-    }
-    
-    public static ScheduleType stringToScheduleType( String strSchedule ) throws EnumException {
-      for (ScheduleType v : EnumSet.range(ScheduleType.RUN_ONCE, ScheduleType.CRON)) {
-        if ( v.toString().equals( strSchedule ) ) {
-          return v;
-        }
-      }
-      throw new EnumException( MSGS.invalidTemporalValue( scheduleValue.toString() ) );
-    }
-  } /* end enum */
 
   private TextBox scheduleNameTextBox = new TextBox();
   private RunOnceEditor runOnceEditor = null;
@@ -120,24 +59,22 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   private Map<ScheduleType, Panel> scheduleTypeMap = new HashMap<ScheduleType, Panel>();
   private Map<TemporalValue, ScheduleType> temporalValueToScheduleTypeMap = createTemporalValueToScheduleTypeMap();
   private Map<ScheduleType, TemporalValue> scheduleTypeToTemporalValueMap = createScheduleTypeMapToTemporalValue();
-  
+
   private ListBox scheduleCombo = null;
-  
+
 //  private String cronStr = null;
 //  private String repeatInSecs = null;
-  
-  private ICallback<IChangeHandler> onChangeHandler = null;
 
   public ScheduleEditor() {
     super();
-    
+
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
-    
+
     Label scheduleNameLabel = new Label("Schedule Name:");
     scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
     add( scheduleNameLabel );
     add(scheduleNameTextBox);
-    
+
     scheduleCombo = createScheduleCombo();
     Label l = new Label( MSGS.recurrenceColon() );
     l.setStyleName(SCHEDULE_LABEL);
@@ -153,7 +90,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     vp.add( runOnceEditor );
     scheduleTypeMap.put( ScheduleType.RUN_ONCE, runOnceEditor );
     runOnceEditor.setVisible( true );
-    
+
     recurrenceEditor = new RecurrenceEditor();
     vp.add( recurrenceEditor );
     scheduleTypeMap.put( ScheduleType.SECONDS, recurrenceEditor );
@@ -164,12 +101,12 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     scheduleTypeMap.put( ScheduleType.MONTHLY, recurrenceEditor );
     scheduleTypeMap.put( ScheduleType.YEARLY, recurrenceEditor );
     recurrenceEditor.setVisible( false );
-    
+
     cronEditor = new CronEditor();
     vp.add( cronEditor );
     scheduleTypeMap.put( ScheduleType.CRON, cronEditor );
     cronEditor.setVisible( false );
-    
+
     configureOnChangeHandler();
   }
 
@@ -177,10 +114,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     runOnceEditor.reset( now );
     recurrenceEditor.reset( now );
     cronEditor.reset( now );
-    
+
     setScheduleType( ScheduleType.RUN_ONCE );
   }
-  
+
   public String getScheduleName() {
     return scheduleNameTextBox.getText();
   }
@@ -188,7 +125,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   public void setScheduleName(String scheduleName) {
     scheduleNameTextBox.setText(scheduleName);
   }
-  
+
   public String getCronString() {
     switch ( getScheduleType() ) {
       case RUN_ONCE:
@@ -208,7 +145,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     }
   }
   /**
-   * 
+   *
    * @param cronStr
    * @throws CronParseException if cronStr is not a valid CRON string.
    */
@@ -235,13 +172,13 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       // its a cron string that cannot be parsed into a recurrence string, switch to cron string editor.
       setScheduleType( ScheduleType.CRON );
     }
-    
+
     cronEditor.setCronString( cronStr );
   }
 
-  
+
   /**
-   * 
+   *
    * @return null if the selected schedule does not support repeat-in-seconds, otherwise
    * return the number of seconds between schedule execution.
    * @throws RuntimeException if the temporal value is invalid. This
@@ -257,7 +194,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     ScheduleType rt = temporalValueToScheduleType( tv );
     setScheduleType( rt );
   }
-  
+
   private ListBox createScheduleCombo() {
     final ScheduleEditor localThis = this;
     ListBox lb = new ListBox();
@@ -276,56 +213,56 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
     return lb;
   }
-  
+
   public ScheduleType getScheduleType() {
     String selectedValue = scheduleCombo.getValue( scheduleCombo.getSelectedIndex() );
     return ScheduleType.stringToScheduleType( selectedValue );
   }
-  
+
   public void setScheduleType( ScheduleType scheduleType ) {
     scheduleCombo.setSelectedIndex( scheduleType.value() );
     selectScheduleTypeEditor( scheduleType );
   }
-  
+
   /**
    * NOTE: should only ever be used by validators. This is a backdoor
    * into this class that shouldn't be here, do not use this method
    * unless you are validating.
-   * 
+   *
    * @return DateRangeEditor
    */
   public RecurrenceEditor getRecurrenceEditor() {
     return recurrenceEditor;
   }
-  
+
   /**
    * NOTE: should only ever be used by validators. This is a backdoor
    * into this class that shouldn't be here, do not use this method
    * unless you are validating.
-   * 
+   *
    * @return DateRangeEditor
    */
   public CronEditor getCronEditor() {
     return cronEditor;
   }
-  
+
   /**
    * NOTE: should only ever be used by validators. This is a backdoor
    * into this class that shouldn't be here, do not use this method
    * unless you are validating.
-   * 
+   *
    * @return DateRangeEditor
    */
-  
+
   public RunOnceEditor getRunOnceEditor() {
     return runOnceEditor;
   }
-  
+
   public void setStartTime( String startTime ) {
     runOnceEditor.setStartTime( startTime );
     recurrenceEditor.setStartTime( startTime );
   }
-  
+
   public String getStartTime() {
     switch ( getScheduleType() ) {
       case RUN_ONCE:
@@ -350,7 +287,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     recurrenceEditor.setStartDate( startDate );
     cronEditor.setStartDate( startDate );
   }
-  
+
   public Date getStartDate() {
     switch ( getScheduleType() ) {
       case RUN_ONCE:
@@ -362,7 +299,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
         if (startTime.indexOf("PM") >= 0) {
           hour += 12;
         }
-        
+
         startDate.setHours(hour);
         startDate.setMinutes(minute);
         startDate.setSeconds(0);
@@ -430,14 +367,14 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     // show the selected panel
     Panel p = scheduleTypeMap.get( scheduleType );
     p.setVisible( true );
-    
+
     TemporalValue tv = scheduleTypeToTemporalValue( scheduleType );
     if ( null != tv ) {
       // force the recurrence editor to display the appropriate ui
       recurrenceEditor.setTemporalState( tv );
     }
   }
-  
+
   private static Map<TemporalValue, ScheduleType> createTemporalValueToScheduleTypeMap() {
     Map<TemporalValue, ScheduleType> m = new HashMap<TemporalValue, ScheduleType>();
 
@@ -451,7 +388,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
     return m;
   }
-  
+
   private static Map<ScheduleType, TemporalValue> createScheduleTypeMapToTemporalValue() {
     Map<ScheduleType, TemporalValue> m = new HashMap<ScheduleType, TemporalValue>();
 
@@ -465,29 +402,26 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
     return m;
   }
-  
+
   private ScheduleType temporalValueToScheduleType( TemporalValue tv ) {
     return temporalValueToScheduleTypeMap.get( tv );
   }
-  
+
   private TemporalValue scheduleTypeToTemporalValue( ScheduleType st ) {
     return scheduleTypeToTemporalValueMap.get( st );
   }
-  
+
   public void setFocus() {
     scheduleCombo.setFocus( true );
   }
-  
-  public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
-    this.onChangeHandler = handler;
-  }
-  
-  private void changeHandler() {
-    if ( null != onChangeHandler ) {
-      onChangeHandler.onHandle( this );
+
+
+  protected void changeHandler() {
+    if ( null != getOnChangeHandler() ) {
+      getOnChangeHandler().onHandle(this);
     }
   }
-  
+
   private void configureOnChangeHandler() {
     final ScheduleEditor localThis = this;
     ChangeListener changeListener = new ChangeListener() {
@@ -495,6 +429,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
         localThis.changeHandler();
       }
     };
+
     ICallback<IChangeHandler> handler = new ICallback<IChangeHandler>() {
       public void onHandle(IChangeHandler o) {
         localThis.changeHandler();

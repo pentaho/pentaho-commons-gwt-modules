@@ -63,8 +63,65 @@ abstract public class AbstractScheduleEditor extends VerticalPanel implements IC
   protected static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
   private static final String DOW_CHECKBOX = "day-of-week-checkbox"; //$NON-NLS-1$
 
-
   protected Map<TemporalValue, Panel> temporalPanelMap = new LinkedHashMap<TemporalValue, Panel>();
+
+  public enum ScheduleType {
+    RUN_ONCE(0, MSGS.runOnce()),
+    SECONDS(1, MSGS.seconds()),
+    MINUTES(2, MSGS.minutes()),
+    HOURS(3, MSGS.hours()),
+    DAILY(4, MSGS.daily()),
+    WEEKLY(5, MSGS.weekly()),
+    MONTHLY(6, MSGS.monthly()),
+    YEARLY(7, MSGS.yearly()),
+    CRON(8, MSGS.cron());
+
+    private ScheduleType(int value, String name) {
+      this.value = value;
+      this.name = name;
+    }
+
+    private final int value;
+
+    private final String name;
+
+    private static ScheduleType[] scheduleValue = {
+                                                          RUN_ONCE,
+                                                          SECONDS,
+                                                          MINUTES,
+                                                          HOURS,
+                                                          DAILY,
+                                                          WEEKLY,
+                                                          MONTHLY,
+                                                          YEARLY,
+                                                          CRON
+    };
+
+    public int value() {
+      return value;
+    }
+
+    public String toString() {
+      return name;
+    }
+
+    public static ScheduleType get(int idx) {
+      return scheduleValue[idx];
+    }
+
+    public static int length() {
+      return scheduleValue.length;
+    }
+
+    public static ScheduleType stringToScheduleType( String strSchedule ) throws EnumException {
+      for (ScheduleType v : EnumSet.range(ScheduleType.RUN_ONCE, ScheduleType.CRON)) {
+        if ( v.toString().equals( strSchedule ) ) {
+          return v;
+        }
+      }
+      throw new EnumException( MSGS.invalidTemporalValue( scheduleValue.toString() ) );
+    }
+  } /* end enum */
 
   public enum TemporalValue {
     SECONDS(0, MSGS.seconds()),
@@ -135,8 +192,6 @@ abstract public class AbstractScheduleEditor extends VerticalPanel implements IC
 
     Date now = new Date();
     dateRangeEditor = new DateRangeEditor( now );
-
-    configureOnChangeHandler();
   }
 
   public void reset( Date d ) {
@@ -263,26 +318,6 @@ abstract public class AbstractScheduleEditor extends VerticalPanel implements IC
     return onChangeHandler;
   }
 
-  private void configureOnChangeHandler() {
-    final AbstractScheduleEditor localThis = this;
-
-    ICallback<IChangeHandler> handler = new ICallback<IChangeHandler>() {
-      public void onHandle(IChangeHandler o) {
-        localThis.changeHandler();
-      }
-    };
-
-    startTimePicker.setOnChangeHandler(handler);
-    dateRangeEditor.setOnChangeHandler(handler);
-
-    secondlyEditor.setOnChangeHandler(handler);
-    minutelyEditor.setOnChangeHandler(handler);
-    hourlyEditor.setOnChangeHandler(handler);
-    dailyEditor.setOnChangeHandler(handler);
-    weeklyEditor.setOnChangeHandler(handler);
-    monthlyEditor.setOnChangeHandler(handler);
-    yearlyEditor.setOnChangeHandler(handler);
-  }
 
   public class SecondlyRecurrenceEditor extends SimpleRecurrencePanel {
     public SecondlyRecurrenceEditor() {

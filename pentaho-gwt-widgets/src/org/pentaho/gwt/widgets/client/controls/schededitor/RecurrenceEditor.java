@@ -26,6 +26,8 @@ import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.controls.TimePicker;
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.CronParseException;
 import org.pentaho.gwt.widgets.client.utils.CronParser;
 import org.pentaho.gwt.widgets.client.utils.CronParser.RecurrenceType;
@@ -45,13 +47,8 @@ import org.pentaho.gwt.widgets.client.utils.TimeUtil.WeekOfMonth;
 
 @SuppressWarnings("deprecation")
 public class RecurrenceEditor extends AbstractScheduleEditor {
-
-
-
-
   private TemporalValue temporalState = null;
   private DeckPanel deckPanel = null;
-  
 
   public RecurrenceEditor() {
     super();
@@ -64,6 +61,8 @@ public class RecurrenceEditor extends AbstractScheduleEditor {
     add(p);
 
     add(getDateRangeEditor());
+
+    configureOnChangeHandler();
   }
   
 
@@ -565,5 +564,26 @@ public class RecurrenceEditor extends AbstractScheduleEditor {
     if ( null != getOnChangeHandler() ) {
       getOnChangeHandler().onHandle(this);
     }
+  }
+
+  private void configureOnChangeHandler() {
+    final RecurrenceEditor localThis = this;
+
+    ICallback<IChangeHandler> handler = new ICallback<IChangeHandler>() {
+      public void onHandle(IChangeHandler o) {
+        localThis.changeHandler();
+      }
+    };
+
+    getStartTimePicker().setOnChangeHandler(handler);
+    getDateRangeEditor().setOnChangeHandler(handler);
+
+    getSecondlyEditor().setOnChangeHandler(handler);
+    getMonthlyEditor().setOnChangeHandler(handler);
+    getHourlyEditor().setOnChangeHandler(handler);
+    getDailyEditor().setOnChangeHandler(handler);
+    getWeeklyEditor().setOnChangeHandler(handler);
+    getMonthlyEditor().setOnChangeHandler(handler);
+    getYearlyEditor().setOnChangeHandler(handler);
   }
 }
