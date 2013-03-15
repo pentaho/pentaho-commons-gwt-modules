@@ -224,6 +224,19 @@ public class ElementUtils {
     } catch(e){alert(e);}
   }-*/;
 
+  public static native String getComputedStyle(Element ele, String styleName)/*-{
+    if(window.getComputedStyle) {
+      var style = window.getComputedStyle(ele, null);
+      return style.getPropertyValue(styleName);
+    } else {
+      if (ele.currentStyle && ele.currentStyle[styleName]) {
+        return ele.currentStyle[styleName];
+      }
+    }
+    return "";
+
+  }-*/;
+
 }
 
 
