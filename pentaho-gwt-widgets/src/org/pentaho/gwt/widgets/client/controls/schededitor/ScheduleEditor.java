@@ -55,7 +55,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   private static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
   
   public enum ScheduleType {
-    RUN_ONCE(0, MSGS.runOnce()), 
+    RUN_ONCE(0, MSGS.runOnce()),
     SECONDS(1, MSGS.seconds()), 
     MINUTES(2, MSGS.minutes()), 
     HOURS(3, MSGS.hours()), 
