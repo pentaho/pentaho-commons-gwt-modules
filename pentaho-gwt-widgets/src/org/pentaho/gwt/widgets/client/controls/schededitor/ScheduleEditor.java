@@ -412,7 +412,7 @@ public class ScheduleEditor extends AbstractScheduleEditor {
   }
 
   public void setFocus() {
-    scheduleCombo.setFocus( true );
+    scheduleNameTextBox.setFocus( true );
   }
 
 
