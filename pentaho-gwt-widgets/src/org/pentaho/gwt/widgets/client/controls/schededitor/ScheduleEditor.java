@@ -81,17 +81,15 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     private final String name;
 
-    private static ScheduleType[] scheduleValue = {
-                                                          RUN_ONCE,
-                                                          SECONDS,
-                                                          MINUTES,
-                                                          HOURS,
-                                                          DAILY,
-                                                          WEEKLY,
-                                                          MONTHLY,
-                                                          YEARLY,
-                                                          CRON
-    };
+    private static ScheduleType[] scheduleValue = {RUN_ONCE,
+                                                   SECONDS,
+                                                   MINUTES,
+                                                   HOURS,
+                                                   DAILY,
+                                                   WEEKLY,
+                                                   MONTHLY,
+                                                   YEARLY,
+                                                   CRON};
 
     public int value() {
       return value;
@@ -135,7 +133,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
   private boolean isBlockoutDialog = false;
   private TimePicker startTimePicker = null;
-
+  private Widget startTimePanel = null;
 
 
   public ScheduleEditor(ScheduleDialogType type) {
@@ -162,8 +160,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     if (isBlockoutDialog == false)
     {
-      Widget p = createStartTimePanel();
-      add(p);
+      startTimePanel = createStartTimePanel();
+      add(startTimePanel);
     }
 
 
