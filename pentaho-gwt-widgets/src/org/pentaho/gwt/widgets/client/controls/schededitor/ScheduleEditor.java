@@ -19,10 +19,23 @@
  */
 package org.pentaho.gwt.widgets.client.controls.schededitor;
 
+
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gwt.user.client.ui.CaptionPanel;
+import org.pentaho.gwt.widgets.client.controls.TimePicker;
+import org.pentaho.gwt.widgets.client.controls.schededitor.RecurrenceEditor.TemporalValue;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+import org.pentaho.gwt.widgets.client.utils.CronExpression;
+import org.pentaho.gwt.widgets.client.utils.CronParseException;
+import org.pentaho.gwt.widgets.client.utils.CronParser;
+import org.pentaho.gwt.widgets.client.utils.EnumException;
 
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.Label;
@@ -31,12 +44,9 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
-import org.pentaho.gwt.widgets.client.utils.CronExpression;
-import org.pentaho.gwt.widgets.client.utils.CronParseException;
-import org.pentaho.gwt.widgets.client.utils.CronParser;
-import org.pentaho.gwt.widgets.client.utils.EnumException;
+
+import org.pentaho.gwt.widgets.client.utils.TimeUtil;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
 
 /**
  *
@@ -44,12 +54,70 @@ import org.pentaho.gwt.widgets.client.utils.EnumException;
  *
  */
 @SuppressWarnings("deprecation")
-public class ScheduleEditor extends AbstractScheduleEditor {
+public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
-//  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
+  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
 
   private static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
+  protected static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 
+  public enum ScheduleType {
+    RUN_ONCE(0, MSGS.runOnce()),
+    SECONDS(1, MSGS.seconds()),
+    MINUTES(2, MSGS.minutes()),
+    HOURS(3, MSGS.hours()),
+    DAILY(4, MSGS.daily()),
+    WEEKLY(5, MSGS.weekly()),
+    MONTHLY(6, MSGS.monthly()),
+    YEARLY(7, MSGS.yearly()),
+    CRON(8, MSGS.cron());
+
+    private ScheduleType(int value, String name) {
+      this.value = value;
+      this.name = name;
+    }
+
+    private final int value;
+
+    private final String name;
+
+    private static ScheduleType[] scheduleValue = {
+                                                          RUN_ONCE,
+                                                          SECONDS,
+                                                          MINUTES,
+                                                          HOURS,
+                                                          DAILY,
+                                                          WEEKLY,
+                                                          MONTHLY,
+                                                          YEARLY,
+                                                          CRON
+    };
+
+    public int value() {
+      return value;
+    }
+
+    public String toString() {
+      return name;
+    }
+
+    public static ScheduleType get(int idx) {
+      return scheduleValue[idx];
+    }
+
+    public static int length() {
+      return scheduleValue.length;
+    }
+
+    public static ScheduleType stringToScheduleType( String strSchedule ) throws EnumException {
+      for (ScheduleType v : EnumSet.range(ScheduleType.RUN_ONCE, ScheduleType.CRON)) {
+        if ( v.toString().equals( strSchedule ) ) {
+          return v;
+        }
+      }
+      throw new EnumException( MSGS.invalidTemporalValue( scheduleValue.toString() ) );
+    }
+  } /* end enum */
 
   private TextBox scheduleNameTextBox = new TextBox();
   private RunOnceEditor runOnceEditor = null;
@@ -62,24 +130,62 @@ public class ScheduleEditor extends AbstractScheduleEditor {
 
   private ListBox scheduleCombo = null;
 
-//  private String cronStr = null;
-//  private String repeatInSecs = null;
 
-  public ScheduleEditor() {
+  private ICallback<IChangeHandler> onChangeHandler = null;
+
+  private boolean isBlockoutDialog = false;
+  private TimePicker startTimePicker = null;
+
+
+
+  public ScheduleEditor(ScheduleDialogType type) {
     super();
+
+    isBlockoutDialog = (type == ScheduleDialogType.BLOCKOUT);
+    startTimePicker = new TimePicker();
 
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
 
-    Label scheduleNameLabel = new Label("Schedule Name:");
-    scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
-    add( scheduleNameLabel );
-    add(scheduleNameTextBox);
+    if (isBlockoutDialog == false)
+    {
+      Label scheduleNameLabel = new Label("Schedule Name:");
+      scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
+      add( scheduleNameLabel );
+      add(scheduleNameTextBox);
+    }
 
     scheduleCombo = createScheduleCombo();
     Label l = new Label( MSGS.recurrenceColon() );
     l.setStyleName(SCHEDULE_LABEL);
     add( l );
     add( scheduleCombo );
+
+    if (isBlockoutDialog == false)
+    {
+      Widget p = createStartTimePanel();
+      add(p);
+    }
+
+
+    if (isBlockoutDialog)
+    {
+      // Blockout period
+      CaptionPanel blockoutPeriodCaptionPanel = new CaptionPanel(MSGS.blockoutPeriod());
+//      blockoutPeriodCaptionPanel.setStyleName(SCHEDULER_CAPTION_PANEL);
+
+      VerticalPanel blockoutPanel = new VerticalPanel();
+
+      TimePicker endTimePicker = new TimePicker();
+      endTimePicker.setHour( "12" ); //$NON-NLS-1$
+      endTimePicker.setMinute( "00" ); //$NON-NLS-1$
+      endTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.AM );
+
+      blockoutPanel.add(getStartTimePicker());
+      blockoutPanel.add(endTimePicker);
+
+      blockoutPeriodCaptionPanel.add(blockoutPanel);
+      add(blockoutPeriodCaptionPanel);
+    }
 
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%"); //$NON-NLS-1$
@@ -102,12 +208,33 @@ public class ScheduleEditor extends AbstractScheduleEditor {
     scheduleTypeMap.put( ScheduleType.YEARLY, recurrenceEditor );
     recurrenceEditor.setVisible( false );
 
+    // TODO - should we even create cron editor if blockout????
     cronEditor = new CronEditor();
-    vp.add( cronEditor );
     scheduleTypeMap.put( ScheduleType.CRON, cronEditor );
     cronEditor.setVisible( false );
 
+    if (isBlockoutDialog == false)
+    {
+      vp.add( cronEditor );
+    }
+
     configureOnChangeHandler();
+  }
+
+
+  public TimePicker getStartTimePicker()
+  {
+    return startTimePicker;
+  }
+
+
+  protected Widget createStartTimePanel() {
+    CaptionPanel startTimeGB = new CaptionPanel( MSGS.startTime() );
+    startTimeGB.setStyleName(SCHEDULE_EDITOR_CAPTION_PANEL);
+
+    startTimeGB.add(getStartTimePicker());
+
+    return startTimeGB;
   }
 
   public void reset( Date now ) {
@@ -205,9 +332,14 @@ public class ScheduleEditor extends AbstractScheduleEditor {
         localThis.handleScheduleChange();
       }
     });
+
     // add all schedule types to the combobox
     for (ScheduleType schedType : EnumSet.range(ScheduleType.RUN_ONCE, ScheduleType.CRON)) {
-      lb.addItem( schedType.toString() );
+      if (((isBlockoutDialog == false) || ((isBlockoutDialog)) &&
+          ((schedType != ScheduleType.CRON) && (schedType != ScheduleType.SECONDS) && (schedType != ScheduleType.MINUTES))))
+      {
+        lb.addItem( schedType.toString() );
+      }
     }
     lb.setItemSelected( 0, true );
 
@@ -415,10 +547,13 @@ public class ScheduleEditor extends AbstractScheduleEditor {
     scheduleNameTextBox.setFocus( true );
   }
 
+  public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
+    this.onChangeHandler = handler;
+  }
 
   protected void changeHandler() {
-    if ( null != getOnChangeHandler() ) {
-      getOnChangeHandler().onHandle(this);
+    if ( null != onChangeHandler ) {
+      onChangeHandler.onHandle(this);
     }
   }
 
