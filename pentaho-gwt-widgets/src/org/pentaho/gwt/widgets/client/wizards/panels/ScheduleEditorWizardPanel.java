@@ -22,11 +22,11 @@ package org.pentaho.gwt.widgets.client.wizards.panels;
 import java.util.Date;
 
 import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor;
-import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor.ScheduleType;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
 import org.pentaho.gwt.widgets.client.wizards.panels.validators.ScheduleEditorValidator;
 
@@ -42,11 +42,13 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
 
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
 
-  ScheduleEditor scheduleEditor = new ScheduleEditor();
+  ScheduleEditor scheduleEditor;
   ScheduleEditorValidator scheduleEditorValidator;
 
-  public ScheduleEditorWizardPanel() {
+  public ScheduleEditorWizardPanel(final AbstractWizardDialog.ScheduleDialogType type) {
     super();
+
+    scheduleEditor = new ScheduleEditor(type);
     scheduleEditorValidator = new ScheduleEditorValidator(scheduleEditor);
     init();
     layout();
@@ -89,7 +91,7 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     this.setCanFinish(scheduleEditorValidator.isValid());
   }
 
-  public ScheduleType getScheduleType() {
+  public ScheduleEditor.ScheduleType getScheduleType() {
     return scheduleEditor.getScheduleType();
   }
 

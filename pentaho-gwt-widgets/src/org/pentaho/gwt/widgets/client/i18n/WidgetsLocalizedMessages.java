@@ -60,6 +60,16 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String startTime();
 
   /**
+   * Translated "Blockout Period".
+   *
+   * @return translated "Blockout Period"
+
+   */
+  @DefaultMessage("Blockout Period")
+  String blockoutPeriod();
+
+
+  /**
    * Translated "of".
    * 
    * @return translated "of"
@@ -750,6 +760,15 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage("Cron")
   String cron();
+
+  /**
+   * Translated "Blockout".
+   *
+   * @return translated "Blockout"
+
+   */
+  @DefaultMessage("Blockout")
+  String blockout();
 
   /**
    * Translated "March".
