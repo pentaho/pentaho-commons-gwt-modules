@@ -54,12 +54,6 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
   public RunOnceEditor() {
     setWidth("100%"); //$NON-NLS-1$
 
-    CaptionPanel startTimeCaptionPanel = new CaptionPanel(MSGS.startTime());
-    startTimeCaptionPanel.setStyleName(SCHEDULER_CAPTION_PANEL);
-    
-    startTimeCaptionPanel.add(startTimePicker);
-    add( startTimeCaptionPanel );
-    
     CaptionPanel startDateCaptionPanel = new CaptionPanel(MSGS.startDate());
     startDateCaptionPanel.setStyleName(SCHEDULER_CAPTION_PANEL);
     startDateCaptionPanel.add(startDatePicker.getDatePicker());

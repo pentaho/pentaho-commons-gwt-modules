@@ -52,6 +52,13 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
   private static final String WIZARD_BUTTON_PANEL = "pentaho-wizard-button-panel"; //$NON-NLS-1$
 
+  public enum ScheduleDialogType {
+    SCHEDULER, BLOCKOUT
+  }
+
+  protected ScheduleDialogType dialogType;
+
+
   // gui elements
   protected Button backButton = new Button(MSGS.back());
   protected Button nextButton = new Button(MSGS.next());
@@ -66,9 +73,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   
   private boolean canceled = false;
   
-  public AbstractWizardDialog(String title, IWizardPanel[] panels, boolean autohide, boolean modal) {
+  public AbstractWizardDialog(ScheduleDialogType type, String title, IWizardPanel[] panels, boolean autohide, boolean modal) {
     super(autohide, modal);
-    
+
+    dialogType = type;
     setText(title);
     
     init();
@@ -76,7 +84,12 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     setWizardPanels(panels);
     show();
   }
-  
+
+  public ScheduleDialogType getDialogType()
+  {
+    return dialogType;
+  }
+
   /**
    * Init()
    * 
