@@ -490,6 +490,13 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
 
   private void selectScheduleTypeEditor( ScheduleType scheduleType ) {
+    // if we are switching to cron type, then hide the start time panel
+    if (scheduleType == ScheduleType.CRON) {
+      startTimePanel.setVisible(false);
+    } else {
+      startTimePanel.setVisible(true);
+    }
+
     // hide all panels
     for ( Map.Entry<ScheduleType, Panel> me : scheduleTypeMap.entrySet() ) {
       me.getValue().setVisible( false );
