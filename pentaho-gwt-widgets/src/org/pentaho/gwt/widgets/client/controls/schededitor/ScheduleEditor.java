@@ -25,7 +25,11 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import org.pentaho.gwt.widgets.client.controls.TimePicker;
 import org.pentaho.gwt.widgets.client.controls.schededitor.RecurrenceEditor.TemporalValue;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
@@ -134,6 +138,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   private boolean isBlockoutDialog = false;
   private TimePicker startTimePicker = null;
   private Widget startTimePanel = null;
+  protected Button blockoutCheckButton = new Button("View Blockout Times");     //$NON-NLS-1$      // TODO: put in message bundle
 
 
   public ScheduleEditor(ScheduleDialogType type) {
@@ -146,7 +151,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     if (isBlockoutDialog == false)
     {
-      Label scheduleNameLabel = new Label("Schedule Name:");
+      Label scheduleNameLabel = new Label("Schedule Name:");   //$NON-NLS-1$
       scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
       add( scheduleNameLabel );
       add(scheduleNameTextBox);
@@ -164,25 +169,33 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       add(startTimePanel);
     }
 
+    SimplePanel hspacer = new SimplePanel();
+    hspacer.setWidth("100px");
 
     if (isBlockoutDialog)
     {
-      // Blockout period
-      CaptionPanel blockoutPeriodCaptionPanel = new CaptionPanel(MSGS.blockoutPeriod());
-//      blockoutPeriodCaptionPanel.setStyleName(SCHEDULER_CAPTION_PANEL);
+      HorizontalPanel blockoutPeriodPanel = new HorizontalPanel();
+      blockoutPeriodPanel.add(hspacer);
 
-      VerticalPanel blockoutPanel = new VerticalPanel();
+      // Blockout period
+      CaptionPanel blockoutPeriodStartCaptionPanel = new CaptionPanel(MSGS.startTime());
+      blockoutPeriodStartCaptionPanel.add(getStartTimePicker());
+
+      CaptionPanel blockoutPeriodEndCaptionPanel = new CaptionPanel(MSGS.endTime());
 
       TimePicker endTimePicker = new TimePicker();
       endTimePicker.setHour( "12" ); //$NON-NLS-1$
       endTimePicker.setMinute( "00" ); //$NON-NLS-1$
       endTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.AM );
 
-      blockoutPanel.add(getStartTimePicker());
-      blockoutPanel.add(endTimePicker);
+      blockoutPeriodEndCaptionPanel.add(endTimePicker);
 
-      blockoutPeriodCaptionPanel.add(blockoutPanel);
-      add(blockoutPeriodCaptionPanel);
+      blockoutPeriodPanel.add(blockoutPeriodStartCaptionPanel);
+      blockoutPeriodPanel.add(hspacer);
+      blockoutPeriodPanel.add(blockoutPeriodEndCaptionPanel);
+      blockoutPeriodPanel.add(hspacer);
+      add(hspacer);
+      add(blockoutPeriodPanel);
     }
 
     VerticalPanel vp = new VerticalPanel();
@@ -214,6 +227,29 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     if (isBlockoutDialog == false)
     {
       vp.add( cronEditor );
+
+      VerticalPanel blockoutButtonPanel = new VerticalPanel();
+      blockoutButtonPanel.setWidth("100%"); //$NON-NLS-1$
+      //blockoutButtonPanel.setHeight("30%");
+      blockoutButtonPanel.setHorizontalAlignment(VerticalPanel.ALIGN_CENTER);
+      blockoutButtonPanel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
+
+      // We want to add a button to check for blockout conflicts
+      blockoutCheckButton.setStyleName("pentaho-button");
+      blockoutCheckButton.getElement().setId("blockout-check-button");
+      blockoutCheckButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          // TODO: Check if there is a conflict of the current schedule with the list of existing blockout periods
+          System.out.println("********** Display a list of blockout periods");
+        }
+      });
+
+      hspacer.setHeight("50px");
+      blockoutButtonPanel.add(hspacer);
+      blockoutButtonPanel.add(blockoutCheckButton);
+
+      vp.add(hspacer);
+      add(blockoutButtonPanel);
     }
 
     configureOnChangeHandler();
@@ -491,10 +527,13 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
   private void selectScheduleTypeEditor( ScheduleType scheduleType ) {
     // if we are switching to cron type, then hide the start time panel
-    if (scheduleType == ScheduleType.CRON) {
-      startTimePanel.setVisible(false);
-    } else {
-      startTimePanel.setVisible(true);
+    if ((isBlockoutDialog == false) && (startTimePanel != null))
+    {
+      if (scheduleType == ScheduleType.CRON) {
+        startTimePanel.setVisible(false);
+      } else {
+        startTimePanel.setVisible(true);
+      }
     }
 
     // hide all panels
