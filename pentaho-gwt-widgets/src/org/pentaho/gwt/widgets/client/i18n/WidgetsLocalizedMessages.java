@@ -60,13 +60,13 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String startTime();
 
   /**
-   * Translated "Blockout Period".
+   * Translated "End Time".
    *
-   * @return translated "Blockout Period"
+   * @return translated "End Time"
 
    */
-  @DefaultMessage("Blockout Period")
-  String blockoutPeriod();
+  @DefaultMessage("End Time")
+  String endTime();
 
 
   /**
