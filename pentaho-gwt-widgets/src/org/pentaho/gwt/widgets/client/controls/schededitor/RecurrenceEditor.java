@@ -118,15 +118,13 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     private final String name;
 
-    private static TemporalValue[] temporalValues = {
-                                                            SECONDS,
-                                                            MINUTES,
-                                                            HOURS,
-                                                            DAILY,
-                                                            WEEKLY,
-                                                            MONTHLY,
-                                                            YEARLY
-    };
+    private static TemporalValue[] temporalValues = {SECONDS,
+                                                     MINUTES,
+                                                     HOURS,
+                                                     DAILY,
+                                                     WEEKLY,
+                                                     MONTHLY,
+                                                     YEARLY};
 
     public int value() {
       return value;
@@ -168,6 +166,8 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     Date now = new Date();
     dateRangeEditor = new DateRangeEditor( now );
     add( dateRangeEditor );
+
+    startTimePicker = new TimePicker();
 
     configureOnChangeHandler();
   }
@@ -323,17 +323,6 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       p.setValue( Long.toString( repeatTime ) );
     }
     setTemporalState( currentVal );
-  }
-
-
-  private Widget createStartTimePanel() {
-    CaptionPanel startTimeGB = new CaptionPanel( MSGS.startTime() );
-    startTimeGB.setStyleName(SCHEDULE_EDITOR_CAPTION_PANEL);
-
-    startTimePicker = new TimePicker();
-    startTimeGB.add(startTimePicker);
-
-    return startTimeGB;
   }
 
   private Widget createRecurrencePanel() {
