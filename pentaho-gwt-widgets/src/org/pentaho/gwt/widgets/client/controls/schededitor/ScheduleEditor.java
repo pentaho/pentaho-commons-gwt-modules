@@ -184,9 +184,9 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       CaptionPanel blockoutPeriodEndCaptionPanel = new CaptionPanel(MSGS.endTime());
 
       TimePicker endTimePicker = new TimePicker();
-      endTimePicker.setHour( "12" ); //$NON-NLS-1$
+      endTimePicker.setHour( "01" ); //$NON-NLS-1$
       endTimePicker.setMinute( "00" ); //$NON-NLS-1$
-      endTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.AM );
+      endTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.PM );
 
       blockoutPeriodEndCaptionPanel.add(endTimePicker);
 
