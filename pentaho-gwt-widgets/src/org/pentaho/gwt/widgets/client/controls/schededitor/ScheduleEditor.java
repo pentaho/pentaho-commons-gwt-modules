@@ -25,6 +25,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -254,6 +255,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     configureOnChangeHandler();
   }
+
+    public void setBlockoutButtonHandler(final ClickHandler handler) {
+        blockoutCheckButton.addClickHandler(handler);
+    }
 
 
   public TimePicker getStartTimePicker()
