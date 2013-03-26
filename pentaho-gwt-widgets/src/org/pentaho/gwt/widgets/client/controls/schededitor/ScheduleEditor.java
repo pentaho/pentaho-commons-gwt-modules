@@ -142,7 +142,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   protected Button blockoutCheckButton = new Button("View Blockout Times");     //$NON-NLS-1$      // TODO: put in message bundle
 
 
-  public ScheduleEditor(ScheduleDialogType type) {
+  public ScheduleEditor(ScheduleDialogType type, boolean showScheduleName) {
     super();
 
     isBlockoutDialog = (type == ScheduleDialogType.BLOCKOUT);
@@ -150,7 +150,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
 
-    if (isBlockoutDialog == false)
+    if (isBlockoutDialog == false && showScheduleName)
     {
       Label scheduleNameLabel = new Label("Schedule Name:");   //$NON-NLS-1$
       scheduleNameLabel.setStyleName(SCHEDULE_LABEL);

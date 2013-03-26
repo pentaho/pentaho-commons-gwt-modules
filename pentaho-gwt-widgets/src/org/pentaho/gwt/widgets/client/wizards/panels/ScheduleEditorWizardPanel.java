@@ -46,9 +46,13 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   ScheduleEditorValidator scheduleEditorValidator;
 
   public ScheduleEditorWizardPanel(final AbstractWizardDialog.ScheduleDialogType type) {
+    this(type, true);
+  }
+  
+  public ScheduleEditorWizardPanel(final AbstractWizardDialog.ScheduleDialogType type, final boolean showScheduleName) {
     super();
 
-    scheduleEditor = new ScheduleEditor(type);
+    scheduleEditor = new ScheduleEditor(type, showScheduleName);
     scheduleEditorValidator = new ScheduleEditorValidator(scheduleEditor);
     init();
     layout();
