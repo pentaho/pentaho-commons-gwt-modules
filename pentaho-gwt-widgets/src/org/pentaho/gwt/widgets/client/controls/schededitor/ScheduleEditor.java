@@ -138,6 +138,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
   private boolean isBlockoutDialog = false;
   private TimePicker startTimePicker = null;
+  private TimePicker endTimePicker = null;
   private Widget startTimePanel = null;
   protected Button blockoutCheckButton = new Button("View Blockout Times");     //$NON-NLS-1$      // TODO: put in message bundle
 
@@ -184,7 +185,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
       CaptionPanel blockoutPeriodEndCaptionPanel = new CaptionPanel(MSGS.endTime());
 
-      TimePicker endTimePicker = new TimePicker();
+      endTimePicker = new TimePicker();
       endTimePicker.setHour( "01" ); //$NON-NLS-1$
       endTimePicker.setMinute( "00" ); //$NON-NLS-1$
       endTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.PM );
@@ -266,6 +267,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     return startTimePicker;
   }
 
+  public TimePicker getEndTimePicker()
+  {
+    return endTimePicker;
+  }
 
   protected Widget createStartTimePanel() {
     CaptionPanel startTimeGB = new CaptionPanel( MSGS.startTime() );
