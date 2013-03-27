@@ -21,6 +21,7 @@ package org.pentaho.gwt.widgets.client.wizards.panels;
 
 import java.util.Date;
 
+import org.pentaho.gwt.widgets.client.controls.TimePicker;
 import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
@@ -112,6 +113,10 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
 
   public String getStartTime() {
     return scheduleEditor.getStartTime();
+  }
+
+  public TimePicker getRecurrenceEndTime() {
+    return scheduleEditor.getEndTimePicker();
   }
 
   public Date getEndDate() {
