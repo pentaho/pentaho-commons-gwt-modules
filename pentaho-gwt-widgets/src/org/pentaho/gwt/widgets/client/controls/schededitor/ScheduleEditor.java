@@ -138,7 +138,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
   private boolean isBlockoutDialog = false;
   private TimePicker startTimePicker = null;
-  private TimePicker endTimePicker = null;
+  private TimePicker blockoutEndTimePicker = null;
   private Widget startTimePanel = null;
   protected Button blockoutCheckButton = new Button("View Blockout Times");     //$NON-NLS-1$      // TODO: put in message bundle
 
@@ -185,12 +185,12 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
       CaptionPanel blockoutPeriodEndCaptionPanel = new CaptionPanel(MSGS.endTime());
 
-      endTimePicker = new TimePicker();
-      endTimePicker.setHour( "01" ); //$NON-NLS-1$
-      endTimePicker.setMinute( "00" ); //$NON-NLS-1$
-      endTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.PM );
+      blockoutEndTimePicker = new TimePicker();
+      blockoutEndTimePicker.setHour("01"); //$NON-NLS-1$
+      blockoutEndTimePicker.setMinute("00"); //$NON-NLS-1$
+      blockoutEndTimePicker.setTimeOfDay(TimeUtil.TimeOfDay.PM);
 
-      blockoutPeriodEndCaptionPanel.add(endTimePicker);
+      blockoutPeriodEndCaptionPanel.add(blockoutEndTimePicker);
 
       blockoutPeriodPanel.add(blockoutPeriodStartCaptionPanel);
       blockoutPeriodPanel.add(hspacer);
@@ -267,9 +267,9 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     return startTimePicker;
   }
 
-  public TimePicker getEndTimePicker()
+  public TimePicker getBlockoutEndTimePicker()
   {
-    return endTimePicker;
+    return blockoutEndTimePicker;
   }
 
   protected Widget createStartTimePanel() {
