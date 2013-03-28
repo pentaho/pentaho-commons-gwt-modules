@@ -119,8 +119,12 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     return scheduleEditor.getStartTime();
   }
 
-  public TimePicker getRecurrenceEndTime() {
-    return scheduleEditor.getEndTimePicker();
+  public String getBlackoutEndTime() {
+    if (scheduleEditor.getBlockoutEndTimePicker() != null) {
+      return scheduleEditor.getBlockoutEndTimePicker().getTime();
+    } else {
+      return null;
+    }
   }
 
   public Date getEndDate() {
@@ -128,7 +132,7 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   }
 
   public int getRepeatCount() {
-    // Repeate forever
+    // Repeat forever
     return -1;
   }
 
