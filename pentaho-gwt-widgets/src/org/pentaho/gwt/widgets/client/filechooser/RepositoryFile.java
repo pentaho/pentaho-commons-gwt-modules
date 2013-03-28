@@ -93,8 +93,8 @@ public class RepositoryFile implements Serializable {
 		this.path = JSONValueToString(repositoryFileJSON, "path");
 		this.title = JSONValueToString(repositoryFileJSON, "title");
 		this.versionId = JSONValueToString(repositoryFileJSON, "versionId");
+		this.description = JSONValueToString(repositoryFileJSON, "description");
 		if (!folder) {
-			this.description = JSONValueToString(repositoryFileJSON, "description");
 			this.deletedDate = JSONValueToDate(repositoryFileJSON, "deletedDate");
 			this.lastModifiedDate = JSONValueToDate(repositoryFileJSON, "lastModifiedDate");
 			this.lockDate = JSONValueToDate(repositoryFileJSON, "lockDate");
