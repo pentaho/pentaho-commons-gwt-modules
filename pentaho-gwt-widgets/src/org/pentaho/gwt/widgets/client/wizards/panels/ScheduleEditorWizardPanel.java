@@ -119,7 +119,17 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     return scheduleEditor.getStartTime();
   }
 
-  public String getBlackoutEndTime() {
+
+  public String getBlockoutStartTime() {
+    if (scheduleEditor.getStartTimePicker() != null) {
+      return scheduleEditor.getStartTimePicker().getTime();
+    } else {
+      return null;
+    }
+  }
+
+
+  public String getBlockoutEndTime() {
     if (scheduleEditor.getBlockoutEndTimePicker() != null) {
       return scheduleEditor.getBlockoutEndTimePicker().getTime();
     } else {
