@@ -43,7 +43,7 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   private static final String SCHEDULER_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
   
-  private TimePicker startTimePicker = new TimePicker();
+  private TimePicker startTimePicker = null;
   private DefaultFormat format = new DefaultFormat(DateTimeFormat.getFormat(PredefinedFormat.DATE_SHORT)); 
   private DatePickerEx startDatePicker = new DatePickerEx(format);
   private static final String DEFAULT_START_HOUR = "12"; //$NON-NLS-1$
@@ -51,14 +51,15 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
   private static final TimeUtil.TimeOfDay DEFAULT_TIME_OF_DAY = TimeUtil.TimeOfDay.AM;
   private ICallback<IChangeHandler> onChangeHandler = null;
   
-  public RunOnceEditor() {
+  public RunOnceEditor(final TimePicker startTimePicker) {
     setWidth("100%"); //$NON-NLS-1$
 
     CaptionPanel startDateCaptionPanel = new CaptionPanel(MSGS.startDate());
     startDateCaptionPanel.setStyleName(SCHEDULER_CAPTION_PANEL);
     startDateCaptionPanel.add(startDatePicker.getDatePicker());
     add( startDateCaptionPanel );
-    
+
+    this.startTimePicker = startTimePicker;
     configureOnChangeHandler();
   }
 
