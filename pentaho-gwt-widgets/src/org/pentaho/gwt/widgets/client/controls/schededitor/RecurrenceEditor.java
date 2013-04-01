@@ -156,7 +156,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   private static final String MONTHLY_RB_GROUP = "monthly-group"; //$NON-NLS-1$
 
-  public RecurrenceEditor() {
+  public RecurrenceEditor(final TimePicker startTimePicker) {
     super();
     this.setWidth("100%"); //$NON-NLS-1$
 
@@ -167,7 +167,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     dateRangeEditor = new DateRangeEditor( now );
     add( dateRangeEditor );
 
-    startTimePicker = new TimePicker();
+    this.startTimePicker = startTimePicker;
 
     configureOnChangeHandler();
   }

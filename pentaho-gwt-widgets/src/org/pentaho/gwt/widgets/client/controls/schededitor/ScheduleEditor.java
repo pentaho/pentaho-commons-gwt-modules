@@ -165,16 +165,16 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     add( l );
     add( scheduleCombo );
 
+
+    SimplePanel hspacer = new SimplePanel();
+    hspacer.setWidth("100px");
+
     if (isBlockoutDialog == false)
     {
       startTimePanel = createStartTimePanel();
       add(startTimePanel);
     }
-
-    SimplePanel hspacer = new SimplePanel();
-    hspacer.setWidth("100px");
-
-    if (isBlockoutDialog)
+    else
     {
       HorizontalPanel blockoutPeriodPanel = new HorizontalPanel();
       blockoutPeriodPanel.add(hspacer);
@@ -205,12 +205,12 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     add( vp );
     setCellHeight( vp, "100%" ); //$NON-NLS-1$
 
-    runOnceEditor = new RunOnceEditor();
+    runOnceEditor = new RunOnceEditor(startTimePicker);
     vp.add( runOnceEditor );
     scheduleTypeMap.put( ScheduleType.RUN_ONCE, runOnceEditor );
     runOnceEditor.setVisible( true );
 
-    recurrenceEditor = new RecurrenceEditor();
+    recurrenceEditor = new RecurrenceEditor(startTimePicker);
     vp.add( recurrenceEditor );
     scheduleTypeMap.put( ScheduleType.SECONDS, recurrenceEditor );
     scheduleTypeMap.put( ScheduleType.MINUTES, recurrenceEditor );
@@ -221,7 +221,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     scheduleTypeMap.put( ScheduleType.YEARLY, recurrenceEditor );
     recurrenceEditor.setVisible( false );
 
-    // TODO - should we even create cron editor if blockout????
     cronEditor = new CronEditor();
     scheduleTypeMap.put( ScheduleType.CRON, cronEditor );
     cronEditor.setVisible( false );
@@ -239,12 +238,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       // We want to add a button to check for blockout conflicts
       blockoutCheckButton.setStyleName("pentaho-button");
       blockoutCheckButton.getElement().setId("blockout-check-button");
-      blockoutCheckButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          // TODO: Check if there is a conflict of the current schedule with the list of existing blockout periods
-          System.out.println("********** Display a list of blockout periods");
-        }
-      });
 
       hspacer.setHeight("50px");
       blockoutButtonPanel.add(hspacer);
