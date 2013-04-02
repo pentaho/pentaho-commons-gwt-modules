@@ -17,6 +17,8 @@
 package org.pentaho.gwt.widgets.client.i18n;
 
 
+import com.google.gwt.i18n.client.Messages;
+
 /**
  * Interface to represent the messages contained in resource bundle:
  * 	C:/development-2.0/pentaho-gwt-widgets/eclipse-bin/org/pentaho/gwt/widgets/client/i18n/WidgetsLocalizedMessages.properties'.
@@ -1510,6 +1512,10 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   @DefaultMessage("Day-of-Week values must be between 1 and 7")
   String cronInvalidDayOfWeekValue();
 
+  @Messages.DefaultMessage("View Blockout Times")
+  String viewBlockoutTimes();
 
+  @Messages.DefaultMessage("Schedule Name:")
+  String scheduleName();
 
 }
