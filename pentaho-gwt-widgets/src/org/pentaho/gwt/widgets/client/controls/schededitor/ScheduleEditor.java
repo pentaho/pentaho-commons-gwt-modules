@@ -140,7 +140,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   private TimePicker startTimePicker = null;
   private TimePicker blockoutEndTimePicker = null;
   private Widget startTimePanel = null;
-  protected Button blockoutCheckButton = new Button("View Blockout Times");     //$NON-NLS-1$      // TODO: put in message bundle
+  protected Button blockoutCheckButton = new Button(MSGS.viewBlockoutTimes());
 
 
   public ScheduleEditor(ScheduleDialogType type, boolean showScheduleName) {
@@ -153,7 +153,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     if (isBlockoutDialog == false && showScheduleName)
     {
-      Label scheduleNameLabel = new Label("Schedule Name:");   //$NON-NLS-1$
+      Label scheduleNameLabel = new Label(MSGS.scheduleName());
       scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
       add( scheduleNameLabel );
       add(scheduleNameTextBox);
