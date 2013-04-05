@@ -1085,6 +1085,65 @@ input:focus {
     background: url('../images/wt_transparent.png') repeat;
 }
 
+
+/* BEGIN IE FIXES Admin View 
+   BISERVER-8275: The Home page in the Admin Perspective is shortened 
+   if the Document Mode is Standards instead of Quirks mode.
+   
+   In other browsers it works cause probably their rendering in Almost-Standards mode.
+   
+   The present solution for IE/Standards mode
+   establishes intermediate coordinate systems
+   in the tables, using position:relative, 
+   so that div children of that table's cells,
+   that need to assume the containing cell's height,
+   can use absolute positioning relative to its direct table.
+*/
+/* Have no other way to refer to this table */
+/* Setup 0,0 coordinates for absolute content inside the cells of the table */
+body.IE>table {
+    position:relative;
+}
+
+/* inside one of the tds of the referred table */
+.IE #pucContent {
+    height: 100%;
+}
+
+/* Sometimes this div also has the class applicationShell */
+.IE #pucContent>div {
+    position: absolute; 
+    height: auto; /* reset applicationShell 100% setting, otherwise bottom and top don't work well */
+    top:    28px; /* Unfortunately, have to hardcode the menu-bar height here... */
+    bottom: 13px; /* Unfortunately, have to hardcode the effect of pentaho-rounded-panel class */ 
+    left:   0px;  
+    right:  0px;
+}
+
+.IE #pucContent>div>div {
+    position: absolute; 
+    top: 0px;
+    bottom: 0px; 
+    width: 100%; 
+}
+
+/* admin table */
+.IE #adminContentPanel { 
+    position: relative; /* Start a new 0,0 coordinate system */
+    height: 100%; 
+    width:  100%;
+}
+
+/* the div inside one of the table cells should take all available height */
+.IE #adminContentPanel>tbody>tr>td>div { 
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px; 
+}
+/* END IE FIXES Admin View */
+
 .pentaho-shine {
     background-color: none;
 
