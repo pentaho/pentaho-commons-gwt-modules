@@ -389,7 +389,13 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   }
 
   public void setScheduleType( ScheduleType scheduleType ) {
-    scheduleCombo.setSelectedIndex( scheduleType.value() );
+    int itemCount = scheduleCombo.getItemCount();
+    for(int i = 0; i< itemCount; i++) {
+      String itemText = scheduleCombo.getItemText(i);
+      if(itemText.equals(scheduleType.toString())) {
+        scheduleCombo.setSelectedIndex(i);
+      }
+    }
     selectScheduleTypeEditor( scheduleType );
   }
 
@@ -430,6 +436,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   public void setStartTime( String startTime ) {
     runOnceEditor.setStartTime( startTime );
     recurrenceEditor.setStartTime( startTime );
+  }
+
+  public void setBlockoutEndTime( String endTime) {
+    blockoutEndTimePicker.setTime(endTime);
   }
 
   public String getStartTime() {
