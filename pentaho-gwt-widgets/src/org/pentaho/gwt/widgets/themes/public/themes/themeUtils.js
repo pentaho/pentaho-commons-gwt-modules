@@ -7,13 +7,20 @@
  */
 
 function setupJsButtonHover() {
-  setupJsHover('.IE button.pentaho-button', 'pentaho-button-hover')
+    setupJsHover('.IE button.pentaho-button', 'pentaho-button-hover')
 }
 
 function setupJsHover(cssSelector, cssHoverClass) {
-  $(cssSelector).hover(function() {
-    $(this).addClass(cssHoverClass);
-  }, function() {
-    $(this).removeClass(cssHoverClass);
-  });
+
+    var element=$(cssSelector);
+
+    //Explicitly remove hover effect if on button at load of new dialog for IE9.
+    element.removeClass(cssHoverClass);
+
+    element.hover(function() {
+        $(this).addClass(cssHoverClass);
+    }, function() {
+        $(this).removeClass(cssHoverClass);
+    });
+
 }
