@@ -63,7 +63,7 @@ public class PromptDialogBox extends DialogBox {
       notOkButton.getElement().setAttribute("id", "notOkButton"); //$NON-NLS-1$ //$NON-NLS-2$
       notOkButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
-          onCancel();
+          onNotOk();
         }
       });
       dialogButtonPanel.add(notOkButton);
