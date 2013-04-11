@@ -145,7 +145,6 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
   public ScheduleEditor(ScheduleDialogType type, boolean showScheduleName) {
     super();
-
     isBlockoutDialog = (type == ScheduleDialogType.BLOCKOUT);
     startTimePicker = new TimePicker();
 
@@ -254,6 +253,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
         blockoutCheckButton.addClickHandler(handler);
     }
 
+
+  public Button getBlockoutCheckButton() {
+      return blockoutCheckButton;
+    }
 
   public TimePicker getStartTimePicker()
   {
