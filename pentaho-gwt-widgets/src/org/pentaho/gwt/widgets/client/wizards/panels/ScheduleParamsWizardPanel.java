@@ -59,11 +59,20 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     scheduleDescription.setText(description);
   }
   
+  public JsArray<JsSchedulingParameter> getParams() {
+    return getParams(false);
+  }
+  
   /**
    * 
+   * @param suppressAlerts  Added so that getParams can be executed for a terminated dialog and 
+   * still collect any values entered.  (eg: set to true when the "back" button clicked so that
+   * parameter values can be collected but not throw up alerts if mandatory fields are left
+   * blank.
+   * @return
    */
-  public native JsArray<JsSchedulingParameter> getParams() /*-{
-    var params = $doc.getElementById('schedulerParamsFrame').contentWindow.getParams();
+  public native JsArray<JsSchedulingParameter> getParams(boolean suppressAlerts) /*-{
+    var params = $doc.getElementById('schedulerParamsFrame').contentWindow.getParams(suppressAlerts);
     var paramEntries = new Array();
     for (var key in params) {
       var type = null;
