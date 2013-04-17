@@ -21,7 +21,6 @@ package org.pentaho.gwt.widgets.client.wizards.panels;
 
 import java.util.Date;
 
-import org.pentaho.gwt.widgets.client.controls.TimePicker;
 import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
@@ -44,12 +43,13 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
 
   ScheduleEditor scheduleEditor;
+
   ScheduleEditorValidator scheduleEditorValidator;
 
   public ScheduleEditorWizardPanel(final AbstractWizardDialog.ScheduleDialogType type) {
     this(type, true);
   }
-  
+
   public ScheduleEditorWizardPanel(final AbstractWizardDialog.ScheduleDialogType type, final boolean showScheduleName) {
     super();
 
@@ -86,7 +86,6 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
    * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanel#getName()
    */
   public String getName() {
-    // TODO Auto-generated method stub
     return MSGS.scheduleEdit();
   }
 
@@ -119,22 +118,18 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     return scheduleEditor.getStartTime();
   }
 
-
   public String getBlockoutStartTime() {
     if (scheduleEditor.getStartTimePicker() != null) {
       return scheduleEditor.getStartTimePicker().getTime();
-    } else {
-      return null;
     }
+    return null;
   }
-
 
   public String getBlockoutEndTime() {
     if (scheduleEditor.getBlockoutEndTimePicker() != null) {
       return scheduleEditor.getBlockoutEndTimePicker().getTime();
-    } else {
-      return null;
     }
+    return null;
   }
 
   public Date getEndDate() {
