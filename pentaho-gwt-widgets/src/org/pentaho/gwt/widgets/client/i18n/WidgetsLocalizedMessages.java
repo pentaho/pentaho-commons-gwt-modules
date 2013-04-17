@@ -16,7 +16,6 @@
  */
 package org.pentaho.gwt.widgets.client.i18n;
 
-
 import com.google.gwt.i18n.client.Messages;
 
 /**
@@ -24,7 +23,7 @@ import com.google.gwt.i18n.client.Messages;
  * 	C:/development-2.0/pentaho-gwt-widgets/eclipse-bin/org/pentaho/gwt/widgets/client/i18n/WidgetsLocalizedMessages.properties'.
  */
 public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Messages {
-  
+
   /**
    * Translated "MMM dd, yyyy HH:mm:ss a".
    * 
@@ -70,7 +69,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   @DefaultMessage("End Time")
   String endTime();
 
-
   /**
    * Translated "of".
    * 
@@ -115,7 +113,7 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage("Parameters")
   String parameters();
-  
+
   /**
    * Translated "Specify a name.".
    * 
@@ -709,6 +707,7 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage("Next")
   String next();
+
   /**
    * Translated "Type".
    * 
@@ -860,7 +859,7 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   
    */
   @DefaultMessage("Attempt to initialize the Recurrence Dialog with an invalid CRON string: {0}. Error details: {1}.")
-  String invalidCronInInitOfRecurrenceDialog(String arg0,  String arg1);
+  String invalidCronInInitOfRecurrenceDialog(String arg0, String arg1);
 
   /**
    * Translated "Friday ".
@@ -1365,7 +1364,7 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage("first")
   String first();
-  
+
   /**
    * Translated "tableHeaderInputError".
    * 
@@ -1373,8 +1372,8 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   
    */
   @DefaultMessage("Must specify table header names.")
-  String tableHeaderInputError();  
- 
+  String tableHeaderInputError();
+
   /**
    * Translated "invalidDataGridTypeSet".
    * 
@@ -1419,7 +1418,7 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage("You cannot save files in the root of the repository.")
   String noSolutionSelected();
-  
+
   /**
    * Translated "Invalid filename, filenames cannot include the characters: /?%*:|"<>.".&
    * 
@@ -1429,14 +1428,13 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   @DefaultMessage("Invalid filename, filenames cannot include the characters: /?%*:|\"<>.&")
   String invalidFilename();
 
-  
   /**
    * Translated "Schedule Edit".
    * 
    * @return translated "Schedule Edit"
   
    */
-  @DefaultMessage("Schedule Edit")  
+  @DefaultMessage("Schedule Edit")
   String scheduleEdit();
 
   /**
@@ -1445,9 +1443,9 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    * @return translated "Steps:"
   
    */
-  @DefaultMessage("Steps:")  
+  @DefaultMessage("Steps:")
   String steps();
-  
+
   @DefaultMessage("cronExpression cannot be null")
   String cronExpressionNull();
 
@@ -1493,7 +1491,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   @DefaultMessage("{0} option is not valid here. (pos {1})")
   String cronOptionIsNotValidHere(String arg0, String arg1);
 
-
   @DefaultMessage("Unexpected character {0} after /")
   String cronUnexpectedCharacterAfterSlash(String arg0);
 
@@ -1517,5 +1514,20 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
 
   @Messages.DefaultMessage("Schedule Name:")
   String scheduleName();
+
+  @DefaultMessage("Ends")
+  String endsCaptionTitle();
+
+  @DefaultMessage("Duration")
+  String duration();
+
+  @DefaultMessage("day(s)")
+  String dayOrDays();
+
+  @DefaultMessage("hour(s)")
+  String hourOrHours();
+
+  @DefaultMessage("minute(s)")
+  String minuteOrMinutes();
 
 }
