@@ -19,18 +19,11 @@
  */
 package org.pentaho.gwt.widgets.client.controls.schededitor;
 
-
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CaptionPanel;
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import org.pentaho.gwt.widgets.client.controls.TimePicker;
 import org.pentaho.gwt.widgets.client.controls.schededitor.RecurrenceEditor.TemporalValue;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
@@ -41,41 +34,71 @@ import org.pentaho.gwt.widgets.client.utils.CronExpression;
 import org.pentaho.gwt.widgets.client.utils.CronParseException;
 import org.pentaho.gwt.widgets.client.utils.CronParser;
 import org.pentaho.gwt.widgets.client.utils.EnumException;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
 
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.RadioButton;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.pentaho.gwt.widgets.client.utils.TimeUtil;
-import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
-
 /**
- *
  * @author Steven Barkdull
- *
  */
-@SuppressWarnings("deprecation")
-public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
+public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
+
+  public static enum ENDS_TYPE {
+    TIME, DURATION
+  }
+
+  public static class DurationValues {
+    public int days = 0;
+
+    public int hours = 0;
+
+    public int minutes = 0;
+  }
+
+  public static enum TIME {
+    MILLISECOND(1), SECOND(MILLISECOND.time * 1000), MINUTE(SECOND.time * 60), HOUR(MINUTE.time * 60), DAY(
+        HOUR.time * 24);
+
+    private long time;
+
+    TIME(long time) {
+      this.time = time;
+    }
+
+    public long getTime() {
+      return this.time;
+    }
+  }
 
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
 
   private static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
+
   protected static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 
   public enum ScheduleType {
-    RUN_ONCE(0, MSGS.runOnce()),
-    SECONDS(1, MSGS.seconds()),
-    MINUTES(2, MSGS.minutes()),
-    HOURS(3, MSGS.hours()),
-    DAILY(4, MSGS.daily()),
-    WEEKLY(5, MSGS.weekly()),
-    MONTHLY(6, MSGS.monthly()),
-    YEARLY(7, MSGS.yearly()),
-    CRON(8, MSGS.cron());
+    RUN_ONCE(0, MSGS.runOnce()), SECONDS(1, MSGS.seconds()), MINUTES(2, MSGS.minutes()), HOURS(3, MSGS.hours()), DAILY(
+        4, MSGS.daily()), WEEKLY(5, MSGS.weekly()), MONTHLY(6, MSGS.monthly()), YEARLY(7, MSGS.yearly()), CRON(8, MSGS
+        .cron());
 
     private ScheduleType(int value, String name) {
       this.value = value;
@@ -86,15 +109,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
 
     private final String name;
 
-    private static ScheduleType[] scheduleValue = {RUN_ONCE,
-                                                   SECONDS,
-                                                   MINUTES,
-                                                   HOURS,
-                                                   DAILY,
-                                                   WEEKLY,
-                                                   MONTHLY,
-                                                   YEARLY,
-                                                   CRON};
+    private static ScheduleType[] scheduleValue = { RUN_ONCE, SECONDS, MINUTES, HOURS, DAILY, WEEKLY, MONTHLY, YEARLY,
+        CRON };
 
     public int value() {
       return value;
@@ -112,121 +128,273 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       return scheduleValue.length;
     }
 
-    public static ScheduleType stringToScheduleType( String strSchedule ) throws EnumException {
+    public static ScheduleType stringToScheduleType(String strSchedule) throws EnumException {
       for (ScheduleType v : EnumSet.range(ScheduleType.RUN_ONCE, ScheduleType.CRON)) {
-        if ( v.toString().equals( strSchedule ) ) {
+        if (v.toString().equals(strSchedule)) {
           return v;
         }
       }
-      throw new EnumException( MSGS.invalidTemporalValue( scheduleValue.toString() ) );
+      throw new EnumException(MSGS.invalidTemporalValue(scheduleValue.toString()));
     }
   } /* end enum */
 
   private TextBox scheduleNameTextBox = new TextBox();
+
   private RunOnceEditor runOnceEditor = null;
+
   private RecurrenceEditor recurrenceEditor = null;
+
   private CronEditor cronEditor = null;
+
   // TODO sbarkdull, can this be static?
   private Map<ScheduleType, Panel> scheduleTypeMap = new HashMap<ScheduleType, Panel>();
+
   private Map<TemporalValue, ScheduleType> temporalValueToScheduleTypeMap = createTemporalValueToScheduleTypeMap();
+
   private Map<ScheduleType, TemporalValue> scheduleTypeToTemporalValueMap = createScheduleTypeMapToTemporalValue();
 
   private ListBox scheduleCombo = null;
 
-
   private ICallback<IChangeHandler> onChangeHandler = null;
 
   private boolean isBlockoutDialog = false;
-  private TimePicker startTimePicker = null;
-  private TimePicker blockoutEndTimePicker = null;
-  private Widget startTimePanel = null;
-  protected Button blockoutCheckButton = new Button(MSGS.viewBlockoutTimes());
 
+  private TimePicker startTimePicker = null;
+
+  private TimePicker blockoutEndTimePicker = null;
+
+  private Widget startTimePanel = null;
+
+  private RadioButton endTimeRadioButton = null;
+
+  private RadioButton durationRadioButton = null;
+
+  private ListBox daysListBox = null;
+
+  private ListBox hoursListBox = null;
+
+  private ListBox minutesListBox = null;
+
+  protected Button blockoutCheckButton = new Button(MSGS.viewBlockoutTimes());
 
   public ScheduleEditor(ScheduleDialogType type, boolean showScheduleName) {
     super();
     isBlockoutDialog = (type == ScheduleDialogType.BLOCKOUT);
     startTimePicker = new TimePicker();
 
-    setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
+    setStylePrimaryName("scheduleEditor"); //$NON-NLS-1$
 
-    if (isBlockoutDialog == false && showScheduleName)
-    {
+    if (!isBlockoutDialog && showScheduleName) {
       Label scheduleNameLabel = new Label(MSGS.scheduleName());
       scheduleNameLabel.setStyleName(SCHEDULE_LABEL);
-      add( scheduleNameLabel );
+      add(scheduleNameLabel);
       add(scheduleNameTextBox);
     }
 
     scheduleCombo = createScheduleCombo();
-    Label l = new Label( MSGS.recurrenceColon() );
+    Label l = new Label(MSGS.recurrenceColon());
     l.setStyleName(SCHEDULE_LABEL);
-    add( l );
-    add( scheduleCombo );
-
+    add(l);
+    add(scheduleCombo);
 
     SimplePanel hspacer = new SimplePanel();
     hspacer.setWidth("100px");
 
-    if (isBlockoutDialog == false)
-    {
+    if (!isBlockoutDialog) {
       startTimePanel = createStartTimePanel();
       add(startTimePanel);
-    }
-    else
-    {
-      HorizontalPanel blockoutPeriodPanel = new HorizontalPanel();
-      blockoutPeriodPanel.add(hspacer);
+    } else {
 
-      // Blockout period
-      CaptionPanel blockoutPeriodStartCaptionPanel = new CaptionPanel(MSGS.startTime());
-      blockoutPeriodStartCaptionPanel.add(getStartTimePicker());
-
-      CaptionPanel blockoutPeriodEndCaptionPanel = new CaptionPanel(MSGS.endTime());
-
+      // Blockout End TimePicker
       blockoutEndTimePicker = new TimePicker();
       blockoutEndTimePicker.setHour("01"); //$NON-NLS-1$
       blockoutEndTimePicker.setMinute("00"); //$NON-NLS-1$
       blockoutEndTimePicker.setTimeOfDay(TimeUtil.TimeOfDay.PM);
 
-      blockoutPeriodEndCaptionPanel.add(blockoutEndTimePicker);
+      // Blockout End Caption Panel
+      blockoutEndTimePicker.getElement().getStyle().setDisplay(Display.NONE);
 
-      blockoutPeriodPanel.add(blockoutPeriodStartCaptionPanel);
-      blockoutPeriodPanel.add(hspacer);
-      blockoutPeriodPanel.add(blockoutPeriodEndCaptionPanel);
-      blockoutPeriodPanel.add(hspacer);
-      add(hspacer);
-      add(blockoutPeriodPanel);
+      final String[] daysList = new String[365];
+      final String[] hoursList = new String[24];
+      final String[] minutesList = new String[60];
+
+      // Populate list
+      for (Integer i = 0; i < 365; i++) {
+        String iStr = i.toString();
+        daysList[i] = iStr;
+
+        if (i < 60) {
+          minutesList[i] = iStr;
+          if (i < 24) {
+            hoursList[i] = iStr;
+          }
+        }
+      }
+
+      // Units of time Drop Down
+      daysListBox = new ListBox();
+      daysListBox.getElement().setId("daysListBox");
+      populateListItems(daysListBox, daysList, 0, 365);
+
+      final Label daysLabel = new Label("day(s)");
+      daysLabel.getElement().setAttribute("for", daysListBox.getElement().getId());
+
+      hoursListBox = new ListBox();
+      hoursListBox.getElement().setId("hoursListBox");
+      populateListItems(hoursListBox, hoursList, 0, 24);
+
+      final Label hoursLabel = new Label("hour(s)");
+      hoursLabel.getElement().setAttribute("for", hoursListBox.getElement().getId());
+
+      minutesListBox = new ListBox();
+      minutesListBox.getElement().setId("minutesListBox");
+      populateListItems(minutesListBox, minutesList, 0, 60);
+
+      final Label minutesLabel = new Label("minute(s)");
+      minutesLabel.getElement().setAttribute("for", minutesListBox.getElement().getId());
+
+      final HorizontalPanel durationPanel = new HorizontalPanel();
+      durationPanel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
+      durationPanel.setSpacing(blockoutEndTimePicker.getSpacing());
+      durationPanel.add(daysListBox);
+      durationPanel.add(daysLabel);
+      durationPanel.add(hoursListBox);
+      durationPanel.add(hoursLabel);
+      durationPanel.add(minutesListBox);
+      durationPanel.add(minutesLabel);
+
+      // Bind change handler
+      this.scheduleCombo.addChangeHandler(new ChangeHandler() {
+
+        @Override
+        public void onChange(ChangeEvent event) {
+          String scheduleType = scheduleCombo.getItemText(scheduleCombo.getSelectedIndex());
+
+          if (ScheduleType.RUN_ONCE.toString().equals(scheduleType)) {
+            show(daysListBox, daysLabel, hoursListBox, hoursLabel, minutesListBox, minutesLabel);
+
+            populateListItems(daysListBox, daysList, 0, 365);
+            populateListItems(hoursListBox, hoursList, 0, 24);
+            populateListItems(minutesListBox, minutesList, 0, 60);
+
+          } else if (ScheduleType.HOURS.toString().equals(scheduleType)) {
+            hide(daysListBox, daysLabel, hoursListBox, hoursLabel);
+            show(minutesListBox, minutesLabel);
+
+            populateListItems(minutesListBox, minutesList, 0, 60);
+
+          } else if (ScheduleType.DAILY.toString().equals(scheduleType)) {
+            hide(daysListBox, daysLabel);
+            show(hoursListBox, hoursLabel, minutesListBox, minutesLabel);
+
+            populateListItems(hoursListBox, hoursList, 0, 24);
+            populateListItems(minutesListBox, minutesList, 0, 60);
+
+          } else if (ScheduleType.WEEKLY.toString().equals(scheduleType)) {
+            show(daysListBox, daysLabel, hoursListBox, hoursLabel, minutesListBox, minutesLabel);
+
+            populateListItems(daysListBox, daysList, 0, 7);
+            populateListItems(hoursListBox, hoursList, 0, 24);
+            populateListItems(minutesListBox, minutesList, 0, 60);
+
+          } else if (ScheduleType.MONTHLY.toString().equals(scheduleType)) {
+            show(daysListBox, daysLabel, hoursListBox, hoursLabel, minutesListBox, minutesLabel);
+
+            populateListItems(daysListBox, daysList, 0, 28);
+            populateListItems(hoursListBox, hoursList, 0, 24);
+            populateListItems(minutesListBox, minutesList, 0, 60);
+
+          } else if (ScheduleType.YEARLY.toString().equals(scheduleType)) {
+            show(daysListBox, daysLabel, hoursListBox, hoursLabel, minutesListBox, minutesLabel);
+
+            populateListItems(daysListBox, daysList, 0, 365);
+            populateListItems(hoursListBox, hoursList, 0, 24);
+            populateListItems(minutesListBox, minutesList, 0, 60);
+          }
+        }
+      });
+
+      /*
+       * Radio Buttons for duration
+       */
+      this.durationRadioButton = new RadioButton("durationRadioGroup", "durationRadioButton");
+      this.durationRadioButton.setText("Duration");
+      this.durationRadioButton.setValue(Boolean.TRUE);
+      this.durationRadioButton.addClickHandler(new ClickHandler() {
+
+        @Override
+        public void onClick(ClickEvent event) {
+          blockoutEndTimePicker.getElement().getStyle().setDisplay(Display.NONE);
+          durationPanel.getElement().getStyle().clearDisplay();
+        }
+      });
+
+      this.endTimeRadioButton = new RadioButton("durationRadioGroup", "endTimeRadioButton");
+      this.endTimeRadioButton.setText("End Time");
+      this.endTimeRadioButton.addClickHandler(new ClickHandler() {
+
+        @Override
+        public void onClick(ClickEvent event) {
+          blockoutEndTimePicker.getElement().getStyle().clearDisplay();
+          durationPanel.getElement().getStyle().setDisplay(Display.NONE);
+        }
+      });
+
+      // Radio Buttons Panel
+      HorizontalPanel radioButtonsPanel = new HorizontalPanel();
+      radioButtonsPanel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
+      radioButtonsPanel.add(this.endTimeRadioButton);
+      radioButtonsPanel.add(this.durationRadioButton);
+
+      // Ends Panel
+      VerticalPanel endsPanel = new VerticalPanel();
+      endsPanel.add(radioButtonsPanel);
+      endsPanel.add(blockoutEndTimePicker);
+      endsPanel.add(durationPanel);
+
+      // Blockout period
+      CaptionPanel blockoutStartCaptionPanel = new CaptionPanel(MSGS.startTime());
+      blockoutStartCaptionPanel.add(getStartTimePicker());
+
+      // Ends Caption Panel
+      CaptionPanel endCaptionPanel = new CaptionPanel("Ends");
+      endCaptionPanel.add(endsPanel);
+
+      VerticalPanel blockoutPanel = new VerticalPanel();
+      blockoutPanel.setWidth("100%");
+      blockoutPanel.add(blockoutStartCaptionPanel);
+      blockoutPanel.add(endCaptionPanel);
+
+      add(blockoutPanel);
     }
 
     VerticalPanel vp = new VerticalPanel();
     vp.setWidth("100%"); //$NON-NLS-1$
-    add( vp );
-    setCellHeight( vp, "100%" ); //$NON-NLS-1$
+    add(vp);
+    setCellHeight(vp, "100%"); //$NON-NLS-1$
 
     runOnceEditor = new RunOnceEditor(startTimePicker);
-    vp.add( runOnceEditor );
-    scheduleTypeMap.put( ScheduleType.RUN_ONCE, runOnceEditor );
-    runOnceEditor.setVisible( true );
+    vp.add(runOnceEditor);
+    scheduleTypeMap.put(ScheduleType.RUN_ONCE, runOnceEditor);
+    runOnceEditor.setVisible(true);
 
     recurrenceEditor = new RecurrenceEditor(startTimePicker);
-    vp.add( recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.SECONDS, recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.MINUTES, recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.HOURS, recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.DAILY, recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.WEEKLY, recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.MONTHLY, recurrenceEditor );
-    scheduleTypeMap.put( ScheduleType.YEARLY, recurrenceEditor );
-    recurrenceEditor.setVisible( false );
+    vp.add(recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.SECONDS, recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.MINUTES, recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.HOURS, recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.DAILY, recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.WEEKLY, recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.MONTHLY, recurrenceEditor);
+    scheduleTypeMap.put(ScheduleType.YEARLY, recurrenceEditor);
+    recurrenceEditor.setVisible(false);
 
     cronEditor = new CronEditor();
-    scheduleTypeMap.put( ScheduleType.CRON, cronEditor );
-    cronEditor.setVisible( false );
+    scheduleTypeMap.put(ScheduleType.CRON, cronEditor);
+    cronEditor.setVisible(false);
 
-    if (isBlockoutDialog == false)
-    {
-      vp.add( cronEditor );
+    if (!isBlockoutDialog) {
+      vp.add(cronEditor);
 
       VerticalPanel blockoutButtonPanel = new VerticalPanel();
       blockoutButtonPanel.setWidth("100%"); //$NON-NLS-1$
@@ -249,27 +417,100 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     configureOnChangeHandler();
   }
 
-    public void setBlockoutButtonHandler(final ClickHandler handler) {
-        blockoutCheckButton.addClickHandler(handler);
+  private void show(UIObject... objs) {
+    for (UIObject obj : objs) {
+      obj.getElement().getStyle().clearDisplay();
     }
+  }
 
+  private void hide(UIObject... objs) {
+    for (UIObject obj : objs) {
+      obj.getElement().getStyle().setDisplay(Display.NONE);
+    }
+  }
+
+  private void populateListItems(ListBox listBox, String[] arr, int startIndex, int howMany) {
+
+    // Clear items
+    listBox.clear();
+
+    // Add itesm
+    int endIndex = startIndex + howMany;
+    for (int i = startIndex; i < endIndex; i++) {
+      listBox.addItem(arr[i]);
+    }
+  }
+
+  public void setBlockoutButtonHandler(final ClickHandler handler) {
+    blockoutCheckButton.addClickHandler(handler);
+  }
 
   public Button getBlockoutCheckButton() {
-      return blockoutCheckButton;
-    }
+    return blockoutCheckButton;
+  }
 
-  public TimePicker getStartTimePicker()
-  {
+  public TimePicker getStartTimePicker() {
     return startTimePicker;
   }
 
-  public TimePicker getBlockoutEndTimePicker()
-  {
+  public TimePicker getBlockoutEndTimePicker() {
     return blockoutEndTimePicker;
   }
 
+  public ENDS_TYPE getBlockoutEndsType() {
+    return this.durationRadioButton.getValue() ? ENDS_TYPE.DURATION : ENDS_TYPE.TIME;
+  }
+
+  public DurationValues getDurationValues() {
+    DurationValues vals = new DurationValues();
+
+    String displayNone = Display.NONE.getCssName();
+
+    // Days
+    if (!displayNone.equals(this.daysListBox.getElement().getStyle().getDisplay())) {
+      vals.days = Integer.parseInt(this.daysListBox.getItemText(this.daysListBox.getSelectedIndex()));
+    }
+
+    // Hours
+    if (!displayNone.equals(this.hoursListBox.getElement().getStyle().getDisplay())) {
+      vals.hours = Integer.parseInt(this.hoursListBox.getItemText(this.hoursListBox.getSelectedIndex()));
+    }
+
+    // Minutes
+    if (!displayNone.equals(this.minutesListBox.getElement().getStyle().getDisplay())) {
+      vals.minutes = Integer.parseInt(this.minutesListBox.getItemText(this.minutesListBox.getSelectedIndex()));
+    }
+
+    return vals;
+  }
+
+  public void setDurationFields(long duration) {
+
+    long remainder = duration;
+
+    long days = remainder / TIME.DAY.getTime();
+    remainder -= days * TIME.DAY.getTime();
+
+    long hours = remainder / TIME.HOUR.getTime();
+    remainder -= hours * TIME.HOUR.getTime();
+
+    long minutes = remainder / TIME.MINUTE.getTime();
+
+    this.daysListBox.setSelectedIndex(new Long(days).intValue());
+    this.hoursListBox.setSelectedIndex(new Long(hours).intValue());
+    this.minutesListBox.setSelectedIndex(new Long(minutes).intValue());
+
+    // Set valid end time if range is within 24hrs
+    if (duration < TIME.DAY.getTime()) {
+      boolean isPM = hours >= 12;
+      this.blockoutEndTimePicker.setHour(new Long(hours + (isPM ? -12 : 0)).toString());
+      this.blockoutEndTimePicker.setMinute(new Long(minutes).toString());
+      this.blockoutEndTimePicker.setTimeOfDay(isPM ? TimeOfDay.PM : TimeOfDay.AM);
+    }
+  }
+
   protected Widget createStartTimePanel() {
-    CaptionPanel startTimeGB = new CaptionPanel( MSGS.startTime() );
+    CaptionPanel startTimeGB = new CaptionPanel(MSGS.startTime());
     startTimeGB.setStyleName(SCHEDULE_EDITOR_CAPTION_PANEL);
 
     startTimeGB.add(getStartTimePicker());
@@ -277,12 +518,12 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     return startTimeGB;
   }
 
-  public void reset( Date now ) {
-    runOnceEditor.reset( now );
-    recurrenceEditor.reset( now );
-    cronEditor.reset( now );
+  public void reset(Date now) {
+    runOnceEditor.reset(now);
+    recurrenceEditor.reset(now);
+    cronEditor.reset(now);
 
-    setScheduleType( ScheduleType.RUN_ONCE );
+    setScheduleType(ScheduleType.RUN_ONCE);
   }
 
   public String getScheduleName() {
@@ -294,7 +535,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   }
 
   public String getCronString() {
-    switch ( getScheduleType() ) {
+    switch (getScheduleType()) {
       case RUN_ONCE:
         return null;
       case SECONDS: // fall through
@@ -308,41 +549,41 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       case CRON:
         return cronEditor.getCronString();
       default:
-        throw new RuntimeException( MSGS.invalidRunType( getScheduleType().toString() ) );
+        throw new RuntimeException(MSGS.invalidRunType(getScheduleType().toString()));
     }
   }
+
   /**
    *
    * @param cronStr
    * @throws CronParseException if cronStr is not a valid CRON string.
    */
-  public void setCronString( String cronStr ) throws CronParseException {
+  public void setCronString(String cronStr) throws CronParseException {
 
     // Try original simplistic parser...
-    CronParser cp = new CronParser( cronStr );
+    CronParser cp = new CronParser(cronStr);
     String recurrenceStr = null;
     try {
       recurrenceStr = cp.parseToRecurrenceString(); // throws CronParseException
-    } catch( CronParseException e ) {
-      if ( !CronExpression.isValidExpression( cronStr ) ) { // Parse with proper expression parser
+    } catch (CronParseException e) {
+      if (!CronExpression.isValidExpression(cronStr)) { // Parse with proper expression parser
         throw e;
       }
       recurrenceStr = null; // valid cronstring, not parse-able to recurrence string
     }
 
-    if ( null != recurrenceStr ) {
-      recurrenceEditor.inititalizeWithRecurrenceString( recurrenceStr );
+    if (null != recurrenceStr) {
+      recurrenceEditor.inititalizeWithRecurrenceString(recurrenceStr);
       TemporalValue tv = recurrenceEditor.getTemporalState();
-      ScheduleType rt = temporalValueToScheduleType( tv );
-      setScheduleType( rt );
+      ScheduleType rt = temporalValueToScheduleType(tv);
+      setScheduleType(rt);
     } else {
       // its a cron string that cannot be parsed into a recurrence string, switch to cron string editor.
-      setScheduleType( ScheduleType.CRON );
+      setScheduleType(ScheduleType.CRON);
     }
 
-    cronEditor.setCronString( cronStr );
+    cronEditor.setCronString(cronStr);
   }
-
 
   /**
    *
@@ -355,51 +596,52 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     return recurrenceEditor.getRepeatInSecs();
   }
 
-  public void setRepeatInSecs( Integer repeatInSecs ) {
-    recurrenceEditor.inititalizeWithRepeatInSecs( repeatInSecs );
+  public void setRepeatInSecs(Integer repeatInSecs) {
+    recurrenceEditor.inititalizeWithRepeatInSecs(repeatInSecs);
     TemporalValue tv = recurrenceEditor.getTemporalState();
-    ScheduleType rt = temporalValueToScheduleType( tv );
-    setScheduleType( rt );
+    ScheduleType rt = temporalValueToScheduleType(tv);
+    setScheduleType(rt);
   }
 
   private ListBox createScheduleCombo() {
     final ScheduleEditor localThis = this;
     ListBox lb = new ListBox();
-    lb.setVisibleItemCount( 1 );
+    lb.setVisibleItemCount(1);
     //lb.setStyleName("scheduleCombo"); //$NON-NLS-1$
-    lb.addChangeListener( new ChangeListener() {
-      public void onChange(Widget sender) {
+    lb.addChangeHandler(new ChangeHandler() {
+
+      @Override
+      public void onChange(ChangeEvent event) {
         localThis.handleScheduleChange();
       }
     });
 
     // add all schedule types to the combobox
     for (ScheduleType schedType : EnumSet.range(ScheduleType.RUN_ONCE, ScheduleType.CRON)) {
-      if (((isBlockoutDialog == false) || ((isBlockoutDialog)) &&
-          ((schedType != ScheduleType.CRON) && (schedType != ScheduleType.SECONDS) && (schedType != ScheduleType.MINUTES))))
-      {
-        lb.addItem( schedType.toString() );
+      if (!isBlockoutDialog
+          || (isBlockoutDialog && schedType != ScheduleType.CRON && schedType != ScheduleType.SECONDS && schedType != ScheduleType.MINUTES)) {
+        lb.addItem(schedType.toString());
       }
     }
-    lb.setItemSelected( 0, true );
+    lb.setItemSelected(0, true);
 
     return lb;
   }
 
   public ScheduleType getScheduleType() {
-    String selectedValue = scheduleCombo.getValue( scheduleCombo.getSelectedIndex() );
-    return ScheduleType.stringToScheduleType( selectedValue );
+    String selectedValue = scheduleCombo.getValue(scheduleCombo.getSelectedIndex());
+    return ScheduleType.stringToScheduleType(selectedValue);
   }
 
-  public void setScheduleType( ScheduleType scheduleType ) {
+  public void setScheduleType(ScheduleType scheduleType) {
     int itemCount = scheduleCombo.getItemCount();
-    for(int i = 0; i< itemCount; i++) {
+    for (int i = 0; i < itemCount; i++) {
       String itemText = scheduleCombo.getItemText(i);
-      if(itemText.equals(scheduleType.toString())) {
+      if (itemText.equals(scheduleType.toString())) {
         scheduleCombo.setSelectedIndex(i);
       }
     }
-    selectScheduleTypeEditor( scheduleType );
+    selectScheduleTypeEditor(scheduleType);
   }
 
   /**
@@ -436,17 +678,17 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     return runOnceEditor;
   }
 
-  public void setStartTime( String startTime ) {
-    runOnceEditor.setStartTime( startTime );
-    recurrenceEditor.setStartTime( startTime );
+  public void setStartTime(String startTime) {
+    runOnceEditor.setStartTime(startTime);
+    recurrenceEditor.setStartTime(startTime);
   }
 
-  public void setBlockoutEndTime( String endTime) {
+  public void setBlockoutEndTime(String endTime) {
     blockoutEndTimePicker.setTime(endTime);
   }
 
   public String getStartTime() {
-    switch ( getScheduleType() ) {
+    switch (getScheduleType()) {
       case RUN_ONCE:
         return runOnceEditor.getStartTime();
       case SECONDS: // fall through
@@ -460,21 +702,21 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       case CRON:
         return cronEditor.getStartTime();
       default:
-        throw new RuntimeException( MSGS.invalidRunType( getScheduleType().toString() ) );
+        throw new RuntimeException(MSGS.invalidRunType(getScheduleType().toString()));
     }
   }
 
-  public void setStartDate( Date startDate ) {
-    runOnceEditor.setStartDate( startDate );
-    recurrenceEditor.setStartDate( startDate );
-    cronEditor.setStartDate( startDate );
+  public void setStartDate(Date startDate) {
+    runOnceEditor.setStartDate(startDate);
+    recurrenceEditor.setStartDate(startDate);
+    cronEditor.setStartDate(startDate);
   }
 
   public Date getStartDate() {
-    switch ( getScheduleType() ) {
+    switch (getScheduleType()) {
       case RUN_ONCE:
         Date startDate = runOnceEditor.getStartDate();
-        String startTime  = runOnceEditor.getStartTime();
+        String startTime = runOnceEditor.getStartTime();
         String[] times = startTime.split(":");
         int hour = Integer.parseInt(times[0]);
         int minute = Integer.parseInt(times[1]);
@@ -497,17 +739,17 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       case CRON:
         return cronEditor.getStartDate();
       default:
-        throw new RuntimeException( MSGS.invalidRunType( getScheduleType().toString() ) );
+        throw new RuntimeException(MSGS.invalidRunType(getScheduleType().toString()));
     }
   }
 
-  public void setEndDate( Date endDate ) {
-    recurrenceEditor.setEndDate( endDate );
-    cronEditor.setEndDate( endDate );
+  public void setEndDate(Date endDate) {
+    recurrenceEditor.setEndDate(endDate);
+    cronEditor.setEndDate(endDate);
   }
 
   public Date getEndDate() {
-    switch ( getScheduleType() ) {
+    switch (getScheduleType()) {
       case RUN_ONCE:
         return null;
       case SECONDS: // fall through
@@ -521,7 +763,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
       case CRON:
         return cronEditor.getEndDate();
       default:
-        throw new RuntimeException( MSGS.invalidRunType( getScheduleType().toString() ) );
+        throw new RuntimeException(MSGS.invalidRunType(getScheduleType().toString()));
     }
   }
 
@@ -531,20 +773,18 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   }
 
   public void setEndBy() {
-  	cronEditor.setEndBy();
+    cronEditor.setEndBy();
     recurrenceEditor.setEndBy();
   }
 
   private void handleScheduleChange() throws EnumException {
     ScheduleType schedType = getScheduleType();
-    selectScheduleTypeEditor( schedType );
+    selectScheduleTypeEditor(schedType);
   }
 
-
-  private void selectScheduleTypeEditor( ScheduleType scheduleType ) {
+  private void selectScheduleTypeEditor(ScheduleType scheduleType) {
     // if we are switching to cron type, then hide the start time panel
-    if ((isBlockoutDialog == false) && (startTimePanel != null))
-    {
+    if ((isBlockoutDialog == false) && (startTimePanel != null)) {
       if (scheduleType == ScheduleType.CRON) {
         startTimePanel.setVisible(false);
       } else {
@@ -553,30 +793,30 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
     }
 
     // hide all panels
-    for ( Map.Entry<ScheduleType, Panel> me : scheduleTypeMap.entrySet() ) {
-      me.getValue().setVisible( false );
+    for (Map.Entry<ScheduleType, Panel> me : scheduleTypeMap.entrySet()) {
+      me.getValue().setVisible(false);
     }
     // show the selected panel
-    Panel p = scheduleTypeMap.get( scheduleType );
-    p.setVisible( true );
+    Panel p = scheduleTypeMap.get(scheduleType);
+    p.setVisible(true);
 
-    TemporalValue tv = scheduleTypeToTemporalValue( scheduleType );
-    if ( null != tv ) {
+    TemporalValue tv = scheduleTypeToTemporalValue(scheduleType);
+    if (null != tv) {
       // force the recurrence editor to display the appropriate ui
-      recurrenceEditor.setTemporalState( tv );
+      recurrenceEditor.setTemporalState(tv);
     }
   }
 
   private static Map<TemporalValue, ScheduleType> createTemporalValueToScheduleTypeMap() {
     Map<TemporalValue, ScheduleType> m = new HashMap<TemporalValue, ScheduleType>();
 
-    m.put( TemporalValue.SECONDS, ScheduleType.SECONDS );
-    m.put( TemporalValue.MINUTES, ScheduleType.MINUTES );
-    m.put( TemporalValue.HOURS, ScheduleType.HOURS );
-    m.put( TemporalValue.DAILY, ScheduleType.DAILY );
-    m.put( TemporalValue.WEEKLY, ScheduleType.WEEKLY );
-    m.put( TemporalValue.MONTHLY, ScheduleType.MONTHLY );
-    m.put( TemporalValue.YEARLY, ScheduleType.YEARLY );
+    m.put(TemporalValue.SECONDS, ScheduleType.SECONDS);
+    m.put(TemporalValue.MINUTES, ScheduleType.MINUTES);
+    m.put(TemporalValue.HOURS, ScheduleType.HOURS);
+    m.put(TemporalValue.DAILY, ScheduleType.DAILY);
+    m.put(TemporalValue.WEEKLY, ScheduleType.WEEKLY);
+    m.put(TemporalValue.MONTHLY, ScheduleType.MONTHLY);
+    m.put(TemporalValue.YEARLY, ScheduleType.YEARLY);
 
     return m;
   }
@@ -584,35 +824,35 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
   private static Map<ScheduleType, TemporalValue> createScheduleTypeMapToTemporalValue() {
     Map<ScheduleType, TemporalValue> m = new HashMap<ScheduleType, TemporalValue>();
 
-    m.put( ScheduleType.SECONDS, TemporalValue.SECONDS );
-    m.put( ScheduleType.MINUTES, TemporalValue.MINUTES );
-    m.put( ScheduleType.HOURS, TemporalValue.HOURS );
-    m.put( ScheduleType.DAILY, TemporalValue.DAILY );
-    m.put( ScheduleType.WEEKLY, TemporalValue.WEEKLY );
-    m.put( ScheduleType.MONTHLY, TemporalValue.MONTHLY );
-    m.put( ScheduleType.YEARLY, TemporalValue.YEARLY );
+    m.put(ScheduleType.SECONDS, TemporalValue.SECONDS);
+    m.put(ScheduleType.MINUTES, TemporalValue.MINUTES);
+    m.put(ScheduleType.HOURS, TemporalValue.HOURS);
+    m.put(ScheduleType.DAILY, TemporalValue.DAILY);
+    m.put(ScheduleType.WEEKLY, TemporalValue.WEEKLY);
+    m.put(ScheduleType.MONTHLY, TemporalValue.MONTHLY);
+    m.put(ScheduleType.YEARLY, TemporalValue.YEARLY);
 
     return m;
   }
 
-  private ScheduleType temporalValueToScheduleType( TemporalValue tv ) {
-    return temporalValueToScheduleTypeMap.get( tv );
+  private ScheduleType temporalValueToScheduleType(TemporalValue tv) {
+    return temporalValueToScheduleTypeMap.get(tv);
   }
 
-  private TemporalValue scheduleTypeToTemporalValue( ScheduleType st ) {
-    return scheduleTypeToTemporalValueMap.get( st );
+  private TemporalValue scheduleTypeToTemporalValue(ScheduleType st) {
+    return scheduleTypeToTemporalValueMap.get(st);
   }
 
   public void setFocus() {
-    scheduleNameTextBox.setFocus( true );
+    scheduleNameTextBox.setFocus(true);
   }
 
-  public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
+  public void setOnChangeHandler(ICallback<IChangeHandler> handler) {
     this.onChangeHandler = handler;
   }
 
   protected void changeHandler() {
-    if ( null != onChangeHandler ) {
+    if (null != onChangeHandler) {
       onChangeHandler.onHandle(this);
     }
   }
@@ -630,10 +870,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler  {
         localThis.changeHandler();
       }
     };
-    scheduleCombo.addChangeListener( changeListener );
-    runOnceEditor.setOnChangeHandler( handler );
-    recurrenceEditor.setOnChangeHandler( handler );
-    cronEditor.setOnChangeHandler( handler );
+    scheduleCombo.addChangeListener(changeListener);
+    runOnceEditor.setOnChangeHandler(handler);
+    recurrenceEditor.setOnChangeHandler(handler);
+    cronEditor.setOnChangeHandler(handler);
     scheduleNameTextBox.addChangeListener(changeListener);
   }
 }
