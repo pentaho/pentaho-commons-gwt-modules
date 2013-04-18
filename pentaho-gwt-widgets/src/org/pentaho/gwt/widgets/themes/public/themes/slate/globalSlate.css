@@ -2410,11 +2410,13 @@ body .dojoMenuItem2Hover {
 }
 
 .pentaho-fieldgroup-major {	
+	font-family: Verdana;
 	font-size: 24px;
-	color: #f47120;
+	color: #5c5c5c;
 }
 
 .pentaho-fieldgroup-minor {	
+	font-family: Verdana;
 	font-size: 16px;
-	color: #f47120;
+	color: #000000;
 }
