@@ -23,22 +23,28 @@ import org.pentaho.gwt.widgets.client.controls.schededitor.ScheduleEditor;
 
 @SuppressWarnings("deprecation")
 public class ScheduleEditorValidator implements IUiValidator {
-  protected ScheduleEditor schedEd;
+  protected ScheduleEditor scheduleEditor;
+
   protected RecurrenceEditorValidator recurrenceEditorValidator;
+
   protected RunOnceEditorValidator runOnceEditorValidator;
+
   protected CronEditorValidator cronEditorValidator;
-  
-  public ScheduleEditorValidator( ScheduleEditor schedEd) {
-    this.schedEd = schedEd;
-    this.recurrenceEditorValidator = new RecurrenceEditorValidator( this.schedEd.getRecurrenceEditor() );
-    this.runOnceEditorValidator = new RunOnceEditorValidator( this.schedEd.getRunOnceEditor() );
-    this.cronEditorValidator = new CronEditorValidator( this.schedEd.getCronEditor() );
+
+  protected BlockoutValidator blockoutValidator;
+
+  public ScheduleEditorValidator(ScheduleEditor scheduleEditor) {
+    this.scheduleEditor = scheduleEditor;
+    this.recurrenceEditorValidator = new RecurrenceEditorValidator(this.scheduleEditor.getRecurrenceEditor());
+    this.runOnceEditorValidator = new RunOnceEditorValidator(this.scheduleEditor.getRunOnceEditor());
+    this.cronEditorValidator = new CronEditorValidator(this.scheduleEditor.getCronEditor());
+    this.blockoutValidator = new BlockoutValidator(scheduleEditor);
   }
-  
+
   public boolean isValid() {
     boolean isValid = true;
-    
-    switch ( schedEd.getScheduleType() ) {
+
+    switch (scheduleEditor.getScheduleType()) {
       case RUN_ONCE:
         isValid &= runOnceEditorValidator.isValid();
         break;
@@ -56,7 +62,11 @@ public class ScheduleEditorValidator implements IUiValidator {
         break;
       default:
     }
-    
+
+    if (this.scheduleEditor.isBlockoutDialog()) {
+      isValid &= blockoutValidator.isValid();
+    }
+
     return isValid;
   }
 
@@ -64,5 +74,5 @@ public class ScheduleEditorValidator implements IUiValidator {
     recurrenceEditorValidator.clear();
     runOnceEditorValidator.clear();
     cronEditorValidator.clear();
-  }  
+  }
 }
