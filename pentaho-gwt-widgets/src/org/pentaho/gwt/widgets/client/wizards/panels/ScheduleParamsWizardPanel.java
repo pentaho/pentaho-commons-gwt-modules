@@ -19,6 +19,8 @@
  */
 package org.pentaho.gwt.widgets.client.wizards.panels;
 
+import java.util.StringTokenizer;
+
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
@@ -134,10 +136,43 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     $doc.getElementById('schedulerParamsFrame').contentWindow.initSchedulingParams(filePath, $wnd.schedulerParamsCompleteCallback);
   }-*/;
   
+  /**
+   * Analyzer 4419 
+   */
+  public void setRadioParameterValue(String url) {
+    String params = url.substring(url.indexOf("?")+1);
+    params += "&null";//support for back button
+    String token;
+    StringTokenizer str = new StringTokenizer(params,"&");
+    try{
+      while(str.hasMoreTokens()){
+        token = str.nextToken();
+        if(token.startsWith("REPORT_FORMAT_TYPE")){
+          setRadioButton(token.substring(token.indexOf("=")+1));
+          break;
+        }
+      }
+    } catch(Exception ex){}
+  }
+  
+  private native void setRadioButton(String value)/*-{
+    var elementTypes = $doc.getElementById('schedulerParamsFrame').contentWindow.document.body.getElementsByTagName('input');
+      if(elementTypes.length){
+        for(idx = 0 ; idx < elementTypes.length; idx++){        
+            var element = elementTypes[idx];
+            if(element.type == "radio" && element.value == value) {
+              element.checked = true;        
+              break;
+            }    
+         }
+      }   
+   }-*/; 
+  
   public void schedulerParamsCompleteCallback(boolean complete) {
     parametersComplete = complete;
     setCanContinue(complete);
-    setCanFinish(complete);
+    setCanFinish(complete);    
+    setRadioParameterValue(parametersFrame.getUrl());
   }
   
   private native void registerSchedulingCallbacks(ScheduleParamsWizardPanel thisInstance)/*-{
@@ -190,6 +225,7 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
       } else if (!url.equals(parametersFrame.getUrl())) {
         parametersFrame.setUrl(url);
       }
+      setRadioParameterValue(parametersFrame.getUrl());
     }
   }
 }
