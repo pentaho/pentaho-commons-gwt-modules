@@ -2243,3 +2243,20 @@ body.IE>table {
 	font-size: 16px;
     color: #000000;
 }
+
+.warning{
+    background: url('images/warning-icon.png') no-repeat 30px center #FBEADC;
+    padding: 30px;
+    border-radius: 5px;
+    border-color: #DDD;
+    border-width: 1px;
+    border-style: solid;
+    width:600px;
+}
+
+.warning .icon{
+    width: 20px;
+    height: 20px;
+    float: left;
+    padding-right: 8px;
+}
