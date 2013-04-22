@@ -896,15 +896,29 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     cronEditor.setOnChangeHandler(handler);
     scheduleNameTextBox.addChangeHandler(changeHandler);
 
-    this.daysListBox.addChangeHandler(changeHandler);
-    this.hoursListBox.addChangeHandler(changeHandler);
-    this.minutesListBox.addChangeHandler(changeHandler);
+    if (daysListBox != null) {
+      this.daysListBox.addChangeHandler(changeHandler);
+    }
+    if (hoursListBox != null) {
+      this.hoursListBox.addChangeHandler(changeHandler);
+    }
+    if (minutesListBox != null) {
+      this.minutesListBox.addChangeHandler(changeHandler);
+    }
 
-    this.getStartTimePicker().setOnChangeHandler(handler);
-    this.getBlockoutEndTimePicker().setOnChangeHandler(handler);
+    if (this.startTimePicker != null) {
+      startTimePicker.setOnChangeHandler(handler);
+    }
+    if (this.blockoutEndTimePicker != null) {
+      this.blockoutEndTimePicker.setOnChangeHandler(handler);
+    }
 
-    this.durationRadioButton.addClickHandler(clickHandler);
-    this.endTimeRadioButton.addClickHandler(clickHandler);
+    if (this.durationRadioButton != null) {
+      this.durationRadioButton.addClickHandler(clickHandler);
+    }
+    if (this.endTimeRadioButton != null) {
+      this.endTimeRadioButton.addClickHandler(clickHandler);
+    }
   }
 
   public boolean isBlockoutDialog() {
