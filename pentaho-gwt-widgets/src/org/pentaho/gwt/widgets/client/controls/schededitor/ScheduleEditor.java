@@ -38,12 +38,24 @@ import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -176,6 +188,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   private ListBox minutesListBox = null;
 
   protected Button blockoutCheckButton = new Button(MSGS.viewBlockoutTimes());
+  
+  protected ListBox timeZonePicker = null;
 
   public ScheduleEditor(ScheduleDialogType type, boolean showScheduleName) {
     super();
@@ -354,7 +368,15 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
       // Blockout period
       CaptionPanel blockoutStartCaptionPanel = new CaptionPanel(MSGS.startTime());
-      blockoutStartCaptionPanel.add(getStartTimePicker());
+      HorizontalPanel blockoutStartPanel = new HorizontalPanel();
+      blockoutStartPanel.add(getStartTimePicker());
+      timeZonePicker = new ListBox();
+      timeZonePicker.setVisibleItemCount(1);
+      blockoutStartPanel.add(timeZonePicker);
+      timeZonePicker.getElement().getParentElement().getStyle().setPaddingTop(5, Unit.PX);
+      
+      blockoutStartCaptionPanel.add(blockoutStartPanel);
+      populateTimeZonePicker();
 
       // Ends Caption Panel
       CaptionPanel endCaptionPanel = new CaptionPanel(MSGS.endsCaptionTitle());
@@ -447,6 +469,61 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     for (int i = startIndex; i < endIndex; i++) {
       listBox.addItem(arr[i]);
     }
+  }
+
+  private void populateTimeZonePicker() {
+    
+    String url = GWT.getHostPageBaseURL() + "api/system/timezones"; //$NON-NLS-1$
+    RequestBuilder timeZonesRequest = new RequestBuilder(RequestBuilder.GET, url);
+    timeZonesRequest.setHeader("accept", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
+    try {
+      timeZonesRequest.sendRequest(null, new RequestCallback() {
+
+        @Override
+        public void onResponseReceived(Request request, Response response) {
+          timeZonePicker.clear();
+          String responseText = response.getText();
+          JSONValue value = JSONParser.parse(responseText);
+          JSONObject object = value.isObject();
+          value = object.get("timeZones");
+          JSONValue serverTZvalue = object.get("serverTzId");
+          JSONString serverTZIdString = serverTZvalue.isString();
+          String serverTZId = serverTZIdString.stringValue();
+          object = value.isObject();
+          value = object.get("entry");
+          JSONArray timeZonesJSONArray = value.isArray();
+          for (int i=0; i<timeZonesJSONArray.size(); i++) {
+            JSONValue entryValue = timeZonesJSONArray.get(i);
+            JSONObject entryObject = entryValue.isObject();
+            JSONValue keyValue = entryObject.get("key");
+            JSONValue theValue = entryObject.get("value");
+            String key = keyValue.isString().stringValue();
+            String valueForKey = theValue.isString().stringValue();
+            timeZonePicker.addItem(valueForKey, key);
+          }
+          for (int i=0; i<timeZonePicker.getItemCount(); i++) {
+            if (timeZonePicker.getValue(i).equalsIgnoreCase(serverTZId)) {
+              timeZonePicker.setSelectedIndex(i);
+              break;
+            }
+          }
+        }
+
+        @Override
+        public void onError(Request request, Throwable exception) {
+          // TODO Auto-generated method stub
+          
+        }
+        
+      });
+    } catch (RequestException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+  
+  public ListBox getTimeZonePicker() {
+    return timeZonePicker;
   }
 
   public void setBlockoutButtonHandler(final ClickHandler handler) {

@@ -30,6 +30,7 @@ import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
 import org.pentaho.gwt.widgets.client.wizards.panels.validators.ScheduleEditorValidator;
 
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -128,6 +129,18 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
   public String getBlockoutEndTime() {
     if (scheduleEditor.getBlockoutEndTimePicker() != null) {
       return scheduleEditor.getBlockoutEndTimePicker().getTime();
+    }
+    return null;
+  }
+  
+  public String getTimeZone() {
+    if (scheduleEditor.getTimeZonePicker() != null) {
+      ListBox tzPicker = scheduleEditor.getTimeZonePicker();
+      int selIndex = tzPicker.getSelectedIndex();
+      if (selIndex != -1) { // Something is selected
+        return tzPicker.getValue(selIndex);
+      }
+      return null;
     }
     return null;
   }
