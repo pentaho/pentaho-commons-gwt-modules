@@ -839,7 +839,7 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .headerWrapper {
-  background: #d2d2d2 repeat-x scroll left bottom;
+  background: #d2d2d2 scroll left bottom;
   padding-right: 0px;
 }
 
@@ -878,7 +878,7 @@ input[type=password]:focus {
 }
 
 .IE .gwt-ScrollTable .headerTable td {
-  background: url('images/header_20px.png') repeat-x;
+  background: url('images/header_20px.png');
 }
 
 .gwt-ScrollTable .headerTable-disabled td {
