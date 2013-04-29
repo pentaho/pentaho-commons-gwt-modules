@@ -155,7 +155,7 @@ which java class/code the style is associated with */
 
 .tooltip-label{
   color: #000000;
-  font-size: .8em;
+  font-size: 13px;
 }
 
 /* end menubar/menuitem styles ------------------------------------------------------*/
@@ -421,12 +421,12 @@ body{
   border-right: 1px solid #848484;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: .86em;
+  font-size: 13px;
 }
 .fileChooserCell {
   background-color: white;
   padding: 1px 5px;
-  font-size: .86em;
+  font-size: 13px;
 }
 
 
@@ -434,7 +434,7 @@ body{
   background-color: #cbefa3;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: .86em;
+  font-size: 13px;
 }
 
 /* end file chooser styles ------------------------------------------------ */
@@ -637,7 +637,7 @@ body{
 
 .custom-list-item{
   background-color: white;
-  font-size: .86em;
+  font-size: 13px;
 }
 
 .custom-list-disabled-item{
@@ -655,7 +655,7 @@ body{
 .custom-list-item-proxy{
   opacity: 0.85;
   filter: alpha(opacity=85);
-  font-size: .86em;
+  font-size: 13px;
   border: 1px dashed #999 !important;
   background: transparent;
   z-index:1500 !important;
@@ -672,7 +672,7 @@ body{
 
 
 .customButton {
-  font-size: 0.86em;
+  font-size: 13px;
   border: 1px outset #ccc;
   background-color: #ddd;
 }
@@ -856,14 +856,14 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .dataTable td {
-/*  font-size: .85em; */
+/*  font-size: 13px; */
   overflow: hidden;
   white-space: nowrap;
 }
 
 .gwt-ScrollTable .headerTable td {
   font-weight: normal;
-  font-size: .8em;
+  font-size: 13px;
   color: #FFFFFF;
   border-right: 1px solid #848484;
   background: #000000;
@@ -997,7 +997,7 @@ input[type=password]:focus {
 	border: 1px solid red;
 	border-radius: 4px;
 	text-shadow: 0px -1px 0px #830202;
-	font-size: .85em;
+	font-size: 13px;
 	background: -moz-linear-gradient(top, #FF6464 0%, #FF7070 50%, #BF0600 51%, red 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FF6464), color-stop(50%,#FF7070), color-stop(51%,#BF0600), color-stop(100%,red));
 	background: -webkit-linear-gradient(top, #FF3838 0%,#FF3838 50%,#BF0600 51%,red 100%);
