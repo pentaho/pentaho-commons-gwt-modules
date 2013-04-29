@@ -24,3 +24,20 @@ function setupJsHover(cssSelector, cssHoverClass) {
     });
 
 }
+
+// dcleao: Placing this polyfill because this file is loaded pretty early,
+// but it would be better to have a centralized polyfill file.
+if (!Function.prototype.bind) {
+    (function() {
+        var arraySlice = Array.prototype.slice;
+        
+        Function.prototype.bind = function (ctx) {
+            var staticArgs = arraySlice.call(arguments, 1);   
+            var fToBind = this;
+            
+            return function (){
+                return fToBind.apply(ctx, staticArgs.concat(arraySlice.call(arguments)));
+            };
+        };
+    }());
+}
