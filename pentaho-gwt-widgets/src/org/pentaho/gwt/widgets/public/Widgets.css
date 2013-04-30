@@ -1070,3 +1070,8 @@ input[type=password]:focus {
 	height: auto;
 	width: auto;
 }
+
+.timeZonePicker {
+  width: 100%; 
+}
+
