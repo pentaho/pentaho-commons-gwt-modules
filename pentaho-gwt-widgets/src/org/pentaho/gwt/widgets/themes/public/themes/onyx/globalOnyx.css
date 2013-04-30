@@ -473,6 +473,9 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .IE .pentaho-tabWidget {
     background: url('images/tab_off.png') repeat-x;
+    background-color: rgb(25, 25, 25);
+    /* Not forcing this height sometimes causes a separation between the tab button and the pane */
+    height: 21px; /* = 30 - 4 - 4 - 1 */
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -510,6 +513,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .IE .pentaho-tabWidget-selected {
     background: url('images/tab_on.png') repeat-x;
+    background-color: #2b2b2b;
 }
 
 .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
