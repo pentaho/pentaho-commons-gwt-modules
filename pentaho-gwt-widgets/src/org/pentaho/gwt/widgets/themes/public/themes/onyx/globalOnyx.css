@@ -2236,14 +2236,12 @@ body.IE>table {
   padding: 2px;
 }
 
-.pentaho-fieldgroup-major {
-    font-family: Verdana;
+.pentaho-fieldgroup-major {    
 	font-size: 24px;
 	color: #f47120;
 }
 
-.pentaho-fieldgroup-minor {
-    font-family: Verdana;
+.pentaho-fieldgroup-minor {    
 	font-size: 16px;
     color: #000000;
 }
