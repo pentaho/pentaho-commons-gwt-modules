@@ -427,7 +427,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       // We want to add a button to check for blockout conflicts
       blockoutCheckButton.setStyleName("pentaho-button"); //$NON-NLS-1$
       blockoutCheckButton.getElement().setId("blockout-check-button"); //$NON-NLS-1$
-
+      blockoutCheckButton.setVisible(false);
+      
       hspacer.setHeight("50px"); //$NON-NLS-1$
       blockoutButtonPanel.add(hspacer);
       blockoutButtonPanel.add(blockoutCheckButton);
