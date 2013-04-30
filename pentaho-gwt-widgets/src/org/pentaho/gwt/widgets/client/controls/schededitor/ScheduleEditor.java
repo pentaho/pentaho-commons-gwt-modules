@@ -371,6 +371,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       HorizontalPanel blockoutStartPanel = new HorizontalPanel();
       blockoutStartPanel.add(getStartTimePicker());
       timeZonePicker = new ListBox();
+      timeZonePicker.setStyleName("timeZonePicker");
       timeZonePicker.setVisibleItemCount(1);
       blockoutStartPanel.add(timeZonePicker);
       timeZonePicker.getElement().getParentElement().getStyle().setPaddingTop(5, Unit.PX);
