@@ -216,7 +216,7 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
       if (parametersFrame == null) {
         parametersFrame = new Frame();
         parametersCaptionPanel.add(parametersFrame);
-        parametersFrame.setHeight("94%"); //$NON-NLS-1$
+        parametersFrame.setHeight("100%"); //$NON-NLS-1$
         
         //DOM.setElementAttribute(parametersFrame.getElement(), "onload", "schedulerParamsLoadedCallback('" + scheduledFilePath + "')");//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         addOnLoad(parametersFrame.getElement(), scheduledFilePath);
