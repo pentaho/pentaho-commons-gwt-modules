@@ -2203,3 +2203,22 @@ input:focus {
     float: left;
     padding-right: 8px;
 }
+
+#pucHeader {
+    display:inline-block;
+    width:100%;
+    background-color:#000;
+}
+
+#pucMenuBar {
+    display:inline-block
+}
+
+#pucPerspectives {
+    display:inline-block;
+    float:right;
+}
+
+
+
+

@@ -2420,3 +2420,18 @@ body .dojoMenuItem2Hover {
 	font-size: 16px;
     color: #000000;
 }
+
+#pucHeader {
+    display:inline-block;
+    width:100%;
+    background-color:#000;
+}
+
+#pucMenuBar {
+    display:inline-block
+}
+
+#pucPerspectives {
+    display:inline-block;
+    float:right;
+}
