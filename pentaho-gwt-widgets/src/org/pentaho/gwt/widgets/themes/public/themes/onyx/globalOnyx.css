@@ -2253,3 +2253,26 @@ input:focus {
   vertical-align: middle;
   padding-left: 10px;
 }
+
+.waitPopup {
+  position: absolute;
+  left: 44%;
+  top: 44%;
+  padding: 15px 8px;
+  z-index: 20001;
+  height: auto;
+  border: 1px solid #ccc;
+  background: white;
+}
+.waitPopup_title {
+  color: #444;
+  font-weight: bold;
+  font-size: 16px;
+  padding-bottom: 3px;
+}
+
+.waitPopup_msg {
+  color: #444;
+  font-weight: normal;
+  font-size: 13px;
+}
