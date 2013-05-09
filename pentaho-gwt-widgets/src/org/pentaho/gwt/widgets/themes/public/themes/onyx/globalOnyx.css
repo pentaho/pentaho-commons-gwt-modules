@@ -2276,3 +2276,118 @@ input:focus {
   font-weight: normal;
   font-size: 13px;
 }
+
+
+/* == == == == */
+.icon-small {
+  height:16px;
+  width: 16px;
+}
+.icon-medium {
+  height: 32px;
+  width: 32px;
+}
+.icon-large {
+  height: 48px;
+  width: 48px;
+}
+
+.icon-small.icon-refresh {
+  background: url('../images/refresh-small.png');
+}
+
+.icon-small.icon-refresh.disabled {
+  background: url('../images/refresh-small-disabled.png');
+}
+
+.icon-small.icon-run {
+  background: url('../images/run-small.png');
+}
+
+.icon-small.icon-run.disabled {
+  background: url('../images/run-small-disabled.png');
+}
+
+.icon-small.icon-update {
+  background: url('../images/update.png');
+}
+
+.icon-small.icon-update.disabled {
+  background: url('../images/updateDisabled.png');
+}
+
+.icon-small.icon-misc {
+  background: url('../images/misc-small.png');
+}
+
+.icon-small.icon-misc.disabled {
+  background: url('../images/misc-small-disabled.png');
+}
+
+.icon-small.icon-drop-valid {
+  background: url('../images/drop_valid.png');
+}
+.icon-small.icon-drop-invalid {
+  background: url('../images/drop_invalid.png');
+}
+
+.icon-small.icon-analysis {
+  background: url('../images/file_analysis.png');
+}
+.icon-small.icon-xaction {
+  background: url('../images/file_action.png');
+}
+.icon-small.icon-url {
+  background: url('../images/file_url.png');
+}
+.icon-small.icon-stop {
+  background: url('../images/stop-small.png');
+}
+.icon-small.icon-stop-scheduler {
+  background: url('../images/stop-scheduler-small.png');
+}
+.icon-small.icon-start-scheduler {
+  background: url('../images/start-scheduler-small.png');
+}
+.icon-small.icon-execute {
+  background: url('../images/execute-small.png');
+}
+.icon-small.icon-filter-add {
+  background: url('../images/filter-add-small.png');
+}
+.icon-small.icon-filter-active {
+  background: url('../images/filter-active-small.png');
+}
+.icon-small.icon-filter-remove {
+  background: url('../images/filter-remove-small.png');
+}
+
+
+.icon-medium.icon-open {
+  background: url('../images/open_32.png');
+}
+.icon-medium.icon-save {
+  background: url('../images/save_32.png');
+}
+.icon-medium.icon-save.disabled {
+  background: url('../images/save_32_disabled.png');
+}
+.icon-medium.icon-saveAs {
+  background: url('../images/saveAs_32.png');
+}
+.icon-medium.icon-saveAs.disabled {
+  background: url('../images/saveAs_32_disabled.png');
+}
+.icon-medium.icon-print {
+  background: url('../images/print_32.png');
+}
+.icon-medium.icon-print.disabled {
+  background: url('../images/print_32_disabled.png');
+}
+.icon-medium.icon-edit.disabled {
+  background: url('../images/editContent_32.png');
+}
+.icon-medium.icon-edit.disabled {
+  background: url('../images/editContent_32_disabled.png');
+}
+
