@@ -29,7 +29,9 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
 /**
  * Clickable image with enable/disable functionality built in.
+ * @deprecated use {@link ThemeableImageButton}
  */
+@Deprecated
 public class ImageButton extends Image {
 
   private boolean isEnabled = true;

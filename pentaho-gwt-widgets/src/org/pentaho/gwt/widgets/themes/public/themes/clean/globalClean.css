@@ -2332,6 +2332,13 @@ background-color: transparent;
 .icon-small.icon-url {
   background: url('../images/file_url.png');
 }
+.icon-small.icon-file {
+  background: url('../images/fileIcon.gif');
+}
+.icon-small.icon-folder {
+  background: url('../images/folderIcon.png');
+}
+
 .icon-small.icon-stop {
   background: url('../images/stop-small.png');
 }
@@ -2383,4 +2390,34 @@ background-color: transparent;
   background: url('../images/editContent_32_disabled.png');
 }
 
-
+.icon-small.icon-accum-add {
+  background: url('../images/accum_add.png');
+  height: 13px;
+  width: 14px;
+}
+.icon-small.icon-accum-add-all {
+  background: url('../images/accum_add_all.png');
+  height: 13px;
+  width: 14px;
+}
+.icon-small.icon-accum-remove {
+  background: url('../images/accum_remove.png');
+  height: 13px;
+  width: 14px;
+}
+.icon-small.icon-accum-remove-all {
+  background: url('../images/accum_remove_all.png');
+  height: 13px;
+  width: 14px;
+}
+.icon-tree-leaf {
+  height: 14px;
+  width: 35px;
+}
+.icon-tree-leaf.icon-recycle-bin {
+  background: url('../images/recycle_bin.png');
+  height: 16px;
+}
+.icon-tree-leaf.icon-folder {
+  background: url('../images/treeLeaf.png');
+}
