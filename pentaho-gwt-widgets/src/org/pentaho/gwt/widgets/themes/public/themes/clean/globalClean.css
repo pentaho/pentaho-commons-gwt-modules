@@ -1088,7 +1088,7 @@ body.IE>table {
 }
 
 /* inside one of the tds of the referred table */
-.IE #pucContent {
+.IE td #pucContent {
     height: 100%;
 }
 
@@ -2210,6 +2210,10 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
  display: block;
  /* background: #b9d2dd; */
  height: 88px;
+}
+
+#pucContent {	
+	top: 88px; /* Top must be the same as height in #puchHeader */
 }
 
 .tabpanel {
