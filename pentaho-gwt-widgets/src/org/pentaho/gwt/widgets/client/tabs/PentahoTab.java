@@ -32,6 +32,7 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.utils.ImageUtil;
 
 public class PentahoTab extends SimplePanel {
 
@@ -46,8 +47,7 @@ public class PentahoTab extends SimplePanel {
     sinkEvents(Event.ONDBLCLICK | Event.ONMOUSEUP);
 
     if (closeable) {
-      final Image closeTabImage = PentahoTabImages.images.tab_close_off().createImage();
-      closeTabImage.setStyleName("pentaho-tabWidget-close");
+      final Image closeTabImage = ImageUtil.getThemeableImage("pentaho-tabWidget-close", "pentaho-closebutton", "pentaho-imagebutton-disabled");
       closeTabImage.addClickHandler(new ClickHandler() {
         public void onClick(ClickEvent event) {
           event.getNativeEvent().stopPropagation();
@@ -56,13 +56,15 @@ public class PentahoTab extends SimplePanel {
       });
       closeTabImage.addMouseOverHandler(new MouseOverHandler() {
         public void onMouseOver(MouseOverEvent event) {
-          PentahoTabImages.images.tab_close_on().applyTo(closeTabImage);
+          closeTabImage.removeStyleName("pentaho-imagebutton-disabled");
+          closeTabImage.addStyleName("pentaho-imagebutton-hover");
         }
       });
       closeTabImage.addMouseOutHandler(new MouseOutHandler() {
 
         public void onMouseOut(MouseOutEvent event) {
-          PentahoTabImages.images.tab_close_off().applyTo(closeTabImage);
+          closeTabImage.removeStyleName("pentaho-imagebutton-hover");
+          closeTabImage.addStyleName("pentaho-imagebutton-disabled");
         }
       });
 
