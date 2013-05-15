@@ -314,8 +314,8 @@ public class FileChooser extends VerticalPanel {
     filesListPanel.setWidth("100%"); //$NON-NLS-1$
 
     ScrollPanel filesScroller = new ScrollPanel();
-    DOM.setStyleAttribute(filesScroller.getElement(), "background", "#ffffff"); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setStyleAttribute(filesScroller.getElement(), "border", "1px solid #707070"); //$NON-NLS-1$ //$NON-NLS-2$
+
+    filesScroller.setStyleName("fileChooser-scrollPanel");
 
     FlexTable filesListTable = new FlexTable();
     filesListTable.setWidth("100%");
@@ -356,8 +356,6 @@ public class FileChooser extends VerticalPanel {
     filesListTable.setWidth("100%");
     filesScroller.setWidget(filesListTable);
     filesListTable.setWidth("100%");
-    filesScroller.setHeight("220px"); //$NON-NLS-1$
-
     filesListPanel.add(filesScroller);
     return filesListPanel;
   }
