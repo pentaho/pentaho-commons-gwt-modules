@@ -2554,3 +2554,9 @@ media="screen"
   margin: 20px 0px;
   border-top: solid 1px #bfdce5;
 }
+
+.fileChooser-scrollPanel {
+  background-color: white;
+  border: 1px solid rgb(112, 112, 112);
+  height: 220px;
+}

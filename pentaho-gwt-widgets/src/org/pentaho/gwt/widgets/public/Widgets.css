@@ -1075,3 +1075,8 @@ input[type=password]:focus {
   width: 100%; 
 }
 
+.fileChooser-scrollPanel {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(112, 112, 112);
+  height: 220px;
+}
