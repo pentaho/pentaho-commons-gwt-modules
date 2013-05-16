@@ -16,13 +16,13 @@
  */
 package org.pentaho.gwt.widgets.client.table;
 
+import com.google.gwt.gen2.table.client.AbstractScrollTable;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
-import com.google.gwt.widgetideas.table.client.ScrollTable.ScrollTableImages;
 
-public interface BaseTableImages extends ScrollTableImages {
+public interface BaseTableImages extends AbstractScrollTable.ScrollTableImages {
 
-  public AbstractImagePrototype fillWidth();
-  
+  public AbstractImagePrototype scrollTableFillWidth();
+
   public AbstractImagePrototype scrollTableAscending();
   
   public AbstractImagePrototype scrollTableDescending();
