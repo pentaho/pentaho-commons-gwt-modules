@@ -823,16 +823,6 @@ input[type=password]:focus {
   padding: 2px 2px 2px 4px;
 }
 
-/* fix for BISERVER-6446, data table in webkit wasn't liing up with header */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .table-no-fill .dataWrapper .dataTable {
-    width: 0px !important;
-  }
-}
-.IE .table-no-fill .dataWrapper .dataTable {
-  width: 0px !important;
-}
-
 .gwt-ScrollTable {
   border: 1px solid #848484;
   overflow: hidden;
@@ -861,7 +851,7 @@ input[type=password]:focus {
   white-space: nowrap;
 }
 
-.gwt-ScrollTable .headerTable td {
+.gwt-ScrollTable .headerTable {
   font-weight: normal;
   font-size: 13px;
   color: #FFFFFF;
