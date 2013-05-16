@@ -2640,3 +2640,14 @@ body .dojoMenuItem2Hover {
 .icon-tree-leaf.icon-folder {
   background: url('../images/treeLeaf.png');
 }
+
+.favorite-on {
+  background: url("../images/favorite-on.png");
+  height: 32px;
+  width: 32px;
+}
+.favorite-off {
+  background: url("../images/favorite-off.png");
+  height: 32px;
+  width: 32px;
+}
