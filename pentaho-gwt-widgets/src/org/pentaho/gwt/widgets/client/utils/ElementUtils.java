@@ -105,14 +105,24 @@ public class ElementUtils {
     for (int i = 0; i < children.getLength(); i++) {
       killAllTextSelection((com.google.gwt.dom.client.Element) children.getItem(i));
     }
-
   }
 
   public static native void preventTextSelection(Element ele) /*-{
-    if(document.all){
-      ele.onselectstart=function() {return false};
-    } else {
-      ele.style.MozUserSelect='none';
+      //Handle all 3 browser types
+      var isWebkit = 'webkitRequestAnimationFrame' in $wnd;
+      if(ele.hasAttribute('style')){
+      //IE
+      if(document.all){
+        ele.onselectstart=function() {return false};
+      }
+      //Webkit
+      else if(isWebkit){
+         ele.style.webkitUserSelect='none';
+      }
+      //Firefox
+      else {
+          ele.style.MozUserSelect='none';
+      }
     }
   }-*/;
 
