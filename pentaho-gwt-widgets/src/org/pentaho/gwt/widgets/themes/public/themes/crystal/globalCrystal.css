@@ -2560,3 +2560,14 @@ media="screen"
   border: 1px solid rgb(112, 112, 112);
   height: 220px;
 }
+
+.favorite-on {
+  background: url("../images/favorite-on.png");
+  height: 32px;
+  width: 32px;
+}
+.favorite-off {
+  background: url("../images/favorite-off.png");
+  height: 32px;
+  width: 32px;
+}
