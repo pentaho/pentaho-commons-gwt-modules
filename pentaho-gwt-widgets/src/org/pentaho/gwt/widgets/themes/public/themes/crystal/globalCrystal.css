@@ -2571,3 +2571,85 @@ media="screen"
   height: 32px;
   width: 32px;
 }
+
+.pentaho-table {
+  border-spacing: 1px;
+  background-color: #848484;
+}
+.pentaho-table th{
+  font-size: 16px;
+  border-spacing: 2px;
+  padding: 10px 10px 12px 10px;
+  font-weight: normal;
+  background-color: #8ab3c6;
+}
+.gwt-ScrollTable .dataTable td {
+  padding: 10px 10px 12px 10px;
+}
+.gwt-ScrollTable .headerTable {
+  background: #8ab3c6;
+}
+.gwt-ScrollTable .headerTable td {
+  font-size: 16px;
+  border-spacing: 2px;
+  padding: 10px 10px 12px 10px;
+  font-weight: normal;
+  background-color: #8ab3c6;
+  border-right: 1px solid #BEBEBE;
+  border-bottom: 1px solid #BEBEBE;
+}
+.gwt-ScrollTable .headerTable tr > td:last-of-type {
+  border-right: 1px solid transparent;
+}
+
+
+/* dojo grid styles ------------------------- */
+.soria .dojoxGrid {
+    background-color: transparent;
+    font-size: 14px;
+}
+
+/* header */
+
+.soria .dojoxGridHeader {
+    background-color: transparent;
+}
+
+.soria .dojoxGridHeader .dojoxGridCell {
+  font-size: 16px;
+  border-spacing: 2px;
+  padding: 10px 10px 12px 10px;
+  font-weight: normal;
+  background: #8ab3c6;
+  border-right: 1px solid #BEBEBE;
+  border-bottom: 1px solid #BEBEBE;
+}
+
+/* rows */
+
+.soria .dojoxGridRow {
+    border: none;
+    background-color: white;
+}
+
+.soria .dojoxGridRowOver .dojoxGridCell {
+    background-color: #cbefa3;
+    color:#000;
+}
+
+.soria .dojoxGridRowSelected {
+    background-color: #dbdbdb;
+}
+
+/* cells */
+
+.soria .dojoxGridCell {
+    border: 1px solid #BEBEBE;
+    font-size: 14px;
+    padding: 10px 10px 12px 10px;
+}
+
+.soria .dojoxGridCellOver {
+    border: 1px solid #BEBEBE;
+}
+
