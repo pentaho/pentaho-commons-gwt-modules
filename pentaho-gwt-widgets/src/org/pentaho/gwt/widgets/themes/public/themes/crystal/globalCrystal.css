@@ -1488,7 +1488,7 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
 .pentaho-editbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-    background: url('../images/edit_disabled.png') no-repeat center;
+    background: url('images/edit_disabled.png') no-repeat center;
     cursor: default;
 }
 
@@ -1502,7 +1502,7 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
 .pentaho-addbutton.pentaho-imagebutton-disabled {
     width: 16px;
     height: 16px;
-    background: url('../images/add_disabled.png') no-repeat center;
+    background: url('images/add_disabled.png') no-repeat center;
     cursor: default;
 }
 
@@ -2318,7 +2318,7 @@ background-color: transparent;
 }
 
 .icon-small.icon-refresh {
-  background: url('images/refresh-small.png');
+  background: url('images/refresh.png');
 }
 
 .icon-small.icon-refresh.disabled {
@@ -2379,19 +2379,23 @@ background-color: transparent;
   background: url('../images/stop-scheduler-small.png');
 }
 .icon-small.icon-start-scheduler {
-  background: url('../images/start-scheduler-small.png');
+  background: url('images/start-scheduler-small.png');
 }
 .icon-small.icon-execute {
   background: url('../images/execute-small.png');
 }
 .icon-small.icon-filter-add {
-  background: url('../images/filter-add-small.png');
+  background: url('images/filter-add-small.png');
+  height: 18px;
+  width: 22px;
 }
 .icon-small.icon-filter-active {
   background: url('../images/filter-active-small.png');
 }
 .icon-small.icon-filter-remove {
-  background: url('../images/filter-remove-small.png');
+  background: url('images/filter-remove-small.png');
+  height: 18px;
+  width: 23px;
 }
 
 
