@@ -72,20 +72,26 @@ label {
     font-size: 13px;
 }
 
-fieldset {
+fieldset, fieldset.xul-fieldset {
     padding: 0px;
     width: auto;
     border: 1px solid #8bb5c5;
 }
 
 input[type='text'] {
-    border: 1px solid #abc9d9;
+   border: 1px solid #abc9d9;
+	 padding: 2px 0 2px 4px;
 }
 .gwt-ListBox{
- border: 1px solid #abc9d9;
+  border: 1px solid #abc9d9;
+  padding: 2px 0 2px 4px;
 }
 *:focus {outline: none;}
-
+.gwt-PasswordTextBox,
+input, input[type="password"]{
+  border: 1px solid #abc9d9;
+  padding: 2px 0 2px 4px;
+}
 .scroll-panel {
     position: relative;
     overflow: auto;
@@ -141,14 +147,7 @@ input[type='text'] {
     -moz-box-shadow:    inset 0 0 1px #FFF;
    -webkit-box-shadow: inset 0 0 1px #FFF;
    box-shadow:         inset 0 0 1px #FFF;
-   background: #005f7d; /* Old browsers */
-background: -moz-linear-gradient(top,  #005f7d 0%, #007297 43%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#005f7d), color-stop(43%,#007297)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #005f7d 0%,#007297 43%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #005f7d 0%,#007297 43%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #005f7d 0%,#007297 43%); /* IE10+ */
-background: linear-gradient(to bottom,  #005f7d 0%,#007297 43%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005f7d', endColorstr='#007297',GradientType=0 ); /* IE6-9 */
+   background: #0085b0; /* Old browsers */
 
 }
 
@@ -162,15 +161,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005f7d', end
 
 /* Just lightening it up a bit */
 .pentaho-button:active {
-    background: #fcfcfc; /* Old browsers */
-background: -moz-linear-gradient(top,  #fcfcfc 35%, #f4f4f4 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(35%,#fcfcfc), color-stop(100%,#f4f4f4)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #fcfcfc 35%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #fcfcfc 35%,#f4f4f4 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #fcfcfc 35%,#f4f4f4 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #fcfcfc 35%,#f4f4f4 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#f4f4f4',GradientType=0 ); /* IE6-9 */
-color: #000;
+    background: #8ac06e; /* Old browsers */
+  background: -moz-linear-gradient(top,  #8ac06e 0%, #62ab3d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8ac06e), color-stop(100%,#62ab3d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #8ac06e 0%,#62ab3d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #8ac06e 0%,#62ab3d 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #8ac06e 0%,#62ab3d 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #8ac06e 0%,#62ab3d 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ac06e', endColorstr='#62ab3d',GradientType=0 ); /* IE6-9 */
+  color: #293b44;
 
 }
 
@@ -180,16 +179,11 @@ color: #000;
 
 /* lighter gray with white text */
 .pentaho-button:disabled {
-    color: white;
-
-    background: #edf2f7; /* Old browsers */
-background: -moz-linear-gradient(top,  #edf2f7 35%, #dce9f7 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(35%,#edf2f7), color-stop(100%,#dce9f7)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #edf2f7 35%,#dce9f7 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #edf2f7 35%,#dce9f7 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #edf2f7 35%,#dce9f7 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #edf2f7 35%,#dce9f7 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edf2f7', endColorstr='#dce9f7',GradientType=0 ); /* IE6-9 */
+    color: #ccc;
+    background: Transparent; /* Old browsers */
+  -webkit-box-shadow: none;
+  -moz-box-shadow:    none;
+  box-shadow:         none;
 
 }
 
@@ -203,26 +197,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edf2f7', end
 }
 
 .pentaho-toggle-button {
-    /* fallback color */
-    background: #000000;
-    /* Safari/Chrome */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
-    /* Firefox */
-    background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
-
+    background: #007297; /* Old browsers */
+	background: -moz-linear-gradient(top,  #007297 57%, #005f7d 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(57%,#007297), color-stop(100%,#005f7d)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #007297 57%,#005f7d 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #007297 57%,#005f7d 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #007297 57%,#005f7d 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #007297 57%,#005f7d 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', endColorstr='#005f7d',GradientType=0 ); /* IE6-9 */
     font-size: 12px;
     color: #ffffff;
     padding: 5px 14px;
-
-    border: 1px solid #333;
-
-    /* Safari/Chrome */
-    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
-    /* Firefox */
-    -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
-    /* Standard form */
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
-
+    border: 1px solid #dddddd;
     white-space: nowrap;
     text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
     text-align: center;
@@ -306,9 +292,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edf2f7', end
 
 /* Applies the green glow to buttons */
 .pentaho-toggle-button-up-hovering {
-    -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
-    -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
-    box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
+   background-color: #0085b0;
 }
 
 .IE .pentaho-toggle-button-up-hovering {
@@ -348,7 +332,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     border: 1px solid #abc9d9;
     z-index: 1000;
     position: absolute;
-    background: #e1e8ec;
+    background: #f5f6f8;
     padding: 8px 8px 0px 8px;
 }
 
@@ -387,7 +371,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
 .dialog-content {
     border: 0px;
-    background: #e1e8ec;
+    background: #f5f6f8;
 }
 
 .dialog-button-panel {
@@ -464,7 +448,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     float: left;
     background: transparent;
     cursor: pointer;
-    margin-left: 2px;
+    margin-left: 0px;
     padding: 6px 8px;
 }
 
@@ -478,29 +462,33 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     font-size: 16px;
     color: #749db1;
     white-space: nowrap;
+	font-family: OpenSansLight, Helvetica, Arial, Sans serif;
+	padding: 0 8px;
 }
-
+#sidepaneltabset .pentaho-tabWidgetLabel {
+padding: 0 4px;
+}
 .dialog-content .pentaho-tabWidget .pentaho-tabWidgetLabel {
   font-size: 14px;
 }
 .pentaho-tabWidget-selected {
-    border-top: solid 1px #cfcfd0;
-    border-left: solid 1px #cfcfd0;
-    border-right: solid 1px #cfcfd0;
+    border-top: solid 1px #abc9d9;
+    border-left: solid 1px #abc9d9;
+    border-right: solid 1px #abc9d9;
     -moz-border-radius-topleft: 1px;
     -moz-border-radius-topright: 1px;
     -webkit-border-top-left-radius: 1px;
     -webkit-border-top-right-radius: 1px;
     border-top-right-radius: 1px;
     border-top-left-radius: 1px;
- background: #e0e0e0; /* Old browsers */
-background: -moz-linear-gradient(top,  #e0e0e0 0%, #f1f1f1 37%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e0e0e0), color-stop(37%,#f1f1f1)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #e0e0e0 0%,#f1f1f1 37%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #e0e0e0 0%,#f1f1f1 37%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #e0e0e0 0%,#f1f1f1 37%); /* IE10+ */
-background: linear-gradient(to bottom,  #e0e0e0 0%,#f1f1f1 37%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#f1f1f1',GradientType=0 ); /* IE6-9 */
+ background: #FFF; /*
+background: -moz-linear-gradient(top,  #e0e0e0 0%, #f1f1f1 37%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e0e0e0), color-stop(37%,#f1f1f1));
+background: -webkit-linear-gradient(top,  #e0e0e0 0%,#f1f1f1 37%);
+background: -o-linear-gradient(top,  #e0e0e0 0%,#f1f1f1 37%);
+background: -ms-linear-gradient(top,  #e0e0e0 0%,#f1f1f1 37%);
+background: linear-gradient(to bottom,  #e0e0e0 0%,#f1f1f1 37%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#f1f1f1',GradientType=0 ); */
 
 }
 
@@ -515,7 +503,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', end
     color: #26363d;
 }
 .pentaho-tab-panel {
- background: url('images/bg_tab_panel.png') repeat-x top left;
+ background: url('images/bg_admin_tab_panel.png') repeat-x top left;
   height: 35px;
 }
 
@@ -541,9 +529,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', end
 
 .pentaho-tab-deck-panel {
     border-top: 0px solid #E8E9EA;
-    border-right: 0px solid #E8E9EA;
-    border-bottom: 0px solid #E8E9EA;
-    border-left: 0px solid #E8E9EA;
+    border-right: 1px solid #abc9d9;
+    border-bottom: 1px solid #abc9d9;
+    border-left: 1px solid #abc9d9;
     height: 100%;
 }
 
@@ -2179,6 +2167,7 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
 .pentaho-fieldgroup-major {
 	font-size: 24px;
 	color: #1973bc;
+	font-family: OpenSansLight, Helvetica, Arial, Sans serif;
 }
 
 .pentaho-fieldgroup-minor {
@@ -2220,14 +2209,15 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
 border: 0px solid #000000;
 }
 #sidepaneltabs {
- background-color: #f1f1f1;
- width: 100%;
+ width: 258px;
+ border-right: 1px solid #abc9d9;;
+ border-left: 1px solid #abc9d9;;
  /* background: url('images/bg_side_panel.png') repeat-y top right; */
 }
 
 
 #fieldlistContainer {
-border-top: 0;
+border-top: 1px solid #abc9d9;
 border-right: 1px solid #f1f1f1;
 border-bottom: 0;
 border-left: 1px solid #f1f1f1;
@@ -2441,6 +2431,8 @@ background-color: #f1f1f1;
 }
 .tundra .dijitTitlePaneTextNode {
 font-size: 16px;
+font-family: OpenSansLight, Helvetica, Arial, Sans serif;
+padding: 0 0 0 4px;
 }
 
 .icon-small.icon-accum-add {
@@ -2477,8 +2469,9 @@ font-size: 16px;
 
 
   /* added by brett to override PIR styles */
+.styled >* #reportContent,
 #reportContent {
-  border: 1px solid #ccc;
+  border: 1px solid rgb(224, 224, 224);
 }
 
   /* added by brett to override dashbaord styles */
@@ -2525,7 +2518,19 @@ media="screen"
   font-size: 18px;
   color: #1973bc;
   padding: 0 0 20px 0;
-  font-weight: lighter;
+  font-family: OpenSansLight, Helvetica, Arial, Sans serif;
+}
+#fileBrowserFiles.fileBrowserColumn .body,
+#fileBrowserFolders.fileBrowserColumn .body {
+border: 1px solid #bfdce5;
+}
+.fileBrowserColumn .body .folder .element {
+  padding: 6px;
+  font-size: 16px;
+}
+.fileBrowserColumn .body .file .name{
+  padding: 6px;
+  font-size: 16px;
 }
 
 .fileBrowserColumn .body .folder.selected > .element {
@@ -2548,6 +2553,8 @@ media="screen"
 #fileBrowserButtons{
   background-color: #f6f7f8;
   border: 1px solid #bfdce5;
+  height: auto;
+  width: 250px;
 }
 
 .fileBrowserColumn .body .separator {
@@ -2560,7 +2567,17 @@ media="screen"
   border: 1px solid rgb(112, 112, 112);
   height: 220px;
 }
-
+#reportPageOutline {
+position: relative;
+margin-left: auto;
+margin-right: auto;
+width: 818px;
+-webkit-box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, .3);
+box-shadow: 0px 1px 6px 1px rgba(58, 58, 58, .1);
+padding: 0;
+margin-top: 4px;
+border: 0;
+}
 .favorite-on {
   background: url("../images/favorite-on.png");
   height: 32px;
@@ -2571,7 +2588,52 @@ media="screen"
   height: 32px;
   width: 32px;
 }
+.admin-perspective .pentaho-tab-deck-panel {
+  background-color: #FFF;
+    border-top: 0px solid #E8E9EA;
+    border-right: 1px solid #abc9d9;
+    border-bottom: 1px solid #abc9d9;
+    border-left: 1px solid #abc9d9;
+}
+.admin-perspective .pentaho-tab-panel {
+background: url('images/bg_admin_tab_panel.png') repeat-x top left;
+height: 35px;
+}
 
+.admin-perspective .pentaho-tabWidget-selected {
+    border-top: solid 1px #abc9d9;
+    border-left: solid 1px #abc9d9;
+    border-right: solid 1px #abc9d9;
+    -moz-border-radius-topleft: 1px;
+    -moz-border-radius-topright: 1px;
+    -webkit-border-top-left-radius: 1px;
+    -webkit-border-top-right-radius: 1px;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+ background: #FFF;
+}
+
+/* added for Analyzer fix */
+#fieldListWrapperContentPane,
+#layoutPanelWrapper{
+background-color: #f1f1f1;
+}
+#reportBtns{
+background-color: #f1f1f1;
+}
+#reportContainer{
+border: solid 0px #abc9d9;
+padding: 0;
+}
+.reportMain{
+border: 0px solid rgb(224, 224, 224);
+}
+
+
+/* added by brett to for PIR  */
+.tundra .dijitToolbar {
+background-color: #f1f1f1;
+}
 .pentaho-table {
   border-spacing: 1px;
   background-color: #848484;
@@ -2589,6 +2651,20 @@ media="screen"
 .gwt-ScrollTable .headerTable {
   background: #8ab3c6;
 }
+.gwt-ScrollTable {
+  border: 1px solid #d7d7d7;
+  overflow: hidden;
+}
+
+.gwt-ScrollTable .headerWrapper {
+  background: #d2d2d2 scroll left bottom;
+  padding-right: 0px;
+}
+
+.gwt-ScrollTable .footerWrapper {
+  background: #858585;
+  border-top: 1px solid #d7d7d7;
+}
 .gwt-ScrollTable .headerTable td {
   font-size: 16px;
   border-spacing: 2px;
@@ -2600,6 +2676,61 @@ media="screen"
 }
 .gwt-ScrollTable .headerTable tr > td:last-of-type {
   border-right: 1px solid transparent;
+}
+
+
+.gwt-ScrollTable .headerTable-disabled td {
+  font-weight: normal;
+  color: #000000;
+  border-right: 0px;
+}
+
+.gwt-ScrollTable .dataTable tr {
+  background: white;
+}
+
+.gwt-ScrollTable .dataTable-disabled tr {
+  background: white;
+}
+
+.gwt-ScrollTable .dataTable td {
+  border-bottom: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+}
+
+.gwt-ScrollTable .dataTable tr.hovering {
+  background: #d7e9cd none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .dataTable-disabled tr.hovering {
+  background: #d7e9cd none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .dataTable td.hovering {
+  background: #d7e9cd none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .dataTable tr.selected {
+  background: #dce7ed none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .dataTable tr:hover {
+  background: #d7e9cd none repeat scroll 0% 0%;
+}
+
+.gwt-ScrollTable .pagingOptions {
+  background: #e8e8e8 none repeat scroll 0% 0%;
+  border-right: 1px solid #848484;
+  border-top: 1px solid #848484;
+}
+
+.gwt-ScrollTable .pagingOptions .errorLabel {
+  color: red;
+}
+
+.gwt-CellEditor {
+  background: white none repeat scroll 0% 0%;
+  border: 3px solid #BEBEBE;
 }
 
 
@@ -2653,3 +2784,42 @@ media="screen"
     border: 1px solid #BEBEBE;
 }
 
+/* ======================= custom drop down control =========================== */
+
+.custom-list {
+border: 1px solid #8bb5c5;
+}
+
+combo-arrow {
+  padding: 4px;
+  background: #8ab3c6;
+  border: 1px outset #d7d7d7;
+  cursor: pointer;
+  font-size:0px;
+}
+
+.combo-arrow div{
+  background-image: url('images/arrow_down.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 8px;
+  width: 10px;
+  font-size:0px;
+}
+
+.combo-arrow-disabled{
+  padding: 4px;
+  background: #f1f1f1;
+  border: 1px outset gray;
+  font-size:0px;
+}
+.combo-arrow-disabled div{
+  background-image: url('images/arrow_down_disabled.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 8px;
+  width: 10px;
+  font-size:0px;
+}
