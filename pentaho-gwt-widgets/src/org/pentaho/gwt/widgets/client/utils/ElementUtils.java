@@ -108,9 +108,9 @@ public class ElementUtils {
   }
 
   public static native void preventTextSelection(Element ele) /*-{
-      //Handle all 3 browser types
-      var isWebkit = 'webkitRequestAnimationFrame' in $wnd;
-      if(ele.hasAttribute('style')){
+    // Handle all 3 browser types
+    var isWebkit = 'webkitRequestAnimationFrame' in $wnd;
+    if(ele.getAttribute('style') != null){
       //IE
       if(document.all){
         ele.onselectstart=function() {return false};
