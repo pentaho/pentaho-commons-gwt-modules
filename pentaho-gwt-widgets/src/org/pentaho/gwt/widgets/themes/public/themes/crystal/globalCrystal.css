@@ -2532,7 +2532,7 @@ border: 1px solid #bfdce5;
   padding: 6px;
   font-size: 16px;
 }
-.fileBrowserColumn .body .file .name{
+.fileBrowserColumn .body .file {
   padding: 6px;
   font-size: 16px;
 }
@@ -2542,7 +2542,7 @@ border: 1px solid #bfdce5;
 
 }
 
-.fileBrowserColumn .body .folder.selected > .element > .name{
+.fileBrowserColumn .body .folder.selected > .element {
   font-weight: normal;
 }
 
@@ -2551,7 +2551,7 @@ border: 1px solid #bfdce5;
   font-weight: normal;
 }
 
-.fileBrowserColumn .body .file.selected > .name{
+.fileBrowserColumn .body .file.selected {
   font-weight: normal;
 }
 #fileBrowserButtons{
