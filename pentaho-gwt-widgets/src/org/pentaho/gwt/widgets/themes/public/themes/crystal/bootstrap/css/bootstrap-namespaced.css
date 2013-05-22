@@ -2714,12 +2714,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', end
 .bootstrap .btn.disabled,
 .bootstrap .btn[disabled] {
   color: #FFF;
-  background-color: #0085B0;
+  background: #0085B0;
   *background-color: #0085B0;
 }
 .bootstrap .btn:active,
 .bootstrap .btn.active {
-  background-color: #cccccc \9;
+  background-color: #cccccc ;
 }
 .bootstrap .btn:first-child {
   *margin-left: 0;
@@ -2732,23 +2732,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', end
 .btn .btn-large .btn-block:hover {
   color: #FFF;
   text-decoration: none;
-   background-color: #0085B0;
+   background: #0085B0;
 }
 .bootstrap .btn:focus {
   color: #FFF;
   text-decoration: none;
    background-color: #0085B0;
-  *background-color: #0085B0;
+  /**background-color: #0085B0;
   background-position: 0 -15px;
    -webkit-transition: background-position 0.1s linear;
   -moz-transition: background-position 0.1s linear;
   -o-transition: background-position 0.1s linear;
-  transition: background-position 0.1s linear; /**/
+  transition: background-position 0.1s linear; */
 }
 .bootstrap .btn:focus {
-  outline: thin dotted #333;
+  /*outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
+  outline-offset: -2px;*/
 }
 .bootstrap .btn.active,
 .bootstrap .btn:active {
@@ -2788,7 +2788,7 @@ color: #293b44;
   line-height: 20px;
   color: #1973BC;
   text-align: left;
-  /* text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); */
+  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
   cursor: pointer;
  background: transparent; /* Old browsers */
@@ -2831,7 +2831,7 @@ color: #293b44;
   -moz-box-shadow: none;
   box-shadow: none;
 }
-#fileBrowserButtons .btn .btn-large .btn-block:hover {
+.bootstrap #fileBrowserButtons .btn .btn-large .btn-block:hover {
   color: #FFF;
   text-decoration: none;
    background-color: #0085B0;
@@ -2884,6 +2884,11 @@ color: rgb(128, 128, 128);
 
 }
 /* End browse perespective button styling  */
+
+/* File browse styles moved from globalCrystal */
+
+
+/* End File browse styles moved from globalCrystal */
 .bootstrap .btn-large {
   padding: 11px 19px;
   font-size: 17.5px;
@@ -2927,7 +2932,7 @@ color: rgb(128, 128, 128);
   box-sizing: border-box;
 }
 .bootstrap .btn-block + .btn-block {
-  margin-top: 5px;
+  margin-top: 15px;
 }
 .bootstrap input[type="submit"].btn-block,
 .bootstrap input[type="reset"].btn-block,
@@ -3639,9 +3644,16 @@ width: 130px;
   -moz-border-radius: 0;
   border-radius: 0;
 }
+.empty-panel{
+	font-size: 16px;
+	line-height: 22px;
+}
 .bootstrap #recentsContianer .widget-panel.well .content-panel,
 .bootstrap #favoritesContianer  .widget-panel.well .content-panel{
   border: 1px solid #c1d7e1;
+    -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 .bootstrap #recentsContianer .nav-tabs.nav-stacked > li > a ,
 .bootstrap #favoritesContianer  .nav-tabs.nav-stacked > li > a {
@@ -3660,6 +3672,24 @@ width: 130px;
   -moz-border-radius: 0;
   border-radius: 0;
 }
+/* Added by Brett   */
+.bootstrap .well .sidebar {
+	border: 0;
+	background: transparent;
+}
+
+.bootstrap .nav-tabs {
+  border-bottom: 1px solid #c1d7e1;
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 74%, #f4f4f4 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(74%,#ffffff), color-stop(100%,#f4f4f4)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #ffffff 74%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #ffffff 74%,#f4f4f4 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #ffffff 74%,#f4f4f4 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #ffffff 74%,#f4f4f4 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f4f4f4',GradientType=0 ); /* IE6-9 */
+}
+
 .bootstrap .nav-tabs.nav-stacked > li:first-child > a {
   /* -webkit-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
@@ -5420,4 +5450,15 @@ height: 600px;
 }
 .bootstrap .affix {
   position: fixed;
+}
+
+.detail-title{
+  padding: 0 0 20px 0;
+  font-size: 16px;
+  color: #26363d;
+}
+.detail-description{
+  padding: 0 0 20px 0;
+  font-size: 14px;
+  color: #26363d;
 }
