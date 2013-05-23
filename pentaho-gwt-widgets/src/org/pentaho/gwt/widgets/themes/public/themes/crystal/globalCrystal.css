@@ -2255,6 +2255,9 @@ background-color: transparent;
 .busy-indicator-container {
   display: block;
 }
+.busy-indicator-container-wrapper {
+  display: table;
+}
 .spinner {
 
 }
@@ -2276,22 +2279,20 @@ background-color: transparent;
   width: 16px;
 }
 .pentaho-busy-indicator-spinner {
-  display: inline-block;
-  float: left;
+  display: table-cell;
   width: 48px;
   height: 48px;
+  vertical-align: middle;
   padding: 20px;
 }
 .pentaho-busy-indicator-msg-contianer {
-  display: inline-block;
-  float: left;
+  display: table-cell;
   vertical-align: middle;
-  padding: 20px 0px;
 }
 
 .waitPopup {
   position: absolute;
-  width: 350px;
+  width: 330px;
   top: 44%;
   right: 0px;
   left: 0px;
@@ -2305,12 +2306,15 @@ background-color: transparent;
   color: #0560AB;
   font-size: 18px;
   padding-bottom: 3px;
+  width: 262px;
 }
 
 .waitPopup_msg {
   color: #6F777B;
   font-weight: normal;
   font-size: 14px;
+  white-space: normal;
+  width: 262px;
 }
 
 /* == == == == */
