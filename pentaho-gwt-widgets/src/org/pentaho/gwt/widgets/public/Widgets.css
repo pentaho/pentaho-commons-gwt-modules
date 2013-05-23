@@ -838,13 +838,11 @@ input[type=password]:focus {
   border-top: 1px solid #848484;
 }
 
-.gwt-ScrollTable .dataWrapper{
-   overflow-x: hidden !important;
- }
 .gwt-ScrollTable .dataWrapper {
   width: 100% !important;
   position:relative;
   overflow: hidden;
+  overflow-x: hidden !important;
   height:100%;
 }
 
