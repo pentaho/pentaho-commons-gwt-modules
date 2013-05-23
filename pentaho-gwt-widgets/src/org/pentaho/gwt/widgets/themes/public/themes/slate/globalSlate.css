@@ -2438,6 +2438,9 @@ body .dojoMenuItem2Hover {
 
 /* -- new spinner stuff -- */
 .busy-indicator-container {
+  display: block;
+}
+.busy-indicator-container-wrapper {
   display: table;
 }
 .spinner {
@@ -2464,18 +2467,21 @@ body .dojoMenuItem2Hover {
   display: table-cell;
   width: 48px;
   height: 48px;
+  vertical-align: middle;
+  padding: 20px;
 }
 .pentaho-busy-indicator-msg-contianer {
   display: table-cell;
   vertical-align: middle;
-  padding-left: 10px;
 }
 
 .waitPopup {
   position: absolute;
-  left: 44%;
+  width: 330px;
   top: 44%;
-  padding: 15px 8px;
+  right: 0px;
+  left: 0px;
+  margin: auto;
   z-index: 20001;
   height: auto;
   border: 1px solid #ccc;
@@ -2486,14 +2492,16 @@ body .dojoMenuItem2Hover {
   font-weight: bold;
   font-size: 16px;
   padding-bottom: 3px;
+  width: 262px;
 }
 
 .waitPopup_msg {
   color: #444;
   font-weight: normal;
   font-size: 13px;
+  white-space: normal;
+  width: 262px;
 }
-
 
 /* == == == == */
 
