@@ -3798,7 +3798,7 @@ width: 130px;
 height: 300px;
 }
 .bootstrap  #launch-widget .tab-content{
-height: 600px;
+height: auto;
 }
 .bootstrap .tabs-below > .nav-tabs,
 .bootstrap .tabs-right > .nav-tabs,
