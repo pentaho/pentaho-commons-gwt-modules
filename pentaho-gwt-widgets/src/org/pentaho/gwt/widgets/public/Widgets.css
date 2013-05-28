@@ -2,78 +2,9 @@
 Please, please comment all entries so that it is clear
 which java class/code the style is associated with */
 
-/* start snb */
-/* default style for java class Schedule Editor caption panels */
-/* begin recurrence dialog ------------------------------------------------------*/
-
-
 /* killing some intermediate styles for tabs that aren't desired */
 .gwt-TabBarFirst-wrapper{
   display: none;
-}
-
-
-.schedule-editor-caption-panel {
-  margin-top: 6px;
-  padding: 5px;
-}
-.startLabel {
-  padding-right: 1ex;
-  white-space: nowrap;
-  /*border:1px dotted red;*/
-}
-
-.middleLabel {
-  padding-right: 1ex;
-  padding-left: 1ex;
-  white-space: nowrap;
-  /*border:1px dotted red;*/
-}
-.endLabel {
-  padding-left: 1ex;
-  white-space: nowrap;
-  /*border:1px dotted red;*/
-}
-
-.schedule-label {
-  margin-top: 4px;
-}
-
-.cron-label {
-  margin-top: 6px;
-}
-
-.start-date-picker {
-  width: 10em;
-}
-
-.end-date-picker {
-  width: 10em;
-}
-
-.recurrenceRadioButton label {
-  padding-right: 1ex;
-  white-space: nowrap;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-right: 2px;
-}
-
-.recurrenceRadioButton {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: 10px;
-}
-
-.day-of-month-textbox {
-  margin-left: 6px;
-}
-
-.day-of-week-checkbox {
-  padding-left: 4px;
-}
-
-.weeklyRecurrencePanel {
 }
 
 .popupContent {
@@ -105,25 +36,6 @@ which java class/code the style is associated with */
 .blue-date-picker {
 	z-index: 1000;
 }
-
-/* begin schedule editor ------------------------------------------------------*/
-.scheduleEditor {
-  /* can't add a margin here, IE7 can't handle it */
-  /*margin: 10px;*/
-  /*background-color: #CCCCFF; for testing*/
-  width: 100%;
-}
-
-.scheduleDescription {
-  width: 70%;
-  /*background-color: red; for testing */
-}
-
-.scheduleCombo {
-  margin-right: 5px;
-}
-/* end schedule editor ----------------------------------------------------------*/
-/* end recurrence dialog ----------------------------------------------------------*/
 
 /* style for error message associated with dialog controls with invalid data */
 .errorLabel {
@@ -378,11 +290,6 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
 }
 .pentaho-wizard-panel {
 	height: 100%;
-	width: 100%;
-}
-
-.pentaho-schedule-create {
-	padding: 10px;
 	width: 100%;
 }
 
@@ -1060,10 +967,6 @@ input[type=password]:focus {
 	padding-top: 5px;
 	height: auto;
 	width: auto;
-}
-
-.timeZonePicker {
-  width: 100%; 
 }
 
 .fileChooser-scrollPanel {
