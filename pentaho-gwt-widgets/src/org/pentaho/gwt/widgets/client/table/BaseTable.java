@@ -601,7 +601,7 @@ public class BaseTable extends Composite {
   public void setHeight(final String height) {
     super.setHeight(height);
     this.scrollTableHeight = height;
-
+    scrollTable.setHeight(height);
   }
 
   /**
