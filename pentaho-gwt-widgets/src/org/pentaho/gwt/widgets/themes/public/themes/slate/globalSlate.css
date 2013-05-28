@@ -2421,6 +2421,28 @@ body .dojoMenuItem2Hover {
     color: #000000;
 }
 
+.warning{
+    background: url('images/warning-icon.png') no-repeat 30px center #FBEADC;
+    padding: 30px;
+    border-radius: 5px;
+    border-color: #DDD;
+    border-width: 1px;
+    border-style: solid;
+    width:600px;
+}
+
+.warning .icon{
+    width: 20px;
+    height: 70px;
+    float: left;
+    padding-right: 8px;
+}
+
+.warning .warning-header{
+    font-size: 1.25em;
+    color: red;
+}
+
 #pucHeader {
     display:inline-block;
     width:100%;

@@ -2199,9 +2199,14 @@ input:focus {
 
 .warning .icon{
     width: 20px;
-    height: 20px;
+    height: 70px;
     float: left;
     padding-right: 8px;
+}
+
+.warning .warning-header{
+    font-size: 1.25em;
+    color: red;
 }
 
 #pucHeader {
