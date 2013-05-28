@@ -249,8 +249,6 @@ public class BaseTable extends Composite {
     //disable text highlighting on dataGrid
     ElementUtils.killAllTextSelection(dataGrid.getElement());
 
-    dataGrid.setWidth("100%");
-
     // Set style
     if (selectionPolicy == null) {
       dataGrid.setSelectionPolicy(SelectionGrid.SelectionPolicy.ONE_ROW);
@@ -409,7 +407,6 @@ public class BaseTable extends Composite {
    * Makes this table fill all available width.
    */
   public void fillWidth() {
-    tableHeader.setWidth("100%");
     scrollTable.fillWidth();
   }
 
@@ -591,19 +588,9 @@ public class BaseTable extends Composite {
   public void setWidth(final String width) {
     super.setWidth(width);
     this.scrollTableWidth = width;
-    // It sounds silly to resize this way but we need to let the browser
-    // update the DOM before we recompute sizes. IE doesn't return
-    // correct values when you perform too many dynamically computed resizes.
-    DeferredCommand.addCommand(new Command() {
-      public void execute() {
-        if (scrollTable != null) {
-          parentPanel.setWidth(width);
-          scrollTable.setWidth(width);
-          //scrollTable.fillWidth();
-          scrollTable.redraw();
-        }
-      }
-    });
+
+    scrollTable.getHeaderTable().setWidth(width);
+    scrollTable.getDataTable().setWidth(width);
   }
 
   /*
@@ -614,17 +601,7 @@ public class BaseTable extends Composite {
   public void setHeight(final String height) {
     super.setHeight(height);
     this.scrollTableHeight = height;
-    // It sounds silly to resize this way but we need to let the browser
-    // update the DOM before we recompute sizes. IE doesn't return
-    // correct values when you perform too many dynamically computed resizes.
-    DeferredCommand.addCommand(new Command() {
-      public void execute() {
-        if (scrollTable != null) {
-          scrollTable.setHeight(height);
-          scrollTable.redraw();
-        }
-      }
-    });
+
   }
 
   /**
