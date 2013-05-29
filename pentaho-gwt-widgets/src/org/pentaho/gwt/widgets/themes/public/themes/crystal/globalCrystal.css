@@ -1486,6 +1486,31 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
     margin: 0 10px;
 }
 
+.pentaho-savebutton-small {
+  width: 16px;
+  height: 16px;
+  background: url('../images/save_16.png') no-repeat center;
+  cursor: pointer;
+}
+.pentaho-saveasbutton-small {
+  width: 16px;
+  height: 16px;
+  background: url('../images/saveas_16.png') no-repeat center;
+  cursor: pointer;
+}
+.pentaho-openbutton-small {
+  width: 16px;
+  height: 16px;
+  background: url('../images/open_16.png') no-repeat center;
+  cursor: pointer;
+}
+.pentaho-newbutton-small {
+  width: 16px;
+  height: 16px;
+  background: url('../images/new_16.png') no-repeat center;
+  cursor: pointer;
+}
+
 .pentaho-editbutton {
     width: 16px;
     height: 16px;
@@ -1584,25 +1609,27 @@ box-shadow:         0px 3px 5px rgba(50, 50, 50, 0.3);*/
     cursor: pointer;
 }
 
+.pentaho-undobutton.disabled,
 .pentaho-undobutton.pentaho-imagebutton-disabled {
-    width: 16px;
-    height: 16px;
-    background: url('../images/undo_disabled.png') no-repeat center;
-    cursor: default;
+  width: 16px;
+  height: 16px;
+  background: url('../images/undo_disabled.png') no-repeat center;
+  cursor: default;
 }
 
 .pentaho-redobutton {
-    width: 16px;
-    height: 16px;
-    background: url('../images/redo.png') no-repeat center;
-    cursor: pointer;
+  width: 16px;
+  height: 16px;
+  background: url('../images/redo.png') no-repeat center;
+  cursor: pointer;
 }
 
+.pentaho-redobutton.disabled,
 .pentaho-redobutton.pentaho-imagebutton-disabled {
-    width: 16px;
-    height: 16px;
-    background: url('../images/redo_disabled.png') no-repeat center;
-    cursor: default;
+  width: 16px;
+  height: 16px;
+  background: url('../images/redo_disabled.png') no-repeat center;
+  cursor: default;
 }
 
 .pentaho-downbutton {
@@ -2892,4 +2919,8 @@ border: 1px solid #000;
 border-radius: 3;
 margin: 0 auto;
 
+}
+
+.caption .captionIcon {
+  display: inline-block;
 }
