@@ -39,6 +39,7 @@ public class PentahoTab extends SimplePanel {
   private PentahoTabPanel tabPanel;
   private Widget content;
   private Label label = new Label();
+  private boolean solutionBrowserShowing;
 
   public PentahoTab(String text, String tooltip, PentahoTabPanel tabPanel, Widget content, boolean closeable) {
     this.content = content;
@@ -152,4 +153,11 @@ public class PentahoTab extends SimplePanel {
     tabPanel.selectTab(this);
   }
 
+  public boolean isSolutionBrowserShowing() {
+    return solutionBrowserShowing;
+  }
+
+  public void setSolutionBrowserShowing(boolean solutionBrowserShowing) {
+    this.solutionBrowserShowing = solutionBrowserShowing;
+  }
 }
