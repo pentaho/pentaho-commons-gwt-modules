@@ -2633,10 +2633,6 @@ color: #fff;
 
 /*  end browser styles */
 #reportPageOutline {
-position: relative;
-margin-left: auto;
-margin-right: auto;
-width: 818px;
 -webkit-box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, .3);
 box-shadow: 0px 1px 6px 1px rgba(58, 58, 58, .1);
 padding: 0;
