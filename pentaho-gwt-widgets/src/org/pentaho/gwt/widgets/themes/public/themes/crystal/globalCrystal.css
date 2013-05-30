@@ -2924,3 +2924,38 @@ margin: 0 auto;
 .caption .captionIcon {
   display: inline-block;
 }
+
+.drag_and_drop_label_content{
+  color: black;
+  width: 300px;
+  border: 1px dashed #ccc;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  margin: 0 auto;
+  padding: 110px 20px 30px 20px;
+  background-color: #f7f7f7;
+  background-image:  url('./images/drop_here.png');
+  background-repeat: no-repeat;
+  background-position: 120px 30px;
+}
+	
+.drag_and_drop_label_text{
+  font-size: 18px;
+  color: #000;
+  padding: 40px 0 0 0;
+  margin: 0;
+  text-align: center;
+  font-family: OpenSansRegular, sans-serif;
+}
+	
+.drag_and_drop_label_wrapper{
+  padding: 80px;
+  margin: 0;
+  background-color: #fff;
+  display: none;
+}
+
+.drag_and_drop_label .drag_and_drop_label_wrapper {
+  display: block;
+}
