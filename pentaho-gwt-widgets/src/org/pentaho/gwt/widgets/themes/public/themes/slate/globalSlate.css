@@ -2512,6 +2512,7 @@ body .dojoMenuItem2Hover {
   height: 16px;
   width: 16px;
 }
+.busy-indicator-spinner,
 .pentaho-busy-indicator-spinner {
   display: table-cell;
   width: 48px;
