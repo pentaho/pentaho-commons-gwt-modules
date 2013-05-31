@@ -974,3 +974,67 @@ input[type=password]:focus {
   border: 1px solid rgb(112, 112, 112);
   height: 220px;
 }
+
+  /* -- new spinner stuff -- */
+.busy-indicator-container {
+  display: block;
+}
+.busy-indicator-container-wrapper {
+  display: table;
+}
+.spinner div > div {
+  /* spin.js uses inline styles, so we have to override those with !important to acheive theme-ability*/
+  background-color: #0560AB !important;
+}
+
+.large-spinner {
+  height: 48px;
+  width: 48px;
+}
+.medium-spinner {
+  height: 32px;
+  width: 32px;
+}
+.small-spinner {
+  height: 16px;
+  width: 16px;
+}
+
+.pentaho-busy-indicator-spinner {
+  display: table-cell;
+  width: 48px;
+  height: 48px;
+  vertical-align: middle;
+  padding: 20px;
+}
+.pentaho-busy-indicator-msg-contianer {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.waitPopup {
+  position: absolute;
+  width: 330px;
+  top: 44%;
+  right: 0px;
+  left: 0px;
+  margin: auto;
+  z-index: 20001;
+  height: auto;
+  border: 1px solid #ABC9D9;
+  background: #EFF5F8;
+}
+.waitPopup_title {
+  color: #0560AB;
+  font-size: 18px;
+  padding-bottom: 3px;
+  width: 262px;
+}
+
+.waitPopup_msg {
+  color: #6F777B;
+  font-weight: normal;
+  font-size: 14px;
+  white-space: normal;
+  width: 262px;
+}
