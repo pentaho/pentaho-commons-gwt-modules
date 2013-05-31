@@ -789,6 +789,10 @@ input[type=password]:focus {
   background: white;
 }
 
+ .gwt-ScrollTable .dataTable .cellTableOddRow {
+  background-color: #f0f0f0;
+}
+
 .gwt-ScrollTable .dataTable-disabled tr {
   background: white;
 }
