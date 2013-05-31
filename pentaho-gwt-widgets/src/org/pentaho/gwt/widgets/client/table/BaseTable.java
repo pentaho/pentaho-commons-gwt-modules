@@ -121,6 +121,7 @@ public class BaseTable extends Composite {
    */
   public BaseTable(String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators) {
     this(tableHeaderNames, columnWidths, columnComparators, null);
+
   }
 
   
@@ -340,6 +341,10 @@ public class BaseTable extends Composite {
     //
     dataGrid.resizeRows(rowAndColumnValues.length);
     for (int i = 0; i < rowAndColumnValues.length; i++) {
+      //For even rows, add background highlighting
+      if(i%2 != 0){
+      dataGrid.getRowFormatter().setStyleName(i,"cellTableOddRow");
+      }
       for (int j = 0; j < rowAndColumnValues[i].length; j++) {
         Object value = rowAndColumnValues[i][j];
 
