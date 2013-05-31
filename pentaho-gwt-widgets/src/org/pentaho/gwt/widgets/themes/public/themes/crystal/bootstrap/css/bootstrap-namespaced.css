@@ -648,7 +648,7 @@
   font-size: 31px;
 }
 .bootstrap h3 {
-  font-size: 24px;
+  font-size: 22px;
 }
 .bootstrap h4 {
   font-size: 16px;
@@ -2824,9 +2824,9 @@ color: #293b44;
   *margin-left: 0;
 }
 .bootstrap #fileBrowserButtons  .btn:hover{
-  color: #FFF;
+  color: #698492;
   text-decoration: none;
-   background-color: #0085B0;
+   background-color: #dce7ed;
      -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -2933,6 +2933,9 @@ color: rgb(128, 128, 128);
 }
 .bootstrap .btn-block + .btn-block {
   margin-top: 15px;
+}
+.bootstrap #fileBrowserButtons .btn-block + .btn-block {
+  margin-top: 4px;
 }
 .bootstrap input[type="submit"].btn-block,
 .bootstrap input[type="reset"].btn-block,
@@ -3592,6 +3595,10 @@ width: 130px;
   border-right: 1px solid #c1d7e1;
   background-color: #dce7ed;
 }
+.bootstrap #getting-started .nav-tabs .active > li  > a:hover,
+.bootstrap #getting-started .nav-tabs .active > li  > a:focus {
+  background-color: #FFF;
+}
 .bootstrap #recentsContianer .nav-tabs > li > a:hover,
 .bootstrap  #recentsContianer.nav-tabs > li > a:focus,
 .bootstrap #favoritesContianer .nav-tabs > li > a:hover,
@@ -3680,16 +3687,20 @@ width: 130px;
 
 .bootstrap .nav-tabs {
   border-bottom: 1px solid #c1d7e1;
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(top,  #ffffff 74%, #f4f4f4 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(74%,#ffffff), color-stop(100%,#f4f4f4)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #ffffff 74%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #ffffff 74%,#f4f4f4 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #ffffff 74%,#f4f4f4 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #ffffff 74%,#f4f4f4 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f4f4f4',GradientType=0 ); /* IE6-9 */
-}
+background: rgb(255,255,255); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(248,248,248,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(248,248,248,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(248,248,248,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(248,248,248,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(248,248,248,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(248,248,248,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-9 */
 
+}
+.bootstrap #recents-content-panel .nav-tabs,
+.bootstrap #favorites-content-panel .nav-tabs {
+background: #fff;
+}
 .bootstrap .nav-tabs.nav-stacked > li:first-child > a {
   /* -webkit-border-top-right-radius: 4px;
   border-top-right-radius: 4px;
