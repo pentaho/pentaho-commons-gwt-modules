@@ -34,9 +34,10 @@ import com.google.gwt.user.client.ui.SimplePanel;
  * 
  * @author nbaker
  */
-public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, ToolbarPopupSource{
+public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, ToolbarPopupSource {
 
   public static final int SEPARATOR = 1;
+
   public static final int GLUE = 2;
 
   // table holding the buttons
@@ -49,7 +50,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   private List<ToolbarGroup> groups = new ArrayList<ToolbarGroup>();
 
   private List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
-  
+
   public Toolbar() {
     this.setStylePrimaryName("toolbar"); //$NON-NLS-1$
     this.setVerticalAlignment(ALIGN_MIDDLE);
@@ -102,7 +103,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   public void add(Label lbl) {
     bar.add(lbl);
   }
-  
+
   /**
    * Add a panel (spacer most likely) to the toolbar
    * 
@@ -111,14 +112,13 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   public void add(Panel p) {
     bar.add(p);
     //spacer now passed in as panel
-    if(p instanceof SimplePanel){
+    if (p instanceof SimplePanel) {
       String flex = p.getElement().getAttribute("flex");
-      if(StringUtils.isEmpty(flex) ==  false && Integer.parseInt(flex) > 0){
+      if (StringUtils.isEmpty(flex) == false && Integer.parseInt(flex) > 0) {
         bar.setCellWidth(p, "100%");
       }
     }
   }
-  
 
   /**
    * Add a Button to the Toolbar
@@ -126,9 +126,9 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   public void add(ToolbarButton button) {
     bar.add(button.getPushButton());
     buttons.add(button);
-    
+
     //register interest in popupPanel of the comboButtons
-    if(button instanceof ToolbarComboButton){
+    if (button instanceof ToolbarComboButton) {
       ((ToolbarComboButton) button).addPopupPanelListener(this);
     }
   }
@@ -141,19 +141,19 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
    */
   public void add(int key) {
     switch (key) {
-    case Toolbar.SEPARATOR:
-      
-      Image img = new Image(GWT.getModuleBaseURL()+"images/toolbarDivider.png");
-      bar.add(img);
-      bar.setCellVerticalAlignment(img, ALIGN_MIDDLE);
-      break;
-    case Toolbar.GLUE:
-      SimplePanel panel = new SimplePanel();
-      bar.add(panel);
-      bar.setCellWidth(panel, "100%"); //$NON-NLS-1$
-      break;
-    default:
-      // add error logging message
+      case Toolbar.SEPARATOR:
+
+        Image img = new Image(GWT.getModuleBaseURL() + "images/toolbarDivider.png");
+        bar.add(img);
+        bar.setCellVerticalAlignment(img, ALIGN_MIDDLE);
+        break;
+      case Toolbar.GLUE:
+        SimplePanel panel = new SimplePanel();
+        bar.add(panel);
+        bar.setCellWidth(panel, "100%"); //$NON-NLS-1$
+        break;
+      default:
+        // add error logging message
     }
   }
 
@@ -166,6 +166,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   public void addSpacer(int spacerAmount) {
     SimplePanel panel = new SimplePanel();
     panel.setWidth(spacerAmount + "px"); //$NON-NLS-1$
+    panel.addStyleName("gwt-spacer");
     bar.add(panel);
     bar.setCellWidth(panel, spacerAmount + "px"); //$NON-NLS-1$
   }
@@ -193,31 +194,32 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
       e.printStackTrace(System.out);
     }
   }
-  
-  public void addPopupPanelListener(ToolbarPopupListener listener){
-    if(popupListeners.contains(listener) == false){
+
+  public void addPopupPanelListener(ToolbarPopupListener listener) {
+    if (popupListeners.contains(listener) == false) {
       popupListeners.add(listener);
     }
   }
-  public void removePopupPanelListener(ToolbarPopupListener listener){
-    if(popupListeners.contains(listener)){
+
+  public void removePopupPanelListener(ToolbarPopupListener listener) {
+    if (popupListeners.contains(listener)) {
       popupListeners.remove(listener);
     }
   }
 
   public void popupClosed(PopupPanel panel) {
-    for(ToolbarPopupListener listener : popupListeners){
+    for (ToolbarPopupListener listener : popupListeners) {
       listener.popupClosed(panel);
     }
   }
 
   public void popupOpened(PopupPanel panel) {
-    for(ToolbarPopupListener listener : popupListeners){
+    for (ToolbarPopupListener listener : popupListeners) {
       listener.popupOpened(panel);
-    }  
+    }
   }
-  
-  public void removeAll(){
+
+  public void removeAll() {
     bar.clear();
     buttons.clear();
   }
