@@ -2604,3 +2604,173 @@ input:focus {
 .drag_and_drop_label .drag_and_drop_label_wrapper {
   display: block;
 }
+
+/* Login page styles */
+#login-background {
+  background: url(images/login-onyx-bg.jpeg);
+  height: 663px;
+  width: 1255px;
+  top: 90px;
+  margin: 0 auto;
+  position: relative;
+}
+#login-logo {
+  background: url(../images/puc-login-logo.png) no-repeat left;
+  width: 0;
+  height: 93px;
+  left: 600px;
+  top: 90px;
+  position: relative;
+  opacity: 0.2;
+  -moz-transition: 400ms linear;
+  -webkit-transition: 400ms linear;
+  transition: 400ms linear;
+}
+#login-logo.afterSlide {
+  width: 410px;
+  left: 150px;
+  opacity: 1;
+}
+
+#login-input-container {
+  height: 155px;
+  top: 50%;
+  margin-top: -77px;
+  position: absolute;
+}
+#login-form-container {
+  left: 585px;
+  top: 178px;
+  width: 550px;
+  position: relative;
+}
+
+#login INPUT[type="text"],
+#login INPUT[type="password"] {
+  margin-right: 20px;
+  width: 202px;
+}
+
+#login-form-container H1 {
+  font-size: 44px;
+  line-height: 44px;
+  margin-bottom: 30px;
+}
+
+#login-footer{
+  position: relative;
+  top: 100px; /* 90 from top of background image + 10*/
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+  font-size: 13px;
+  color: #939DA0;
+  white-space: nowrap;
+  left: 1255px;
+  width: 0px;
+  opacity: 0.2;
+  display: block;
+  -moz-transition: 500ms linear;
+  -webkit-transition: 500ms linear;
+  transition: 500ms linear;
+}
+#login-footer.afterSlide {
+  left: 0px;
+  width: 1255px;
+  opacity: 1;
+}
+
+#eval-users-toggle {
+  font-size: 13px;
+  color: #1973BC;
+  margin-top: 18px;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+}
+#eval-users-toggle > DIV {
+  display: inline-block;
+}
+
+#animate-wrapper {
+  left: 550px;
+  width: 0;
+  overflow: hidden;
+  position: relative;
+  max-height: 155px;
+  opacity: 0.2;
+  -moz-transition: all 600ms linear;
+  -webkit-transition: all 600ms linear;
+  transition: all 600ms linear;
+}
+#animate-wrapper.afterSlide {
+  left: 0px;
+  width: 550px;
+  opacity: 1;
+}
+#login-wrapper {
+  height: 790px;
+  overflow: hidden;
+}
+#login,
+#animate-wrapper > H1 {
+  white-space: nowrap;
+}
+#evaluationPanel {
+  position: relative;
+  top: -18px;
+  height: 0px;
+  border: 1px solid transparent;
+  opacity: 0.8;
+  overflow: hidden;
+  -moz-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+#evaluationPanel.afterSlide {
+  top: -18px;
+  height: 130px;
+  border: 1px solid #cbdde8;
+  opacity: 1;
+  background-color: #FFF;
+}
+.IE #evaluationPanel {
+  top: -14px;
+}
+.IE #evaluationPanel.afterSlide {
+  top: -14px;
+}
+
+#loginError,
+#systemDown {
+  padding-bottom: 8px;
+  width: 400px;
+  position: absolute;
+  left: 38%;
+  top: 40%;
+}
+
+  /* end Login page styles */
+
+.custom-dropdown-arrow {
+  background-image: url('../images/dropdown_arrow_gray.png');
+  background-repeat: no-repeat;
+  height: 11px;
+  width: 17px;
+}
+
+.custom-dropdown-arrow.custom-dropdown-pressed {
+  background-image: url('../images/dropdown_arrow_blue.png');
+}
+
+.custom-dropdown-arrow.small {
+  background-image: url('../images/arrow-dark-small.png');
+  background-repeat: no-repeat;
+  height: 8px;
+  width: 12px;
+}
+
+.custom-dropdown-arrow.small.custom-dropdown-pressed {
+  background-image: url('../images/arrow-light-small.png');
+}
+
