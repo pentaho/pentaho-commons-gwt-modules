@@ -148,17 +148,18 @@ public class ImageButton extends Image {
       return;
     }
     this.isEnabled = isEnabled;
-
+    
     if (isEnabled) {
       this.setSrc(enabledUrl);
     } else if (disabledUrl != null) {
       this.setSrc(disabledUrl);
     }
+    this.updateStyles();
   }
   
   /**
-   * We're manipulating the DOM element directory instead of using the setUrl() method as
-   * setUrl(), which does a lot of deferred loading / caching magic, was casing issues with IE. 
+   * We're manipulating the DOM element directly instead of using the setUrl() method as
+   * setUrl(), which does a lot of deferred loading / caching magic, was causing issues with IE. 
    * 
    * @TODO Re-evaluate the need for this after the next GWT release.
    * @param src
