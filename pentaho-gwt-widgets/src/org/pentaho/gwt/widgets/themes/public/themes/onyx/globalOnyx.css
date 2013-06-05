@@ -2618,16 +2618,16 @@ input:focus {
   background: url(../images/puc-login-logo.png) no-repeat left;
   width: 0;
   height: 93px;
-  left: 600px;
+  left: 750px;
   top: 90px;
   position: relative;
-  opacity: 0.2;
-  -moz-transition: 400ms linear;
-  -webkit-transition: 400ms linear;
-  transition: 400ms linear;
+  opacity: 0.5;
+  -moz-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
+  -webkit-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
+  transition: width 600ms linear, left 600ms linear, opacity 1s linear;
 }
 #login-logo.afterSlide {
-  width: 410px;
+  width: 560px;
   left: 150px;
   opacity: 1;
 }
@@ -2656,27 +2656,31 @@ input:focus {
   line-height: 44px;
   margin-bottom: 30px;
 }
-
-#login-footer{
+#login-footer-wrapper{
   position: relative;
   top: 100px; /* 90 from top of background image + 10*/
   margin-left: auto;
   margin-right: auto;
   text-align: right;
+  left: 0px;
+  width: 1255px;
+  display: block;
+  overflow: hidden;
+}
+#login-footer{
+  float: right;
   font-size: 13px;
   color: #939DA0;
   white-space: nowrap;
-  left: 1255px;
   width: 0px;
-  opacity: 0.2;
+  opacity: 0.5;
   display: block;
-  -moz-transition: 500ms linear;
-  -webkit-transition: 500ms linear;
-  transition: 500ms linear;
+  -moz-transition: width 600ms linear, opacity 1s linear;
+  -webkit-transition: width 600ms linear, opacity 1s linear;
+  transition: width 600ms linear, opacity 1s linear;
 }
 #login-footer.afterSlide {
-  left: 0px;
-  width: 1255px;
+  width: 400px;
   opacity: 1;
 }
 
@@ -2698,10 +2702,10 @@ input:focus {
   overflow: hidden;
   position: relative;
   max-height: 155px;
-  opacity: 0.2;
-  -moz-transition: all 600ms linear;
-  -webkit-transition: all 600ms linear;
-  transition: all 600ms linear;
+  opacity: 0.5;
+  -moz-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
+  -webkit-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
+  transition: width 600ms linear, left 600ms linear, opacity 1s linear;
 }
 #animate-wrapper.afterSlide {
   left: 0px;
@@ -2710,7 +2714,6 @@ input:focus {
 }
 #login-wrapper {
   height: 790px;
-  overflow: hidden;
 }
 #login,
 #animate-wrapper > H1 {
@@ -2749,7 +2752,6 @@ input:focus {
   left: 38%;
   top: 40%;
 }
-
   /* end Login page styles */
 
 .custom-dropdown-arrow {
