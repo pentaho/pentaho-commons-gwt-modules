@@ -9,11 +9,11 @@
  */
 .bootstrap {
   /* Allow for input prepend/append in search forms */
- 
+
   /* White icons with optional class, or on hover/focus/active states of certain elements */
- 
+
   /* move down carets for tabs */
- 
+
 }
 .bootstrap .clearfix {
   *zoom: 1;
@@ -640,6 +640,7 @@
 .bootstrap h2,
 .bootstrap h3 {
   /* line-height: 40px;  */
+  cursor: default;
 }
 .bootstrap h1 {
   font-size: 38px;
@@ -982,7 +983,7 @@
   outline: 0;
   outline: thin dotted \9;
   /* IE6-9 */
- 
+
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
@@ -1007,10 +1008,10 @@
 .bootstrap input[type="file"] {
   height: 30px;
   /* In IE7, the height of the select element cannot be changed by height, only font-size */
- 
+
   *margin-top: 4px;
   /* For IE7, add top margin to align select with labels */
- 
+
   line-height: 30px;
 }
 .bootstrap select {
@@ -1557,7 +1558,7 @@
   padding-left: 14px;
   padding-left: 4px \9;
   /* IE7-8 doesn't have border-radius, so don't indent the padding */
- 
+
   margin-bottom: 0;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
@@ -2678,7 +2679,7 @@
   line-height: 20px;
   color: #FFF;
   text-align: center;
-  /* text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); */ 
+  /* text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); */
   vertical-align: middle;
   cursor: pointer;
  background: #007297; /* Old browsers */
@@ -2705,7 +2706,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', end
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); */
   -webkit-box-shadow:  0 2px 2px rgba(0, 0, 0, 0.3);
   -moz-box-shadow:  0 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow:  0 2px 2px rgba(0, 0, 0, 0.3); 
+  box-shadow:  0 2px 2px rgba(0, 0, 0, 0.3);
 }
 .bootstrap .btn:hover,
 .bootstrap .btn:focus,
@@ -3362,7 +3363,7 @@ color: rgb(128, 128, 128);
   display: inline-block;
   *display: inline;
   /* IE7 inline-block hack */
- 
+
   *zoom: 1;
 }
 .bootstrap .btn-group-vertical > .btn {
@@ -3579,7 +3580,7 @@ color: rgb(128, 128, 128);
   -webkit-border-radius: 0px 4px 0 0;
   -moz-border-radius: 0px 4px 0 0;
   border-radius: 0px 0px 0 0;
-  border-top: 0px solid #c1d7e1;
+  border-top: 4px solid transparent;
   border-bottom: 0px solid #c1d7e1;
   border-left: 0px solid transparent;
   border-right: 1px solid #c1d7e1;
@@ -3589,7 +3590,7 @@ width: 130px;
 }
 .bootstrap #getting-started .nav-tabs > li > a:hover,
 .bootstrap #getting-started .nav-tabs > li > a:focus {
-  border-top: 0px solid #c1d7e1;
+  border-top: 4px solid transparent;
   border-bottom: 1px solid #c1d7e1;
   border-left: 0px solid #c1d7e1;
   border-right: 1px solid #c1d7e1;
@@ -3603,7 +3604,7 @@ width: 130px;
 .bootstrap  #recentsContianer.nav-tabs > li > a:focus,
 .bootstrap #favoritesContianer .nav-tabs > li > a:hover,
 .bootstrap  #favoritesContianer.nav-tabs > li > a:focus {
-  border-top: 0px solid #c1d7e1;
+  border-top: 4px solid transparent;
   border-bottom: 1px solid #c1d7e1;
   border-left: 0px solid #c1d7e1;
   border-right: 0px solid #c1d7e1;
@@ -3615,7 +3616,7 @@ width: 130px;
   color: #555555;
   cursor: default;
   background-color: #ffffff;
-  border-top: 0px solid #c1d7e1;
+  border-top: 4px solid #f2ce17;
   border-bottom: 1px solid transparent;
   border-left: 0px solid #c1d7e1;
   border-right: 1px solid #c1d7e1;
