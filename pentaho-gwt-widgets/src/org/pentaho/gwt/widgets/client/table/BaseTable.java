@@ -343,7 +343,7 @@ public class BaseTable extends Composite {
     for (int i = 0; i < rowAndColumnValues.length; i++) {
       //For even rows, add background highlighting
       if(i%2 != 0){
-      dataGrid.getRowFormatter().setStyleName(i,"cellTableOddRow");
+        dataGrid.getRowFormatter().setStyleName(i,"cellTableOddRow");
       }
       for (int j = 0; j < rowAndColumnValues[i].length; j++) {
         Object value = rowAndColumnValues[i][j];
@@ -554,6 +554,8 @@ public class BaseTable extends Composite {
       //Element[] tdElems = new Element[grid.getRowCount()];
       List<Element> tdElems = new ArrayList<Element>();
       for (int i = 0; i < grid.getRowCount(); i++) {
+        // first, clear out existing row styling for oddRow.
+        grid.getRowFormatter().setStyleName(i,"");
         tdElems.add(grid.getCellFormatter().getElement(i, column));
       }
 
@@ -562,8 +564,7 @@ public class BaseTable extends Composite {
             columnComparators != null && columnComparators[column] != null ? columnComparators[column]
                 : DEFAULT_COLUMN_COMPARATOR);
       }
-      
-      
+
       // Convert tdElems to trElems, reversing if needed
       Element[] trElems = new Element[tdElems.size()];
       List<Element> sortedTdElement = new ArrayList<Element>();
@@ -582,6 +583,14 @@ public class BaseTable extends Composite {
       }
       callback.onSortingComplete(trElems);
       sortListener.onSortingComplete(sortObjectCollection(sortedTdElement));
+
+      // now that the sorting is done, set the alternating row color
+      for (int i = 0; i < grid.getRowCount(); i++) {
+        if(i%2 != 0){
+          grid.getRowFormatter().setStyleName(i,"cellTableOddRow");
+        }
+      }
+
     }
   };
 
