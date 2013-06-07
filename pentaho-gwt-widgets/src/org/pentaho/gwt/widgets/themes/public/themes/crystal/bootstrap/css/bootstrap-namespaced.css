@@ -2800,6 +2800,9 @@ color: #293b44;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  transition: all 500ms;
+  -moz-transition: all 500ms;
+  -webkit-transition: all 500ms;
 }
 .bootstrap #fileBrowserButtons  .btn:hover,
 .bootstrap #fileBrowserButtons  .btn:focus,
@@ -2813,6 +2816,9 @@ color: #293b44;
     -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 .bootstrap #fileBrowserButtons .btn:active,
 .bootstrap #fileBrowserButtons .btn.active {
@@ -2820,23 +2826,32 @@ color: #293b44;
     -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 .bootstrap #fileBrowserButtons  .btn:first-child {
   *margin-left: 0;
 }
 .bootstrap #fileBrowserButtons  .btn:hover{
-  color: #698492;
   text-decoration: none;
-   background-color: #dce7ed;
      -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  color: #698492;
+  background-color: #dce7ed;
 }
 .bootstrap #fileBrowserButtons .btn .btn-large .btn-block:hover {
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
   color: #FFF;
   text-decoration: none;
-   background-color: #0085B0;
-     -webkit-box-shadow: none;
+  background-color: #0085B0;
+  -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
@@ -2881,7 +2896,7 @@ color: #293b44;
   -moz-box-shadow: none;
   box-shadow: none;
   background: transparent;
-color: rgb(128, 128, 128);
+  color: rgb(207, 207, 207);
 
 }
 /* End browse perespective button styling  */
@@ -3434,6 +3449,9 @@ color: rgb(128, 128, 128);
   color: #b94a48;
   background-color: #f2dede;
   border-color: #eed3d7;
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
 }
 .bootstrap .alert-danger h4,
 .bootstrap .alert-error h4 {
@@ -3479,6 +3497,9 @@ color: rgb(128, 128, 128);
   text-decoration: none;
   background-color: #dce7ed;
   color: #1973bc;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 .bootstrap .nav > li > a > img {
   max-width: none;
@@ -3588,6 +3609,10 @@ color: rgb(128, 128, 128);
 .bootstrap #getting-started .nav-tabs > li > a {
 width: 130px;
 }
+
+
+.bootstrap #launch-widget-row .nav-tabs > li > a:hover,
+.bootstrap #launch-widget-row .nav-tabs > li > a:focus,
 .bootstrap #getting-started .nav-tabs > li > a:hover,
 .bootstrap #getting-started .nav-tabs > li > a:focus {
   border-top: 4px solid transparent;
@@ -3595,10 +3620,16 @@ width: 130px;
   border-left: 0px solid #c1d7e1;
   border-right: 1px solid #c1d7e1;
   background-color: #dce7ed;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 .bootstrap #getting-started .nav-tabs .active > li  > a:hover,
 .bootstrap #getting-started .nav-tabs .active > li  > a:focus {
   background-color: #FFF;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 .bootstrap #recentsContianer .nav-tabs > li > a:hover,
 .bootstrap  #recentsContianer.nav-tabs > li > a:focus,
@@ -3608,6 +3639,9 @@ width: 130px;
   border-bottom: 1px solid #c1d7e1;
   border-left: 0px solid #c1d7e1;
   border-right: 0px solid #c1d7e1;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 
 .bootstrap .nav-tabs > .active > a,
@@ -3620,6 +3654,9 @@ width: 130px;
   border-bottom: 1px solid transparent;
   border-left: 0px solid #c1d7e1;
   border-right: 1px solid #c1d7e1;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
 }
 .bootstrap .nav-pills > li > a {
   padding-top: 8px;
