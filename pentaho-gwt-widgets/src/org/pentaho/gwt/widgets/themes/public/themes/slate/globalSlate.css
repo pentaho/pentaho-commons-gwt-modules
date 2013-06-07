@@ -2885,3 +2885,43 @@ body .dojoMenuItem2Hover {
   background-image: url('../images/arrow-light-small.png');
 }
 
+.drag_and_drop_label_content{
+  color: black;
+  width: 300px;
+  height: 180px;
+  border: 1px dashed #ccc;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #f7f7f7;
+  background-image:  url('./images/drop_here.png');
+  background-repeat: no-repeat;
+  background-position: 100px 20px;
+  position: absolute;
+  top: 50%;
+  margin-top: -80px;
+  left: 50%;
+  margin-left: -150px;
+}
+
+.drag_and_drop_label_text{
+  font-size: 18px;
+  color: #000;
+  margin: 0;
+  text-align: center;
+  font-family: OpenSansRegular, sans-serif;
+  position: relative;
+  top: 132px;
+}
+
+.drag_and_drop_label_wrapper{
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  background-color: #fff;
+  display: none;
+}
+
+.drag_and_drop_label .drag_and_drop_label_wrapper {
+  display: block;
+}
