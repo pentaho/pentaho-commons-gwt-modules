@@ -72,6 +72,10 @@ label {
   font-size: 13px;
 }
 
+legend{
+	color: #777;
+}
+
 fieldset, fieldset.xul-fieldset {
   padding: 0px;
   width: auto;
@@ -80,17 +84,17 @@ fieldset, fieldset.xul-fieldset {
 
 input[type='text'] {
   border: 1px solid #cbdde8;
-  padding: 2px 0 2px 4px;
+  padding: 4px 2px 4px 4px;
 }
 .gwt-ListBox{
   border: 1px solid #cbdde8;
-  padding: 2px 0 2px 4px;
+  padding: 4px 2px 4px 4px;
 }
 *:focus {outline: none;}
 .gwt-PasswordTextBox,
 input, input[type="password"]{
   border: 1px solid #cbdde8;
-  padding: 2px 0 2px 4px;
+  padding: 4px 2px 4px 4px;
 }
 .scroll-panel {
   position: relative;
@@ -116,7 +120,7 @@ input, input[type="password"]{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', endColorstr='#005f7d',GradientType=0 ); /* IE6-9 */
   font-size: 15px;
   color: #ffffff;
-  padding: 6px 14px 8px 14px;
+  padding: 4px 14px 6px 14px;
   font-family: opensanslight, sans-serif;
   /* Standard form */
   border-radius: 3px;
@@ -348,7 +352,7 @@ cursor: auto;
   font-size: 16px;
   color: #1973bc;
   cursor: move;
-  padding: 6px 0 10px 12px;
+  padding: 6px 0 6px 12px;
   border: 0px solid black;
   text-align: left;
 }
@@ -481,13 +485,15 @@ cursor: auto;
   border-top-left-radius: 1px;
   background: #FFF;
 }
+#contentArea .pentaho-tabWidget,
+#editContainer .pentaho-tabWidget {
+border-top: 4px solid transparent;
+}
 #contentArea .pentaho-tabWidget-selected,
 #editContainer .pentaho-tabWidget-selected{
   border-top: solid 4px #f2ce17;
 }
-#editContainer .pentaho-tabWidget {
-border-top: 4px solid transparent;
-}
+
 .IE .pentaho-tabWidget-selected {
   /*background: url('images/tab_on.png') repeat-x;*/
 }
@@ -516,10 +522,10 @@ border-top: 4px solid transparent;
   height: 35px;
 }
 
-
-#sidepaneltabset.pentaho-tabBar{
+#sidepanelinner .pentaho-tabBar,
+#editContainer .pentaho-tabBar{
   background: url('images/bg_admin_tab_panel.png') repeat-x bottom left;
-  height: 35px;
+  height: 38px;
 }
 
 
@@ -2597,14 +2603,14 @@ media="screen"
   padding: 6px;
   font-size: 16px;
 }
-
-.fileBrowserColumn .body .folder.selected > .element {
-  background: #d7e9cd;
-
-}
+/* remove trasnstion for preformance but will revisit */
 
 .fileBrowserColumn .body .folder.selected > .element {
   font-weight: normal;
+  background: #d7e9cd;
+  /*      transition: all 300ms;
+-moz-transition: all 300ms;
+-webkit-transition: all 300ms;*/
 }
 
 .fileBrowserColumn .body .file.selected{
@@ -2815,7 +2821,9 @@ background-color: #8ab3c6;
   background: white none repeat scroll 0% 0%;
   border: 3px solid #d7d7d7;
 }
-
+.gwt-Tree .gwt-TreeItem-selected{
+	background-color: #d7e9cd;
+}
 
   /* dojo grid styles ------------------------- */
 .soria .dojoxGrid {
@@ -3249,4 +3257,25 @@ background-color: #8ab3c6;
   color: black;
   vertical-align: top;
   font-size: 12px;
+}
+#launch-widget-body{
+	background-color: #f6f7f8;
+}
+#launch-widget-container{
+	padding: 60px 0 0 0;
+	background-image: url('images/logo.png');
+	background-repeat: no-repeat;
+	background-position: 20px 8px;
+}
+/* analyzer disclosure panel arrow */
+.tundra .pentaho-titled-toolbar .dijitArrowNode {
+background-image: url('images/disclosure_open.png');
+)
+.tundra .pentaho-titled-toolbar.dijitClosed .dijitArrowNode {
+background-image: url('images/disclosure_close.png');
+)
+.pc_pageControlContainer {
+padding: 0px 1px 0px 1px;
+height: auto;
+vertical-align: middle;
 }
