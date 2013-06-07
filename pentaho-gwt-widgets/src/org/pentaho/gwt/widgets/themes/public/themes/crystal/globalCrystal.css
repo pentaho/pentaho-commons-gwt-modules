@@ -3263,17 +3263,17 @@ background-color: #8ab3c6;
 }
 #launch-widget-container{
 	padding: 60px 0 0 0;
-	background-image: url('images/logo.png');
+	background-image: url('../images/logo.png');
 	background-repeat: no-repeat;
 	background-position: 20px 8px;
 }
 /* analyzer disclosure panel arrow */
 .tundra .pentaho-titled-toolbar .dijitArrowNode {
-background-image: url('images/disclosure_open.png');
-)
+  background-image: url('../images/disclosure_open.png');
+}
 .tundra .pentaho-titled-toolbar.dijitClosed .dijitArrowNode {
-background-image: url('images/disclosure_close.png');
-)
+  background-image: url('../images/disclosure_close.png');
+}
 .pc_pageControlContainer {
 padding: 0px 1px 0px 1px;
 height: auto;
