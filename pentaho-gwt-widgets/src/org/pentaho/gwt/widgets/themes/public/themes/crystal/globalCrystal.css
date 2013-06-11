@@ -3111,13 +3111,24 @@ background-color: #8ab3c6;
 #login INPUT[type="text"],
 #login INPUT[type="password"] {
   margin-right: 20px;
+  margin-left: 0px;
   width: 202px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+#login .input-container {
+  display: inline-block;
+}
+#login .input-container button {
+  margin-bottom: 10px;
 }
 
 #login-form-container H1 {
   font-size: 44px;
   line-height: 44px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 #login-footer-wrapper{
   position: relative;
@@ -3150,7 +3161,7 @@ background-color: #8ab3c6;
 #eval-users-toggle {
   font-size: 13px;
   color: #1973BC;
-  margin-top: 18px;
+  margin-top: 13px;
   white-space: nowrap;
   cursor: pointer;
   display: inline-block;
@@ -3164,7 +3175,7 @@ background-color: #8ab3c6;
   width: 0;
   overflow: hidden;
   position: relative;
-  max-height: 155px;
+  max-height: 182px;
   opacity: 0.5;
   -moz-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
   -webkit-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
@@ -3178,33 +3189,51 @@ background-color: #8ab3c6;
 #login-wrapper {
   height: 790px;
 }
+.login-role {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+#evaluationPanel .login-label {
+  margin-bottom: 5px;
+  font-size: 13px;
+  min-height: 0px;
+}
+.login-role,
+.login-label {
+  color: #777;
+}
+#evaluationPanel .btn {
+  margin-top: 16px;
+}
+#login label {
+  font-size: 13px;
+  color: #777;
+}
+
 #login,
 #animate-wrapper > H1 {
   white-space: nowrap;
 }
 #evaluationPanel {
   position: relative;
-  top: -18px;
-  height: 0px;
+  top: -14px;
+  height: 180px;
   border: 1px solid transparent;
-  opacity: 0.8;
+  opacity: 0.0;
   overflow: hidden;
-  -moz-transition: all 200ms linear;
-  -webkit-transition: all 200ms linear;
-  transition: all 200ms linear;
+  -moz-transition: opacity 500ms ease-in-out;
+  -webkit-transition: opacity 500ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 #evaluationPanel.afterSlide {
-  top: -18px;
-  height: 130px;
+  top: -14px;
+  height: 180px;
   border: 1px solid #cbdde8;
   opacity: 1;
   background-color: #FFF;
 }
-.IE #evaluationPanel {
-  top: -14px;
-}
-.IE #evaluationPanel.afterSlide {
-  top: -14px;
+#role-business-user-panel {
+  padding-left: 10px;
 }
 
 #loginError,
@@ -3216,6 +3245,16 @@ background-color: #8ab3c6;
   top: 40%;
 }
 
+#eval-arrow {
+  margin-left: 4px;
+  height: 12px;
+  width: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+  -moz-transition: all 300ms ease-in-out;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
   /* end Login page styles */
 
 .custom-dropdown-arrow {
@@ -3236,8 +3275,14 @@ background-color: #8ab3c6;
   width: 12px;
 }
 
+#eval-arrow,
 .custom-dropdown-arrow.small.custom-dropdown-pressed {
   background-image: url('../images/arrow-light-small.png');
+}
+#eval-arrow.closed {
+  background-image: url('../images/arrow-closed-light-small.png');
+  width: 12px;
+  height: 12px;
 }
 
 .custom-list-item-hover{
