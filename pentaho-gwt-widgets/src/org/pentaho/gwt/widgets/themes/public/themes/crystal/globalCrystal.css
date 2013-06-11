@@ -2377,6 +2377,18 @@ body.IE>table {
   width: 22px;
 }
 
+.icon-small.icon-open-folder {
+  background: url('images/open-folder.png');
+  height: 22px;
+  width: 22px;
+}
+
+.icon-small.icon-open-folder.disabled {
+  background: url('images/open-folder-disabled.png');
+  height: 22px;
+  width: 22px;
+}
+
 .icon-small.icon-update {
   background: url('../images/update.png');
 }
