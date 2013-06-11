@@ -3712,7 +3712,7 @@ width: 130px;
 }
 .bootstrap #recentsContianer .nav-tabs.nav-stacked > li:last-child > a ,
 .bootstrap #favoritesContianer  .nav-tabs.nav-stacked > li:last-child  > a {
-  border-bottom: 0px solid #c1d7e1;
+  /*border-bottom: 0px solid #c1d7e1;*/
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
