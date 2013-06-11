@@ -81,16 +81,43 @@ fieldset, fieldset.xul-fieldset {
   width: auto;
   border: 1px solid #cbdde8;
 }
+input[type='checkbox']{
+	border:none;
+}
+input[type='radio']{
+	border:none;
+}
 
 input[type='text'] {
   border: 1px solid #cbdde8;
   padding: 4px 2px 4px 4px;
 }
-.gwt-ListBox{
+select,
+.gwt-ListBox,
+.timeZonePicker{
   border: 1px solid #cbdde8;
   padding: 4px 2px 4px 4px;
 }
 *:focus {outline: none;}
+
+.adminField {
+margin-left: 4px;
+}
+#ldapTreeDialogContent{
+	padding: 0 4px;
+}
+.soria .dijitTreeRowSelected {
+	background-color: #d7e9cd;
+}
+.soria .dijitTreeRowHover {
+	background-color:#dce7ed;
+}
+.dijitTreeRow{
+	padding: 4px;
+}
+.groupOption input[type="text"], .groupOption input[type="password"] {
+margin-left: 0px;
+}
 .gwt-PasswordTextBox,
 input, input[type="password"]{
   border: 1px solid #cbdde8;
@@ -352,7 +379,7 @@ cursor: auto;
   font-size: 16px;
   color: #1973bc;
   cursor: move;
-  padding: 6px 0 6px 12px;
+  padding: 6px 0 2px 12px;
   border: 0px solid black;
   text-align: left;
 }
@@ -364,6 +391,8 @@ cursor: auto;
 .pentaho-dialog .button-panel {
   padding: 12px 8px 10px 0px;
   width: 100%;
+  height: auto;
+  margin: 0;
 }
 
 
@@ -430,7 +459,7 @@ cursor: auto;
 
 .glasspane {
   position: absolute;
-  background-color: #809eab;
+  background-color: #144b64; /*#809eab;*/
   /* IE8 css hack for opacity */
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=80)";
   filter: alpha(opacity = 80);
@@ -1904,17 +1933,15 @@ body.IE>table {
 
 .dragDropAvatar {
   padding: 4px;
-  background-color: #d7e9cd;
-
-  border: 1px solid #87df27;
-
+  background-color: #f5f6f8;
+  border: 1px solid #1973bc;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
 }
 
 .dragDropTargetArea.highlightTarget {
-  background-color: #d7e9cd;
+  background-color: #dce7ed;
 }
 
 .dragDropTargetArea {
@@ -2163,7 +2190,6 @@ body.IE>table {
   margin: 0px;
   padding: 0px;
   display: none;
-
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
@@ -2195,10 +2221,19 @@ body.IE>table {
   font-family: OpenSansLight, Helvetica, Arial, Sans serif;
   cursor: default;
 }
-
+.authMethod,
 .pentaho-fieldgroup-minor {
   font-size: 16px;
   color: #26363d;
+}
+.dialog-content .message{
+	text-align: left;
+}
+.dialog-buttons {
+height: 30px;
+margin-bottom: 0px;
+margin-top: 0px;
+padding: 10px 0 10px 0;
 }
 
 .warning{
@@ -2208,7 +2243,7 @@ body.IE>table {
   border-color: #DDD;
   border-width: 1px;
   border-style: solid;
-  width:600px;
+  width:575px;
 }
 
 .warning .icon{
@@ -2225,7 +2260,7 @@ body.IE>table {
 
   /* added by Brett  */
 #pucHeader {
-  background: url('images/bg_header.png') repeat-x top left;
+  background: url('images/bg_header_2.png') repeat-x top left;
   display: block;
   /* background: #b9d2dd; */
   height: 88px;
@@ -2264,6 +2299,8 @@ body.IE>table {
 
 #bottompanel{
   border: 0;
+  height: 40px;
+  padding: 4px;
 }
 
 .pentahoPropertiesPanel{
@@ -2324,7 +2361,7 @@ body.IE>table {
   z-index: 20001;
   height: auto;
   border: 1px solid #ABC9D9;
-  background: #EFF5F8;
+  background: #cbdde8;
 }
 .waitPopup_title {
   color: #0560AB;
@@ -2577,7 +2614,7 @@ media="screen"
   background: #8ab3c6;
 }
 .objectTree{
-  border: 1px solid #f1f1f1;
+  border: 1px solid #cbdde8;
 }
 
 .objectTree h2{
@@ -2725,8 +2762,22 @@ height: 39px;
   border: 0px solid rgb(224, 224, 224);
 }
 
+.pc_pageTotal{
+	padding: 4px 0px 0px 2px;
+}
 
-  /* added by brett to for PIR  */
+.reportArea #selectionFilterPanel{
+	padding: 1px 3px 8px 3px;
+	background-color: #8ab3c6;
+	border-left: 1px #cbdde8 solid;
+  border-right: 1px #cbdde8 solid;
+  border-bottom: 1px #cbdde8 solid;
+  opacity: 1;
+}
+/* added by brett to for PIR  */
+#formattabpanelinner .tundra .dijitToolbar {
+  background-color: #fff;
+  }
 .tundra .dijitToolbar {
   background-color: #f1f1f1;
   height: 30px;
@@ -2742,8 +2793,11 @@ height: 39px;
   font-weight: normal;
   background-color: #8ab3c6;
 }
-.gwt-ScrollTable .dataTable td {
+.schedulesPanel .gwt-ScrollTable .dataTable td {
   padding: 10px 10px 12px 10px;
+}
+.gwt-ScrollTable .dataTable td {
+  padding: 4px 10px 4px 10px;
 }
 .gwt-ScrollTable .headerTable {
   background: #8ab3c6;
@@ -2836,7 +2890,26 @@ background-color: #8ab3c6;
 .gwt-Tree .gwt-TreeItem-selected{
 	background-color: #d7e9cd;
 }
+.tree-item-custom-widget-selected {
+background-color: #d7e9cd;
+}
 
+.tree-item-custom-widget-drop-hover{
+  border: 1px solid #8ab3c6;
+  background-color: #dce7ed;
+}
+.tree-drop-indicator{
+  height: 1px;
+  background-color: #1973cd;
+  margin-top: 1px;
+  padding-right: 6px;
+
+}
+.tree-drop-indicator-symbol{
+  background-image: url("images/dropIndicator.png");
+  padding-left:12px;
+  padding-top:4px;
+}
   /* dojo grid styles ------------------------- */
 .soria .dojoxGrid {
   background-color: transparent;
@@ -2971,15 +3044,18 @@ background-color: #8ab3c6;
   box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.3);*/
   background: url('images/warning-icon.png') no-repeat 15px center #FBEADC;
 }
+.invalidLicense{
+	padding: 10px 0;
+}
 .license_message_title{
   font-size: 16px;
   color: red;
-  padding: 0 0 20px 40px;
+  padding: 0 0 10px 40px;
 }
 .license_message_text{
   font-size: 14px;
   color: #000;
-  padding: 10px 0 0 0;
+  padding: 0 0 0 40px;
   margin: 0;
 }
 #file-input-form-container{
@@ -3031,7 +3107,7 @@ background-color: #8ab3c6;
 
 #csvDeckPanel .custom-list-textbox, #datasourceName, #uploadedFile, .dataTable .gwt-HTML{
   font-family: opensansRegular, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color:#26363d;
 }
 
@@ -3335,4 +3411,69 @@ background-color: #8ab3c6;
 padding: 0px 1px 0px 1px;
 height: auto;
 vertical-align: middle;
+}
+.indicator{
+  background-image: url("images/dropIndicator.png");
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+.indicator .indicatorLine{
+  background-color: #1973bc;
+}
+
+/* Analyzer dag adnd rop indicators */
+.dnd-indicator-horizontal-left {
+  background:url(images/dnd_left_arrow.png) no-repeat;
+}
+.dnd-indicator-horizontal-line {
+  background:url(images/dnd_horz_line.png) repeat-x;
+  /* width will be set inline by javascript to be dynamic */
+}
+.dnd-indicator-horizontal-right {
+  background:url(images/dnd_right_arrow.png) no-repeat;
+}
+
+.dnd-indicator-vertical-top {
+  background:url(images/dnd_top_arrow.png);
+}
+.dnd-indicator-vertical-line {
+
+  background:url(images/dnd_vert_line.png) repeat-y;
+  /* height will be set inline by javascript to be dynamic */
+}
+.dnd-indicator-vertical-bottom {
+  background:url(images/dnd_bottom_arrow.png);
+}
+/* PIR drag and drop indicators */
+
+.dropActiveHorizontal {
+    background:transparent url(images/group_line_bg_active.png) repeat-x;
+}
+
+.dropActiveVertical {
+    background:transparent url(images/col_line_bg_active.png) repeat-y;
+}
+
+.dropHiliteHorizontal {
+    background:transparent url(images/group_line_bg_aadditional.png) repeat-x;
+}
+
+.dropHiliteVertical {
+    background:transparent url(images/col_line_bg_additional.png) repeat-y;
+}
+
+.dropLeftArrow{
+    background:transparent url(images/left_arrow.png);
+}
+
+.dropRightArrow{
+    background:transparent url(images/right_arrow.png);
+}
+
+.dropTopArrow{
+    background:transparent url(images/top_arrow.png);
+}
+
+.dropBottomArrow{
+    background:transparent url(images/bottom_arrow.png);
 }
