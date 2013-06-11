@@ -2354,6 +2354,14 @@ input:focus {
   background: url('../images/run-small-disabled.png');
 }
 
+.icon-small.icon-open-folder {
+  background: url('../images/open_16.png');
+}
+
+.icon-small.icon-open-folder.disabled {
+  background: url('../images/open_16_disabled.png');
+}
+
 .icon-small.icon-update {
   background: url('../images/update.png');
 }
