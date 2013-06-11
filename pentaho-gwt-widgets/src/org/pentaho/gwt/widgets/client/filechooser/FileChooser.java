@@ -16,22 +16,43 @@
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.http.client.*;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
-import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.filechooser.images.FileChooserImages;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.filechooser.images.FileChooserImages;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.RequestBuilder;
+import com.google.gwt.http.client.RequestCallback;
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.http.client.Response;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.ChangeListener;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MouseListener;
+import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Tree;
+import com.google.gwt.user.client.ui.TreeItem;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -102,11 +123,14 @@ public class FileChooser extends VerticalPanel {
     try {
       RepositoryFile file = tree.getFile();
       if(file != null && !file.isFolder() && file.getName().equals(actualFileName)) {
-        return file;
+    	return file;
       }
       if(file != null) {
         for(RepositoryFileTree treeItem: tree.getChildren()) {
-          search(treeItem, actualFileName);
+          file = search(treeItem, actualFileName);
+          if(file != null) {
+        	  return file;
+          }
         }
       }
     } catch(Exception e) {
@@ -645,7 +669,15 @@ public class FileChooser extends VerticalPanel {
   }
 
   public boolean doesSelectedFileExist() {
-    return search(fileTree, this.actualFileName) != null; 
+	return doesSelectedFileExist(null);
+  }
+  
+  public boolean doesSelectedFileExist(String ext) {
+	  String fileName = this.actualFileName;
+	  if(!StringUtils.isEmpty(ext)) {
+		  fileName = fileName + ext;
+	  }
+	  return search(fileTree, fileName) != null;
   }
 
   public void setShowLocalizedFileNames(boolean showLocalizedFileNames) {
