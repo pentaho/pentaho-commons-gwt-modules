@@ -135,9 +135,18 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   public boolean doesSelectedFileExist() {
-    return fileChooser.doesSelectedFileExist();
+    return doesSelectedFileExist(null);
   }
-
+  
+  public boolean doesSelectedFileExist(String ext) {
+	boolean result = false;
+	if(StringUtils.isEmpty(ext)) {
+		result = fileChooser.doesSelectedFileExist();
+	} else {
+		result = fileChooser.doesSelectedFileExist(ext);
+	}
+   return result;
+  }
   
   public List<String> getFilesInPath(final RepositoryFileTree fileTreeItem) {
     return fileChooser.getFilesInPath(fileTreeItem);
