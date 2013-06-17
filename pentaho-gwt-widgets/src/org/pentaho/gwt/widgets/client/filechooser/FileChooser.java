@@ -122,7 +122,7 @@ public class FileChooser extends VerticalPanel {
   private RepositoryFile search(RepositoryFileTree tree, String actualFileName) {
     try {
       RepositoryFile file = tree.getFile();
-      if(file != null && !file.isFolder() && file.getName().equals(actualFileName)) {
+      if(file != null && !file.isFolder() && file.getPath().equals(actualFileName)) {
     	return file;
       }
       if(file != null) {
@@ -673,7 +673,7 @@ public class FileChooser extends VerticalPanel {
   }
   
   public boolean doesSelectedFileExist(String ext) {
-	  String fileName = this.actualFileName;
+	  String fileName = this.selectedPath + "/" + this.actualFileName;
 	  if(!StringUtils.isEmpty(ext)) {
 		  fileName = fileName + ext;
 	  }
