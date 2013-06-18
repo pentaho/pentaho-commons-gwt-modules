@@ -2790,3 +2790,137 @@ input:focus {
   background-image: url('../images/arrow-light-small.png');
 }
 
+/*
+ * Toolbar buttons
+ */
+.pentaho-smallmeasurebutton {
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/sm_measure_icon.png");
+}
+
+.pentaho-smalldimensionbutton {
+    background-image: url("../images/sm_dim_icon.png");
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-smallhierarchybutton {
+    background-image: url("../images/sm_hierarchy_icon.png");
+    width: 13px;
+    height: 13px;
+}
+
+.pentaho-smalllevelbutton {
+    background-image: url("../images/sm_level_icon.png");
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-smallmemberpropbutton {
+    background-image: url("../images/sm_member_prop_icon.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-smallcategorybutton {
+    background-image: url("../images/sm_folder_icon.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-fieldbutton {
+    background-image: url("../images/field_list.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-autopopulatebutton {
+    background-image: url("../images/autogen_model.png");
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-addfieldbutton {
+    background-image: url("../images/insert_to_model.png");
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-refreshbutton {
+    background-image: url("../images/refresh.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-helpbutton {
+    background-image: url("../images/help_link.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-clearmodelbutton {
+    background-image: url("../images/clear_model.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-smallremovebutton {
+    background-image: url("../images/sm_remove.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-expandallbutton {
+    background-image: url("../images/ExpandAll.png");    
+    width: 15px;
+    height: 15px;
+}
+
+.pentaho-collapseallbutton {
+    background-image: url("../images/CollapseAll.png");    
+    width: 15px;
+    height: 15px;
+}
+
+.penatho-smalleditbutton {
+    background-image: url("../images/sm_edit.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-warningbutton {
+    background-image: url("../images/warning.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-updatebutton {
+    background-image: url("../images/update.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-updatebutton.pentaho-imagebutton-disabled {
+  background-image: url("../images/updateDisabled.png");    
+  width: 16px;
+  height: 16px;
+}
+
+.pentaho-movearrowbutton {
+  background-image: url("../images/move_arrow.png");    
+  width: 16px;
+  height: 16px;
+}
+
+.pentaho-movearrowbackbutton {
+  background-image: url("../images/move_arrow_back.png");    
+  width: 16px;
+  height: 16px;
+}
+
+.pentaho-chevron {
+  background-image: url("../images/24x24_chevron_green.png");    
+  width: 16px;
+  height: 16px; 
+}
