@@ -3263,7 +3263,6 @@ background-color: #d7e9cd;
   width: 0;
   overflow: hidden;
   position: relative;
-  max-height: 182px;
   opacity: 0.5;
   -moz-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
   -webkit-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
@@ -3278,17 +3277,26 @@ background-color: #d7e9cd;
   height: 790px;
 }
 .login-role {
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 #evaluationPanel .login-label {
   margin-bottom: 5px;
-  font-size: 13px;
+  font-size: 14px;
   min-height: 0px;
 }
-.login-role,
+
+.login-role {
+  color: #777;
+  font-family: 'OpenSansLight';
+}
+
 .login-label {
   color: #777;
+  font-family: 'OpenSansRegular';
+}
+.login-value{
+ font-family: 'OpenSansLight';
 }
 #evaluationPanel .btn {
   margin-top: 16px;
@@ -3304,7 +3312,7 @@ background-color: #d7e9cd;
 }
 #evaluationPanel {
   position: relative;
-  top: -14px;
+  top: -7px;
   height: 180px;
   border: 1px solid transparent;
   opacity: 0.0;
@@ -3314,7 +3322,7 @@ background-color: #d7e9cd;
   transition: opacity 500ms ease-in-out;
 }
 #evaluationPanel.afterSlide {
-  top: -14px;
+  top: -7px;
   height: 180px;
   border: 1px solid #cbdde8;
   opacity: 1;
