@@ -27,6 +27,7 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
+
 /**
  * Clickable image with enable/disable functionality built in.
  * @deprecated use {@link ThemeableImageButton}
@@ -35,8 +36,28 @@ import com.google.gwt.user.client.ui.Image;
 public class ImageButton extends Image {
 
   private boolean isEnabled = true;
+
   private String enabledUrl;
+
   private String disabledUrl;
+
+  String imagePressedStyle = "image-button-pressed"; //$NON-NLS-1$
+
+  String disabeldImagePressedStyle = "disabled-image-button-pressed"; //$NON-NLS-1$
+
+  String imageHoverStyle = "image-button-over"; //$NON-NLS-1$
+
+  String disabledImageHoverStyle = "disabled-image-button-over"; //$NON-NLS-1$
+
+  String imageStyle = "image-button"; //$NON-NLS-1$
+
+  String disabledImageStyle = "disabled-image-button"; //$NON-NLS-1$
+
+  String themeImageDownStyle = "pentaho-imagebutton-down"; //$NON-NLS-1$
+
+  String themeImageHoverStyle = "pentaho-imagebutton-hover"; //$NON-NLS-1$
+
+  String themeDisabledImageStyle = "pentaho-imagebutton-disabled"; //$NON-NLS-1$
 
   public ImageButton(String enabledUrl, String disabledUrl, String tooltip) {
     this(enabledUrl, disabledUrl, tooltip, 0, 0);
@@ -44,34 +65,42 @@ public class ImageButton extends Image {
 
   public ImageButton() {
     super();
-    setStyleName("image-button"); //$NON-NLS-1$
+    setStyleName(imageStyle);
+
     this.addMouseDownHandler(new MouseDownHandler() {
       public void onMouseDown(MouseDownEvent event) {
+        removeStyleNames(imagePressedStyle, disabeldImagePressedStyle, themeImageDownStyle);
+
         if (isEnabled) {
-          setStyleName("image-button-pressed"); //$NON-NLS-1$
+          addStyleNames(imagePressedStyle, themeImageDownStyle);
         } else {
-          setStyleName("disabled-image-button-pressed"); //$NON-NLS-1$
+          addStyleNames(disabeldImagePressedStyle);
         }
       }
     });
     this.addMouseUpHandler(new MouseUpHandler() {
       public void onMouseUp(MouseUpEvent event) {
+        removeStyleNames(imagePressedStyle, disabeldImagePressedStyle, themeImageDownStyle);
         updateStyles();
       }
     });
 
     this.addMouseOverHandler(new MouseOverHandler() {
       public void onMouseOver(MouseOverEvent event) {
+        removeStyleNames(imageHoverStyle, disabledImageHoverStyle, themeImageHoverStyle);
+
         if (isEnabled) {
-          setStyleName("image-button-over"); //$NON-NLS-1$
+          addStyleNames(imageHoverStyle, themeImageHoverStyle);
         } else {
-          setStyleName("disabled-image-button-over"); //$NON-NLS-1$
+          addStyleName(disabledImageHoverStyle);
         }
+
       }
     });
 
     this.addMouseOutHandler(new MouseOutHandler() {
       public void onMouseOut(MouseOutEvent event) {
+        removeStyleNames(imageHoverStyle, disabledImageHoverStyle, themeImageHoverStyle);
         updateStyles();
       }
     });
@@ -79,15 +108,16 @@ public class ImageButton extends Image {
   }
 
   private void updateStyles() {
+    removeStyleNames(imageStyle, disabledImageStyle, themeDisabledImageStyle);
+
     if (isEnabled) {
-      setStyleName("image-button"); //$NON-NLS-1$
+      addStyleName(imageStyle);
     } else {
-      setStyleName("disabled-image-button"); //$NON-NLS-1$
+      addStyleNames(disabledImageStyle, themeDisabledImageStyle);
     }
   }
 
-  public ImageButton(String enabledUrl, String disabledUrl, String tooltip,
-      int width, int height) {
+  public ImageButton(String enabledUrl, String disabledUrl, String tooltip, int width, int height) {
     super(enabledUrl);
 
     setSize(width + "px", height + "px"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -111,8 +141,7 @@ public class ImageButton extends Image {
     // only change the url if it's different and not null
     if (isEnabled && this.getUrl().equals(enabledUrl) == false) {
       this.setSrc(enabledUrl);
-    } else if (!isEnabled && disabledUrl != null
-        && this.getUrl().equals(disabledUrl) == false) {
+    } else if (!isEnabled && disabledUrl != null && this.getUrl().equals(disabledUrl) == false) {
       this.setSrc(disabledUrl);
     }
   }
@@ -124,8 +153,7 @@ public class ImageButton extends Image {
     this.disabledUrl = url;
 
     // only change the url if it's different and not null
-    if (isEnabled && enabledUrl != null
-        && this.getUrl().equals(enabledUrl) == false) {
+    if (isEnabled && enabledUrl != null && this.getUrl().equals(enabledUrl) == false) {
       this.setSrc(enabledUrl);
     } else if (!isEnabled && this.getUrl().equals(disabledUrl) == false) {
       this.setSrc(disabledUrl);
@@ -148,7 +176,7 @@ public class ImageButton extends Image {
       return;
     }
     this.isEnabled = isEnabled;
-    
+
     if (isEnabled) {
       this.setSrc(enabledUrl);
     } else if (disabledUrl != null) {
@@ -156,7 +184,7 @@ public class ImageButton extends Image {
     }
     this.updateStyles();
   }
-  
+
   /**
    * We're manipulating the DOM element directly instead of using the setUrl() method as
    * setUrl(), which does a lot of deferred loading / caching magic, was causing issues with IE. 
@@ -164,12 +192,24 @@ public class ImageButton extends Image {
    * @TODO Re-evaluate the need for this after the next GWT release.
    * @param src
    */
-  private void setSrc(String src){
+  private void setSrc(String src) {
     this.getElement().setAttribute("src", src); //$NON-NLS-1$
   }
 
   public void setFocus(boolean focus) {
     this.setFocus(focus);
+  }
+
+  public void removeStyleNames(String... names) {
+    for (String name : names) {
+      removeStyleName(name);
+    }
+  }
+
+  public void addStyleNames(String... names) {
+    for (String name : names) {
+      addStyleName(name);
+    }
   }
 
 }

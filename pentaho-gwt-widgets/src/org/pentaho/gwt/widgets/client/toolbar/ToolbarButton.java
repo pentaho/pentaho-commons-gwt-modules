@@ -18,6 +18,14 @@ package org.pentaho.gwt.widgets.client.toolbar;
 
 import org.pentaho.gwt.widgets.client.text.ToolTip;
 
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -41,20 +49,36 @@ import com.google.gwt.user.client.ui.Widget;
 @SuppressWarnings("deprecation")
 public class ToolbarButton {
   protected DockPanel button = new DockPanel();
+
   protected boolean enabled = true;
+
   protected boolean visible = true;
+
   protected String text;
+
   protected Image image;
+
   protected Image disabledImage;
+
   protected Image currentImage;
+
   protected Label label = new Label();
+
   protected FocusPanel eventWrapper = new FocusPanel();
-  protected String stylePrimaryName = "toolbar-button";    //$NON-NLS-1$
+
+  protected String stylePrimaryName = "toolbar-button"; //$NON-NLS-1$
+
   protected Command command;
+
   protected ToolTip toolTipWidget;
+
   protected String toolTip;
+
   protected Image downImage;
+
   protected Image downImageDisabled;
+
+  String className = ""; //$NON-NLS-1$
 
   /**
    * Constructs a toolbar button with an image and a label
@@ -62,24 +86,11 @@ public class ToolbarButton {
    * @param img GWT Image object 
    * @param label String containing an option label
    */
-  public ToolbarButton(Image img, String label){
+  public ToolbarButton(Image img, String label) {
     this(img);
     this.label.setText(label);
     button.add(this.label, DockPanel.EAST);
   }
-  
-  /**
-   * Constructs a toolbar button with an enabled image, disabled image and a label
-   * 
-   * @param img GWT Image object 
-   * @param disabledImage GWT Image object 
-   * @param label String containing an option label
-   */
-  public ToolbarButton(Image img, Image disabledImage, String label){
-    this(img, label);
-    this.disabledImage = disabledImage;
-  }
-  
 
   /**
    * Constructs a toolbar button with an enabled image, disabled image and a label
@@ -88,17 +99,29 @@ public class ToolbarButton {
    * @param disabledImage GWT Image object 
    * @param label String containing an option label
    */
-  public ToolbarButton(Image img, Image disabledImage){
+  public ToolbarButton(Image img, Image disabledImage, String label) {
+    this(img, label);
+    this.disabledImage = disabledImage;
+  }
+
+  /**
+   * Constructs a toolbar button with an enabled image, disabled image and a label
+   * 
+   * @param img GWT Image object 
+   * @param disabledImage GWT Image object 
+   * @param label String containing an option label
+   */
+  public ToolbarButton(Image img, Image disabledImage) {
     this(img);
     this.disabledImage = disabledImage;
   }
-  
+
   /**
    * Constructs a toolbar button with an image, currently hardcoded to 16x16
    * 
    * @param img GWT Image object 
    */
-  public ToolbarButton(Image img){
+  public ToolbarButton(Image img) {
     this.image = img;
     this.currentImage = img;
     button.add(this.image, DockPanel.CENTER);
@@ -107,28 +130,27 @@ public class ToolbarButton {
 
     button.setStyleName(stylePrimaryName);
     eventWrapper.add(button);
-    
+
     addStyleMouseListener();
   }
-  
-  public void setId(String id){
-    if((button != null) && (button.getElement()!=null)){
-      button.getElement().setId(id.concat("_btn"));
+
+  public void setId(String id) {
+    if ((button != null) && (button.getElement() != null)) {
+      button.getElement().setId(id.concat("_btn")); //$NON-NLS-1$
     }
-    if((eventWrapper != null) && (eventWrapper.getElement()!=null)){
+    if ((eventWrapper != null) && (eventWrapper.getElement() != null)) {
       eventWrapper.getElement().setId(id);
     }
 
   }
-  
-  public void setStylePrimaryName(String styleName){
+
+  public void setStylePrimaryName(String styleName) {
     this.stylePrimaryName = styleName;
     button.setStylePrimaryName(styleName);
-    
+
   }
 
-  
-  protected void addStyleMouseListener(){
+  protected void addStyleMouseListener() {
     // a click listener is more appropriate here to fire the click events
     // rather than a mouse-up because the focus panel can (and does) sometimes
     // receive mouse up events if a widget 'above' it has been clicked and
@@ -136,55 +158,60 @@ public class ToolbarButton {
     // fire a button's command
     eventWrapper.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
-        if(!enabled){
+        if (!enabled) {
           //ElementUtils.blur(ToolbarButton.this.eventWrapper.getElement());
           return;
         }
-        button.removeStyleName(stylePrimaryName+"-down");   //$NON-NLS-1$
-        button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName + "-down"); //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName + "-hovering"); //$NON-NLS-1$
         command.execute();
         //ElementUtils.blur(ToolbarButton.this.eventWrapper.getElement());
       }
     });
-    eventWrapper.addMouseListener(new MouseListener(){
+    eventWrapper.addMouseListener(new MouseListener() {
       public void onMouseDown(Widget w, int arg1, int arg2) {
-        if(!enabled){
+        if (!enabled) {
           return;
         }
-        button.addStyleName(stylePrimaryName+"-down");    //$NON-NLS-1$
+        button.addStyleName(stylePrimaryName + "-down"); //$NON-NLS-1$
       }
+
       public void onMouseEnter(Widget arg0) {
-        if(!enabled){
+        if (!enabled) {
           return;
         }
-        button.addStyleName(stylePrimaryName+"-hovering");    //$NON-NLS-1$
+        button.addStyleName(stylePrimaryName + "-hovering"); //$NON-NLS-1$
       }
+
       public void onMouseLeave(Widget arg0) {
-        if(!enabled){
+        if (!enabled) {
           return;
         }
-        button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName + "-hovering"); //$NON-NLS-1$
       }
+
       public void onMouseUp(Widget arg0, int arg1, int arg2) {
-        if(!enabled){
+        if (!enabled) {
           //ElementUtils.blur(ToolbarButton.this.eventWrapper.getElement());
           return;
         }
-        button.removeStyleName(stylePrimaryName+"-down");   //$NON-NLS-1$
-        button.removeStyleName(stylePrimaryName+"-hovering");   //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName + "-down"); //$NON-NLS-1$
+        button.removeStyleName(stylePrimaryName + "-hovering"); //$NON-NLS-1$
         //ElementUtils.blur(ToolbarButton.this.eventWrapper.getElement());
       }
-      public void onMouseMove(Widget arg0, int arg1, int arg2) {}
+
+      public void onMouseMove(Widget arg0, int arg1, int arg2) {
+      }
     });
   }
-  
+
   /**
    * Gets the enabled status of the button.
    * 
    * @return boolean flag
    */
   public boolean isEnabled() {
-    return enabled;  
+    return enabled;
   }
 
   /**
@@ -195,21 +222,21 @@ public class ToolbarButton {
   public void setEnabled(boolean enabled) {
     boolean prevState = this.enabled;
     this.enabled = enabled;
-    if(enabled){
-      button.removeStyleName(stylePrimaryName+"-disabled");    //$NON-NLS-1$
+    if (enabled) {
+      button.removeStyleName(stylePrimaryName + "-disabled"); //$NON-NLS-1$
 
-      if(prevState == false && disabledImage != null){
+      if (prevState == false && disabledImage != null) {
         //was disabled, remove old image and put in the enabled one
         button.remove(currentImage);
         button.add(calculateApporiateImage(), DockPanel.CENTER);
         button.setCellHorizontalAlignment(this.image, DockPanel.ALIGN_CENTER);
         button.setCellVerticalAlignment(this.image, DockPanel.ALIGN_MIDDLE);
       }
-      
+
     } else {
-      button.addStyleName(stylePrimaryName+"-disabled");    //$NON-NLS-1$
-      
-      if(prevState == true && disabledImage != null){
+      button.addStyleName(stylePrimaryName + "-disabled"); //$NON-NLS-1$
+
+      if (prevState == true && disabledImage != null) {
         //was enabled, remove old image and put in the disabled one
         button.remove(currentImage);
         button.add(calculateApporiateImage(), DockPanel.CENTER);
@@ -220,13 +247,10 @@ public class ToolbarButton {
   }
 
   public void setTempDisabled(boolean disable) {
-    button.setStyleName(
-        this.enabled && !disable
-        ? stylePrimaryName
-        : stylePrimaryName+"-disabled"              //$NON-NLS-1$
+    button.setStyleName(this.enabled && !disable ? stylePrimaryName : stylePrimaryName + "-disabled" //$NON-NLS-1$
     );
   }
-  
+
   /**
    * Gets the visibility of the button]
    * 
@@ -245,13 +269,13 @@ public class ToolbarButton {
     this.visible = visible;
     button.setVisible(visible);
   }
-  
+
   /**
    * Returns the managed PushButton object
    * 
    * @return PushButton concreate object
    */
-  public FocusPanel getPushButton(){
+  public FocusPanel getPushButton() {
     return eventWrapper;
   }
 
@@ -293,7 +317,7 @@ public class ToolbarButton {
    * @param img GWT Image
    */
   public void setDisabledImage(Image img) {
-    if(!isEnabled()){
+    if (!isEnabled()) {
       //was enabled, remove old image and put in the disabled one
       this.disabledImage = img;
       button.remove(currentImage);
@@ -303,7 +327,7 @@ public class ToolbarButton {
       button.setCellVerticalAlignment(curImage, DockPanel.ALIGN_MIDDLE);
     }
   }
-  
+
   /**
    * Returns the optional text to be displayed on this button.
    * 
@@ -342,13 +366,13 @@ public class ToolbarButton {
   public void setCommand(Command cmd) {
     this.command = cmd;
   }
-  
+
   /**
    * Sets the text to be displayed in a hover-tip when a user hovers over the button
    * 
    * @param toolTip String
    */
-  public void setToolTip(String toolTip){
+  public void setToolTip(String toolTip) {
     this.toolTip = toolTip;
     if (toolTipWidget != null) {
       eventWrapper.removeMouseListener(toolTipWidget);
@@ -356,18 +380,18 @@ public class ToolbarButton {
     toolTipWidget = new ToolTip(toolTip, 1000);
     eventWrapper.addMouseListener(toolTipWidget);
   }
-  
+
   /**
    * Gets the text to be displayed in a hover-tip when a user hovers over the button
    * 
    * @return String tooltip
    */
-  public String getToolTip(){
+  public String getToolTip() {
     return toolTip;
   }
-  
-  protected Image calculateApporiateImage(){
-    currentImage = (!enabled && disabledImage != null)? disabledImage : image;
+
+  protected Image calculateApporiateImage() {
+    currentImage = (!enabled && disabledImage != null) ? disabledImage : image;
     return currentImage;
   }
 
@@ -376,7 +400,7 @@ public class ToolbarButton {
    * 
    */
   public Image getDownImage() {
-  
+
     return downImage;
   }
 
@@ -386,19 +410,83 @@ public class ToolbarButton {
    * @param img GWT Image
    */
   public void setDownImage(Image downImage) {
-  
+
     this.downImage = downImage;
   }
 
   public Image getDownImageDisabled() {
-  
+
     return downImageDisabled;
   }
 
   public void setDownImageDisabled(Image downImageDisabled) {
-  
+
     this.downImageDisabled = downImageDisabled;
   }
-  
-  
+
+  public void addClassName(String className) {
+    this.className = className;
+
+    updateImg(this.image, true);
+
+    if (this.disabledImage != null) {
+      updateImg(this.disabledImage, false);
+    }
+  }
+
+  private void updateImg(final Image img, boolean enabled) {
+
+    if (!className.isEmpty()) {
+      img.addStyleName(className);
+    }
+
+    String disabledStyle = "pentaho-imagebutton-disabled"; //$NON-NLS-1$
+    if (!enabled) {
+      img.addStyleName(disabledStyle);
+    } else {
+      img.removeStyleName(disabledStyle);
+    }
+
+    final String overStyle = "pentaho-imagebutton-hover"; //$NON-NLS-1$
+
+    // Mouse over
+    img.addMouseOverHandler(new MouseOverHandler() {
+
+      @Override
+      public void onMouseOver(MouseOverEvent event) {
+        img.addStyleName(overStyle);
+
+      }
+    });
+
+    // Mouse Out
+    img.addMouseOutHandler(new MouseOutHandler() {
+
+      @Override
+      public void onMouseOut(MouseOutEvent event) {
+        img.removeStyleName(overStyle);
+      }
+    });
+
+    final String downStyle = "pentaho-imagebutton-down"; //$NON-NLS-1$
+
+    // Mouse Down
+    img.addMouseDownHandler(new MouseDownHandler() {
+
+      @Override
+      public void onMouseDown(MouseDownEvent event) {
+        img.addStyleName(downStyle);
+      }
+    });
+
+    // Mouse Up
+    img.addMouseUpHandler(new MouseUpHandler() {
+
+      @Override
+      public void onMouseUp(MouseUpEvent event) {
+        img.removeStyleName(downStyle);
+      }
+    });
+
+  }
 }
