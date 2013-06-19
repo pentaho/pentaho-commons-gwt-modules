@@ -261,7 +261,6 @@ public class FileChooser extends VerticalPanel {
     HorizontalPanel navigationBar = new HorizontalPanel();
 
     final Image upDirImage = new Image();
-//    FileChooserImages.images.up().applyTo(upDirImage);
     upDirImage.setUrl("mantle/images/spacer.gif"); //$NON-NLS-1$
     upDirImage.addStyleName("pentaho-filechooseupbutton"); //$NON-NLS-1$
     upDirImage.setTitle(FileChooserEntryPoint.messages.getString("upOneLevel")); //$NON-NLS-1$
