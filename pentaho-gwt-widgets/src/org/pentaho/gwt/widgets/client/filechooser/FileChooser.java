@@ -87,7 +87,7 @@ public class FileChooser extends VerticalPanel {
 
 
   public FileChooser() {
-    fileNameTextBox.getElement().setId("fileNameTextBox");
+    fileNameTextBox.getElement().setId("fileNameTextBox"); //$NON-NLS-1$
     
     // workaround webkit browsers quirk of not being able to set focus in a widget by clicking on it  
     fileNameTextBox.addClickHandler(new ClickHandler() {      
@@ -174,7 +174,7 @@ public class FileChooser extends VerticalPanel {
   public void fetchRepository(final IDialogCallback completedCallback) throws RequestException {
     RequestBuilder builder = null;
     builder = new RequestBuilder(RequestBuilder.GET, getFullyQualifiedURL()+  "api/repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
-    builder.setHeader("Accept", "application/json");
+    builder.setHeader("Accept", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
     RequestCallback callback = new RequestCallback() {
 
       public void onError(Request request, Throwable exception) {
@@ -192,7 +192,7 @@ public class FileChooser extends VerticalPanel {
             completedCallback.okPressed();
           }
         } else {
-          Window.alert("Solution Repository not found.");
+          Window.alert("Solution Repository not found."); //$NON-NLS-1$
         }
       }
 
@@ -227,7 +227,7 @@ public class FileChooser extends VerticalPanel {
     
     selectedTreeItem = getTreeItem(pathSegments);
     navigationListBox = new ListBox();
-    navigationListBox.getElement().setId("navigationListBox");
+    navigationListBox.getElement().setId("navigationListBox"); //$NON-NLS-1$
     navigationListBox.setWidth("350px"); //$NON-NLS-1$
     // now we can find the tree nodes who match the path segments
     navigationListBox.addItem("/", "/"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -256,13 +256,15 @@ public class FileChooser extends VerticalPanel {
     clear();
 
     VerticalPanel locationBar = new VerticalPanel();
-    locationBar.add(new Label(FileChooserEntryPoint.messages.getString("location")));
+    locationBar.add(new Label(FileChooserEntryPoint.messages.getString("location"))); //$NON-NLS-1$
 
     HorizontalPanel navigationBar = new HorizontalPanel();
 
     final Image upDirImage = new Image();
-    FileChooserImages.images.up().applyTo(upDirImage);
-    upDirImage.setTitle(FileChooserEntryPoint.messages.getString("upOneLevel"));
+//    FileChooserImages.images.up().applyTo(upDirImage);
+    upDirImage.setUrl("mantle/images/spacer.gif"); //$NON-NLS-1$
+    upDirImage.addStyleName("pentaho-filechooseupbutton"); //$NON-NLS-1$
+    upDirImage.setTitle(FileChooserEntryPoint.messages.getString("upOneLevel")); //$NON-NLS-1$
     upDirImage.addMouseListener(new MouseListener() {
 
       public void onMouseDown(Widget sender, int x, int y) {
@@ -324,7 +326,7 @@ public class FileChooser extends VerticalPanel {
     locationBar.add(navigationBar);
     locationBar.setWidth("100%"); //$NON-NLS-1$
 
-    Label filenameLabel = new Label(FileChooserEntryPoint.messages.getString("filename"));
+    Label filenameLabel = new Label(FileChooserEntryPoint.messages.getString("filename")); //$NON-NLS-1$
     filenameLabel.setWidth("550px"); //$NON-NLS-1$
     add(filenameLabel);
     fileNameTextBox.setWidth("300px"); //$NON-NLS-1$
@@ -339,16 +341,16 @@ public class FileChooser extends VerticalPanel {
 
     ScrollPanel filesScroller = new ScrollPanel();
 
-    filesScroller.setStyleName("fileChooser-scrollPanel");
+    filesScroller.setStyleName("fileChooser-scrollPanel"); //$NON-NLS-1$
 
     FlexTable filesListTable = new FlexTable();
-    filesListTable.setWidth("100%");
+    filesListTable.setWidth("100%"); //$NON-NLS-1$
     filesListTable.setCellSpacing(0);
-    Label nameLabel = new Label(FileChooserEntryPoint.messages.getString("name"), false);
+    Label nameLabel = new Label(FileChooserEntryPoint.messages.getString("name"), false); //$NON-NLS-1$
     nameLabel.setStyleName("fileChooserHeader"); //$NON-NLS-1$
-    Label typeLabel = new Label(FileChooserEntryPoint.messages.getString("type"), false);
+    Label typeLabel = new Label(FileChooserEntryPoint.messages.getString("type"), false); //$NON-NLS-1$
     typeLabel.setStyleName("fileChooserHeader"); //$NON-NLS-1$
-    Label dateLabel = new Label(FileChooserEntryPoint.messages.getString("dateModified"), false);
+    Label dateLabel = new Label(FileChooserEntryPoint.messages.getString("dateModified"), false); //$NON-NLS-1$
     dateLabel.setStyleName("fileChooserHeader"); //$NON-NLS-1$
 
     ElementUtils.preventTextSelection(nameLabel.getElement());
@@ -377,9 +379,9 @@ public class FileChooser extends VerticalPanel {
         addFileToList(repositoryFileTree, childItem, filesListTable, row++);
       }
     }
-    filesListTable.setWidth("100%");
+    filesListTable.setWidth("100%"); //$NON-NLS-1$
     filesScroller.setWidget(filesListTable);
-    filesListTable.setWidth("100%");
+    filesListTable.setWidth("100%"); //$NON-NLS-1$
     filesListPanel.add(filesScroller);
     return filesListPanel;
   }
@@ -423,7 +425,7 @@ public class FileChooser extends VerticalPanel {
     myNameLabel.sinkEvents(Event.ONDBLCLICK | Event.ONCLICK);
     myNameLabel.sinkEvents(Event.ONMOUSEOVER | Event.ONMOUSEOUT);
     myNameLabel.setTitle(file.getTitle());
-    myNameLabel.setStyleName("fileChooserCellLabel");
+    myNameLabel.setStyleName("fileChooserCellLabel"); //$NON-NLS-1$
     HorizontalPanel fileNamePanel = new HorizontalPanel();
     Image fileImage = new Image() {
       public void onBrowserEvent(Event event) {
@@ -441,13 +443,13 @@ public class FileChooser extends VerticalPanel {
         FileChooserImages.images.file_analysis().applyTo(fileImage);
       } else if (fileName.endsWith(".url")) { //$NON-NLS-1$
         FileChooserImages.images.file_url().applyTo(fileImage);
-      } else if (fileName.endsWith("xanalyzer")) {
+      } else if (fileName.endsWith("xanalyzer")) { //$NON-NLS-1$
         FileChooserImages.images.file_analyzer().applyTo(fileImage);
-      } else if (fileName.endsWith("prpti")) {
+      } else if (fileName.endsWith("prpti")) { //$NON-NLS-1$
         FileChooserImages.images.file_pir_report().applyTo(fileImage);
-      } else if (fileName.endsWith("prpt")) {
+      } else if (fileName.endsWith("prpt")) { //$NON-NLS-1$
         FileChooserImages.images.file_prpt_report().applyTo(fileImage);
-      } else if (fileName.endsWith("xdash")) {
+      } else if (fileName.endsWith("xdash")) { //$NON-NLS-1$
         FileChooserImages.images.file_dashboard().applyTo(fileImage);
       } else {
         FileChooserImages.images.file_action().applyTo(fileImage);
@@ -457,7 +459,8 @@ public class FileChooser extends VerticalPanel {
     fileNamePanel.add(myNameLabel);
     DOM.setStyleAttribute(myNameLabel.getElement(), "cursor", "default"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    Label typeLabel = new Label(isDir ? FileChooserEntryPoint.messages.getString("folder") : FileChooserEntryPoint.messages.getString("file"), false);
+    Label typeLabel = new Label(
+        isDir ? FileChooserEntryPoint.messages.getString("folder") : FileChooserEntryPoint.messages.getString("file"), false); //$NON-NLS-1$ //$NON-NLS-2$
 
     ElementUtils.preventTextSelection(myNameLabel.getElement());
     ElementUtils.preventTextSelection(typeLabel.getElement());
@@ -531,7 +534,7 @@ public class FileChooser extends VerticalPanel {
       }
       com.google.gwt.dom.client.Element parentRow = ElementUtils.findElementAboveByTagName(sourceElement, "table"); //$NON-NLS-1$
       parentRow.getStyle().setProperty("background", "#B9B9B9"); //$NON-NLS-1$ //$NON-NLS-2$
-      parentRow.addClassName("pentaho-file-chooser-selection");
+      parentRow.addClassName("pentaho-file-chooser-selection"); //$NON-NLS-1$
       lastSelectedFileElement = sourceElement;
     }
   }
@@ -673,7 +676,7 @@ public class FileChooser extends VerticalPanel {
   }
   
   public boolean doesSelectedFileExist(String ext) {
-	  String fileName = this.selectedPath + "/" + this.actualFileName;
+    String fileName = this.selectedPath + "/" + this.actualFileName; //$NON-NLS-1$
 	  if(!StringUtils.isEmpty(ext)) {
 		  fileName = fileName + ext;
 	  }
