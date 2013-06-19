@@ -2924,3 +2924,10 @@ input:focus {
   width: 16px;
   height: 16px; 
 }
+
+.pentaho-filechooseupbutton {
+  background-image: url("../images/up.png");    
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
