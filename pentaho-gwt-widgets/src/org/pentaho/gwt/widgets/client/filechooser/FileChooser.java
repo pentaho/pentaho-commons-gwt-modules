@@ -676,10 +676,10 @@ public class FileChooser extends VerticalPanel {
   
   public boolean doesSelectedFileExist(String ext) {
     String fileName = this.selectedPath + "/" + this.actualFileName; //$NON-NLS-1$
-	  if(!StringUtils.isEmpty(ext)) {
-		  fileName = fileName + ext;
-	  }
-	  return search(fileTree, fileName) != null;
+	if(!StringUtils.isEmpty(ext) && !fileName.endsWith(ext)) {
+		fileName = fileName + ext;
+	}
+	return search(fileTree, fileName) != null;
   }
 
   public void setShowLocalizedFileNames(boolean showLocalizedFileNames) {
