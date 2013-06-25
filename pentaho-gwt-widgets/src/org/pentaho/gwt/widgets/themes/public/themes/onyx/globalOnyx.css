@@ -2931,3 +2931,31 @@ input:focus {
   height: 20px;
   cursor: pointer;
 }
+
+.pentaho-addcombobutton {
+  width: 22px;
+  height: 22px;
+  background: url('../images/add_combo.png') no-repeat center;
+  cursor: pointer;
+}
+
+.pentaho-addcombobutton.pentaho-imagebutton-disabled {
+  width: 22px;
+  height: 22px;
+  background: url('../images/add_combo_disabled.png') no-repeat center;
+  cursor: default;
+}
+
+.pentaho-exportbutton{
+  width: 22px;
+  height: 22px;
+  background: url('../images/export.png') no-repeat center;
+  cursor: pointer;
+}
+
+.pentaho-exportbutton.pentaho-imagebutton-disabled {
+  width: 22px;
+  height: 22px;
+  background: url('../images/export_disabled.png') no-repeat center;
+  cursor: default;
+}
