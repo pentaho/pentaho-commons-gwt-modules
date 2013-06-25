@@ -5507,3 +5507,6 @@ height: auto;
   font-size: 14px;
   color: #26363d;
 }
+.empty-message{
+	padding: 0 40px 20px 40px;
+}

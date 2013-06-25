@@ -57,6 +57,14 @@ html, body {
   color: #26363d;
 }
 
+a, a:visited {
+  color:#1973bc;
+}
+
+a, a:link, a:active, a:hover {
+  color:#1973bc;
+  text-decoration: none;
+}
 div {
   outline: 0px;
   hideFocus: true;
@@ -148,7 +156,7 @@ input, input[type="password"]{
   font-size: 15px;
   color: #ffffff;
   padding: 4px 14px 6px 14px;
-  font-family: opensanslight, sans-serif;
+  font-family: opensanslight,  Helvetica, Arial, Sans serif;
   /* Standard form */
   border-radius: 3px;
   /* Firefox */
@@ -332,14 +340,14 @@ cursor: auto;
   /* Standard toggle-button style. Should be applied to a <button> element to get full pseudo-styles. */
 .pentaho-toggle-button-down, .pentaho-toggle-button-down-disabled, .pentaho-toggle-button-down-hovering {
   color: black;
-  background: #fcfcfc; /* Old browsers */
-  background: -moz-linear-gradient(top,  #fcfcfc 35%, #f4f4f4 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(35%,#fcfcfc), color-stop(100%,#f4f4f4)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top,  #fcfcfc 35%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top,  #fcfcfc 35%,#f4f4f4 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top,  #fcfcfc 35%,#f4f4f4 100%); /* IE10+ */
-  background: linear-gradient(to bottom,  #fcfcfc 35%,#f4f4f4 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#f4f4f4',GradientType=0 ); /* IE6-9 */
+  background: #004b60; /* Old browsers */
+background: -moz-linear-gradient(top,  #004b60 0%, #005f7d 20%, #4e8596 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#004b60), color-stop(20%,#005f7d), color-stop(100%,#4e8596)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #004b60 0%,#005f7d 20%,#4e8596 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #004b60 0%,#005f7d 20%,#4e8596 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #004b60 0%,#005f7d 20%,#4e8596 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #004b60 0%,#005f7d 20%,#4e8596 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004b60', endColorstr='#4e8596',GradientType=0 ); /* IE6-9 */
 
 }
 
@@ -906,8 +914,15 @@ border-top: 4px solid transparent;
   border-left: none;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: #848484
+  border-bottom-color: #cbdde8;
 }
+.IE .toolbar {
+	background-color: #fff;
+	  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #cbdde8;
+}
+
 .xul-editPanel-title{
   background-color: #f1f1f1;
   border-bottom: 1px solid #b5b5b5;
@@ -918,6 +933,21 @@ border-top: 4px solid transparent;
 .xul-editPanel{
   border: 1px solid #cbdde8;
 }
+.xul-editPanel .xul-editPanel-title,
+.xul-editPanel-title {
+  background-color: #FFF;
+  border-bottom: 1px solid #cbdde8;
+}
+.xul-editPanel .xul-editPanel-title-label,
+.xul-editPanel-title-label {
+  color: #26363d;
+}
+.dialog-content .xul-editPanel,
+.xul-editPanel {
+  border: 1px solid #cbdde8;
+  background-color: #fff;
+}
+
 .content-toolbar {
   height: 32px;
 }
@@ -957,8 +987,8 @@ input:focus {
 }
 
 .toolbar-button.toolbar-button-hovering {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid #dce7ed;
+  border: 1px solid #3D6380;
+  background: rgba(255, 255, 255, .2);
   cursor: pointer;
   margin: 0px;
   width: 22px;
@@ -985,8 +1015,8 @@ input:focus {
 }
 
 .toolbar-toggle-button-down {
-  border: 1px solid #888;
-  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid #3d6380;
+  background-color: rgba(255, 255, 255, 0.2);
   margin: 0px;
   width: 22px;
   height: 22px;
@@ -994,12 +1024,12 @@ input:focus {
 }
 
 .IE .toolbar-toggle-button-down {
-  border: 1px solid #888 !important; /* override the transparent value set in toolbar-toggle-button*/
+  border: 1px solid #3d6380; !important; /* override the transparent value set in toolbar-toggle-button*/
 }
 
 .toolbar-toggle-button-down-hovering {
   border: 1px solid #dce7ed;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, .2);
   margin: 0px;
   cursor: pointer;
 }
@@ -1558,14 +1588,14 @@ body.IE>table {
 .pentaho-editbutton {
   width: 22px;
   height: 22px;
-  background: url('images/edit.png') no-repeat center;
+  background: url('images/edit_22.png') no-repeat center;
   cursor: pointer;
 }
 
 .pentaho-editbutton.pentaho-imagebutton-disabled {
   width: 22px;
   height: 22px;
-  background: url('images/edit_disabled.png') no-repeat center;
+  background: url('images/edit_22_disabled.png') no-repeat center;
   cursor: default;
 }
 
@@ -1707,28 +1737,28 @@ body.IE>table {
 .pentaho-downbutton {
   width: 16px;
   height: 16px;
-  background: url('../images/16x16_down.png') no-repeat center;
+  background: url('images/16x16_down.png') no-repeat center;
   cursor: pointer;
 }
 
 .pentaho-downbutton.pentaho-imagebutton-disabled {
   width: 16px;
   height: 16px;
-  background: url('../images/16x16_down_disabled.png') no-repeat center;
+  background: url('images/16x16_down_disabled.png') no-repeat center;
   cursor: default;
 }
 
 .pentaho-upbutton {
   width: 16px;
   height: 16px;
-  background: url('../images/16x16_up.png') no-repeat center;
+  background: url('images/16x16-up.png') no-repeat center;
   cursor: pointer;
 }
 
 .pentaho-upbutton.pentaho-imagebutton-disabled {
   width: 16px;
   height: 16px;
-  background: url('../images/16x16_up_disabled.png') no-repeat center;
+  background: url('images/16x16-up_disabled.png') no-repeat center;
   cursor: default;
 }
 
@@ -2572,22 +2602,22 @@ padding: 10px 0 10px 0;
 }
 
 .icon-small.icon-accum-add {
-  background: url('../images/accum_add.png');
+  background: url('images/accum_add.png');
   height: 13px;
   width: 14px;
 }
 .icon-small.icon-accum-add-all {
-  background: url('../images/accum_add_all.png');
+  background: url('images/accum_add_all.png');
   height: 13px;
   width: 14px;
 }
 .icon-small.icon-accum-remove {
-  background: url('../images/accum_remove.png');
+  background: url('images/accum_remove.png');
   height: 13px;
   width: 14px;
 }
 .icon-small.icon-accum-remove-all {
-  background: url('../images/accum_remove_all.png');
+  background: url('images/accum_remove_all.png');
   height: 13px;
   width: 14px;
 }
@@ -2596,14 +2626,76 @@ padding: 10px 0 10px 0;
   width: 35px;
 }
 .icon-tree-leaf.icon-recycle-bin {
-  background: url('../images/recycle_bin.png');
+  background: url('images/remove_16.png') no-repeat;
   height: 16px;
 }
 .icon-tree-leaf.icon-folder {
-  background: url('../images/treeLeaf.png');
+  background: url('images/folder_16.png') no-repeat;
+}
+.sidePanelIconOpen{
+	  background: url('images/16x16_right.png') no-repeat;
+}
+.fileBrowserColumn .body .file .icon{
+	background: transparent;
 }
 
+.sidePanelIconClose{
+	background: url('images/16x16_left.png')no-repeat;
+}
+.fileBrowserColumn .body div.folder.open > div.element > div.icon {
+background: url("images/folder_open.png") no-repeat;
+width: 22px;
+height: 22px;
 
+}
+.fileBrowserColumn .body div.folder > div.element > div.icon, .fileBrowserColumn .body div.folder.empty > div.element > div.icon, .fileBrowserColumn .body div.folder.open.empty > div.element > div.icon {
+background: url("images/folder_closed.png") no-repeat;
+}
+.fileBrowserColumn .body div.trash > div.element > div.icon, .fileBrowserColumn .body div.trash.empty > div.element > div.icon, .fileBrowserColumn .body div.trash.open.empty > div.element > div.icon{
+background: url("images/remove.png") no-repeat;
+}
+.fileBrowserColumn .body .file .html{
+  background: url("images/file_url.png")no-repeat;
+}
+
+.fileBrowserColumn .body .file .xanalyzer{
+  background: url("images/file_analysis.png")no-repeat;
+}
+.fileBrowserColumn .body .file .icon.xdash,
+.fileBrowserColumn .body .file .xdash{
+	 background: url("images/file_dashboard.png")no-repeat;
+}
+.fileBrowserColumn .body .file .icon.xaction,
+.fileBrowserColumn .body .file .xaction{
+	 background: url("images/file_action.png")no-repeat;
+}
+.fileBrowserColumn .body .file .icon.prpt,
+.fileBrowserColumn .body .file .prpt {
+  background: url("images/prptFile.png")no-repeat;
+}
+.fileBrowserColumn .body .file .icon.prpti,
+.fileBrowserColumn .body .file .prpti{
+  background: url("images/prptiFile.png")no-repeat;
+}
+
+.file-xanalyzer{
+  background: url("images/file_analysis_32.png")no-repeat;
+}
+
+.file-xdash{
+	 background: url("images/file_dashboard_32.png")no-repeat;
+}
+.file-xaction{
+	 background: url("images/file_action_32.png")no-repeat;
+}
+
+.file-prpt {
+  background: url("images/prptFile_32.png")no-repeat;
+}
+
+.file-prpti{
+  background: url("images/prptiFile_32.png")no-repeat;
+}
   /* added by brett to override PIR styles */
 .styled >* #reportContent,
 #reportContent {
@@ -2611,10 +2703,12 @@ padding: 10px 0 10px 0;
 }
 
   /* added by brett to override dashbaord styles */
+  /* #d7e9cd; */
+  /* #8ac06e; */
 .highlight-shadow{
-  -moz-box-shadow: 0 0 4px 4px #8ac06e;
-  -webkit-box-shadow: 0 0 4px 4px #8ac06e;
-  box-shadow: 0 0 4px 4px #8ac06e;
+  -moz-box-shadow: 0 0 0px 2px #8ac06e;
+  -webkit-box-shadow: 0 0 0px 2px #8ac06e;
+  box-shadow: 0 0 0px 2px #8ac06e;
 }
 .panelContent {
   background-color: #fff;
@@ -2670,6 +2764,7 @@ media="screen"
 .fileBrowserColumn .body .folder .element {
   padding: 6px;
   font-size: 16px;
+  font-family: opensanslight, Helvetica, Arial, Sans serif;
 }
 #fileBrowserButtons .body{
   border-top: 4PX solid #f2ce17;
@@ -2679,6 +2774,7 @@ media="screen"
 .fileBrowserColumn .body .file {
   padding: 6px;
   font-size: 16px;
+  font-family: opensanslight, Helvetica, Arial, Sans serif;
 }
 /* remove trasnstion for preformance but will revisit */
 
@@ -2724,6 +2820,7 @@ media="screen"
   height: 220px;
 }
 
+
   /*  end browser styles */
 #reportPageOutline {
   -webkit-box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, .3);
@@ -2733,12 +2830,12 @@ media="screen"
   border: 0;
 }
 .favorite-on {
-  background: url("../images/favorite-on.png");
+  background: url("images/favorite-on.png");
   height: 32px;
   width: 32px;
 }
 .favorite-off {
-  background: url("../images/favorite-off.png");
+  background: url("images/favorite-off.png");
   height: 32px;
   width: 32px;
 }
@@ -2781,6 +2878,7 @@ height: 39px;
 }
 #reportBtns{
   background-color: #f1f1f1;
+  height: 30px;
 }
 #reportContainer{
   border: solid 0px #cbdde8;
@@ -2959,7 +3057,7 @@ background-color: #d7e9cd;
   border-right: 1px solid #d7d7d7;
   border-bottom: 1px solid #d7d7d7;
   color: #fff;
-  font-family: OpenSansLight, sans-serif;
+  font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
 }
 
   /* rows */
@@ -2984,7 +3082,7 @@ background-color: #d7e9cd;
   border: 1px solid #d7d7d7;
   font-size: 14px;
   padding: 10px 10px 12px 10px;
-  font-family: OpenSansRegular, sans-serif;
+  font-family: OpenSansRegular,  Helvetica, Arial, Sans serif;
 }
 
 .soria .dojoxGridCellOver {
@@ -3134,7 +3232,7 @@ background-color: #d7e9cd;
 }
 
 #csvDeckPanel .custom-list-textbox, #datasourceName, #uploadedFile, .dataTable .gwt-HTML{
-  font-family: opensansRegular, sans-serif;
+  font-family: opensansRegular,  Helvetica, Arial, Sans serif;
   font-size: 14px;
   color:#26363d;
 }
@@ -3145,39 +3243,41 @@ background-color: #d7e9cd;
 
 .drag_and_drop_label_content{
   color: black;
-  width: 300px;
-  height: 180px;
-  border: 1px dashed #ccc;
+  width: 220px;
+  height: 100px;
+ /* border: 1px dashed #ccc;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
-  background-color: #f7f7f7;
+  background-color: #f7f7f7;*/
   background-image:  url('./images/drop_here.png');
   background-repeat: no-repeat;
-  background-position: 100px 20px;
+  background-position: 1px 0px;
   position: absolute;
-  top: 50%;
-  margin-top: -80px;
-  left: 50%;
-  margin-left: -150px;
+  margin: auto;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .drag_and_drop_label_text{
-  font-size: 18px;
-  color: #000;
+font-size: 21px;
+color: #3D6380;
   margin: 0;
-  text-align: center;
-  font-family: OpenSansRegular, sans-serif;
+text-align: left;
+font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
   position: relative;
-  top: 132px;
+padding: 0px 0px 0 70px;
 }
 
 .drag_and_drop_label_wrapper{
-  height: 100%;
+  height: 100px;
   overflow: hidden;
   margin: 0;
   background-color: #fff;
   display: none;
+  padding: 0px;
 }
 
 .drag_and_drop_label .drag_and_drop_label_wrapper {
@@ -3316,15 +3416,15 @@ background-color: #d7e9cd;
 
 .login-role {
   color: #777;
-  font-family: 'OpenSansLight';
+  font-family: 'OpenSansLight', Helvetica, Arial, Sans serif;
 }
 
 .login-label {
   color: #777;
-  font-family: 'OpenSansRegular';
+  font-family: 'OpenSansRegular', Helvetica, Arial, Sans serif;
 }
 .login-value{
- font-family: 'OpenSansLight';
+ font-family: 'OpenSansLight', Helvetica, Arial, Sans serif;
 }
 #evaluationPanel .btn {
   margin-top: 16px;
@@ -3457,8 +3557,11 @@ vertical-align: middle;
 .indicator .indicatorLine{
   background-color: #1973bc;
 }
+#standardDialog #dialogMessageBar .dlgInfo{
+	background:url(images/info.png) no-repeat;
+}
 
-/* Analyzer dag adnd rop indicators */
+/* Analyzer drag and drop indicators */
 .dnd-indicator-horizontal-left {
   background:url(images/dnd_left_arrow.png) no-repeat;
 }
@@ -3521,53 +3624,53 @@ vertical-align: middle;
 .pentaho-smallmeasurebutton {
     width: 16px;
     height: 16px;
-    background-image: url("../images/sm_measure_icon.png");
+    background-image: url("images/gemBar_measure.png");
 }
 
 .pentaho-smalldimensionbutton {
-    background-image: url("../images/sm_dim_icon.png");
+    background-image: url("images/sm_dim_icon.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-smallhierarchybutton {
-    background-image: url("../images/sm_hierarchy_icon.png");
+    background-image: url("images/sm_hierarchy_icon.png");
     width: 13px;
     height: 13px;
 }
 
 .pentaho-smalllevelbutton {
-    background-image: url("../images/sm_level_icon.png");
+    background-image: url("images/gemBar_level.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-smallmemberpropbutton {
-    background-image: url("../images/sm_member_prop_icon.png");    
+    background-image: url("images/sm_member_prop_icon.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-smallcategorybutton {
-    background-image: url("../images/sm_folder_icon.png");    
+    background-image: url("images/folder_16.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-fieldbutton {
-    background-image: url("../images/field_list.png");    
+    background-image: url("images/list_16.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-autopopulatebutton {
-    background-image: url("../images/autogen_model.png");
+    background-image: url("images/auto_model.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-addfieldbutton {
-    background-image: url("../images/insert_to_model.png");
+    background-image: url("images/add_to_model.png");
     width: 16px;
     height: 16px;
 }
@@ -3585,13 +3688,13 @@ vertical-align: middle;
 }
 
 .pentaho-clearmodelbutton {
-    background-image: url("../images/clear_model.png");    
+    background-image: url("images/clear_model_16.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-smallremovebutton {
-    background-image: url("../images/sm_remove.png");    
+    background-image: url("images/remove_16.png");
     width: 16px;
     height: 16px;
 }
@@ -3609,7 +3712,7 @@ vertical-align: middle;
 }
 
 .penatho-smalleditbutton {
-    background-image: url("../images/sm_edit.png");    
+    background-image: url("images/edit_16.png");
     width: 16px;
     height: 16px;
 }
@@ -3651,7 +3754,7 @@ vertical-align: middle;
 }
 
 .pentaho-filechooseupbutton {
-  background-image: url("../images/up.png");    
+  background-image: url("../images/up.png");
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -3674,4 +3777,249 @@ vertical-align: middle;
   top:0px;
   left:0px;
   height:auto !important;
+}
+
+.reportMain .trashcan {
+  background: url('images/trashcan.png') no-repeat 4px 2px;
+}
+
+.reportMain .trashActive {
+  background: url('images/trashcan_full.png') no-repeat 4px 2px;
+}
+  /* analyzer icons  */
+.gem-bar-level {
+  background: url('images/gemBar_level.png') no-repeat;
+  height: 16px;
+  width: 16px;
+}
+.gem-bar-measure {
+  background: url('images/gemBar_measure.png') no-repeat;
+  height: 16px;
+  width: 16px;
+}
+.gem-bar-filter {
+  background: url('images/gemBar_filter.png') no-repeat;
+  width: 35px;
+}
+
+#fieldListTree .attribute {
+  background: url('images/gemBar_level.png') no-repeat;
+}
+
+#fieldListTree .measure {
+  background: url('images/gemBar_measure.png') no-repeat;
+}
+.pentaho-undobutton{
+  background: url('images/undo.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.pentaho-undobutton.disabled, .pentaho-undobutton.pentaho-imagebutton-disabled {
+  background: url('images/undo_disable.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.pentaho-redobutton.disabled, .pentaho-redobutton.pentaho-imagebutton-disabled{
+  background: url('images/redo-disabled.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.pentaho-redobutton{
+  background: url('images/redo.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.field-panel-icon{
+  background: url('images/field_panel.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.field-layout-icon{
+  background: url('images/layoutpanel.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.pentaho-filterbutton{
+  background: url('images/filter.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.auto-refresh-icon{
+  background: url('images/autoRefresh.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.more-menu-icon{
+  background: url('images/more_menu.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.show-pivot-icon{
+  background: url('images/btn_table.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.show-chart-icon{
+  background: url('images/btn_chart.png') no-repeat;
+  width: 22px;
+  height: 22px;
+}
+  /*.pentaho-downbutton{
+    background: url('images/arrow_down.png') no-repeat;
+    background-position: 0px 4px;
+  }*/
+.filterPaneToggle{
+  background: url('images/icon_filters_fold.png') no-repeat;
+}
+.filterSummary .hide{
+  background: url('images/icon_filters_unfold.png') no-repeat;
+}
+.helpIcon{
+  background: url('images/help_link.png') no-repeat;
+}
+  /* ---------- PIR icons ----------  */
+.tundra .dijitDisabled .dijitEditorIcon {
+  background: transparent;
+}
+.dijitEditorIconUndo{
+  background: url('images/undo.png');
+  width: 22px;
+  height: 22px;
+}
+
+.tundra .dijitDisabled .dijitEditorIconIndent {
+  background-image: url("images/indicator_circle_ball_stop.png");
+  background-position: 0;
+  height: 22px;
+  width: 22px;
+}
+.pentaho_dijitEditorIconExport{
+  background: url('images/file_export.png') no-repeat;
+  height: 22px;
+  width: 22px;
+}
+.pc_pagePrev {
+  background: url('images/page_back.png') no-repeat !important;
+  background-position: 1px 3px !important;
+  height: 22px;
+  width: 22px;
+}
+.pc_pagePrevDisabled {
+  background: url('images/page_back_disabled.png') no-repeat !important;
+  background-position: 1px 3px !important;
+  height: 22px;
+  width: 22px;
+}
+.pc_pageNextDisabled {
+  background: url('images/page_forward_disabled.png') no-repeat !important;
+  background-position: 1px 3px !important;
+  height: 22px;
+  width: 22px;
+}
+.pc_pageNext{
+  background: url('images/page_forward.png') no-repeat !important;
+  background-position: 1px 3px !important;
+  height: 22px;
+  width: 22px;
+}
+
+.pentaho-optionsbutton{
+  background: url('images/options.png') no-repeat !important;
+  height: 22px;
+  width: 22px;
+}
+.dijitEditorIconParameters{
+  background: url('images/options.png') no-repeat !important;
+  height: 22px !important;
+  width: 22px !important;
+}
+.tundra .dijitToolbar .dijitButtonChecked, .tundra .dijitToolbar .dijitToggleButtonChecked{
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid #3D6380;
+}
+.tundra .dijitToolbar .dijitButtonHover,
+.tundra .dijitToolbar .dijitToggleButtonHover,
+.tundra .dijitToolbar .dijitDropDownButtonHover,
+.tundra .dijitToolbar .dijitComboButton .dijitButtonContentsHover,
+.tundra .dijitToolbar .dijitComboButton .dijitDownArrowButtonHover {
+  /* TODO: change this from Hover to Selected so that button is still highlighted while drop down is being used */
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid #3D6380;
+
+}
+
+.pentaho-datasourcebutton{
+  background: url('images/datasource.png') no-repeat;
+}
+#toolbar2a{
+  background-color: #FFF;
+}
+.pageSetupDialogLandscape{
+  background: url('images/landscape_off.png') no-repeat;
+}
+.pageSetupDialogLandscapeSelected{
+  background: url('images/landscape_on.png') no-repeat;
+}
+.pageSetupDialogPortrait{
+  background: url('images/portrait_off.png') no-repeat;
+}
+.pageSetupDialogPortraitSelected{
+  background: url('images/portrait_on.png') no-repeat;
+}
+  /* ----------  data access ----------  */
+.pentaho-exportbutton{
+  background: url('images/file_export.png') no-repeat;
+}
+.pentaho-exportbutton.pentaho-imagebutton-disabled{
+  background: url('images/export_disabled.png') no-repeat;
+}
+.pentaho-addcombobutton{
+  background: url('images/add_combo.png') no-repeat;
+}
+  /* ---------- dashbaords icons ---------- */
+.editLabel .edit-btn{
+  background: url('images/edit_16.png') no-repeat;
+}
+.editLabel .insert-btn{
+  background: url('images/insert_16.png') no-repeat;
+}
+#editPovContainerPanel #povTableEditSelected img.disabled-image-button-pressed, #editPovContainerPanel #povTableEditSelected img.disabled-image-button-over, #editPovContainerPanel #povTableEditSelected img.disabled-image-button {
+  background: url('images/edit_16_disabled.png') no-repeat;
+}
+#editPovContainerPanel #povTableEditSelected img.image-button-pressed, #editPovContainerPanel #povTableEditSelected img.image-button-over, #editPovContainerPanel #povTableEditSelected img.image-button{
+  background: url('images/edit_16.png') no-repeat;
+}
+#filterTypeDeck #staticSelectionTableAdd img.image-button-pressed, #filterTypeDeck #staticSelectionTableAdd img.image-button-over, #filterTypeDeck #staticSelectionTableAdd img.image-button,
+#editPovContainerPanel #povTableAdd img.image-button-pressed, #editPovContainerPanel #povTableAdd img.image-button-over, #editPovContainerPanel #povTableAdd img.image-button{
+  background: url('images/add_16.png') no-repeat;
+}
+#standardDialog .filterConditionDelete,
+#filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-pressed, #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-over, #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button,
+#editPovContainerPanel #povTableRemoveSelected img.image-button-pressed, #editPovContainerPanel #povTableRemoveSelected img.image-button-over, #editPovContainerPanel #povTableRemoveSelected img.image-button {
+  background: url('images/remove_16.png') no-repeat;
+}
+#filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button,
+#editPovContainerPanel #povTableRemoveSelected img.disabled-image-button-pressed, #editPovContainerPanel #povTableRemoveSelected img.disabled-image-button-over, #editPovContainerPanel #povTableRemoveSelected img.disabled-image-button{
+  background: url('images/remove_16_disabled.png') no-repeat;
+}
+#filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button,
+#editPovContainerPanel #povTableMoveSelectedDown img.disabled-image-button-pressed, #editPovContainerPanel #povTableMoveSelectedDown img.disabled-image-button-over, #editPovContainerPanel #povTableMoveSelectedDown img.disabled-image-button {
+  background: url('images/16x16_down_disabled.png') no-repeat;
+}
+#filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button-pressed, #filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button-over, #filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button,
+#editPovContainerPanel #povTableMoveSelectedUp img.image-button-pressed, #editPovContainerPanel #povTableMoveSelectedUp img.image-button-over, #editPovContainerPanel #povTableMoveSelectedUp img.image-button{
+  background: url('images/16x16_down.png') no-repeat;
+}
+#filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button,
+#editPovContainerPanel #povTableMoveSelectedUp img.disabled-image-button-pressed, #editPovContainerPanel #povTableMoveSelectedUp img.disabled-image-button-over, #editPovContainerPanel #povTableMoveSelectedUp img.disabled-image-button {
+  background: url('images/16x16-up_disabled.png') no-repeat;
+}
+#filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button-pressed, #filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button-over, #filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button,
+#editPovContainerPanel #povTableMoveSelectedUp img.image-button-pressed, #editPovContainerPanel #povTableMoveSelectedUp img.image-button-over, #editPovContainerPanel #povTableMoveSelectedUp img.image-button{
+  background: url('images/16x16-up.png') no-repeat;
+}
+#schemaNameLabel,
+#uploadFileLabel{
+  border: 1px solid #cbdde8;
+  vertical-align: middle;
 }
