@@ -3450,6 +3450,9 @@ padding: 0px 0px 0 70px;
   -webkit-transition: opacity 500ms ease-in-out;
   transition: opacity 500ms ease-in-out;
 }
+.IE8 #evaluationPanel {
+  display: none;
+}
 #evaluationPanel.afterSlide {
   top: -7px;
   height: 180px;
@@ -3458,6 +3461,10 @@ padding: 0px 0px 0 70px;
   filter: alpha(opacity=100);
   background-color: #FFF;
 }
+.IE8 #evaluationPanel.afterSlide {
+  display: block;
+}
+
 #role-business-user-panel {
   padding-left: 10px;
 }
