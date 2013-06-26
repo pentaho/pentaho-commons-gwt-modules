@@ -2715,7 +2715,6 @@ input:focus {
   width: 0;
   overflow: hidden;
   position: relative;
-  max-height: 155px;
   opacity: 0.5;
   -moz-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
   -webkit-transition: width 600ms linear, left 600ms linear, opacity 1s linear;
@@ -2735,7 +2734,7 @@ input:focus {
 }
 #evaluationPanel {
   position: relative;
-  top: -18px;
+  top: -7px;
   height: 0px;
   border: 1px solid transparent;
   opacity: 0.8;
@@ -2744,18 +2743,19 @@ input:focus {
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
 }
+.IE8 #evaluationPanel {
+  display: none;
+}
+
 #evaluationPanel.afterSlide {
-  top: -18px;
+  top: -7px;
   height: 130px;
   border: 1px solid #cbdde8;
   opacity: 1;
   background-color: #FFF;
 }
-.IE #evaluationPanel {
-  top: -14px;
-}
-.IE #evaluationPanel.afterSlide {
-  top: -14px;
+.IE8 #evaluationPanel.afterSlide {
+  display: block;
 }
 
 #loginError,
