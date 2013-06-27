@@ -1460,7 +1460,7 @@ body.IE>table {
 }
 
 .panel-content {
-  background: #f1f1f1;
+  background: #FFF;
 }
 
 .pentaho-listbox-tb {
@@ -3960,15 +3960,22 @@ vertical-align: middle;
 .pageSetupDialogLandscape{
   background: url('images/landscape_off.png') no-repeat;
 }
+.pageSetupDialogLandscape:hover {
+  background-image: url(images/landscape_on.png);
+}
 .pageSetupDialogLandscapeSelected{
   background: url('images/landscape_on.png') no-repeat;
 }
 .pageSetupDialogPortrait{
   background: url('images/portrait_off.png') no-repeat;
 }
+.pageSetupDialogPortrait:hover {
+  background-image: url(images/portrait_on.png);
+}
 .pageSetupDialogPortraitSelected{
   background: url('images/portrait_on.png') no-repeat;
 }
+
   /* ----------  data access ----------  */
 .pentaho-exportbutton{
   background: url('images/file_export.png') no-repeat;
