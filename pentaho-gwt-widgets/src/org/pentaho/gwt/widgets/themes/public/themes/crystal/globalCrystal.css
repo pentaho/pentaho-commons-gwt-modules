@@ -215,7 +215,7 @@ input, input[type="password"]{
   /* lighter gray with white text */
 .pentaho-button:disabled {
   color: #ccc;
-  background: Transparent; /* Old browsers */
+  background: transparent; /* Old browsers */
   -webkit-box-shadow: none;
   -moz-box-shadow:    none;
   box-shadow:         none;
@@ -383,7 +383,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004b60', end
 }
 
 .pentaho-dialog .Caption {
-  background: Transparent;
+  background: transparent;
   font-size: 16px;
   color: #1973bc;
   cursor: move;
@@ -1197,7 +1197,7 @@ body.IE>table {
   /* END IE FIXES Admin View */
 
 .pentaho-shine {
-  background-color: none;
+  background-color: transparent;
 }
 
 .IE .pentaho-shine {
@@ -1432,7 +1432,7 @@ body.IE>table {
 }
 
 .pentaho-launcher-shine {
-  background-color: none;
+  background-color: transparent;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), to(rgba(255, 255, 255, 0.15)));
   background: -moz-linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15) 100%) repeat scroll 0 0 transparent;
 }
@@ -1460,7 +1460,7 @@ body.IE>table {
 }
 
 .panel-content {
-  background: #f1f1;
+  background: #f1f1f1;
 }
 
 .pentaho-listbox-tb {
@@ -1919,11 +1919,6 @@ body.IE>table {
   background: url('../images/toolbar_separator.png') no-repeat center;
 }
 
-.pentaho-table content {
-  margin: 10px 10px 10px 10px;
-  padding: 10px 10px 10px 10px;
-}
-
 .pentaho-table {
   background: black;
 }
@@ -2333,8 +2328,8 @@ padding: 10px 0 10px 0;
 }
 #sidepaneltabs {
   width: 258px;
-  border-right: 1px solid #cbdde8;;
-  border-left: 1px solid #cbdde8;;
+  border-right: 1px solid #cbdde8;
+  border-left: 1px solid #cbdde8;
   /* background: url('images/bg_side_panel.png') repeat-y top right; */
 }
 
@@ -2640,7 +2635,7 @@ padding: 10px 0 10px 0;
 }
 
 .sidePanelIconClose{
-	background: url('images/16x16_left.png')no-repeat;
+	background: url('images/16x16_left.png') no-repeat;
 }
 .fileBrowserColumn .body div.folder.open > div.element > div.icon {
 background: url("images/folder_open.png") no-repeat;
@@ -2655,46 +2650,46 @@ background: url("images/folder_closed.png") no-repeat;
 background: url("images/remove.png") no-repeat;
 }
 .fileBrowserColumn .body .file .html{
-  background: url("images/file_url.png")no-repeat;
+  background: url("images/file_url.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .xanalyzer{
-  background: url("images/file_analysis.png")no-repeat;
+  background: url("images/file_analysis.png") no-repeat;
 }
 .fileBrowserColumn .body .file .icon.xdash,
 .fileBrowserColumn .body .file .xdash{
-	 background: url("images/file_dashboard.png")no-repeat;
+	 background: url("images/file_dashboard.png") no-repeat;
 }
 .fileBrowserColumn .body .file .icon.xaction,
 .fileBrowserColumn .body .file .xaction{
-	 background: url("images/file_action.png")no-repeat;
+	 background: url("images/file_action.png") no-repeat;
 }
 .fileBrowserColumn .body .file .icon.prpt,
 .fileBrowserColumn .body .file .prpt {
-  background: url("images/prptFile.png")no-repeat;
+  background: url("images/prptFile.png") no-repeat;
 }
 .fileBrowserColumn .body .file .icon.prpti,
 .fileBrowserColumn .body .file .prpti{
-  background: url("images/prptiFile.png")no-repeat;
+  background: url("images/prptiFile.png") no-repeat;
 }
 
 .file-xanalyzer{
-  background: url("images/file_analysis_32.png")no-repeat;
+  background: url("images/file_analysis_32.png") no-repeat;
 }
 
 .file-xdash{
-	 background: url("images/file_dashboard_32.png")no-repeat;
+	 background: url("images/file_dashboard_32.png") no-repeat;
 }
 .file-xaction{
-	 background: url("images/file_action_32.png")no-repeat;
+	 background: url("images/file_action_32.png") no-repeat;
 }
 
 .file-prpt {
-  background: url("images/prptFile_32.png")no-repeat;
+  background: url("images/prptFile_32.png") no-repeat;
 }
 
 .file-prpti{
-  background: url("images/prptiFile_32.png")no-repeat;
+  background: url("images/prptiFile_32.png") no-repeat;
 }
   /* added by brett to override PIR styles */
 .styled >* #reportContent,
@@ -2729,7 +2724,6 @@ background: url("images/remove.png") no-repeat;
   padding: 4px;
   border: 0px solid #666;
 }
-media="screen"
 .gwt-ScrollTable .headerTable td{
   color: #FFFFFF;
   border-right: 1px solid rgb(255, 255, 255);
@@ -2980,23 +2974,23 @@ background-color: #8ab3c6;
 }
 
 .gwt-ScrollTable .dataTable tr.hovering {
-  background: #dce7ed; none repeat scroll 0% 0%;
+  background: #dce7ed;
 }
 
 .gwt-ScrollTable .dataTable-disabled tr.hovering {
-  background: #dce7ed; none repeat scroll 0% 0%;
+  background: #dce7ed;
 }
 
 .gwt-ScrollTable .dataTable td.hovering {
-  background: #dce7ed; none repeat scroll 0% 0%;
+  background: #dce7ed;
 }
 
 .gwt-ScrollTable .dataTable tr.selected {
-  background: #d7e9cd none repeat scroll 0% 0%;
+  background: #d7e9cd;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
-  background: #dce7ed; none repeat scroll 0% 0%;
+  background: #dce7ed;
 }
 
 .gwt-ScrollTable .pagingOptions {
@@ -3709,7 +3703,7 @@ vertical-align: middle;
 }
 
 .pentaho-expandallbutton {
-    background-image: url("../images/ExpandAll.png");    
+    background-image: url("../images/ExpandAll.png");
     width: 15px;
     height: 15px;
 }
