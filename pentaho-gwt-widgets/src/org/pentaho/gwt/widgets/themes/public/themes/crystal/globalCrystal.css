@@ -2780,6 +2780,14 @@ background: url("images/remove.png") no-repeat;
 -webkit-transition: all 300ms;*/
 }
 
+.fileBrowserColumn .body .folder.secondarySelected > .element {
+  font-weight: normal;
+  background: #d3d3d3;
+  /*      transition: all 300ms;
+-moz-transition: all 300ms;
+-webkit-transition: all 300ms;*/
+}
+
 .fileBrowserColumn .body .file.selected{
   background: #d7e9cd;
   font-weight: normal;
