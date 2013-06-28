@@ -3732,6 +3732,18 @@ vertical-align: middle;
     height: 16px;
 }
 
+.pentaho-smallmodelbutton {
+	background-image: url("../images/sm_model_icon.png");    
+    width: 16px;
+    height: 16px;
+}
+
+.pentaho-column {
+	background-image: url("../images/column.png");    
+    width: 16px;
+    height: 16px;
+}
+
 .pentaho-updatebutton.pentaho-imagebutton-disabled {
   background-image: url("../images/updateDisabled.png");    
   width: 16px;
