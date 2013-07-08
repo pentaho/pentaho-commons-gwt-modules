@@ -962,6 +962,7 @@ border-top: 4px solid transparent;
 .xul-editPanel {
   border: 1px solid #cbdde8;
   background-color: #fff;
+  height: 468px;
 }
 
 .content-toolbar {
