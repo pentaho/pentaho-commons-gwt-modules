@@ -3005,3 +3005,10 @@ input:focus {
 #datasource-button-bar {
   padding: 0 13px;
 }
+.colorpickertabs.tabpanel {
+  padding: 0px;
+  height:230px;
+  width: 222px;
+  display:block;
+  border: 1px solid #444444;
+}
