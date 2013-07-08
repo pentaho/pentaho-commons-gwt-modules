@@ -962,6 +962,7 @@ border-top: 4px solid transparent;
 .xul-editPanel {
   border: 1px solid #cbdde8;
   background-color: #fff;
+  height: 468px;
 }
 
 .content-toolbar {
@@ -1919,14 +1920,17 @@ body.IE>table {
   cursor: default;
 }
 
+.trashcan,
 .pentaho-trashbutton {
   width: 128px;
   height: 150px;
-  background: url('../images/trashcan.png') no-repeat center;
+  background: url('images/trashcan.png') no-repeat center;
 }
 
+.trashcan:hover,
+.trashcan.dojoDndContainerOver,
 .pentaho-trashbutton.pentaho-imagebutton-hover {
-  background: url('../images/trashcan_full.png') no-repeat center;
+  background: url('images/trashcan_full.png') no-repeat center;
   cursor: pointer;
 }
 
@@ -3963,7 +3967,12 @@ vertical-align: middle;
   width: 22px;
   height: 22px;
 }
-
+.tundra .dijitEditorIconIndent {
+  background-image: url(images/indicator_ball.gif);
+  background-position: 0;
+  height: 22px;
+  width: 22px;
+}
 .tundra .dijitDisabled .dijitEditorIconIndent {
   background-image: url("images/indicator_circle_ball_stop.png");
   background-position: 0;
@@ -4116,4 +4125,16 @@ vertical-align: middle;
 }
 .flag{
 	background: transparent url('images/flag-right.png') no-repeat scroll top right;
+}
+
+#datasource-button-bar {
+  padding: 0 10px;
+}
+.colorpickertabs.tabpanel {
+  padding: 0px;
+  height:230px;
+  width: 222px;
+  display:block;
+  border: 1px solid #cbdde8;
+  background-color: #fff;
 }
