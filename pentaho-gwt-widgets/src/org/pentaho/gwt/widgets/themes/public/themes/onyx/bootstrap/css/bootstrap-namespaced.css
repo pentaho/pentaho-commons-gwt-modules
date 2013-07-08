@@ -209,15 +209,15 @@
   font-size: 14px;
   line-height: 20px;
   color: #333333;
-  background-color: #ffffff;
+  background: transparent;
 }
 .bootstrap a {
-  color: #0088cc;
+  color: #f47120;
   text-decoration: none;
 }
 .bootstrap a:hover,
 .bootstrap a:focus {
-  color: #005580;
+  color: #f47120;
   text-decoration: underline;
 }
 .bootstrap .img-rounded {
@@ -625,6 +625,7 @@
   line-height: 20px;
   color: inherit;
   text-rendering: optimizelegibility;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, .6);
 }
 .bootstrap h1 small,
 .bootstrap h2 small,
@@ -635,11 +636,6 @@
   font-weight: normal;
   line-height: 1;
   color: #999999;
-}
-.bootstrap h1,
-.bootstrap h2,
-.bootstrap h3 {
-  line-height: 40px;
 }
 .bootstrap h1 {
   font-size: 38.5px;
@@ -679,7 +675,7 @@
 .bootstrap ul,
 .bootstrap ol {
   padding: 0;
-  margin: 0 0 10px 25px;
+  margin: 0 0 0px 25px;
 }
 .bootstrap ul ul,
 .bootstrap ul ol,
@@ -2593,13 +2589,14 @@
   padding: 19px;
   margin-bottom: 20px;
   background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #333;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 1px 1px 5px 0px #333333, 0 0 1px 1px rgba(255, 255, 255, .6) inset;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.5)), to(rgba(255, 255, 255, 0.35)));
 }
 .bootstrap .well blockquote {
   border-color: #ddd;
@@ -2670,35 +2667,31 @@
   padding: 4px 12px;
   margin-bottom: 0;
   *margin-left: .3em;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
-  color: #333333;
+  color: #FFF;
   text-align: center;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);
   vertical-align: middle;
   cursor: pointer;
-  background-color: #f5f5f5;
-  *background-color: #e6e6e6;
-  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
-  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
-  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
-  background-repeat: repeat-x;
-  border: 1px solid #cccccc;
+  background-color: #000;
+  *background-color: #000;
+  background-image: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
+  border: 1px solid #333;
   *border: 0;
   border-color: #e6e6e6 #e6e6e6 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   border-bottom-color: #b3b3b3;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
   *zoom: 1;
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+   -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+    -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.7) inset;
 }
 .bootstrap .btn:hover,
 .bootstrap .btn:focus,
@@ -2706,9 +2699,9 @@
 .bootstrap .btn.active,
 .bootstrap .btn.disabled,
 .bootstrap .btn[disabled] {
-  color: #333333;
-  background-color: #e6e6e6;
-  *background-color: #d9d9d9;
+-webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
+    -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
+    box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
 }
 .bootstrap .btn:active,
 .bootstrap .btn.active {
@@ -2719,13 +2712,8 @@
 }
 .bootstrap .btn:hover,
 .bootstrap .btn:focus {
-  color: #333333;
+  color: #FFF;
   text-decoration: none;
-  background-position: 0 -15px;
-  -webkit-transition: background-position 0.1s linear;
-  -moz-transition: background-position 0.1s linear;
-  -o-transition: background-position 0.1s linear;
-  transition: background-position 0.1s linear;
 }
 .bootstrap .btn:focus {
   outline: thin dotted #333;
@@ -3316,7 +3304,7 @@
   margin-top: 5px;
 }
 .bootstrap .nav {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   margin-left: 0;
   list-style: none;
 }
@@ -3436,6 +3424,70 @@
   border: 1px solid #ddd;
   border-bottom-color: transparent;
 }
+.bootstrap .nav-tabs > li > a {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  line-height: 30px;
+  -webkit-border-radius: 0px 4px 0 0;
+  -moz-border-radius: 0px 4px 0 0;
+  border-radius: 0px 0px 0 0;
+  border-top: 0px solid transparent;
+  border-bottom: 0px solid #ddd;
+  border-left: 0px solid transparent;
+  border-right: 1px solid #ddd;
+}
+.bootstrap #getting-started .nav-tabs > li > a {
+  width: 130px;
+}
+
+
+.bootstrap #launch-widget-row .nav-tabs > li > a:hover,
+.bootstrap #launch-widget-row .nav-tabs > li > a:focus,
+.bootstrap #getting-started .nav-tabs > li > a:hover,
+.bootstrap #getting-started .nav-tabs > li > a:focus {
+  border-top: 0px solid transparent;
+  border-bottom: 1px solid #ddd;
+  border-left: 0px solid #ddd;
+  border-right: 1px solid #ddd;
+  background-color: #d7e9cd;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+}
+.bootstrap #recentsContianer .nav-tabs > li > a:hover,
+.bootstrap  #recentsContianer.nav-tabs > li > a:focus,
+.bootstrap #favoritesContianer .nav-tabs > li > a:hover,
+.bootstrap  #favoritesContianer.nav-tabs > li > a:focus {
+  border-top: 4px solid transparent;
+  border-bottom: 1px solid #ddd;
+  border-left: 0px solid #ddd;
+  border-right: 0px solid #ddd;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+}
+.bootstrap #getting-started .nav-tabs .active > li  > a:hover,
+.bootstrap #getting-started .nav-tabs .active > li  > a:focus {
+  background-color: #FFF;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+}
+.bootstrap .nav-tabs > .active > a,
+.bootstrap .nav-tabs > .active > a:hover,
+.bootstrap .nav-tabs > .active > a:focus {
+  color: #555555;
+  cursor: default;
+  background-color: #ffffff;
+  border-top: 0px solid #f2ce17;
+  border-bottom: 1px solid transparent;
+  border-left: 0px solid #c1d7e1;
+  border-right: 1px solid #ddd;
+  transition: all 300ms;
+  -moz-transition: all 300ms;
+  -webkit-transition: all 300ms;
+ }
+
 .bootstrap .nav-pills > li > a {
   padding-top: 8px;
   padding-bottom: 8px;
@@ -3489,6 +3541,37 @@
 }
 .bootstrap .nav-pills.nav-stacked > li > a {
   margin-bottom: 3px;
+}
+.bootstrap #recentsContianer  .nav > li > a:hover,
+.bootstrap #recentsContianer  .nav > li > a:focus,
+.bootstrap #favoritesContianer  .nav > li > a:hover,
+.bootstrap #favoritesContianer  .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #d7e9cd;
+}
+.bootstrap #recentsContianer .widget-panel.well .content-panel,
+.bootstrap #favoritesContianer  .widget-panel.well .content-panel{
+  border: 1px solid #ddd;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.bootstrap #recentsContianer .nav-tabs.nav-stacked > li > a ,
+.bootstrap #favoritesContianer  .nav-tabs.nav-stacked > li > a {
+  border-bottom: 1px solid #ddd;
+  border-top: 0px solid #ddd;
+  border-right: 0px solid #ddd;
+	border-left: 0px solid #ddd;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.bootstrap #recentsContianer .nav-tabs.nav-stacked > li:last-child > a ,
+.bootstrap #favoritesContianer  .nav-tabs.nav-stacked > li:last-child  > a {
+  /*border-bottom: 0px solid #c1d7e1;*/
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 .bootstrap .nav-pills.nav-stacked > li:last-child > a {
   margin-bottom: 1px;
@@ -3563,6 +3646,13 @@
 }
 .bootstrap .tab-content {
   overflow: auto;
+  background: #FFF;
+}
+.bootstrap  #getting-started .tab-content{
+  height: 320px;
+}
+.bootstrap  #launch-widget .tab-content{
+  height: auto;
 }
 .bootstrap .tabs-below > .nav-tabs,
 .bootstrap .tabs-right > .nav-tabs,
@@ -3576,6 +3666,7 @@
 .bootstrap .tab-content > .active,
 .bootstrap .pill-content > .active {
   display: block;
+  padding: 10px 0 0 0;
 }
 .bootstrap .tabs-below > .nav-tabs {
   border-top: 1px solid #ddd;
@@ -4550,7 +4641,7 @@
   padding: 1px;
   text-align: left;
   white-space: normal;
-  background-color: #ffffff;
+  background-color: #d4d6db;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 6px;
@@ -4634,7 +4725,7 @@
 .bootstrap .popover.right .arrow:after {
   bottom: -10px;
   left: 1px;
-  border-right-color: #ffffff;
+  border-right-color: #d4d6db;
   border-left-width: 0;
 }
 .bootstrap .popover.bottom .arrow {
