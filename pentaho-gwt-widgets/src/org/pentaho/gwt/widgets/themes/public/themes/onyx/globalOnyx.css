@@ -871,7 +871,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     border-bottom-style: solid;
     border-bottom-color: #848484
 }
-
+.dialog-content .xul-editPanel,
+.xul-editPanel {
+  height: 463px;
+}
 .content-toolbar {
     height: 32px;
 }
@@ -3000,4 +3003,15 @@ input:focus {
 
 #fileBrowser{
 	padding: 10px 0;
+}
+
+#datasource-button-bar {
+  padding: 0 13px;
+}
+.colorpickertabs.tabpanel {
+  padding: 0px;
+  height:230px;
+  width: 222px;
+  display:block;
+  border: 1px solid #444444;
 }
