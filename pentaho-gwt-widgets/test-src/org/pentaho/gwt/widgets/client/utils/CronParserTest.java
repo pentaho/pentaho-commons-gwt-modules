@@ -20,10 +20,12 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.google.gwt.junit.client.GWTTestCase;
+
 /**
  * GWT JUnit tests must extend GWTTestCase.
  */
-public class CronParserTest {
+public class CronParserTest extends GWTTestCase{
 
   /**
    * Must refer to a valid module that sources this class.
