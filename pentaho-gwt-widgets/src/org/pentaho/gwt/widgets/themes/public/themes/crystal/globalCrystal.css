@@ -1919,14 +1919,17 @@ body.IE>table {
   cursor: default;
 }
 
+.trashcan,
 .pentaho-trashbutton {
   width: 128px;
   height: 150px;
-  background: url('../images/trashcan.png') no-repeat center;
+  background: url('images/trashcan.png') no-repeat center;
 }
 
+.trashcan:hover,
+.trashcan.dojoDndContainerOver,
 .pentaho-trashbutton.pentaho-imagebutton-hover {
-  background: url('../images/trashcan_full.png') no-repeat center;
+  background: url('images/trashcan_full.png') no-repeat center;
   cursor: pointer;
 }
 
