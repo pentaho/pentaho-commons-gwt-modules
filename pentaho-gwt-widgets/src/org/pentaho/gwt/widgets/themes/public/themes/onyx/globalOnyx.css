@@ -3001,3 +3001,7 @@ input:focus {
 #fileBrowser{
 	padding: 10px 0;
 }
+
+#datasource-button-bar {
+  padding: 0 13px;
+}

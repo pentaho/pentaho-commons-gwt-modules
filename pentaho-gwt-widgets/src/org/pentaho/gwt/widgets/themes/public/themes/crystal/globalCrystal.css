@@ -4122,3 +4122,7 @@ vertical-align: middle;
 .flag{
 	background: transparent url('images/flag-right.png') no-repeat scroll top right;
 }
+
+#datasource-button-bar {
+  padding: 0 10px;
+}
