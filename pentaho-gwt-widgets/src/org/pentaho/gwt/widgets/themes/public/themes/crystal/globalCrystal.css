@@ -3963,7 +3963,12 @@ vertical-align: middle;
   width: 22px;
   height: 22px;
 }
-
+.tundra .dijitEditorIconIndent {
+  background-image: url(images/indicator_ball.gif);
+  background-position: 0;
+  height: 22px;
+  width: 22px;
+}
 .tundra .dijitDisabled .dijitEditorIconIndent {
   background-image: url("images/indicator_circle_ball_stop.png");
   background-position: 0;
