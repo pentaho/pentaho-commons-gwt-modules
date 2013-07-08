@@ -20,6 +20,7 @@ html, body {
     padding: 0px;
     font-family: Tahoma, Helvetica, Arial, sans-serif;
     font-size: 14px;
+    background: transparent;
 }
 
 div {
@@ -859,7 +860,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     width: 100%;
     height: 100%;
     vertical-align: middle;
-    background-color: # #d8d8d8;
+    background-color: #d8d8d8;
     background-image: url(../images/subtoolbar_bg.png);
     background-repeat: repeat-x;
     background-position: top center;
@@ -1090,7 +1091,7 @@ input:focus {
 }
 
 .pentaho-shine {
-    background-color: none;
+    background-color: transparent;
 
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(170, 170, 170, 0.34)), color-stop(0.1, rgba(135, 135, 135, 0.34)), color-stop(0.5, rgba(50, 50, 50, 0.04)), color-stop(0.52, rgba(0, 0, 0, 0.25)), color-stop(0.8, rgba(0, 0, 0, 0.25)), to(rgba(10, 10, 10, 0.04)));
 
@@ -1363,7 +1364,7 @@ input:focus {
 }
 
 .pentaho-launcher-shine {
-    background-color: none;
+    background-color: transparent;
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.35)), to(rgba(255, 255, 255, 0.15)));
     background: -moz-linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15) 100%) repeat scroll 0 0 transparent;
 }
@@ -1822,11 +1823,6 @@ input:focus {
     background: url('../images/toolbar_separator.png') no-repeat center;
 }
 
-.pentaho-table content {
-    margin: 10px 10px 10px 10px;
-    padding: 10px 10px 10px 10px;
-}
-
 .pentaho-table {
     background: black;
 }
@@ -2203,10 +2199,18 @@ input:focus {
 .tundra .dijitTabInnerDiv {
   padding: 2px;
 }
-
+.workspaceHeading,
 .pentaho-fieldgroup-major {    
 	font-size: 24px;
-	color: #f47120;
+  color: #333;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, .6);
+}
+.authMethod{
+	color: #000;
+	/*text-shadow: 0px 1px 1px rgba(255, 255, 255, .6);*/
+}
+.authText{
+	color: #000;
 }
 
 .pentaho-fieldgroup-minor {    
@@ -2580,39 +2584,35 @@ input:focus {
 
 .drag_and_drop_label_content{
   color: black;
-  width: 300px;
-  height: 180px;
-  border: 1px dashed #ccc;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  background-color: #f7f7f7;
+  width: 220px;
+  height: 100px;
   background-image:  url('./images/drop_here.png');
   background-repeat: no-repeat;
-  background-position: 100px 20px;
+  background-position: 1px 0px;
   position: absolute;
-  top: 50%;
-  margin-top: -80px;
-  left: 50%;
-  margin-left: -150px;
+  margin: auto;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .drag_and_drop_label_text{
-  font-size: 18px;
-  color: #000;
+  font-size: 21px;
+  color: #333;
   margin: 0;
-  text-align: center;
-  font-family: OpenSansRegular, sans-serif;
+  text-align: left;
   position: relative;
-  top: 132px;
+  padding: 0px 0px 0 70px;
 }
 
 .drag_and_drop_label_wrapper{
-  height: 100%;
+  height: 100px;
   overflow: hidden;
   margin: 0;
   background-color: #fff;
   display: none;
+  padding: 0px;
 }
 
 .drag_and_drop_label .drag_and_drop_label_wrapper {
@@ -2958,4 +2958,46 @@ input:focus {
   height: 22px;
   background: url('../images/export_disabled.png') no-repeat center;
   cursor: default;
+}
+#ldapSecurityAdminPanel html{
+	background: transparent;
+}
+.fileBrowserColumn .header{
+  border: 0;
+  font-size: 18px;
+}
+
+#fileBrowserFiles.fileBrowserColumn .body,
+#fileBrowserFolders.fileBrowserColumn .body {
+  background: #fff;
+  padding: 4px 10px;
+  border: 1px solid #333;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.fileBrowserColumn .body .folder.selected > .element {
+  font-weight: normal;
+  background: #d7e9cd;
+}
+
+.fileBrowserColumn .body .folder.secondarySelected > .element {
+  font-weight: normal;
+  background: rgb(224, 224, 224);
+}
+
+.fileBrowserColumn .body .file.selected{
+  background: #d7e9cd;
+  font-weight: normal;
+}
+
+.fileBrowserColumn .body .file.selected {
+  font-weight: normal;
+}
+.flag{
+	background: transparent url('images/flag-right.png') no-repeat scroll top right;
+}
+
+#fileBrowser{
+	padding: 10px 0;
 }
