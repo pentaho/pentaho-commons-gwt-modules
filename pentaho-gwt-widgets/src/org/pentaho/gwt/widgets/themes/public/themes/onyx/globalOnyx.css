@@ -2407,7 +2407,21 @@ input:focus {
 .icon-small.icon-folder {
   background: url('../images/folderIcon.png');
 }
-
+.icon-small.icon-waqr-report {
+  background: url('../images/file_waqr_report.png');
+}
+.icon-small.icon-analyzer {
+  background: url('../images/file_analyzer.png');
+}
+.icon-small.icon-pir-report {
+  background: url('../images/file_pir_report.png');
+}
+.icon-small.icon-prpt-report {
+  background: url('../images/file_prpt_report.png');
+}
+.icon-small.icon-dashboard {
+  background: url('../images/file_dashboard.png');
+}
 .icon-small.icon-stop {
   background: url('../images/stop-small.png');
 }
@@ -3014,4 +3028,7 @@ input:focus {
   width: 222px;
   display:block;
   border: 1px solid #444444;
+
+.clickable {
+	cursor: pointer;
 }

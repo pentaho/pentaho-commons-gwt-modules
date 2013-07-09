@@ -22,10 +22,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.filechooser.images.FileChooserImages;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.http.client.Request;
@@ -261,7 +261,7 @@ public class FileChooser extends VerticalPanel {
     HorizontalPanel navigationBar = new HorizontalPanel();
 
     final Image upDirImage = new Image();
-    upDirImage.setUrl("mantle/images/spacer.gif"); //$NON-NLS-1$
+    upDirImage.setUrl(GWT.getModuleBaseURL() + "images/spacer.gif"); //$NON-NLS-1$
     upDirImage.addStyleName("pentaho-filechooseupbutton"); //$NON-NLS-1$
     upDirImage.setTitle(FileChooserEntryPoint.messages.getString("upOneLevel")); //$NON-NLS-1$
     upDirImage.addMouseListener(new MouseListener() {
@@ -431,27 +431,30 @@ public class FileChooser extends VerticalPanel {
         handleFileClicked(item, isDir, event, myNameLabel.getElement());
       }
     };
+    fileImage.setUrl(GWT.getModuleBaseURL() + "images/spacer.gif");
+    fileImage.addStyleName("icon-small");
+    fileImage.addStyleName("clickable");
     fileImage.sinkEvents(Event.ONDBLCLICK | Event.ONCLICK);
     if (isDir) {
-      FileChooserImages.images.folder().applyTo(fileImage);
+      fileImage.addStyleName("icon-folder");
     } else {
 
       if (fileName.endsWith("waqr.xaction")) { //$NON-NLS-1$
-        FileChooserImages.images.file_waqr_report().applyTo(fileImage);
+        fileImage.addStyleName("icon-waqr-report");
       } else if (fileName.endsWith("analysisview.xaction")) { //$NON-NLS-1$
-        FileChooserImages.images.file_analysis().applyTo(fileImage);
+        fileImage.addStyleName("icon-analysis");
       } else if (fileName.endsWith(".url")) { //$NON-NLS-1$
-        FileChooserImages.images.file_url().applyTo(fileImage);
+        fileImage.addStyleName("icon-url");
       } else if (fileName.endsWith("xanalyzer")) { //$NON-NLS-1$
-        FileChooserImages.images.file_analyzer().applyTo(fileImage);
+        fileImage.addStyleName("icon-analyzer");
       } else if (fileName.endsWith("prpti")) { //$NON-NLS-1$
-        FileChooserImages.images.file_pir_report().applyTo(fileImage);
+        fileImage.addStyleName("icon-pir-report");
       } else if (fileName.endsWith("prpt")) { //$NON-NLS-1$
-        FileChooserImages.images.file_prpt_report().applyTo(fileImage);
+        fileImage.addStyleName("icon-prpt-report");
       } else if (fileName.endsWith("xdash")) { //$NON-NLS-1$
-        FileChooserImages.images.file_dashboard().applyTo(fileImage);
+        fileImage.addStyleName("icon-dashboard");
       } else {
-        FileChooserImages.images.file_action().applyTo(fileImage);
+        fileImage.addStyleName("icon-xaction");
       }
     }
     fileNamePanel.add(fileImage);
