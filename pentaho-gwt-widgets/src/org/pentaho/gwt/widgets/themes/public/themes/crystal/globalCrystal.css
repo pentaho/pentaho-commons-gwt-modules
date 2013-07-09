@@ -2518,7 +2518,6 @@ padding: 10px 0 10px 0;
 .icon-small.icon-xaction {
   background: url('../images/file_action.png');
 }
-
 .icon-small.icon-url {
   background: url('../images/file_url.png');
 }
@@ -2527,6 +2526,21 @@ padding: 10px 0 10px 0;
 }
 .icon-small.icon-folder {
   background: url('../images/folderIcon.png');
+}
+.icon-small.icon-waqr-report {
+  background: url('../images/file_waqr_report.png');
+}
+.icon-small.icon-analyzer {
+  background: url('../images/file_analyzer.png');
+}
+.icon-small.icon-pir-report {
+  background: url('../images/file_pir_report.png');
+}
+.icon-small.icon-prpt-report {
+  background: url('../images/file_prpt_report.png');
+}
+.icon-small.icon-dashboard {
+  background: url('../images/file_dashboard.png');
 }
 
 .icon-small.icon-stop {
@@ -4137,4 +4151,7 @@ vertical-align: middle;
   display:block;
   border: 1px solid #cbdde8;
   background-color: #fff;
+
+.clickable {
+	cursor: pointer;
 }
