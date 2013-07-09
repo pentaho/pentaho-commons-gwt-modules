@@ -117,7 +117,7 @@ background-color: #cbefa3;
 }
 
 .disabledMenuItem {
-  color: gray;
+  color: #CCCCCC;
   cursor: Default;
   padding:3px 20px 3px 20px;
   vertical-align: bottom;
