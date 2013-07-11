@@ -2640,17 +2640,26 @@ padding: 10px 0 10px 0;
   height: 13px;
   width: 14px;
 }
-.icon-tree-leaf {
+.icon-tree-node {
   height: 14px;
   width: 35px;
 }
-.icon-tree-leaf.icon-recycle-bin {
+.icon-tree-node.icon-recycle-bin {
   background: url('images/remove_16.png') no-repeat;
   height: 16px;
 }
-.icon-tree-leaf.icon-folder {
+.icon-tree-node.icon-folder {
   background: url('images/folder_16.png') no-repeat;
 }
+
+.leaf-widget.parent-widget>table>tbody>tr>td>img {
+  background: url('images/16x16_right.png') no-repeat !important;
+}
+
+.leaf-widget.parent-widget.open>table>tbody>tr>td>img {
+  background: url('images/16x16_down.png') no-repeat !important;
+}
+
 .sidePanelIconOpen{
 	  background: url('images/16x16_right.png') no-repeat;
 }
