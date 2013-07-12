@@ -361,17 +361,21 @@ public class FileChooser extends VerticalPanel {
     filesListTable.setWidget(0, 1, typeLabel);
     filesListTable.setWidget(0, 2, dateLabel);
 
-    int row = 0;
+    List<TreeItem> treeItems = new ArrayList<TreeItem>();
     for (int i = 0; i < parentTreeItem.getChildCount(); i++) {
-      final TreeItem childItem = parentTreeItem.getChild(i);
+      treeItems.add(parentTreeItem.getChild(i));
+    }
+    Collections.sort(treeItems, new TreeItemComparator()); // BISERVER-9599 - custom sort
+
+    int row = 0;
+    for(final TreeItem childItem: treeItems){
       RepositoryFileTree repositoryFileTree = (RepositoryFileTree) childItem.getUserObject();
       RepositoryFile repositoryFile = repositoryFileTree.getFile();
       if (repositoryFile.isFolder() && !(repositoryFile.getName() != null && repositoryFile.getName().equals(ETC_FOLDER))) {
         addFileToList(repositoryFileTree, childItem, filesListTable, row++);
       }
     }
-    for (int i = 0; i < parentTreeItem.getChildCount(); i++) {
-      final TreeItem childItem = parentTreeItem.getChild(i);
+    for(final TreeItem childItem: treeItems){
       RepositoryFileTree repositoryFileTree = (RepositoryFileTree) childItem.getUserObject();
       RepositoryFile repositoryFile = repositoryFileTree.getFile();
       if (!repositoryFile.isFolder()) {
@@ -389,7 +393,7 @@ public class FileChooser extends VerticalPanel {
     Label myDateLabel = null;
     RepositoryFile file = repositoryFileTree.getFile();
     Date lastModDate = file.getLastModifiedDate();
-    String fileName = file.getName(); 
+    String fileName = file.getName();
 
     final Boolean isDir = file.isFolder(); 
     if(lastModDate != null) {
