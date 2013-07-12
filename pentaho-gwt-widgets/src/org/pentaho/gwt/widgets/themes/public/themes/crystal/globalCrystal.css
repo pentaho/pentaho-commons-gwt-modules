@@ -143,9 +143,20 @@ input, input[type="password"]{
   background-color: #FFF;
 }
 #pucHeader {
-  background: url('images/bg_header_2.png') repeat-x top left;
   display: block;
-  height: 88px;
+  height: 60px;
+  background: #d8e4ed; /* Old browsers */
+  background: -moz-linear-gradient(top,  #d8e4ed 0%, #c3d5e4 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d8e4ed), color-stop(100%,#c3d5e4)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #d8e4ed 0%,#c3d5e4 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #d8e4ed 0%,#c3d5e4 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #d8e4ed 0%,#c3d5e4 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #d8e4ed 0%,#c3d5e4 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8e4ed', endColorstr='#c3d5e4',GradientType=0 ); /* IE6-9 */
+  -webkit-box-shadow: 0px 2px 3px rgba(50, 50, 50, 0.4);
+  -moz-box-shadow:    0px 2px 3px rgba(50, 50, 50, 0.4);
+  box-shadow:         0px 2px 3px rgba(50, 50, 50, 0.4);
+  padding: 24px 0 0px 0;
 }
 
   /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
@@ -249,7 +260,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005f7d', end
   font-size: 12px;
   color: #ffffff;
   padding: 5px 14px;
-   border: 1px solid #cbdde8;
+  border: 1px solid #0382AC;
   white-space: nowrap;
 
   text-align: center;
@@ -261,6 +272,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005f7d', end
   background: transparent;
   border:none;
   color: inherit;
+  cursor: pointer;
 }
 
 .pentaho-toggle-button-horizontal {
@@ -345,16 +357,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#005f7d', end
 
   /* Standard toggle-button style. Should be applied to a <button> element to get full pseudo-styles. */
 .pentaho-toggle-button-down, .pentaho-toggle-button-down-disabled, .pentaho-toggle-button-down-hovering {
-  color: #0085b0;
-background: #cbdde8; /* Old browsers */
-background: -moz-linear-gradient(top,  #cbdde8 0%, #f5f6f8 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cbdde8), color-stop(100%,#f5f6f8)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #cbdde8 0%,#f5f6f8 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #cbdde8 0%,#f5f6f8 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #cbdde8 0%,#f5f6f8 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #cbdde8 0%,#f5f6f8 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cbdde8', endColorstr='#f5f6f8',GradientType=0 ); /* IE6-9 */
-
+  color: #293b44;
+  background: #8ac06e; /* Old browsers */
+  background: url('images/checkmark_16x16.png') no-repeat 3px 5px, -moz-linear-gradient(top,  #8ac06e 0%, #62ab3d 100%); /* FF3.6+ */
+  background: url('images/checkmark_16x16.png') no-repeat 3px 5px, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#62ab3d), color-stop(100%,#8ac06e)); /* Chrome,Safari4+ */
+  background: url('images/checkmark_16x16.png') no-repeat 3px 5px, -webkit-linear-gradient(top,  #62ab3d 0%,#8ac06e 100%); /* Chrome10+,Safari5.1+ */
+  background: url('images/checkmark_16x16.png') no-repeat 3px 5px, -o-linear-gradient(top,  #62ab3d 0%,#8ac06e  100%); /* Opera 11.10+ */
+  background: url('images/checkmark_16x16.png') no-repeat 3px 5px, -ms-linear-gradient(top,  #62ab3d 0%,#8ac06e 100%); /* IE10+ */
+  background: url('images/checkmark_16x16.png') no-repeat 3px 5px, linear-gradient(to bottom,  #62ab3d 0%,#8ac06e 100%); /* W3C */
 }
 
 .IE .pentaho-toggle-button-down, .IE .pentaho-toggle-button-down-disabled {
@@ -368,7 +378,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cbdde8', end
   background-position: center center;*/
 }
 div#FilterPanel div.pentaho-toggle-button-down button{
-	color: #0085b0;
+	color: #293b44;
 }
 
   /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
@@ -2513,39 +2523,62 @@ padding: 10px 0 10px 0;
 }
 
 .icon-small.icon-analysis {
-  background: url('../images/file_analysis.png');
+  background: url('images/file_analysis.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-xaction {
-  background: url('../images/file_action.png');
+  background: url('images/file_action.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-url {
-  background: url('../images/file_url.png');
+  background: url('images/file_url.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-file {
-  background: url('../images/fileIcon.gif');
+  background: url('images/file.png') no-repeat;
+    height: 22px;
+  width: 22px;
 }
 .icon-small.icon-folder {
-  background: url('../images/folderIcon.png');
+  background: url('images/folder_closed.png') no-repeat;
+  height: 22px;
+  width: 22px;
+}
+.fileChooserCellLabel{
+	padding:2px;
 }
 .icon-small.icon-waqr-report {
-  background: url('../images/file_waqr_report.png');
+  background: url('images/file_generic.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-analyzer {
-  background: url('../images/file_analyzer.png');
+  background: url('images/file_analysis.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-pir-report {
-  background: url('../images/file_pir_report.png');
+  background: url('images/prptiFile.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-prpt-report {
-  background: url('../images/file_prpt_report.png');
+  background: url('images/prptFile.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 .icon-small.icon-dashboard {
-  background: url('../images/file_dashboard.png');
+  background: url('images/file_dashboard.png') no-repeat;
+  height: 22px;
+  width: 22px;
 }
 
 .icon-small.icon-stop {
-      background: url('images/pause-scheduler-small.png');
-    height: 22px;
+  background: url('images/stop_scheduler.png') no-repeat;
+  height: 22px;
   width: 22px;
 }
 .icon-small.icon-stop-scheduler {
@@ -2680,7 +2713,7 @@ height: 22px;
   background: url("images/folder_closed.png") no-repeat;
 }
 .fileBrowserColumn .body div.trash > div.element > div.icon, .fileBrowserColumn .body div.trash.empty > div.element > div.icon, .fileBrowserColumn .body div.trash.open.empty > div.element > div.icon{
-  background: url("images/remove.png") no-repeat;
+  background: url("images/trash.png") no-repeat;
 }
 .fileBrowserColumn .body .file .html{
   background: url("images/file_url.png") no-repeat;
@@ -2830,19 +2863,22 @@ background: transparent;
 
 .fileBrowserColumn .body .folder.secondarySelected > .element {
   font-weight: normal;
-  background: #bfdce5;
-  /*      transition: all 300ms;
--moz-transition: all 300ms;
--webkit-transition: all 300ms;*/
+  background: #dce7ed;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .fileBrowserColumn .body .file.selected{
   background: #d7e9cd;
   font-weight: normal;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .fileBrowserColumn .body .file.selected {
   font-weight: normal;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 #fileBrowserButtons{
   width: 250px;
@@ -2919,9 +2955,17 @@ height: 39px;
   border-top-left-radius: 1px;
   background: #FFF;
 }
+button.adminButton {
+  background: url("images/auth.png")
+}
+.dijitFolderClosed, .dijitIconFolderClosed {
+  background-image: url("images/folder_16.png") !important;
+}
+.dijitFolderOpen, .dijitIconFolderOpen {
+  background-image: url("images/folder_16.png") !important;
+}
 
-
-  /* added for Analyzer fix */
+/* added for Analyzer fix */
 #fieldListWrapperContentPane,
 #layoutPanelWrapper{
   background-color: #fff;
@@ -3040,22 +3084,32 @@ background-color: #8ab3c6;
 
 .gwt-ScrollTable .dataTable tr.hovering {
   background: #dce7ed;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable-disabled tr.hovering {
   background: #dce7ed;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable td.hovering {
   background: #dce7ed;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable tr.selected {
   background: #d7e9cd;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
   background: #dce7ed;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .pagingOptions {
@@ -3074,14 +3128,20 @@ background-color: #8ab3c6;
 }
 .gwt-Tree .gwt-TreeItem-selected{
   background-color: #d7e9cd;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 .tree-item-custom-widget-selected {
 background-color: #d7e9cd;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .tree-item-custom-widget-drop-hover{
   border: 1px solid #8ab3c6;
   background-color: #dce7ed;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 .tree-drop-indicator{
   height: 1px;
@@ -3129,10 +3189,14 @@ background-color: #d7e9cd;
 .soria .dojoxGridRowOver .dojoxGridCell {
   background-color: #dce7ed;
   color:#000;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
 .soria .dojoxGridRowSelected {
   background-color:  #d7e9cd;
+  -moz-transition: all 600ms;
+  -webkit-transition: all 600ms;
 }
 
   /* cells */
@@ -3846,10 +3910,13 @@ vertical-align: middle;
 }
 
 .pentaho-filechooseupbutton {
-  background-image: url("../images/up.png");
-  width: 20px;
-  height: 20px;
+  background-image: url("images/up.png");
+  width: 22px;
+  height: 22px;
   cursor: pointer;
+  padding: 4px;
+  background-repeat: no-repeat;
+  background-position: 2px 4px;
 }
 
 .IE8 #browse-properties-dialog, .IE9 #browse-properties-dialog {
@@ -3996,6 +4063,112 @@ vertical-align: middle;
   height: 22px;
   width: 22px;
 }
+.tundra .dijitEditorIcon.dijitEditorIconBold{
+  background: url('images/bold.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconBold{
+	  background: url('images/bold_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconItalic {
+  background: url('images/italic.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconItalic {
+	  background: url('images/italic_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconForeColor {
+  background: url('images/font_color.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconForeColor{
+	  background: url('images/font_color_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconBackColor {
+  background: url('images/back_color.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconBackColor {
+	  background: url('images/back_color_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconCopy {
+  background: url('images/copy_format.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconCopy {
+	  background: url('images/copy_format_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconPaste {
+  background: url('images/paste_format.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconPaste {
+	  background: url('images/paste_format_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconDelete {
+  background: url('images/remove_format.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconDelete {
+	  background: url('images/remove_format_disabled.png') no-repeat;
+}
+.tundra .dijitEditorIcon.dijitEditorIconJustifyLeft {
+  background: url('images/align_left.png') no-repeat;
+}
+.tundra .dijitDisabled  .dijitEditorIconJustifyLeft{
+	  background: url('images/align_left_disabled.png') no-repeat;
+}
+.tundra .dijitEditorIcon.dijitEditorIconJustifyCenter {
+  background: url('images/align_center.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconJustifyCenter  {
+	  background: url('images/align_center_disabled.png') no-repeat;
+}
+.tundra .dijitEditorIcon.dijitEditorIconJustifyRight {
+  background: url('images/align_right.png') no-repeat;
+}
+.tundra .dijitDisabled .dijitEditorIconJustifyRight{
+	  background: url('images/align_right_disabled.png') no-repeat;
+}
+
+.tundra .dijitEditorIcon.dijitEditorIconSelectAll{
+  background: url('images/select_all.png');
+}
+.tundra .dijitEditorIcon.dijitEditorIconFilter{
+  background: url('images/filter.png');
+}
+.tundra .dijitEditorIcon.dijitEditorIconCut{
+  background: url('images/layoutpanel.png');
+}
+.filterIndicatorBackground_1 {
+background: url("images/filter_indicators/num_filter_bg_1.png") no-repeat;
+}
+.filterIndicatorBackground_2 {
+background: url("images/filter_indicators/num_filter_bg_2.png") no-repeat;
+}
+.filterIndicatorBackground_3 {
+background: url("images/filter_indicators/num_filter_bg_3.png") no-repeat;
+}
+.filterIndicatorBackground_4 {
+background: url("images/filter_indicators/num_filter_bg_4.png") no-repeat;
+}
+.filterIndicatorBackground_5 {
+background: url("images/filter_indicators/num_filter_bg_5.png") no-repeat;
+}
+.filterIndicatorBackground_6 {
+background: url("images/filter_indicators/num_filter_bg_6.png") no-repeat;
+}
+.filterIndicatorBackground_7 {
+background: url("images/filter_indicators/num_filter_bg_7.png") no-repeat;
+}
+.filterIndicatorBackground_8 {
+background: url("images/filter_indicators/num_filter_bg_8.png") no-repeat;
+}
+.filterIndicatorBackground_9 {
+background: url("images/filter_indicators/num_filter_bg_9.png") no-repeat;
+}
+.filterIndicatorBackground_9_plus {
+background: url("images/filter_indicators/num_filter_bg_9p.png") no-repeat;
+}
 .tundra .dijitDisabled .dijitEditorIconIndent {
   background-image: url("images/indicator_circle_ball_stop.png");
   background-position: 0;
@@ -4007,6 +4180,19 @@ vertical-align: middle;
   height: 22px;
   width: 22px;
 }
+.dijitTooltipBelow .dijitTooltipConnector {
+background: url("images/connector_top.png") no-repeat top left;
+}
+.closeIcon{
+	background: url('images/closeTab_off.png') no-repeat top left;
+}
+.closeIconHover{
+	background: url('images/closeTab_active.png')no-repeat top left;
+}
+.tundra .dijitTooltipContainer .pentaho-tabWidget{
+	padding: 2px 8px;
+}
+
 .pc_pagePrev {
   background: url('images/page_back.png') no-repeat !important;
   background-position: 1px 3px !important;
@@ -4149,9 +4335,17 @@ vertical-align: middle;
 .flag{
 	background: transparent url('images/flag-right.png') no-repeat scroll top right;
 }
-
+#toppanelinner{
+	padding: 0 4px 0 0;
+}
+.trashcan{
+	 background: url('images/trashcan.png') no-repeat;
+}
 #datasource-button-bar {
   padding: 0 10px;
+}
+.trashcan:hover{
+	 background: url('images/trashcan_full.png') no-repeat scroll;
 }
 .colorpickertabs.tabpanel {
   padding: 0px;
@@ -4160,7 +4354,145 @@ vertical-align: middle;
   display:block;
   border: 1px solid #cbdde8;
   background-color: #fff;
-
+}
 .clickable {
 	cursor: pointer;
+}
+#modelSelectDialog DIV.dijitSelect {
+  display: inline-table;
+  width: 345px !important;
+}
+/* Dashboard prompt controls */
+
+#filterControlsGroupbox #dropDownFilterButton img.image-button-pressed,
+#filterControlsGroupbox #dropDownFilterButton img.image-button-over,
+#filterControlsGroupbox #dropDownFilterButton img.image-button {
+  background: url("images/prompt_controls/dropdown.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #dropDownFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #dropDownFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #dropDownFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/dropdown_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+
+#filterControlsGroupbox #listFilterButton img.image-button-pressed,
+#filterControlsGroupbox #listFilterButton img.image-button-over,
+#filterControlsGroupbox #listFilterButton img.image-button {
+  background: url("images/prompt_controls/list.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #listFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #listFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #listFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/list_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+
+#filterControlsGroupbox #radioFilterButton img.image-button-pressed,
+#filterControlsGroupbox #radioFilterButton img.image-button-over,
+#filterControlsGroupbox #radioFilterButton img.image-button {
+  background: url("images/prompt_controls/radio.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #radioFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #radioFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #radioFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/radio_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+
+#filterControlsGroupbox #checkboxFilterButton img.image-button-pressed,
+#filterControlsGroupbox #checkboxFilterButton img.image-button-over,
+#filterControlsGroupbox #checkboxFilterButton img.image-button {
+  background: url("images/prompt_controls/checkbox.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #checkboxFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #checkboxFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #checkboxFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/checkbox_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+
+#filterControlsGroupbox #buttonFilterButton img.image-button-pressed,
+#filterControlsGroupbox #buttonFilterButton img.image-button-over,
+#filterControlsGroupbox #buttonFilterButton img.image-button {
+  background: url("images/prompt_controls/button.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #buttonFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #buttonFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #buttonFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/button_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+
+#filterControlsGroupbox #textfieldFilterButton img.image-button-pressed,
+#filterControlsGroupbox #textfieldFilterButton img.image-button-over,
+#filterControlsGroupbox #textfieldFilterButton img.image-button {
+  background: url("images/prompt_controls/textfield.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #textfieldFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #textfieldFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #textfieldFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/textfield_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+
+#filterControlsGroupbox #datepickerFilterButton img.image-button-pressed,
+#filterControlsGroupbox #datepickerFilterButton img.image-button-over,
+#filterControlsGroupbox #datepickerFilterButton img.image-button {
+  background: url("images/prompt_controls/datepicker.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
+}
+#filterControlsGroupbox #datepickerFilterButton img.disabled-image-button-pressed,
+#filterControlsGroupbox #datepickerFilterButton img.disabled-image-button-over,
+#filterControlsGroupbox #datepickerFilterButton img.disabled-image-button {
+  background: url("images/prompt_controls/datepicker_selected.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 32px;
+  width: 32px;
 }
