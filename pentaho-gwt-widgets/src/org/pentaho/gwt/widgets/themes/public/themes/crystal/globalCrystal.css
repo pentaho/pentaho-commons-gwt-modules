@@ -3919,19 +3919,19 @@ vertical-align: middle;
   background-position: 2px 4px;
 }
 
-.IE8 #browse-properties-dialog, .IE9 #browse-properties-dialog {
+.IE #browse-properties-dialog {
   height:500px;
 }
 
-.IE8 #browse-properties-dialog>div>table, .IE9 #browse-properties-dialog>div>table {
+.IE #browse-properties-dialog>div>table {
   height:465px !important;
 }
 
-.IE8 #browse-properties-dialog .dialogContent, .IE9 #browse-properties-dialog .dialogContent {
+.IE #browse-properties-dialog .dialogContent {
   position: relative;
 }
 
-.IE8 #browse-properties-dialog .pentaho-tab-panel, .IE9 #browse-properties-dialog .pentaho-tab-panel {
+.IE #browse-properties-dialog .pentaho-tab-panel {
   position: absolute;
   top:0px;
   left:0px;
