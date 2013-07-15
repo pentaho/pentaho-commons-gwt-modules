@@ -2345,6 +2345,7 @@ input:focus {
   width: 48px;
 }
 
+.refresh-browse-perspective,
 .icon-small.icon-refresh {
   background: url('../images/refresh-small.png');
 }
@@ -3049,6 +3050,7 @@ input:focus {
   width: 222px;
   display:block;
   border: 1px solid #444444;
+}
 
 .clickable {
 	cursor: pointer;
