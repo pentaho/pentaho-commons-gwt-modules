@@ -2465,10 +2465,12 @@ padding: 10px 0 10px 0;
   width: 48px;
 }
 
+.refresh-browse-perspective,
 .icon-small.icon-refresh {
   background: url('images/refresh-small.png');
-      height: 22px;
+  height: 22px;
   width: 22px;
+  cursor: pointer;
 }
 
 .icon-small.icon-refresh.disabled {
