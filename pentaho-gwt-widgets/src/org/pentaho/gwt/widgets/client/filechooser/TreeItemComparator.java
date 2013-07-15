@@ -23,6 +23,11 @@ import java.util.Comparator;
  * @author Rowell Belen
  */
 public class TreeItemComparator implements Comparator<TreeItem>{
+
+  public TreeItemComparator(){
+    setupNativeHooks(this);
+  }
+
   @Override
   public int compare(TreeItem treeItem1, TreeItem treeItem2) {
     RepositoryFileTree repositoryFileTree1 = (RepositoryFileTree) treeItem1.getUserObject();
@@ -33,6 +38,13 @@ public class TreeItemComparator implements Comparator<TreeItem>{
 
     return compare(repositoryFile1.getTitle(), repositoryFile2.getTitle());
   }
+
+  private static native void setupNativeHooks(TreeItemComparator comparator)
+  /*-{
+    $wnd.localeCompare = function(title1, title2) {
+      return comparator.@org.pentaho.gwt.widgets.client.filechooser.TreeItemComparator::compare(Ljava/lang/String;Ljava/lang/String;)(title1, title2)
+    }
+  }-*/;
 
   public native int compare(String a, String b)
   /*-{
