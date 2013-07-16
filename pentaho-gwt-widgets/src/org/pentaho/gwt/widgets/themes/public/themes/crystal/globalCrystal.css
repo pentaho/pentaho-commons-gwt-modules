@@ -2061,8 +2061,7 @@ body.IE>table {
 
 .splashtext {
   color: #26363d;
-  padding-left: 30px;
-  padding-top: 25px;
+   padding: 10px 0 0 0;
   vertical-align: top;
   line-height: 2em;
 }
@@ -2677,7 +2676,7 @@ padding: 10px 0 10px 0;
 }
 .icon-tree-node {
   height: 14px;
-  width: 35px;
+  width: 22px;
 }
 .icon-tree-node.icon-recycle-bin {
   background: url('images/remove_16.png') no-repeat;
@@ -3870,9 +3869,9 @@ vertical-align: middle;
 }
 
 .pentaho-updatebutton {
-    background-image: url("../images/update.png");    
-    width: 16px;
-    height: 16px;
+    background-image: url("images/edit_22.png");
+    width: 22px;
+    height: 22px;
 }
 
 .pentaho-smallmodelbutton {
@@ -3894,21 +3893,25 @@ vertical-align: middle;
 }
 
 .pentaho-movearrowbutton {
-  background-image: url("../images/move_arrow.png");    
+  background-image: url("images/accum_add.png");
+  background-repeat: no-repeat;
   width: 16px;
   height: 16px;
 }
 
 .pentaho-movearrowbackbutton {
-  background-image: url("../images/move_arrow_back.png");    
+  background-image: url("images/accum_remove.png");
+  background-repeat: no-repeat;
   width: 16px;
   height: 16px;
 }
 
 .pentaho-chevron {
-  background-image: url("../images/24x24_chevron_green.png");    
+  background-image: url("images/16x16_right.png");
+  background-repeat: no-repeat;
   width: 16px;
   height: 16px; 
+  background-position: 0px 2px;
 }
 
 .pentaho-filechooseupbutton {
@@ -4501,4 +4504,8 @@ background: url("images/connector_top.png") no-repeat top left;
   background-repeat: no-repeat;
   height: 32px;
   width: 32px;
+}
+#stepsPanel {
+  border-right: 0px solid black;
+  background-image: url(images/bg_steps.png);
 }
