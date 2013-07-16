@@ -3195,7 +3195,7 @@ background-color: #d7e9cd;
 }
 
 .soria .dojoxGridRowSelected {
-  background-color:  #d7e9cd;
+  background-color:  #d7e9cd !important;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
