@@ -2348,6 +2348,9 @@ input:focus {
 .refresh-browse-perspective,
 .icon-small.icon-refresh {
   background: url('../images/refresh-small.png');
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
 }
 
 .icon-small.icon-refresh.disabled {
