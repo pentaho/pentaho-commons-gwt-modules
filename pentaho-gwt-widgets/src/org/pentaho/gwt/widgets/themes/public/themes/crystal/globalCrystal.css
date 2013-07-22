@@ -500,6 +500,8 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   /**/
 
 .glasspane {
+  /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
+	
   position: absolute;
   background-color: #144b64; /*#809eab;*/
   /* IE8 css hack for opacity */
