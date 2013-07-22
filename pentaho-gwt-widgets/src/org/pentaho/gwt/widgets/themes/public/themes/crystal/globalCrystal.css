@@ -1990,17 +1990,19 @@ body.IE>table {
 }
 
 .treenode-open {
-  background: url('../images/minus.gif');
+  background: url('images/arrow_open.png');
   width: 16px;
   height: 16px;
   float: left;
+  background-position: 0px 1px;
 }
 
 .treenode-closed {
-  background: url('../images/plus.gif');
+  background: url('images/arrow_closed.png');
   width: 16px;
   height: 16px;
   float: left;
+  background-position: 0px 1px;
 }
 
 .treenode-leaf-label {
@@ -2051,7 +2053,7 @@ body.IE>table {
 }
 
 .splashtitle {
-  padding-top: 25px;
+  padding-top: 0px;
   color: #1973bc;
   font-family: opensanslight, Helvetica, Arial, Sans serif;
   font-size: 18px;
@@ -2118,10 +2120,10 @@ body.IE>table {
 }
 
 .tundra .dijitArrowButtonInner {
-  background:url("images/black-arrow.png") no-repeat scroll 3px center;
+  background:url("images/16x16_down.png") no-repeat scroll 3px center;
   width: 16px;
   height: 16px;
-  /*margin: 0 4px 0 4px;*/
+  margin: 0;
 }
 .dialog-content .dijitComboBox .dijitArrowButton {
   /* fallback color */
@@ -2687,11 +2689,11 @@ padding: 10px 0 10px 0;
 }
 
 .leaf-widget.parent-widget>table>tbody>tr>td>img {
-  background: url('images/16x16_right.png') no-repeat !important;
+  background: url('images/arrow_closed.png') no-repeat !important;
 }
 
 .leaf-widget.parent-widget.open>table>tbody>tr>td>img {
-  background: url('images/16x16_down.png') no-repeat !important;
+  background: url('images/arrow_open.png') no-repeat !important;
 }
 
 .sidePanelIconOpen{
@@ -2743,13 +2745,13 @@ width: 22px;
  background: url("images/folder_closed.png") no-repeat;
 }
 .fileBrowserColumn .body div.folder.open > div.element > div.expandCollapse {
-background: url("images/16x16_down.png") no-repeat;
+background: url("images/arrow_open.png") no-repeat;
 background-position: 0px 3px;
 height: 16px;
 width: 16px;
 }
 .fileBrowserColumn .body div.folder > div.element > div.expandCollapse {
-background: url("images/16x16_right.png") no-repeat;
+background: url("images/arrow_closed.png") no-repeat;
 background-position: 0px 3px;
 height: 16px;
 width: 16px;
@@ -3058,7 +3060,7 @@ background-color: #8ab3c6;
 .gwt-ScrollTable .headerTable td {
   font-size: 16px;
   border-spacing: 2px;
-  padding: 6px 10px 8px 10px;
+  padding: 4px 10px 4px 10px;
   font-weight: normal;
   background-color: #8ab3c6;
   border-right: 1px solid #d7d7d7;
@@ -3066,7 +3068,7 @@ background-color: #8ab3c6;
 }
 #contentLinkingAssignmentTable .gwt-ScrollTable .headerTable td,
 #propertiesPanelParameterAssignmentTable .gwt-ScrollTable .headerTable td {
-  padding: 8px 10px 6px 10px;
+  padding: 4px 10px 4px 10px;
   height: 20px;
   font-size: 14px;
 }
@@ -3850,7 +3852,7 @@ vertical-align: middle;
 }
 
 .pentaho-smallremovebutton {
-    background-image: url("images/remove_16.png");
+    background-image: url("images/remove16x16.png");
     width: 16px;
     height: 16px;
 }
@@ -4039,15 +4041,25 @@ vertical-align: middle;
   width: 22px;
   height: 22px;
 }
-  /*.pentaho-downbutton{
-    background: url('images/arrow_down.png') no-repeat;
-    background-position: 0px 4px;
-  }*/
-.filterPaneToggle{
-  background: url('images/icon_filters_fold.png') no-repeat;
+#arrow-menu, .arrow-menu-icon{
+ 	background: url('images/arrow_menu.png') no-repeat;
 }
+.tundra .pentaho-titled-toolbar.dijitClosed .dijitArrowNode,
+.filterPaneToggle{
+  background: url('images/arrow_closed.png') no-repeat;
+}
+.tundra .pentaho-titled-toolbar .dijitArrowNode,
 .filterSummary .hide{
-  background: url('images/icon_filters_unfold.png') no-repeat;
+  background: url('images/arrow_open.png') no-repeat;
+}
+.fieldListTree .folder{
+	padding-left: 15px;
+}
+ .folderClose{
+  background: url('images/arrow_closed.png') no-repeat;
+}
+ .folderOpen{
+  background: url('images/arrow_open.png') no-repeat;
 }
 .helpIcon{
   background: url('images/help_link.png') no-repeat;
@@ -4148,12 +4160,21 @@ vertical-align: middle;
 
 .tundra .dijitEditorIcon.dijitEditorIconSelectAll{
   background: url('images/select_all.png');
+  width: 22px;
+  height: 22px;
 }
 .tundra .dijitEditorIcon.dijitEditorIconFilter{
   background: url('images/filter.png');
+  width: 22px;
+  height: 22px;
 }
 .tundra .dijitEditorIcon.dijitEditorIconCut{
   background: url('images/layoutpanel.png');
+  width: 22px;
+  height: 22px;
+}
+#dijit_ToolbarSeparator_4{
+	display: none;
 }
 .filterIndicatorBackground_1 {
 background: url("images/filter_indicators/num_filter_bg_1.png") no-repeat;
@@ -4240,7 +4261,7 @@ background: url("images/connector_top.png") no-repeat top left;
   width: 22px;
 }
 .dijitEditorIconParameters{
-  background: url('images/options.png') no-repeat !important;
+  background: url('images/list_22x22.png') no-repeat !important;
   height: 22px !important;
   width: 22px !important;
 }
@@ -4260,7 +4281,7 @@ background: url("images/connector_top.png") no-repeat top left;
 }
 
 .pentaho-datasourcebutton{
-  background: url('images/datasource.png') no-repeat;
+  background: url('images/database.png') no-repeat;
 }
 #toolbar2a{
   background-color: #FFF;
@@ -4519,4 +4540,62 @@ background: url("images/connector_top.png") no-repeat top left;
 #stepsPanel {
   border-right: 0px solid black;
   background-image: url(images/bg_steps.png);
+}
+/* instaview fiel type icon? */
+.pentaho-selectlist-item-data{
+	background: url("images/database.png") no-repeat left center;
+	height: 22px;
+}
+/* dashbarod resize mode - resize handler colors */
+.resizeHandle{
+background-color: #dce7ed;
+border: 1px solid #1973bc;
+}
+/* layout anel gem styling */
+.gem{
+  height: 17px;
+  border-radius: 0px;
+  padding: 1px 5px;
+  margin-bottom: 4px;
+  min-width: 120px;
+  background:#FDF296;
+  border: 1px solid #D6B225;
+}
+
+.IE .gem{
+  background:#FDF296;
+}
+
+.IE .propPanel_gemBar.number .gem{
+  background: #DDF4FC;
+}
+
+.propPanel_gemBar.number .gem {
+  background: #DDF4FC;
+  border: 1px solid #7EC9F2;
+}
+
+.propPanel_gemBar.number .gem.over {
+  background: #d7e9cd;
+  border: 1px solid #8ac06e;
+  -moz-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
+  -webkit-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
+}
+
+.gem.over{
+  background: #CBEFA3;
+  border: 1px solid #87DF27;
+  -moz-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
+  -webkit-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
+}
+.gem .gemMenuHandle{
+  float: right;
+  background-image: url('images/16x16_down.png');
+}
+
+.gem.over .gemMenuHandle{
+  background-image: url('images/16x16_down.png');
+}
+.gem.over .gemMenuHandle.over{
+  background-image: url('images/16x16_down.png');
 }
