@@ -411,6 +411,21 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   text-align: left;
 }
 
+.pentaho-dialog .Caption .dialog-close-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+
+.pentaho-dialog#dialogOverride #override-description {
+  padding-bottom: 10px;
+}
+
+.pentaho-dialog .pentaho-button.ok {
+  margin-right: 10px;
+}
+
+
 .IE .pentaho-dialog .Caption {
   /*background: url('images/bg_title.png') repeat-x;*/
 }
