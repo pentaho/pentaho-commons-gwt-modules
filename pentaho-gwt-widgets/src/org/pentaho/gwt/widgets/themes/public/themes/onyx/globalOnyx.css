@@ -2619,43 +2619,6 @@ input:focus {
   display: inline-block;
 }
 
-.drag_and_drop_label_content{
-  color: black;
-  width: 220px;
-  height: 100px;
-  background-image:  url('./images/drop_here.png');
-  background-repeat: no-repeat;
-  background-position: 1px 0px;
-  position: absolute;
-  margin: auto;
-	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-}
-
-.drag_and_drop_label_text{
-  font-size: 21px;
-  color: #333;
-  margin: 0;
-  text-align: left;
-  position: relative;
-  padding: 0px 0px 0 70px;
-}
-
-.drag_and_drop_label_wrapper{
-  height: 100px;
-  overflow: hidden;
-  margin: 0;
-  background-color: #fff;
-  display: none;
-  padding: 0px;
-}
-
-.drag_and_drop_label .drag_and_drop_label_wrapper {
-  display: block;
-}
-
 /* Login page styles */
 #login-background {
   background: url(images/login-onyx-bg.jpeg);
