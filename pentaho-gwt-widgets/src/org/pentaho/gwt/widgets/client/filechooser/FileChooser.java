@@ -536,10 +536,9 @@ public class FileChooser extends VerticalPanel {
       // highlight row
       if (lastSelectedFileElement != null) {
         com.google.gwt.dom.client.Element parentRow = ElementUtils.findElementAboveByTagName(lastSelectedFileElement, "table"); //$NON-NLS-1$
-        parentRow.getStyle().setProperty("background", "white"); //$NON-NLS-1$ //$NON-NLS-2$
+        parentRow.removeClassName("pentaho-file-chooser-selection");
       }
       com.google.gwt.dom.client.Element parentRow = ElementUtils.findElementAboveByTagName(sourceElement, "table"); //$NON-NLS-1$
-      parentRow.getStyle().setProperty("background", "#B9B9B9"); //$NON-NLS-1$ //$NON-NLS-2$
       parentRow.addClassName("pentaho-file-chooser-selection"); //$NON-NLS-1$
       lastSelectedFileElement = sourceElement;
     }
