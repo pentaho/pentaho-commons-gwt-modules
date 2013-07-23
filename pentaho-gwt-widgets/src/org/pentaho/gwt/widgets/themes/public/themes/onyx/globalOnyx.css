@@ -3021,3 +3021,8 @@ input:focus {
 .clickable {
 	cursor: pointer;
 }
+
+.propPanel_gemBar {
+  background: #d4d6db;
+  border: 0px;
+}

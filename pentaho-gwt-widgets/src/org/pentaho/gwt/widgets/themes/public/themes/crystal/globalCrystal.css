@@ -4534,6 +4534,11 @@ border: 1px solid #1973bc;
   background: #DDF4FC;
 }
 
+.propPanel_gemBar {
+  background: #f5f6f8;
+  border: 0px;
+}
+
 .propPanel_gemBar.number .gem {
   background: #DDF4FC;
   border: 1px solid #7EC9F2;
