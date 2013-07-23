@@ -4332,16 +4332,6 @@ background: url("images/connector_top.png") no-repeat top left;
 .pentaho-addcombobutton{
   background: url('images/add_combo.png') no-repeat;
 }
-  /* ---------- dashbaords icons ---------- */
-.editLabel .edit-btn{
-  background: url('images/edit_16.png') no-repeat;
-}
-.editLabel .insert-btn{
-  background: url('images/insert_16.png') no-repeat;
-}
-.widget-tools .print-btn {
-  background: url('images/print_16.png') no-repeat;
-}
 
 #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button,
 #editPovContainerPanel #povTableEditSelected img.disabled-image-button-pressed, #editPovContainerPanel #povTableEditSelected img.disabled-image-button-over, #editPovContainerPanel #povTableEditSelected img.disabled-image-button {
