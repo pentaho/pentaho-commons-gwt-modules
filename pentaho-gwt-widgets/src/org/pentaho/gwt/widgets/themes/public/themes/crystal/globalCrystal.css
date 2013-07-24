@@ -89,6 +89,7 @@ fieldset, fieldset.xul-fieldset {
   width: auto;
   border: 1px solid #cbdde8;
 }
+
 input[type='checkbox']{
   border:none;
 }
@@ -96,9 +97,13 @@ input[type='radio']{
   border:none;
 }
 
-input[type='text'] {
+input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #cbdde8;
   padding: 4px 2px 4px 4px;
+
+   -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;  
 }
 select,
 .gwt-ListBox,
@@ -383,12 +388,41 @@ div#FilterPanel div.pentaho-toggle-button-down button{
 
   /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
   has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
-.pentaho-dialog {
+.pentaho-dialog, .bootstrap .modal.pentaho-dialog {
   border: 1px solid #cbdde8;
-  z-index: 1000;
+  z-index: 1050;
   position: absolute;
   background: #f5f6f8;
   padding: 8px 8px 0px 8px;
+  margin: auto;
+  width: auto;
+  height: auto;
+
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  -webkit-background-clip: none;
+  -moz-background-clip: none;
+  background-clip: none;
+}
+
+.pentaho-dialog #override-description {
+  padding-bottom: 10px;
+}
+
+.pentaho-dialog#cannot-rename-dialog {
+  width: 310px;
+}
+
+.pentaho-dialog#dialogOverrideFolder, .pentaho-dialog#dialogOverrideFile, .pentaho-dialog#dialogRename {
+  width: 475px;
+}
+
+.pentaho-dialog#dialogRename INPUT {
+  width: 100%;
 }
 
 .IE .pentaho-dialog {
@@ -417,14 +451,13 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   right: 6px;
 }
 
-.pentaho-dialog#dialogOverride #override-description {
-  padding-bottom: 10px;
+.pentaho-dialog .button-panel.right {
+  text-align: right;
 }
 
-.pentaho-dialog .pentaho-button.ok {
-  margin-right: 10px;
+.pentaho-dialog .button-panel.center {
+  text-align: center;
 }
-
 
 .IE .pentaho-dialog .Caption {
   /*background: url('images/bg_title.png') repeat-x;*/
@@ -437,6 +470,9 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   margin: 0;
 }
 
+.pentaho-dialog .dialog-content {
+  padding: 5px 10px 10px 10px;
+}
 
 .pentaho-dialog .button-panel .pentaho-button {
   margin-left: 5px;
