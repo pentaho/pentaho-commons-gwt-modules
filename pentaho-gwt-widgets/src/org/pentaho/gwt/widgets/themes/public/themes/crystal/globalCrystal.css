@@ -2866,6 +2866,7 @@ background: transparent;
 #fileBrowserFiles.fileBrowserColumn .body,
 #fileBrowserFolders.fileBrowserColumn .body {
   border: 1px solid #bfdce5;
+  top: 59px;
 }
 .fileBrowserColumn .body .folder .element {
   padding: 6px;
@@ -2875,6 +2876,7 @@ background: transparent;
 #fileBrowserButtons .body{
   border-top: 4PX solid #f2ce17;
  padding: 16px 0 0 0;
+ top: 59px;
 }
 
 .fileBrowserColumn .body .file {
@@ -3405,6 +3407,49 @@ div.prompt-panel .pentaho-toggle-button-container {
 
 .caption .captionIcon {
   display: inline-block;
+}
+
+.drag_and_drop_label_content{
+  color: black;
+  width: 220px;
+  height: 100px;
+ /* border: 1px dashed #ccc;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  background-color: #f7f7f7;*/
+  background-image:  url('./images/drop_here.png');
+  background-repeat: no-repeat;
+  background-position: 1px 0px;
+  position: absolute;
+  margin: auto;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.drag_and_drop_label_text{
+font-size: 21px;
+color: #3D6380;
+  margin: 0;
+text-align: left;
+font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
+  position: relative;
+padding: 0px 0px 0 70px;
+}
+
+.drag_and_drop_label_wrapper{
+  height: 100px;
+  overflow: hidden;
+  margin: 0;
+  background-color: #fff;
+  display: none;
+  padding: 0px;
+}
+
+.drag_and_drop_label .drag_and_drop_label_wrapper {
+  display: block;
 }
 
 /* Login page styles */
@@ -4288,6 +4333,16 @@ background: url("images/connector_top.png") no-repeat top left;
 }
 .pentaho-addcombobutton{
   background: url('images/add_combo.png') no-repeat;
+}
+  /* ---------- dashbaords icons ---------- */
+.editLabel .edit-btn{
+  background: url('images/edit_16.png') no-repeat;
+}
+.editLabel .insert-btn{
+  background: url('images/insert_16.png') no-repeat;
+}
+.widget-tools .print-btn {
+  background: url('images/print_16.png') no-repeat;
 }
 
 #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button,
