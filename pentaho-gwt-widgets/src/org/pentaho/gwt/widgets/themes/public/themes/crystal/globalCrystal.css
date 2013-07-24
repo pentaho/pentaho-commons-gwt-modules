@@ -2866,6 +2866,7 @@ background: transparent;
 #fileBrowserFiles.fileBrowserColumn .body,
 #fileBrowserFolders.fileBrowserColumn .body {
   border: 1px solid #bfdce5;
+  top: 59px;
 }
 .fileBrowserColumn .body .folder .element {
   padding: 6px;
@@ -2874,7 +2875,8 @@ background: transparent;
 }
 #fileBrowserButtons .body{
   border-top: 4PX solid #f2ce17;
- padding: 16px 0 0 0;
+  padding: 16px 0 0 0;
+  top: 59px;
 }
 
 .fileBrowserColumn .body .file {
