@@ -409,6 +409,10 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   background-clip: none;
 }
 
+.pentaho-dialog #override-description {
+  padding-bottom: 10px;
+}
+
 .pentaho-dialog#cannot-rename-dialog {
   width: 310px;
 }
