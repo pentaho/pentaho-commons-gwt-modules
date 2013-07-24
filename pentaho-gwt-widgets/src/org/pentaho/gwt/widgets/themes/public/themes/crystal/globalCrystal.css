@@ -4510,11 +4510,7 @@ background: url("images/connector_top.png") no-repeat top left;
 	background: url("images/database.png") no-repeat left center;
 	height: 22px;
 }
-/* dashbarod resize mode - resize handler colors */
-.resizeHandle{
-background-color: #dce7ed;
-border: 1px solid #1973bc;
-}
+
 /* layout anel gem styling */
 .gem{
   height: 17px;
