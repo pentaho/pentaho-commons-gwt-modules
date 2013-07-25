@@ -72,7 +72,10 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
-.pentaho-button {
+.pentaho-button, .bootstrap button.pentaho-button {
+
+    line-height: normal;
+
     /* fallback color */
     background: #000000;
     /* Safari/Chrome */
@@ -105,24 +108,20 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
     cursor: pointer;
 }
 
-.IE .pentaho-button {
+.IE .pentaho-button, .IE .bootstrap .pentaho-button {
     height: auto;
     background: #000000 url('images/bg_btn.png') repeat-x left center;
     background-position: center center;
 }
 
 /* Applies the green glow to buttons */
-.pentaho-button:hover {
+.pentaho-button:hover, .bootstrap .pentaho-button:hover {
     -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
     -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
     box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
 }
 
-.IE .pentaho-button:hover {
-    border: 1px solid #73FF02;
-}
-
-.IE .pentaho-button-hover {
+.IE .pentaho-button:hover, .IE .bootstrap .pentaho-button:hover, .IE .pentaho-button-hover, .IE .bootstrap .pentaho-button-hover {
     border: 1px solid #73FF02;
 }
 
@@ -138,7 +137,7 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 }
 
 /* lighter gray with white text */
-.pentaho-button:disabled {
+.pentaho-button:disabled, .pentaho-button[disabled], .bootstrap .pentaho-button:disabled, .bootstrap .pentaho-button[disabled] {
     color: white;
 
     background: -moz-linear-gradient(#AAA, #BBB 10%, #8d8d8d 50%, #727272 55%, #747474 90%) repeat scroll 0 0 transparent;
@@ -149,18 +148,29 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
     -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.2) inset;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px rgba(0, 0, 0, 0.2) inset;
     text-shadow: 0px 0px 2px rgba(000, 000, 000, 4);
-}
 
-.IE .pentaho-button.disabled {
-    background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
 }
-.IE .pentaho-button[disabled] {
-  background: url('images/bg_btn_disabled.png') repeat-x left center;
-  cursor: default;
+
+.IE .pentaho-button.disabled, .IE .bootstrap .pentaho-button.disabled,  {
+    background: url('images/bg_btn_disabled.png') repeat-x left center;
+    cursor: default;
+    border: inherit;
 }
 
-.pentaho-toggle-button {
+.IE .pentaho-button:disabled, .IE .bootstrap .pentaho-button:disabled {
+    background: url('images/bg_btn_disabled.png') repeat-x left center;
+    cursor: default;
+    border: inherit;
+}
+
+.IE .pentaho-button[disabled], .IE .bootstrap .pentaho-button[disabled] {
+    background: url('images/bg_btn_disabled.png') repeat-x left center;
+    cursor: default;
+    border: inherit;   
+}
+
+.pentaho-toggle-button {    
     /* fallback color */
     background: #000000;
     /* Safari/Chrome */
@@ -406,7 +416,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 }
 
 .pentaho-dialog .button-panel .pentaho-button {
-    margin-left: 5px;
+    margin: 2px 2px 2px 5px ;
 }
 
 .pentaho-dialog .button-panel.right {
