@@ -394,6 +394,9 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   position: absolute;
   background: #f5f6f8;
   padding: 8px 8px 0px 8px;
+}
+
+.bootstrap .modal.pentaho-dialog {
   margin: auto;
   width: auto;
   height: auto;
