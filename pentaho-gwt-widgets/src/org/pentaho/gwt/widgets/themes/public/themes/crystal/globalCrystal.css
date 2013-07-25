@@ -2113,6 +2113,7 @@ body.IE>table {
 .splash-content {
   /* fallback color */
   background: transparent;
+  width: 460px !important;
 }
 
 .splashimage {
