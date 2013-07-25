@@ -44,8 +44,17 @@ fieldset {
     border: 1px solid #888;
 }
 
-input[type='text'] {
+.bootstrap .pentaho-dialog p {
+  margin: 0;
+}
+
+input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
     border: 1px solid #333;
+    padding: 1px 0px 0px 1px;
+
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;  
 }
 
 *:focus {outline: none;}
@@ -297,9 +306,9 @@ input[type='text'] {
 
 /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
 has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
-.pentaho-dialog {
+.pentaho-dialog, .bootstrap .modal.pentaho-dialog {
     border: 1px solid rgba(255, 255, 255, 0.59375);
-    z-index: 1000;
+    z-index: 1050;
     position: absolute;
 
     /* Firefox */
@@ -318,6 +327,35 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 
     background: rgba(255, 255, 255, 0.5);
     padding: 8px 8px 0px 8px;
+}
+
+.bootstrap .modal.pentaho-dialog {
+    margin: auto;
+    width: auto;
+    height: auto;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;    
+}
+
+.pentaho-dialog #override-description {
+  padding-bottom: 10px;
+}
+
+.pentaho-dialog#cannot-rename-dialog {
+  width: 310px;
+}
+
+.pentaho-dialog#dialogOverrideFolder, .pentaho-dialog#dialogOverrideFile, .pentaho-dialog#dialogRename {
+  width: 475px;
+}
+
+.pentaho-dialog#dialogRename INPUT {
+  width: 100%;
 }
 
 .IE .pentaho-dialog {
@@ -371,9 +409,18 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     margin-left: 5px;
 }
 
+.pentaho-dialog .button-panel.right {
+  text-align: right;
+}
+
+.pentaho-dialog .button-panel.center {
+  text-align: center;
+}
+
 .dialog-content {
     border: 1px solid black;
     background: #d4d6db;
+    padding: 5px 10px 10px 10px;
 }
 
 .dialog-button-panel {
