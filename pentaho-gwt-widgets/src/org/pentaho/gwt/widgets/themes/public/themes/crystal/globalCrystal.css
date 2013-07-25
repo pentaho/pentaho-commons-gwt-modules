@@ -97,6 +97,10 @@ input[type='radio']{
   border:none;
 }
 
+.bootstrap .pentaho-dialog p {
+  margin: 0;
+}
+
 input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #cbdde8;
   padding: 4px 2px 4px 4px;
@@ -410,6 +414,13 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   -webkit-background-clip: none;
   -moz-background-clip: none;
   background-clip: none;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .pentaho-dialog #override-description {
