@@ -378,7 +378,7 @@ cursor: auto;
   background: url('images/checkmark_16x16.png') no-repeat 3px center, linear-gradient(to bottom,  #62ab3d 0%,#8ac06e 100%); /* W3C */
 }
 
-.pentaho-toggle-button.html-face {
+.pentaho-toggle-button>.html-face {
   padding: 0 6px;
 }
 
