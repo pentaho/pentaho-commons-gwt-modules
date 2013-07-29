@@ -437,8 +437,12 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   width: 310px;
 }
 
-.pentaho-dialog#dialogOverrideFolder, .pentaho-dialog#dialogOverrideFile, .pentaho-dialog#dialogRename {
-  width: 475px;
+.pentaho-dialog#dialogOverrideFolder, .pentaho-dialog#dialogRename {
+  width: 495px;
+}
+
+.pentaho-dialog#dialogOverrideFile {
+  width: 455px;
 }
 
 .pentaho-dialog#dialogRename INPUT {
