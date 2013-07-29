@@ -1685,6 +1685,12 @@ body.IE>table {
   cursor: pointer;
 }
 
+#mqlFilterGroupbox #mqlFilterEditButton img.image-button-pressed,
+#mqlFilterGroupbox #mqlFilterEditButton img.image-button-over,
+#sqlFilterGroupbox #editQueryButton img.image-button-pressed,
+#sqlFilterGroupbox #editQueryButton img.image-button-over,
+#mqlFilterGroupbox #mqlFilterEditButton img.image-button,
+#sqlFilterGroupbox #editQueryButton img.image-button,
 .pentaho-editbutton {
   width: 22px;
   height: 22px;
@@ -1692,6 +1698,12 @@ body.IE>table {
   cursor: pointer;
 }
 
+#mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button-pressed,
+#mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button-over,
+#sqlFilterGroupbox #editQueryButton img.disabled-image-button-pressed,
+#sqlFilterGroupbox #editQueryButton img.disabled-image-button-over,
+#mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button,
+#sqlFilterGroupbox #editQueryButton img.disabled-image-button,
 .pentaho-editbutton.pentaho-imagebutton-disabled {
   width: 22px;
   height: 22px;
