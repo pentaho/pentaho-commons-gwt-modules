@@ -108,7 +108,9 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
     cursor: pointer;
 }
 
-.IE .pentaho-button, .IE .bootstrap .pentaho-button {
+.IE .pentaho-button,
+.IE .bootstrap .pentaho-button,
+.IE .pentaho-button:active {
     height: auto;
     background: #000000 url('images/bg_btn.png') repeat-x left center;
     background-position: center center;
@@ -132,7 +134,7 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #C8C8C8), color-stop(0.10, #AAA), color-stop(0.50, #666), color-stop(0.55, #353535), color-stop(0.90, #3F3F3F));
 }
 
-.IE .pentaho-button:active {
+.IE .pentaho-button:focus {
     background: url('images/bg_btn_active.png') repeat-x left center;
 }
 
