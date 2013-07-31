@@ -2612,9 +2612,14 @@ input:focus {
 }
 #contentLinkingAssignmentTable .gwt-ScrollTable .headerTable td,
 #propertiesPanelParameterAssignmentTable .gwt-ScrollTable .headerTable td {
-  padding: 8px 10px 6px 10px;
+  padding: 8px 0px 6px 0px;
   height: 20px;
   font-size: 14px;
+}
+#contentLinkingAssignmentTable .gwt-ScrollTable .dataTable>tbody>tr>td,
+#propertiesPanelParameterAssignmentTable .gwt-ScrollTable .dataTable>tbody>tr>td {
+    padding-left:  0px;
+    padding-right: 0px;
 }
 .IE .headerTable td {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#FF777777', endColorstr = '#FF000000');
