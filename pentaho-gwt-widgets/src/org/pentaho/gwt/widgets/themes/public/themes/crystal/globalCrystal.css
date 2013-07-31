@@ -4637,3 +4637,22 @@ background: url("images/connector_top.png") no-repeat top left;
 .gem.over .gemMenuHandle.over{
   background-image: url('images/16x16_down.png');
 }
+
+#getting-started-message-content{
+  padding: 20px 0 0 4px;
+}
+
+#getting-started-message-content #title {
+  font-size: 24px;
+  font-family: opensanslight;
+  line-height: 30px;
+  padding-bottom: 10px;
+}
+
+.welcome-img {
+  padding: 0 10px 0 0;
+}
+
+#video-container{
+  padding: 4px 4px 0 0;
+}

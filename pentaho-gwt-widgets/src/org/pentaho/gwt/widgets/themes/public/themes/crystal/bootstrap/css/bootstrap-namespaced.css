@@ -208,7 +208,7 @@
   font-family: OpenSansRegular, sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: #333333;
+  color: #26363d;
   background: transparent;
 }
 .bootstrap a {
@@ -3836,11 +3836,12 @@ background: #fff;
   border-right: 1px solid #c1d7e1;
   border-left: 1px solid #c1d7e1;
   border-bottom: 1px solid #c1d7e1;
-  padding: 40px;
+  padding: 0 0 0 12px;
   height: 300px;
 }
 .bootstrap  #getting-started .tab-content{
-height: 300px;
+  height: 380px;
+  overflow: hidden;
 }
 .bootstrap  #launch-widget .tab-content{
 height: auto;
