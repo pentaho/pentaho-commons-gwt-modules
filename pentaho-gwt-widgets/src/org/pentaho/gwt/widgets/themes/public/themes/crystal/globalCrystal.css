@@ -4642,7 +4642,7 @@ background: url("images/connector_top.png") no-repeat top left;
   padding: 20px 0 0 4px;
 }
 
-#title {
+#getting-started-message-content #title {
   font-size: 24px;
   font-family: opensanslight;
   line-height: 30px;
