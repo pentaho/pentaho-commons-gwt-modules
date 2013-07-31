@@ -3158,10 +3158,19 @@ background-color: #8ab3c6;
 }
 #contentLinkingAssignmentTable .gwt-ScrollTable .headerTable td,
 #propertiesPanelParameterAssignmentTable .gwt-ScrollTable .headerTable td {
-  padding: 4px 10px 4px 10px;
+  padding-left:   0px;
+  padding-right:  0px;
   height: 20px;
   font-size: 14px;
 }
+
+#contentLinkingAssignmentTable .gwt-ScrollTable .dataTable>tbody>tr>td,
+#propertiesPanelParameterAssignmentTable .gwt-ScrollTable .dataTable>tbody>tr>td {
+    padding-left:  0px;
+    padding-right: 0px;
+}
+
+
 .gwt-ScrollTable .headerTable tr > td:last-of-type {
   border-right: 1px solid transparent;
 }
