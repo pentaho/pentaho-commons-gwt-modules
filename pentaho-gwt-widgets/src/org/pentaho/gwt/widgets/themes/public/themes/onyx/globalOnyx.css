@@ -3094,3 +3094,22 @@ input:focus {
   background: #d4d6db;
   border: 0px;
 }
+
+#getting-started-message-content {
+    padding: 20px 0 0 4px;
+}
+
+#getting-started-message-content #title {
+    font-size: 24px;
+    font-family: Tahoma, Helvetica, Arial, sans-serif;    
+    line-height: 30px;
+    padding-bottom: 10px;
+}
+
+.welcome-img{
+    padding: 0 10px 0 0;
+}
+
+#video-container {
+    padding: 4px 4px 0 0;
+}
