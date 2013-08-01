@@ -3646,10 +3646,16 @@
 }
 .bootstrap .tab-content {
   overflow: auto;
-  background: #FFF;
+  background-color: #fff;
+  border-right: 1px solid #c1d7e1;
+  border-left: 1px solid #c1d7e1;
+  border-bottom: 1px solid #c1d7e1;
+  padding: 0 0 0 12px;
+  height: 300px;
 }
 .bootstrap  #getting-started .tab-content{
-  height: 320px;
+  height: 380px;
+  overflow:hidden;
 }
 .bootstrap  #launch-widget .tab-content{
   height: auto;
@@ -3666,7 +3672,6 @@
 .bootstrap .tab-content > .active,
 .bootstrap .pill-content > .active {
   display: block;
-  padding: 10px 0 0 0;
 }
 .bootstrap .tabs-below > .nav-tabs {
   border-top: 1px solid #ddd;
