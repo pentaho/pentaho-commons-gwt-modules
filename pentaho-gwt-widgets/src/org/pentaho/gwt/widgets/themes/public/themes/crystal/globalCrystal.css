@@ -453,60 +453,59 @@ div#FilterPanel div.pentaho-toggle-button-down button{
 
 
 .IE8 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 425px; !important;
+  height: 425px !important;
 }
 
 .IE9 #browse-properties-dialog.new-schedule-dialog{
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE9 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 415px; !important;
+  height: 415px !important;
 }
 
 .IE9 .schedule-recurrence-dialog{
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE9 .schedule-recurrence-dialog .schedule-dialog-content{
-  height: 430px; !important;
+  height: 430px !important;
 }
 
-
 .IE9 .schedule-params-dialog {
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE9 .schedule-params-dialog .schedule-dialog-content{
-  height: 430px; !important;
+  height: 430px !important;
 }
 
 .IE10 #browse-properties-dialog.new-schedule-dialog{
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE10 .schedule-recurrence-dialog{
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE10 .schedule-recurrence-dialog .schedule-dialog-content{
-  height: 430px; !important;
+  height: 430px !important;
 }
 
 .IE10 .schedule-params-dialog {
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE10 .schedule-params-dialog .schedule-dialog-content{
-  height: 430px; !important;
+  height: 430px !important;
 }
 
 .IE .schedule-recurrence-dialog {
-  height: 500px; !important;
+  height: 500px !important;
 }
 
 .IE .schedule-params-dialog {
-  height: 500px; !important;
+  height: 500px !important;
 }
 
   /* Secondary style applied to pentaho-dialog elements to add a continuous 8px padding. */
