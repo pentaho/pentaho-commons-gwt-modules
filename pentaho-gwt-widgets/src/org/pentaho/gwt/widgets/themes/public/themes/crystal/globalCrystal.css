@@ -633,8 +633,7 @@ div#FilterPanel div.pentaho-toggle-button-down button{
 }
 
 .pentaho-tabWidget {
-  display: block;
-  float: left;
+  display: inline-block;
   background: transparent;
   cursor: pointer;
   margin-left: 0px;
@@ -698,11 +697,11 @@ border-top: 4px solid transparent;
   background: url('images/bg_admin_tab_panel.png') repeat-x 0 0px;
   height: 35px;
 }
- .pentaho-tab-bar {
+.pentaho-tab-bar {
   background: url('images/bg_admin_tab_panel.png') repeat-x 0 0px;
-      height: 35px;
+  min-height: 35px;
 }
-  .dialog-content  .pentaho-tab-bar {
+ .dialog-content  .pentaho-tab-bar {
   background: url('images/bg_admin_tab_panel.png') repeat-x 0 -3px;
       height: 32px;
 }
