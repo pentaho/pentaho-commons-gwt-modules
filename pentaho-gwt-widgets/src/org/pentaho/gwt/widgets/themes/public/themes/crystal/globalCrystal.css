@@ -2863,7 +2863,7 @@ width: 22px;
 .fileBrowserColumn .body div.trash > div.element > div.icon, .fileBrowserColumn .body div.trash.empty > div.element > div.icon, .fileBrowserColumn .body div.trash.open.empty > div.element > div.icon{
   background: url("images/trash.png") no-repeat;
 }
-.fileBrowserColumn .body .file .html{
+.fileBrowserColumn .body .file .icon.url{
   background: url("images/file_url.png") no-repeat;
 }
 

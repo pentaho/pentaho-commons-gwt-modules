@@ -5515,3 +5515,11 @@ height: auto;
 .empty-message{
 	padding: 0 40px 20px 40px;
 }
+
+.file-unknown {
+  background: url("../../images/file_generic_32.png");
+}
+
+.file-url {
+  background: url("../../images/file_url_32.png");
+}
