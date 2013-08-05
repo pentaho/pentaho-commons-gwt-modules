@@ -4722,3 +4722,11 @@ background: url("images/connector_top.png") no-repeat top left;
 #video-container{
   padding: 4px 4px 0 0;
 }
+
+.file-unknown {
+  background: url("images/file_generic_32.png");
+}
+
+.file-url {
+  background: url("images/file_url_32.png");
+}
