@@ -33,7 +33,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
     private static final String ILLEGAL_NAME_CHARS = "\\\'/?%*:|\"<>&"; //$NON-NLS-1$
     private static String lastOpenLocation="";
-    private static Boolean isDirty=false;
+    private static boolean isDirty=false;
 
     private ArrayList<FileChooserListener> listeners = new ArrayList<FileChooserListener>();
 
@@ -87,21 +87,21 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       return $wnd.top.HOME_FOLDER;
   }-*/;
 
-    public native void setupNativeHooks()
+    public static native void setupNativeHooks()
   /*-{
-      $wnd.mantle_setIsDirty = function(isDirty) {
-          @org.pentaho.gwt.widgets.client.filechooser.FileChooserDialog::setIsDirty(Ljava/lang/Boolean;)(isDirty);
+      $wnd.mantle_setIsRepoDirty = function(isDirty) {
+          @org.pentaho.gwt.widgets.client.filechooser.FileChooserDialog::setIsDirty(Z)(isDirty);
       }
-      $wnd.mantle_getIsDirty = function() {
+      $wnd.mantle_getIsRepoDirty = function() {
           return @org.pentaho.gwt.widgets.client.filechooser.FileChooserDialog::getIsDirty()();
       }
   }-*/;
 
-    public static Boolean getIsDirty(){
+    public static boolean getIsDirty(){
         return isDirty;
     }
 
-    public static void setIsDirty(Boolean isDirty){
+    public static void setIsDirty(boolean isDirty){
         FileChooserDialog.isDirty=isDirty;
     }
 
