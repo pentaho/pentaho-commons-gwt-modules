@@ -2863,7 +2863,7 @@ width: 22px;
 .fileBrowserColumn .body div.trash > div.element > div.icon, .fileBrowserColumn .body div.trash.empty > div.element > div.icon, .fileBrowserColumn .body div.trash.open.empty > div.element > div.icon{
   background: url("images/trash.png") no-repeat;
 }
-.fileBrowserColumn .body .file .html{
+.fileBrowserColumn .body .file .icon.url{
   background: url("images/file_url.png") no-repeat;
 }
 
@@ -4721,4 +4721,12 @@ background: url("images/connector_top.png") no-repeat top left;
 
 #video-container{
   padding: 4px 4px 0 0;
+}
+
+.file-unknown {
+  background: url("images/file_generic_32.png");
+}
+
+.file-url {
+  background: url("images/file_url_32.png");
 }
