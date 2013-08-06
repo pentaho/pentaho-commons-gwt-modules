@@ -4705,6 +4705,7 @@ background: url("images/connector_top.png") no-repeat top left;
 
 #getting-started-message-content{
   padding: 20px 0 0 4px;
+  width: 300px;
 }
 
 #getting-started-message-content #title {
@@ -4712,6 +4713,12 @@ background: url("images/connector_top.png") no-repeat top left;
   font-family: opensanslight;
   line-height: 30px;
   padding-bottom: 10px;
+  width: 200px;
+}
+
+#getting-started-message-content #message{
+	font-size: 16px;
+	line-height: 22px;
 }
 
 .welcome-img {
@@ -4720,6 +4727,82 @@ background: url("images/connector_top.png") no-repeat top left;
 
 #video-container{
   padding: 4px 4px 0 0;
+}
+
+#getting-started .card  {
+  display: block;
+  border-top: 2px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid #c1d7e1;
+  border-right: 1px solid transparent;
+  padding: 10px;
+}
+
+#getting-started  .selected {
+  background-color: #FFF;
+  border-top: 2px solid #f2ce17;
+  border-bottom: 1px solid #c1d7e1;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #c1d7e1;
+}
+
+#getting-started .card-img {
+  width: 100px;
+  height: 72px;
+}
+
+#getting-started .selector-column {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 190px;
+  height: 381px;
+}
+
+#getting-started .vertical-selector {
+  display: block;
+  background-color: #f5f6f8;
+  padding: 0px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 12px;
+  border-left: 0px solid #c1d7e1;
+  height: 100%;
+}
+#getting-started .details-img {
+  width: 668px;
+  height: 245px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#getting-started .details-content {
+  width: 400px;
+  padding-top: 20px;
+}
+
+#getting-started .detail-title {
+  font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
+  padding: 0 0 20px 0;
+  font-size: 24px;
+  color: #26363d;
+}
+
+#getting-started .detail-description {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+#getting-started .button-container {
+  position: relative;
+  z-index: 1;
+}
+
+#getting-started-media-content {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .file-unknown {
