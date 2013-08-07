@@ -2187,7 +2187,7 @@ body.IE>table {
   /* styles for splash/logo dialogs */
 .splash-content {
   /* fallback color */
-  background: transparent;
+  background: #f5f6f8;
   width: 460px !important;
 }
 
