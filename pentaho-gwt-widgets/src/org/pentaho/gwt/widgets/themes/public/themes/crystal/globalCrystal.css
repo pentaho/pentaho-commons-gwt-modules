@@ -109,12 +109,17 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
   -moz-border-radius: 0px;
   border-radius: 0px;  
 }
+
 select,
-.gwt-ListBox,
+.gwt-ListBox {
+  border: 1px solid #cbdde8;
+  padding: 0 0 0 4px;
+}
 .timeZonePicker{
   border: 1px solid #cbdde8;
   padding: 4px 2px 4px 4px;
 }
+
 *:focus {outline: none;}
 
 .adminField {
