@@ -3147,7 +3147,7 @@ button.adminButton {
   border: 0px solid rgb(224, 224, 224);
 }
 
-.pc_pageTotal{
+.pc_pageTotal, .dijitToolbar .pc_pageTotal{
   padding: 4px 0px 0px 2px;
 }
 
@@ -3163,7 +3163,7 @@ button.adminButton {
 #formattabpanelinner .tundra .dijitToolbar {
   background-color: #fff;
   }
-.tundra .dijitToolbar {
+.tundra .dijitToolbar, .tundra .dijitToolbar#toolbar {
   background-color: #f1f1f1;
   height: 30px;
 }
@@ -3818,7 +3818,7 @@ div.prompt-panel .pentaho-toggle-button-container {
 .tundra .pentaho-titled-toolbar.dijitClosed .dijitArrowNode {
   background-image: url('../images/disclosure_close.png');
 }
-.pc_pageControlContainer {
+.pc_pageControlContainer, .dijitToolbar .pc_pageControlContainer {
 padding: 0px 1px 0px 1px;
 height: auto;
 vertical-align: middle;
@@ -4347,25 +4347,25 @@ background: url("images/connector_top.png") no-repeat top left;
 	padding: 2px 8px;
 }
 
-.pc_pagePrev {
+.pc_pagePrev, .dijitToolbar .pc_pagePrev {
   background: url('images/page_back.png') no-repeat !important;
   background-position: 1px 3px !important;
   height: 22px;
   width: 22px;
 }
-.pc_pagePrevDisabled {
+.pc_pagePrevDisabled, .dijitToolbar .pc_pagePrevDisabled {
   background: url('images/page_back_disabled.png') no-repeat !important;
   background-position: 1px 3px !important;
   height: 22px;
   width: 22px;
 }
-.pc_pageNextDisabled {
+.pc_pageNextDisabled, .dijitToolbar .pc_pageNextDisabled {
   background: url('images/page_forward_disabled.png') no-repeat !important;
   background-position: 1px 3px !important;
   height: 22px;
   width: 22px;
 }
-.pc_pageNext{
+.pc_pageNext, .dijitToolbar .pc_pageNext{
   background: url('images/page_forward.png') no-repeat !important;
   background-position: 1px 3px !important;
   height: 22px;
@@ -4377,12 +4377,15 @@ background: url("images/connector_top.png") no-repeat top left;
   height: 22px;
   width: 22px;
 }
-.dijitEditorIconParameters{
+.dijitEditorIconParameters, .dijitToolbar .dijitEditorIconParameters{
   background: url('images/list_22x22.png') no-repeat !important;
   height: 22px !important;
   width: 22px !important;
 }
-.tundra .dijitToolbar .dijitButtonChecked, .tundra .dijitToolbar .dijitToggleButtonChecked{
+.tundra .dijitToolbar .dijitButtonChecked, 
+.tundra .dijitToolbar .dijitToggleButtonChecked,
+.tundra .dijitToolbar#toolbar .dijitButtonChecked, 
+.tundra .dijitToolbar#toolbar .dijitToggleButtonChecked{
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid #3D6380;
 }
@@ -4390,11 +4393,19 @@ background: url("images/connector_top.png") no-repeat top left;
 .tundra .dijitToolbar .dijitToggleButtonHover,
 .tundra .dijitToolbar .dijitDropDownButtonHover,
 .tundra .dijitToolbar .dijitComboButton .dijitButtonContentsHover,
-.tundra .dijitToolbar .dijitComboButton .dijitDownArrowButtonHover {
+.tundra .dijitToolbar .dijitComboButton .dijitDownArrowButtonHover,
+.tundra .dijitToolbar#toolbar .dijitButtonHover,
+.tundra .dijitToolbar#toolbar .dijitToggleButtonHover,
+.tundra .dijitToolbar#toolbar .dijitDropDownButtonHover,
+.tundra .dijitToolbar#toolbar .dijitComboButton .dijitButtonContentsHover,
+.tundra .dijitToolbar#toolbar .dijitComboButton .dijitDownArrowButtonHover {
   /* TODO: change this from Hover to Selected so that button is still highlighted while drop down is being used */
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid #3D6380;
+}
 
+.IE .dijitButtonNode.pentaho-button {
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#FFFFFF',GradientType=0 ); /* IE6-9 */
 }
 
 .pentaho-datasourcebutton{
