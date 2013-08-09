@@ -1066,7 +1066,7 @@ border-top: 4px solid transparent;
 
   /* ======================= Toolbar Styles ========================= */
 
-.toolbar {
+.toolbar, table.toolbar {
   width: 100%;
   height: 100%;
   vertical-align: middle;
@@ -1077,7 +1077,7 @@ border-top: 4px solid transparent;
   border-bottom-style: solid;
   border-bottom-color: #cbdde8;
 }
-.IE .toolbar {
+.IE .toolbar, .IE table.toolbar {
 	background-color: #fff;
 	  border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -4827,4 +4827,4 @@ background: url("images/connector_top.png") no-repeat top left;
 
 .file-url {
   background: url("images/file_url_32.png");
-}
+} 
