@@ -4731,11 +4731,11 @@ background: url("images/connector_top.png") no-repeat top left;
 }
 
 #getting-started-message-content #title {
-  font-size: 24px;
+  font-size: 22px;
   font-family: opensanslight;
   line-height: 30px;
   padding-bottom: 10px;
-  width: 200px;
+  width: 300px;
 }
 
 #getting-started-message-content #message{
@@ -4760,7 +4760,23 @@ background: url("images/connector_top.png") no-repeat top left;
   padding: 10px;
 }
 
-#getting-started  .selected {
+#launch-widget .card {  
+  border-bottom: 2px solid transparent;
+  border-left: 1px solid transparent;
+  border-top: 1px solid #c1d7e1;
+  border-right: 1px solid transparent;
+  padding: 10px;
+}
+
+#launch-widget .selected {
+  background-color: #FFF;
+  border-bottom: 2px solid #f2ce17;
+  border-left: 1px solid #c1d7e1;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #c1d7e1;
+}
+
+#getting-started .selected {
   background-color: #FFF;
   border-top: 2px solid #f2ce17;
   border-bottom: 1px solid #c1d7e1;
@@ -4768,9 +4784,9 @@ background: url("images/connector_top.png") no-repeat top left;
   border-right: 1px solid #c1d7e1;
 }
 
-#getting-started .card-img {
-  width: 100px;
-  height: 72px;
+#getting-started .card-img, #launch-widget .card-img {
+  width: 150px;
+  height: 100px;
 }
 
 #getting-started .selector-column {
@@ -4781,22 +4797,40 @@ background: url("images/connector_top.png") no-repeat top left;
   height: 381px;
 }
 
+#launch-widget .horizontal-selector {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 #getting-started .vertical-selector {
   display: block;
-  background-color: #f5f6f8;
-  padding: 0px;
   overflow-x: hidden;
   overflow-y: scroll;
-  font-size: 12px;
-  border-left: 0px solid #c1d7e1;
   height: 100%;
 }
-#getting-started .details-img {
-  width: 668px;
-  height: 245px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+
+#launch-widget .horizontal-selector, #getting-started .vertical-selector {
+  background-color: #f5f6f8;
+  padding: 0px;
+  font-size: 12px;
+  border-top: 0px solid #c1d7e1;
+}
+
+#launch-widget.widget-panel .tab-content {
+  padding-left: 0px;
+}
+
+#getting-started #tab2 .details-img {
+  width: 644px;
+  height: 299px;
+ position: absolute;
+  bottom: 4px;
+}
+#getting-started #tab3 .details-img {
+  width: 644px;
+  height: 299px;
+ position: absolute;
+  bottom: 8px;
 }
 
 #getting-started .details-content {
@@ -4807,24 +4841,50 @@ background: url("images/connector_top.png") no-repeat top left;
 #getting-started .detail-title {
   font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
   padding: 0 0 20px 0;
-  font-size: 24px;
+  font-size: 22px;
   color: #26363d;
 }
 
 #getting-started .detail-description {
   font-size: 16px;
   line-height: 22px;
+  display: none;
 }
 
 #getting-started .button-container {
-  position: relative;
+  position: absolute;
   z-index: 1;
+  top: 200px;
+  left: 250px;
 }
 
 #getting-started-media-content {
   position: absolute;
   top: 0;
   right: 0;
+}
+#getting-started .pentaho-button{
+	font-size: 18px;
+	padding-right: 35px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
+	 background: url("images/open_new_window.png") no-repeat right center, -moz-linear-gradient(top, #007297 47%,  #005f7d  100%); /* FF3.6+ */
+  background: url("images/open_new_window.png") no-repeat right center, -webkit-gradient(linear, left top, left bottom, color-stop(47%,#007297), color-stop(100%,#005f7d)); /* Chrome,Safari4+ */
+  background: url("images/open_new_window.png") no-repeat right center, -webkit-linear-gradient(top,  #007297  47%,#005f7d  100%); /* Chrome10+,Safari5.1+ */
+  background: url("images/open_new_window.png") no-repeat rightcenter, -o-linear-gradient(top,  #007297 47%, #005f7d  100%); /* Opera 11.10+ */
+  background: url("images/open_new_window.png") no-repeat right center, -ms-linear-gradient(top,  #007297 47%, #005f7d  100%); /* IE10+ */
+  background:  url("images/open_new_window.png") no-repeat right center, linear-gradient(to bottom,  #007297 47%, #005f7d  100%); /* W3C */
+	-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+width: 200px;
+}
+#getting-started .pentaho-button:hover {
+  -moz-box-shadow:    inset 0 0 1px #FFF;
+  -webkit-box-shadow: inset 0 0 1px #FFF;
+  box-shadow:         inset 0 0 1px #FFF;
+  background:  url("images/open_new_window.png") no-repeat right center, #0085b0; /* Old browsers */
+
 }
 
 .file-unknown {
@@ -4833,4 +4893,4 @@ background: url("images/connector_top.png") no-repeat top left;
 
 .file-url {
   background: url("images/file_url_32.png");
-} 
+}
