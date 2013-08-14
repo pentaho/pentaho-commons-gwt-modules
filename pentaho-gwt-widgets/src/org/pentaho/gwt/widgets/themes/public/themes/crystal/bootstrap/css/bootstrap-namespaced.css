@@ -5505,16 +5505,6 @@ height: auto;
   position: fixed;
 }
 
-.detail-title{
-  padding: 0 0 20px 0;
-  font-size: 16px;
-  color: #26363d;
-}
-.detail-description{
-  padding: 0 0 20px 0;
-  font-size: 14px;
-  color: #26363d;
-}
 .empty-message{
 	padding: 0 40px 20px 40px;
 }
