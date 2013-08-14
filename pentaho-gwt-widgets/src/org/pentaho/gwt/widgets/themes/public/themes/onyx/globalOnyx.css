@@ -2835,7 +2835,7 @@ input:focus {
 #evaluationPanel.afterSlide {
   top: -7px;
   height: 130px;
-  border: 1px solid #cbdde8;
+  border: 1px solid #ddd;
   opacity: 1;
   background-color: #FFF;
 }
@@ -3111,22 +3111,231 @@ input:focus {
   background: #d4d6db;
   border: 0px;
 }
+#launch-widget-body {
+background: url('images/bg_pentaho_default.png') repeat-x top left;
+background-color: #303030;
+}
 
-#getting-started-message-content {
-    padding: 20px 0 0 4px;
+#getting-started-message-content{
+  padding: 20px 0 0 4px;
+  width: 300px;
 }
 
 #getting-started-message-content #title {
-    font-size: 24px;
-    font-family: Tahoma, Helvetica, Arial, sans-serif;    
-    line-height: 30px;
-    padding-bottom: 10px;
+  font-size: 22px;
+  font-family: Tahoma, Helvetica, Arial, sans-serif;    
+  line-height: 30px;
+  padding-bottom: 10px;
+  width: 300px;
 }
 
-.welcome-img{
-    padding: 0 10px 0 0;
+#getting-started-message-content #message{
+	font-size: 16px;
+	line-height: 22px;
 }
 
-#video-container {
-    padding: 4px 4px 0 0;
+.welcome-img {
+  padding: 0 10px 0 0;
+}
+
+#video-container{
+  padding: 4px 4px 0 0;
+}
+
+#getting-started .card  {
+  display: block;
+  border-top: 2px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid transparent;
+  padding: 10px;
+}
+
+#launch-widget .card {  
+  border-bottom: 2px solid transparent;
+  border-left: 1px solid transparent;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid transparent;
+  padding: 10px;
+/*  width: 300px;*/
+}
+#launch-widget .tutorial-card {  
+ width:300px;
+}
+#launch-widget .sample-card {  
+ width:500px;
+}
+#launch-widget .selected {
+  background-color: #FFF;
+  border-bottom: 2px solid #ef8033;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #ddd;
+}
+
+#getting-started .selected {
+  background-color: #FFF;
+  border-top: 2px solid #ef8033;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #ddd;
+}
+
+#getting-started .card-img, #launch-widget .card-img {
+  width: 150px;
+  height: 100px;
+}
+
+#getting-started .selector-column {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 190px;
+  height: 381px;
+}
+#launch-widget .horizontal-selector {
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: absolute;
+  bottom: 0;
+}
+
+#getting-started .vertical-selector {
+  display: block;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+#launch-widget .horizontal-selector, #getting-started .vertical-selector {
+  background-color: #f4f4f4;
+  padding: 0px;
+  font-size: 12px;
+  border-top: 0px solid #ddd;
+}
+
+#launch-widget.widget-panel .tab-content {
+  padding-left: 0px;
+}
+
+#getting-started #tab2 .details-img {
+  width: 644px;
+  height: 299px;
+ position: absolute;
+  bottom: 4px;
+}
+#getting-started #tab3 .details-img {
+  width: 644px;
+  height: 299px;
+ position: absolute;
+  bottom: 8px;
+}
+
+#getting-started .details-content {
+  width: 400px;
+  padding-top: 20px;
+}
+
+#getting-started .detail-title {
+  font-family: Tahoma, Helvetica, Arial, sans-serif; 
+  padding: 0 0 20px 0;
+  font-size: 22px;
+  color: #26363d;
+}
+
+#getting-started .detail-description {
+  font-size: 16px;
+  line-height: 22px;
+  display: none;
+}
+
+#getting-started .button-container {
+  position: absolute;
+  z-index: 1;
+  top: 200px;
+  left: 250px;
+}
+
+#getting-started-media-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#getting-started .pentaho-button{
+  font-size: 18px;
+  padding-right: 35px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-family: Tahoma, Helvetica, Arial, sans-serif; 
+  background: url("images/open_new_window.png") no-repeat right center, -moz-linear-gradient(top, #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* FF3.6+ */
+  background: url("images/open_new_window.png") no-repeat right center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212)); /* Chrome,Safari4+ */
+  background: url("images/open_new_window.png") no-repeat right center, -webkit-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* Chrome10+,Safari5.1+ */
+  background: url("images/open_new_window.png") no-repeat rightcenter, -o-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* Opera 11.10+ */
+  background: url("images/open_new_window.png") no-repeat right center, -ms-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* IE10+ */
+  background:  url("images/open_new_window.png") no-repeat right center, linear-gradient(to bottom,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* W3C */
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  width: 200px;
+  /*  Safari/Chrome 
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
+   Firefox 
+  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;*/
+}
+
+#getting-started .pentaho-button:hover {
+  -webkit-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
+  -moz-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
+  box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(255, 255, 255, 0.7), 0 0 2px 1px rgba(115, 255, 2, 1) inset;
+  background: url("images/open_new_window.png") no-repeat right center, -moz-linear-gradient(top, #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* FF3.6+ */
+  background: url("images/open_new_window.png") no-repeat right center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212)); /* Chrome,Safari4+ */
+  background: url("images/open_new_window.png") no-repeat right center, -webkit-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* Chrome10+,Safari5.1+ */
+  background: url("images/open_new_window.png") no-repeat rightcenter, -o-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* Opera 11.10+ */
+  background: url("images/open_new_window.png") no-repeat right center, -ms-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* IE10+ */
+  background:  url("images/open_new_window.png") no-repeat right center, linear-gradient(to bottom,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* W3C */
+}
+
+#launch-widget-container {
+	padding: 70px 0 0 0;
+	background-image: url('images/logo.png');
+	background-repeat: no-repeat;
+background-position: 20px 8px;
+}
+
+#sample-container {
+	height: 462px;
+	padding: 0 20px;
+}
+
+#sample-sub-container{
+	border: 1px solid #ddd;
+	width:100%;
+	height: 100%;
+}
+
+#launch-widget .detail-title{
+	padding: 0 0 10px 0;
+}
+
+#sample-details-content,
+#tutorial-details-content{
+	padding: 20px 0 0 20px;
+}
+
+.tab-pane .active{
+	height: 1000px;
+}
+
+#launch-widget #tab1,
+#launch-widget #tab2,
+#launch-widget #tab3{
+	height: 760px;
+	position: relative;
+}
+
+#launch-widget #welcome-video{
+	padding: 80px 0 0 0;
+}
+
+#sample {
+	height: 480px;	
 }
