@@ -3436,8 +3436,11 @@
   border-left: 0px solid transparent;
   border-right: 1px solid #ddd;
 }
+.bootstrap #launch-widget .nav-tabs > li > a,
 .bootstrap #getting-started .nav-tabs > li > a {
-  width: 130px;
+width: 130px;
+font-size: 16px;
+padding-left: 20px;
 }
 
 
@@ -3647,9 +3650,9 @@
 .bootstrap .tab-content {
   overflow: auto;
   background-color: #fff;
-  border-right: 1px solid #c1d7e1;
-  border-left: 1px solid #c1d7e1;
-  border-bottom: 1px solid #c1d7e1;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 0 0 0 12px;
   height: 300px;
 }
