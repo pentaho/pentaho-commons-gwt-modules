@@ -4954,3 +4954,15 @@ div.listbox .pentaho-listbox {
 .file-url {
   background: url("images/file_url_32.png");
 }
+
+#eval-users-toggle {
+ font-size: 13px;
+  color: #1973BC;
+  margin-top: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+  background: url(images/login_yellow_bar.png) no-repeat;
+  background-position: bottom left;
+  padding: 0 0 10px 0;
+}
