@@ -638,7 +638,7 @@ div#FilterPanel div.pentaho-toggle-button-down button{
 }
 
 .pentaho-tabWidget {
-  display: inline-block;
+  display: inline-table;
   background: transparent;
   cursor: pointer;
   margin-left: 0px;
