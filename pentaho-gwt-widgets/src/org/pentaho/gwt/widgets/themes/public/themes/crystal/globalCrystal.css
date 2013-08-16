@@ -4963,3 +4963,8 @@ div.listbox .pentaho-listbox {
   background-position: bottom left;
   padding: 0 0 10px 0;
 }
+
+.resize-wrapper-top,
+.resize-wrapper-inner {
+  background: #144b64;
+}
