@@ -4847,13 +4847,14 @@ div.listbox .pentaho-listbox {
 #getting-started #tab3 .details-img {
   width: 644px;
   height: 299px;
- position: absolute;
+  position: absolute;
   bottom: 8px;
 }
 
 #getting-started .details-content {
   width: 400px;
   padding-top: 20px;
+  padding: 20px 0 0 10px;
 }
 
 #getting-started .detail-title {
@@ -4887,7 +4888,7 @@ div.listbox .pentaho-listbox {
   top: 0;
   right: 0;
 }
-#getting-started .pentaho-button{
+#getting-started .pentaho-button {
   font-size: 18px;
   padding-right: 35px;
   padding-top: 16px;
@@ -4901,7 +4902,7 @@ div.listbox .pentaho-listbox {
   background:  url("images/open_new_window.png") no-repeat right center, linear-gradient(to bottom,  #007297 47%, #005f7d  100%); /* W3C */
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
-  width: 200px;
+  width: 220px;
 }
 
 #getting-started .pentaho-button:hover {
@@ -4924,10 +4925,6 @@ div.listbox .pentaho-listbox {
 
 #launch-widget .detail-title {
   padding: 0 0 10px 0;
-}
-
-#sample-details-content, #tutorial-details-content {
-  padding: 20px 0 0 20px;
 }
 
 #launch-widget .tab-pane {
