@@ -5508,3 +5508,7 @@ height: auto;
 .empty-message{
 	padding: 0 40px 20px 40px;
 }
+
+.bootstrap form {
+    margin: 0 0 7px;
+}
