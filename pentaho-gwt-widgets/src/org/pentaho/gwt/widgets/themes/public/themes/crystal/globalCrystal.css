@@ -107,7 +107,7 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 
    -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
-  border-radius: 0px;  
+  border-radius: 0px;
 }
 
 select,
@@ -395,7 +395,7 @@ cursor: auto;
   background-position: center center;*/
 }
 div#FilterPanel div.pentaho-toggle-button-down button{
-	color: #293b44;
+  color: #293b44;
 }
 
   /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
@@ -620,7 +620,7 @@ div#FilterPanel div.pentaho-toggle-button-down button{
 
 .glasspane {
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
-	
+
   position: absolute;
   background-color: #144b64; /*#809eab;*/
   /* IE8 css hack for opacity */
@@ -1078,8 +1078,8 @@ border-top: 4px solid transparent;
   border-bottom-color: #cbdde8;
 }
 .IE .toolbar, .IE table.toolbar {
-	background-color: #fff;
-	  border-bottom-width: 1px;
+  background-color: #fff;
+    border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: #cbdde8;
 }
@@ -2699,7 +2699,7 @@ padding: 10px 0 10px 0;
   width: 22px;
 }
 .fileChooserCellLabel{
-	padding:2px;
+  padding:2px;
 }
 .icon-small.icon-waqr-report {
   background: url('images/file_generic.png') no-repeat;
@@ -2846,19 +2846,19 @@ padding: 10px 0 10px 0;
 }
 
 .sidePanelIconOpen{
-	  background: url('images/16x16_right.png') no-repeat;
+    background: url('images/16x16_right.png') no-repeat;
 }
 
 
 .sidePanelIconClose{
-	background: url('images/16x16_left.png') no-repeat;
+  background: url('images/16x16_left.png') no-repeat;
 }
 .fileBrowserColumn .body div.folder.open > div.element > div.icon {
 background: url("images/folder_open.png") no-repeat;
 width: 22px;
 }
 .fileBrowserColumn .body .file .icon{
-	background: url("images/file_generic.png") no-repeat;
+  background: url("images/file_generic.png") no-repeat;
 }
 .fileBrowserColumn .body div.folder > div.element > div.icon, .fileBrowserColumn .body div.folder.empty > div.element > div.icon, .fileBrowserColumn .body div.folder.open.empty > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
@@ -2876,11 +2876,11 @@ width: 22px;
 }
 .fileBrowserColumn .body .file .icon.xdash,
 .fileBrowserColumn .body .file .xdash{
-	 background: url("images/file_dashboard.png") no-repeat;
+   background: url("images/file_dashboard.png") no-repeat;
 }
 .fileBrowserColumn .body .file .icon.xaction,
 .fileBrowserColumn .body .file .xaction{
-	 background: url("images/file_action.png") no-repeat;
+   background: url("images/file_action.png") no-repeat;
 }
 .fileBrowserColumn .body .file .icon.prpt,
 .fileBrowserColumn .body .file .prpt {
@@ -2910,10 +2910,10 @@ width: 16px;
 }
 
 .file-xdash{
-	 background: url("images/file_dashboard_32.png") no-repeat;
+   background: url("images/file_dashboard_32.png") no-repeat;
 }
 .file-xaction{
-	 background: url("images/file_action_32.png") no-repeat;
+   background: url("images/file_action_32.png") no-repeat;
 }
 
 .file-prpt {
@@ -3833,7 +3833,7 @@ vertical-align: middle;
   background-color: #1973bc;
 }
 #standardDialog #dialogMessageBar .dlgInfo{
-	background:url(images/info.png) no-repeat;
+  background:url(images/info.png) no-repeat;
 }
 
 /* Analyzer drag and drop indicators */
@@ -3951,13 +3951,13 @@ vertical-align: middle;
 }
 
 .pentaho-refreshbutton {
-    background-image: url("../images/refresh.png");    
+    background-image: url("../images/refresh.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-helpbutton {
-    background-image: url("../images/help_link.png");    
+    background-image: url("../images/help_link.png");
     width: 16px;
     height: 16px;
 }
@@ -3981,7 +3981,7 @@ vertical-align: middle;
 }
 
 .pentaho-collapseallbutton {
-    background-image: url("../images/CollapseAll.png");    
+    background-image: url("../images/CollapseAll.png");
     width: 15px;
     height: 15px;
 }
@@ -3993,7 +3993,7 @@ vertical-align: middle;
 }
 
 .pentaho-warningbutton {
-    background-image: url("../images/warning.png");    
+    background-image: url("../images/warning.png");
     width: 16px;
     height: 16px;
 }
@@ -4005,19 +4005,19 @@ vertical-align: middle;
 }
 
 .pentaho-smallmodelbutton {
-	background-image: url("../images/sm_model_icon.png");    
+  background-image: url("../images/sm_model_icon.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-column {
-	background-image: url("images/column.png");
+  background-image: url("images/column.png");
   width: 16px;
   height: 16px;
 }
 
 .pentaho-updatebutton.pentaho-imagebutton-disabled {
-  background-image: url("../images/updateDisabled.png");    
+  background-image: url("../images/updateDisabled.png");
   width: 16px;
   height: 16px;
 }
@@ -4040,7 +4040,7 @@ vertical-align: middle;
   background-image: url("images/16x16_right.png");
   background-repeat: no-repeat;
   width: 16px;
-  height: 16px; 
+  height: 16px;
   background-position: 0px 2px;
 }
 
@@ -4159,7 +4159,7 @@ vertical-align: middle;
   height: 22px;
 }
 #arrow-menu, .arrow-menu-icon{
- 	background: url('images/arrow_menu.png') no-repeat;
+  background: url('images/arrow_menu.png') no-repeat;
 }
 .tundra .pentaho-titled-toolbar.dijitClosed .dijitArrowNode,
 .filterPaneToggle{
@@ -4170,7 +4170,7 @@ vertical-align: middle;
   background: url('images/arrow_open.png') no-repeat;
 }
 .fieldListTree .folder{
-	padding-left: 15px;
+  padding-left: 15px;
 }
  .folderClose{
   background: url('images/arrow_closed.png') no-repeat;
@@ -4212,67 +4212,67 @@ vertical-align: middle;
   background: url('images/bold.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconBold{
-	  background: url('images/bold_disabled.png') no-repeat;
+    background: url('images/bold_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconItalic {
   background: url('images/italic.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconItalic {
-	  background: url('images/italic_disabled.png') no-repeat;
+    background: url('images/italic_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconForeColor {
   background: url('images/font_color.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconForeColor{
-	  background: url('images/font_color_disabled.png') no-repeat;
+    background: url('images/font_color_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconBackColor {
   background: url('images/back_color.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconBackColor {
-	  background: url('images/back_color_disabled.png') no-repeat;
+    background: url('images/back_color_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconCopy {
   background: url('images/copy_format.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconCopy {
-	  background: url('images/copy_format_disabled.png') no-repeat;
+    background: url('images/copy_format_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconPaste {
   background: url('images/paste_format.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconPaste {
-	  background: url('images/paste_format_disabled.png') no-repeat;
+    background: url('images/paste_format_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconDelete {
   background: url('images/remove_format.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconDelete {
-	  background: url('images/remove_format_disabled.png') no-repeat;
+    background: url('images/remove_format_disabled.png') no-repeat;
 }
 .tundra .dijitEditorIcon.dijitEditorIconJustifyLeft {
   background: url('images/align_left.png') no-repeat;
 }
 .tundra .dijitDisabled  .dijitEditorIconJustifyLeft{
-	  background: url('images/align_left_disabled.png') no-repeat;
+    background: url('images/align_left_disabled.png') no-repeat;
 }
 .tundra .dijitEditorIcon.dijitEditorIconJustifyCenter {
   background: url('images/align_center.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconJustifyCenter  {
-	  background: url('images/align_center_disabled.png') no-repeat;
+    background: url('images/align_center_disabled.png') no-repeat;
 }
 .tundra .dijitEditorIcon.dijitEditorIconJustifyRight {
   background: url('images/align_right.png') no-repeat;
 }
 .tundra .dijitDisabled .dijitEditorIconJustifyRight{
-	  background: url('images/align_right_disabled.png') no-repeat;
+    background: url('images/align_right_disabled.png') no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconSelectAll{
@@ -4291,7 +4291,7 @@ vertical-align: middle;
   height: 22px;
 }
 #dijit_ToolbarSeparator_4{
-	display: none;
+  display: none;
 }
 .filterIndicatorBackground_1 {
 background: url("images/filter_indicators/num_filter_bg_1.png") no-repeat;
@@ -4338,13 +4338,13 @@ background: url("images/filter_indicators/num_filter_bg_9p.png") no-repeat;
 background: url("images/connector_top.png") no-repeat top left;
 }
 .closeIcon{
-	background: url('images/closeTab_off.png') no-repeat top left;
+  background: url('images/closeTab_off.png') no-repeat top left;
 }
 .closeIconHover{
-	background: url('images/closeTab_active.png')no-repeat top left;
+  background: url('images/closeTab_active.png')no-repeat top left;
 }
 .tundra .dijitTooltipContainer .pentaho-tabWidget{
-	padding: 2px 8px;
+  padding: 2px 8px;
 }
 
 .pc_pagePrev, .dijitToolbar .pc_pagePrev {
@@ -4382,9 +4382,9 @@ background: url("images/connector_top.png") no-repeat top left;
   height: 22px !important;
   width: 22px !important;
 }
-.tundra .dijitToolbar .dijitButtonChecked, 
+.tundra .dijitToolbar .dijitButtonChecked,
 .tundra .dijitToolbar .dijitToggleButtonChecked,
-.tundra .dijitToolbar#toolbar .dijitButtonChecked, 
+.tundra .dijitToolbar#toolbar .dijitButtonChecked,
 .tundra .dijitToolbar#toolbar .dijitToggleButtonChecked{
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid #3D6380;
@@ -4486,25 +4486,25 @@ background: url("images/connector_top.png") no-repeat top left;
   border: 1px solid #cbdde8;
   vertical-align: middle;
 }#propertiesPanelTitle{
-	width: 200px !important;
+  width: 200px !important;
 }
 #propertiesPanelRefreshPeriod{
-		width: 30px !important;
+    width: 30px !important;
 }
 .flag{
-	background: transparent url('images/flag-right.png') no-repeat scroll top right;
+  background: transparent url('images/flag-right.png') no-repeat scroll top right;
 }
 #toppanelinner{
-	padding: 0 4px 0 0;
+  padding: 0 4px 0 0;
 }
 .trashcan{
-	 background: url('images/trashcan.png') no-repeat;
+   background: url('images/trashcan.png') no-repeat;
 }
 #datasource-button-bar {
   padding: 0 10px;
 }
 .trashcan:hover{
-	 background: url('images/trashcan_full.png') no-repeat scroll;
+   background: url('images/trashcan_full.png') no-repeat scroll;
 }
 .colorpickertabs.tabpanel {
   padding: 0px;
@@ -4515,7 +4515,7 @@ background: url("images/connector_top.png") no-repeat top left;
   background-color: #fff;
 }
 .clickable {
-	cursor: pointer;
+  cursor: pointer;
 }
 #modelSelectDialog div.dijitSelect {
   display: inline-table;
@@ -4674,9 +4674,11 @@ div.listbox .pentaho-listbox {
   background-image: url(images/bg_steps.png);
 }
 /* instaview fiel type icon? */
-.pentaho-selectlist-item-data{
-	background: url("images/database.png") no-repeat left center;
-	height: 22px;
+.pentaho-selectlist-item-data {
+  background-image: url("images/database.png");
+  background-repeat: no-repeat;
+  background-position: left center;
+  height: 22px;
 }
 
 /* layout anel gem styling */
@@ -4747,8 +4749,8 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started-message-content #message{
-	font-size: 16px;
-	line-height: 22px;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .welcome-img {
@@ -4768,7 +4770,7 @@ div.listbox .pentaho-listbox {
   padding: 10px;
 }
 
-#launch-widget .card {  
+#launch-widget .card {
   border-bottom: 2px solid transparent;
   border-left: 1px solid transparent;
   border-top: 1px solid #c1d7e1;
@@ -4776,11 +4778,11 @@ div.listbox .pentaho-listbox {
   padding: 10px;
 }
 
-#launch-widget .tutorial-card {  
+#launch-widget .tutorial-card {
  width:300px;
 }
 
-#launch-widget .sample-card {  
+#launch-widget .sample-card {
  width:500px;
 }
 
@@ -4941,7 +4943,7 @@ div.listbox .pentaho-listbox {
 }
 
 #launch-widget #sample {
-  height: 480px;  
+  height: 480px;
 }
 
 .file-unknown {
