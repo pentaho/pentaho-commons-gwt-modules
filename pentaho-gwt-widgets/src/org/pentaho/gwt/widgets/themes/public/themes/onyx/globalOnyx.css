@@ -3371,3 +3371,8 @@ background-position: 20px 8px;
 #sample {
 	height: 480px;	
 }
+
+.main-container {
+  margin: 0 auto;
+  width: 1230px;
+}
