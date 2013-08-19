@@ -3602,7 +3602,8 @@ color: #293b44;
   border-left: 0px solid transparent;
   border-right: 1px solid #c1d7e1;
 }
-.bootstrap #getting-started .nav-tabs > li > a {
+.bootstrap #getting-started .nav-tabs > li > a,
+.bootstrap #launch-widget .nav-tabs > li > a {
 width: 130px;
 font-size: 16px;
 padding-left: 20px;
@@ -3839,7 +3840,7 @@ background: #fff;
   border-right: 1px solid #c1d7e1;
   border-left: 1px solid #c1d7e1;
   border-bottom: 1px solid #c1d7e1;
-  padding: 0 0 0 20px;
+  padding: 0;
   height: 300px;
 }
 .bootstrap  #getting-started .tab-content{

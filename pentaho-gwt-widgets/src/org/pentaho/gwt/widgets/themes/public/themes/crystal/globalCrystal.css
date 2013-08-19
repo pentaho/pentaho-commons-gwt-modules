@@ -1079,7 +1079,7 @@ border-top: 4px solid transparent;
 }
 .IE .toolbar, .IE table.toolbar {
   background-color: #fff;
-    border-bottom-width: 1px;
+  border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: #cbdde8;
 }
@@ -3802,15 +3802,11 @@ div.prompt-panel .pentaho-toggle-button-container {
   vertical-align: top;
   font-size: 12px;
 }
+
 #launch-widget-body{
   background-color: #f6f7f8;
 }
-#launch-widget-container{
-  padding: 60px 0 0 0;
-  background-image: url('../images/logo.png');
-  background-repeat: no-repeat;
-  background-position: 20px 8px;
-}
+
 /* analyzer disclosure panel arrow */
 .tundra .pentaho-titled-toolbar .dijitArrowNode {
   background-image: url('../images/disclosure_open.png');
@@ -4005,7 +4001,7 @@ vertical-align: middle;
 }
 
 .pentaho-smallmodelbutton {
-  background-image: url("../images/sm_model_icon.png");
+  	background-image: url("../images/sm_model_icon.png");
     width: 16px;
     height: 16px;
 }
@@ -4735,11 +4731,6 @@ div.listbox .pentaho-listbox {
   background-image: url('images/16x16_down.png');
 }
 
-#getting-started-message-content{
-  padding: 20px 0 0 4px;
-  width: 300px;
-}
-
 #getting-started-message-content #title {
   font-size: 22px;
   font-family: opensanslight;
@@ -4855,13 +4846,22 @@ div.listbox .pentaho-listbox {
 
 #getting-started .details-content {
   width: 400px;
-  padding-top: 20px;
-  padding: 20px 0 0 10px;
+}
+
+.details-content {
+  padding: 20px 0 0 20px;
 }
 
 #getting-started .detail-title {
-  font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
   padding: 0 0 20px 0;
+}
+
+#launch-widget .detail-title {
+  padding: 0 0 10px 0;
+}
+
+.detail-title {
+  font-family: OpenSansLight,  Helvetica, Arial, Sans serif;
   font-size: 22px;
   color: #26363d;
 }
@@ -4943,7 +4943,32 @@ div.listbox .pentaho-listbox {
 }
 
 #launch-widget #sample {
-  height: 480px;
+  height: 480px;  
+}
+
+#launch-widget-container.main-container {
+    padding-top: 0px;
+}
+
+#launch-widget {
+    padding-top: 0px;
+}
+
+#launch-widget-title-row-span {
+  padding: 0 19px;
+}
+
+#launch-widget-title-row #logo {
+    background-image: url('../images/logo.png');
+    width: 185px;
+    height: 50px;
+    float: right;
+    margin: 10px 0;
+}
+
+#launch-widget-title-row #launch-widget-title {
+    float: left;
+    margin-top: 25px;
 }
 
 .file-unknown {
