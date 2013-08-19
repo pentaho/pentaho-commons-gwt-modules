@@ -1723,27 +1723,34 @@ body.IE>table {
 }
 
 .pentaho-savebutton-small {
-  width: 16px;
-  height: 16px;
-  background: url('../images/save_16.png') no-repeat center;
+  width: 22px;
+  height: 22px;
+  background: url('images/save_22.png') no-repeat center;
   cursor: pointer;
 }
 .pentaho-saveasbutton-small {
-  width: 16px;
-  height: 16px;
-  background: url('../images/saveas_16.png') no-repeat center;
+  width: 22px;
+  height: 22px;
+  background: url('images/saveas_22.png') no-repeat center;
   cursor: pointer;
 }
 .pentaho-openbutton-small {
-  width: 16px;
-  height: 16px;
-  background: url('../images/open_16.png') no-repeat center;
+  width: 26px;
+  height: 22px;
+  background: url('images/open_22.png') no-repeat center;
   cursor: pointer;
 }
 .pentaho-newbutton-small {
-  width: 16px;
-  height: 16px;
-  background: url('../images/new_16.png') no-repeat center;
+  width: 22px;
+  height: 22px;
+  background: url('images/new_22.png') no-repeat center;
+  cursor: pointer;
+}
+
+.back-icon{
+  width: 22px;
+  height: 22px;
+  background: url('images/back_22.png') no-repeat center;
   cursor: pointer;
 }
 
