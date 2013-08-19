@@ -3653,7 +3653,7 @@ padding-left: 20px;
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
-  padding: 0 0 0 12px;
+  padding: 0;
   height: 300px;
 }
 .bootstrap  #getting-started .tab-content{
