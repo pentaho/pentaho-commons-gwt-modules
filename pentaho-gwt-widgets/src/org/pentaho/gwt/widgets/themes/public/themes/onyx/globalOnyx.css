@@ -3143,14 +3143,10 @@ div.listbox .pentaho-listbox {
   background: #d4d6db;
   border: 0px;
 }
-#launch-widget-body {
-background: url('images/bg_pentaho_default.png') repeat-x top left;
-background-color: #303030;
-}
 
-#getting-started-message-content{
-  padding: 20px 0 0 4px;
-  width: 300px;
+#launch-widget-body {
+  background: url('images/bg_pentaho_default.png') repeat-x top left;
+  background-color: #303030;
 }
 
 #getting-started-message-content #title {
@@ -3265,20 +3261,27 @@ background-color: #303030;
 
 #getting-started .details-content {
   width: 400px;
-  padding-top: 20px;
 }
 
-#getting-started .detail-title {
+.details-content {
+    padding: 20px 0 0 20px;
+}
+
+.detail-title {
   font-family: Tahoma, Helvetica, Arial, sans-serif; 
-  padding: 0 0 20px 0;
+  padding: 5px 0 20px 0;
   font-size: 22px;
   color: #26363d;
 }
 
 #getting-started .detail-description {
-  font-size: 16px;
-  line-height: 22px;
   display: none;
+}
+
+.detail-description {
+  padding: 0 0 20px 0;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 #getting-started .button-container {
@@ -3326,13 +3329,6 @@ background-color: #303030;
   background:  url("images/open_new_window.png") no-repeat right center, linear-gradient(to bottom,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* W3C */
 }
 
-#launch-widget-container {
-	padding: 70px 0 0 0;
-	background-image: url('images/logo.png');
-	background-repeat: no-repeat;
-background-position: 20px 8px;
-}
-
 #sample-container {
 	height: 462px;
 	padding: 0 20px;
@@ -3346,11 +3342,6 @@ background-position: 20px 8px;
 
 #launch-widget .detail-title{
 	padding: 0 0 10px 0;
-}
-
-#sample-details-content,
-#tutorial-details-content{
-	padding: 20px 0 0 20px;
 }
 
 .tab-pane .active{
@@ -3372,6 +3363,23 @@ background-position: 20px 8px;
 	height: 480px;	
 }
 
+#launch-widget-container.main-container {
+    padding-top: 0px;
+}
+
+#launch-widget-title-row #logo {
+    background-image: url('images/logo.png');
+    width: 185px;
+    height: 50px;
+    float: right;
+    margin: 10px 0;
+}
+
+#launch-widget-title-row #launch-widget-title {
+    float: left;
+    color: #FFF;
+    margin-top: 25px;
+}
 .main-container {
   margin: 0 auto;
   width: 1230px;
