@@ -4407,10 +4407,6 @@ background: url("images/connector_top.png") no-repeat top left;
   border: 1px solid #3D6380;
 }
 
-.IE .dijitButtonNode.pentaho-button {
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#FFFFFF',GradientType=0 ); /* IE6-9 */
-}
-
 .pentaho-datasourcebutton{
   background: url('images/database.png') no-repeat;
 }
