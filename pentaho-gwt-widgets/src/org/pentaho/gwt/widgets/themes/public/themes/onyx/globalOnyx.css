@@ -3389,3 +3389,10 @@ div.listbox .pentaho-listbox {
   margin: 0 auto;
   width: 1230px;
 }
+
+.IE .scheduleEditor SELECT {
+  margin: 2px;
+}
+.IE .scheduleEditor FIELDSET TD {
+  padding-top: 0px !important;
+}
