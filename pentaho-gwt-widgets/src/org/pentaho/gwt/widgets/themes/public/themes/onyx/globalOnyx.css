@@ -3144,6 +3144,11 @@ div.listbox .pentaho-listbox {
   border: 0px;
 }
 
+#launch-widget-title-row #launch-widget-title {
+    text-shadow: 1px 1px 1px #000;
+    font-weight: normal;
+}
+
 #launch-widget-body {
   background: url('images/bg_pentaho_default.png') repeat-x top left;
   background-color: #303030;
@@ -3160,6 +3165,7 @@ div.listbox .pentaho-listbox {
 #getting-started-message-content #message{
 	font-size: 16px;
 	line-height: 22px;
+    width: 300px;
 }
 
 .welcome-img {
@@ -3298,7 +3304,6 @@ div.listbox .pentaho-listbox {
 }
 #getting-started .pentaho-button{
   font-size: 18px;
-  padding-right: 35px;
   padding-top: 16px;
   padding-bottom: 16px;
   font-family: Tahoma, Helvetica, Arial, sans-serif; 
