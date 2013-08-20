@@ -110,14 +110,18 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
   border-radius: 0px;
 }
 
-select,
-.gwt-ListBox {
+SELECT,
+.gwt-ListBox,
+.timeZonePicker {
   border: 1px solid #cbdde8;
   padding: 0 0 0 4px;
+  font-size: 13px;
 }
-.timeZonePicker{
-  border: 1px solid #cbdde8;
-  padding: 4px 2px 4px 4px;
+.IE .scheduleEditor SELECT {
+  margin: 2px;
+}
+.IE .scheduleEditor FIELDSET TD {
+  padding-top: 0px !important;
 }
 
 *:focus {outline: none;}
