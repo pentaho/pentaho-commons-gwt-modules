@@ -4749,6 +4749,7 @@ div.listbox .pentaho-listbox {
 #getting-started-message-content #message{
   font-size: 16px;
   line-height: 22px;
+  width: 300px;
 }
 
 .welcome-img {
