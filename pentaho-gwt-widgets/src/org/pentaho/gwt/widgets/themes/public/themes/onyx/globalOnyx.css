@@ -2608,16 +2608,21 @@ div.listbox .pentaho-listbox {
   height: 13px;
   width: 14px;
 }
-.icon-tree-leaf {
+.icon-tree-node {
   height: 14px;
-  width: 35px;
+  width: 22px;
 }
 .icon-tree-leaf.icon-recycle-bin {
   background: url('../images/recycle_bin.png');
   height: 16px;
 }
-.icon-tree-leaf.icon-folder {
-  background: url('../images/treeLeaf.png');
+
+.icon-tree-node.icon-folder {
+  background: url("../images/folder.png") no-repeat 2px 0px;
+}
+
+.open > table .icon-tree-node.icon-folder {
+  background: url("../images/folder.png") no-repeat -17px 0px;
 }
 
 .favorite-on {

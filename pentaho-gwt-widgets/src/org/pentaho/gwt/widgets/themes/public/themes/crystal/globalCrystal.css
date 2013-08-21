@@ -2847,6 +2847,10 @@ padding: 10px 0 10px 0;
   background: url('images/folder_16.png') no-repeat;
 }
 
+.open > table .icon-tree-node.icon-folder {
+  background: url('images/folder_16-open.png') no-repeat;
+}
+
 .tree-item-collapsed>table>tbody>tr>td>img,
 .leaf-widget.parent-widget>table>tbody>tr>td>img {
   background: url('images/arrow_closed.png') no-repeat !important;
