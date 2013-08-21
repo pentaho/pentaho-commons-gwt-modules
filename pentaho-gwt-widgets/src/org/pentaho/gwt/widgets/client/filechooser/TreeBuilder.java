@@ -50,19 +50,19 @@ public class TreeBuilder {
       boolean isDirectory = file.isFolder();
       
       if (isVisible || showHiddenFiles) {
-        String fileName = file.getName(); 
-        if(filter.accept(fileName, isDirectory, isVisible) == false){
+        String fileTitle = file.getTitle();
+        if(filter.accept(fileTitle, isDirectory, isVisible) == false){
           continue;
         }
         
         TreeItem childTreeItem = new TreeItem();
         // TODO There is no concept of filename and a localized filename  in the repository. Do we need this ?
         if (showLocalizedFileNames) {
-          childTreeItem.setText(fileName);
-          childTreeItem.setTitle(fileName);
+          childTreeItem.setText(fileTitle);
+          childTreeItem.setTitle(fileTitle);
         } else {
-          childTreeItem.setText(fileName);
-          childTreeItem.setTitle(fileName);
+          childTreeItem.setText(fileTitle);
+          childTreeItem.setTitle(fileTitle);
         }
 
         //ElementUtils.preventTextSelection(childTreeItem.getElement());
