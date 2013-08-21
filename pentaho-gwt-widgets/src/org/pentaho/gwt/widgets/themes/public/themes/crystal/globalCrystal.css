@@ -2835,6 +2835,9 @@ padding: 10px 0 10px 0;
   height: 13px;
   width: 14px;
 }
+.icon-tree-leaf {
+  margin-left: 15px;
+}
 .icon-tree-node {
   height: 14px;
   width: 22px;
