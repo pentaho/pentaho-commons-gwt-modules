@@ -2610,7 +2610,10 @@ div.listbox .pentaho-listbox {
 }
 .icon-tree-node {
   height: 14px;
-  width: 22px;
+  width: 21px;
+}
+.icon-tree-leaf {
+  margin-left: 15px;
 }
 .icon-tree-leaf.icon-recycle-bin {
   background: url('../images/recycle_bin.png');
