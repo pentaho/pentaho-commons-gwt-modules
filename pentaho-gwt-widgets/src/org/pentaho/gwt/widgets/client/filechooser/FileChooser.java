@@ -119,6 +119,11 @@ public class FileChooser extends VerticalPanel {
     setSpacing(3);
   }
 
+  public FileChooser(boolean showHiddenFiles){
+    super();
+    this.showHiddenFiles = showHiddenFiles;
+  }
+
   private RepositoryFile search(RepositoryFileTree tree, String actualFileName) {
     try {
       RepositoryFile file = tree.getFile();
@@ -173,7 +178,7 @@ public class FileChooser extends VerticalPanel {
 
   public void fetchRepository(final IDialogCallback completedCallback) throws RequestException {
     RequestBuilder builder = null;
-    builder = new RequestBuilder(RequestBuilder.GET, getFullyQualifiedURL()+  "api/repo/files/:/children?depth=-1&filter=*"); //$NON-NLS-1$
+    builder = new RequestBuilder(RequestBuilder.GET, getFullyQualifiedURL()+  "api/repo/files/:/children?showHidden=" + showHiddenFiles + "&depth=-1&filter=*"); //$NON-NLS-1$
     builder.setHeader("Accept", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
     RequestCallback callback = new RequestCallback() {
 

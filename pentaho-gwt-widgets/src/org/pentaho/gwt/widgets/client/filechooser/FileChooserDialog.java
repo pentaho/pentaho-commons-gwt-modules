@@ -134,9 +134,14 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
         return null;
     }
 
-        public FileChooserDialog(FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide, boolean modal, String title, String okText) {
+    public FileChooserDialog(FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide, boolean modal, String title, String okText) {
+        this(mode, selectedPath, fileTree, autoHide, modal, title, okText, false);
+    }
+
+
+    public FileChooserDialog(FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide, boolean modal, String title, String okText, boolean showHiddenFiles) {
         super(title, okText, FileChooserEntryPoint.messages.getString("Cancel"), false, true); //$NON-NLS-1$
-        fileChooser = new FileChooser();
+        fileChooser = new FileChooser(showHiddenFiles);
         setContent(fileChooser);
         fileChooser.setWidth("100%"); //$NON-NLS-1$
         fileChooser.setMode(mode);
@@ -193,6 +198,16 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
                 autoHide,
                 modal,
                 mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString("Open") : FileChooserEntryPoint.messages.getString("Save"), mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString("Open") : FileChooserEntryPoint.messages.getString("Save")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    }
+
+    public FileChooserDialog(FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide, boolean modal, boolean showHiddenFiles) {
+        this(
+                mode,
+                selectedPath,
+                fileTree,
+                autoHide,
+                modal,
+                mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString("Open") : FileChooserEntryPoint.messages.getString("Save"), mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString("Open") : FileChooserEntryPoint.messages.getString("Save"), showHiddenFiles); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     public void addFileChooserListener(FileChooserListener listener) {
