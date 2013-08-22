@@ -3522,6 +3522,9 @@ div.prompt-panel .pentaho-toggle-button-container {
   font-size: 12px;
   padding: 4px 10px;
 }
+.IE #selectAll,
+.IE #tempPreviewButton,
+.IE #preview,
 #selectAll,
 #tempPreviewButton,
 #preview{
@@ -3529,24 +3532,30 @@ div.prompt-panel .pentaho-toggle-button-container {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  background: transparent;
+  background: #f5f6f8;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); /* IE6-9 */
   color: #1973BC;
 }
+
+.IE #createJoinButton,
 #createJoinButton{
   padding: 0 0 2px 0px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  background: transparent;
+  background: #f5f6f8;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); /* IE6-9 */
   color: #1973BC;
-
 }
+
+.IE #deleteJoinButton,
 #deleteJoinButton {
   padding: 0 0 2px 0px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  background: transparent;
+  background: #f5f6f8;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); /* IE6-9 */
   color: #1973BC;
 }
 
