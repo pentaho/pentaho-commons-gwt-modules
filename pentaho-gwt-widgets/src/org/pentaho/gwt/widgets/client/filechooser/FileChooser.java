@@ -28,6 +28,9 @@ import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -43,7 +46,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MouseListener;
@@ -87,6 +89,7 @@ public class FileChooser extends VerticalPanel {
 
 
   public FileChooser() {
+    super();
     fileNameTextBox.getElement().setId("fileNameTextBox"); //$NON-NLS-1$
     
     // workaround webkit browsers quirk of not being able to set focus in a widget by clicking on it  
@@ -96,31 +99,23 @@ public class FileChooser extends VerticalPanel {
       }
     });
     
-    fileNameTextBox.addKeyboardListener(new KeyboardListener() {
-
-      public void onKeyDown(Widget sender, char keyCode, int modifiers) {
-      }
-
-      public void onKeyPress(Widget sender, char keyCode, int modifiers) {
-      }
-
-      public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+    fileNameTextBox.addKeyUpHandler(new KeyUpHandler() {
+      public void onKeyUp(KeyUpEvent event) {
         actualFileName = fileNameTextBox.getText();
-        if (keyCode == KeyboardListener.KEY_ENTER && isSubmitOnEnter()) {
+        if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER && isSubmitOnEnter()) {
           if(mode != FileChooserMode.SAVE) {
             fireFileSelected(search(fileTree, actualFileName));  
           } else {
-          fireFileSelected();
+            fireFileSelected();
+          }
         }
       }
-      }
-
     });
     setSpacing(3);
   }
 
   public FileChooser(boolean showHiddenFiles){
-    super();
+    this();
     this.showHiddenFiles = showHiddenFiles;
   }
 
