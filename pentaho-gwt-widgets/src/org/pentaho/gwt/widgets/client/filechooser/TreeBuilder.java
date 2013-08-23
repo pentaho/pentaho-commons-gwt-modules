@@ -51,7 +51,7 @@ public class TreeBuilder {
       
       if (isVisible || showHiddenFiles) {
         String fileTitle = file.getTitle();
-        if(filter.accept(fileTitle, isDirectory, isVisible) == false){
+        if(filter.accept(fileTitle, isDirectory, (isVisible || showHiddenFiles)) == false){
           continue;
         }
         
