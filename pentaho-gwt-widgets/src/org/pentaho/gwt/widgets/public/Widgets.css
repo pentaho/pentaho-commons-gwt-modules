@@ -732,7 +732,7 @@ input[type=password]:focus {
 
 .gwt-ScrollTable {
   border: 1px solid #848484;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .gwt-ScrollTable .headerWrapper {
@@ -748,8 +748,21 @@ input[type=password]:focus {
 .gwt-ScrollTable .dataWrapper {
   width: 100% !important;
   position:relative;
-  overflow: hidden;
   overflow-x: hidden !important;
+  height:100%;
+}
+
+#previewResultsTable .gwt-ScrollTable .dataWrapper {
+  width: 100% !important;
+  position:relative;
+  overflow:scroll !important;
+  height:100%;
+}
+
+#previewTreeContainer .gwt-ScrollTable .dataWrapper {
+  width: 100% !important;
+  position:relative;
+  overflow:scroll !important;
   height:100%;
 }
 
