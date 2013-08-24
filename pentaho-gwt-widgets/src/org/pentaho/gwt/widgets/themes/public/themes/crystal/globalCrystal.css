@@ -3998,13 +3998,13 @@ vertical-align: middle;
 }
 
 .pentaho-expandallbutton {
-    background-image: url("../images/ExpandAll.png");
+    background-image: url("images/ExpandAll.png");
     width: 15px;
     height: 15px;
 }
 
 .pentaho-collapseallbutton {
-    background-image: url("../images/CollapseAll.png");
+    background-image: url("images/CollapseAll.png");
     width: 15px;
     height: 15px;
 }
@@ -5018,4 +5018,15 @@ div.listbox .pentaho-listbox {
 .resize-wrapper-top,
 .resize-wrapper-inner {
   background: #144b64;
+}
+
+.icon-table {
+  height: 16px;
+  width: 16px;
+  background: url("images/table.png");
+}
+.icon-fact-table {
+  height: 16px;
+  width: 16px;
+  background: url("images/table_fact.png");
 }

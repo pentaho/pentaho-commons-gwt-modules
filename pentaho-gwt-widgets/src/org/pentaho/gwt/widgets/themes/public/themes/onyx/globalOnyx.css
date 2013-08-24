@@ -2997,13 +2997,13 @@ div.listbox .pentaho-listbox {
 }
 
 .pentaho-expandallbutton {
-    background-image: url("../images/ExpandAll.png");    
+    background-image: url("images/ExpandAll.png");
     width: 15px;
     height: 15px;
 }
 
 .pentaho-collapseallbutton {
-    background-image: url("../images/CollapseAll.png");    
+    background-image: url("images/CollapseAll.png");
     width: 15px;
     height: 15px;
 }
@@ -3403,4 +3403,20 @@ div.listbox .pentaho-listbox {
 }
 .IE .scheduleEditor FIELDSET TD {
   padding-top: 0px !important;
+}
+
+.pentaho-column {
+  background-image: url("images/column.png");
+  width: 16px;
+  height: 16px;
+}
+.icon-table {
+  height: 16px;
+  width: 16px;
+  background: url("images/table.png");
+}
+.icon-fact-table {
+  height: 16px;
+  width: 16px;
+  background: url("images/table_fact.png");
 }
