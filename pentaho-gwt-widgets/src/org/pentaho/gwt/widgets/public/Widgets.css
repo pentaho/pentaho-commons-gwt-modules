@@ -7,6 +7,10 @@ which java class/code the style is associated with */
   display: none;
 }
 
+.overflowHide {
+  overflow: hidden;
+}
+
 .popupContent {
   font-color: #000000;
 }
