@@ -210,6 +210,7 @@ public class BaseTable extends Composite {
       tableHeader.setHTML(0, i, tableHeaderNames[i]);
       cellFormatter.setHorizontalAlignment(0, i, HasHorizontalAlignment.ALIGN_LEFT);
       cellFormatter.setWordWrap(0, i, false);
+      cellFormatter.setStylePrimaryName(0,i,"overflowHide");
     }
 
     if (this.selectionPolicy == null) {
