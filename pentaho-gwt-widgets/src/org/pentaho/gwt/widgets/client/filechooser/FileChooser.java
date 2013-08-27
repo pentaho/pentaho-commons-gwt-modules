@@ -167,14 +167,15 @@ public class FileChooser extends VerticalPanel {
     }
   }
 
-  private native String getFullyQualifiedURL()/*-{
-  return $wnd.FULL_QUALIFIED_URL;
+  private native String getFullyQualifiedURL()
+  /*-{
+    return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
   }-*/;
 
   public void fetchRepository(final IDialogCallback completedCallback) throws RequestException {
     RequestBuilder builder = null;
     builder = new RequestBuilder(RequestBuilder.GET, getFullyQualifiedURL()+  "api/repo/files/:/children?showHidden=" + showHiddenFiles + "&depth=-1&filter=*"); //$NON-NLS-1$
-    builder.setHeader("Accept", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
+    builder.setHeader("accept", "application/json"); //$NON-NLS-1$ //$NON-NLS-2$
     RequestCallback callback = new RequestCallback() {
 
       public void onError(Request request, Throwable exception) {
