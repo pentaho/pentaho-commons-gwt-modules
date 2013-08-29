@@ -2850,6 +2850,7 @@ padding: 10px 0 10px 0;
   background: url('images/folder_16.png') no-repeat;
 }
 
+.dijitFolderOpened, .dijitIconFolderOpen,
 .open > table .icon-tree-node.icon-folder {
   background: url('images/folder_16-open.png') no-repeat;
 }
