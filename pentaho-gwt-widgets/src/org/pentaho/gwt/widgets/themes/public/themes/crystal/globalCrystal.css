@@ -187,7 +187,6 @@ input, input[type="password"]{
   background: -o-linear-gradient(top,  #007297 57%,#005f7d 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top,  #007297 57%,#005f7d 100%); /* IE10+ */
   background: linear-gradient(to bottom,  #007297 57%,#005f7d 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', endColorstr='#005f7d',GradientType=0 ); /* IE6-9 */
   font-size: 15px;
   color: #ffffff;
   padding: 4px 14px 6px 14px;
