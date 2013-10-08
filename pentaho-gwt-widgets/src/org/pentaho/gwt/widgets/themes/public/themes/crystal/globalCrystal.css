@@ -746,6 +746,18 @@ border-top: 4px solid transparent;
   border-left: 1px solid #cbdde8;
   height: 100%;
   background-color: #fff;
+  position: relative;
+}
+
+/* Webkit browsers only */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .pentaho-tab-deck-panel>DIV {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+  }
 }
 
   /* properties dialog panels */
