@@ -4131,11 +4131,11 @@ vertical-align: middle;
   width: 35px;
 }
 
-#fieldListTree .attribute {
+.fieldListTree .attribute {
   background: url('images/gemBar_level.png') no-repeat;
 }
 
-#fieldListTree .measure {
+.fieldListTree .measure {
   background: url('images/gemBar_measure.png') no-repeat;
 }
 .pentaho-undobutton{
