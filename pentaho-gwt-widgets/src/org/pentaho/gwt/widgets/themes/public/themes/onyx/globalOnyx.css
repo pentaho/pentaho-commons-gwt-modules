@@ -619,6 +619,18 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     border-bottom: 1px solid #2B2B2B;
     border-left: 1px solid #2B2B2B;
     height: 100%;
+  position: relative;
+}
+
+/* Webkit browsers only */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .pentaho-tab-deck-panel>DIV {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+  }
 }
 
 .pucContentDeck .pentaho-tab-deck-panel {
