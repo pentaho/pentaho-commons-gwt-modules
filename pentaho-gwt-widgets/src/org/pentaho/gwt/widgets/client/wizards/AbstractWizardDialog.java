@@ -1,25 +1,21 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.gwt.widgets.client.wizards;
-
-import org.pentaho.gwt.widgets.client.dialogs.DialogBox;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -33,18 +29,21 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.dialogs.DialogBox;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
 /**
  * @author wseyler
- *
- * Framework for creating Wizards
+ * 
+ *         Framework for creating Wizards
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings( "deprecation" )
 public abstract class AbstractWizardDialog extends DialogBox implements IWizardPanelListener {
-  
+
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
-  
-  private static final int STEPS_COUNT = 15;  // Defines the height of the steps ListBox
+
+  private static final int STEPS_COUNT = 15; // Defines the height of the steps ListBox
 
   private static final String WIZARD_DECK_PANEL = "pentaho-wizard-deck-panel"; //$NON-NLS-1$
 
@@ -56,305 +55,308 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
   protected ScheduleDialogType dialogType;
 
-
   // gui elements
-  protected Button backButton = new Button(MSGS.back());
-  protected Button nextButton = new Button(MSGS.next());
-  protected Button cancelButton = new Button(MSGS.cancel());
-  protected Button finishButton = new Button(MSGS.finish());
+  protected Button backButton = new Button( MSGS.back() );
+  protected Button nextButton = new Button( MSGS.next() );
+  protected Button cancelButton = new Button( MSGS.cancel() );
+  protected Button finishButton = new Button( MSGS.finish() );
 
   ListBox steps = new ListBox();
   protected DeckPanel wizardDeckPanel = new DeckPanel();
   VerticalPanel stepsList = new VerticalPanel();
 
   private IWizardPanel[] wizardPanels;
-  
+
   private boolean canceled = false;
-  
-  public AbstractWizardDialog(ScheduleDialogType type, String title, IWizardPanel[] panels, boolean autohide, boolean modal) {
-    super(autohide, modal);
+
+  public AbstractWizardDialog( ScheduleDialogType type, String title, IWizardPanel[] panels, boolean autohide,
+      boolean modal ) {
+    super( autohide, modal );
 
     dialogType = type;
-    setText(title);
-    
+    setText( title );
+
     init();
     layout();
-    setWizardPanels(panels);
+    setWizardPanels( panels );
     show();
   }
 
-  public ScheduleDialogType getDialogType()
-  {
+  public ScheduleDialogType getDialogType() {
     return dialogType;
   }
 
   /**
    * Init()
    * 
-   * Initialize the GUI Elements by setting up the required listeners and state
-   * NOTE:  This method can be overridden to provided new/additional functionality
-   * but should NEVER be called more than once during the lifecycle of the object
+   * Initialize the GUI Elements by setting up the required listeners and state NOTE: This method can be overridden to
+   * provided new/additional functionality but should NEVER be called more than once during the lifecycle of the object
    */
   protected void init() {
 
-    backButton.getElement().setId("wizard-back-button");
-    nextButton.getElement().setId("wizard-next-button");
-    cancelButton.getElement().setId("wizard-cancel-button");
-    finishButton.getElement().setId("wizard-finish-button");
-    
-    backButton.setStyleName("pentaho-button");
-    nextButton.setStyleName("pentaho-button");
-    cancelButton.setStyleName("pentaho-button");
-    finishButton.setStyleName("pentaho-button");
-	  
-    nextButton.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    backButton.getElement().setId( "wizard-back-button" );
+    nextButton.getElement().setId( "wizard-next-button" );
+    cancelButton.getElement().setId( "wizard-cancel-button" );
+    finishButton.getElement().setId( "wizard-finish-button" );
+
+    backButton.setStyleName( "pentaho-button" );
+    nextButton.setStyleName( "pentaho-button" );
+    cancelButton.setStyleName( "pentaho-button" );
+    finishButton.setStyleName( "pentaho-button" );
+
+    nextButton.addClickListener( new ClickListener() {
+      public void onClick( Widget sender ) {
         nextClicked();
       }
-    });
-    
-    backButton.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    } );
+
+    backButton.addClickListener( new ClickListener() {
+      public void onClick( Widget sender ) {
         backClicked();
       }
-    });
-    
-    cancelButton.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+    } );
+
+    cancelButton.addClickListener( new ClickListener() {
+      public void onClick( Widget sender ) {
         cancelClicked();
-      }     
-    });
-    
-    finishButton.addClickListener(new ClickListener() {
-      public void onClick(Widget sender) {
+      }
+    } );
+
+    finishButton.addClickListener( new ClickListener() {
+      public void onClick( Widget sender ) {
         finishClicked();
       }
-    });
-    
-    steps.setEnabled(false);
-    
+    } );
+
+    steps.setEnabled( false );
+
   }
 
-  protected boolean enableNext(int index) {
-    return ((IWizardPanel)wizardDeckPanel.getWidget(index)).canContinue() && index < wizardDeckPanel.getWidgetCount() -1;
+  protected boolean enableNext( int index ) {
+    return ( (IWizardPanel) wizardDeckPanel.getWidget( index ) ).canContinue()
+        && index < wizardDeckPanel.getWidgetCount() - 1;
   }
-  
-  protected boolean enableBack(int index) {
+
+  protected boolean enableBack( int index ) {
     return index > 0;
   }
-  
-  protected boolean showNext(int index) {
+
+  protected boolean showNext( int index ) {
     return wizardDeckPanel.getWidgetCount() > 1;
   }
-  
-  protected boolean showBack(int index) {
+
+  protected boolean showBack( int index ) {
     return wizardDeckPanel.getWidgetCount() > 1;
   }
-  
-  protected boolean showFinish(int index) {
+
+  protected boolean showFinish( int index ) {
     return true;
   }
-  
+
   protected void nextClicked() {
-    int oldIndex = steps.getSelectedIndex();  // The panel currently being displayed
-    int newIndex = oldIndex + 1;              // The panel that is going to be displayed
+    int oldIndex = steps.getSelectedIndex(); // The panel currently being displayed
+    int newIndex = oldIndex + 1; // The panel that is going to be displayed
     // Get the actors (next and previous panels)
-    IWizardPanel nextPanel = (IWizardPanel)wizardDeckPanel.getWidget(newIndex);
-    IWizardPanel previousPanel = (IWizardPanel)wizardDeckPanel.getWidget(oldIndex);
-    if (!onNext(nextPanel, previousPanel)) {
+    IWizardPanel nextPanel = (IWizardPanel) wizardDeckPanel.getWidget( newIndex );
+    IWizardPanel previousPanel = (IWizardPanel) wizardDeckPanel.getWidget( oldIndex );
+    if ( !onNext( nextPanel, previousPanel ) ) {
       return;
     }
     // Update the Listeners
-    previousPanel.removeWizardPanelListener(AbstractWizardDialog.this);
-    nextPanel.addWizardPanelListener(AbstractWizardDialog.this);
+    previousPanel.removeWizardPanelListener( AbstractWizardDialog.this );
+    nextPanel.addWizardPanelListener( AbstractWizardDialog.this );
     // Update the GUI with the current widget index;
-    updateGUI(newIndex);
+    updateGUI( newIndex );
   }
-  
+
   protected void backClicked() {
     int oldIndex = wizardDeckPanel.getVisibleWidget();
-    int newIndex = oldIndex - 1;              // The panel that is going to be displayed  
+    int newIndex = oldIndex - 1; // The panel that is going to be displayed
     // Get the actors (next and previous panels)
-    IWizardPanel previousPanel = (IWizardPanel)wizardDeckPanel.getWidget(newIndex);
-    IWizardPanel currentPanel = (IWizardPanel)wizardDeckPanel.getWidget(oldIndex);
-    if (!onPrevious(previousPanel, currentPanel)) {
+    IWizardPanel previousPanel = (IWizardPanel) wizardDeckPanel.getWidget( newIndex );
+    IWizardPanel currentPanel = (IWizardPanel) wizardDeckPanel.getWidget( oldIndex );
+    if ( !onPrevious( previousPanel, currentPanel ) ) {
       return;
     }
     // Update the Listeners
-    currentPanel.removeWizardPanelListener(AbstractWizardDialog.this);
-    previousPanel.addWizardPanelListener(AbstractWizardDialog.this);
+    currentPanel.removeWizardPanelListener( AbstractWizardDialog.this );
+    previousPanel.addWizardPanelListener( AbstractWizardDialog.this );
     // Update the GUI with the current widget index;
-    updateGUI(newIndex);
+    updateGUI( newIndex );
   }
-  
+
   protected void finishClicked() {
-    if (onFinish()) {
+    if ( onFinish() ) {
       AbstractWizardDialog.this.hide();
     }
   }
-  
+
   protected void cancelClicked() {
     canceled = true;
     AbstractWizardDialog.this.hide();
   }
-  
+
   /**
-   * @param index of the widget that will be shown.
+   * @param index
+   *          of the widget that will be shown.
    * 
-   * updateGUI(int index) sets up the panels and buttons based on the state of the widget
-   * (IWizardPanel) that will be shown (index).
+   *          updateGUI(int index) sets up the panels and buttons based on the state of the widget (IWizardPanel) that
+   *          will be shown (index).
    */
-  protected void updateGUI(int index) {
-    stepsList.setVisible(wizardDeckPanel.getWidgetCount() > 1);
-    finishButton.setVisible(showFinish(index));
-    backButton.setVisible(showBack(index));
-    nextButton.setVisible(showNext(index));
+  protected void updateGUI( int index ) {
+    stepsList.setVisible( wizardDeckPanel.getWidgetCount() > 1 );
+    finishButton.setVisible( showFinish( index ) );
+    backButton.setVisible( showBack( index ) );
+    nextButton.setVisible( showNext( index ) );
     // Updates the selected step
-    steps.setSelectedIndex(index);
+    steps.setSelectedIndex( index );
     // Shows the current IWizardPanel
-    wizardDeckPanel.showWidget(index);
+    wizardDeckPanel.showWidget( index );
     // Enables the next button if the current IWizardPanel can continue and we're not at the last IWizardPanel
-    nextButton.setEnabled(enableNext(index));
+    nextButton.setEnabled( enableNext( index ) );
     // Back button always enabled unless we're on the first IWizardPanel
-    backButton.setEnabled(enableBack(index));
+    backButton.setEnabled( enableBack( index ) );
     // Current IWizardPanel can finish at any step.
-    finishButton.setEnabled(((IWizardPanel)wizardDeckPanel.getWidget(index)).canFinish());
-    
+    finishButton.setEnabled( ( (IWizardPanel) wizardDeckPanel.getWidget( index ) ).canFinish() );
+
   }
-  
+
   /**
    * layout()
    * 
-   * Lays out the GUI elements.  Should only be called ONCE during the objects lifecycle
+   * Lays out the GUI elements. Should only be called ONCE during the objects lifecycle
    */
-  protected void layout() {    
+  protected void layout() {
     // Create the overall container to be displayed in the dialog
-	  
-	SimplePanel deckWrapper = new SimplePanel();
-	deckWrapper.setHeight("100%");
-	deckWrapper.setWidth("100%");
-	deckWrapper.setStyleName("dialog-content");
-	  
+
+    SimplePanel deckWrapper = new SimplePanel();
+    deckWrapper.setHeight( "100%" );
+    deckWrapper.setWidth( "100%" );
+    deckWrapper.setStyleName( "dialog-content" );
+
     DockPanel content = new DockPanel();
-    
+
     // Create the Steps and add it to the content
     stepsList = new VerticalPanel();
-    stepsList.add(new Label(MSGS.steps()));
-    steps.setVisibleItemCount(STEPS_COUNT);
-    stepsList.add(steps);
-//    steps.setSize("30%", "100%");
-    content.add(stepsList, DockPanel.WEST);
-    
+    stepsList.add( new Label( MSGS.steps() ) );
+    steps.setVisibleItemCount( STEPS_COUNT );
+    stepsList.add( steps );
+    // steps.setSize("30%", "100%");
+    content.add( stepsList, DockPanel.WEST );
+
     // Add the wizardPanels to the Deck and add the deck to the content
-//    wizardDeckPanel.setSize("70%", "100%");
-	deckWrapper.setWidget(wizardDeckPanel);
-    content.add(deckWrapper, DockPanel.CENTER);
-    wizardDeckPanel.addStyleName(WIZARD_DECK_PANEL);
-    
+    // wizardDeckPanel.setSize("70%", "100%");
+    deckWrapper.setWidget( wizardDeckPanel );
+    content.add( deckWrapper, DockPanel.CENTER );
+    wizardDeckPanel.addStyleName( WIZARD_DECK_PANEL );
+
     // Add the control buttons
     HorizontalPanel wizardButtonPanel = new HorizontalPanel();
-    wizardButtonPanel.setSpacing(2);
+    wizardButtonPanel.setSpacing( 2 );
     // If we have only one button then we dont need to show the back and next button.
-    wizardButtonPanel.add(backButton);
-    wizardButtonPanel.add(nextButton);
-    wizardButtonPanel.add(finishButton);
-    wizardButtonPanel.add(cancelButton);
-    wizardButtonPanel.addStyleName(WIZARD_BUTTON_PANEL);
+    wizardButtonPanel.add( backButton );
+    wizardButtonPanel.add( nextButton );
+    wizardButtonPanel.add( finishButton );
+    wizardButtonPanel.add( cancelButton );
+    wizardButtonPanel.addStyleName( WIZARD_BUTTON_PANEL );
 
     HorizontalPanel wizardButtonPanelWrapper = new HorizontalPanel();
-    wizardButtonPanelWrapper.setWidth("100%"); //$NON-NLS-1$
-    wizardButtonPanelWrapper.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-    wizardButtonPanelWrapper.setVerticalAlignment(HasVerticalAlignment.ALIGN_BOTTOM);
-    wizardButtonPanelWrapper.add(wizardButtonPanel);
-    
-    content.add(wizardButtonPanelWrapper, DockPanel.SOUTH);
-    content.setCellVerticalAlignment(wizardButtonPanelWrapper, HasVerticalAlignment.ALIGN_BOTTOM);
-    
+    wizardButtonPanelWrapper.setWidth( "100%" ); //$NON-NLS-1$
+    wizardButtonPanelWrapper.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_RIGHT );
+    wizardButtonPanelWrapper.setVerticalAlignment( HasVerticalAlignment.ALIGN_BOTTOM );
+    wizardButtonPanelWrapper.add( wizardButtonPanel );
+
+    content.add( wizardButtonPanelWrapper, DockPanel.SOUTH );
+    content.setCellVerticalAlignment( wizardButtonPanelWrapper, HasVerticalAlignment.ALIGN_BOTTOM );
+
     // Add the content to the dialog
-    add(content);
-    content.setWidth("100%"); //$NON-NLS-1$
-    content.setHeight("100%"); //$NON-NLS-1$
-    content.setCellHeight(deckWrapper, "98%");
+    add( content );
+    content.setWidth( "100%" ); //$NON-NLS-1$
+    content.setHeight( "100%" ); //$NON-NLS-1$
+    content.setCellHeight( deckWrapper, "98%" );
   }
 
   /**
-   * @param wizardPanels - IWizardPanel[]
+   * @param wizardPanels
+   *          - IWizardPanel[]
    * 
-   * Creates a wizardDeckPanel with the contents of wizardPanels respecting the order.
-   * Creates a step panel populated with the step names from the wizardPanels and then
-   * sets the current wizard panel to the first panel in the list and updates the GUI.
+   *          Creates a wizardDeckPanel with the contents of wizardPanels respecting the order. Creates a step panel
+   *          populated with the step names from the wizardPanels and then sets the current wizard panel to the first
+   *          panel in the list and updates the GUI.
    */
-  public void setWizardPanels(IWizardPanel[] wizardPanels) {
+  public void setWizardPanels( IWizardPanel[] wizardPanels ) {
     this.wizardPanels = wizardPanels;
-    
-    steps.clear();      
+
+    steps.clear();
     wizardDeckPanel.clear();
-    if (wizardPanels != null  && wizardPanels.length > 0) { // Add new wizardPanels
-      for (IWizardPanel panel : wizardPanels) {
-        steps.addItem(panel.getName());
-        wizardDeckPanel.add((Widget) panel);
+    if ( wizardPanels != null && wizardPanels.length > 0 ) { // Add new wizardPanels
+      for ( IWizardPanel panel : wizardPanels ) {
+        steps.addItem( panel.getName() );
+        wizardDeckPanel.add( (Widget) panel );
       }
-      
-      ((IWizardPanel) wizardDeckPanel.getWidget(0)).addWizardPanelListener(this);
-      if (wizardPanels.length == 1) { // We only have one item so change the Finish button to ok.
-        finishButton.setText(MSGS.ok());
+
+      ( (IWizardPanel) wizardDeckPanel.getWidget( 0 ) ).addWizardPanelListener( this );
+      if ( wizardPanels.length == 1 ) { // We only have one item so change the Finish button to ok.
+        finishButton.setText( MSGS.ok() );
       }
-      
-      updateGUI(0);
+
+      updateGUI( 0 );
     }
   }
-  
+
   /**
    * @return the current list if IWizardPanel in an array.
    */
   public IWizardPanel[] getWizardPanels() {
     return wizardPanels;
   }
-  
-  /* (non-Javadoc)
-   * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanelListener#panelChanged(org.pentaho.gwt.widgets.client.wizards.IWizardPanel)
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * org.pentaho.gwt.widgets.client.wizards.IWizardPanelListener#panelChanged(org.pentaho.gwt.widgets.client.wizards
+   * .IWizardPanel)
    */
-  public void panelUpdated(IWizardPanel wizardPanel) {
+  public void panelUpdated( IWizardPanel wizardPanel ) {
     int index = wizardDeckPanel.getVisibleWidget();
-    int lastPanelIndex = wizardDeckPanel.getWidgetCount() -1;
-    
-    nextButton.setEnabled(wizardPanel.canContinue() && index < lastPanelIndex);
-    finishButton.setEnabled(wizardPanel.canFinish());
+    int lastPanelIndex = wizardDeckPanel.getWidgetCount() - 1;
+
+    nextButton.setEnabled( wizardPanel.canContinue() && index < lastPanelIndex );
+    finishButton.setEnabled( wizardPanel.canFinish() );
   }
-  
+
   public boolean wasCancelled() {
     return canceled;
   }
-  
+
   /**
    * abstract onFinish()
    * 
-   * Override for action to take when user presses the finish button.  Return true if the wizard
-   * dialog should close after the finish() method completes.
+   * Override for action to take when user presses the finish button. Return true if the wizard dialog should close
+   * after the finish() method completes.
    */
   protected abstract boolean onFinish();
-  
+
   /**
    * @param nextPanel
    * @param previousPanel
    * @return boolean if the "Next" operation should complete.
    * 
-   * Users should return true if the Wizard should proceed to the next panel.  This would be a
-   * good spot to retrieve/update state information between the two panels.  This method is call
-   * before the next method executes (ie. next panel is displayed).  If nothing needs to be done
-   * simply return true
+   *         Users should return true if the Wizard should proceed to the next panel. This would be a good spot to
+   *         retrieve/update state information between the two panels. This method is call before the next method
+   *         executes (ie. next panel is displayed). If nothing needs to be done simply return true
    */
-  protected abstract boolean onNext(IWizardPanel nextPanel, IWizardPanel previousPanel);
-  
+  protected abstract boolean onNext( IWizardPanel nextPanel, IWizardPanel previousPanel );
+
   /**
    * @param previousPanel
    * @param currentPanel
    * @return boolean if the "Back" operation should complete
-   *   
-   * Users should return true if the Wizard should proceed to the next panel.  This would be a
-   * good spot to retrieve/update state information between the two panels.  This method is call
-   * before the back method executes (ie. previous panel is displayed).  If nothing needs to be
-   * done simply return true;
+   * 
+   *         Users should return true if the Wizard should proceed to the next panel. This would be a good spot to
+   *         retrieve/update state information between the two panels. This method is call before the back method
+   *         executes (ie. previous panel is displayed). If nothing needs to be done simply return true;
    */
-  protected abstract boolean onPrevious(IWizardPanel previousPanel, IWizardPanel currentPanel);
+  protected abstract boolean onPrevious( IWizardPanel previousPanel, IWizardPanel currentPanel );
 }

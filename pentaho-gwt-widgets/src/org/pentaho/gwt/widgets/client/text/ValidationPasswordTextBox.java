@@ -1,19 +1,19 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.gwt.widgets.client.text;
 
@@ -32,43 +32,43 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ValidationPasswordTextBox extends HorizontalPanel implements IValidationTextBox{
+public class ValidationPasswordTextBox extends HorizontalPanel implements IValidationTextBox {
 
   private PasswordTextBox passwordTextBox;
-  
+
   private PopupPanel popupPanel;
-  
+
   private String validationMessage;
-  
+
   private SimplePanel imagePanel;
-  
+
   private Image image;
-  
+
   private ValidationTextBoxKeyUpHandlerCollection handlers;
-  
+
   private ValidationTextBoxListenerCollection listeners;
-  
+
   private static final int DEFAULT_OFFSET = 9;
-  
+
   public ValidationPasswordTextBox() {
     passwordTextBox = new PasswordTextBox();
-    passwordTextBox.addKeyUpHandler(new KeyUpHandler() {
-      
+    passwordTextBox.addKeyUpHandler( new KeyUpHandler() {
+
       @Override
-      public void onKeyUp(KeyUpEvent event) {
-        performValidation(true);
-        fireOnKeyUp(event);
+      public void onKeyUp( KeyUpEvent event ) {
+        performValidation( true );
+        fireOnKeyUp( event );
       }
-    });
+    } );
 
     imagePanel = new SimplePanel() {
 
       @Override
-      public void onBrowserEvent(Event event) {
-        super.onBrowserEvent(event);
-        switch (DOM.eventGetType(event)) {
+      public void onBrowserEvent( Event event ) {
+        super.onBrowserEvent( event );
+        switch ( DOM.eventGetType( event ) ) {
           case Event.ONMOUSEOVER: {
-            if(!validate()) {
+            if ( !validate() ) {
               showMessagePopup();
             }
             break;
@@ -81,55 +81,55 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
         }
       }
     };
-    imagePanel.setStylePrimaryName("validation-textbox-image-panel"); //$NON-NLS-1$
-    imagePanel.sinkEvents(Event.ONMOUSEOVER | Event.ONMOUSEOUT);
-    this.add(passwordTextBox);
-    passwordTextBox.setWidth("100%");
-    this.setCellWidth(passwordTextBox, "100%");
-    this.setStylePrimaryName("custom-text-box"); //$NON-NLS-1$
+    imagePanel.setStylePrimaryName( "validation-textbox-image-panel" ); //$NON-NLS-1$
+    imagePanel.sinkEvents( Event.ONMOUSEOVER | Event.ONMOUSEOUT );
+    this.add( passwordTextBox );
+    passwordTextBox.setWidth( "100%" );
+    this.setCellWidth( passwordTextBox, "100%" );
+    this.setStylePrimaryName( "custom-text-box" ); //$NON-NLS-1$
     SimplePanel hSpacer = new SimplePanel();
-    hSpacer.setWidth("10px");
-    this.add(hSpacer);
-    image = new Image(GWT.getModuleBaseURL() + "images/spacer.gif"); //$NON-NLS-1$
-    image.setStylePrimaryName("validation-textbox-image");
-    imagePanel.add(image);
-    imagePanel.addStyleDependentName("invalid");
-    this.add(imagePanel);
-  }
-  
-  public void addKeyUpHandler(KeyUpHandler handler) {
-    if (handlers == null) {
-      handlers = new ValidationTextBoxKeyUpHandlerCollection();
-    }
-    handlers.add(handler);
+    hSpacer.setWidth( "10px" );
+    this.add( hSpacer );
+    image = new Image( GWT.getModuleBaseURL() + "images/spacer.gif" ); //$NON-NLS-1$
+    image.setStylePrimaryName( "validation-textbox-image" );
+    imagePanel.add( image );
+    imagePanel.addStyleDependentName( "invalid" );
+    this.add( imagePanel );
   }
 
-  public void removeKeyUpHandler(KeyUpHandler handler) {
-    if (handlers != null) {
-      handlers.remove(handler);
+  public void addKeyUpHandler( KeyUpHandler handler ) {
+    if ( handlers == null ) {
+      handlers = new ValidationTextBoxKeyUpHandlerCollection();
+    }
+    handlers.add( handler );
+  }
+
+  public void removeKeyUpHandler( KeyUpHandler handler ) {
+    if ( handlers != null ) {
+      handlers.remove( handler );
     }
   }
 
   /**
    * Fire all current {@link KeyUpHandler}.
    */
-  void fireOnKeyUp(KeyUpEvent event) {
+  void fireOnKeyUp( KeyUpEvent event ) {
 
-    if (handlers != null) {
-      handlers.fireOnKeyUp(event);
+    if ( handlers != null ) {
+      handlers.fireOnKeyUp( event );
     }
   }
 
-  public void addValidatableTextBoxListener(IValidationTextBoxListener listener) {
-    if (listeners == null) {
+  public void addValidatableTextBoxListener( IValidationTextBoxListener listener ) {
+    if ( listeners == null ) {
       listeners = new ValidationTextBoxListenerCollection();
     }
-    listeners.add(listener);
+    listeners.add( listener );
   }
 
-  public void removeValidatableTextBoxListener(IValidationTextBoxListener listener) {
-    if (listeners != null) {
-      listeners.remove(listener);
+  public void removeValidatableTextBoxListener( IValidationTextBoxListener listener ) {
+    if ( listeners != null ) {
+      listeners.remove( listener );
     }
   }
 
@@ -137,8 +137,8 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
    * Fire all current {@link IValidationTextBoxListener}.
    */
   void fireOnSuccess() {
-    if (listeners != null) {
-      listeners.fireOnSuccess(this);
+    if ( listeners != null ) {
+      listeners.fireOnSuccess( this );
     }
   }
 
@@ -146,90 +146,93 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
    * Fire all current {@link IValidationTextBoxListener}.
    */
   void fireOnFailure() {
-    if (listeners != null) {
-      listeners.fireOnFailure(this);
+    if ( listeners != null ) {
+      listeners.fireOnFailure( this );
     }
   }
-  
-  private void performValidation(boolean showPopUp) {
-    if(!validate()) {
+
+  private void performValidation( boolean showPopUp ) {
+    if ( !validate() ) {
       fireOnFailure();
-      imagePanel.removeStyleDependentName("valid");
-      imagePanel.addStyleDependentName("invalid");
-      if(showPopUp) {
-    	  showMessagePopup();
+      imagePanel.removeStyleDependentName( "valid" );
+      imagePanel.addStyleDependentName( "invalid" );
+      if ( showPopUp ) {
+        showMessagePopup();
       }
     } else {
       fireOnSuccess();
-      imagePanel.removeStyleDependentName("invalid");
-      imagePanel.addStyleDependentName("valid"); 
+      imagePanel.removeStyleDependentName( "invalid" );
+      imagePanel.addStyleDependentName( "valid" );
       hideMessagePopup();
     }
   }
-  
+
   @Override
   public boolean validate() {
     // TODO Auto-generated method stub
     return false;
   }
-  
+
   public String getValidationMessage() {
     return validationMessage;
   }
-  public void setValidationMessage(String validationMessage) {
+
+  public void setValidationMessage( String validationMessage ) {
     this.validationMessage = validationMessage;
   }
+
   public TextBox getManagedObject() {
     return passwordTextBox;
   }
-  
+
   public String getValue() {
     return passwordTextBox.getValue();
   }
-  
-  public void setValue(String value) {
-    passwordTextBox.setValue(value);
-    performValidation(false);      
+
+  public void setValue( String value ) {
+    passwordTextBox.setValue( value );
+    performValidation( false );
   }
-  
+
   public String getText() {
     return passwordTextBox.getText();
   }
-  
+
   private void showMessagePopup() {
     Label validationMessageLabel = new Label();
-    validationMessageLabel.setStyleName("validation-textbox-message-label"); //$NON-NLS-1$
-    validationMessageLabel.setText(getValidationMessage());
+    validationMessageLabel.setStyleName( "validation-textbox-message-label" ); //$NON-NLS-1$
+    validationMessageLabel.setText( getValidationMessage() );
     VerticalPanel messagePanel = new VerticalPanel();
-    messagePanel.add(validationMessageLabel);
+    messagePanel.add( validationMessageLabel );
     HorizontalPanel bottomPanel = new HorizontalPanel();
     SimplePanel hSpacer = new SimplePanel();
-    hSpacer.setStylePrimaryName("validation-textbox-left-image-buffer"); //$NON-NLS-1$
-    bottomPanel.add(hSpacer);
+    hSpacer.setStylePrimaryName( "validation-textbox-left-image-buffer" ); //$NON-NLS-1$
+    bottomPanel.add( hSpacer );
     SimplePanel tailImagePanel = new SimplePanel();
-    tailImagePanel.setStylePrimaryName("validation-textbox-tail-image"); //$NON-NLS-1$
-    bottomPanel.add(tailImagePanel);
-    messagePanel.add(bottomPanel);
-    popupPanel = new PopupPanel(true, false);
-    popupPanel.setWidget(messagePanel);
-    popupPanel.setPopupPositionAndShow(new PositionCallback() {
-      public void setPosition(int offsetWidth, int offsetHeight) {
+    tailImagePanel.setStylePrimaryName( "validation-textbox-tail-image" ); //$NON-NLS-1$
+    bottomPanel.add( tailImagePanel );
+    messagePanel.add( bottomPanel );
+    popupPanel = new PopupPanel( true, false );
+    popupPanel.setWidget( messagePanel );
+    popupPanel.setPopupPositionAndShow( new PositionCallback() {
+      public void setPosition( int offsetWidth, int offsetHeight ) {
         int absLeft = -1;
         int absTop = -1;
         int offHeight = -1;
-        absLeft =passwordTextBox.getAbsoluteLeft();
+        absLeft = passwordTextBox.getAbsoluteLeft();
         absTop = passwordTextBox.getAbsoluteTop();
         offHeight = passwordTextBox.getOffsetHeight();
-        popupPanel.setPopupPosition(absLeft, absTop - offHeight - DEFAULT_OFFSET >= 0 ? absTop - offHeight - DEFAULT_OFFSET: absTop);
+        popupPanel.setPopupPosition( absLeft, absTop - offHeight - DEFAULT_OFFSET >= 0 ? absTop - offHeight
+            - DEFAULT_OFFSET : absTop );
       }
-    });      
-    popupPanel.show(); 
+    } );
+    popupPanel.show();
   }
-  
+
   private void hideMessagePopup() {
-    if(popupPanel != null) {
-      popupPanel.hide();      
+    if ( popupPanel != null ) {
+      popupPanel.hide();
     }
   }
-  
+
 }

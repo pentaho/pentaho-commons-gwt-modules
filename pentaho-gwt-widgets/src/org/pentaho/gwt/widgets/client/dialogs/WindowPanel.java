@@ -1,20 +1,20 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Portions Copyright 2008-2013 Pentaho Corporation.  All rights reserved.
-* Portions Copyright 2009 - Fred Sauer
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Portions Copyright 2008-2013 Pentaho Corporation.  All rights reserved.
+ * Portions Copyright 2009 - Fred Sauer
+ */
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
@@ -31,7 +31,9 @@ public class WindowPanel extends FocusPanel {
 
   /**
    * WindowPanel direction constant, used in
-   * {@link ResizeDragController#makeDraggable(com.google.gwt.user.client.ui.Widget, com.allen_sauer.gwt.dnd.demo.client.example.resize.WindowPanel.DirectionConstant)}.
+   * {@link ResizeDragController#makeDraggable(com.google.gwt.user.client.ui.Widget,
+   * com.allen_sauer.gwt.dnd.demo.client.example.resize.WindowPanel.DirectionConstant)}
+   * .
    */
   public static class DirectionConstant {
 
@@ -39,7 +41,7 @@ public class WindowPanel extends FocusPanel {
 
     public final String directionLetters;
 
-    private DirectionConstant(int directionBits, String directionLetters) {
+    private DirectionConstant( int directionBits, String directionLetters ) {
       this.directionBits = directionBits;
       this.directionLetters = directionLetters;
     }
@@ -68,42 +70,42 @@ public class WindowPanel extends FocusPanel {
   /**
    * Specifies that resizing occur at the east edge.
    */
-  public static final DirectionConstant EAST = new DirectionConstant(DIRECTION_EAST, "e"); //$NON-NLS-1$
+  public static final DirectionConstant EAST = new DirectionConstant( DIRECTION_EAST, "e" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the both edge.
    */
-  public static final DirectionConstant NORTH = new DirectionConstant(DIRECTION_NORTH, "n"); //$NON-NLS-1$
+  public static final DirectionConstant NORTH = new DirectionConstant( DIRECTION_NORTH, "n" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the north-east edge.
    */
-  public static final DirectionConstant NORTH_EAST = new DirectionConstant(DIRECTION_NORTH | DIRECTION_EAST, "ne"); //$NON-NLS-1$
+  public static final DirectionConstant NORTH_EAST = new DirectionConstant( DIRECTION_NORTH | DIRECTION_EAST, "ne" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the north-west edge.
    */
-  public static final DirectionConstant NORTH_WEST = new DirectionConstant(DIRECTION_NORTH | DIRECTION_WEST, "nw"); //$NON-NLS-1$
+  public static final DirectionConstant NORTH_WEST = new DirectionConstant( DIRECTION_NORTH | DIRECTION_WEST, "nw" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the south edge.
    */
-  public static final DirectionConstant SOUTH = new DirectionConstant(DIRECTION_SOUTH, "s"); //$NON-NLS-1$
+  public static final DirectionConstant SOUTH = new DirectionConstant( DIRECTION_SOUTH, "s" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the south-east edge.
    */
-  public static final DirectionConstant SOUTH_EAST = new DirectionConstant(DIRECTION_SOUTH | DIRECTION_EAST, "se"); //$NON-NLS-1$
+  public static final DirectionConstant SOUTH_EAST = new DirectionConstant( DIRECTION_SOUTH | DIRECTION_EAST, "se" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the south-west edge.
    */
-  public static final DirectionConstant SOUTH_WEST = new DirectionConstant(DIRECTION_SOUTH | DIRECTION_WEST, "sw"); //$NON-NLS-1$
+  public static final DirectionConstant SOUTH_WEST = new DirectionConstant( DIRECTION_SOUTH | DIRECTION_WEST, "sw" ); //$NON-NLS-1$
 
   /**
    * Specifies that resizing occur at the west edge.
    */
-  public static final DirectionConstant WEST = new DirectionConstant(DIRECTION_WEST, "w"); //$NON-NLS-1$
+  public static final DirectionConstant WEST = new DirectionConstant( DIRECTION_WEST, "w" ); //$NON-NLS-1$
 
   private static final int BORDER_THICKNESS = 5;
 
@@ -119,7 +121,7 @@ public class WindowPanel extends FocusPanel {
 
   private Widget eastWidget;
 
-  private Grid grid = new Grid(3, 3);
+  private Grid grid = new Grid( 3, 3 );
 
   private final FocusPanel headerContainer;
 
@@ -133,62 +135,63 @@ public class WindowPanel extends FocusPanel {
 
   private final WindowController windowController;
 
-  public WindowPanel(final WindowController windowController, String headerText, Widget contentWidget, boolean wrapContentInScrollPanel) {
+  public WindowPanel( final WindowController windowController, String headerText, Widget contentWidget,
+      boolean wrapContentInScrollPanel ) {
     this.windowController = windowController;
-    this.headerWidget = new HTML(headerText);
-    setStyleName(CSS_RESIZE_PANEL);
+    this.headerWidget = new HTML( headerText );
+    setStyleName( CSS_RESIZE_PANEL );
 
-    contentOrScrollPanelWidget = wrapContentInScrollPanel ? new ScrollPanel(contentWidget) : contentWidget;
+    contentOrScrollPanelWidget = wrapContentInScrollPanel ? new ScrollPanel( contentWidget ) : contentWidget;
 
     headerContainer = new FocusPanel();
-    headerContainer.setStyleName(CSS_RESIZE_PANEL_HEADER);
-    headerContainer.add(headerWidget);
+    headerContainer.setStyleName( CSS_RESIZE_PANEL_HEADER );
+    headerContainer.add( headerWidget );
 
-    windowController.getPickupDragController().makeDraggable(this, headerContainer);
+    windowController.getPickupDragController().makeDraggable( this, headerContainer );
 
-//    addClickListener(new ClickListener() {
-//
-//      public void onClick(Widget sender) {
-//        // force our panel to the top of our z-index context
-//        AbsolutePanel boundaryPanel = windowController.getBoundaryPanel();
-//        WidgetLocation location = new WidgetLocation(WindowPanel.this, boundaryPanel);
-//        boundaryPanel.add(WindowPanel.this, location.getLeft(), location.getTop());
-//      }
-//    });
+    // addClickListener(new ClickListener() {
+    //
+    // public void onClick(Widget sender) {
+    // // force our panel to the top of our z-index context
+    // AbsolutePanel boundaryPanel = windowController.getBoundaryPanel();
+    // WidgetLocation location = new WidgetLocation(WindowPanel.this, boundaryPanel);
+    // boundaryPanel.add(WindowPanel.this, location.getLeft(), location.getTop());
+    // }
+    // });
 
-    Grid verticalPanel = new Grid(2, 1);
-    verticalPanel.setCellPadding(0);
-    verticalPanel.setCellSpacing(0);
-    verticalPanel.setWidget(0, 0, headerContainer);
-    verticalPanel.setWidget(1, 0, contentOrScrollPanelWidget);
-    verticalPanel.getCellFormatter().addStyleName(1, 0, "resizable-DialogContentWidget"); //$NON-NLS-1$
-    verticalPanel.addStyleName("resizable-DialogHeaderAndContent"); //$NON-NLS-1$
+    Grid verticalPanel = new Grid( 2, 1 );
+    verticalPanel.setCellPadding( 0 );
+    verticalPanel.setCellSpacing( 0 );
+    verticalPanel.setWidget( 0, 0, headerContainer );
+    verticalPanel.setWidget( 1, 0, contentOrScrollPanelWidget );
+    verticalPanel.getCellFormatter().addStyleName( 1, 0, "resizable-DialogContentWidget" ); //$NON-NLS-1$
+    verticalPanel.addStyleName( "resizable-DialogHeaderAndContent" ); //$NON-NLS-1$
 
-    grid.setCellSpacing(0);
-    grid.setCellPadding(0);
-    add(grid);
+    grid.setCellSpacing( 0 );
+    grid.setCellPadding( 0 );
+    add( grid );
 
-    setupCell(0, 0, NORTH_WEST);
-    northWidget = setupCell(0, 1, NORTH);
-    setupCell(0, 2, NORTH_EAST);
+    setupCell( 0, 0, NORTH_WEST );
+    northWidget = setupCell( 0, 1, NORTH );
+    setupCell( 0, 2, NORTH_EAST );
 
-    westWidget = setupCell(1, 0, WEST);
-    grid.setWidget(1, 1, verticalPanel);
-    eastWidget = setupCell(1, 2, EAST);
+    westWidget = setupCell( 1, 0, WEST );
+    grid.setWidget( 1, 1, verticalPanel );
+    eastWidget = setupCell( 1, 2, EAST );
 
-    setupCell(2, 0, SOUTH_WEST);
-    southWidget = setupCell(2, 1, SOUTH);
-    setupCell(2, 2, SOUTH_EAST);
+    setupCell( 2, 0, SOUTH_WEST );
+    southWidget = setupCell( 2, 1, SOUTH );
+    setupCell( 2, 2, SOUTH_EAST );
   }
 
-  public void setText(String text) {
-    headerWidget.setHTML(text);
+  public void setText( String text ) {
+    headerWidget.setHTML( text );
   }
-  
-  public void setTitle(String text) {
-    setText(text);
+
+  public void setTitle( String text ) {
+    setText( text );
   }
-  
+
   public int getContentHeight() {
     return contentHeight;
   }
@@ -197,46 +200,46 @@ public class WindowPanel extends FocusPanel {
     return contentWidth;
   }
 
-  public void moveBy(int right, int down) {
+  public void moveBy( int right, int down ) {
     AbsolutePanel parent = (AbsolutePanel) getParent();
-    Location location = new WidgetLocation(this, parent);
+    Location location = new WidgetLocation( this, parent );
     int left = location.getLeft() + right;
     int top = location.getTop() + down;
-    parent.setWidgetPosition(this, left, top);
+    parent.setWidgetPosition( this, left, top );
   }
 
-  public void setContentSize(int width, int height) {
-    if (width != contentWidth) {
+  public void setContentSize( int width, int height ) {
+    if ( width != contentWidth ) {
       contentWidth = width;
-      headerContainer.setPixelSize(contentWidth, headerWidget.getOffsetHeight());
-      northWidget.setPixelSize(contentWidth, BORDER_THICKNESS);
-      southWidget.setPixelSize(contentWidth, BORDER_THICKNESS);
+      headerContainer.setPixelSize( contentWidth, headerWidget.getOffsetHeight() );
+      northWidget.setPixelSize( contentWidth, BORDER_THICKNESS );
+      southWidget.setPixelSize( contentWidth, BORDER_THICKNESS );
     }
-    if (height != contentHeight) {
+    if ( height != contentHeight ) {
       contentHeight = height;
       int headerHeight = headerContainer.getOffsetHeight();
-      westWidget.setPixelSize(BORDER_THICKNESS, contentHeight + headerHeight);
-      eastWidget.setPixelSize(BORDER_THICKNESS, contentHeight + headerHeight);
+      westWidget.setPixelSize( BORDER_THICKNESS, contentHeight + headerHeight );
+      eastWidget.setPixelSize( BORDER_THICKNESS, contentHeight + headerHeight );
     }
-    contentOrScrollPanelWidget.setPixelSize(contentWidth, contentHeight);
+    contentOrScrollPanelWidget.setPixelSize( contentWidth, contentHeight );
   }
 
   @Override
   protected void onLoad() {
     super.onLoad();
-    if (contentOrScrollPanelWidget.getOffsetHeight() != 0) {
-      headerWidget.setPixelSize(headerWidget.getOffsetWidth(), headerWidget.getOffsetHeight());
-      setContentSize(contentOrScrollPanelWidget.getOffsetWidth(), contentOrScrollPanelWidget.getOffsetHeight());
+    if ( contentOrScrollPanelWidget.getOffsetHeight() != 0 ) {
+      headerWidget.setPixelSize( headerWidget.getOffsetWidth(), headerWidget.getOffsetHeight() );
+      setContentSize( contentOrScrollPanelWidget.getOffsetWidth(), contentOrScrollPanelWidget.getOffsetHeight() );
     }
   }
 
-  private Widget setupCell(int row, int col, DirectionConstant direction) {
+  private Widget setupCell( int row, int col, DirectionConstant direction ) {
     final FocusPanel widget = new FocusPanel();
-    widget.setPixelSize(BORDER_THICKNESS, BORDER_THICKNESS);
-    grid.setWidget(row, col, widget);
-    windowController.getResizeDragController().makeDraggable(widget, direction);
-    widget.setStyleName("dialog-resize-" + direction.directionLetters); //$NON-NLS-1$
-    //grid.getCellFormatter().setStyleName(row, col, "demo-resize-" + direction.directionLetters);
+    widget.setPixelSize( BORDER_THICKNESS, BORDER_THICKNESS );
+    grid.setWidget( row, col, widget );
+    windowController.getResizeDragController().makeDraggable( widget, direction );
+    widget.setStyleName( "dialog-resize-" + direction.directionLetters ); //$NON-NLS-1$
+    // grid.getCellFormatter().setStyleName(row, col, "demo-resize-" + direction.directionLetters);
     return widget;
   }
 }
