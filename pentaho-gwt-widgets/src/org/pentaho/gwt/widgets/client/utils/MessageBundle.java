@@ -1,28 +1,21 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.gwt.widgets.client.utils;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
 import com.google.gwt.http.client.Header;
 import com.google.gwt.http.client.Request;
@@ -31,26 +24,32 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * @deprecated
- * Please use org.pentaho.gwt.widgets.client.utils.localization.ResourceBundle instead.  
- * We are gradually moving to a more logical breakdown of GWT modules for more succinct reuse.
- *
- * This class is a ResourceBundle for GWT projects. Provided with a resource's base-name it will fetch and merge resources as follows:
+ * @deprecated Please use org.pentaho.gwt.widgets.client.utils.localization.ResourceBundle instead. We are gradually
+ *             moving to a more logical breakdown of GWT modules for more succinct reuse.
  * 
- * 1. base-name.properties
- * 2. base-name_xx.properties (where XX = language, such as en)
- * 3. base-name_xx_yy.properties (where yy = country, such as US)
+ *             This class is a ResourceBundle for GWT projects. Provided with a resource's base-name it will fetch and
+ *             merge resources as follows:
  * 
- * When each new resource is fetched it is merged with previous resources. Resource collisions are resolved by overwriting existing resources with new
- * resources. In this way we are able to provide language/country overrides above the default bundles.
+ *             1. base-name.properties 2. base-name_xx.properties (where XX = language, such as en) 3.
+ *             base-name_xx_yy.properties (where yy = country, such as US)
+ * 
+ *             When each new resource is fetched it is merged with previous resources. Resource collisions are resolved
+ *             by overwriting existing resources with new resources. In this way we are able to provide language/country
+ *             overrides above the default bundles.
  * 
  * @author Michael D'Amour
  */
 @Deprecated
 public class MessageBundle {
-  
+
   private static final Map<String, String> bundleCache = new HashMap<String, String>();
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   public static final String PROPERTIES_EXTENSION = ".properties"; //$NON-NLS-1$
@@ -67,12 +66,12 @@ public class MessageBundle {
   private class FakeResponse extends Response {
 
     private String text;
-    
-    public FakeResponse(String text) {
+
+    public FakeResponse( String text ) {
       this.text = text;
     }
-    
-    public String getHeader(String arg0) {
+
+    public String getHeader( String arg0 ) {
       return null;
     }
 
@@ -95,14 +94,15 @@ public class MessageBundle {
     public String getText() {
       return text;
     }
-    
+
   }
-  
+
   /**
-   * The MessageBundle class fetches localized properties files by using the GWT RequestBuilder against the supplied path. Ideally the path should be relative,
-   * but absolute paths are accepted. When the ResourceBundle has fetched and loaded all available resources it will notify the caller by way of
-   * IMessageBundleLoadCallback. This is necessary due to the asynchronous nature of the loading process. Care should be taken to be sure not to request
-   * resources until loading has finished as inconsistent and incomplete results will be likely.
+   * The MessageBundle class fetches localized properties files by using the GWT RequestBuilder against the supplied
+   * path. Ideally the path should be relative, but absolute paths are accepted. When the ResourceBundle has fetched and
+   * loaded all available resources it will notify the caller by way of IMessageBundleLoadCallback. This is necessary
+   * due to the asynchronous nature of the loading process. Care should be taken to be sure not to request resources
+   * until loading has finished as inconsistent and incomplete results will be likely.
    * 
    * @param path
    *          The path to the resources (mantle/messages)
@@ -112,12 +112,12 @@ public class MessageBundle {
    *          The callback to invoke when the bundle has finished loading
    */
   @Deprecated
-  public MessageBundle(String path, String bundleName, IMessageBundleLoadCallback bundleLoadCallback) {
+  public MessageBundle( String path, String bundleName, IMessageBundleLoadCallback bundleLoadCallback ) {
     this.path = path;
     this.bundleName = bundleName;
     this.bundleLoadCallback = bundleLoadCallback;
     // get the locale meta property if the url parameter is missing
-    this.localeName = StringUtils.defaultIfEmpty(Window.Location.getParameter("locale"), getLanguagePreference()); //$NON-NLS-1$
+    this.localeName = StringUtils.defaultIfEmpty( Window.Location.getParameter( "locale" ), getLanguagePreference() ); //$NON-NLS-1$
     initCallbacks();
     // decompose locale
     // _en_US
@@ -127,14 +127,14 @@ public class MessageBundle {
 
     // always fetch the base first
     currentAttemptUrl = path + bundleName + PROPERTIES_EXTENSION + getUrlExtras();
-    if (bundleCache.containsKey(currentAttemptUrl)) {
-      baseCallback.onResponseReceived(null, new FakeResponse(bundleCache.get(currentAttemptUrl)));
+    if ( bundleCache.containsKey( currentAttemptUrl ) ) {
+      baseCallback.onResponseReceived( null, new FakeResponse( bundleCache.get( currentAttemptUrl ) ) );
     } else {
-      RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, currentAttemptUrl); 
+      RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, currentAttemptUrl );
       try {
-        requestBuilder.sendRequest(null, baseCallback);
-      } catch (RequestException e) {
-        Window.alert("base load " + MSGS.error() + ":" + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+        requestBuilder.sendRequest( null, baseCallback );
+      } catch ( RequestException e ) {
+        Window.alert( "base load " + MSGS.error() + ":" + e.getMessage() ); //$NON-NLS-1$ //$NON-NLS-2$
         fireBundleLoadCallback();
       }
     }
@@ -142,65 +142,64 @@ public class MessageBundle {
 
   @Deprecated
   private native String getUrlExtras()/*-{
-    return (document.all) ? "?rand="+(Math.random()*10000) : "";
-  }-*/;
+                                      return (document.all) ? "?rand="+(Math.random()*10000) : "";
+                                      }-*/;
 
   @Deprecated
   private void initCallbacks() {
     baseCallback = new RequestCallback() {
-      public void onError(Request request, Throwable exception) {
-        Window.alert("baseCallback " + MSGS.error() + ":" + exception.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+      public void onError( Request request, Throwable exception ) {
+        Window.alert( "baseCallback " + MSGS.error() + ":" + exception.getMessage() ); //$NON-NLS-1$ //$NON-NLS-2$
         fireBundleLoadCallback();
       }
 
-      public void onResponseReceived(Request request, Response response) {
+      public void onResponseReceived( Request request, Response response ) {
         String propertiesFileText = response.getText();
-        
+
         // build a simple map of key/value pairs from the properties file
-        if (response.getStatusCode() == Response.SC_OK) {
-          bundle = PropertiesUtil.buildProperties(propertiesFileText, bundle);
-          if (response instanceof FakeResponse == false) {
+        if ( response.getStatusCode() == Response.SC_OK ) {
+          bundle = PropertiesUtil.buildProperties( propertiesFileText, bundle );
+          if ( response instanceof FakeResponse == false ) {
             // this is a real bundle load
-            bundleCache.put(currentAttemptUrl, propertiesFileText);
+            bundleCache.put( currentAttemptUrl, propertiesFileText );
           }
         } else {
           // put empty bundle in cache (not found, but we want to remember it was not found)
-          bundleCache.put(currentAttemptUrl, ""); //$NON-NLS-1$
+          bundleCache.put( currentAttemptUrl, "" ); //$NON-NLS-1$
         }
-        
+
         // now fetch the the lang/country variants
-        if (localeName.equalsIgnoreCase("default")) { //$NON-NLS-1$
+        if ( localeName.equalsIgnoreCase( "default" ) ) { //$NON-NLS-1$
           // process only bundleName.properties
           fireBundleLoadCallback();
           return;
         } else {
-          StringTokenizer st = new StringTokenizer(localeName, '_');
-          if (st.countTokens() > 0) {
-            String lang = st.tokenAt(0);
+          StringTokenizer st = new StringTokenizer( localeName, '_' );
+          if ( st.countTokens() > 0 ) {
+            String lang = st.tokenAt( 0 );
             // 2. fetch bundleName_lang.properties
             // 3. fetch bundleName_lang_country.properties
             currentAttemptUrl = path + bundleName + "_" + lang + PROPERTIES_EXTENSION + getUrlExtras(); //$NON-NLS-1$
-            
+
             // IE caches the file and causes an issue with the request
-            
-            
-            if (bundleCache.containsKey(currentAttemptUrl)) {
-              langCallback.onResponseReceived(null, new FakeResponse(bundleCache.get(currentAttemptUrl)));
+
+            if ( bundleCache.containsKey( currentAttemptUrl ) ) {
+              langCallback.onResponseReceived( null, new FakeResponse( bundleCache.get( currentAttemptUrl ) ) );
             } else {
-              RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, currentAttemptUrl);
-              
-              // Caching causing some strange behavior with IE6. 
+              RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, currentAttemptUrl );
+
+              // Caching causing some strange behavior with IE6.
               // TODO: Investigate caching issue.
-              requestBuilder.setHeader("Cache-Control", "no-cache"); //$NON-NLS-1$ //$NON-NLS-2$
-              
+              requestBuilder.setHeader( "Cache-Control", "no-cache" ); //$NON-NLS-1$ //$NON-NLS-2$
+
               try {
-                requestBuilder.sendRequest(null, langCallback);
-              } catch (RequestException e) {
-                Window.alert("lang " + MSGS.error() + ":" + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+                requestBuilder.sendRequest( null, langCallback );
+              } catch ( RequestException e ) {
+                Window.alert( "lang " + MSGS.error() + ":" + e.getMessage() ); //$NON-NLS-1$ //$NON-NLS-2$
                 fireBundleLoadCallback();
               }
             }
-          } else if (st.countTokens() == 0) {
+          } else if ( st.countTokens() == 0 ) {
             // already fetched
             fireBundleLoadCallback();
             return;
@@ -209,38 +208,37 @@ public class MessageBundle {
       }
     };
     langCallback = new RequestCallback() {
-      public void onError(Request request, Throwable exception) {
-        Window.alert("langCallback " + MSGS.error() + ":" + exception.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+      public void onError( Request request, Throwable exception ) {
+        Window.alert( "langCallback " + MSGS.error() + ":" + exception.getMessage() ); //$NON-NLS-1$ //$NON-NLS-2$
         fireBundleLoadCallback();
       }
 
-      public void onResponseReceived(Request request, Response response) {
+      public void onResponseReceived( Request request, Response response ) {
         String propertiesFileText = response.getText();
         // build a simple map of key/value pairs from the properties file
-        if (response.getStatusCode() == Response.SC_OK) {
-          bundle = PropertiesUtil.buildProperties(propertiesFileText, bundle);
-          if (response instanceof FakeResponse == false) {
+        if ( response.getStatusCode() == Response.SC_OK ) {
+          bundle = PropertiesUtil.buildProperties( propertiesFileText, bundle );
+          if ( response instanceof FakeResponse == false ) {
             // this is a real bundle load
-            bundleCache.put(currentAttemptUrl, propertiesFileText);
+            bundleCache.put( currentAttemptUrl, propertiesFileText );
           }
         } else {
           // put empty bundle in cache (not found, but we want to remember it was not found)
-          bundleCache.put(currentAttemptUrl, ""); //$NON-NLS-1$
+          bundleCache.put( currentAttemptUrl, "" ); //$NON-NLS-1$
         }
 
-        
-        StringTokenizer st = new StringTokenizer(localeName, '_');
-        if (st.countTokens() == 2) {
+        StringTokenizer st = new StringTokenizer( localeName, '_' );
+        if ( st.countTokens() == 2 ) {
           // 3. fetch bundleName_lang_country.properties
           currentAttemptUrl = path + bundleName + "_" + localeName + PROPERTIES_EXTENSION + getUrlExtras(); //$NON-NLS-1$
-          if (bundleCache.containsKey(currentAttemptUrl)) {
-            langCountryCallback.onResponseReceived(null, new FakeResponse(bundleCache.get(currentAttemptUrl)));
+          if ( bundleCache.containsKey( currentAttemptUrl ) ) {
+            langCountryCallback.onResponseReceived( null, new FakeResponse( bundleCache.get( currentAttemptUrl ) ) );
           } else {
-            RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, currentAttemptUrl);
+            RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, currentAttemptUrl );
             try {
-              requestBuilder.sendRequest(null, langCountryCallback);
-            } catch (RequestException e) {
-              Window.alert("langCountry " + MSGS.error() + ":" + e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+              requestBuilder.sendRequest( null, langCountryCallback );
+            } catch ( RequestException e ) {
+              Window.alert( "langCountry " + MSGS.error() + ":" + e.getMessage() ); //$NON-NLS-1$ //$NON-NLS-2$
               fireBundleLoadCallback();
             }
           }
@@ -252,23 +250,23 @@ public class MessageBundle {
       }
     };
     langCountryCallback = new RequestCallback() {
-      public void onError(Request request, Throwable exception) {
-        Window.alert("langCountryCallback " + MSGS.error() + ":" + exception.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+      public void onError( Request request, Throwable exception ) {
+        Window.alert( "langCountryCallback " + MSGS.error() + ":" + exception.getMessage() ); //$NON-NLS-1$ //$NON-NLS-2$
         fireBundleLoadCallback();
       }
 
-      public void onResponseReceived(Request request, Response response) {
+      public void onResponseReceived( Request request, Response response ) {
         String propertiesFileText = response.getText();
         // build a simple map of key/value pairs from the properties file
-        if (response.getStatusCode() == Response.SC_OK) {
-          bundle = PropertiesUtil.buildProperties(propertiesFileText, bundle);
-          if (response instanceof FakeResponse == false) {
+        if ( response.getStatusCode() == Response.SC_OK ) {
+          bundle = PropertiesUtil.buildProperties( propertiesFileText, bundle );
+          if ( response instanceof FakeResponse == false ) {
             // this is a real bundle load
-            bundleCache.put(currentAttemptUrl, propertiesFileText);
+            bundleCache.put( currentAttemptUrl, propertiesFileText );
           }
         } else {
           // put empty bundle in cache (not found, but we want to remember it was not found)
-          bundleCache.put(currentAttemptUrl, ""); //$NON-NLS-1$
+          bundleCache.put( currentAttemptUrl, "" ); //$NON-NLS-1$
         }
         fireBundleLoadCallback();
       }
@@ -277,45 +275,49 @@ public class MessageBundle {
 
   @Deprecated
   private void fireBundleLoadCallback() {
-    if (bundleLoadCallback != null) {
-      bundleLoadCallback.bundleLoaded(bundleName);
+    if ( bundleLoadCallback != null ) {
+      bundleLoadCallback.bundleLoaded( bundleName );
     }
   }
 
   /**
-   * This method returns the value for the given key with UTF-8 respected if supplied in \\uXXXX style format (single forward slash, u, followed by 4 digits).
-   * UTF-8 escaped values are replaced with entity escaping, such as '&#x0101;' for proper consumption by web browsers.
+   * This method returns the value for the given key with UTF-8 respected if supplied in \\uXXXX style format (single
+   * forward slash, u, followed by 4 digits). UTF-8 escaped values are replaced with entity escaping, such as '&#x0101;'
+   * for proper consumption by web browsers.
    * 
    * @param key
    *          The name of the resource being requested
    * @return The UTF-8 friendly value found for the given key
    */
   @Deprecated
-  public String getString(String key) {
-    String resource = bundle.get(key);
-    if (resource == null) {
+  public String getString( String key ) {
+    String resource = bundle.get( key );
+    if ( resource == null ) {
       return key;
     }
-    return decodeUTF8(bundle.get(key));
+    return decodeUTF8( bundle.get( key ) );
   }
-  
+
   /**
-   * This method return the value for the given key with UTF-8 respected and will replace {n} tokens with the parameters that are passed in.
+   * This method return the value for the given key with UTF-8 respected and will replace {n} tokens with the parameters
+   * that are passed in.
    * 
-   * @param key The name of the resource being requested
-   * @param parameters The values to replace occurrences of {n} in the found resource
+   * @param key
+   *          The name of the resource being requested
+   * @param parameters
+   *          The values to replace occurrences of {n} in the found resource
    * @return The UTF-8 friendly value found for the given key
    */
   @Deprecated
-  public String getString(String key, String...parameters) {
-    String resource = bundle.get(key);
-    if (resource == null) {
+  public String getString( String key, String... parameters ) {
+    String resource = bundle.get( key );
+    if ( resource == null ) {
       return key;
     }
-    for (int i=0;i<parameters.length;i++) {
-      resource = resource.replace("{" + i + "}", parameters[i]); //$NON-NLS-1$ //$NON-NLS-2$
+    for ( int i = 0; i < parameters.length; i++ ) {
+      resource = resource.replace( "{" + i + "}", parameters[i] ); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    return decodeUTF8(resource);
+    return decodeUTF8( resource );
   }
 
   /**
@@ -327,16 +329,16 @@ public class MessageBundle {
   public Set<String> getKeys() {
     return bundle.keySet();
   }
-  
+
   @Deprecated
-  private String decodeUTF8(String str) {
-    if (str == null) {
+  private String decodeUTF8( String str ) {
+    if ( str == null ) {
       return str;
     }
-    while (str.indexOf("\\u") != -1) { //$NON-NLS-1$
-      int index = str.indexOf("\\u"); //$NON-NLS-1$
-      String hex = str.substring(index + 2, index + 6);
-      str = str.substring(0, index) + "&#" + hex + ";" + str.substring(index + 6); //$NON-NLS-1$ //$NON-NLS-2$
+    while ( str.indexOf( "\\u" ) != -1 ) { //$NON-NLS-1$
+      int index = str.indexOf( "\\u" ); //$NON-NLS-1$
+      String hex = str.substring( index + 2, index + 6 );
+      str = str.substring( 0, index ) + "&#" + hex + ";" + str.substring( index + 6 ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     return str;
   }

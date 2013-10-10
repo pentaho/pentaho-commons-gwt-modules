@@ -1,54 +1,55 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.gwt.widgets.client.filechooser;
-
-import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
-import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
-import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
+import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
+import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 
 public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCallback {
 
   public static ResourceBundle messages = new ResourceBundle();
 
   public void onModuleLoad() {
-    if (messages == null) {
+    if ( messages == null ) {
       messages = new ResourceBundle();
     }
-    messages.loadBundle(GWT.getModuleBaseURL() + "messages/", "filechooser_messages", true, FileChooserEntryPoint.this); //$NON-NLS-1$ //$NON-NLS-2$
+    messages
+        .loadBundle( GWT.getModuleBaseURL() + "messages/", "filechooser_messages", true, FileChooserEntryPoint.this );
   }
 
-  public void bundleLoaded(String bundleName) {
-    setupNativeHooks(this);
+  public void bundleLoaded( String bundleName ) {
+    setupNativeHooks( this );
   }
 
-  public native void notifyCallback(JavaScriptObject callback, RepositoryFile file, String filePath, String fileName, String title)
+  public native void notifyCallback( JavaScriptObject callback, RepositoryFile file, String filePath, String fileName,
+      String title )
   /*-{
    try {
      callback.fileSelected(file, filePath, fileName, title);
    } catch (ex) {
    }
   }-*/;
-  
-  public native void notifyCallbackCanceled(JavaScriptObject callback)
+
+  public native void notifyCallbackCanceled( JavaScriptObject callback )
   /*-{
    try {
      callback.dialogCanceled();
@@ -56,36 +57,40 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
      alert(ex);
    }
   }-*/;
-  
-  public void openFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
-    FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.OPEN, selectedPath, false, true);
-    dialog.addFileChooserListener(new FileChooserListener() {
-      public void fileSelected(RepositoryFile file, String filePath, String fileName, String title) {
-        notifyCallback(callback, file, filePath, fileName, title);
+
+  public void openFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
+    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.OPEN, selectedPath, false, true );
+    dialog.addFileChooserListener( new FileChooserListener() {
+      public void fileSelected( RepositoryFile file, String filePath, String fileName, String title ) {
+        notifyCallback( callback, file, filePath, fileName, title );
       }
-      public void fileSelectionChanged(RepositoryFile file, String filePath, String fileName, String title) {
+
+      public void fileSelectionChanged( RepositoryFile file, String filePath, String fileName, String title ) {
       }
-      public void dialogCanceled(){
-        notifyCallbackCanceled(callback);
-      }      
-    });
+
+      public void dialogCanceled() {
+        notifyCallbackCanceled( callback );
+      }
+    } );
   }
-  
-  public void saveFileChooserDialog(final JavaScriptObject callback, String selectedPath) {
-    FileChooserDialog dialog = new FileChooserDialog(FileChooserMode.SAVE, selectedPath, false, true);
-    dialog.addFileChooserListener(new FileChooserListener() {
-      public void fileSelected(RepositoryFile file, String filePath, String fileName, String title) {
-        notifyCallback(callback, file, filePath, fileName, title);
+
+  public void saveFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
+    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true );
+    dialog.addFileChooserListener( new FileChooserListener() {
+      public void fileSelected( RepositoryFile file, String filePath, String fileName, String title ) {
+        notifyCallback( callback, file, filePath, fileName, title );
       }
-      public void fileSelectionChanged(RepositoryFile file, String filePath, String fileName, String title) {
+
+      public void fileSelectionChanged( RepositoryFile file, String filePath, String fileName, String title ) {
       }
-      public void dialogCanceled(){
-        notifyCallbackCanceled(callback);
+
+      public void dialogCanceled() {
+        notifyCallbackCanceled( callback );
       }
-    });
+    } );
   }
-  
-  public native void setupNativeHooks(FileChooserEntryPoint fileChooserEntryPoint)
+
+  public native void setupNativeHooks( FileChooserEntryPoint fileChooserEntryPoint )
   /*-{
     $wnd.openFileChooserDialog = function(callback, selectedPath) {
       fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::openFileChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
@@ -94,7 +99,5 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
       fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::saveFileChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
     }
   }-*/;
-
-  
 
 }

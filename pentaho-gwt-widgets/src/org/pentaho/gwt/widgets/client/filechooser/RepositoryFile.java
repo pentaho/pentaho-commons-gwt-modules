@@ -1,32 +1,32 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.gwt.widgets.client.filechooser;
+
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONValue;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
-
 /**
- * JAXB-safe version of {@code RepositoryFile}. ({@code RepositoryFile} has no
- * zero-arg constructor and no public mutators.)
+ * JAXB-safe version of {@code RepositoryFile}. ({@code RepositoryFile} has no zero-arg constructor and no public
+ * mutators.)
  * 
  * @see RepositoryFileAdapter
  * 
@@ -38,317 +38,318 @@ public class RepositoryFile implements Serializable {
   private static final long serialVersionUID = 1271027425735179424L;
 
   public RepositoryFile() {
-		super();
-	}
+    super();
+  }
 
-	protected String name;
-	protected String id;
-	protected Date createdDate;
-	protected Date lastModifiedDate;
-	protected boolean folder;
-	protected String path;
-	protected boolean hidden;
-	protected boolean versioned;
-	protected String versionId;
-	protected boolean locked;
-	protected String lockOwner;
-	protected String lockMessage;
-	protected Date lockDate;
-	protected long fileSize;
-	protected String owner;
-	protected int ownerType = -1;
-	protected String title;
-	protected String description;
-	protected String locale;
-	protected String originalParentFolderPath;
-	protected String originalParentFolderId;
-	protected Date deletedDate;
-	protected List<LocalizedStringMapEntry> titleMapEntries;
-	protected List<LocalizedStringMapEntry> descriptionMapEntries;
-	protected String creatorId;
+  protected String name;
+  protected String id;
+  protected Date createdDate;
+  protected Date lastModifiedDate;
+  protected boolean folder;
+  protected String path;
+  protected boolean hidden;
+  protected boolean versioned;
+  protected String versionId;
+  protected boolean locked;
+  protected String lockOwner;
+  protected String lockMessage;
+  protected Date lockDate;
+  protected long fileSize;
+  protected String owner;
+  protected int ownerType = -1;
+  protected String title;
+  protected String description;
+  protected String locale;
+  protected String originalParentFolderPath;
+  protected String originalParentFolderId;
+  protected Date deletedDate;
+  protected List<LocalizedStringMapEntry> titleMapEntries;
+  protected List<LocalizedStringMapEntry> descriptionMapEntries;
+  protected String creatorId;
 
-	/**
-	 * This Constructor will create the object from a JsonObject
-	 * 
-	 * @param jso a JSON String representing the RepositoryFile Object
-	 */
-	public RepositoryFile(JSONObject jso) {
-		super();
-		JSONObject rftdo = jso.isObject();
-		//There are times the web service wraps the json RepositoryFile with repsitoryFileDto and times when it does not.
-		//The following line mitigates this so it doesn't care what form it is getting.
-		JSONObject repositoryFileJSON = rftdo.get("repositoryFileDto") != null ? rftdo.get("repositoryFileDto").isObject() : jso;
+  /**
+   * This Constructor will create the object from a JsonObject
+   * 
+   * @param jso
+   *          a JSON String representing the RepositoryFile Object
+   */
+  public RepositoryFile( JSONObject jso ) {
+    super();
+    JSONObject rftdo = jso.isObject();
+    // There are times the web service wraps the json RepositoryFile with repsitoryFileDto and times when it does not.
+    // The following line mitigates this so it doesn't care what form it is getting.
+    JSONObject repositoryFileJSON =
+        rftdo.get( "repositoryFileDto" ) != null ? rftdo.get( "repositoryFileDto" ).isObject() : jso;
 
-		folder = JSONValueToBoolean(repositoryFileJSON, "folder");
-		creatorId = JSONValueToString(repositoryFileJSON, "creatorId");
-		this.createdDate = JSONValueToDate(repositoryFileJSON, "createdDate");
-		this.fileSize = JSONValueToLong(repositoryFileJSON, "fileSize");
-		this.hidden = JSONValueToBoolean(repositoryFileJSON, "hidden");
-		this.id = JSONValueToString(repositoryFileJSON, "id");
-		this.locale = JSONValueToString(repositoryFileJSON, "locale");
-		this.locked = JSONValueToBoolean(repositoryFileJSON, "locked");
-		this.name = JSONValueToString(repositoryFileJSON, "name");
-		this.ownerType = JSONValueToInt(repositoryFileJSON, "ownerType");
-		this.path = JSONValueToString(repositoryFileJSON, "path");
-		this.title = JSONValueToString(repositoryFileJSON, "title");
-		this.versionId = JSONValueToString(repositoryFileJSON, "versionId");
-		this.description = JSONValueToString(repositoryFileJSON, "description");
-		if (!folder) {
-			this.deletedDate = JSONValueToDate(repositoryFileJSON, "deletedDate");
-			this.lastModifiedDate = JSONValueToDate(repositoryFileJSON, "lastModifiedDate");
-			this.lockDate = JSONValueToDate(repositoryFileJSON, "lockDate");
-			this.lockMessage = JSONValueToString(repositoryFileJSON, "lockMessage");
-			this.lockOwner = JSONValueToString(repositoryFileJSON, "lockOwner");
-			this.originalParentFolderId = JSONValueToString(repositoryFileJSON, "originalParentFolderId");
-			this.originalParentFolderPath = JSONValueToString(repositoryFileJSON, "originalParentFolderPath");
-			this.owner = JSONValueToString(repositoryFileJSON, "owner");
-			this.versioned = JSONValueToBoolean(repositoryFileJSON, "versioned");
-		}
-	}
+    folder = JSONValueToBoolean( repositoryFileJSON, "folder" );
+    creatorId = JSONValueToString( repositoryFileJSON, "creatorId" );
+    this.createdDate = JSONValueToDate( repositoryFileJSON, "createdDate" );
+    this.fileSize = JSONValueToLong( repositoryFileJSON, "fileSize" );
+    this.hidden = JSONValueToBoolean( repositoryFileJSON, "hidden" );
+    this.id = JSONValueToString( repositoryFileJSON, "id" );
+    this.locale = JSONValueToString( repositoryFileJSON, "locale" );
+    this.locked = JSONValueToBoolean( repositoryFileJSON, "locked" );
+    this.name = JSONValueToString( repositoryFileJSON, "name" );
+    this.ownerType = JSONValueToInt( repositoryFileJSON, "ownerType" );
+    this.path = JSONValueToString( repositoryFileJSON, "path" );
+    this.title = JSONValueToString( repositoryFileJSON, "title" );
+    this.versionId = JSONValueToString( repositoryFileJSON, "versionId" );
+    this.description = JSONValueToString( repositoryFileJSON, "description" );
+    if ( !folder ) {
+      this.deletedDate = JSONValueToDate( repositoryFileJSON, "deletedDate" );
+      this.lastModifiedDate = JSONValueToDate( repositoryFileJSON, "lastModifiedDate" );
+      this.lockDate = JSONValueToDate( repositoryFileJSON, "lockDate" );
+      this.lockMessage = JSONValueToString( repositoryFileJSON, "lockMessage" );
+      this.lockOwner = JSONValueToString( repositoryFileJSON, "lockOwner" );
+      this.originalParentFolderId = JSONValueToString( repositoryFileJSON, "originalParentFolderId" );
+      this.originalParentFolderPath = JSONValueToString( repositoryFileJSON, "originalParentFolderPath" );
+      this.owner = JSONValueToString( repositoryFileJSON, "owner" );
+      this.versioned = JSONValueToBoolean( repositoryFileJSON, "versioned" );
+    }
+  }
 
-	private static String JSONValueToString(JSONObject jso, String fieldName) {
-		JSONValue temp = jso.get(fieldName);
-		if (temp != null) {
-			return temp.isString().stringValue();
-		}
-		return null;
-	}
+  private static String JSONValueToString( JSONObject jso, String fieldName ) {
+    JSONValue temp = jso.get( fieldName );
+    if ( temp != null ) {
+      return temp.isString().stringValue();
+    }
+    return null;
+  }
 
-	private static Date JSONValueToDate(JSONObject jso, String fieldName) {
-		JSONValue temp = jso.get(fieldName);
-		if (temp != null) {
-			return parseDateTime(temp.isString().stringValue());
-		}
-		return null;
-	}
+  private static Date JSONValueToDate( JSONObject jso, String fieldName ) {
+    JSONValue temp = jso.get( fieldName );
+    if ( temp != null ) {
+      return parseDateTime( temp.isString().stringValue() );
+    }
+    return null;
+  }
 
-	private static long JSONValueToLong(JSONObject jso, String fieldName) {
-		JSONValue temp = jso.get(fieldName);
-		if (temp != null) {
-			return Long.valueOf(temp.isString().stringValue());
-		}
-		return 0;
-	}
-	
-	private static int JSONValueToInt(JSONObject jso, String fieldName) {
-		JSONValue temp = jso.get(fieldName);
-		if (temp != null) {
-			return Integer.valueOf(temp.isString().stringValue());
-		}
-		return 0;
-	}
+  private static long JSONValueToLong( JSONObject jso, String fieldName ) {
+    JSONValue temp = jso.get( fieldName );
+    if ( temp != null ) {
+      return Long.valueOf( temp.isString().stringValue() );
+    }
+    return 0;
+  }
 
-	private static boolean JSONValueToBoolean(JSONObject jso, String fieldName) {
-		JSONValue temp = jso.get(fieldName);
-		if (temp != null) {
-			return Boolean.valueOf(temp.isString().stringValue());
-		}
-		return false;
-	}
+  private static int JSONValueToInt( JSONObject jso, String fieldName ) {
+    JSONValue temp = jso.get( fieldName );
+    if ( temp != null ) {
+      return Integer.valueOf( temp.isString().stringValue() );
+    }
+    return 0;
+  }
 
-	private static Date parseDateTime(String dateTimeString) {
-		// parse the date
-		Date date = null;
-		try {
-			//date = DateTimeFormat.getFormat("MM/dd/yyyy HH:mm:ss").parse(dateTimeString);
-      Long timeInMillis = Long.parseLong(dateTimeString);
-      date = new Date(timeInMillis);
-		} catch (Exception e) {
-			return null;
-		}
-		return date;
-	}
-	
-	public String getName() {
-		return name;
-	}
+  private static boolean JSONValueToBoolean( JSONObject jso, String fieldName ) {
+    JSONValue temp = jso.get( fieldName );
+    if ( temp != null ) {
+      return Boolean.valueOf( temp.isString().stringValue() );
+    }
+    return false;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  private static Date parseDateTime( String dateTimeString ) {
+    // parse the date
+    Date date = null;
+    try {
+      // date = DateTimeFormat.getFormat("MM/dd/yyyy HH:mm:ss").parse(dateTimeString);
+      Long timeInMillis = Long.parseLong( dateTimeString );
+      date = new Date( timeInMillis );
+    } catch ( Exception e ) {
+      return null;
+    }
+    return date;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+  public void setName( String name ) {
+    this.name = name;
+  }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+  public String getId() {
+    return id;
+  }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+  public void setId( String id ) {
+    this.id = id;
+  }
 
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
+  public Date getCreatedDate() {
+    return createdDate;
+  }
 
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+  public void setCreatedDate( Date createdDate ) {
+    this.createdDate = createdDate;
+  }
 
-	public boolean isFolder() {
-		return folder;
-	}
+  public Date getLastModifiedDate() {
+    return lastModifiedDate;
+  }
 
-	public void setFolder(boolean folder) {
-		this.folder = folder;
-	}
+  public void setLastModifiedDate( Date lastModifiedDate ) {
+    this.lastModifiedDate = lastModifiedDate;
+  }
 
-	public String getPath() {
-		return path;
-	}
+  public boolean isFolder() {
+    return folder;
+  }
 
-	public void setPath(String path) {
-		this.path = path;
-	}
+  public void setFolder( boolean folder ) {
+    this.folder = folder;
+  }
 
-	public boolean isHidden() {
-		return hidden;
-	}
+  public String getPath() {
+    return path;
+  }
 
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
-	}
+  public void setPath( String path ) {
+    this.path = path;
+  }
 
-	public boolean isVersioned() {
-		return versioned;
-	}
+  public boolean isHidden() {
+    return hidden;
+  }
 
-	public void setVersioned(boolean versioned) {
-		this.versioned = versioned;
-	}
+  public void setHidden( boolean hidden ) {
+    this.hidden = hidden;
+  }
 
-	public String getVersionId() {
-		return versionId;
-	}
+  public boolean isVersioned() {
+    return versioned;
+  }
 
-	public void setVersionId(String versionId) {
-		this.versionId = versionId;
-	}
+  public void setVersioned( boolean versioned ) {
+    this.versioned = versioned;
+  }
 
-	public boolean isLocked() {
-		return locked;
-	}
+  public String getVersionId() {
+    return versionId;
+  }
 
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
+  public void setVersionId( String versionId ) {
+    this.versionId = versionId;
+  }
 
-	public String getLockOwner() {
-		return lockOwner;
-	}
+  public boolean isLocked() {
+    return locked;
+  }
 
-	public void setLockOwner(String lockOwner) {
-		this.lockOwner = lockOwner;
-	}
+  public void setLocked( boolean locked ) {
+    this.locked = locked;
+  }
 
-	public String getLockMessage() {
-		return lockMessage;
-	}
+  public String getLockOwner() {
+    return lockOwner;
+  }
 
-	public void setLockMessage(String lockMessage) {
-		this.lockMessage = lockMessage;
-	}
+  public void setLockOwner( String lockOwner ) {
+    this.lockOwner = lockOwner;
+  }
 
-	public Date getLockDate() {
-		return lockDate;
-	}
+  public String getLockMessage() {
+    return lockMessage;
+  }
 
-	public void setLockDate(Date lockDate) {
-		this.lockDate = lockDate;
-	}
+  public void setLockMessage( String lockMessage ) {
+    this.lockMessage = lockMessage;
+  }
 
-	public String getOwner() {
-		return owner;
-	}
+  public Date getLockDate() {
+    return lockDate;
+  }
 
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
+  public void setLockDate( Date lockDate ) {
+    this.lockDate = lockDate;
+  }
 
-	public long getFileSize() {
-		return fileSize;
-	}
+  public String getOwner() {
+    return owner;
+  }
 
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
-	}
+  public void setOwner( String owner ) {
+    this.owner = owner;
+  }
 
-	public int getOwnerType() {
-		return ownerType;
-	}
+  public long getFileSize() {
+    return fileSize;
+  }
 
-	public void setOwnerType(int ownerType) {
-		this.ownerType = ownerType;
-	}
+  public void setFileSize( long fileSize ) {
+    this.fileSize = fileSize;
+  }
 
-	public String getTitle() {
-		return title;
-	}
+  public int getOwnerType() {
+    return ownerType;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public void setOwnerType( int ownerType ) {
+    this.ownerType = ownerType;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public void setTitle( String title ) {
+    this.title = title;
+  }
 
-	public String getLocale() {
-		return locale;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
+  public void setDescription( String description ) {
+    this.description = description;
+  }
 
-	public String getOriginalParentFolderPath() {
-		return originalParentFolderPath;
-	}
+  public String getLocale() {
+    return locale;
+  }
 
-	public void setOriginalParentFolderPath(String originalParentFolderPath) {
-		this.originalParentFolderPath = originalParentFolderPath;
-	}
+  public void setLocale( String locale ) {
+    this.locale = locale;
+  }
 
-	public String getOriginalParentFolderId() {
-		return originalParentFolderId;
-	}
+  public String getOriginalParentFolderPath() {
+    return originalParentFolderPath;
+  }
 
-	public void setOriginalParentFolderId(String originalParentFolderId) {
-		this.originalParentFolderId = originalParentFolderId;
-	}
+  public void setOriginalParentFolderPath( String originalParentFolderPath ) {
+    this.originalParentFolderPath = originalParentFolderPath;
+  }
 
-	public Date getDeletedDate() {
-		return deletedDate;
-	}
+  public String getOriginalParentFolderId() {
+    return originalParentFolderId;
+  }
 
-	public void setDeletedDate(Date deletedDate) {
-		this.deletedDate = deletedDate;
-	}
+  public void setOriginalParentFolderId( String originalParentFolderId ) {
+    this.originalParentFolderId = originalParentFolderId;
+  }
 
-	public List<LocalizedStringMapEntry> getTitleMapEntries() {
-		return titleMapEntries;
-	}
+  public Date getDeletedDate() {
+    return deletedDate;
+  }
 
-	public void setTitleMapEntries(List<LocalizedStringMapEntry> titleMapEntries) {
-		this.titleMapEntries = titleMapEntries;
-	}
+  public void setDeletedDate( Date deletedDate ) {
+    this.deletedDate = deletedDate;
+  }
 
-	public List<LocalizedStringMapEntry> getDescriptionMapEntries() {
-		return descriptionMapEntries;
-	}
+  public List<LocalizedStringMapEntry> getTitleMapEntries() {
+    return titleMapEntries;
+  }
 
-	public void setDescriptionMapEntries(
-			List<LocalizedStringMapEntry> descriptionMapEntries) {
-		this.descriptionMapEntries = descriptionMapEntries;
-	}
+  public void setTitleMapEntries( List<LocalizedStringMapEntry> titleMapEntries ) {
+    this.titleMapEntries = titleMapEntries;
+  }
+
+  public List<LocalizedStringMapEntry> getDescriptionMapEntries() {
+    return descriptionMapEntries;
+  }
+
+  public void setDescriptionMapEntries( List<LocalizedStringMapEntry> descriptionMapEntries ) {
+    this.descriptionMapEntries = descriptionMapEntries;
+  }
 }

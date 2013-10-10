@@ -1,28 +1,21 @@
 /*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ */
 
 package org.pentaho.gwt.widgets.client.controls;
-
-import java.util.Date;
-
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
-import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.CaptionPanel;
@@ -34,12 +27,18 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
+import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+
+import java.util.Date;
 
 /**
  * @author Steven Barkdull
- *
+ * 
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings( "deprecation" )
 public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
 
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
@@ -51,79 +50,79 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
 
   private DatePickerEx startDatePicker = null;
   private EndDatePanel endDatePanel = null;
-  
+
   private ErrorLabel startLabel = null;
   private ICallback<IChangeHandler> onChangeHandler = null;
-  private static int uniqueInstanceNumber=0;
+  private static int uniqueInstanceNumber = 0;
 
   public DateRangeEditor( Date date ) {
 
     super( MSGS.rangeOfRecurrence() );
-    this.addStyleName(SCHEDULE_EDITOR_CAPTION_PANEL);
+    this.addStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
     uniqueInstanceNumber += 1;
-    
+
     HorizontalPanel outerHP = new HorizontalPanel();
     add( outerHP );
-    
+
     HorizontalPanel hp = new HorizontalPanel();
     Label l = new Label( MSGS.startLabel() );
-    l.setStyleName("startLabel"); //$NON-NLS-1$
+    l.setStyleName( "startLabel" ); //$NON-NLS-1$
     hp.add( l );
-    DefaultFormat format = new DefaultFormat(DateTimeFormat.getShortDateFormat());
-    startDatePicker = new DatePickerEx(format);
-    startDatePicker.getDatePicker().setStyleName(START_DATE_PICKER);
-    hp.add(startDatePicker.getDatePicker());
+    DefaultFormat format = new DefaultFormat( DateTimeFormat.getShortDateFormat() );
+    startDatePicker = new DatePickerEx( format );
+    startDatePicker.getDatePicker().setStyleName( START_DATE_PICKER );
+    hp.add( startDatePicker.getDatePicker() );
     startLabel = new ErrorLabel( hp );
-    outerHP.add(startLabel);
+    outerHP.add( startLabel );
 
     endDatePanel = new EndDatePanel( date );
-    outerHP.add(endDatePanel);
-    
+    outerHP.add( endDatePanel );
+
     reset( date );
     configureOnChangeHandler();
   }
-  
+
   public void setStartDateError( String errorMsg ) {
     startLabel.setErrorMsg( errorMsg );
   }
-  
+
   public Date getStartDate() {
     return startDatePicker.getSelectedDate();
   }
-  
+
   public void setStartDate( Date d ) {
-    startDatePicker.getDatePicker().setValue(d);
+    startDatePicker.getDatePicker().setValue( d );
   }
-  
+
   public Date getEndDate() {
     return endDatePanel.getDate();
   }
-  
+
   public void setEndDate( Date d ) {
     endDatePanel.setDate( d );
   }
-  
+
   public void reset( Date d ) {
     startDatePicker.getDatePicker().setValue( d );
     endDatePanel.reset( d );
   }
-  
+
   public void setNoEndDate() {
     endDatePanel.setNoEndDate();
   }
-  
+
   public boolean isEndBy() {
     return endDatePanel.isEndBy();
   }
-  
+
   public void setEndBy() {
     endDatePanel.setEndBy();
   }
-  
+
   public boolean isNoEndDate() {
     return endDatePanel.isNoEndDate();
   }
-  
+
   public void setEndByError( String errorMsg ) {
     endDatePanel.setEndByError( errorMsg );
   }
@@ -131,24 +130,24 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
   public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
     this.onChangeHandler = handler;
   }
-  
+
   private void changeHandler() {
     if ( null != onChangeHandler ) {
       onChangeHandler.onHandle( this );
     }
   }
-  
+
   private void configureOnChangeHandler() {
     final DateRangeEditor localThis = this;
-    
+
     ICallback<IChangeHandler> handler = new ICallback<IChangeHandler>() {
-      public void onHandle(IChangeHandler o) {
+      public void onHandle( IChangeHandler o ) {
         localThis.changeHandler();
       }
     };
 
-    startDatePicker.setOnChangeHandler(handler);
-    endDatePanel.setOnChangeHandler(handler);
+    startDatePicker.setOnChangeHandler( handler );
+    endDatePanel.setOnChangeHandler( handler );
   }
 
   private class EndDatePanel extends VerticalPanel implements IChangeHandler {
@@ -158,123 +157,123 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     private RadioButton endByRb = null;
     private ErrorLabel endByLabel = null;
     private ICallback<IChangeHandler> onChangeHandler = null;
-    
+
     public EndDatePanel( Date date ) {
       final EndDatePanel localThis = this;
-  
-      noEndDateRb = new RadioButton(END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.noEndDateLabel() );
-      noEndDateRb.setStyleName("recurrenceRadioButton"); //$NON-NLS-1$
-      noEndDateRb.setValue(true);
-      add(noEndDateRb);
+
+      noEndDateRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.noEndDateLabel() );
+      noEndDateRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
+      noEndDateRb.setValue( true );
+      add( noEndDateRb );
       HorizontalPanel hp = new HorizontalPanel();
-      add(hp);
-  
+      add( hp );
+
       HorizontalPanel endByPanel = new HorizontalPanel();
-      endByRb = new RadioButton(END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.endByLabel() );
-      endByRb.setStyleName("recurrenceRadioButton"); //$NON-NLS-1$
-      endByPanel.add(endByRb);
-      DefaultFormat format = new DefaultFormat(DateTimeFormat.getShortDateFormat());
-      endDatePicker = new DatePickerEx(format);
-      endDatePicker.getDatePicker().setStyleName(END_DATE_PICKER);
-      endDatePicker.getDatePicker().setEnabled(false);
-      endByPanel.add(endDatePicker.getDatePicker());
+      endByRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.endByLabel() );
+      endByRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
+      endByPanel.add( endByRb );
+      DefaultFormat format = new DefaultFormat( DateTimeFormat.getShortDateFormat() );
+      endDatePicker = new DatePickerEx( format );
+      endDatePicker.getDatePicker().setStyleName( END_DATE_PICKER );
+      endDatePicker.getDatePicker().setEnabled( false );
+      endByPanel.add( endDatePicker.getDatePicker() );
       endByLabel = new ErrorLabel( endByPanel );
       hp.add( endByLabel );
-  
-      noEndDateRb.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          localThis.endDatePicker.getDatePicker().setEnabled(false);
+
+      noEndDateRb.addClickListener( new ClickListener() {
+        public void onClick( Widget sender ) {
+          localThis.endDatePicker.getDatePicker().setEnabled( false );
         }
-      });
-  
-      endByRb.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          localThis.endDatePicker.getDatePicker().setEnabled(true);
+      } );
+
+      endByRb.addClickListener( new ClickListener() {
+        public void onClick( Widget sender ) {
+          localThis.endDatePicker.getDatePicker().setEnabled( true );
         }
-      });
+      } );
       reset( date );
       configureOnChangeHandler();
     }
-    
+
     public void reset( Date d ) {
       setNoEndDate();
       endDatePicker.getDatePicker().setValue( d );
     }
-    
-    @SuppressWarnings("unused")
+
+    @SuppressWarnings( "unused" )
     public DatePickerEx getEndDatePicker() {
       return endDatePicker;
     }
-    
+
     public void setNoEndDate() {
-      endByRb.setValue(false);
+      endByRb.setValue( false );
       noEndDateRb.setValue( true );
       endDatePicker.getDatePicker().setEnabled( false );
     }
-    
+
     public boolean isEndBy() {
       return endByRb.getValue();
     }
-    
+
     public void setEndBy() {
       noEndDateRb.setValue( false );
       endByRb.setValue( true );
       endDatePicker.getDatePicker().setEnabled( true );
     }
-    
+
     public boolean isNoEndDate() {
       return noEndDateRb.getValue();
     }
-    
+
     public Date getDate() {
-      return isEndBy()
-        ? endDatePicker.getSelectedDate()
-        : null;
+      return isEndBy() ? endDatePicker.getSelectedDate() : null;
     }
-    
+
     public void setDate( Date d ) {
       endDatePicker.getDatePicker().setValue( d );
     }
-    
+
     public void setEndByError( String errorMsg ) {
       endByLabel.setErrorMsg( errorMsg );
     }
-    
+
     public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
       this.onChangeHandler = handler;
     }
-    
+
     private void changeHandler() {
       if ( null != onChangeHandler ) {
         onChangeHandler.onHandle( this );
       }
     }
-    
+
     private void configureOnChangeHandler() {
       final EndDatePanel localThis = this;
-      
+
       ICallback<IChangeHandler> handler = new ICallback<IChangeHandler>() {
-        public void onHandle(IChangeHandler o) {
+        public void onHandle( IChangeHandler o ) {
           localThis.changeHandler();
         }
       };
       KeyboardListener keyboardListener = new KeyboardListener() {
-        public void onKeyDown(Widget sender, char keyCode, int modifiers) {
+        public void onKeyDown( Widget sender, char keyCode, int modifiers ) {
         }
-        public void onKeyPress(Widget sender, char keyCode, int modifiers) {
+
+        public void onKeyPress( Widget sender, char keyCode, int modifiers ) {
         }
-        public void onKeyUp(Widget sender, char keyCode, int modifiers) {
+
+        public void onKeyUp( Widget sender, char keyCode, int modifiers ) {
           localThis.changeHandler();
         }
       };
-      
+
       ClickListener clickListener = new ClickListener() {
-        public void onClick(Widget sender) {
+        public void onClick( Widget sender ) {
           localThis.changeHandler();
         }
       };
-      
-      endDatePicker.setOnChangeHandler(handler);
+
+      endDatePicker.setOnChangeHandler( handler );
       noEndDateRb.addClickListener( clickListener );
       noEndDateRb.addKeyboardListener( keyboardListener );
       endByRb.addClickListener( clickListener );
