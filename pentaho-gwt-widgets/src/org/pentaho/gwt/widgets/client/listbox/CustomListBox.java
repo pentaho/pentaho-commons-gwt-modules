@@ -101,7 +101,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private List<ChangeListener> listeners = new ArrayList<ChangeListener>();
   private final int spacing = 1;
   private int maxHeight, maxWidth, averageHeight; // height and width of largest ListItem
-  @SuppressWarnings( "unused" )
   private String primaryStyleName;
   private String height, width;
   private String popupHeight;
@@ -668,7 +667,6 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       if ( !selectedItems.contains( item ) ) {
         selectedItems.add( item );
       }
-      int prevIdx = selectedIndex;
       selectedIndex = items.indexOf( item );
 
       scrollSelectedItemIntoView();

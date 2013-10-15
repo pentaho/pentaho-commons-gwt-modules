@@ -78,7 +78,7 @@ public class StringUtils {
           Integer.parseInt( strInt );
           return true;
         } catch ( NumberFormatException ignore ) {
-          boolean ignoreMe = true;
+          //ignore
         }
       }
       return false;
