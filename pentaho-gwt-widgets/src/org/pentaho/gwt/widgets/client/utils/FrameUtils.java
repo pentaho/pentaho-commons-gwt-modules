@@ -124,7 +124,7 @@ public class FrameUtils {
       frames = ElementUtils.getElementsByTagName( "iframe" ); //$NON-NLS-1$
     } catch ( ClassCastException cce ) {
       // ignore class cast exceptions in here, they are happening in hosted mode for Elements
-      boolean ignore = true;
+      //ignore
     }
     for ( Element ele : frames ) {
       Frame f = null;

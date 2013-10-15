@@ -31,7 +31,7 @@ public class ColorPickerDialog extends PromptDialogBox {
     try {
       colorPicker.setHex( startHex );
     } catch ( Exception e ) {
-      boolean ignore = true;
+      //ignore
     }
   }
 

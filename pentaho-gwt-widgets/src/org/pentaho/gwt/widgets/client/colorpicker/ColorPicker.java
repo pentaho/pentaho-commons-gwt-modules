@@ -713,7 +713,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
         color.setHSV( hue, 100, 100 );
         slidermap.setOverlayColor( "#" + color.getHex() ); //$NON-NLS-1$
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
 
       sliderbar.setSliderPosition( 256 - (int) ( ( new Integer( hue ).floatValue() / 360 ) * 256 ) );
@@ -750,7 +750,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
         color.setHSV( hue, saturation, 100 );
         sliderbar.setLayerColor( "#" + color.getHex(), SliderBar.BarD ); //$NON-NLS-1$
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
 
       slidermap.setOverlayOpacity( brightness );
@@ -864,7 +864,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
         tbHexColor.setText( color.getHex() );
         setPreview( color.getHex() );
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
     }
 
@@ -878,7 +878,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
           ( (TextBox) sender ).setText( "0" ); //$NON-NLS-1$
         }
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
 
       red = Integer.parseInt( tbRed.getText() );
@@ -898,7 +898,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
         tbHexColor.setText( color.getHex() );
         setPreview( color.getHex() );
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
     } else if ( sender == tbHue || sender == tbSaturation || sender == tbBrightness ) {
       // Don't allow this value to overflow
@@ -915,7 +915,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
           tbBrightness.setText( "100" ); //$NON-NLS-1$
         }
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
 
       red = Integer.parseInt( tbRed.getText() );
@@ -935,7 +935,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
         tbHexColor.setText( color.getHex() );
         setPreview( color.getHex() );
       } catch ( Exception e ) {
-        boolean ignore = true;
+        //ignore
       }
     }
 

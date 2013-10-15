@@ -53,7 +53,6 @@ public class ElementUtils {
   public static void removeScrollingFromSplitPane( Widget panel ) {
     if ( !panel.isAttached() ) {
       // throw new IllegalStateException("Operation not allowed while element not on DOM");
-      boolean ignore = false;
     }
 
     if ( ( panel instanceof HorizontalSplitPanel || panel instanceof VerticalSplitPanel ) == false ) {

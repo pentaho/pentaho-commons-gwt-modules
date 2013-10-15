@@ -25,16 +25,12 @@ package org.pentaho.gwt.widgets.client.utils;
  */
 public class ParseException extends Exception {
 
-  private final int errorPos;
-
   public ParseException( String message, int pos ) {
     super( message );
-    errorPos = pos;
   }
 
   public ParseException( String message ) {
     super( message );
-    errorPos = 0;
   }
 
 }

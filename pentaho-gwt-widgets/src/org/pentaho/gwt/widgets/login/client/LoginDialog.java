@@ -186,6 +186,10 @@ public class LoginDialog extends PromptDialogBox {
   public void setShowNewWindowOption( boolean show ) {
     showNewWindowOption = show;
   }
+  
+  public boolean getShowNewWindowOption() {
+    return showNewWindowOption;
+  }
 
   public static void performLogin( final AsyncCallback callback ) {
     loginDialog = new LoginDialog( callback, false );

@@ -84,7 +84,7 @@ public class ToolbarGroup {
       buttons.add( btn );
     } else {
       // log error
-      boolean ignore = true;
+      //ignore
     }
   }
 

@@ -174,7 +174,7 @@ public class PromptDialogBox extends DialogBox {
           callback.okPressed();
         }
       } catch ( Throwable dontCare ) {
-        boolean ignore = true;
+        //ignore
       }
       hide();
     }
@@ -186,7 +186,7 @@ public class PromptDialogBox extends DialogBox {
         ( (IThreeButtonDialogCallback) callback ).notOkPressed();
       }
     } catch ( Throwable dontCare ) {
-      boolean ignore = true;
+      //ignore
     }
     hide();
   }
@@ -197,7 +197,7 @@ public class PromptDialogBox extends DialogBox {
         callback.cancelPressed();
       }
     } catch ( Throwable dontCare ) {
-      boolean ignore = true;
+      //ignore
     }
     hide();
   }

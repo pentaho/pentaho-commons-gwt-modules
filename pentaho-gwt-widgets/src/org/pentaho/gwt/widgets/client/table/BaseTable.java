@@ -86,8 +86,6 @@ public class BaseTable extends Composite {
 
   private FixedWidthGrid dataGrid;
 
-  private String[] tableHeaderNames;
-
   private String scrollTableWidth;
 
   private String scrollTableHeight;
@@ -158,7 +156,6 @@ public class BaseTable extends Composite {
       SelectionGrid.SelectionPolicy selectionPolicy ) {
 
     if ( tableHeaderNames != null ) {
-      this.tableHeaderNames = tableHeaderNames;
       this.columnWidths = columnWidths;
       this.numberOfColumns = tableHeaderNames.length;
 
@@ -196,6 +193,7 @@ public class BaseTable extends Composite {
    * Creates a table with the given headers, column widths, and row/column values using the default resize policy of
    * RESIZE_POLICY_FIXED_WIDTH.
    */
+  @SuppressWarnings( "unused" )
   private void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues ) {
     createTable( tableHeaderNames, columnWidths, rowAndColumnValues, ScrollTable.ResizePolicy.FIXED_WIDTH,
         selectionPolicy );
@@ -408,7 +406,7 @@ public class BaseTable extends Composite {
         try {
           element = cellFormatter.getElement( i, j );
         } catch ( Exception e ) {
-          boolean ignore = true;
+          //ignore
         }
 
         if ( element != null ) {
