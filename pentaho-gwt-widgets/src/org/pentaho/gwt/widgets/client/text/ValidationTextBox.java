@@ -49,8 +49,6 @@ public class ValidationTextBox extends HorizontalPanel implements IValidationTex
 
   private ValidationTextBoxListenerCollection listeners;
 
-  private static final int DEFAULT_OFFSET = 9;
-
   public ValidationTextBox() {
     textBox = new TextBox();
     textBox.addKeyUpHandler( new KeyUpHandler() {

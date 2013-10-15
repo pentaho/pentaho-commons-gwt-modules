@@ -172,7 +172,6 @@ import java.util.TreeSet;
 public class CronExpression {
 
   private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
-  private static final long serialVersionUID = 12423409423L;
 
   protected static final int SECOND = 0;
 

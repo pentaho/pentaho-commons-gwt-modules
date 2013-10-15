@@ -73,7 +73,7 @@ public class ResizableDialogBox {
               callback.okPressed();
             }
           } catch ( Throwable dontCare ) {
-            boolean ignore = true;
+            //ignore
           }
           hide();
         }
@@ -94,7 +94,7 @@ public class ResizableDialogBox {
               callback.cancelPressed();
             }
           } catch ( Throwable dontCare ) {
-            boolean ignore = true;
+            //ignore
           }
           hide();
         }

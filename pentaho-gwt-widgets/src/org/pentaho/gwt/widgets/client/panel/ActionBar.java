@@ -65,7 +65,7 @@ public class ActionBar extends SimplePanel {
       collapseEffect.setEffectElement( this.getElement() );
       collapseEffect.setDuration( DURATION );
       collapseEffect.play( delay );
-      setState( state.COLLAPSE );
+      setState( State.COLLAPSE );
     }
   }
 
@@ -80,7 +80,7 @@ public class ActionBar extends SimplePanel {
       expandEffect.setEffectElement( this.getElement() );
       expandEffect.setDuration( DURATION );
       expandEffect.play( delay );
-      setState( state.EXPAND );
+      setState( State.EXPAND );
     }
   }
 
