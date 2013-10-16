@@ -3432,3 +3432,21 @@ div.listbox .pentaho-listbox {
   width: 16px;
   background: url("images/table_fact.png");
 }
+
+
+.fileBrowserColumn .body .file .icon.cda,
+.fileBrowserColumn .body .file .cda{
+  background: url("../images/cda_20.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.wcdf,
+.fileBrowserColumn .body .file .wcdf{
+  background: url("../images/cde_20.png") no-repeat;
+}
+
+.file-cda {
+  background: url("../images/cda_32.png") no-repeat;
+}
+
+.file-wcdf{
+  background: url("../images/cde_32.png") no-repeat;
+}
