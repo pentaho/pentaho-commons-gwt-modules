@@ -2923,6 +2923,15 @@ width: 22px;
 .fileBrowserColumn .body .file .icon.trashFolder{
  background: url("images/folder_closed.png") no-repeat;
 }
+.fileBrowserColumn .body .file .icon.cda,
+.fileBrowserColumn .body .file .cda{
+  background: url("images/cda_20.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.wcdf,
+.fileBrowserColumn .body .file .wcdf{
+  background: url("images/cde_20.png") no-repeat;
+}
+
 .fileBrowserColumn .body div.folder.open > div.element > div.expandCollapse {
 background: url("images/arrow_open.png") no-repeat;
 background-position: 0px 3px;
@@ -2953,6 +2962,10 @@ width: 16px;
 .file-prpti{
   background: url("images/prptiFile_32.png") no-repeat;
 }
+
+
+
+
   /* added by brett to override PIR styles */
 .styled >* #reportContent,
 #reportContent {
@@ -5045,4 +5058,21 @@ div.listbox .pentaho-listbox {
   height: 16px;
   width: 16px;
   background: url("images/table_fact.png");
+}
+
+.fileBrowserColumn .body .file .icon.cda,
+.fileBrowserColumn .body .file .cda{
+  background: url("../images/cda_20.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.wcdf,
+.fileBrowserColumn .body .file .wcdf{
+  background: url("../images/cde_20.png") no-repeat;
+}
+
+.file-cda {
+  background: url("../images/cda_32.png") no-repeat;
+}
+
+.file-wcdf{
+  background: url("../images/cde_32.png") no-repeat;
 }
