@@ -177,7 +177,7 @@ public class FileChooser extends VerticalPanel {
     RequestBuilder builder = null;
     builder =
         new RequestBuilder( RequestBuilder.GET, getFullyQualifiedURL()
-            + "api/repo/files/:/children?showHidden=" + showHiddenFiles + "&depth=-1&filter=*" ); //$NON-NLS-1$
+            + "api/repo/files/:/tree?showHidden=" + showHiddenFiles + "&depth=-1&filter=*" ); //$NON-NLS-1$
     builder.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
     RequestCallback callback = new RequestCallback() {
 
