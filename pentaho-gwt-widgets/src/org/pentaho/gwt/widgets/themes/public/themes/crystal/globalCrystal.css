@@ -4407,19 +4407,18 @@ background: url("images/connector_top.png") no-repeat top left;
   height: 22px;
   width: 22px;
 }
-.pc_pageNextDisabled, .dijitToolbar .pc_pageNextDisabled {
-  background: url('images/page_forward_disabled.png') no-repeat !important;
-  background-position: 1px 3px !important;
-  height: 22px;
-  width: 22px;
-}
 .pc_pageNext, .dijitToolbar .pc_pageNext{
   background: url('images/page_forward.png') no-repeat !important;
   background-position: 1px 3px !important;
   height: 22px;
   width: 22px;
 }
-
+.pc_pageNextDisabled, .dijitToolbar .pc_pageNextDisabled {
+  background: url('images/page_forward_disabled.png') no-repeat !important;
+  background-position: 1px 3px !important;
+  height: 22px;
+  width: 22px;
+}
 .pentaho-optionsbutton{
   background: url('images/options.png') no-repeat !important;
   height: 22px;
