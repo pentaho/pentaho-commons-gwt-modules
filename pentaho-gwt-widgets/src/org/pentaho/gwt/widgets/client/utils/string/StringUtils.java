@@ -85,4 +85,17 @@ public class StringUtils {
       return strInt.matches( MATCH_POSITIVE_INTEGER_RE );
     }
   }
+  
+  public static int countMatches(String str, String sub) {
+    if (isEmpty( str ) || isEmpty( sub )){
+      return 0;
+    }
+    int count = 0;
+    int idx = 0;
+    while ((idx = str.indexOf(sub, idx)) != -1) {
+        count++;
+        idx += sub.length();
+    }
+    return count;
+  }
 }
