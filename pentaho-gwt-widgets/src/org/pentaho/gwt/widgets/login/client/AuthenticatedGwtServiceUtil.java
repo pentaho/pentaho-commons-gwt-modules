@@ -26,7 +26,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.login.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.messages.Messages;
 
 /**
  * This class is a wrapper class to any GWT service which needs authentication before it performs any work The class

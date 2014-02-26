@@ -27,8 +27,7 @@ import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.messages.Messages;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
@@ -41,7 +40,6 @@ import java.util.Date;
 @SuppressWarnings( "deprecation" )
 public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
 
-  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
   private static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 
   private static final String END_DATE_RB_GROUP = "end-date-group"; //$NON-NLS-1$
@@ -57,7 +55,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
 
   public DateRangeEditor( Date date ) {
 
-    super( MSGS.rangeOfRecurrence() );
+    super( Messages.getString( "DateRangeEditor.rangeOfRecurrence" ) );
     this.addStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
     uniqueInstanceNumber += 1;
 
@@ -65,7 +63,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     add( outerHP );
 
     HorizontalPanel hp = new HorizontalPanel();
-    Label l = new Label( MSGS.startLabel() );
+    Label l = new Label( Messages.getString( "DateRangeEditor.startLabel" ) );
     l.setStyleName( "startLabel" ); //$NON-NLS-1$
     hp.add( l );
     DefaultFormat format = new DefaultFormat( DateTimeFormat.getShortDateFormat() );
@@ -161,7 +159,8 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     public EndDatePanel( Date date ) {
       final EndDatePanel localThis = this;
 
-      noEndDateRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.noEndDateLabel() );
+      noEndDateRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber
+          , Messages.getString( "DateRangeEditor.noEndDateLabel" ) );
       noEndDateRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       noEndDateRb.setValue( true );
       add( noEndDateRb );
@@ -169,7 +168,8 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
       add( hp );
 
       HorizontalPanel endByPanel = new HorizontalPanel();
-      endByRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, MSGS.endByLabel() );
+      endByRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber
+          , Messages.getString( "DateRangeEditor.endByLabel" ) );
       endByRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       endByPanel.add( endByRb );
       DefaultFormat format = new DefaultFormat( DateTimeFormat.getShortDateFormat() );

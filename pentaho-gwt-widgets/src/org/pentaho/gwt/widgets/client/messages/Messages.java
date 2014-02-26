@@ -15,12 +15,11 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.gwt.widgets.login.client.messages;
+package org.pentaho.gwt.widgets.client.messages;
 
 import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 
 public class Messages {
-
   private static ResourceBundle messageBundle;
 
   public static String getString( String key ) {
