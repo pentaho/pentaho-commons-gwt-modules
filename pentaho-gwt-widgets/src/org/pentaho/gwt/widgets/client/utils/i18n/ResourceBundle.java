@@ -267,6 +267,15 @@ public class ResourceBundle {
         StringTokenizer st = new StringTokenizer(localeName, '_');
         if (st.countTokens() == 2) {
           // 3. fetch bundleName_lang_country.properties
+
+          // need to match case-insensitive on country
+          if( !isSupportedLanguage( localeName ) ) {
+            // try to switch the case on the trailing characters
+            if( isSupportedLanguage( st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase() ) ) {
+              localeName = st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase();
+            }
+          }
+
           currentAttemptUrl = path + bundleName + "_" + localeName + PROPERTIES_EXTENSION + getUrlExtras(); //$NON-NLS-1$
           if (!isSupportedLanguage(localeName) || bundleCache.containsKey(currentAttemptUrl)) {
             langCountryCallback.onResponseReceived(null, new FakeResponse(bundleCache.get(currentAttemptUrl)));
