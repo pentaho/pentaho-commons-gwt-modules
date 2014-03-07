@@ -44,7 +44,7 @@ public class LoginEntryPoint implements EntryPoint, IResourceBundleLoadCallback 
   public void onModuleLoad() {
     ResourceBundle messages = new ResourceBundle();
     Messages.setResourceBundle( messages );
-    messages.loadBundle( GWT.getHostPageBaseURL() + "messages/", "LoginMessages", true, LoginEntryPoint.this ); //$NON-NLS-1$ //$NON-NLS-2$
+    messages.loadBundle( GWT.getModuleBaseForStaticFiles() + "messages/", "LoginMessages", true, LoginEntryPoint.this ); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   public void bundleLoaded( String bundleName ) {
