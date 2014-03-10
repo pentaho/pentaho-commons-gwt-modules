@@ -3450,3 +3450,13 @@ div.listbox .pentaho-listbox {
 .file-wcdf{
   background: url("../images/cde_32.png") no-repeat;
 }
+
+/********** angular-directives **********/
+.bootstrap .accordion-wizard .accordion-title .accordion-heading-content {
+  color: black;
+}
+
+.bootstrap .accordion-wizard .summary-label {
+  color: #BBB;
+}
+/********** /angular-directives **********/
