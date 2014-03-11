@@ -5076,7 +5076,6 @@ div.listbox .pentaho-listbox {
   background: url("../images/cde_32.png") no-repeat;
 }
 
-<<<<<<< Updated upstream
 
 /********** angular-directives **********/
 .bootstrap .accordion-wizard .accordion-title .accordion-heading-content {
@@ -5087,7 +5086,6 @@ div.listbox .pentaho-listbox {
   color: #BBB;
 }
 /********** /angular-directives **********/
-=======
 .tundra .dijitCalendarContainer.dijitCalendar .dijitArrowButtonInner {
     background:url("images/16x16_down.png") no-repeat scroll center;
     width: 16px;
@@ -5175,4 +5173,3 @@ div.listbox .pentaho-listbox {
     position: relative;
     left: -2px;
 }
->>>>>>> Stashed changes
