@@ -5076,6 +5076,7 @@ div.listbox .pentaho-listbox {
   background: url("../images/cde_32.png") no-repeat;
 }
 
+<<<<<<< Updated upstream
 
 /********** angular-directives **********/
 .bootstrap .accordion-wizard .accordion-title .accordion-heading-content {
@@ -5086,3 +5087,92 @@ div.listbox .pentaho-listbox {
   color: #BBB;
 }
 /********** /angular-directives **********/
+=======
+.tundra .dijitCalendarContainer.dijitCalendar .dijitArrowButtonInner {
+    background:url("images/16x16_down.png") no-repeat scroll center;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarDecrease {
+    background:url("images/16x16_left.png") no-repeat scroll center;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarIncrease {
+    background:url("images/16x16_right.png") no-repeat scroll center;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar {
+    border: 2px solid #cbdde8;
+    background-color: #FFF;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarMonthContainer .dijitDropDownButton {
+    border: 2px solid #cbdde8;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar * {
+    background-color: #FFFFFF;
+    background-image: none;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate,
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate .dijitCalendarDateLabel,
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedYear {
+    background-color: #cbdde8 !important;
+}
+
+.dijitCalendarMonthMenu.dijitMenu {
+    background-color: #FFF;
+    border: 2px solid #cbdde8;
+    border-top: none;
+}
+
+.dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabelHover{
+    background-color: #cbdde8;
+    color: #144b64;
+}
+
+.dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabelHover:active {
+    background-color: #CBEFA3;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
+    border-top: none;
+    border-bottom: solid 1px #000;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarYearLabel {
+    border-top: solid 1px #000;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
+    color: #cbdde8;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarDateTemplate {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.tundra .dijitCalendarContainer.dijitCalendar [widgetid*=lookup_popup_mddb] {
+    position: relative;
+    left: -2px;
+}
+>>>>>>> Stashed changes
