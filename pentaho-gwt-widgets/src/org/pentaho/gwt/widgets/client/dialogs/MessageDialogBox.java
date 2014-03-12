@@ -19,11 +19,12 @@ package org.pentaho.gwt.widgets.client.dialogs;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import org.pentaho.gwt.widgets.client.messages.Messages;
 
 public class MessageDialogBox extends PromptDialogBox {
 
   public MessageDialogBox( String title, String message, boolean isHTML, boolean autoHide, boolean modal ) {
-    super( title, "OK", null, autoHide, modal, isHTML ? new HTML( message ) : new Label( message ) ); //$NON-NLS-1$
+    super( title, Messages.getString( "dialog.button.ok" ), null, autoHide, modal, isHTML ? new HTML( message ) : new Label( message ) ); //$NON-NLS-1$
   }
 
   public MessageDialogBox( String title, String message, boolean isHTML,

@@ -30,8 +30,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.dialogs.DialogBox;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
-import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.messages.Messages;
 
 /**
  * @author wseyler
@@ -40,8 +39,6 @@ import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
  */
 @SuppressWarnings( "deprecation" )
 public abstract class AbstractWizardDialog extends DialogBox implements IWizardPanelListener {
-
-  private static final WidgetsLocalizedMessages MSGS = WidgetsLocalizedMessagesSingleton.getInstance().getMessages();
 
   private static final int STEPS_COUNT = 15; // Defines the height of the steps ListBox
 
@@ -56,10 +53,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   protected ScheduleDialogType dialogType;
 
   // gui elements
-  protected Button backButton = new Button( MSGS.back() );
-  protected Button nextButton = new Button( MSGS.next() );
-  protected Button cancelButton = new Button( MSGS.cancel() );
-  protected Button finishButton = new Button( MSGS.finish() );
+  protected Button backButton = new Button( Messages.getString( "dialog.button.back" ) );
+  protected Button nextButton = new Button( Messages.getString( "dialog.button.next" ) );
+  protected Button cancelButton = new Button( Messages.getString( "dialog.button.cancel" ) );
+  protected Button finishButton = new Button( Messages.getString( "dialog.button.finish" ) );
 
   ListBox steps = new ListBox();
   protected DeckPanel wizardDeckPanel = new DeckPanel();
@@ -238,7 +235,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
     // Create the Steps and add it to the content
     stepsList = new VerticalPanel();
-    stepsList.add( new Label( MSGS.steps() ) );
+    stepsList.add( new Label( Messages.getString( "dialog.steps" ) ) );
     steps.setVisibleItemCount( STEPS_COUNT );
     stepsList.add( steps );
     // steps.setSize("30%", "100%");
@@ -297,7 +294,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
       ( (IWizardPanel) wizardDeckPanel.getWidget( 0 ) ).addWizardPanelListener( this );
       if ( wizardPanels.length == 1 ) { // We only have one item so change the Finish button to ok.
-        finishButton.setText( MSGS.ok() );
+        finishButton.setText( Messages.getString( "dialog.button.ok" ) );
       }
 
       updateGUI( 0 );

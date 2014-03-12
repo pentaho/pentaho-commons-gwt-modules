@@ -41,7 +41,7 @@ import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.utils.StringTokenizer;
-import org.pentaho.gwt.widgets.login.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.messages.Messages;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

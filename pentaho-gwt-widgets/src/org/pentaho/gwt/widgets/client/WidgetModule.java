@@ -18,16 +18,28 @@
 package org.pentaho.gwt.widgets.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import org.pentaho.gwt.widgets.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
+import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 
-public class WidgetModule implements EntryPoint {
+public class WidgetModule implements EntryPoint, IResourceBundleLoadCallback {
 
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
+    ResourceBundle messages = new ResourceBundle();
+    Messages.setResourceBundle( messages );
+    messages.loadBundle( GWT.getModuleBaseForStaticFiles() + "messages/", "WidgetsMessages", true, WidgetModule.this ); //$NON-NLS-1$ //$NON-NLS-2$
+  }
+
+  @Override
+  public void bundleLoaded( String bundleName ) {
+
   }
 }
