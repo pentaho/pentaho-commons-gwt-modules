@@ -5081,11 +5081,17 @@ div.listbox .pentaho-listbox {
 .bootstrap .accordion-wizard .accordion-title .accordion-heading-content {
   color: #0088CC;
 }
-
 .bootstrap .accordion-wizard .summary-label {
   color: #BBB;
 }
+.bootstrap .accordion-wizard .accordion-group {
+  background-color: #FFF;
+}
+.bootstrap .accordion-wizard .accordion-group.accordion-group-active {
+  background-color: #F8F8F8;
+}
 /********** /angular-directives **********/
+
 .tundra .dijitCalendarContainer.dijitCalendar .dijitArrowButtonInner {
     background:url("images/16x16_down.png") no-repeat scroll center;
     width: 16px;
