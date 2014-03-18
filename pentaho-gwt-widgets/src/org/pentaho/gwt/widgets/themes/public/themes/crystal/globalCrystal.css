@@ -5227,3 +5227,7 @@ treecontrol.tree-classic li .tree-selected {
     background-color: #d7e9cd;
 }
 
+.schedule-dialog-button-panel tr td button.pentaho-button{
+	margin-left:2px;
+	margin-right:2px;
+}
