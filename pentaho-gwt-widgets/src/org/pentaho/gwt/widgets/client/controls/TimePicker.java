@@ -17,10 +17,13 @@
 
 package org.pentaho.gwt.widgets.client.controls;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
+
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
@@ -37,13 +40,13 @@ import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
  */
 @SuppressWarnings( "deprecation" )
 public class TimePicker extends HorizontalPanel implements IChangeHandler {
-  private ListBox hourLB = new ListBox();
-  private ListBox minuteLB = new ListBox();
-  private ListBox timeOfDayLB = new ListBox();
+  private final ListBox hourLB = new ListBox();
+  private final ListBox minuteLB = new ListBox();
+  private final ListBox timeOfDayLB = new ListBox();
   private ICallback<IChangeHandler> onChangeHandler = null;
 
   public TimePicker() {
-    this.setSpacing( 5 );
+    setSpacing( 5 );
     // hour list
     initHourLB();
 
@@ -60,6 +63,15 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
     add( minuteLB );
     add( timeOfDayLB );
     configureOnChangeHandler();
+  }
+
+  public void setTime( Date date ) {
+    int hIndex = date.getHours() - 1;
+    hIndex = hIndex > 10 ? hIndex - 12 : hIndex;
+    hIndex = hIndex == -1 ? 11 : hIndex;
+    hourLB.setSelectedIndex( hIndex );
+    minuteLB.setSelectedIndex( date.getMinutes() );
+    setTimeOfDay( date.getHours() > 11 ? TimeOfDay.PM : TimeOfDay.AM );
   }
 
   /**
@@ -135,7 +147,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
    * @return
    */
   public void setHour( String hour ) {
-    this.hourLB.setSelectedIndex( Integer.parseInt( hour ) - 1 );
+    hourLB.setSelectedIndex( Integer.parseInt( hour ) - 1 );
   }
 
   /**
@@ -153,7 +165,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
    * @param minute
    */
   public void setMinute( String minute ) {
-    this.minuteLB.setSelectedIndex( Integer.parseInt( minute ) );
+    minuteLB.setSelectedIndex( Integer.parseInt( minute ) );
   }
 
   public TimeUtil.TimeOfDay getTimeOfDay() {
@@ -161,11 +173,12 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
   }
 
   public void setTimeOfDay( TimeUtil.TimeOfDay timeOfDay ) {
-    this.timeOfDayLB.setSelectedIndex( timeOfDay.value() );
+    timeOfDayLB.setSelectedIndex( timeOfDay.value() );
   }
 
+  @Override
   public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
-    this.onChangeHandler = handler;
+    onChangeHandler = handler;
   }
 
   private void changeHandler() {
@@ -178,6 +191,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
     final TimePicker localThis = this;
 
     ChangeListener changeListener = new ChangeListener() {
+      @Override
       public void onChange( Widget sender ) {
         localThis.changeHandler();
       }
