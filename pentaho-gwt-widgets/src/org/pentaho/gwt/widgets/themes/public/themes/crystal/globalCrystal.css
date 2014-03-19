@@ -5227,3 +5227,25 @@ treecontrol.tree-classic li .tree-selected {
     background-color: #d7e9cd;
 }
 
+
+.bootstrap .pentaho-toggle .btn.toggle-on.active {}
+.bootstrap .pentaho-toggle .btn.toggle-on.inactive {
+  background-image: none;
+  background-color: #FFF;
+  color: #FFF;
+  text-shadow: none;
+}
+
+.bootstrap .pentaho-toggle .btn.toggle-off.active {
+  background-image: none;
+  background-color: #F8F8F8;
+  color: #000;
+  text-shadow: none;
+}
+
+.bootstrap .pentaho-toggle .btn.toggle-off.inactive {
+  background-image: none;
+  background-color: #FFF;
+  color: #FFF;
+  text-shadow: none;
+}
