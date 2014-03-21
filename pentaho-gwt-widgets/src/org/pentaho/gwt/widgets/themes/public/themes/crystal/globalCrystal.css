@@ -5257,3 +5257,13 @@ treecontrol.tree-classic li .tree-selected {
   color: #FFF;
   text-shadow: none;
 }
+
+.tundra .dijitDownArrowButton input[type='text'].dijitArrowButtonInner {
+    border: none;
+}
+
+.tundra table.dijitValidationTextBox .dijitButtonContents,
+.tundra table.dijitValidationTextBox .dijitArrowButtonInner {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
