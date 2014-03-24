@@ -215,15 +215,6 @@ input, input[type="password"]{
 
 }
 
-.IE .pentaho-button:hover {
-  background: #0085b0;
-}
-
-.IE .pentaho-button-hover {
-
-  background: #0085b0;
-}
-
   /* Just lightening it up a bit */
 .pentaho-button:active,
 .IE .pentaho-button:focus {
@@ -236,6 +227,11 @@ input, input[type="password"]{
   background: linear-gradient(to bottom,  #8ac06e 0%,#62ab3d 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ac06e', endColorstr='#62ab3d',GradientType=0 ); /* IE6-9 */
   color: #293b44;
+}
+
+.dijitDisabled .pentaho-button:active,
+.IE .dijitDisabled .pentaho-button:focus {
+  background: none;
 }
 
 .IE .pentaho-button:active {
@@ -4388,7 +4384,7 @@ background: url("images/connector_top.png") no-repeat top left;
 .closeIcon{
   background: url('images/closeTab_off.png') no-repeat top left;
 }
-.closeIconHover{
+.closeIcon:hover{
   background: url('images/closeTab_active.png')no-repeat top left;
 }
 .tundra .dijitTooltipContainer .pentaho-tabWidget{
