@@ -4991,7 +4991,7 @@ div.listbox .pentaho-listbox {
 }
 
 #launch-widget #sample {
-  height: 480px;  
+  height: 480px;
 }
 
 #launch-widget-container.main-container {
@@ -5262,4 +5262,9 @@ treecontrol.tree-classic li .tree-selected {
 .tundra table.dijitValidationTextBox .dijitArrowButtonInner {
     padding-top: 0px;
     padding-bottom: 0px;
+}
+
+.schedule-dialog-button-panel tr td button.pentaho-button{
+	margin-left:2px;
+	margin-right:2px;
 }
