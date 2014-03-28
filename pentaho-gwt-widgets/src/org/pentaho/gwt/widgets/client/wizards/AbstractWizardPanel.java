@@ -36,7 +36,7 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
 
   public AbstractWizardPanel() {
     super();
-    this.addStyleName( WIZARD_PANEL );
+    addStyleName( WIZARD_PANEL );
   }
 
   /*
@@ -46,6 +46,7 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
    * org.pentaho.gwt.widgets.client.wizards.SourcesWizardEvents#addWizardPanelListener(org.pentaho.gwt.widgets.client
    * .wizards.IWizardPanelListener)
    */
+  @Override
   public void addWizardPanelListener( IWizardPanelListener listener ) {
     if ( wizardPanelListenerCollection == null ) {
       wizardPanelListenerCollection = new WizardPanelListenerCollection();
@@ -60,6 +61,7 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
    * org.pentaho.gwt.widgets.client.wizards.SourcesWizardEvents#removeWizardPanelListener(org.pentaho.gwt.widgets.client
    * .wizards.IWizardPanelListener)
    */
+  @Override
   public void removeWizardPanelListener( IWizardPanelListener listener ) {
     if ( wizardPanelListenerCollection != null ) {
       wizardPanelListenerCollection.remove( listener );
@@ -81,6 +83,7 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
    * 
    * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanel#canContinue()
    */
+  @Override
   public boolean canContinue() {
     return canContinue;
   }
@@ -95,11 +98,16 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
     }
   }
 
+  public void panelChanged() {
+    wizardPanelListenerCollection.fireWizardPanelChanged( this );
+  }
+
   /*
    * (non-Javadoc)
    * 
    * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanel#canFinish()
    */
+  @Override
   public boolean canFinish() {
     return canFinish;
   }
@@ -109,6 +117,7 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
    * 
    * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanel#setUserData(java.lang.Object)
    */
+  @Override
   public void setUserData( Object userData ) {
     this.userData = userData;
   }
@@ -118,6 +127,7 @@ public abstract class AbstractWizardPanel extends DockPanel implements IWizardPa
    * 
    * @see org.pentaho.gwt.widgets.client.wizards.IWizardPanel#getUserData()
    */
+  @Override
   public Object getUserData() {
     return userData;
   }

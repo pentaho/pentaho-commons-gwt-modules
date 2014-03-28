@@ -29,6 +29,7 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+
 import org.pentaho.gwt.widgets.client.dialogs.DialogBox;
 import org.pentaho.gwt.widgets.client.messages.Messages;
 
@@ -102,24 +103,28 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     finishButton.setStyleName( "pentaho-button" );
 
     nextButton.addClickListener( new ClickListener() {
+      @Override
       public void onClick( Widget sender ) {
         nextClicked();
       }
     } );
 
     backButton.addClickListener( new ClickListener() {
+      @Override
       public void onClick( Widget sender ) {
         backClicked();
       }
     } );
 
     cancelButton.addClickListener( new ClickListener() {
+      @Override
       public void onClick( Widget sender ) {
         cancelClicked();
       }
     } );
 
     finishButton.addClickListener( new ClickListener() {
+      @Override
       public void onClick( Widget sender ) {
         finishClicked();
       }
@@ -132,6 +137,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   protected boolean enableNext( int index ) {
     return ( (IWizardPanel) wizardDeckPanel.getWidget( index ) ).canContinue()
         && index < wizardDeckPanel.getWidgetCount() - 1;
+  }
+
+  protected boolean enableFinish( int index ) {
+    return ( (IWizardPanel) wizardDeckPanel.getWidget( index ) ).canFinish();
   }
 
   protected boolean enableBack( int index ) {
@@ -148,6 +157,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
   protected boolean showFinish( int index ) {
     return true;
+  }
+
+  protected int getIndex() {
+    return wizardDeckPanel.getVisibleWidget();
   }
 
   protected void nextClicked() {
@@ -167,7 +180,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
   }
 
   protected void backClicked() {
-    int oldIndex = wizardDeckPanel.getVisibleWidget();
+    int oldIndex = getIndex();
     int newIndex = oldIndex - 1; // The panel that is going to be displayed
     // Get the actors (next and previous panels)
     IWizardPanel previousPanel = (IWizardPanel) wizardDeckPanel.getWidget( newIndex );
@@ -214,7 +227,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     // Back button always enabled unless we're on the first IWizardPanel
     backButton.setEnabled( enableBack( index ) );
     // Current IWizardPanel can finish at any step.
-    finishButton.setEnabled( ( (IWizardPanel) wizardDeckPanel.getWidget( index ) ).canFinish() );
+    finishButton.setEnabled( enableFinish( index ) );
 
   }
 
@@ -315,12 +328,11 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    * org.pentaho.gwt.widgets.client.wizards.IWizardPanelListener#panelChanged(org.pentaho.gwt.widgets.client.wizards
    * .IWizardPanel)
    */
+  @Override
   public void panelUpdated( IWizardPanel wizardPanel ) {
-    int index = wizardDeckPanel.getVisibleWidget();
-    int lastPanelIndex = wizardDeckPanel.getWidgetCount() - 1;
-
-    nextButton.setEnabled( wizardPanel.canContinue() && index < lastPanelIndex );
-    finishButton.setEnabled( wizardPanel.canFinish() );
+    int index = getIndex();
+    nextButton.setEnabled( enableNext( index ) );
+    finishButton.setEnabled( enableFinish( index ) );
   }
 
   public boolean wasCancelled() {
