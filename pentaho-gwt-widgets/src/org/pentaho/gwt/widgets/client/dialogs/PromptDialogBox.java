@@ -94,7 +94,6 @@ public class PromptDialogBox extends DialogBox {
     }
     dialogContent.setCellPadding( 0 );
     dialogContent.setCellSpacing( 0 );
-    dialogContent.getFlexCellFormatter().setHeight( 0, 0, "100%" );
     // add button panel
     dialogContent.setWidget( 1, 0, dialogButtonPanelWrapper );
     dialogContent.getCellFormatter().setVerticalAlignment( 1, 0, HasVerticalAlignment.ALIGN_BOTTOM );
