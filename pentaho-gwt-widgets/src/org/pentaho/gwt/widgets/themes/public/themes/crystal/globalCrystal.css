@@ -5088,28 +5088,28 @@ div.listbox .pentaho-listbox {
 }
 /********** /angular-directives **********/
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitArrowButtonInner {
+.dijitCalendarPopup  .dijitCalendarContainer.dijitCalendar .dijitArrowButtonInner {
     background:url("images/16x16_down.png") no-repeat scroll center;
     width: 16px;
     height: 16px;
     margin: 0;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarDecrease {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarDecrease {
     background:url("images/16x16_left.png") no-repeat scroll center;
     width: 16px;
     height: 16px;
     margin: 0;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarIncrease {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarIncrease {
     background:url("images/16x16_right.png") no-repeat scroll center;
     width: 16px;
     height: 16px;
     margin: 0;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar {
+.dijitCalendarContainer.dijitCalendar {
     border: 2px solid #cbdde8;
     background-color: #FFF;
     padding-left: 10px;
@@ -5118,21 +5118,21 @@ div.listbox .pentaho-listbox {
     padding-bottom: 3px;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarMonthContainer .dijitDropDownButton {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarMonthContainer .dijitDropDownButton {
     border: 2px solid #cbdde8;
     padding-top: 5px;
     padding-bottom: 5px;
     width: 100%;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar * {
+.dijitCalendarPopup .dijitCalendarContainer.dijitCalendar * {
     background-color: #FFFFFF;
     background-image: none;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate,
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate .dijitCalendarDateLabel,
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedYear {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate,
+.dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate .dijitCalendarDateLabel,
+.dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedYear {
     background-color: #cbdde8 !important;
 }
 
@@ -5151,29 +5151,77 @@ div.listbox .pentaho-listbox {
     background-color: #CBEFA3;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
     border-top: none;
-    border-bottom: solid 1px #000;
+    border-bottom: solid 1px #cbdde8;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarYearLabel {
-    border-top: solid 1px #000;
+.dijitCalendarContainer.dijitCalendar .dijitCalendarYearLabel {
+    border-top: solid 1px #cbdde8;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
     color: #cbdde8;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar .dijitCalendarDateTemplate {
+.dijitCalendarContainer.dijitCalendar .dijitCalendarDateTemplate {
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 0px;
     padding-right: 0px;
 }
 
-.tundra .dijitCalendarContainer.dijitCalendar [widgetid*=lookup_popup_mddb] {
+.dijitCalendarContainer.dijitCalendar [widgetid*=lookup_popup_mddb] {
     position: relative;
     left: -2px;
+}
+
+[id*=DP] .dijitDownArrowButton {
+  height: 20px;
+  background-image: none !important;
+}
+
+[id*=DP] .dijitDownArrowButton input {
+  padding: 0px;
+}
+
+#widget_DP_range1_lookup, #widget_DP_range2_lookup {
+  height: 20px;
+  width: 120px;
+}
+
+#date-picker-dlg-wrapper {
+  width: 100%;
+}
+
+.dialog-content #date-picker-dlg-wrapper .dijitComboBox .dijitArrowButton {
+  border: none;
+  box-shadow: none;
+}
+
+#date-picker-dlg-wrapper .dijitComboBox {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#DP_range1 {
+  float: left;
+  padding-left: 65px !important;
+}
+
+#DP_range2 {
+  float: right;
+  padding-right: 65px !important;
+}
+
+#DP_range1_lookup, #DP_range2_lookup {
+  padding: 0px;
+  text-align: center;
+}
+
+#widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown {
+  margin-left: -34px !important;
+  margin-top: 10px !important;
 }
 
 /*Angular Tree control directive*/
