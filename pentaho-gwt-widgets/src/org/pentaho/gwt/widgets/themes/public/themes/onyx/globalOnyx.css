@@ -3631,3 +3631,30 @@ treecontrol.tree-classic li .tree-selected {
   color: #FFF;
   text-shadow: none;
 }
+
+.schedule-dialog-button-panel tr td button.pentaho-button {
+  margin-left:2px;
+  margin-right:2px;
+}
+
+.pentaho-calendar-icon ,
+.angular-dojo.dateTimePicker .pentaho-dropdownbutton-outer {
+  padding: 6px;
+  background: none;
+  width: 16px;
+  border: none;
+  margin-left: 4px;
+}
+
+.angular-dojo.dateTimePicker .pentaho-dropdownbutton-inner {
+  background-image: url('images/calendar_icon.png');
+  background-position: center center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  font-size: 0px;
+}
+.angular-dojo.dateTimePicker .pentaho-dropdownbutton-inner.disabled {
+  background-image: url('images/calendar_icon_disabled.png');
+}
