@@ -5088,28 +5088,28 @@ div.listbox .pentaho-listbox {
 }
 /********** /angular-directives **********/
 
-.dijitCalendarPopup  .dijitCalendarContainer.dijitCalendar .dijitArrowButtonInner {
+.dijitPopup.dijitCalendarPopup  .dijitCalendarContainer .dijitDownArrowButton .dijitArrowButtonInner {
     background:url("images/16x16_down.png") no-repeat scroll center;
     width: 16px;
     height: 16px;
     margin: 0;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarDecrease {
+.dijitPopup .dijitCalendarContainer .dijitCalendarIncrementControl.dijitCalendarDecrease {
     background:url("images/16x16_left.png") no-repeat scroll center;
     width: 16px;
     height: 16px;
     margin: 0;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarIncrementControl.dijitCalendarIncrease {
+.dijitPopup .dijitCalendarContainer .dijitCalendarIncrementControl.dijitCalendarIncrease {
     background:url("images/16x16_right.png") no-repeat scroll center;
     width: 16px;
     height: 16px;
     margin: 0;
 }
 
-.dijitCalendarContainer.dijitCalendar {
+.dijitPopup.dijitCalendarPopup .dijitCalendarContainer {
     border: 2px solid #cbdde8;
     background-color: #FFF;
     padding-left: 10px;
@@ -5118,21 +5118,21 @@ div.listbox .pentaho-listbox {
     padding-bottom: 3px;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarMonthContainer .dijitDropDownButton {
+.dijitCalendarContainer .dijitCalendarMonthContainer .dijitDropDownButton {
     border: 2px solid #cbdde8;
     padding-top: 5px;
     padding-bottom: 5px;
     width: 100%;
 }
 
-.dijitCalendarPopup .dijitCalendarContainer.dijitCalendar * {
+.dijitCalendarPopup.dijitPopup .dijitCalendarContainer * {
     background-color: #FFFFFF;
     background-image: none;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate,
-.dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedDate .dijitCalendarDateLabel,
-.dijitCalendarContainer.dijitCalendar .dijitCalendarSelectedYear {
+.dijitCalendarContainer .dijitCalendarSelectedDate,
+.dijitCalendarContainer .dijitCalendarSelectedDate .dijitCalendarDateLabel,
+.dijitCalendarContainer .dijitCalendarSelectedYear {
     background-color: #cbdde8 !important;
 }
 
@@ -5151,27 +5151,27 @@ div.listbox .pentaho-listbox {
     background-color: #CBEFA3;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
+.dijitCalendarContainer .dijitCalendarDayLabelTemplate {
     border-top: none;
     border-bottom: solid 1px #cbdde8;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarYearLabel {
+.dijitCalendarContainer .dijitCalendarYearLabel {
     border-top: solid 1px #cbdde8;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarDayLabelTemplate {
+.dijitCalendarContainer .dijitCalendarDayLabelTemplate {
     color: #cbdde8;
 }
 
-.dijitCalendarContainer.dijitCalendar .dijitCalendarDateTemplate {
+.dijitCalendarContainer .dijitCalendarDateTemplate {
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 0px;
     padding-right: 0px;
 }
 
-.dijitCalendarContainer.dijitCalendar [widgetid*=lookup_popup_mddb] {
+.dijitCalendarContainer [widgetid*=lookup_popup_mddb] {
     position: relative;
     left: -2px;
 }
