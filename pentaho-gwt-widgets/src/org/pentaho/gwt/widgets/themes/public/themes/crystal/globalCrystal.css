@@ -5142,7 +5142,14 @@ div.listbox .pentaho-listbox {
     border-top: none;
 }
 
-.dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabelHover{
+.dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabel,
+.dijitCalendarContainer .dijitDropDownButton .dijitButtonText,
+.dijitCalendarPopup.dijitPopup .dijitCalendarContainer {
+  font-family: OpenSansLight;
+  font-weight: normal;
+}
+
+.dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabelHover {
     background-color: #cbdde8;
     color: #144b64;
 }
@@ -5154,14 +5161,11 @@ div.listbox .pentaho-listbox {
 .dijitCalendarContainer .dijitCalendarDayLabelTemplate {
     border-top: none;
     border-bottom: solid 1px #cbdde8;
+    color: #1973bc;
 }
 
 .dijitCalendarContainer .dijitCalendarYearLabel {
     border-top: solid 1px #cbdde8;
-}
-
-.dijitCalendarContainer .dijitCalendarDayLabelTemplate {
-    color: #cbdde8;
 }
 
 .dijitCalendarContainer .dijitCalendarDateTemplate {
@@ -5169,6 +5173,8 @@ div.listbox .pentaho-listbox {
     padding-bottom: 2px;
     padding-left: 0px;
     padding-right: 0px;
+
+    text-align: center;
 }
 
 .dijitCalendarContainer [widgetid*=lookup_popup_mddb] {
