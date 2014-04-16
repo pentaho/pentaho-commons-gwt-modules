@@ -2249,7 +2249,6 @@ body.IE>table {
   cursor: pointer;
   font-size: 0px;
 
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#888888', endColorstr = '#121212');
   zoom: 1;
 }
 
@@ -5344,4 +5343,14 @@ treecontrol.tree-classic li .tree-selected {
 .schedule-dialog-button-panel tr td button.pentaho-button{
 	margin-left:2px;
 	margin-right:2px;
+}
+
+.bootstrap DIV select {
+  border: 1px solid #CBDDE8;
+  --webkit-border-radius: 0px;
+  --moz-border-radius: 0px;
+  border-radius: 0px !important;
+  --webkit-box-shadow: none;
+  --moz-box-shadow: none;
+  box-shadow: none;
 }
