@@ -5209,24 +5209,38 @@ div.listbox .pentaho-listbox {
   border-bottom-right-radius: 0px;
 }
 
-#DP_range1 {
-  float: left;
-  padding-left: 65px !important;
+#date-picker-dlg-wrapper #DP_range1, #date-picker-dlg-wrapper #DP_range2 {
+  text-align: center;
 }
 
-#DP_range2 {
-  float: right;
-  padding-right: 65px !important;
+#DP_range1 #widget_DP_range1_lookup {
+  margin: auto;
 }
 
 #DP_range1_lookup, #DP_range2_lookup {
-  padding: 0px;
-  text-align: center;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-left: 5px !important;
+  padding-bottom: 0px;
+  text-align: left;
 }
 
 #widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown {
   margin-left: -34px !important;
   margin-top: 10px !important;
+}
+
+#date-picker-dlg-wrapper .example-calendar {
+  width: 189px;
+  height: 196px;
+  background-image: url("images/calendar_example.png");
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+#widget_DP_range1_lookup .dijitArrowButtonInner, #widget_DP_range2_lookup .dijitArrowButtonInner {
+  background-image: url("images/calendar_icon.png") !important;
 }
 
 /*Angular Tree control directive*/
