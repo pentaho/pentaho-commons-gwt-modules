@@ -17,21 +17,23 @@
 
 package org.pentaho.gwt.widgets.client.filechooser;
 
-import com.google.gwt.user.client.ui.KeyboardListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
+import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gwt.user.client.ui.KeyboardListener;
 
 public class FileChooserDialog extends PromptDialogBox implements FileChooserListener {
 
-  private static final String ILLEGAL_NAME_CHARS = "\\\'/?%*:|\"<>&"; //$NON-NLS-1$
+  //private static final String ILLEGAL_NAME_CHARS = "\\\'/?%*:|\"<>&"; //$NON-NLS-1$
   private static String lastOpenLocation = "";
   private static boolean isDirty = false;
 
@@ -303,10 +305,10 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
               .getString( "noFilenameEntered" ), false, false, true );
       dialogBox.center();
       return false;
-    } else if ( StringUtils.containsAnyChars( fileName, ILLEGAL_NAME_CHARS ) ) {
+    } else if ( !NameUtils.isValidFileName( fileName ) ) {
       MessageDialogBox dialogBox =
           new MessageDialogBox( FileChooserEntryPoint.messages.getString( "error" ), FileChooserEntryPoint.messages
-              .getString( "invalidFilename" ), false, false, true );
+              .getString( "invalidFilename", NameUtils.reservedCharListForDisplay( "" ) ), false, false, true );
       dialogBox.center();
       return false;
     }
