@@ -67,7 +67,7 @@ public class NameUtils {
   
   public static native String URLEncode( String value )
   /*-{
-    return $wnd.pho.Encoder.encode( value );
+    return $wnd.pho.Encoder.encode( "{0}", value );
   }-*/;
   
   public static native String getReservedChars()
