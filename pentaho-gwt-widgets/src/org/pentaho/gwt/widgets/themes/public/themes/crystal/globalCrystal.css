@@ -5368,3 +5368,22 @@ treecontrol.tree-classic li .tree-selected {
   --moz-box-shadow: none;
   box-shadow: none;
 }
+
+#standardDialog .dialogMessageBar span.dlgError {
+  background-image: url("images/no.png");
+  vertical-align: middle;
+  height: auto;
+  padding-left: 29px;
+  padding-top: 0px;
+  color: #333;
+  font-size: 13px;
+  background-color: #fefde7;
+}
+
+#standardDialog #dialogMessageBar2 {
+  padding: 12px;
+  height: auto;
+  background-color: #fefde7;
+  border-color: #cacacb;
+  margin-top: 10px;
+}
