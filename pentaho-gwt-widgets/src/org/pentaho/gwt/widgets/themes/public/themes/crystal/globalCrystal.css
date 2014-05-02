@@ -204,6 +204,8 @@ input, input[type="password"]{
   white-space: nowrap;
   /*text-shadow: 0px 0px 2px rgba(000, 000, 000, 1);*/
   cursor: pointer;
+  /* Chrome has a default 2px margin for buttons in user agent stylesheet rule */
+  margin: 0px;
 }
 
   /* Applies the green glow to buttons */
