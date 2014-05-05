@@ -5245,6 +5245,11 @@ div.listbox .pentaho-listbox {
   background-image: url("images/calendar_icon.png") !important;
 }
 
+#widget_DP_range1_lookup {
+  border-color: #cbdde8;
+  background-image: none;
+}
+
 /*Angular Tree control directive*/
 
 [treecontrol] .treeControlView,
