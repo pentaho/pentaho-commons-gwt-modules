@@ -231,6 +231,10 @@ input, input[type="password"]{
   color: #293b44;
 }
 
+.dijitButton .pentaho-button {
+  padding: 8px 13px;
+}
+
 .dijitDisabled .pentaho-button:active,
 .IE .dijitDisabled .pentaho-button:focus {
   background: none;
@@ -4197,11 +4201,13 @@ vertical-align: middle;
   background: url('images/btn_table.png') no-repeat;
   width: 22px;
   height: 22px;
+  border: 1px solid transparent;
 }
 .show-chart-icon{
   background: url('images/btn_chart.png') no-repeat;
   width: 22px;
   height: 22px;
+  border: 1px solid transparent;
 }
 #arrow-menu, .arrow-menu-icon{
   background: url('images/arrow_menu.png') no-repeat;
@@ -4212,7 +4218,7 @@ vertical-align: middle;
 }
 .tundra .pentaho-titled-toolbar .dijitArrowNode,
 .filterSummary .hide{
-  background: url('images/arrow_open.png') no-repeat;
+  background: url('images/arrow_open.png') no-repeat center left;
 }
 .fieldListTree .folder{
   padding-left: 15px;
