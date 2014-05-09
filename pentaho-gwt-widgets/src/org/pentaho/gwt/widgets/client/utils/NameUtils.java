@@ -70,6 +70,16 @@ public class NameUtils {
     return $wnd.pho.Encoder.encode( "{0}", value );
   }-*/;
   
+  public static native String URLEncode( String template, String arg )
+  /*-{
+    return $wnd.pho.Encoder.encode( template, [ arg ] );
+  }-*/;
+  
+  public static native String URLEncode( String template, String[] args )
+  /*-{
+    return $wnd.pho.Encoder.encode( template, args );
+  }-*/;
+  
   public static native String getReservedChars()
   /*-{
     return $wnd.RESERVED_CHARS; 
