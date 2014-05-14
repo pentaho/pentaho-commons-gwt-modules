@@ -1345,7 +1345,7 @@ body.IE>table {
 .IE #pucContent>div {
   position: absolute;
   height: auto; /* reset applicationShell 100% setting, otherwise bottom and top don't work well */
-  top:    4px; /* Unfortunately, have to hardcode the menu-bar height here... */
+  top:    0px;
   bottom: 13px; /* Unfortunately, have to hardcode the effect of pentaho-rounded-panel class */
   left:   0px;
   right:  0px;
