@@ -439,7 +439,7 @@ public class ResourceBundle {
     this.supportedLanguages = supportedLanguages;
   }
 
-  // Run the values of a map through the decodeUTF8 function to un-escape \uXXXX unicode characters
+  // Run the values of a map through the decodeUTF8 function to un-escape unicode characters
   private void decodeMapValues( Map<String, String> map ) {
     for ( Map.Entry<String, String> entry : map.entrySet() ) {
       entry.setValue( decodeUTF8( entry.getValue() ) );
