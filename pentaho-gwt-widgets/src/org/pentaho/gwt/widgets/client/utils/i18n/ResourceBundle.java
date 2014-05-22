@@ -148,6 +148,7 @@ public class ResourceBundle {
         // if the user already set them, keep 'em, it's an override
         if ( ResourceBundle.this.supportedLanguages == null ) {
           ResourceBundle.this.supportedLanguages = supportedLanguagesBundle.getMap();
+          decodeMapValues( ResourceBundle.this.supportedLanguages );
         }
         // always fetch the base first
         currentAttemptUrl = ResourceBundle.this.path + bundleName + PROPERTIES_EXTENSION + getUrlExtras();
@@ -436,6 +437,13 @@ public class ResourceBundle {
 
   public void setSupportedLanguages( Map<String, String> supportedLanguages ) {
     this.supportedLanguages = supportedLanguages;
+  }
+
+  // Run the values of a map through the decodeUTF8 function to un-escape \uXXXX unicode characters
+  private void decodeMapValues( Map<String, String> map ) {
+    for ( Map.Entry<String, String> entry : map.entrySet() ) {
+      entry.setValue( decodeUTF8( entry.getValue() ) );
+    }
   }
 
   private native String getUrlExtras()
