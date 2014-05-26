@@ -490,6 +490,10 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   height: 430px !important;
 }
 
+.IE9 .schedule-email-dialog .schedule-dialog-content{
+  height: 430px !important;
+}
+
 .IE10 #browse-properties-dialog.new-schedule-dialog{
   height: 500px !important;
 }
@@ -510,11 +514,19 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   height: 430px !important;
 }
 
+.IE10 .schedule-email-dialog .schedule-dialog-content{
+  height: 430px !important;
+}
+
 .IE .schedule-recurrence-dialog {
   height: 500px !important;
 }
 
 .IE .schedule-params-dialog {
+  height: 500px !important;
+}
+
+.IE .schedule-email-dialog {
   height: 500px !important;
 }
 
