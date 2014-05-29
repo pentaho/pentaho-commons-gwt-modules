@@ -307,8 +307,11 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       return false;
     } else if ( !NameUtils.isValidFileName( fileName ) ) {
       MessageDialogBox dialogBox =
-          new MessageDialogBox( FileChooserEntryPoint.messages.getString( "error" ), FileChooserEntryPoint.messages
-              .getString( "invalidFilename", NameUtils.reservedCharListForDisplay( "" ) ), false, false, true );
+          new MessageDialogBox( FileChooserEntryPoint.messages.getString( "error" ),
+            FileChooserEntryPoint.messages.getString( "invalidFilename",
+              "Invalid Filename",  // default value if key isn't found
+              NameUtils.reservedCharListForDisplay() ),
+            false, false, true );
       dialogBox.center();
       return false;
     }
