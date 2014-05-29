@@ -51,20 +51,22 @@ public class NameUtils {
    * @return
    */
   public static String reservedCharListForDisplay( String separatorString ) {
-    StringBuilder sb = new StringBuilder();
-    String reservedChars = getReservedChars();
-    for ( int i = 0; i < reservedChars.length(); i++ ) {
-      if ( !String.valueOf( reservedChars.charAt( i ) ).trim().isEmpty() ) {
-        sb.append( reservedChars.charAt( i ) );
-        sb.append( separatorString );
-      }
+    String reservedChars = getReservedCharsDisplay();
+    if( reservedChars != null && separatorString != null ) {
+      reservedChars = reservedChars.replaceAll( ", ", separatorString );
     }
-    if ( sb.length() > 0 ) {
-      sb.delete( sb.length() - separatorString.length(), sb.length() - 1 );
-    }
-    return sb.toString();
+    return reservedChars;
   }
-  
+
+  /**
+   * Returns human readable list of reserved characters
+   *
+   * @return
+   */
+  public static String reservedCharListForDisplay( ) {
+    return getReservedCharsDisplay();
+  }
+
   public static native String URLEncode( String value )
   /*-{
     return $wnd.pho.Encoder.encode( "{0}", value );
@@ -84,7 +86,12 @@ public class NameUtils {
   /*-{
     return $wnd.RESERVED_CHARS; 
   }-*/;
-  
+
+  public static native String getReservedCharsDisplay()
+  /*-{
+    return $wnd.RESERVED_CHARS_DISPLAY;
+  }-*/;
+
   public static native String encodeRepositoryPath( String path )
   /*-{
     return $wnd.pho.Encoder.encodeRepositoryPath( path );
