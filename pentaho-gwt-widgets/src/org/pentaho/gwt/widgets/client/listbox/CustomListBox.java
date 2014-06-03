@@ -1158,7 +1158,11 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
    */
   public String getValue() {
     if ( !editable ) {
-      return null;
+      if( getSelectedItem() != null ) {
+        return getSelectedItem().getText();
+      } else {
+        return null;
+      }
     } else {
       return ( editableTextBox != null ) ? editableTextBox.getText() : null;
     }
@@ -1170,6 +1174,13 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       editableTextBox.setText( text );
       selectedIndex = -1;
       this.onChange( editableTextBox );
+    } else {
+      for( int i = 0; i < items.size(); i++ ) {
+        if( items.get( i ).getText().equals( text ) ) {
+          setSelectedIndex( i );
+          return;
+        }
+      }
     }
   }
 
