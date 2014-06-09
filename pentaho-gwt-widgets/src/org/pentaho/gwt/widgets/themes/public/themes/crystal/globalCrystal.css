@@ -2921,6 +2921,10 @@ width: 22px;
 .fileBrowserColumn .body .file .xdash{
    background: url("images/file_dashboard.png") no-repeat;
 }
+.fileBrowserColumn .body .file .icon.ktr,
+.fileBrowserColumn .body .file .ktr{
+  background: url("images/kettle_transformation.png") no-repeat;
+}
 .fileBrowserColumn .body .file .icon.xaction,
 .fileBrowserColumn .body .file .xaction{
    background: url("images/file_action.png") no-repeat;
@@ -2966,6 +2970,9 @@ width: 16px;
 }
 .file-xaction{
    background: url("images/file_action_32.png") no-repeat;
+}
+.file-ktr{
+   background: url("images/kettle_transformation_32.png") no-repeat;
 }
 
 .file-prpt {
