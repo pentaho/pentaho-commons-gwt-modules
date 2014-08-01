@@ -4446,6 +4446,12 @@ background: url("images/connector_top.png") no-repeat top left;
   height: 22px;
   width: 22px;
 }
+.pentaho-optionsdatasourcebutton {
+  width: 32px;
+  height: 32px;
+  background: url('images/options.png') no-repeat center;
+  cursor: pointer;
+}
 .dijitEditorIconParameters, .dijitToolbar .dijitEditorIconParameters{
   background: url('images/list_22x22.png') no-repeat !important;
   height: 22px !important;
