@@ -2303,7 +2303,7 @@ body.IE>table {
 }
 
 .tundra .dijitArrowButtonInner {
-  background:url("images/16x16_down.png") no-repeat scroll 3px center;
+  background:url("images/16x16_down.png") no-repeat scroll 0px center;
   width: 16px;
   height: 16px;
   margin: 0;
