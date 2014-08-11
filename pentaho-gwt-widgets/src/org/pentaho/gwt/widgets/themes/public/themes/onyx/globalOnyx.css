@@ -2108,7 +2108,7 @@ div.listbox .pentaho-listbox {
   background:url("../images/comboArrow.png") no-repeat scroll 0 center;
   width: 16px;
   height: 16px;
-  /*margin: 0 4px 0 4px;*/
+  border: 0px;
 }
 .dialog-content .dijitComboBox .dijitArrowButton {
   /* fallback color */
