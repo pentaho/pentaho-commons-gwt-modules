@@ -4552,11 +4552,15 @@ background: url("images/connector_top.png") no-repeat top left;
 #editPovContainerPanel #povTableMoveSelectedUp img.image-button-pressed, #editPovContainerPanel #povTableMoveSelectedUp img.image-button-over, #editPovContainerPanel #povTableMoveSelectedUp img.image-button{
   background: url('images/16x16-up.png') no-repeat;
 }
-#schemaNameLabel,
-#uploadFileLabel{
+#schemaNameLabel,#uploadFileLabel{
   border: 1px solid #cbdde8;
   vertical-align: middle;
-}#propertiesPanelTitle{
+  height: 18px !important;
+  width: 365px !important;
+  overflow: hidden;
+  padding: 5px;
+}
+#propertiesPanelTitle{
   width: 200px !important;
 }
 #propertiesPanelRefreshPeriod{
