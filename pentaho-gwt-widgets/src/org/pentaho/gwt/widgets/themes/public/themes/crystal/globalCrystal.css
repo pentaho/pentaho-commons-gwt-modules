@@ -420,6 +420,13 @@ div#FilterPanel div.pentaho-toggle-button-down button{
   user-select: none;
 }
 
+/*
+For IE10, need to add padding to the bottom of some dialogs generated with XUL
+*/
+.IE10 .pentaho-dialog#emailTestDialog {
+  padding-bottom: 20px !important;
+}
+
 .bootstrap .modal.pentaho-dialog {
   margin: auto;
   width: auto;
