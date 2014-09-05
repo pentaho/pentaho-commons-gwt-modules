@@ -5436,3 +5436,7 @@ treecontrol.tree-classic li .tree-selected {
   border-color: #cacacb;
   margin-top: 10px;
 }
+
+#sharePanelRemoveButton {
+  margin-left: 5px;
+}
