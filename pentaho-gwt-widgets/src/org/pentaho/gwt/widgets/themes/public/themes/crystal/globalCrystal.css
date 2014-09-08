@@ -421,9 +421,9 @@ div#FilterPanel div.pentaho-toggle-button-down button{
 }
 
 /*
-For IE10, need to add padding to the bottom of some dialogs generated with XUL
+For IE 9 and IE10, need to add padding to the bottom of some dialogs generated with XUL
 */
-.IE10 .pentaho-dialog#emailTestDialog {
+.IE9 .pentaho-dialog#emailTestDialog, .IE10 .pentaho-dialog#emailTestDialog {
   padding-bottom: 20px !important;
 }
 
