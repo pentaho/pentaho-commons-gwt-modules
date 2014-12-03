@@ -10,6 +10,7 @@
 
   <inherits name='com.googlecode.gwtx.Java'/>
 
+  <entry-point class='org.pentaho.mantle.client.dialogs.SelectFolderDialogEntryPoint'/>
   <entry-point class='org.pentaho.mantle.client.dialogs.scheduling.NewScheduleDialogEntryPoint'/>
 
   <source path=""/>
