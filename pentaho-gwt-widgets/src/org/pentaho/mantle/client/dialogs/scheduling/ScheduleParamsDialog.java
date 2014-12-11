@@ -17,6 +17,18 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.utils.NameUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
+import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
+import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.workspace.JsJob;
+import org.pentaho.mantle.client.workspace.JsJobParam;
+import org.pentaho.mantle.login.client.MantleLoginDialog;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
@@ -36,31 +48,17 @@ import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.utils.NameUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
-import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
-import org.pentaho.mantle.client.messages.Messages;
-import org.pentaho.mantle.client.solutionbrowser.filelist.FileItem;
-import org.pentaho.mantle.client.ui.PerspectiveManager;
-import org.pentaho.mantle.client.workspace.JsJob;
-import org.pentaho.mantle.client.workspace.JsJobParam;
-import org.pentaho.mantle.login.client.MantleLoginDialog;
-
 /**
  * @author wseyler
  * 
  */
 public class ScheduleParamsDialog extends AbstractWizardDialog {
-  FileItem fileItem = null;
   String moduleBaseURL = GWT.getModuleBaseURL();
   String moduleName = GWT.getModuleName();
   String contextURL = moduleBaseURL.substring( 0, moduleBaseURL.lastIndexOf( moduleName ) );
 
   IDialogCallback callback;
+  IAfterResponse afterResponseCallback;
 
   ScheduleParamsWizardPanel scheduleParamsWizardPanel;
   ScheduleEmailDialog scheduleEmailDialog;
@@ -149,7 +147,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
         }
       }
     }
-    setParametersUrl( "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
+    setParametersUrl(ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     wizardDeckPanel.setHeight( "100%" ); //$NON-NLS-1$
 
     wizardDeckPanel.getElement().getParentElement().addClassName( "schedule-dialog-content" );
@@ -194,7 +192,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    
 
       RequestBuilder scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, contextURL + "api/scheduler/job" );
+          new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/job" );
       scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
       scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
 
@@ -218,23 +216,23 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
                 callback.okPressed();
               }
 
-              JSONValue rib = jobSchedule.get( "runInBackground" );
-              if ( rib != null && rib.isBoolean() != null && rib.isBoolean().booleanValue() ) {
-                MessageDialogBox dialogBox =
-                    new MessageDialogBox(
-                        Messages.getString( "runInBackground" ), Messages.getString( "backgroundExecutionStarted" ), //$NON-NLS-1$ //$NON-NLS-2$
-                        false, false, true );
-                dialogBox.center();
-              } else if ( !PerspectiveManager.getInstance().getActivePerspective().getId().equals(
-                  PerspectiveManager.SCHEDULES_PERSPECTIVE ) ) {
-                ScheduleCreateStatusDialog successDialog = new ScheduleCreateStatusDialog();
-                successDialog.center();
+              if ( afterResponseCallback != null ) {
+                afterResponseCallback.onResponse( jobSchedule.get( "runInBackground" ) );
               } else {
-                MessageDialogBox dialogBox =
-                    new MessageDialogBox(
-                        Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
-                        false, false, true );
-                dialogBox.center();
+                JSONValue rib = jobSchedule.get( "runInBackground" );
+                if ( rib != null && rib.isBoolean() != null && rib.isBoolean().booleanValue() ) {
+                  MessageDialogBox dialogBox =
+                      new MessageDialogBox(
+                          Messages.getString( "runInBackground" ), Messages.getString( "backgroundExecutionStarted" ), //$NON-NLS-1$ //$NON-NLS-2$
+                          false, false, true );
+                  dialogBox.center();
+                } else {
+                  MessageDialogBox dialogBox =
+                      new MessageDialogBox(
+                          Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
+                          false, false, true );
+                  dialogBox.center();
+                }
               }
             } else {
               MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), response.getText(), //$NON-NLS-1$ 
@@ -259,7 +257,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   private void showScheduleEmailDialog( final JSONArray scheduleParams ) {
 
     try {
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -356,7 +354,8 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
               name.stringValue().replace( "\"", "" ) + "=" + stringValueArr.get( j ).toString().replace( "\"", "" );
         }
       }
-      setParametersUrl( "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
+      Window.alert( "getparameterUi311" );
+      setParametersUrl(ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     super.center();
   }
@@ -396,6 +395,10 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
 
   public IDialogCallback getCallback() {
     return callback;
+  }
+
+  public void setAfterResponseCallback( IAfterResponse afterResponseCallback ) {
+    this.afterResponseCallback = afterResponseCallback;
   }
 
   public ScheduleRecurrenceDialog getParentDialog() {
@@ -440,5 +443,9 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
 
   public void setScheduleParams( JSONArray scheduleParams ) {
     this.scheduleParams = scheduleParams;
+  }
+
+  public interface IAfterResponse {
+    void onResponse( JSONValue rib );
   }
 }

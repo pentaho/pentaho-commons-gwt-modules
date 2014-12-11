@@ -17,6 +17,13 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
+import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
+import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.workspace.JsJob;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
@@ -31,17 +38,9 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
-import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
-import org.pentaho.mantle.client.messages.Messages;
-import org.pentaho.mantle.client.solutionbrowser.filelist.FileItem;
-import org.pentaho.mantle.client.ui.PerspectiveManager;
-import org.pentaho.mantle.client.workspace.JsJob;
+import com.google.gwt.user.client.Window;
 
 public class ScheduleEmailDialog extends AbstractWizardDialog {
-  FileItem fileItem = null;
   String moduleBaseURL = GWT.getModuleBaseURL();
   String moduleName = GWT.getModuleName();
   String contextURL = moduleBaseURL.substring( 0, moduleBaseURL.lastIndexOf( moduleName ) );
@@ -122,7 +121,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
     scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    
 
     RequestBuilder scheduleFileRequestBuilder =
-        new RequestBuilder( RequestBuilder.POST, contextURL + "api/scheduler/job" );
+        new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/job" );
     scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
     scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
 
@@ -153,10 +152,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
                       Messages.getString( "runInBackground" ), Messages.getString( "backgroundExecutionStarted" ), //$NON-NLS-1$ //$NON-NLS-2$
                       false, false, true );
               dialogBox.center();
-            } else if ( !PerspectiveManager.getInstance().getActivePerspective().getId().equals(
-                PerspectiveManager.SCHEDULES_PERSPECTIVE ) ) {
-              ScheduleCreateStatusDialog successDialog = new ScheduleCreateStatusDialog();
-              successDialog.center();
+              Window.alert( "ScheduleEmailDialog: show ScheduleCreateStatusDialog if on the schedule perspective" );
             } else {
               MessageDialogBox dialogBox =
                   new MessageDialogBox(

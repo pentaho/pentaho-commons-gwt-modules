@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
@@ -477,7 +478,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   private void populateTimeZonePicker() {
 
-    String url = GWT.getHostPageBaseURL() + "api/system/timezones"; //$NON-NLS-1$
+    String url = ScheduleHelper.getFullyQualifiedURL() + "api/system/timezones"; //$NON-NLS-1$
     RequestBuilder timeZonesRequest = new RequestBuilder( RequestBuilder.GET, url );
     timeZonesRequest.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
     timeZonesRequest.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );

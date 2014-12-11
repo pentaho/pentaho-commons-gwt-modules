@@ -17,26 +17,12 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
-import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.Label;
+/**
+ * Callback for some schedule dialog result. Required for communication between caller and dialogs.
+ */
+public interface IScheduleCallback extends IDialogCallback {
 
-public class ScheduleCreateStatusDialog extends PromptDialogBox {
-
-  public ScheduleCreateStatusDialog() {
-    super( Messages.getString( "scheduleCreated" ), Messages.getString( "yes" ), Messages.getString( "no" ), false,
-        true );
-    Label label = new Label();
-    label.setText( Messages.getString( "scheduleCreateSuccess" ) );
-    label.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
-    setContent( label );
-    setWidth( "400px" );
-  }
-
-  protected void onOk() {
-    super.onOk();
-  }
-
+  void scheduleJob();
 }

@@ -17,9 +17,9 @@
 
 package org.pentaho.mantle.client.dialogs;
 
-import com.google.gwt.user.client.ui.SimplePanel;
-import org.pentaho.mantle.client.MantleApplication;
 import org.pentaho.mantle.client.messages.Messages;
+
+import com.google.gwt.user.client.ui.SimplePanel;
 
 public class WaitPopup extends SimplePanel {
 
@@ -35,19 +35,64 @@ public class WaitPopup extends SimplePanel {
   @Override
   public void setVisible( boolean visible ) {
     if ( visible ) {
-      MantleApplication.showBusyIndicator( Messages.getString( "pleaseWait" ), Messages.getString( "waitMessage" ) );
+      showBusyIndicator( Messages.getString( "pleaseWait" ), Messages.getString( "waitMessage" ) );
     } else {
-      MantleApplication.hideBusyIndicator();
+      hideBusyIndicator();
     }
   }
 
   public void setVisibleById( boolean visible, String id ) {
     if ( visible ) {
-      MantleApplication.showBusyIndicatorById( Messages.getString( "pleaseWait" ), Messages.getString( "waitMessage" ),
+      showBusyIndicatorById( Messages.getString( "pleaseWait" ), Messages.getString( "waitMessage" ),
           id );
     } else {
-      MantleApplication.hideBusyIndicatorById( id );
+      hideBusyIndicatorById( id );
     }
   }
+
+
+  public static native void showBusyIndicator( String title, String message )
+  /*-{
+      $wnd.pen.require([
+              "common-ui/util/BusyIndicator"
+          ],
+
+          function (busy) {
+              busy.show(title, message);
+          });
+  }-*/;
+
+  public static native void hideBusyIndicator()
+  /*-{
+      $wnd.pen.require([
+              "common-ui/util/BusyIndicator"
+          ],
+
+          function (busy) {
+              busy.hide();
+          });
+  }-*/;
+
+  public static native void showBusyIndicatorById( String title, String message, String id )
+  /*-{
+      $wnd.pen.require([
+              "common-ui/util/BusyIndicator"
+          ],
+
+          function (busy) {
+              busy.show(title, message, id);
+          });
+  }-*/;
+
+  public static native void hideBusyIndicatorById( String id )
+  /*-{
+      $wnd.pen.require([
+              "common-ui/util/BusyIndicator"
+          ],
+
+          function (busy) {
+              busy.hide(id);
+          });
+  }-*/;
 
 }
