@@ -23,6 +23,7 @@
         <dependency org="com.google.gwt" name="gwt-user" rev="${dependency.gwt.revision}" conf="codegen->default" transitive="false"/>
         <dependency org="com.google.gwt" name="gwt-dev"  rev="${dependency.gwt.revision}" conf="codegen->default" transitive="false"/>
         <dependency org="com.google.gwt" name="gwt-incubator" rev="${dependency.gwt-incubator.revision}" conf="codegen->default" transitive="false"/>
+        <dependency org="com.google.code.gwtx" name="gwtx" rev="1.5.2" conf="codegen->default" transitive="false"/>
         <dependency org="com.allen_sauer" name="gwt-dnd" rev="${dependency.gwt-dnd.revision}" conf="codegen->default" transitive="false"/>
 
         <dependency org="javax.validation" name="validation-api"  rev="1.0.0.GA" conf="codegen->default" transitive="false">
