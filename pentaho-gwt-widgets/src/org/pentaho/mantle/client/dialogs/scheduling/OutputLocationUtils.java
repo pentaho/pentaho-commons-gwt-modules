@@ -17,16 +17,15 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
-import com.google.gwt.core.client.GWT;
+import org.pentaho.gwt.widgets.client.utils.NameUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Command;
-
-import org.pentaho.gwt.widgets.client.utils.NameUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 /**
  * @author Rowell Belen
@@ -41,7 +40,7 @@ public class OutputLocationUtils {
     }
 
     final String outputLocationPath = NameUtils.encodeRepositoryPath( outputLocation );
-    final String url = GWT.getHostPageBaseURL() + "api/repo/files/" + outputLocationPath + "/tree?depth=1"; //$NON-NLS-1$
+    final String url = ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/" + outputLocationPath + "/tree?depth=1"; //$NON-NLS-1$
     RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, url );
     // This header is required to force Internet Explorer to not cache values from the GET response.
     builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -71,5 +70,4 @@ public class OutputLocationUtils {
       }
     }
   }
-
 }

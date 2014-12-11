@@ -20,6 +20,30 @@ package org.pentaho.mantle.client.dialogs.scheduling;
 import java.util.Date;
 import java.util.List;
 
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.DayOfWeek;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.MonthOfYear;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.WeekOfMonth;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
+import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
+import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.DailyRecurrenceEditor;
+import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.MonthlyRecurrenceEditor;
+import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.WeeklyRecurrenceEditor;
+import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.YearlyRecurrenceEditor;
+import org.pentaho.mantle.client.dialogs.scheduling.ScheduleEditor.DurationValues;
+import org.pentaho.mantle.client.dialogs.scheduling.ScheduleEditor.ScheduleType;
+import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.workspace.BlockoutPanel;
+import org.pentaho.mantle.client.workspace.JsBlockStatus;
+import org.pentaho.mantle.client.workspace.JsJob;
+import org.pentaho.mantle.client.workspace.JsJobParam;
+import org.pentaho.mantle.client.workspace.JsJobTrigger;
+import org.pentaho.mantle.login.client.MantleLoginDialog;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayInteger;
@@ -47,31 +71,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil.DayOfWeek;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil.MonthOfYear;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil.WeekOfMonth;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
-import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
-import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.DailyRecurrenceEditor;
-import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.MonthlyRecurrenceEditor;
-import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.WeeklyRecurrenceEditor;
-import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.YearlyRecurrenceEditor;
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleEditor.DurationValues;
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleEditor.ScheduleType;
-import org.pentaho.mantle.client.messages.Messages;
-import org.pentaho.mantle.client.ui.PerspectiveManager;
-import org.pentaho.mantle.client.workspace.BlockoutPanel;
-import org.pentaho.mantle.client.workspace.JsBlockStatus;
-import org.pentaho.mantle.client.workspace.JsJob;
-import org.pentaho.mantle.client.workspace.JsJobParam;
-import org.pentaho.mantle.client.workspace.JsJobTrigger;
-import org.pentaho.mantle.login.client.MantleLoginDialog;
 
 /**
  * @author wseyler
@@ -160,7 +159,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     this.scheduleName = scheduleName;
     scheduleEditorWizardPanel = new ScheduleEditorWizardPanel( getDialogType() );
     scheduleEditor = scheduleEditorWizardPanel.getScheduleEditor();
-    String url = GWT.getHostPageBaseURL() + "api/scheduler/blockout/hasblockouts?ts=" + System.currentTimeMillis(); //$NON-NLS-1$
+    String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/hasblockouts?ts=" + System.currentTimeMillis(); //$NON-NLS-1$
     RequestBuilder hasBlockoutsRequest = new RequestBuilder( RequestBuilder.GET, url );
     hasBlockoutsRequest.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
     hasBlockoutsRequest.setHeader( "accept", "text/plain" );
@@ -657,7 +656,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   }
 
   protected boolean addBlockoutPeriod( final JSONObject schedule, final JsJobTrigger trigger, String urlSuffix ) {
-    String url = GWT.getHostPageBaseURL() + "api/scheduler/blockout/" + urlSuffix; //$NON-NLS-1$
+    String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/" + urlSuffix; //$NON-NLS-1$
 
     RequestBuilder addBlockoutPeriodRequest = new RequestBuilder( RequestBuilder.POST, url );
     addBlockoutPeriodRequest.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -752,7 +751,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
    * @param trigger
    */
   protected void verifyBlockoutConflict( final JSONObject schedule, final JsJobTrigger trigger ) {
-    String url = GWT.getHostPageBaseURL() + "api/scheduler/blockout/blockstatus"; //$NON-NLS-1$
+    String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/blockstatus"; //$NON-NLS-1$
 
     RequestBuilder blockoutConflictRequest = new RequestBuilder( RequestBuilder.POST, url );
     blockoutConflictRequest.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -832,7 +831,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       }
 
       RequestBuilder scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, contextURL + "api/scheduler/job" ); //$NON-NLS-1$
+          new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/job" ); //$NON-NLS-1$
       scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
       scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
 
@@ -855,17 +854,12 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
                 callback.okPressed();
               }
               if ( showSuccessDialog ) {
-                if ( !PerspectiveManager.getInstance().getActivePerspective().getId().equals(
-                    PerspectiveManager.SCHEDULES_PERSPECTIVE ) ) {
-                  ScheduleCreateStatusDialog successDialog = new ScheduleCreateStatusDialog();
-                  successDialog.center();
-                } else {
+                Window.alert( "ScheduleEmailDialog: show ScheduleCreateStatusDialog if on the schedule perspective" );
                   MessageDialogBox dialogBox =
                       new MessageDialogBox(
                           Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
                           false, false, true );
                   dialogBox.center();
-                }
               }
             } else {
               MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), //$NON-NLS-1$
@@ -915,7 +909,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   private void showScheduleEmailDialog( final JSONObject schedule ) {
     try {
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -959,7 +953,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   private void showScheduleParamsDialog( final JsJobTrigger trigger, final JSONObject schedule ) {
     try {
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );

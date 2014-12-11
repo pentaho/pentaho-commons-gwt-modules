@@ -44,6 +44,7 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -75,6 +76,9 @@ public class NewScheduleDialog extends PromptDialogBox {
       return window.top.HOME_FOLDER;
   }-*/;
 
+  /**
+   * @deprecated Need to set callback
+   */
   public NewScheduleDialog( JsJob jsJob, IDialogCallback callback, boolean isEmailConfValid ) {
     super(
         Messages.getString( "newSchedule" ), Messages.getString( "nextStep" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -85,7 +89,7 @@ public class NewScheduleDialog extends PromptDialogBox {
     createUI();
   }
 
-  public NewScheduleDialog( String filePath, IDialogCallback callback, boolean isEmailConfValid ) {
+  public NewScheduleDialog( String filePath, IScheduleCallback callback, boolean isEmailConfValid) {
     super(
         Messages.getString( "newSchedule" ), Messages.getString( "nextStep" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     this.filePath = filePath;
@@ -132,6 +136,7 @@ public class NewScheduleDialog extends PromptDialogBox {
           }
         } );
         selectFolder.center();
+        scheduleLocationTextBox.setText( "/home/admin" );
       }
     } );
     browseButton.setStyleName( "pentaho-button" );
@@ -206,11 +211,12 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     if ( ( urlPath != null ) && ( urlPath.endsWith( "xaction" ) ) ) {
       isXAction = true;
-      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, GWT.getHostPageBaseURL() + "api/repos/" + urlPath
+      Window.alert( "getparameterUi1" );
+      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath
           + "/parameterUi" );
     } else {
       isXAction = false;
-      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, GWT.getHostPageBaseURL() + "api/repo/files/" + urlPath
+      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/" + urlPath
           + "/parameterizable" );
     }
 

@@ -17,6 +17,16 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
+import org.pentaho.mantle.client.commands.AbstractCommand;
+import org.pentaho.mantle.client.events.EventBusUtil;
+import org.pentaho.mantle.client.events.SolutionFileActionEvent;
+import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.login.client.MantleLoginDialog;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -27,16 +37,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.mantle.client.commands.AbstractCommand;
-import org.pentaho.mantle.client.events.EventBusUtil;
-import org.pentaho.mantle.client.events.SolutionFileActionEvent;
-import org.pentaho.mantle.client.messages.Messages;
-import org.pentaho.mantle.client.solutionbrowser.SolutionBrowserPanel;
-import org.pentaho.mantle.login.client.MantleLoginDialog;
 
 public class ScheduleHelper {
 
@@ -52,13 +52,13 @@ public class ScheduleHelper {
     }
   }-*/;
 
-  private static void showScheduleDialog( final String fileNameWithPath ) {
+  public static void showScheduleDialog( final String fileNameWithPath ) {
 
     final SolutionFileActionEvent event = new SolutionFileActionEvent();
     event.setAction( ScheduleHelper.class.getName() );
     try {
 
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -126,41 +126,13 @@ public class ScheduleHelper {
     }
   }
 
-  public static void createSchedule( final RepositoryFile repositoryFile ) {
+  public static void createSchedule( final RepositoryFile repositoryFile, final IDialogCallback callback ) {
     AbstractCommand scheduleCommand = new AbstractCommand() {
-
-      private void schedule() {
-        String extension = ""; //$NON-NLS-1$
-        if ( repositoryFile.getPath().lastIndexOf( "." ) > 0 ) { //$NON-NLS-1$
-          extension = repositoryFile.getPath().substring( repositoryFile.getPath().lastIndexOf( "." ) + 1 ); //$NON-NLS-1$
-        }
-
-        if ( SolutionBrowserPanel.getInstance().getExecutableFileExtensions().contains( extension ) ) {
-          showScheduleDialog( repositoryFile.getPath() );
-        } else {
-          final MessageDialogBox dialogBox =
-              new MessageDialogBox(
-                  Messages.getString( "open" ), Messages.getString( "scheduleInvalidFileType", repositoryFile.getPath() ), false, false, true ); //$NON-NLS-1$ //$NON-NLS-2$
-
-          dialogBox.setCallback( new IDialogCallback() {
-            public void cancelPressed() {
-            }
-
-            public void okPressed() {
-              dialogBox.hide();
-            }
-          } );
-
-          dialogBox.center();
-          return;
-        }
-
-      }
 
       protected void performOperation() {
 
         // hit the server and check: isScheduleAllowed
-        final String url = GWT.getHostPageBaseURL() + "api/scheduler/isScheduleAllowed?id=" + repositoryFile.getId(); //$NON-NLS-1$
+        final String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/isScheduleAllowed?id=" + repositoryFile.getId(); //$NON-NLS-1$
         RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
         requestBuilder.setHeader( "accept", "text/plain" );
         requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -176,7 +148,7 @@ public class ScheduleHelper {
 
             public void onResponseReceived( Request request, Response response ) {
               if ( "true".equalsIgnoreCase( response.getText() ) ) {
-                schedule();
+                callback.okPressed();
               } else {
                 errorDialog.center();
               }
@@ -262,4 +234,8 @@ public class ScheduleHelper {
     scheduleInBackground.center();
   }
 
+  public static native String getFullyQualifiedURL()
+  /*-{
+    return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
+  }-*/;
 }

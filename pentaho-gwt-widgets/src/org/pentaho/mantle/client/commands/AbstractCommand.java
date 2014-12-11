@@ -27,8 +27,10 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
@@ -54,7 +56,7 @@ public abstract class AbstractCommand implements Command {
    */
   public void execute( final boolean feedback ) {
     try {
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
       requestBuilder.setHeader( "accept", "text/plain" );
@@ -102,7 +104,7 @@ public abstract class AbstractCommand implements Command {
     this.commandCallback = commandCallback;
 
     try {
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
       requestBuilder.setHeader( "accept", "text/plain" );
@@ -130,7 +132,7 @@ public abstract class AbstractCommand implements Command {
    */
   public void execute() {
     try {
-      final String url = GWT.getHostPageBaseURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
       requestBuilder.setHeader( "accept", "text/plain" );
