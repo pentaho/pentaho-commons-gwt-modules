@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+
 import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
 import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
 import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
@@ -73,6 +74,29 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
       }
     } );
   }
+  
+  public void openFolderChooserDialog( final JavaScriptObject callback, String selectedPath ) {
+    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.OPEN, selectedPath, false, true );
+    dialog.addFileChooserListener( new FileChooserListener() {
+      public void fileSelected( RepositoryFile file, String filePath, String fileName, String title ) {
+        notifyCallback( callback, file, filePath, fileName, title );
+      }
+
+      public void fileSelectionChanged( RepositoryFile file, String filePath, String fileName, String title ) {
+      }
+
+      public void dialogCanceled() {
+        notifyCallbackCanceled( callback );
+      }
+    } );
+    dialog.setFileFilter( new FileFilter() {
+      
+      @Override
+      public boolean accept( String name, boolean isDirectory, boolean isVisible ) {
+        return isDirectory;
+      }
+    } );
+  }
 
   public void saveFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
     FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true );
@@ -104,6 +128,9 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
   /*-{
     $wnd.openFileChooserDialog = function(callback, selectedPath) {
       fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::openFileChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
+    }
+    $wnd.openFolderChooserDialog = function(callback, selectedPath) {
+      fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::openFolderChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
     }
     $wnd.saveFileChooserDialog = function(callback, selectedPath) {
       fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::saveFileChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
