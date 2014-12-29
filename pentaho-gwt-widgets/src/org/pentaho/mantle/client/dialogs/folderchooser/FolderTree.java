@@ -15,7 +15,7 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.mantle.client.solutionbrowser.tree;
+package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,23 +54,27 @@ import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 
-public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener, UserSettingsLoadedEventHandler,
+public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, UserSettingsLoadedEventHandler,
     IRepositoryFileProvider*/ {
+  
+  private static final String SELECTED_STYLE_NAME = "selected";
+  
+  private static final String HIDDEN_STYLE_NAME = "hidden";
+  
   private boolean showLocalizedFileNames = true;
   private boolean showHiddenFiles = false;
-  private boolean isAdministrator = false;
   private boolean createRootNode = false;
   private boolean useDescriptionsForTooltip = false;
   public RepositoryFileTree repositoryFileTree;
   public List<RepositoryFile> trashItems;
-  public FileTreeItem trashItem;
+  public FolderTreeItem trashItem;
 
   private TreeItem selectedItem = null;
   private String selectedPath = null;
 
   private FocusPanel focusable = new FocusPanel();
 
-  public SolutionTree( boolean showTrash ) {
+  public FolderTree( boolean showTrash ) {
     super();
     setAnimationEnabled( true );
     sinkEvents( Event.ONDBLCLICK );
@@ -92,36 +96,36 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
         if ( selectedItem != null ) {
           Widget treeItemWidget = selectedItem.getWidget();
           if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-            ( (LeafItemWidget) treeItemWidget ).getParent().removeStyleName( "selected" ); //$NON-NLS-1$
+            ( (LeafItemWidget) treeItemWidget ).getParent().removeStyleName( SELECTED_STYLE_NAME );
           } else {
-            selectedItem.removeStyleName( "selected" ); //$NON-NLS-1$
+            selectedItem.removeStyleName( SELECTED_STYLE_NAME );
           }
         }
         selectedItem = event.getSelectedItem();
         if ( selectedItem != null ) {
           Widget treeItemWidget = selectedItem.getWidget();
-          if ( selectedItem instanceof FileTreeItem ) {
-            RepositoryFile repositoryFile = ( (FileTreeItem) selectedItem ).getRepositoryFile();
+          if ( selectedItem instanceof FolderTreeItem ) {
+            RepositoryFile repositoryFile = ( (FolderTreeItem) selectedItem ).getRepositoryFile();
             if ( repositoryFile != null && repositoryFile.isHidden() && !isShowHiddenFiles() ) {
               if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-                ( (LeafItemWidget) treeItemWidget ).getParent().removeStyleName( "hidden" ); //$NON-NLS-1$
-                ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( "selected" ); //$NON-NLS-1$
+                ( (LeafItemWidget) treeItemWidget ).getParent().removeStyleName( HIDDEN_STYLE_NAME );
+                ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
               } else {
-                selectedItem.addStyleName( "hidden" ); //$NON-NLS-1$
-                selectedItem.addStyleName( "selected" ); //$NON-NLS-1$                
+                selectedItem.addStyleName( HIDDEN_STYLE_NAME );
+                selectedItem.addStyleName( SELECTED_STYLE_NAME );                
               }
             } else {
               if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-                ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( "selected" ); //$NON-NLS-1$
+                ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
               } else {
-                selectedItem.addStyleName( "selected" ); //$NON-NLS-1$
+                selectedItem.addStyleName( SELECTED_STYLE_NAME );
               }
             }
           } else {
             if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-              ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( "selected" ); //$NON-NLS-1$
+              ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
             } else {
-              selectedItem.addStyleName( "selected" ); //$NON-NLS-1$
+              selectedItem.addStyleName( SELECTED_STYLE_NAME );
             }
           }
         }
@@ -130,7 +134,7 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     // By default, expanding a node does not select it. Add that in here
     this.addOpenHandler( new OpenHandler<TreeItem>() {
       public void onOpen( OpenEvent<TreeItem> event ) {
-        SolutionTree.this.setSelectedItem( event.getTarget() );
+        FolderTree.this.setSelectedItem( event.getTarget() );
         selectedItem.addStyleName( "open" );
       }
     } );
@@ -342,6 +346,7 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     return null;
   }
 
+  @Override
   protected void onLoad() {
     super.onLoad();
     fixLeafNodes();
@@ -360,7 +365,7 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
       selectedItem = getSelectedItem();
     }
     clear();
-    addItem( new FileTreeItem( Messages.getString( "loadingEllipsis" ) ) ); //$NON-NLS-1$
+    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) ); //$NON-NLS-1$
     WaitPopup.getInstance().setVisible( false );
   }
 
@@ -377,9 +382,9 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     // get document root item
     RepositoryFile rootRepositoryFile = repositoryFileTree.getFile();
     if ( !rootRepositoryFile.isHidden() || isShowHiddenFiles() ) {
-      FileTreeItem rootItem = null;
+      FolderTreeItem rootItem = null;
       if ( createRootNode ) {
-        rootItem = new FileTreeItem();
+        rootItem = new FolderTreeItem();
         rootItem.setText( rootRepositoryFile.getPath() );
         rootItem.setTitle( rootRepositoryFile.getPath() );
         rootItem.getElement().setId( rootRepositoryFile.getPath() );
@@ -426,8 +431,8 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
    * 
    */
   private void fixLeafNodes() {
-    List<FileTreeItem> allNodes = getAllNodes();
-    for ( FileTreeItem treeItem : allNodes ) {
+    List<FolderTreeItem> allNodes = getAllNodes();
+    for ( FolderTreeItem treeItem : allNodes ) {
       RepositoryFileTree userObject = (RepositoryFileTree) treeItem.getUserObject();
       if ( userObject != null && userObject.getChildren().size() == 0 ) { // This is a leaf node so change the
                                                                           // widget
@@ -441,24 +446,24 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     }
   }
 
-  public List<FileTreeItem> getAllNodes() {
-    ArrayList<FileTreeItem> nodeList = new ArrayList<FileTreeItem>();
+  private List<FolderTreeItem> getAllNodes() {
+    List<FolderTreeItem> nodeList = new ArrayList<FolderTreeItem>();
     for ( int i = 0; i < this.getItemCount(); i++ ) {
-      nodeList.add( (FileTreeItem) this.getItem( i ) );
-      getAllNodes( (FileTreeItem) this.getItem( i ), nodeList );
+      nodeList.add( (FolderTreeItem) this.getItem( i ) );
+      getAllNodes( (FolderTreeItem) this.getItem( i ), nodeList );
     }
     return nodeList;
   }
 
-  private void getAllNodes( FileTreeItem parent, ArrayList<FileTreeItem> nodeList ) {
+  private void getAllNodes( FolderTreeItem parent, List<FolderTreeItem> nodeList ) {
     for ( int i = 0; i < parent.getChildCount(); i++ ) {
-      FileTreeItem child = (FileTreeItem) parent.getChild( i );
+      FolderTreeItem child = (FolderTreeItem) parent.getChild( i );
       nodeList.add( child );
       getAllNodes( child, nodeList );
     }
   }
 
-  public FileTreeItem getTrashItem() {
+  public FolderTreeItem getTrashItem() {
     return trashItem;
   }
 
@@ -468,7 +473,7 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
 
   public void select( String path ) {
     this.selectedPath = path;
-    ArrayList<String> pathSegments = new ArrayList<String>();
+    List<String> pathSegments = new ArrayList<String>();
     if ( path != null ) {
       if ( path.startsWith( "/" ) ) { //$NON-NLS-1$
         path = path.substring( 1 );
@@ -492,49 +497,30 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
       }
       Collections.reverse( parents );
       selectFromList( parents );
-      // this.setSelectedItem(selectedItem, false);
-      // selectedItem.setSelected(true);
     }
   }
 
-  public ArrayList<String> getPathSegments( String path ) {
-    ArrayList<String> pathSegments = new ArrayList<String>();
-    if ( path != null ) {
-      if ( path.startsWith( "/" ) ) { //$NON-NLS-1$
-        path = path.substring( 1 );
-      }
-      StringTokenizer st = new StringTokenizer( path, '/' );
-      for ( int i = 0; i < st.countTokens(); i++ ) {
-        pathSegments.add( st.tokenAt( i ) );
-      }
-    }
-    return pathSegments;
-  }
-
-  public FileTreeItem getTreeItem( final ArrayList<String> pathSegments ) {
+  public FolderTreeItem getTreeItem( final List<String> pathSegments ) {
     if ( pathSegments.size() > 0 ) {
       // the first path segment is going to be a 'root' in the tree
       String rootSegment = pathSegments.get( 0 );
       for ( int i = 0; i < getItemCount(); i++ ) {
-        FileTreeItem root = (FileTreeItem) getItem( i );
+        FolderTreeItem root = (FolderTreeItem) getItem( i );
         if ( root.getFileName().equalsIgnoreCase( rootSegment ) ) {
-          @SuppressWarnings( "unchecked" )
-          ArrayList<String> tmpPathSegs = (ArrayList<String>) pathSegments.clone();
-          tmpPathSegs.remove( 0 );
-          return getTreeItem( root, tmpPathSegs );
+          return getTreeItem( root, pathSegments.subList( 1, pathSegments.size() ) );
         }
       }
     }
     return null;
   }
 
-  private FileTreeItem getTreeItem( final FileTreeItem root, final ArrayList<String> pathSegments ) {
+  private FolderTreeItem getTreeItem( final FolderTreeItem root, final List<String> pathSegments ) {
     int depth = 0;
-    FileTreeItem currentItem = root;
+    FolderTreeItem currentItem = root;
     while ( depth < pathSegments.size() ) {
       String pathSegment = pathSegments.get( depth );
       for ( int i = 0; i < currentItem.getChildCount(); i++ ) {
-        FileTreeItem childItem = (FileTreeItem) currentItem.getChild( i );
+        FolderTreeItem childItem = (FolderTreeItem) currentItem.getChild( i );
         if ( childItem.getFileName().equalsIgnoreCase( pathSegment ) ) {
           currentItem = childItem;
         }
@@ -543,11 +529,11 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     }
     // let's check if the currentItem matches our segments (it might point to the last item before
     // we eventually failed to find the complete match)
-    FileTreeItem tmpItem = currentItem;
+    FolderTreeItem tmpItem = currentItem;
     depth = pathSegments.size() - 1;
     while ( tmpItem != null && depth >= 0 ) {
       if ( tmpItem.getFileName().equalsIgnoreCase( pathSegments.get( depth ) ) ) {
-        tmpItem = (FileTreeItem) tmpItem.getParentItem();
+        tmpItem = (FolderTreeItem) tmpItem.getParentItem();
         depth--;
       } else {
         // every item must match
@@ -558,15 +544,15 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     return currentItem;
   }
 
-  private void selectFromList( ArrayList<TreeItem> parents ) {
+  private void selectFromList( List<TreeItem> parents ) {
     TreeItem pathDown = null;
     for ( int i = 0; i < parents.size(); i++ ) {
       TreeItem parent = parents.get( i );
       if ( pathDown == null ) {
         for ( int j = 0; j < getItemCount(); j++ ) {
           TreeItem possibleItem = getItem( j );
-          if ( ( possibleItem instanceof FileTreeItem ) && ( parent instanceof FileTreeItem )
-              && ( (FileTreeItem) parent ).getFileName().equals( ( (FileTreeItem) possibleItem ).getFileName() ) ) {
+          if ( ( possibleItem instanceof FolderTreeItem ) && ( parent instanceof FolderTreeItem )
+              && ( (FolderTreeItem) parent ).getFileName().equals( ( (FolderTreeItem) possibleItem ).getFileName() ) ) {
             pathDown = possibleItem;
             pathDown.setState( true, true );
             pathDown.setSelected( true );
@@ -576,8 +562,8 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
       } else {
         for ( int j = 0; j < pathDown.getChildCount(); j++ ) {
           TreeItem possibleItem = pathDown.getChild( j );
-          if ( ( possibleItem instanceof FileTreeItem ) && ( parent instanceof FileTreeItem )
-              && ( (FileTreeItem) parent ).getFileName().equals( ( (FileTreeItem) possibleItem ).getFileName() ) ) {
+          if ( ( possibleItem instanceof FolderTreeItem ) && ( parent instanceof FolderTreeItem )
+              && ( (FolderTreeItem) parent ).getFileName().equals( ( (FolderTreeItem) possibleItem ).getFileName() ) ) {
             pathDown = possibleItem;
             pathDown.setState( true, true );
             break;
@@ -591,7 +577,7 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     }
   }
 
-  private void buildSolutionTree( FileTreeItem parentTreeItem, RepositoryFileTree repositoryFileTree ) {
+  private void buildSolutionTree( FolderTreeItem parentTreeItem, RepositoryFileTree repositoryFileTree ) {
     List<RepositoryFileTree> children = repositoryFileTree.getChildren();
 
     // BISERVER-9599 - Custom Sort
@@ -612,13 +598,13 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
         // TODO Mapping Title to LocalizedName
         String localizedName = file.getTitle();
         String description = file.getDescription();
-        FileTreeItem childTreeItem = new FileTreeItem();
+        FolderTreeItem childTreeItem = new FolderTreeItem();
         childTreeItem.setStylePrimaryName( "leaf-widget" );
         childTreeItem.getElement().setAttribute( "id", file.getPath() ); //$NON-NLS-1$
         childTreeItem.setUserObject( treeItem );
         childTreeItem.setRepositoryFile( file );
         if ( file.isHidden() && file.isFolder() ) {
-          childTreeItem.addStyleDependentName( "hidden" );
+          childTreeItem.addStyleDependentName( HIDDEN_STYLE_NAME );
         }
 
         if ( treeItem != null && treeItem.getChildren() != null ) {
@@ -653,10 +639,10 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
         } else {
           parentTreeItem.addItem( childTreeItem );
         }
-        FileTreeItem tmpParent = childTreeItem;
+        FolderTreeItem tmpParent = childTreeItem;
         String pathToChild = tmpParent.getFileName();
         while ( tmpParent.getParentItem() != null ) {
-          tmpParent = (FileTreeItem) tmpParent.getParentItem();
+          tmpParent = (FolderTreeItem) tmpParent.getParentItem();
           pathToChild = tmpParent.getFileName() + "/" + pathToChild; //$NON-NLS-1$
         }
         /*
@@ -679,17 +665,17 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     this.showLocalizedFileNames = showLocalizedFileNames;
     // use existing tree and switch text/title
     for ( int i = 0; i < getItemCount(); i++ ) {
-      toggleLocalizedFileNames( (FileTreeItem) getItem( i ) );
+      toggleLocalizedFileNames( (FolderTreeItem) getItem( i ) );
     }
   }
 
-  private void toggleLocalizedFileNames( FileTreeItem parentTreeItem ) {
+  private void toggleLocalizedFileNames( FolderTreeItem parentTreeItem ) {
     String title = parentTreeItem.getTitle();
     String text = parentTreeItem.getText();
     parentTreeItem.setTitle( text );
     parentTreeItem.setText( title );
     for ( int i = 0; i < parentTreeItem.getChildCount(); i++ ) {
-      toggleLocalizedFileNames( (FileTreeItem) parentTreeItem.getChild( i ) );
+      toggleLocalizedFileNames( (FolderTreeItem) parentTreeItem.getChild( i ) );
     }
   }
 
@@ -714,20 +700,12 @@ public class SolutionTree extends Tree /*implements IRepositoryFileTreeListener,
     onFetchRepositoryFileTree( repositoryFileTree, trashItems );
   }
 
-  public boolean isAdministrator() {
-    return isAdministrator;
-  }
-
-  public void setAdministrator( boolean isAdministrator ) {
-    this.isAdministrator = isAdministrator;
-  }
-
   public boolean isCreateRootNode() {
     return createRootNode;
   }
 
   public List<RepositoryFile> getRepositoryFiles() {
-    final FileTreeItem selectedTreeItem = (FileTreeItem) getSelectedItem();
+    final FolderTreeItem selectedTreeItem = (FolderTreeItem) getSelectedItem();
     List<RepositoryFile> values = new ArrayList<RepositoryFile>();
     values.add( ( (RepositoryFileTree) selectedTreeItem.getUserObject() ).getFile() );
     return values;

@@ -15,30 +15,30 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.mantle.client.solutionbrowser.tree;
+package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 
-public class FileTreeItem extends TreeItem {
+public class FolderTreeItem extends TreeItem {
   public String fileName;
   public String url;
   private RepositoryFile repositoryFile;
 
-  public FileTreeItem() {
+  public FolderTreeItem() {
     super();
   }
 
-  public FileTreeItem( Widget widget ) {
+  public FolderTreeItem( Widget widget ) {
     super( widget );
   }
 
   /**
    * @param string
    */
-  public FileTreeItem( String string ) {
+  public FolderTreeItem( String string ) {
     super( ( new SafeHtmlBuilder() ).appendEscaped( string ).toSafeHtml() );
     getElement().setId( string );
   }

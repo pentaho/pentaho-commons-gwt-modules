@@ -15,7 +15,7 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.mantle.client.dialogs;
+package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
@@ -25,8 +25,6 @@ import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.mantle.client.commands.NewFolderCommand;
 import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
-import org.pentaho.mantle.client.solutionbrowser.tree.FileTreeItem;
-import org.pentaho.mantle.client.solutionbrowser.tree.SolutionTree;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Command;
@@ -38,11 +36,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
-//import org.pentaho.mantle.client.commands.NewFolderCommand;
 
 public class SelectFolderDialog extends PromptDialogBox {
 
-  private static class MySolutionTree extends SolutionTree {
+  private static class MySolutionTree extends FolderTree {
     public SelectFolderDialog localThis;
 
     public MySolutionTree( boolean showTrash ) {
@@ -93,7 +90,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     add.setCommand( new Command() {
       public void execute() {
         final NewFolderCommand nfc =
-            new NewFolderCommand( ( (FileTreeItem) tree.getSelectedItem() ).getRepositoryFile() );
+            new NewFolderCommand( ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile() );
         nfc.setCallback( new ICallback<String>() {
           public void onHandle(final String path ) {
             tree.fetchRepositoryFileTree(new AsyncCallback<RepositoryFileTree>() {
@@ -130,7 +127,7 @@ public class SelectFolderDialog extends PromptDialogBox {
   }
 
   public String getSelectedPath() {
-    String selectedPath = ( (FileTreeItem) tree.getSelectedItem() ).getRepositoryFile().getPath();
+    String selectedPath = ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile().getPath();
     return selectedPath;
   }
 

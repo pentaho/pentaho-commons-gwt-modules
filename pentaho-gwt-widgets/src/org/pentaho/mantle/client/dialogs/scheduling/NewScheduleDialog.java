@@ -23,8 +23,8 @@ import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
-import org.pentaho.mantle.client.dialogs.SelectFolderDialog;
 import org.pentaho.mantle.client.dialogs.WaitPopup;
+import org.pentaho.mantle.client.dialogs.folderchooser.SelectFolderDialog;
 import org.pentaho.mantle.client.messages.Messages;
 import org.pentaho.mantle.client.workspace.JsJob;
 

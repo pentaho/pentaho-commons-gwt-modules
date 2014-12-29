@@ -23,7 +23,7 @@ import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-import org.pentaho.mantle.client.dialogs.SelectFolderDialog;
+import org.pentaho.mantle.client.dialogs.folderchooser.SelectFolderDialog;
 import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.dom.client.Style.VerticalAlign;

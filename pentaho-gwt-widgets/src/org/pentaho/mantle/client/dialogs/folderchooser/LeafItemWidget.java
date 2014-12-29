@@ -15,7 +15,7 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.mantle.client.solutionbrowser.tree;
+package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 
