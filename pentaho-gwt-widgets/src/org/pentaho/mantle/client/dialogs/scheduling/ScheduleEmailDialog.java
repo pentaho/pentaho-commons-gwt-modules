@@ -38,7 +38,6 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import com.google.gwt.user.client.Window;
 
 public class ScheduleEmailDialog extends AbstractWizardDialog {
   String moduleBaseURL = GWT.getModuleBaseURL();
@@ -152,7 +151,6 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
                       Messages.getString( "runInBackground" ), Messages.getString( "backgroundExecutionStarted" ), //$NON-NLS-1$ //$NON-NLS-2$
                       false, false, true );
               dialogBox.center();
-              Window.alert( "ScheduleEmailDialog: show ScheduleCreateStatusDialog if on the schedule perspective" );
             } else {
               MessageDialogBox dialogBox =
                   new MessageDialogBox(

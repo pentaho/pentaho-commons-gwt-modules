@@ -102,6 +102,8 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   private ScheduleEditor scheduleEditor;
 
   private PromptDialogBox parentDialog;
+  
+  private boolean newSchedule = true;
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, JsJob jsJob, IDialogCallback callback,
       boolean hasParams, boolean isEmailConfValid, final ScheduleDialogType type ) {
@@ -111,6 +113,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     setCallback( callback );
     editJob = jsJob;
     this.parentDialog = parentDialog;
+    newSchedule = false;
     constructDialog( jsJob.getFullResourceName(), jsJob.getOutputPath(), jsJob.getJobName(), hasParams,
         isEmailConfValid, jsJob );
   }
@@ -854,10 +857,17 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
                 callback.okPressed();
               }
               if ( showSuccessDialog ) {
-                Window.alert( "ScheduleEmailDialog: show ScheduleCreateStatusDialog if on the schedule perspective" );
-                  MessageDialogBox dialogBox =
-                      new MessageDialogBox(
-                          Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
+                String scheduleTitle = null;
+                String scheduleMessage = null;
+                if (newSchedule) {
+                  scheduleTitle = Messages.getString( "schedule" );
+                  scheduleMessage = Messages.getString( "scheduleCreated" );
+                } else {
+                  scheduleTitle = Messages.getString( "scheduleUpdatedTitle" );
+                  scheduleMessage = Messages.getString( "scheduleUpdatedMessage" );
+                }  
+                MessageDialogBox dialogBox =
+                      new MessageDialogBox( scheduleTitle, scheduleMessage, 
                           false, false, true );
                   dialogBox.center();
               }
@@ -1107,5 +1117,9 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   public void setShowSuccessDialog( boolean showSuccessDialog ) {
     this.showSuccessDialog = showSuccessDialog;
+  }
+
+  public void setNewSchedule(boolean newSchedule) {
+    this.newSchedule = newSchedule;
   }
 }

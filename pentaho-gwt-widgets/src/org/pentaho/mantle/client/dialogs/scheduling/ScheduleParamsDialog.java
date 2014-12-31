@@ -354,7 +354,6 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
               name.stringValue().replace( "\"", "" ) + "=" + stringValueArr.get( j ).toString().replace( "\"", "" );
         }
       }
-      Window.alert( "getparameterUi311" );
       setParametersUrl(ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     super.center();

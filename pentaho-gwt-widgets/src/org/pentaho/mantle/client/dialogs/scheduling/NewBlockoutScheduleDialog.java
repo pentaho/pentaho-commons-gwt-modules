@@ -34,6 +34,7 @@ public class NewBlockoutScheduleDialog extends ScheduleRecurrenceDialog {
     super( null, ScheduleDialogType.BLOCKOUT,
         Messages.getString( "newBlockoutSchedule" ), filePath, "", "", callback, hasParams, //$NON-NLS-1$
         isEmailConfValid );
+    setNewSchedule(updateMode);
   }
 
   public NewBlockoutScheduleDialog( final JsJob jsJob, final IDialogCallback callback, final boolean hasParams,
@@ -78,5 +79,6 @@ public class NewBlockoutScheduleDialog extends ScheduleRecurrenceDialog {
 
   public void setUpdateMode() {
     updateMode = true;
+    setNewSchedule( updateMode );
   }
 }
