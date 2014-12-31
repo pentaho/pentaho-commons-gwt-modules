@@ -23,7 +23,6 @@ import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 
 /**
  * Entry point for display schedule dialog.

@@ -336,7 +336,7 @@ public class ScheduleOutputLocationDialogExecutor {
       } else {
         MessageDialogBox dialogBox =
             new MessageDialogBox(
-                Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
+                Messages.getString( "schedule" ), Messages.getString( "scheduleCreated" ), //$NON-NLS-1$ //$NON-NLS-2$ 
                 false, false, true );
         dialogBox.center();
       }
