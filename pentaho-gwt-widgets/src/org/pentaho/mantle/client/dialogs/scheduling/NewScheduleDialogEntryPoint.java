@@ -59,7 +59,7 @@ public class NewScheduleDialogEntryPoint implements EntryPoint, IResourceBundleL
       }
     };
     NewScheduleDialog dialog = new NewScheduleDialog( reportFile, callback, false );
-    dialog.show();
+    dialog.center();
   }
 
   public void openBackgroundDialog( String reportFile ) {
