@@ -55,6 +55,8 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
   JsJob editJob;
 
   Boolean done = false;
+  
+  private boolean newSchedule = true;
 
   public ScheduleEmailDialog( AbstractWizardDialog parentDialog, String filePath, JSONObject jobSchedule,
       JSONArray scheduleParams, JsJob editJob ) {
@@ -152,11 +154,17 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
                       false, false, true );
               dialogBox.center();
             } else {
-              MessageDialogBox dialogBox =
-                  new MessageDialogBox(
-                      Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
-                      false, false, true );
-              dialogBox.center();
+              String scheduleTitle = null;
+              String scheduleMessage = null;
+              if ( newSchedule ) {
+                scheduleTitle = Messages.getString( "schedule" );
+                scheduleMessage = Messages.getString( "scheduleCreated" );
+              } else {
+                scheduleTitle = Messages.getString( "scheduleUpdatedTitle" );
+                scheduleMessage = Messages.getString( "scheduleUpdatedMessage" );
+              }  
+              MessageDialogBox dialogBox = new MessageDialogBox( scheduleTitle, scheduleMessage, false, false, true );
+              dialogBox.center();            
             }
           } else {
             MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), response.getText(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-2$
@@ -289,4 +297,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
     this.editJob = editJob;
   }
 
+  public void setNewSchedule( boolean newSchedule ) {
+    this.newSchedule = newSchedule;
+  }
 }

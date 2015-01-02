@@ -859,7 +859,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
               if ( showSuccessDialog ) {
                 String scheduleTitle = null;
                 String scheduleMessage = null;
-                if (newSchedule) {
+                if ( newSchedule ) {
                   scheduleTitle = Messages.getString( "schedule" );
                   scheduleMessage = Messages.getString( "scheduleCreated" );
                 } else {
@@ -950,6 +950,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
           } else {
             scheduleEmailDialog.setJobSchedule( scheduleRequest );
           }
+          scheduleEmailDialog.setNewSchedule( newSchedule );
           scheduleEmailDialog.center();
           hide();
         }
@@ -992,6 +993,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
           } else {
             scheduleParamsDialog.setJobSchedule( schedule );
           }
+          scheduleParamsDialog.setNewSchedule( newSchedule );
           scheduleParamsDialog.center();
           hide();
         }
@@ -1119,7 +1121,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     this.showSuccessDialog = showSuccessDialog;
   }
 
-  public void setNewSchedule(boolean newSchedule) {
+  public void setNewSchedule( boolean newSchedule ) {
     this.newSchedule = newSchedule;
   }
 }

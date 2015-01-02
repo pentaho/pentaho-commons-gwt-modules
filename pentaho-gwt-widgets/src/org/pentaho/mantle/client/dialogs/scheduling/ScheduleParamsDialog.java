@@ -73,6 +73,8 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   Boolean done = false;
   boolean isEmailConfValid = false;
 
+  private boolean newSchedule = true;
+  
   public ScheduleParamsDialog( ScheduleRecurrenceDialog parentDialog, boolean isEmailConfValid, JsJob editJob ) {
     super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
     this.parentDialog = parentDialog;
@@ -227,10 +229,16 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
                           false, false, true );
                   dialogBox.center();
                 } else {
-                  MessageDialogBox dialogBox =
-                      new MessageDialogBox(
-                          Messages.getString( "scheduleUpdatedTitle" ), Messages.getString( "scheduleUpdatedMessage" ), //$NON-NLS-1$ //$NON-NLS-2$ 
-                          false, false, true );
+                  String scheduleTitle = null;
+                  String scheduleMessage = null;
+                  if ( newSchedule ) {
+                    scheduleTitle = Messages.getString( "schedule" );
+                    scheduleMessage = Messages.getString( "scheduleCreated" );
+                  } else {
+                    scheduleTitle = Messages.getString( "scheduleUpdatedTitle" );
+                    scheduleMessage = Messages.getString( "scheduleUpdatedMessage" );
+                  }  
+                  MessageDialogBox dialogBox = new MessageDialogBox( scheduleTitle, scheduleMessage, false, false, true );
                   dialogBox.center();
                 }
               }
@@ -447,4 +455,8 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   public interface IAfterResponse {
     void onResponse( JSONValue rib );
   }
+  
+  public void setNewSchedule( boolean newSchedule ) {
+    this.newSchedule = newSchedule;
+  }  
 }
