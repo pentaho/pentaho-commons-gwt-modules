@@ -145,27 +145,6 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
             if ( callback != null ) {
               callback.okPressed();
             }
-
-            JSONValue rib = scheduleRequest.get( "runInBackground" );
-            if ( rib != null && rib.isBoolean() != null && rib.isBoolean().booleanValue() ) {
-              MessageDialogBox dialogBox =
-                  new MessageDialogBox(
-                      Messages.getString( "runInBackground" ), Messages.getString( "backgroundExecutionStarted" ), //$NON-NLS-1$ //$NON-NLS-2$
-                      false, false, true );
-              dialogBox.center();
-            } else {
-              String scheduleTitle = null;
-              String scheduleMessage = null;
-              if ( newSchedule ) {
-                scheduleTitle = Messages.getString( "schedule" );
-                scheduleMessage = Messages.getString( "scheduleCreated" );
-              } else {
-                scheduleTitle = Messages.getString( "scheduleUpdatedTitle" );
-                scheduleMessage = Messages.getString( "scheduleUpdatedMessage" );
-              }  
-              MessageDialogBox dialogBox = new MessageDialogBox( scheduleTitle, scheduleMessage, false, false, true );
-              dialogBox.center();            
-            }
           } else {
             MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), response.getText(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-2$
                 false, false, true );

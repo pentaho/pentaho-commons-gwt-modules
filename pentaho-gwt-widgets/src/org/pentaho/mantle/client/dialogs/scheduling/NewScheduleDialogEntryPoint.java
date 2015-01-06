@@ -17,6 +17,7 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
 import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
 import org.pentaho.mantle.client.messages.Messages;
@@ -48,6 +49,11 @@ public class NewScheduleDialogEntryPoint implements EntryPoint, IResourceBundleL
 
       @Override
       public void okPressed() {
+        MessageDialogBox dialogBox =
+            new MessageDialogBox(
+                Messages.getString( "scheduleCreated" ), Messages.getString( "scheduleCreateSuccessNoSwitch" ), //$NON-NLS-1$ //$NON-NLS-2$
+                false, false, true );
+        dialogBox.center();
       }
 
       @Override
