@@ -856,21 +856,6 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
               if ( callback != null ) {
                 callback.okPressed();
               }
-              if ( showSuccessDialog ) {
-                String scheduleTitle = null;
-                String scheduleMessage = null;
-                if ( newSchedule ) {
-                  scheduleTitle = Messages.getString( "schedule" );
-                  scheduleMessage = Messages.getString( "scheduleCreated" );
-                } else {
-                  scheduleTitle = Messages.getString( "scheduleUpdatedTitle" );
-                  scheduleMessage = Messages.getString( "scheduleUpdatedMessage" );
-                }  
-                MessageDialogBox dialogBox =
-                      new MessageDialogBox( scheduleTitle, scheduleMessage, 
-                          false, false, true );
-                  dialogBox.center();
-              }
             } else {
               MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), //$NON-NLS-1$
                   response.getText(), false, false, true );

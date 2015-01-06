@@ -52,8 +52,7 @@ public class ScheduleHelper {
     }
   }-*/;
 
-  public static void showScheduleDialog( final String fileNameWithPath ) {
-
+  public static void showScheduleDialog( final String fileNameWithPath, final IDialogCallback callback ) {
     final SolutionFileActionEvent event = new SolutionFileActionEvent();
     event.setAction( ScheduleHelper.class.getName() );
     try {
@@ -71,7 +70,7 @@ public class ScheduleHelper {
             }
 
             public void onSuccess( Boolean result ) {
-              showScheduleDialog( fileNameWithPath );
+              showScheduleDialog( fileNameWithPath, callback );
             }
 
           } );
@@ -101,7 +100,7 @@ public class ScheduleHelper {
                 if ( response.getStatusCode() == Response.SC_OK ) {
                   final boolean isEmailConfValid = Boolean.parseBoolean( response.getText() );
 
-                  NewScheduleDialog dialog = new NewScheduleDialog( fileNameWithPath, null, isEmailConfValid );
+                  NewScheduleDialog dialog = new NewScheduleDialog( fileNameWithPath, callback, isEmailConfValid );
                   dialog.center();
 
                   event.setMessage( "Open" );

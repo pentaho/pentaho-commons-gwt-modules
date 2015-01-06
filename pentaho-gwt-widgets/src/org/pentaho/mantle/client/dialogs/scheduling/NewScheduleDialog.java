@@ -87,7 +87,8 @@ public class NewScheduleDialog extends PromptDialogBox {
     createUI();
   }
 
-  public NewScheduleDialog( String filePath, IScheduleCallback callback, boolean isEmailConfValid) {
+  public NewScheduleDialog( String filePath, IDialogCallback callback, boolean isEmailConfValid) {
+
     super(
         Messages.getString( "newSchedule" ), Messages.getString( "nextStep" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     this.filePath = filePath;
