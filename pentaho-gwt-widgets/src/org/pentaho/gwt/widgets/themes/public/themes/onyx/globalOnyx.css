@@ -3658,3 +3658,9 @@ treecontrol.tree-classic li .tree-selected {
 .angular-dojo.dateTimePicker .pentaho-dropdownbutton-inner.disabled {
   background-image: url('images/calendar_icon_disabled.png');
 }
+.pentaho-optionsdatasourcebutton {
+  width: 32px;
+  height: 32px;
+  background: url('images/options.png') no-repeat center;
+  cursor: pointer;
+}
