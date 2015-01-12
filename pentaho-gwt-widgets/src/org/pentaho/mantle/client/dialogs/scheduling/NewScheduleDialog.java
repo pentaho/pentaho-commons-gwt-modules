@@ -182,7 +182,7 @@ public class NewScheduleDialog extends PromptDialogBox {
     content.getParent().setHeight( "100%" );
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
 
-    okButton.getParent().getParent().setStyleName( "schedule-dialog-button-panel" );
+    okButton.getParent().getParent().setStyleName( "button-panel" );
 
     updateButtonState();
     setSize( "650px", "450px" );

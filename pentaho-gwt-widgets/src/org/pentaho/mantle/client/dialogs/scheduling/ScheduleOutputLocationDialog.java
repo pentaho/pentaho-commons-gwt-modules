@@ -146,7 +146,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
     content.getParent().setHeight( "100%" );
 
-    okButton.getParent().getParent().setStyleName( "schedule-dialog-button-panel" );
+    okButton.getParent().getParent().setStyleName( "button-panel" );
 
     updateButtonState();
     setSize( "650px", "450px" );
