@@ -22,7 +22,6 @@ import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
 import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.mantle.client.commands.NewFolderCommand;
 import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
 

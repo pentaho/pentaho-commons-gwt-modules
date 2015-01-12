@@ -15,7 +15,7 @@
  * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.mantle.client.commands;
+package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
@@ -24,10 +24,11 @@ import org.pentaho.gwt.widgets.client.filechooser.FileChooserDialog;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -42,8 +43,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class NewFolderCommand extends AbstractCommand {
 
   private String solutionPath = null;
-  private String moduleBaseURL = GWT.getModuleBaseURL();
-  private String moduleName = GWT.getModuleName();
+  
   private String contextURL = ScheduleHelper.getFullyQualifiedURL();
 
   private RepositoryFile parentFolder;
@@ -66,23 +66,10 @@ public class NewFolderCommand extends AbstractCommand {
   }
 
   protected void performOperation() {
-    /*if ( this.getSolutionPath() != null ) {
-      SolutionBrowserPanel sbp = SolutionBrowserPanel.getInstance();
-      sbp.getFile( this.getSolutionPath(), new SolutionFileHandler() {
-        @Override
-        public void handle( RepositoryFile repositoryFile ) {
-          NewFolderCommand.this.parentFolder = repositoryFile;
-          performOperation( true );
-        }
-      } );
-    } else {*/
       performOperation( true );
-    //}
   }
 
   protected void performOperation( boolean feedback ) {
-    //final SolutionFolderActionEvent event = new SolutionFolderActionEvent();
-    //event.setAction( this.getClass().getName() );
 
     final TextBox folderNameTextBox = new TextBox();
     folderNameTextBox.setTabIndex( 1 );
@@ -104,10 +91,14 @@ public class NewFolderCommand extends AbstractCommand {
       }
 
       public void okPressed() {
-
         if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() ) ) {
           //event.setMessage( Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ) );
           //EventBusUtil.EVENT_BUS.fireEvent( event );
+          MessageDialogBox dialogBox =
+              new MessageDialogBox(
+                  Messages.getString( "error" ), Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ), //$NON-NLS-1$ //$NON-NLS-2$
+                  false, false, true );
+          dialogBox.center();
           return;
         }
 
@@ -141,6 +132,16 @@ public class NewFolderCommand extends AbstractCommand {
                 setBrowseRepoDirty( Boolean.TRUE );
                 //EventBusUtil.EVENT_BUS.fireEvent( event );
               } else {
+                
+                String errorMessage = StringUtils.isEmpty( createFolderResponse.getText() )
+                    || Messages.getString( createFolderResponse.getText() ) == null
+                    ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ) //$NON-NLS-1$
+                    : Messages.getString( createFolderResponse.getText(), folderNameTextBox.getText() );
+                MessageDialogBox dialogBox =
+                    new MessageDialogBox(
+                        Messages.getString( "error" ), errorMessage, //$NON-NLS-1$ //$NON-NLS-2$
+                        false, false, true );
+                dialogBox.center();
                 /*event.setMessage(
                     StringUtils.isEmpty( createFolderResponse.getText() )
                         || Messages.getString( createFolderResponse.getText() ) == null
