@@ -858,7 +858,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
               }
             } else {
               MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), //$NON-NLS-1$
-                  response.getText(), false, false, true );
+                  Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode(), false, false, true );
               dialogBox.center();
               setDone( false );
             }
