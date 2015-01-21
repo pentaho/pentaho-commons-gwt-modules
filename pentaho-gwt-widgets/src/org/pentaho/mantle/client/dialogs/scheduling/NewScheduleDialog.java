@@ -135,7 +135,6 @@ public class NewScheduleDialog extends PromptDialogBox {
           }
         } );
         selectFolder.center();
-        scheduleLocationTextBox.setText( "/home/admin" );
       }
     } );
     browseButton.setStyleName( "pentaho-button" );
