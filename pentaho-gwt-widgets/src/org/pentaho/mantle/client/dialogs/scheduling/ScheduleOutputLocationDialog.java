@@ -106,7 +106,6 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
           }
         } );
         selectFolder.center();
-        scheduleLocationTextBox.setText( "/home/admin" );
       }
     } );
     browseButton.setStyleName( "pentaho-button" );
