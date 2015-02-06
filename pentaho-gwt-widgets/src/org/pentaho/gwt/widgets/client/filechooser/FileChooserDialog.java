@@ -57,6 +57,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal, String title,
       String okText ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
+    showGlassPane();
     setupNativeHooks();
     fileChooser = new FileChooser( mode, selectedPath, new IDialogCallback() {
       public void cancelPressed() {
@@ -351,9 +352,14 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
   @Override
   public void center() {
-    GlassPane.getInstance().show();
     super.center();
     setFocus();
+  }
+
+  private void showGlassPane() {
+    GlassPane.getInstance().show();
+    super.initializePageBackground();
+    super.block();
   }
 
   private void setFocus() {
