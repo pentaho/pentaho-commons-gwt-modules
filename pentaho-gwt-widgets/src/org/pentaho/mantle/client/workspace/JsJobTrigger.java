@@ -354,7 +354,7 @@ public class JsJobTrigger extends JavaScriptObject {
     String trigDesc = "";
     ScheduleType scheduleType = ScheduleType.valueOf( getScheduleType() );
     if ( scheduleType == ScheduleType.RUN_ONCE ) {
-      return "Run Once";
+      return Messages.getString( "schedule.runOnce" );
     }
     if ( "cronJobTrigger".equals( getType() ) || ( getUiPassParamRaw()
       != null && getUiPassParamRaw().equals( "CRON" ) ) ) {
@@ -410,7 +410,7 @@ public class JsJobTrigger extends JavaScriptObject {
         }
       }
       DateTimeFormat timeFormat = DateTimeFormat.getFormat( PredefinedFormat.TIME_MEDIUM );
-      trigDesc += " at " + timeFormat.format( getStartTime() );
+      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
     } else if ( "simpleJobTrigger".equals( getType() ) ) {
       // if (getRepeatInterval() > 0) {
       trigDesc = getSimpleDescription();
@@ -459,13 +459,13 @@ public class JsJobTrigger extends JavaScriptObject {
       int repeatInterval = getRepeatInterval();
       trigDesc =
           Messages.getString( "every" ) + " " + ( repeatInterval / 86400 ) + " " + Messages.getString( "daysLower" );
-      trigDesc += " at " + timeFormat.format( getStartTime() );
+      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
     } else if ( intervalSeconds != getRepeatInterval() ) {
       trigDesc = Messages.getString( "every" ) + " " + intervalUnits;
-      trigDesc += " at " + timeFormat.format( getStartTime() );
+      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
     } else {
       trigDesc = Messages.getString( "every" ) + " " + intervalUnits;
-      trigDesc += " at " + timeFormat.format( getStartTime() );
+      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
     }
     if ( getRepeatCount() > 0 ) {
       trigDesc += "; " + Messages.getString( "run" ) + " " + getRepeatCount() + " " + Messages.getString( "times" );

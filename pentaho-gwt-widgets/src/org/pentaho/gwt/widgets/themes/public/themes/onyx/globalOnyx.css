@@ -3658,3 +3658,44 @@ treecontrol.tree-classic li .tree-selected {
 .angular-dojo.dateTimePicker .pentaho-dropdownbutton-inner.disabled {
   background-image: url('images/calendar_icon_disabled.png');
 }
+.pentaho-optionsdatasourcebutton {
+  width: 32px;
+  height: 32px;
+  background: url('images/options.png') no-repeat center;
+  cursor: pointer;
+}
+
+/* Folder tree styles */
+.leaf-widget {
+  /*font-size: 13px;*/
+}
+
+.leaf-widget .gwt-TreeItem > table {
+
+}
+
+.leaf-widget .gwt-TreeItem-selected > table {
+  background-color: #dbdbdb;
+}
+
+.leaf-widget .leaf-widget-hidden .gwt-TreeItem > table {
+  width: 100%;
+  opacity: .7;
+  font-style: italic;
+  background-color: #ffffff;
+}
+
+.leaf-widget .leaf-widget-hidden .gwt-TreeItem-selected > table {
+  width: 100%;
+  opacity: .7;
+  font-style: italic;
+  background-color: #dbdbdb;
+}
+
+.select-folder-tree {
+  height: 360px;
+  overflow: auto;
+  width: 380px;
+  border: 1px solid #cbdde8;
+  background-color: white;
+}

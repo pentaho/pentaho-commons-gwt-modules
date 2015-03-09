@@ -60,7 +60,8 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     return true;
   }
 
-  public void center() {
+
+  protected void initializePageBackground() {
     // IE6 has problems with 100% height so is better a huge size
     // pageBackground.setSize("100%", "100%");
     if ( pageBackground == null ) {
@@ -79,11 +80,20 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
       } );
       RootPanel.get().add( pageBackground, 0, 0 );
     }
+  }
+
+  protected  void block() {
+    pageBackground.setSize( "100%", Window.getClientHeight() + Window.getScrollTop() + "px" ); //$NON-NLS-1$ //$NON-NLS-2$
+    pageBackground.setVisible( true );
+    pageBackground.getElement().getStyle().setDisplay( Display.BLOCK );
+
+  }
+
+  public void center() {
+    initializePageBackground();
     super.center();
     if ( modal && !centerCalled ) {
-      pageBackground.setSize( "100%", Window.getClientHeight() + Window.getScrollTop() + "px" ); //$NON-NLS-1$ //$NON-NLS-2$
-      pageBackground.setVisible( true );
-      pageBackground.getElement().getStyle().setDisplay( Display.BLOCK );
+      block();
       dialogDepthCount++;
     }
     if ( focusWidget != null ) {

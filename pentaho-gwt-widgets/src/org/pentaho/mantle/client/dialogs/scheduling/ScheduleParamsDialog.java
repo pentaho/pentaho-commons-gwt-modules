@@ -222,8 +222,10 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
                 afterResponseCallback.onResponse( jobSchedule.get( "runInBackground" ) );
               }
             } else {
-              MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), response.getText(), //$NON-NLS-1$ 
-                  false, false, true );
+              MessageDialogBox dialogBox =
+                  new MessageDialogBox( Messages.getString( "error" ),
+                      Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode(), //$NON-NLS-1$ 
+                      false, false, true );
               dialogBox.center();
               setDone( false );
             }
