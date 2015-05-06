@@ -235,28 +235,12 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String resumeScheduler();
 
   /**
-   * Translated "February".
-   * 
-   * @return translated "February"
-   */
-  @DefaultMessage( "February" )
-  String february();
-
-  /**
    * Translated "Resume selected schedule(s)".
    * 
    * @return translated "Resume selected schedule(s)"
    */
   @DefaultMessage( "Resume selected schedule(s)" )
   String resumeSchedules();
-
-  /**
-   * Translated "Sunday".
-   * 
-   * @return translated "Sunday"
-   */
-  @DefaultMessage( "Sunday" )
-  String sunday();
 
   /**
    * Translated "Edit schedule".
@@ -403,14 +387,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String specifyEndDate();
 
   /**
-   * Translated "Tuesday".
-   * 
-   * @return translated "Tuesday"
-   */
-  @DefaultMessage( "Tuesday" )
-  String tuesday();
-
-  /**
    * Translated "Invalid day of month: {0}. ".
    * 
    * @return translated "Invalid day of month: {0}. "
@@ -419,28 +395,12 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String invalidDayOfMonth( String arg0 );
 
   /**
-   * Translated "September".
-   * 
-   * @return translated "September"
-   */
-  @DefaultMessage( "September" )
-  String september();
-
-  /**
    * Translated "Weekly".
    * 
    * @return translated "Weekly"
    */
   @DefaultMessage( "Weekly" )
   String weekly();
-
-  /**
-   * Translated "May".
-   * 
-   * @return translated "May"
-   */
-  @DefaultMessage( "May" )
-  String may();
 
   /**
    * Translated "Range of recurrence".
@@ -531,14 +491,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String mustBeMinutesRange( String arg0 );
 
   /**
-   * Translated "October".
-   * 
-   * @return translated "October"
-   */
-  @DefaultMessage( "October" )
-  String october();
-
-  /**
    * Translated "Invalid recurrenceType: {0}.  ".
    * 
    * @return translated "Invalid recurrenceType: {0}.  "
@@ -593,14 +545,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Location:" )
   String location();
-
-  /**
-   * Translated "Monday".
-   * 
-   * @return translated "Monday"
-   */
-  @DefaultMessage( "Monday" )
-  String monday();
 
   /**
    * Translated "Cancel".
@@ -691,14 +635,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String blockout();
 
   /**
-   * Translated "March".
-   * 
-   * @return translated "March"
-   */
-  @DefaultMessage( "March" )
-  String march();
-
-  /**
    * Translated "Confirm Delete".
    * 
    * @return translated "Confirm Delete"
@@ -713,14 +649,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Recurrence:" )
   String recurrenceColon();
-
-  /**
-   * Translated "January".
-   * 
-   * @return translated "January"
-   */
-  @DefaultMessage( "January" )
-  String january();
 
   /**
    * Translated "Create schedule".
@@ -747,22 +675,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String daysLabel();
 
   /**
-   * Translated "Saturday".
-   * 
-   * @return translated "Saturday"
-   */
-  @DefaultMessage( "Saturday" )
-  String saturday();
-
-  /**
-   * Translated "July".
-   * 
-   * @return translated "July"
-   */
-  @DefaultMessage( "July" )
-  String july();
-
-  /**
    * Translated "Attempt to initialize the Recurrence Dialog with an invalid CRON string: {0}. Error details: {1}.".
    * 
    * @return translated
@@ -770,14 +682,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Attempt to initialize the Recurrence Dialog with an invalid CRON string: {0}. Error details: {1}." )
   String invalidCronInInitOfRecurrenceDialog( String arg0, String arg1 );
-
-  /**
-   * Translated "Friday ".
-   * 
-   * @return translated "Friday "
-   */
-  @DefaultMessage( "Friday " )
-  String friday();
 
   /**
    * Translated "Yearly".
@@ -812,14 +716,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String noRadioBtnsSelected();
 
   /**
-   * Translated "November".
-   * 
-   * @return translated "November"
-   */
-  @DefaultMessage( "November" )
-  String november();
-
-  /**
    * Translated "Specify a group name.".
    * 
    * @return translated "Specify a group name."
@@ -834,14 +730,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "minute(s)" )
   String minutesLabel();
-
-  /**
-   * Translated "Thursday".
-   * 
-   * @return translated "Thursday"
-   */
-  @DefaultMessage( "Thursday" )
-  String thursday();
 
   /**
    * Translated "Invalid String for RecurrenceType: {0}. ".
@@ -882,14 +770,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Invalid Run Type: {0}." )
   String invalidRunType( String arg0 );
-
-  /**
-   * Translated "December".
-   * 
-   * @return translated "December"
-   */
-  @DefaultMessage( "December" )
-  String december();
 
   /**
    * Translated "Comma separated list of action sequence paths:".
@@ -980,14 +860,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String scheduleCreator();
 
   /**
-   * Translated "June".
-   * 
-   * @return translated "June"
-   */
-  @DefaultMessage( "June" )
-  String june();
-
-  /**
    * Translated "Invalid String for week of month: {0}. ".
    * 
    * @return translated "Invalid String for week of month: {0}. "
@@ -1052,14 +924,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String checkToSelectAll();
 
   /**
-   * Translated "August".
-   * 
-   * @return translated "August"
-   */
-  @DefaultMessage( "August" )
-  String august();
-
-  /**
    * Translated
    * "Are you sure you want to delete all checked schedules? There are {0} users subscribed to this schedule.".
    * 
@@ -1085,14 +949,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Minutes" )
   String minutes();
-
-  /**
-   * Translated "April".
-   * 
-   * @return translated "April"
-   */
-  @DefaultMessage( "April" )
-  String april();
 
   /**
    * Translated "The".
@@ -1133,14 +989,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Cron String:" )
   String cronLabel();
-
-  /**
-   * Translated "Wednesday".
-   * 
-   * @return translated "Wednesday"
-   */
-  @DefaultMessage( "Wednesday" )
-  String wednesday();
 
   /**
    * Translated "None".

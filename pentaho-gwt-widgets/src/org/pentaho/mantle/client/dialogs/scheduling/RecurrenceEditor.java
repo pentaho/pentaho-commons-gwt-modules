@@ -575,7 +575,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       final int ITEMS_IN_ROW = 4;
       for ( int ii = 0; ii < ITEMS_IN_ROW; ++ii ) {
         DayOfWeek day = DayOfWeek.get( ii );
-        CheckBox cb = new CheckBox( day.toString() );
+        CheckBox cb = new CheckBox( Messages.getString( day.toString() ) );
         cb.setStylePrimaryName( DOW_CHECKBOX );
         gp.setWidget( 0, ii, cb );
         dayToCheckBox.put( day, cb );
@@ -583,7 +583,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       // Add Thur - Sat
       for ( int ii = ITEMS_IN_ROW; ii < DayOfWeek.length(); ++ii ) {
         DayOfWeek day = DayOfWeek.get( ii );
-        CheckBox cb = new CheckBox( day.toString() );
+        CheckBox cb = new CheckBox( Messages.getString( day.toString() ) );
         cb.setStylePrimaryName( DOW_CHECKBOX );
         gp.setWidget( 1, ii - 4, cb );
         dayToCheckBox.put( day, cb );
@@ -1005,7 +1005,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     ListBox l = new ListBox();
     for ( int ii = 0; ii < DayOfWeek.length(); ++ii ) {
       DayOfWeek day = DayOfWeek.get( ii );
-      l.addItem( day.toString() );
+      l.addItem( Messages.getString( day.toString() ) );
     }
     return l;
   }
@@ -1015,7 +1015,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     ListBox l = new ListBox();
     for ( int ii = 0; ii < MonthOfYear.length(); ++ii ) {
       MonthOfYear month = MonthOfYear.get( ii );
-      l.addItem( month.toString() );
+      l.addItem( Messages.getString( month.toString() ) );
     }
 
     return l;
