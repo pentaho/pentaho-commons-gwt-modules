@@ -86,9 +86,12 @@ public class TimeUtil {
     }
   } // end enum TimeOfDay
 
+  /**
+   * Names of enum are used as key in resource bundle.
+   */
   public enum DayOfWeek {
-    SUN( 0, MSGS.sunday() ), MON( 1, MSGS.monday() ), TUE( 2, MSGS.tuesday() ), WED( 3, MSGS.wednesday() ), THU( 4,
-        MSGS.thursday() ), FRI( 5, MSGS.friday() ), SAT( 6, MSGS.saturday() );
+    SUN( 0, "sunday" ), MON( 1, "monday" ), TUE( 2, "tuesday" ), WED( 3, "wednesday" ), THU( 4,
+        "thursday" ), FRI( 5, "friday" ), SAT( 6,"saturday" );
 
     DayOfWeek( int value, String name ) {
       this.value = value;
@@ -119,18 +122,18 @@ public class TimeUtil {
   } /* end enum */
 
   public enum MonthOfYear {
-    JAN( 0, MSGS.january() ),
-    FEB( 1, MSGS.february() ),
-    MAR( 2, MSGS.march() ),
-    APR( 3, MSGS.april() ),
-    MAY( 4, MSGS.may() ),
-    JUN( 5, MSGS.june() ),
-    JUL( 6, MSGS.july() ),
-    AUG( 7, MSGS.august() ),
-    SEPT( 8, MSGS.september() ),
-    OCT( 9, MSGS.october() ),
-    NOV( 10, MSGS.november() ),
-    DEC( 11, MSGS.december() );
+    JAN( 0, "january" ),
+    FEB( 1, "february" ),
+    MAR( 2, "march" ),
+    APR( 3, "april" ),
+    MAY( 4, "may" ),
+    JUN( 5, "june" ),
+    JUL( 6, "july" ),
+    AUG( 7, "august" ),
+    SEPT( 8, "september" ),
+    OCT( 9, "october" ),
+    NOV( 10, "november" ),
+    DEC( 11, "december" );
 
     MonthOfYear( int value, String name ) {
       this.value = value;
