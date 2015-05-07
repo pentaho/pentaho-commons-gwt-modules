@@ -187,14 +187,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String monthly();
 
   /**
-   * Translated "third".
-   * 
-   * @return translated "third"
-   */
-  @DefaultMessage( "third" )
-  String third();
-
-  /**
    * Translated "Name:".
    * 
    * @return translated "Name:"
@@ -435,14 +427,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String folder();
 
   /**
-   * Translated "fourth".
-   * 
-   * @return translated "fourth"
-   */
-  @DefaultMessage( "fourth" )
-  String fourth();
-
-  /**
    * Translated "Start:".
    * 
    * @return translated "Start:"
@@ -521,22 +505,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Action sequence list cannot be empty." )
   String actionSequenceCannotBeEmpty();
-
-  /**
-   * Translated "last".
-   * 
-   * @return translated "last"
-   */
-  @DefaultMessage( "last" )
-  String last();
-
-  /**
-   * Translated "second".
-   * 
-   * @return translated "second"
-   */
-  @DefaultMessage( "second" )
-  String second();
 
   /**
    * Translated "Location:".
@@ -1061,14 +1029,6 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
    */
   @DefaultMessage( "Invalid String for temporal value: {0}" )
   String invalidTemporalValue( String arg0 );
-
-  /**
-   * Translated "first".
-   * 
-   * @return translated "first"
-   */
-  @DefaultMessage( "first" )
-  String first();
 
   /**
    * Translated "tableHeaderInputError".

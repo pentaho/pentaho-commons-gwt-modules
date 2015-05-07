@@ -1025,7 +1025,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     ListBox l = new ListBox();
     for ( WeekOfMonth week : EnumSet.range( WeekOfMonth.FIRST, WeekOfMonth.LAST ) ) {
-      l.addItem( week.toString() );
+      l.addItem( Messages.getString( week.toString() ) );
     }
 
     return l;

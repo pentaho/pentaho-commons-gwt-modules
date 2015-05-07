@@ -164,8 +164,8 @@ public class TimeUtil {
   } /* end enum */
 
   public enum WeekOfMonth {
-    FIRST( 0, MSGS.first() ), SECOND( 1, MSGS.second() ), THIRD( 2, MSGS.third() ), FOURTH( 3, MSGS.fourth() ), LAST(
-        4, MSGS.last() );
+    FIRST( 0, "first_num" ), SECOND( 1, "second_num" ), THIRD( 2, "third_num" ), FOURTH( 3, "fourth_num" ), LAST( 4,
+        "last_num" );
 
     WeekOfMonth( int value, String name ) {
       this.value = value;
