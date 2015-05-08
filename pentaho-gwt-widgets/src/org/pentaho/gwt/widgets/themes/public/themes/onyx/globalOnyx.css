@@ -3706,6 +3706,10 @@ treecontrol.tree-classic li .tree-selected {
   display: block;
 }
 
+#sidepanel #sidepaneltabset > div[tabid=datatab] > span{
+  max-width:48px;
+}
+
 #sidepanel #sidepaneltabset > div[tabid=formattab] > span{
   max-width:80px;
 }
