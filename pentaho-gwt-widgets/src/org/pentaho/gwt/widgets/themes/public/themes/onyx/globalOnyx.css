@@ -2796,6 +2796,16 @@ div.listbox .pentaho-listbox {
   position: relative;
 }
 
+#login-form-container.lang_fr #evaluationPanel{
+	width: 100%;
+}
+.lang_fr #evaluationPanel .login-value{
+	width:30%;
+}
+.lang_fr #evaluationPanel .login-label{
+	width:65%;
+}
+
 #login INPUT[type="text"],
 #login INPUT[type="password"] {
   margin-right: 20px;
@@ -2859,7 +2869,7 @@ div.listbox .pentaho-listbox {
 }
 #animate-wrapper.afterSlide {
   left: 0px;
-  width: 550px;
+  width: 600px;
   opacity: 1;
 }
 #login-wrapper {
