@@ -3672,10 +3672,12 @@ div.prompt-panel .pentaho-toggle-button-container {
 #login-form-container.lang_fr #evaluationPanel{
 	width: 100%;
 }
-.lang_fr #evaluationPanel .login-value{
+.lang_fr #evaluationPanel .login-value,
+.lang_de #evaluationPanel .login-value{
 	width:30%;
 }
-.lang_fr #evaluationPanel .login-label{
+.lang_fr #evaluationPanel .login-label,
+.lang_de #evaluationPanel .login-label{
 	width:65%;
 }
 
