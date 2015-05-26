@@ -390,8 +390,8 @@ public class JsJobTrigger extends JavaScriptObject {
         String dayOfWeek = getQualifiedDayOfWeek();
 
         trigDesc =
-            Messages.getString( "the" ) + " " + WeekOfMonth.valueOf( qualifier ) + " " + DayOfWeek.valueOf( dayOfWeek )
-                + " " + Messages.getString( "ofEveryMonth" );
+            Messages.getString( "the" ) + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
+              + Messages.getString( DayOfWeek.valueOf( dayOfWeek ).toString() ) + " " + Messages.getString( "ofEveryMonth" );
       } else if ( getDayOfWeekRecurrences().length > 0 ) {
         // WEEKLY: Every week on <day>..<day> at <time>
         // check if weekdays first
