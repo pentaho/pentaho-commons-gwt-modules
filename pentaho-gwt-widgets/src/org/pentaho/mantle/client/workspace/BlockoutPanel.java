@@ -338,11 +338,8 @@ public class BlockoutPanel extends SimplePanel {
         row++;
       }
       table.populateTable( tableContent );
-      table.addStyleName( "" );
       table.setVisible( jobList.size() > 0 );
-
     }
-
   }
 
   private native JsArray<JsJob> parseJson( String json )
@@ -424,7 +421,7 @@ public class BlockoutPanel extends SimplePanel {
     try {
       Date endTime = block.getJobTrigger().getEndTime();
       if ( endTime == null ) {
-        return "Never";
+        return Messages.getString("never");
       } else {
         return formatDate( endTime );
       }
