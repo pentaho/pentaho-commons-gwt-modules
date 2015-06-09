@@ -3669,6 +3669,18 @@ div.prompt-panel .pentaho-toggle-button-container {
   position: relative;
 }
 
+#login-form-container.lang_fr #evaluationPanel{
+	width: 100%;
+}
+.lang_fr #evaluationPanel .login-value,
+.lang_de #evaluationPanel .login-value{
+	width:30%;
+}
+.lang_fr #evaluationPanel .login-label,
+.lang_de #evaluationPanel .login-label{
+	width:65%;
+}
+
 #login INPUT[type="text"],
 #login INPUT[type="password"] {
   margin-right: 20px;
@@ -3743,7 +3755,7 @@ div.prompt-panel .pentaho-toggle-button-container {
 }
 #animate-wrapper.afterSlide {
   left: 0px;
-  width: 550px;
+  width: 600px;
   opacity: 1;
 }
 #login-wrapper {
@@ -5474,4 +5486,22 @@ treecontrol.tree-classic li .tree-selected {
   width: 380px;
   border: 1px solid #cbdde8;
   background-color: white;
+}
+
+#sidepanel #sidepaneltabset > div > span{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+#sidepanel #sidepaneltabset > div[tabid=datatab] > span{
+  max-width:48px;
+}
+
+#sidepanel #sidepaneltabset > div[tabid=formattab] > span{
+  max-width:80px;
+}
+
+#sidepanel #sidepaneltabset > div[tabid=generaltab] > span{
+  max-width:62px;
 }

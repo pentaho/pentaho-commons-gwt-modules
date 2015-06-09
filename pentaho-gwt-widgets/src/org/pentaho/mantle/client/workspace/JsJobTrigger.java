@@ -373,13 +373,13 @@ public class JsJobTrigger extends JavaScriptObject {
           String qualifier = getDayOfWeekQualifier();
           String dayOfWeek = getQualifiedDayOfWeek();
           trigDesc =
-              Messages.getString( "the" ) + " " + WeekOfMonth.valueOf( qualifier ) + " "
-                  + DayOfWeek.valueOf( dayOfWeek ) + " " + Messages.getString( "of" ) + " "
-                  + MonthOfYear.get( monthsOfYear[0] - 1 );
+              Messages.getString("the") + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
+                  + Messages.getString( DayOfWeek.valueOf(dayOfWeek).toString() ) + " " + Messages.getString("of") + " "
+                      + Messages.getString( MonthOfYear.get(monthsOfYear[0] - 1).toString() );
         } else {
           // monthsOfYear, daysOfMonth
           trigDesc =
-              Messages.getString( "every" ) + " " + MonthOfYear.get( monthsOfYear[0] - 1 ) + " " + daysOfMonth[0];
+              Messages.getString( "every" ) + " " + Messages.getString( MonthOfYear.get(monthsOfYear[0] - 1).toString() ) + " " + daysOfMonth[0];
         }
       } else if ( daysOfMonth != null && daysOfMonth.length > 0 ) {
         // MONTHLY: Day N of every month
@@ -390,8 +390,8 @@ public class JsJobTrigger extends JavaScriptObject {
         String dayOfWeek = getQualifiedDayOfWeek();
 
         trigDesc =
-            Messages.getString( "the" ) + " " + WeekOfMonth.valueOf( qualifier ) + " " + DayOfWeek.valueOf( dayOfWeek )
-                + " " + Messages.getString( "ofEveryMonth" );
+            Messages.getString( "the" ) + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
+              + Messages.getString( DayOfWeek.valueOf( dayOfWeek ).toString() ) + " " + Messages.getString( "ofEveryMonth" );
       } else if ( getDayOfWeekRecurrences().length > 0 ) {
         // WEEKLY: Every week on <day>..<day> at <time>
         // check if weekdays first

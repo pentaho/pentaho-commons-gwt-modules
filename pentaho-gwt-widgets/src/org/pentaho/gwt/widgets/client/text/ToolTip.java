@@ -18,6 +18,7 @@
 package org.pentaho.gwt.widgets.client.text;
 
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -47,10 +48,33 @@ public class ToolTip extends PopupPanel implements MouseListener {
     hide();
   }
 
-  public void onMouseEnter( Widget sender ) {
+  public void onMouseEnter( final Widget sender ) {
     timer.schedule( delay );
-    this.setPopupPosition( sender.getAbsoluteLeft() + sender.getOffsetWidth() - 3, sender.getAbsoluteTop()
-        + sender.getOffsetHeight() + 2 );
+
+    PositionCallback callback = new PositionCallback() {
+
+      @Override
+      public void setPosition( int offsetWidth, int offsetHeight ) {
+        if ( sender != null ) {
+          int clientWidth = Window.getClientWidth();
+
+          int left = sender.getAbsoluteLeft();
+          int top = sender.getAbsoluteTop();
+          int width = sender.getOffsetWidth();
+          int height = sender.getOffsetHeight();
+
+          int topPos = top + height + 2;
+          int leftPos = left + width - 3;
+
+          if ( leftPos + offsetWidth > clientWidth ) {
+            setPopupPosition( leftPos - offsetWidth, topPos );
+          } else {
+            setPopupPosition( leftPos, topPos );
+          }
+        }
+      }
+    };
+    setPopupPositionAndShow( callback );
   }
 
   public void onMouseLeave( Widget sender ) {
