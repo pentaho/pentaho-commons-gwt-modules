@@ -284,7 +284,7 @@ cursor: auto;
   cursor: hand;
 }
 
-.pentaho-toggle-button button{
+.pentaho-toggle-button-container .pentaho-toggle-button button, .pentaho-toggle-button button {
   background: transparent;
   border:none;
   color: inherit;
