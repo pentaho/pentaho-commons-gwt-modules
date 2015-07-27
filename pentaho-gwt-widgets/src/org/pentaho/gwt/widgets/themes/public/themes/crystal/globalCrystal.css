@@ -578,7 +578,11 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 }
 
 .pentaho-dialog .dialog-content {
-  padding: 5px 10px 10px 10px;
+  padding: 5px 0px 10px 0px;
+}
+
+.pentaho-dialog .dialog-content .pentaho-padding-lg {
+  padding: 6px;
 }
 
 .pentaho-dialog .button-panel .pentaho-button {
