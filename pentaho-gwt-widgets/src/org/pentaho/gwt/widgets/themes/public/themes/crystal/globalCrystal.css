@@ -4247,6 +4247,18 @@ vertical-align: middle;
   height: 22px;
   border: 1px solid transparent;
 }
+
+.textfield-icon {
+  background: url('images/prompt_controls/textfield.png') no-repeat;
+  width: 32px;
+  height: 32px;
+}
+
+.format-wrapper .textfield-icon {
+  background-position: -4px -4px;
+  width: 24px;
+  height: 24px;
+}
 #arrow-menu, .arrow-menu-icon{
   background: url('images/arrow_menu.png') no-repeat;
 }

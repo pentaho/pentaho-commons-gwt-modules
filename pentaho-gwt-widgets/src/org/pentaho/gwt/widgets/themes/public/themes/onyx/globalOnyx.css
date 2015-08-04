@@ -54,7 +54,7 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
-    border-radius: 0px;  
+    border-radius: 0px;
 }
 
 *:focus {outline: none;}
@@ -169,10 +169,10 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 .IE .pentaho-button[disabled], .IE .bootstrap .pentaho-button[disabled] {
     background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
-    border: inherit;   
+    border: inherit;
 }
 
-.pentaho-toggle-button {    
+.pentaho-toggle-button {
     /* fallback color */
     background: #000000;
     /* Safari/Chrome */
@@ -351,7 +351,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     -khtml-user-select: none;
     -moz-user-select: moz-none;
     -ms-user-select: none;
-    user-select: none;    
+    user-select: none;
 }
 
 .pentaho-dialog #override-description {
@@ -2268,6 +2268,19 @@ div.listbox .pentaho-listbox {
   height: 48px;
   width: 48px;
 }
+
+.textfield-icon {
+  background: url('images/prompt_controls/textfield.png') no-repeat;
+  width: 32px;
+  height: 32px;
+}
+
+.format-wrapper .textfield-icon {
+  background-position: -4px -6px;
+  width: 24px;
+  height: 20px;
+}
+
 /* FieldsetPane styles - start */
 .pentaho-fieldset-pane {
 
@@ -2327,7 +2340,7 @@ div.listbox .pentaho-listbox {
   padding: 2px;
 }
 .workspaceHeading,
-.pentaho-fieldgroup-major {    
+.pentaho-fieldgroup-major {
 	font-size: 24px;
   color: #333;
   text-shadow: 0px 1px 1px rgba(255, 255, 255, .6);
@@ -2340,7 +2353,7 @@ div.listbox .pentaho-listbox {
 	color: #000;
 }
 
-.pentaho-fieldgroup-minor {    
+.pentaho-fieldgroup-minor {
 	font-size: 16px;
     color: #000000;
 }
@@ -2374,7 +2387,7 @@ div.listbox .pentaho-listbox {
     height: 84px;
 }
 
-#pucContent {  	
+#pucContent {
   	top: 84px; /* Top must be the same as height in #puchHeader */
 }
 
@@ -2967,19 +2980,19 @@ div.listbox .pentaho-listbox {
 }
 
 .pentaho-smallmemberpropbutton {
-    background-image: url("../images/sm_member_prop_icon.png");    
+    background-image: url("../images/sm_member_prop_icon.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-smallcategorybutton {
-    background-image: url("../images/sm_folder_icon.png");    
+    background-image: url("../images/sm_folder_icon.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-fieldbutton {
-    background-image: url("../images/field_list.png");    
+    background-image: url("../images/field_list.png");
     width: 16px;
     height: 16px;
 }
@@ -2997,25 +3010,25 @@ div.listbox .pentaho-listbox {
 }
 
 .pentaho-refreshbutton {
-    background-image: url("../images/refresh.png");    
+    background-image: url("../images/refresh.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-helpbutton {
-    background-image: url("../images/help_link.png");    
+    background-image: url("../images/help_link.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-clearmodelbutton {
-    background-image: url("../images/clear_model.png");    
+    background-image: url("../images/clear_model.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-smallremovebutton {
-    background-image: url("../images/sm_remove.png");    
+    background-image: url("../images/sm_remove.png");
     width: 16px;
     height: 16px;
 }
@@ -3033,49 +3046,49 @@ div.listbox .pentaho-listbox {
 }
 
 .penatho-smalleditbutton {
-    background-image: url("../images/sm_edit.png");    
+    background-image: url("../images/sm_edit.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-warningbutton {
-    background-image: url("../images/warning.png");    
+    background-image: url("../images/warning.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-updatebutton {
-    background-image: url("../images/update.png");    
+    background-image: url("../images/update.png");
     width: 16px;
     height: 16px;
 }
 
 .pentaho-updatebutton.pentaho-imagebutton-disabled {
-  background-image: url("../images/updateDisabled.png");    
+  background-image: url("../images/updateDisabled.png");
   width: 16px;
   height: 16px;
 }
 
 .pentaho-movearrowbutton {
-  background-image: url("../images/move_arrow.png");    
+  background-image: url("../images/move_arrow.png");
   width: 16px;
   height: 16px;
 }
 
 .pentaho-movearrowbackbutton {
-  background-image: url("../images/move_arrow_back.png");    
+  background-image: url("../images/move_arrow_back.png");
   width: 16px;
   height: 16px;
 }
 
 .pentaho-chevron {
-  background-image: url("../images/24x24_chevron_green.png");    
+  background-image: url("../images/24x24_chevron_green.png");
   width: 16px;
-  height: 16px; 
+  height: 16px;
 }
 
 .pentaho-filechooseupbutton {
-  background-image: url("../images/up.png");    
+  background-image: url("../images/up.png");
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -3188,7 +3201,7 @@ div.listbox .pentaho-listbox {
 
 #getting-started-message-content #title {
   font-size: 22px;
-  font-family: Tahoma, Helvetica, Arial, sans-serif;    
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
   line-height: 30px;
   padding-bottom: 10px;
   width: 300px;
@@ -3217,7 +3230,7 @@ div.listbox .pentaho-listbox {
   padding: 10px;
 }
 
-#launch-widget .card {  
+#launch-widget .card {
   border-bottom: 2px solid transparent;
   border-left: 1px solid transparent;
   border-top: 1px solid #ddd;
@@ -3225,10 +3238,10 @@ div.listbox .pentaho-listbox {
   padding: 10px;
 /*  width: 300px;*/
 }
-#launch-widget .tutorial-card {  
+#launch-widget .tutorial-card {
  width:300px;
 }
-#launch-widget .sample-card {  
+#launch-widget .sample-card {
  width:500px;
 }
 #launch-widget .selected {
@@ -3306,7 +3319,7 @@ div.listbox .pentaho-listbox {
 }
 
 .detail-title {
-  font-family: Tahoma, Helvetica, Arial, sans-serif; 
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
   padding: 5px 0 20px 0;
   font-size: 22px;
   color: #26363d;
@@ -3338,7 +3351,7 @@ div.listbox .pentaho-listbox {
   font-size: 18px;
   padding-top: 16px;
   padding-bottom: 16px;
-  font-family: Tahoma, Helvetica, Arial, sans-serif; 
+  font-family: Tahoma, Helvetica, Arial, sans-serif;
   background: url("images/open_new_window.png") no-repeat right center, -moz-linear-gradient(top, #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* FF3.6+ */
   background: url("images/open_new_window.png") no-repeat right center, -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212)); /* Chrome,Safari4+ */
   background: url("images/open_new_window.png") no-repeat right center, -webkit-linear-gradient(top,  #AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%); /* Chrome10+,Safari5.1+ */
@@ -3348,9 +3361,9 @@ div.listbox .pentaho-listbox {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   width: 200px;
-  /*  Safari/Chrome 
+  /*  Safari/Chrome
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
-   Firefox 
+   Firefox
   background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%) repeat scroll 0 0 transparent;*/
 }
 
@@ -3397,7 +3410,7 @@ div.listbox .pentaho-listbox {
 }
 
 #sample {
-	height: 480px;	
+	height: 480px;
 }
 
 #launch-widget-container.main-container {
