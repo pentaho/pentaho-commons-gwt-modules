@@ -2110,7 +2110,8 @@ div.listbox .pentaho-listbox {
   height: 16px;
   border: 0px;
 }
-.dialog-content .dijitComboBox .dijitArrowButton {
+.dialog-content .dijitComboBox .dijitArrowButton,
+div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
   /* fallback color */
   background: #000000;
   /* Safari/Chrome */
@@ -2153,7 +2154,8 @@ div.listbox .pentaho-listbox {
   background-position: center center;
 }
 
-.dialog-content .dijitComboBox .dijitArrowButton input[type='text'] {
+.dialog-content .dijitComboBox .dijitArrowButton input[type='text'],
+div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
   border: none;
   height: 20px !important;
 }

@@ -2315,7 +2315,8 @@ body.IE>table {
   height: 16px;
   margin: 0;
 }
-.dialog-content .dijitComboBox .dijitArrowButton {
+.dialog-content .dijitComboBox .dijitArrowButton,
+div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
   /* fallback color */
   background: #000000;
   /* Safari/Chrome */
@@ -2357,7 +2358,8 @@ body.IE>table {
   background-position: center center;
 }
 
-.dialog-content .dijitComboBox .dijitArrowButton input[type='text'] {
+.dialog-content .dijitComboBox .dijitArrowButton input[type='text'],
+div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
   border: none;
   height: 20px !important;
 }
@@ -5249,16 +5251,19 @@ div.listbox .pentaho-listbox {
     left: -2px;
 }
 
-[id*=DP] .dijitDownArrowButton {
+[id*=DP] .dijitDownArrowButton,
+div.dijitDateTextBox .dijitDownArrowButton {
   height: 20px;
   background-image: none !important;
 }
 
-[id*=DP] .dijitDownArrowButton input {
+[id*=DP] .dijitDownArrowButton input,
+div.dijitDateTextBox .dijitDownArrowButton input {
   padding: 0px;
 }
 
-#widget_DP_range1_lookup, #widget_DP_range2_lookup {
+#widget_DP_range1_lookup, #widget_DP_range2_lookup,
+div.dijitDateTextBox {
   height: 20px;
   width: 120px;
 }
@@ -5267,7 +5272,8 @@ div.listbox .pentaho-listbox {
   width: 100%;
 }
 
-.dialog-content #date-picker-dlg-wrapper .dijitComboBox .dijitArrowButton {
+.dialog-content #date-picker-dlg-wrapper .dijitComboBox .dijitArrowButton,
+div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
   border: none;
   box-shadow: none;
 }
@@ -5281,11 +5287,13 @@ div.listbox .pentaho-listbox {
   text-align: center;
 }
 
-#DP_range1 #widget_DP_range1_lookup {
+#DP_range1 #widget_DP_range1_lookup,
+div.dijitDateTextBox.dijitTextBox {
   margin: auto;
 }
 
-#DP_range1_lookup, #DP_range2_lookup {
+#DP_range1_lookup, #DP_range2_lookup,
+div.dijitDateTextBox input.dijitInputInner[type='text']{
   padding-right: 0px;
   padding-top: 0px;
   padding-left: 5px !important;
@@ -5293,7 +5301,8 @@ div.listbox .pentaho-listbox {
   text-align: left;
 }
 
-#widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown {
+#widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown,
+div.dijitPopup.dijitCalendarPopup{
   margin-left: -34px !important;
   margin-top: 10px !important;
 }
@@ -5307,11 +5316,13 @@ div.listbox .pentaho-listbox {
   margin-top: 10px;
 }
 
-#widget_DP_range1_lookup .dijitArrowButtonInner, #widget_DP_range2_lookup .dijitArrowButtonInner {
+#widget_DP_range1_lookup .dijitArrowButtonInner, #widget_DP_range2_lookup .dijitArrowButtonInner,
+div.dijitDateTextBox .dijitArrowButtonInner {
   background-image: url("images/calendar_icon.png") !important;
 }
 
-#widget_DP_range1_lookup {
+#widget_DP_range1_lookup,
+div.dijitDateTextBox.dijitTextBox {
   border-color: #cbdde8;
   background-image: none;
 }
