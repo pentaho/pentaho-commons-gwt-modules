@@ -316,6 +316,18 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
     background-position: center center;
 }
 
+div#FilterPanel div.pentaho-toggle-button-down button{
+  background: transparent;
+  border:none;
+  color: inherit;
+}
+
+div#FilterPanel div.pentaho-toggle-button-up button{
+  background: transparent;
+  border:none;
+  color: inherit;
+}
+
 /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
 has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
 .pentaho-dialog, .bootstrap .modal.pentaho-dialog {
