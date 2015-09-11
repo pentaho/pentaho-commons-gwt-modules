@@ -17,7 +17,6 @@
 
 package org.pentaho.gwt.widgets.client.utils;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
@@ -25,6 +24,8 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
 
 public class TimeUtil {
 
@@ -270,7 +271,11 @@ public class TimeUtil {
    * @return
    */
   public static TimeOfDay getTimeOfDayBy0To23Hour( String hour ) {
-    return Integer.parseInt( hour ) < MAX_HOUR ? TimeOfDay.AM : TimeOfDay.PM;
+    return getTimeOfDayBy0To23Hour( Integer.parseInt( hour ) );
+  }
+  
+  public static TimeOfDay getTimeOfDayBy0To23Hour( int hour ) {
+    return hour < MAX_HOUR ? TimeOfDay.AM : TimeOfDay.PM;
   }
 
   /**

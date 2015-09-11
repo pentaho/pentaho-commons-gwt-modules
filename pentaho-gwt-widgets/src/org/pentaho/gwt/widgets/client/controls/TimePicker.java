@@ -17,17 +17,17 @@
 
 package org.pentaho.gwt.widgets.client.controls;
 
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
+
 import java.util.Date;
 
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
-
-import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
 
 // TODO sbarkdull, this code needs to be locale sensitive
 
@@ -147,7 +147,11 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
    * @return
    */
   public void setHour( String hour ) {
-    hourLB.setSelectedIndex( Integer.parseInt( hour ) - 1 );
+    setHour( Integer.parseInt( hour ) );
+  }
+  
+  public void setHour( int hour ) {
+    hourLB.setSelectedIndex( hour - 1 );
   }
 
   /**
@@ -165,7 +169,11 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
    * @param minute
    */
   public void setMinute( String minute ) {
-    minuteLB.setSelectedIndex( Integer.parseInt( minute ) );
+    setMinute( Integer.parseInt( minute ) );
+  }
+  
+  public void setMinute( int minute ) {
+    minuteLB.setSelectedIndex( minute );
   }
 
   public TimeUtil.TimeOfDay getTimeOfDay() {
