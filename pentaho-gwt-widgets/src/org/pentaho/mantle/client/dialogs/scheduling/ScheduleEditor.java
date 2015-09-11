@@ -17,12 +17,23 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import org.pentaho.gwt.widgets.client.controls.TimePicker;
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
+import org.pentaho.gwt.widgets.client.utils.CronExpression;
+import org.pentaho.gwt.widgets.client.utils.CronParseException;
+import org.pentaho.gwt.widgets.client.utils.CronParser;
+import org.pentaho.gwt.widgets.client.utils.EnumException;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
+import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
+import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.TemporalValue;
+import org.pentaho.mantle.client.messages.Messages;
+
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
@@ -53,24 +64,15 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-
-import org.pentaho.gwt.widgets.client.controls.TimePicker;
-import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
-import org.pentaho.gwt.widgets.client.utils.CronExpression;
-import org.pentaho.gwt.widgets.client.utils.CronParseException;
-import org.pentaho.gwt.widgets.client.utils.CronParser;
-import org.pentaho.gwt.widgets.client.utils.EnumException;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil;
-import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
-import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
-import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.TemporalValue;
-import org.pentaho.mantle.client.messages.Messages;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 
 /**
  * @author Steven Barkdull
  */
 public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
+  
+  private static final int DEFAULT_START_HOUR = 12; //$NON-NLS-1$
+  private static final int DEFAULT_START_MINUTE = 0; //$NON-NLS-1$
 
   public static enum ENDS_TYPE {
     TIME, DURATION
@@ -195,16 +197,22 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   protected Button blockoutCheckButton = new Button( Messages.getString( "schedule.viewBlockoutTimes" ) );
 
   protected ListBox timeZonePicker = null;
+  
+  private final Date defaultDate = initDefaultDate();
+  
+  @SuppressWarnings( "deprecation" )
+  private Date initDefaultDate(){
+    Date date = new Date();
+    date.setHours( DEFAULT_START_HOUR );
+    date.setMinutes( DEFAULT_START_MINUTE );
+    CalendarUtil.addDaysToDate( date, 1 );
+    return date;
+  }
 
   public ScheduleEditor( ScheduleDialogType type ) {
     super();
-    isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );
+    isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );    
     startTimePicker = new TimePicker();
-    startTimePicker.setTime( new Date() );
-    //Increase the initial time to one minute ahead of now to avoid time in the past error popup
-    int minutePlusOne = Integer.parseInt( startTimePicker.getMinute() ) + 1;
-    startTimePicker.setMinute( Integer.toString( minutePlusOne ) );
-
 
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
 
@@ -223,10 +231,11 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     } else {
 
       // Blockout End TimePicker
+      Date blockoutEndDate = new Date( defaultDate.getTime() );
+      addMinutes( defaultDate, 1 );
       blockoutEndTimePicker = new TimePicker();
-      blockoutEndTimePicker.setHour( "01" ); //$NON-NLS-1$
-      blockoutEndTimePicker.setMinute( "00" ); //$NON-NLS-1$
-      blockoutEndTimePicker.setTimeOfDay( TimeUtil.TimeOfDay.PM );
+      blockoutEndTimePicker = new TimePicker();
+      blockoutEndTimePicker.setTime( blockoutEndDate );
 
       // Blockout End Caption Panel
       blockoutEndTimePicker.getElement().getStyle().setDisplay( Display.NONE );
@@ -266,6 +275,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       minutesListBox = new ListBox();
       minutesListBox.getElement().setId( "minutesListBox" ); //$NON-NLS-1$
       populateListItems( minutesListBox, minutesList, 0, 60 );
+      minutesListBox.setSelectedIndex( 1 ); // default value for Validator
 
       final Label minutesLabel = new Label( Messages.getString( "schedule.minuteOrMinutes" ) );
       minutesLabel.getElement().setAttribute( "for", minutesListBox.getElement().getId() ); //$NON-NLS-1$
@@ -440,10 +450,18 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       vp.add( hspacer );
       add( blockoutButtonPanel );
     }
+    
+    reset( defaultDate );
 
     configureOnChangeHandler();
   }
 
+  @SuppressWarnings( "deprecation" )
+  private void addMinutes( Date date, int count )
+  {
+    date.setMinutes( date.getMinutes() + count );
+  }
+  
   private void show( boolean applyToParent, UIObject... objs ) {
     for ( UIObject obj : objs ) {
       Element ele = obj.getElement();
