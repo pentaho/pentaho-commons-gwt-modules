@@ -5200,7 +5200,7 @@ div.listbox .pentaho-listbox {
     border: 2px solid #cbdde8;
     padding-top: 5px;
     padding-bottom: 5px;
-    width: 100%;
+    width: 97%;
 }
 
 .dijitCalendarPopup.dijitPopup .dijitCalendarContainer * {
@@ -5310,10 +5310,13 @@ div.dijitDateTextBox input.dijitInputInner[type='text']{
   text-align: left;
 }
 
-#widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown,
-div.dijitPopup.dijitCalendarPopup{
-  margin-left: -34px !important;
+#widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown {
   margin-top: 10px !important;
+  margin-left: -34px !important;
+}
+
+div.dijitPopup.dijitCalendarPopup{
+  margin-top: 3px !important;
 }
 
 #date-picker-dlg-wrapper .example-calendar {
