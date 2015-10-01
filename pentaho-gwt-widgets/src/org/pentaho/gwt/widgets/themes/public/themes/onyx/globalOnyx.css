@@ -3756,3 +3756,9 @@ treecontrol.tree-classic li .tree-selected {
 #sidepanel #sidepaneltabset > div[tabid=generaltab] > span{
   max-width:62px;
 }
+
+#stepsPanel {
+  background-image: url(images/bg_steps.png);
+  background-repeat: no-repeat;
+  overflow: hidden;
+}

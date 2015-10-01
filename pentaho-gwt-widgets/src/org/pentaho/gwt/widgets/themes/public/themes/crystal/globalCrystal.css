@@ -4789,6 +4789,8 @@ div.listbox .pentaho-listbox {
 #stepsPanel {
   border-right: 0px solid black;
   background-image: url(images/bg_steps.png);
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 /* instaview fiel type icon? */
 .pentaho-selectlist-item-data {
