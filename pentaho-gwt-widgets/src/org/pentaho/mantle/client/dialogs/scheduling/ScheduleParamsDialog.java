@@ -17,6 +17,7 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import org.mortbay.util.ajax.JSONObjectConvertor;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
@@ -33,6 +34,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
+import com.google.gwt.dev.json.JsonArray;
+import com.google.gwt.dev.json.JsonString;
+import com.google.gwt.dev.json.JsonValue;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -72,6 +76,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
 
   Boolean done = false;
   boolean isEmailConfValid = false;
+  private boolean isNewJob = true;
 
   private boolean newSchedule = true;
   
@@ -178,6 +183,8 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     scheduleParams = getScheduleParams( false );
     if ( editJob != null ) {
       String lineageId = editJob.getJobParamValue( "lineage-id" );
+//      JsArrayString jobIdValue = (JsArrayString) JavaScriptObject.createArray().cast();
+//      jobIdValue.push( editJob.getJobId() );
       JsArrayString lineageIdValue = (JsArrayString) JavaScriptObject.createArray().cast();
       lineageIdValue.push( lineageId );
       JsSchedulingParameter p = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
@@ -193,10 +200,10 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       JSONObject scheduleRequest = (JSONObject) JSONParser.parseStrict( jobSchedule.toString() );
       scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    
 
-      RequestBuilder scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/job" );
-      scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-      scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
+      RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob );
+      if ( editJob != null ) {
+    	  scheduleRequest.put( "jobId", new JSONString( editJob.getJobId() ) );
+      }
 
       try {
         scheduleFileRequestBuilder.sendRequest( scheduleRequest.toString(), new RequestCallback() {
@@ -439,5 +446,17 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   
   public void setNewSchedule( boolean newSchedule ) {
     this.newSchedule = newSchedule;
-  }  
+  }
+
+private boolean isNewSchedule() {
+	return newSchedule;
+}
+
+public boolean isNewJob() {
+	return isNewJob;
+}
+
+public void setNewJob(boolean isNewJob) {
+	this.isNewJob = isNewJob;
+}  
 }
