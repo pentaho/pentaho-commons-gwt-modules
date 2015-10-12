@@ -33,11 +33,11 @@ public class ActionBar extends SimplePanel {
     EXPAND, COLLAPSE
   }
 
-  private HorizontalPanel buttonPanel;
+  protected HorizontalPanel buttonPanel;
   NMorphStyle collapseEffect;
   NMorphStyle expandEffect;
   int height = -1;
-  private State state;
+  protected State state;
 
   public ActionBar() {
     buttonPanel = new HorizontalPanel();

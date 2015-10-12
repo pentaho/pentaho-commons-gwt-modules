@@ -115,23 +115,23 @@ public class WindowPanel extends FocusPanel {
 
   private int contentHeight;
 
-  private Widget contentOrScrollPanelWidget;
+  protected Widget contentOrScrollPanelWidget;
 
   private int contentWidth;
 
-  private Widget eastWidget;
+  protected Widget eastWidget;
 
   private Grid grid = new Grid( 3, 3 );
 
-  private final FocusPanel headerContainer;
+  protected final FocusPanel headerContainer;
 
   private final HTML headerWidget;
 
-  private Widget northWidget;
+  protected Widget northWidget;
 
-  private Widget southWidget;
+  protected Widget southWidget;
 
-  private Widget westWidget;
+  protected Widget westWidget;
 
   private final WindowController windowController;
 

@@ -28,7 +28,7 @@ import java.util.Date;
  * value is passed as a String between the two and converted on the other side.
  */
 public class JSDateTextFormatter implements JSTextFormatter {
-  private DateTimeFormat dateFormat;
+  protected DateTimeFormat dateFormat;
 
   public JSDateTextFormatter( final String pattern ) {
     this( DateTimeFormat.getFormat( pattern ) );

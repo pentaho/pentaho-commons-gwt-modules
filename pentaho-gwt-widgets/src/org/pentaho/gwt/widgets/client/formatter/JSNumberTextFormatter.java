@@ -25,7 +25,7 @@ import com.google.gwt.i18n.client.NumberFormat;
  * value is passed as a String between the two and converted on the other side.
  */
 public class JSNumberTextFormatter implements JSTextFormatter {
-  private NumberFormat formatter;
+  protected NumberFormat formatter;
 
   public JSNumberTextFormatter( final String pattern ) {
     formatter = NumberFormat.getFormat( pattern );

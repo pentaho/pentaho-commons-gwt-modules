@@ -507,7 +507,7 @@ public class Color {
    * @return red component
    */
   public int getRed() {
-    return (int) ( r * 255 );
+    return (int) ( r * 255.0f + 0.5f );
   }
 
   /**
@@ -516,7 +516,7 @@ public class Color {
    * @return green component
    */
   public int getGreen() {
-    return (int) ( g * 255 );
+    return (int) ( g * 255.0f + 0.5f );
   }
 
   /**
@@ -525,7 +525,7 @@ public class Color {
    * @return blue component
    */
   public int getBlue() {
-    return (int) ( b * 255 );
+    return (int) ( b * 255.0f + 0.5f );
   }
 
   /**
@@ -534,7 +534,7 @@ public class Color {
    * @return hue component
    */
   public int getHue() {
-    return (int) h;
+    return Math.round( h );
   }
 
   /**
@@ -543,7 +543,7 @@ public class Color {
    * @return saturation component
    */
   public int getSaturation() {
-    return (int) ( s * 100 );
+    return Math.round( s * 100 );
   }
 
   /**
@@ -552,7 +552,7 @@ public class Color {
    * @return value component
    */
   public int getValue() {
-    return (int) ( v * 100 );
+    return Math.round( v * 100 );
   }
 
   /**

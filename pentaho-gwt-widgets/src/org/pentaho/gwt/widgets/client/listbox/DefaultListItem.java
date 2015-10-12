@@ -48,19 +48,22 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
  */
 public class DefaultListItem extends HorizontalPanel implements ListItem<Object> {
 
-  private static final String DROP_INVALID_PNG = "drop_invalid.png";
-  private static final String DROP_VALID_PNG = "drop_valid.png";
+  private static final String DROP_INVALID_PNG = "drop_invalid.png"; //$NON-NLS-1$
+  private static final String DROP_VALID_PNG = "drop_valid.png"; //$NON-NLS-1$
+  public static final String HOVER = "hover"; //$NON-NLS-1$
+  public static final String SELECTED = "selected";
+  public static final String PROXY_VALID = "proxy-valid";
   private String text = ""; //$NON-NLS-1$
-  private Widget widget;
-  private Widget dropWidget;
+  protected Widget widget;
+  protected Widget dropWidget;
   private Image img;
   private Widget extraWidget;
   private String baseStyleName = "custom-list"; //$NON-NLS-1$
   private Object value;
-  private ListItemListener listItemListener;
-  private String styleName = "custom-list";
+  protected ListItemListener listItemListener;
+  private String styleName = "custom-list"; //$NON-NLS-1$
   private Object backingObject;
-  private Image dragIndicator;
+  protected Image dragIndicator;
 
   public DefaultListItem() {
     init();
@@ -161,14 +164,15 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
     int code = event.getTypeInt();
     switch ( code ) {
       case Event.ONMOUSEOVER:
-        this.addStyleDependentName( "hover" ); //$NON-NLS-1$
+        this.addStyleDependentName( HOVER );
         break;
       case Event.ONMOUSEOUT:
-        this.removeStyleDependentName( "hover" ); //$NON-NLS-1$
+        this.removeStyleDependentName( HOVER );
         break;
       case Event.ONMOUSEUP:
         listItemListener.itemSelected( DefaultListItem.this, event );
-        this.removeStyleDependentName( "hover" ); //$NON-NLS-1$
+        this.removeStyleDependentName( HOVER );
+        break;
       case Event.ONDBLCLICK:
         listItemListener.doAction( DefaultListItem.this );
       default:
@@ -201,7 +205,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
 
   public void onSelect() {
     try {
-      widget.addStyleDependentName( "selected" ); //$NON-NLS-1$
+      widget.addStyleDependentName( SELECTED ); //$NON-NLS-1$
     } catch ( Exception e ) {
       e.printStackTrace();
     }
@@ -209,7 +213,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
 
   public void onDeselect() {
     try {
-      widget.removeStyleDependentName( "selected" ); //$NON-NLS-1$
+      widget.removeStyleDependentName( SELECTED ); //$NON-NLS-1$
     } catch ( Exception e ) {
       e.printStackTrace();
 
@@ -274,10 +278,10 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
 
   public void setDropValid( boolean valid ) {
     if ( valid ) {
-      addStyleDependentName( "proxy-valid" );
+      addStyleDependentName( PROXY_VALID );
       dragIndicator.setUrl( GWT.getModuleBaseURL() + DROP_VALID_PNG );
     } else {
-      removeStyleDependentName( "proxy-valid" );
+      removeStyleDependentName( PROXY_VALID );
       dragIndicator.setUrl( GWT.getModuleBaseURL() + DROP_INVALID_PNG );
     }
   }
@@ -286,7 +290,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
     DefaultListItem item = new DefaultListItem( this.getText() );
     item.setWidth( "20px" );
     item.makeDraggable();
-    removeStyleDependentName( "hover" ); //$NON-NLS-1$
+    removeStyleDependentName( HOVER ); //$NON-NLS-1$
     return item;
   }
 

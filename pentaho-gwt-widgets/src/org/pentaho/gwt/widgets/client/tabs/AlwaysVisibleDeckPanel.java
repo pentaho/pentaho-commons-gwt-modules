@@ -46,7 +46,7 @@ public class AlwaysVisibleDeckPanel extends DeckPanel {
     curWidget.getElement().getParentElement().getStyle().setProperty( "left", "0" );
   }
 
-  private void moveOffscreen( Widget w ) {
+  protected void moveOffscreen( Widget w ) {
     if ( w.getElement() == null || w.getElement().getParentElement() == null ) { // old active widget was removed.
       return;
     }

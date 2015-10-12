@@ -178,8 +178,4 @@ public class ThemeableImageButton extends Image {
     }
   }
 
-  public void setFocus( boolean focus ) {
-    this.setFocus( focus );
-  }
-
 }

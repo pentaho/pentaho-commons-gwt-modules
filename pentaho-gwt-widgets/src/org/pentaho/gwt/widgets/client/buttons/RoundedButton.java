@@ -42,12 +42,12 @@ public class RoundedButton extends Widget implements HasClickHandlers {
   private String text = ""; //$NON-NLS-1$
   private String baseStyleName = "roundedbutton"; //$NON-NLS-1$
   private Label label = new Label();
-  private Command command;
   private SimplePanel leftPanel = new SimplePanel();
   private SimplePanel rightPanel = new SimplePanel();
   private boolean enabled = true;
 
-  private List<ClickListener> listeners = new ArrayList<ClickListener>();
+  protected List<ClickListener> listeners = new ArrayList<ClickListener>();
+  protected Command command;
 
   public RoundedButton() {
     createElement();

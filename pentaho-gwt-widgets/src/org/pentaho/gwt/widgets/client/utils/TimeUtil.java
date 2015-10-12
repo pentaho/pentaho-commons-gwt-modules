@@ -79,7 +79,7 @@ public class TimeUtil {
 
     public static TimeOfDay stringToTimeOfDay( String timeOfDay ) throws EnumException {
       for ( TimeOfDay v : EnumSet.range( TimeOfDay.AM, TimeOfDay.PM ) ) {
-        if ( v.toString().equals( timeOfDay ) ) {
+        if ( v.toString().equalsIgnoreCase( timeOfDay ) ) {
           return v;
         }
       }

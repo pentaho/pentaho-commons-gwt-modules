@@ -34,13 +34,13 @@ import java.util.List;
  */
 public class ToolbarGroup {
 
-  private List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
-  private boolean enabled = true;
-  private boolean visible = true;
+  protected List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
+  protected boolean enabled = true;
+  protected boolean visible = true;
   private String label = null;
-  private Image trailingSeparator = null;
-  private Image leadingSeparator = null;
-  private Label groupLabel = new Label();
+  protected Image trailingSeparator = null;
+  protected Image leadingSeparator = null;
+  protected Label groupLabel = new Label();
 
   public static final String CSS_ENABLED = "toolbar-group-label"; //$NON-NLS-1$ 
   public static final String CSS_DISABLED = "toolbar-group-label-disabled"; //$NON-NLS-1$ 

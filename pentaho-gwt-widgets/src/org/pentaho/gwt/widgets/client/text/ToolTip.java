@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.text;
@@ -29,10 +29,35 @@ public class ToolTip extends PopupPanel implements MouseListener {
 
   private Timer timer = new Timer() {
     public void run() {
-      show();
+      PositionCallback callback = new PositionCallback() {
+
+        @Override
+        public void setPosition( int offsetWidth, int offsetHeight ) {
+
+          if ( sender != null ) {
+            int clientWidth = Window.getClientWidth();
+
+            int left = sender.getAbsoluteLeft();
+            int top = sender.getAbsoluteTop();
+            int width = sender.getOffsetWidth();
+            int height = sender.getOffsetHeight();
+
+            int topPos = top + height + 2;
+            int leftPos = left + width - 3;
+
+            if ( leftPos + offsetWidth > clientWidth ) {
+              setPopupPosition( leftPos - offsetWidth, topPos );
+            } else {
+              setPopupPosition( leftPos, topPos );
+            }
+          }
+        }
+      };
+      setPopupPositionAndShow( callback );
     }
   };
   private int delay;
+  private Widget sender;
 
   public ToolTip( String message, int delay ) {
     super( true );
@@ -50,31 +75,7 @@ public class ToolTip extends PopupPanel implements MouseListener {
 
   public void onMouseEnter( final Widget sender ) {
     timer.schedule( delay );
-
-    PositionCallback callback = new PositionCallback() {
-
-      @Override
-      public void setPosition( int offsetWidth, int offsetHeight ) {
-        if ( sender != null ) {
-          int clientWidth = Window.getClientWidth();
-
-          int left = sender.getAbsoluteLeft();
-          int top = sender.getAbsoluteTop();
-          int width = sender.getOffsetWidth();
-          int height = sender.getOffsetHeight();
-
-          int topPos = top + height + 2;
-          int leftPos = left + width - 3;
-
-          if ( leftPos + offsetWidth > clientWidth ) {
-            setPopupPosition( leftPos - offsetWidth, topPos );
-          } else {
-            setPopupPosition( leftPos, topPos );
-          }
-        }
-      }
-    };
-    setPopupPositionAndShow( callback );
+    this.sender = sender;
   }
 
   public void onMouseLeave( Widget sender ) {

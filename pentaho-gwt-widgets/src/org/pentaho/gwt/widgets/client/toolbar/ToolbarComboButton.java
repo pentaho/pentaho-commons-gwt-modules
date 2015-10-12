@@ -42,7 +42,7 @@ public class ToolbarComboButton extends ToolbarButton implements ToolbarPopupSou
     }
   };
 
-  private List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
+  protected List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
 
   /**
    * Constructs a toolbar button with an image and a label
