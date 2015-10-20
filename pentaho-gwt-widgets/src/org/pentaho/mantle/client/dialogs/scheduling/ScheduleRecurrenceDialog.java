@@ -93,7 +93,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   private ScheduleParamsDialog scheduleParamsDialog;
   private ScheduleEditorWizardPanel scheduleEditorWizardPanel;
 
-  protected JsJob editJob;
+  protected JsJob editJob = null;
   private Boolean done = false;
   private boolean hasParams = false;
   private boolean isEmailConfValid = false;
@@ -833,10 +833,10 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
       }
 
-      RequestBuilder scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/job" ); //$NON-NLS-1$
-      scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
-      scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
+      RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob );
+      if ( editJob != null ) {
+    	  scheduleRequest.put( "jobId", new JSONString( editJob.getJobId() ) );
+      }
 
       try {
         scheduleFileRequestBuilder.sendRequest( scheduleRequest.toString(), new RequestCallback() {
