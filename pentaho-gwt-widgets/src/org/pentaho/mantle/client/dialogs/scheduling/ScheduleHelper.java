@@ -25,6 +25,7 @@ import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.events.EventBusUtil;
 import org.pentaho.mantle.client.events.SolutionFileActionEvent;
 import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.workspace.JsJob;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
 import com.google.gwt.core.client.GWT;
@@ -33,6 +34,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
@@ -232,9 +234,28 @@ public class ScheduleHelper {
     scheduleInBackground.setCallback( callback );
     scheduleInBackground.center();
   }
+  
+  public static RequestBuilder buildRequestForJob( JsJob editJob ) {
+	  
+	  RequestBuilder scheduleFileRequestBuilder = null;
+	  
+      if ( editJob == null ) {
+	      scheduleFileRequestBuilder =
+	          new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + "api/scheduler/job" );
+      } else {
+	      scheduleFileRequestBuilder =
+		          new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + "api/scheduler/job/update" );
+      }
+      
+      scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
+      scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
+      
+      return scheduleFileRequestBuilder;
+  }
 
   public static native String getFullyQualifiedURL()
   /*-{
     return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
   }-*/;
+
 }
