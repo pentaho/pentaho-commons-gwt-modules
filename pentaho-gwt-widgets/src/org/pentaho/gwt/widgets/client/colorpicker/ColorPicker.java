@@ -409,28 +409,28 @@ import com.google.gwt.user.client.ui.Widget;
 @SuppressWarnings( "deprecation" )
 public class ColorPicker extends Composite implements ClickListener, KeyboardListener, ChangeListener {
   // Elements
-  private HTML colorpreview;
-  private SliderMap slidermap; // main color picking slider. Leftmost UI component.
-  private SliderBar sliderbar; // auxilliary color picking slider. Center UI component.
+  protected HTML colorpreview;
+  protected SliderMap slidermap; // main color picking slider. Leftmost UI component.
+  protected SliderBar sliderbar; // auxilliary color picking slider. Center UI component.
 
   // Textboxes
-  private TextBox tbHue;
-  private TextBox tbSaturation;
-  private TextBox tbBrightness;
-  private TextBox tbRed;
-  private TextBox tbGreen;
-  private TextBox tbBlue;
-  private TextBox tbHexColor;
+  protected TextBox tbHue;
+  protected TextBox tbSaturation;
+  protected TextBox tbBrightness;
+  protected TextBox tbRed;
+  protected TextBox tbGreen;
+  protected TextBox tbBlue;
+  protected TextBox tbHexColor;
 
   // Radiobuttons
-  private RadioButton rbHue;
-  private RadioButton rbSaturation;
-  private RadioButton rbBrightness;
-  private RadioButton rbRed;
-  private RadioButton rbGreen;
-  private RadioButton rbBlue;
+  protected RadioButton rbHue;
+  protected RadioButton rbSaturation;
+  protected RadioButton rbBrightness;
+  protected RadioButton rbRed;
+  protected RadioButton rbGreen;
+  protected RadioButton rbBlue;
 
-  private int colorMode; // Which color picking mode we are in
+  protected int colorMode; // Which color picking mode we are in
   private int red;
   private int green;
   private int blue;
@@ -1173,7 +1173,7 @@ public class ColorPicker extends Composite implements ClickListener, KeyboardLis
   /**
    * Called whenever the internal state has been changed and needs to synchronize the other components.
    */
-  private void updateSliders() {
+  protected void updateSliders() {
     // Let the sliders know something's changed
     if ( rbHue.isChecked() ) {
       onClick( rbHue );

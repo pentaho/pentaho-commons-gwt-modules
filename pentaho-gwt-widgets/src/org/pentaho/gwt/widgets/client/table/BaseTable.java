@@ -77,18 +77,19 @@ public class BaseTable extends Composite {
 
   public static final BaseColumnComparator DEFAULT_COLUMN_COMPARATOR = BaseColumnComparator
       .getInstance( ColumnComparatorTypes.STRING_NOCASE );
+  public static final String TABLE_NO_FILL = "table-no-fill";
 
-  private Panel parentPanel = new VerticalPanel();
+  protected Panel parentPanel = new VerticalPanel();
 
-  private ScrollTable scrollTable;
+  protected ScrollTable scrollTable;
 
   private FixedWidthFlexTable tableHeader;
 
-  private FixedWidthGrid dataGrid;
+  protected FixedWidthGrid dataGrid;
 
-  private String scrollTableWidth;
+  protected String scrollTableWidth;
 
-  private String scrollTableHeight;
+  protected String scrollTableHeight;
 
   private int[] columnWidths;
 
@@ -202,7 +203,7 @@ public class BaseTable extends Composite {
   /**
    * Creates a table with the given headers, column widths, row/column values, and resize policy.
    */
-  private void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues,
+  protected void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues,
       AbstractScrollTable.ResizePolicy resizePolicy, SelectionGrid.SelectionPolicy selectionPolicy ) {
     createTableHeader( tableHeaderNames, columnWidths );
     createDataGrid( selectionPolicy, tableHeaderNames.length );
@@ -340,7 +341,7 @@ public class BaseTable extends Composite {
   /**
    * Populates the data grid with data then sets the column widths.
    */
-  private void populateDataGrid( int[] columnWidths, Object[][] rowAndColumnValues, Collection objects ) {
+  protected void populateDataGrid( int[] columnWidths, Object[][] rowAndColumnValues, Collection objects ) {
     this.objects = objects;
     populateDataGrid( columnWidths, rowAndColumnValues );
   }
@@ -348,7 +349,7 @@ public class BaseTable extends Composite {
   /**
    * Populates the data grid with data then sets the column widths.
    */
-  private void populateDataGrid( int[] columnWidths, Object[][] rowAndColumnValues ) {
+  protected void populateDataGrid( int[] columnWidths, Object[][] rowAndColumnValues ) {
     while ( dataGrid.getRowCount() > 0 ) {
       dataGrid.removeRow( 0 );
     }
@@ -432,7 +433,7 @@ public class BaseTable extends Composite {
   }
 
   public void noFill() {
-    scrollTable.addStyleName( "table-no-fill" );
+    scrollTable.addStyleName( TABLE_NO_FILL );
   }
 
   /**

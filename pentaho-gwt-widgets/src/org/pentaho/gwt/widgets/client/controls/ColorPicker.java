@@ -37,7 +37,7 @@ import java.util.List;
 
 public class ColorPicker extends Image {
 
-  private List<ColorPickerListener> listeners = new ArrayList<ColorPickerListener>();
+  protected List<ColorPickerListener> listeners = new ArrayList<ColorPickerListener>();
   private ColorPickerDialog picker = new ColorPickerDialog();
   private String selectedColor = "#FFF"; //$NON-NLS-1$
 

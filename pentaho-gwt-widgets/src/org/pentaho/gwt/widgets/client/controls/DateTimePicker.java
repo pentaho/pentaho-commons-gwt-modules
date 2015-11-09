@@ -38,8 +38,8 @@ import java.util.Date;
 
 public class DateTimePicker extends FlowPanel implements IChangeHandler {
   private DefaultFormat format = new DefaultFormat( DateTimeFormat.getFormat( PredefinedFormat.DATE_SHORT ) );
-  private DatePickerEx datePicker = new DatePickerEx( format );
-  private TimePicker timePicker = new TimePicker();
+  protected DatePickerEx datePicker = new DatePickerEx( format );
+  protected TimePicker timePicker = new TimePicker();
   private ICallback<IChangeHandler> onChangeHandler = null;
 
   public enum Layout {

@@ -32,17 +32,17 @@ public final class ResizableDialogDragHandler implements DragHandler {
   /**
    * CSS blue.
    */
-  private static final String BLUE = "#4444BB"; //$NON-NLS-1$
+  protected static final String BLUE = "#4444BB"; //$NON-NLS-1$
 
   /**
    * CSS green.
    */
-  private static final String GREEN = "#44BB44"; //$NON-NLS-1$
+  protected static final String GREEN = "#44BB44"; //$NON-NLS-1$
 
   /**
    * CSS red.
    */
-  private static final String RED = "#BB4444"; //$NON-NLS-1$
+  protected static final String RED = "#BB4444"; //$NON-NLS-1$
 
   /**
    * Text area where event messages are shown.
@@ -98,11 +98,11 @@ public final class ResizableDialogDragHandler implements DragHandler {
     log( "onPreviewDragStart: " + event, BLUE ); //$NON-NLS-1$
   }
 
-  private void clear() {
+  protected void clear() {
     eventTextArea.setHTML( "" ); //$NON-NLS-1$
   }
 
-  private void log( String text, String color ) {
+  protected void log( String text, String color ) {
     eventTextArea.setHTML( eventTextArea.getHTML()
         + ( eventTextArea.getHTML().length() == 0 ? "" : "<br>" ) + "<span style='color: " + color //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         + "'>" + text + "</span>" ); //$NON-NLS-1$ //$NON-NLS-2$

@@ -35,9 +35,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PentahoTab extends SimplePanel {
 
+  public static final String SELECTED = "selected";
   private PentahoTabPanel tabPanel;
   private Widget content;
-  private Label label = new Label();
+  protected Label label = new Label();
   private boolean solutionBrowserShowing;
 
   public PentahoTab( String text, String tooltip, PentahoTabPanel tabPanel, Widget content, boolean closeable ) {
@@ -104,11 +105,11 @@ public class PentahoTab extends SimplePanel {
   }
 
   public void onBrowserEvent( Event event ) {
-    if ( ( DOM.eventGetType( event ) & Event.ONDBLCLICK ) == Event.ONDBLCLICK ) {
+    if ( ( event.getTypeInt() & Event.ONDBLCLICK ) == Event.ONDBLCLICK ) {
       onDoubleClick( event );
-    } else if ( DOM.eventGetButton( event ) == Event.BUTTON_RIGHT ) {
+    } else if ( event.getButton() == Event.BUTTON_RIGHT ) {
       onRightClick( event );
-    } else if ( DOM.eventGetButton( event ) == Event.BUTTON_LEFT ) {
+    } else if ( event.getButton() == Event.BUTTON_LEFT ) {
       if ( event.getEventTarget().toString().toLowerCase().indexOf( "image" ) == -1 ) {
         fireTabSelected();
       }
@@ -124,9 +125,9 @@ public class PentahoTab extends SimplePanel {
 
   public void setSelected( boolean selected ) {
     if ( selected ) {
-      addStyleDependentName( "selected" );
+      addStyleDependentName( SELECTED );
     } else {
-      removeStyleDependentName( "selected" );
+      removeStyleDependentName( SELECTED );
     }
   }
 

@@ -42,15 +42,15 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   public static final int GLUE = 2;
 
   // table holding the buttons
-  private HorizontalPanel bar = new HorizontalPanel();
+  protected HorizontalPanel bar = new HorizontalPanel();
 
   // Collection of buttons
-  private List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
+  protected List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
 
   // collection of groups
-  private List<ToolbarGroup> groups = new ArrayList<ToolbarGroup>();
+  protected List<ToolbarGroup> groups = new ArrayList<ToolbarGroup>();
 
-  private List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
+  protected List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
 
   public Toolbar() {
     this.setStylePrimaryName( "toolbar" ); //$NON-NLS-1$

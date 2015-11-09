@@ -44,9 +44,9 @@ public class ValidationPasswordTextBox extends HorizontalPanel implements IValid
 
   private Image image;
 
-  private ValidationTextBoxKeyUpHandlerCollection handlers;
+  protected ValidationTextBoxKeyUpHandlerCollection handlers;
 
-  private ValidationTextBoxListenerCollection listeners;
+  protected ValidationTextBoxListenerCollection listeners;
 
   private static final int DEFAULT_OFFSET = 9;
 

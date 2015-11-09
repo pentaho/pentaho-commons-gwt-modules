@@ -30,7 +30,7 @@ import org.pentaho.gwt.widgets.client.utils.StringUtils;
 @SuppressWarnings( "deprecation" )
 public class ErrorLabel extends VerticalPanel {
 
-  private Label errorLabel = null;
+  protected Label errorLabel = null;
 
   public ErrorLabel( Widget w ) {
     errorLabel = new Label();

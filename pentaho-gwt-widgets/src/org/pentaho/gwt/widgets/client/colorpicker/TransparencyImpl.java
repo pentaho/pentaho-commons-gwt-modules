@@ -416,7 +416,6 @@ public class TransparencyImpl {
       DOM.setStyleAttribute( elem, "filter", "alpha(opacity=" + alpha + ")" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     } else {
       // Everyone else
-      DOM.setStyleAttribute( elem, "-moz-opacity", "" + ( new Integer( alpha ).floatValue() / 100 ) + "" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       DOM.setStyleAttribute( elem, "opacity", "" + ( new Integer( alpha ).floatValue() / 100 ) + "" ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
   }

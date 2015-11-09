@@ -81,37 +81,37 @@ import com.google.gwt.user.client.ui.Widget;
 @SuppressWarnings( "deprecation" )
 public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener,
     FocusListener, KeyboardListener, ListItemListener {
-  private List<ListItem> items = new ArrayList<ListItem>();
-  private int selectedIndex = -1;
-  private DropDownArrow arrow = new DropDownArrow();
-  private int visible = 1;
+  protected List<ListItem> items = new ArrayList<ListItem>();
+  protected int selectedIndex = -1;
+  protected DropDownArrow arrow = new DropDownArrow();
+  protected int visible = 1;
   private int maxDropVisible = 15;
-  private boolean editable = false;
+  protected boolean editable = false;
   private VerticalPanel listPanel = new VerticalPanel();
-  private ScrollPanel listScrollPanel = new ScrollPanel();
+  protected ScrollPanel listScrollPanel = new ScrollPanel();
 
   // Members for drop-down style
-  private FlexTable dropGrid = new FlexTable();
-  private boolean popupShowing = false;
+  protected FlexTable dropGrid = new FlexTable();
+  protected boolean popupShowing = false;
   private DropPopupPanel popup;
   private PopupList popupVbox = new PopupList();
-  private FocusPanel fPanel = new FocusPanel();
+  protected FocusPanel fPanel = new FocusPanel();
   private ScrollPanel popupScrollPanel = new ScrollPanel();
 
-  private List<ChangeListener> listeners = new ArrayList<ChangeListener>();
+  protected List<ChangeListener> listeners = new ArrayList<ChangeListener>();
   private final int spacing = 1;
-  private int maxHeight, maxWidth, averageHeight; // height and width of largest ListItem
+  protected int maxHeight, maxWidth, averageHeight; // height and width of largest ListItem
   private String primaryStyleName;
   private String height, width;
-  private String popupHeight;
+  protected String popupHeight;
   private String popupWidth;
-  private boolean suppressLayout;
+  protected boolean suppressLayout;
 
   private boolean enabled = true;
   private String val;
   private Command command;
-  private DragController dragController;
-  private boolean multiSelect;
+  protected DragController dragController;
+  protected boolean multiSelect;
 
   public CustomListBox() {
 
@@ -359,7 +359,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     return visible;
   }
 
-  private void updateUI() {
+  protected void updateUI() {
     if ( !this.isAttached() ) {
       return;
     }
@@ -395,10 +395,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
   }
 
-  private TextBox editableTextBox;
+  protected TextBox editableTextBox;
   private SimplePanel selectedItemWrapper = new SimplePanel();
 
-  private void updateSelectedDropWidget() {
+  protected void updateSelectedDropWidget() {
     Widget selectedWidget = new Label( "" ); //Default to show in case of empty sets? //$NON-NLS-1$
     boolean updateMade = true;
     if ( editable == false ) { // only show their widget if editable is false
@@ -553,7 +553,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   /**
    * Used internally to hide/show drop-down popup.
    */
-  private void togglePopup() {
+  protected void togglePopup() {
     if ( popupShowing == false ) {
 
       // This delayed instantiation works around a problem with the underlying GWT widgets that
@@ -602,7 +602,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     }
   }
 
-  private void scrollSelectedItemIntoView() {
+  protected void scrollSelectedItemIntoView() {
 
     // Scroll to view currently selected widget
     // DOM.scrollIntoView(this.getSelectedItem().getWidget().getElement());
@@ -652,9 +652,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
   }
 
-  private List<ListItem> selectedItems = new ArrayList<ListItem>();
+  protected List<ListItem> selectedItems = new ArrayList<ListItem>();
 
-  private void handleSelection( ListItem item, Event evt ) {
+  protected void handleSelection( ListItem item, Event evt ) {
     if ( !evt.getCtrlKey() && !evt.getShiftKey() && !evt.getMetaKey() ) {
       for ( ListItem itm : selectedItems ) {
         itm.onDeselect();
@@ -1111,7 +1111,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   /**
    * This is the arrow rendered in the drop-down.
    */
-  private class DropDownArrow extends SimplePanel {
+  protected class DropDownArrow extends SimplePanel {
     private SimplePanel img;
     private boolean enabled = true;
 

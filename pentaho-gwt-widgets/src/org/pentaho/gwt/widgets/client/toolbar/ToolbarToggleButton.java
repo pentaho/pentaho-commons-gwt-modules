@@ -27,7 +27,7 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 @SuppressWarnings( "deprecation" )
 public class ToolbarToggleButton extends ToolbarButton {
 
-  private boolean selected = false;
+  protected boolean selected = false;
   private String TOGGLE_STYLE = "toolbar-toggle-button"; //$NON-NLS-1$
 
   /**
@@ -120,7 +120,7 @@ public class ToolbarToggleButton extends ToolbarButton {
     updateSelectedStyle();
   }
 
-  private void updateSelectedStyle() {
+  protected void updateSelectedStyle() {
     if ( selected ) {
       button.addStyleName( stylePrimaryName + "-down" ); //$NON-NLS-1$
       if ( this.downImage != null ) {

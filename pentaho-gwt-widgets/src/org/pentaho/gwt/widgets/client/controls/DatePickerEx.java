@@ -40,7 +40,7 @@ import java.util.Date;
 public class DatePickerEx implements IChangeHandler {
 
   private DefaultFormat format = null;
-  private DateBox datePicker = null;
+  protected DateBox datePicker = null;
   private ICallback<IChangeHandler> onChangeHandler;
 
   public DatePickerEx() {

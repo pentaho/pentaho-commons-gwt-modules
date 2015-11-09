@@ -24,9 +24,9 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PentahoTabPanel extends VerticalPanel {
 
-  private FlowPanel tabBar = new FlowPanel();
-  private DeckPanel tabDeck = new AlwaysVisibleDeckPanel();
-  private PentahoTab selectedTab;
+  protected FlowPanel tabBar = new FlowPanel();
+  protected DeckPanel tabDeck = new AlwaysVisibleDeckPanel();
+  protected PentahoTab selectedTab;
 
   public PentahoTabPanel() {
     setStylePrimaryName( "pentaho-tab-panel" );

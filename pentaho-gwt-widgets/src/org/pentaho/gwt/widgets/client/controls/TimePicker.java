@@ -40,9 +40,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @SuppressWarnings( "deprecation" )
 public class TimePicker extends HorizontalPanel implements IChangeHandler {
-  private final ListBox hourLB = new ListBox();
-  private final ListBox minuteLB = new ListBox();
-  private final ListBox timeOfDayLB = new ListBox();
+  protected ListBox hourLB = new ListBox();
+  protected ListBox minuteLB = new ListBox();
+  protected ListBox timeOfDayLB = new ListBox();
   private ICallback<IChangeHandler> onChangeHandler = null;
 
   public TimePicker() {

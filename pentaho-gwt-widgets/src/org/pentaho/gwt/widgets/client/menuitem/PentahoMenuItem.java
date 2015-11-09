@@ -22,8 +22,8 @@ import com.google.gwt.user.client.ui.MenuItem;
 
 public class PentahoMenuItem extends MenuItem {
 
-  private boolean enabled = true;
-  private boolean useCheckUI = false;
+  protected boolean enabled = true;
+  protected boolean useCheckUI = false;
   private boolean checked = false;
 
   public PentahoMenuItem( String text, Command cmd ) {

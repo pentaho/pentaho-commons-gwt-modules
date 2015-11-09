@@ -69,6 +69,9 @@ public class ColorPalette extends Composite implements ClickListener, KeyboardLi
     // VerticalPanel tempPalettePanel = new VerticalPanel();
 
     Widget paletteItem = null;
+    while ( mainPanel.getWidgetCount() > 0 ) {
+      mainPanel.remove( 0 );
+    }
 
     // Generate the palette panel
     for ( int row = 0; row < rows; row++ ) {

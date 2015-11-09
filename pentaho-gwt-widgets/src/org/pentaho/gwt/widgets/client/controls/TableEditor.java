@@ -38,7 +38,7 @@ public class TableEditor extends VerticalPanel {
       "style/images/add.png", "style/images/add_disabled.png", MSGS.addItem(), 15, 15 ); //$NON-NLS-1$ //$NON-NLS-2$
   private ImageButton deleteBtn = new ImageButton(
       "style/images/remove.png", "style/images/remove_disabled.png", MSGS.deleteItems(), 15, 15 ); //$NON-NLS-1$ //$NON-NLS-2$
-  private ListBox actionLb = new ListBox();
+  protected ListBox actionLb = new ListBox();
   private ErrorLabel errorLabel = null;
   private ICallback<TableEditor> onSelectHandler = null;
   private static int DEFAULT_NUM_VISIBLE_ITEMS = 10;
