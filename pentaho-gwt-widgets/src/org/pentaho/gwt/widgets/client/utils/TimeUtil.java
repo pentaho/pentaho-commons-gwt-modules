@@ -92,7 +92,7 @@ public class TimeUtil {
    */
   public enum DayOfWeek {
     SUN( 0, "sunday" ), MON( 1, "monday" ), TUE( 2, "tuesday" ), WED( 3, "wednesday" ), THU( 4,
-        "thursday" ), FRI( 5, "friday" ), SAT( 6,"saturday" );
+        "thursday" ), FRI( 5, "friday" ), SAT( 6, "saturday" );
 
     DayOfWeek( int value, String name ) {
       this.value = value;
@@ -273,7 +273,7 @@ public class TimeUtil {
   public static TimeOfDay getTimeOfDayBy0To23Hour( String hour ) {
     return getTimeOfDayBy0To23Hour( Integer.parseInt( hour ) );
   }
-  
+
   public static TimeOfDay getTimeOfDayBy0To23Hour( int hour ) {
     return hour < MAX_HOUR ? TimeOfDay.AM : TimeOfDay.PM;
   }
@@ -336,7 +336,7 @@ public class TimeUtil {
   }
 
   // this code runs in a single thread, so it is ok to share these two DateTimeFormats
-  private static DateTimeFormat dateFormatter = DateTimeFormat.getLongDateFormat();
+  private static DateTimeFormat dateFormatter = DateTimeFormat.getFormat( MSGS.dateFormat() );
   private static DateTimeFormat dateTimeFormatter = DateTimeFormat.getFormat( MSGS.dateFormatLongMedium() );
 
   public static Date getDateTime( String time, Date date ) {

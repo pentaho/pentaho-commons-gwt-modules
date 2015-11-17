@@ -41,9 +41,9 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
 
   private static final String SCHEDULER_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 
-  private TimePicker startTimePicker = null;
+  protected TimePicker startTimePicker = null;
   private DefaultFormat format = new DefaultFormat( DateTimeFormat.getFormat( PredefinedFormat.DATE_SHORT ) );
-  private DatePickerEx startDatePicker = new DatePickerEx( format );
+  protected DatePickerEx startDatePicker = new DatePickerEx( format );
   private ICallback<IChangeHandler> onChangeHandler = null;
   private final MessageDialogBox errorBox =
       new MessageDialogBox( Messages.getString( "error" ), "", false, false, true );

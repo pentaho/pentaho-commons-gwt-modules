@@ -28,11 +28,11 @@ import com.google.gwt.user.client.ui.DockPanel;
 public abstract class AbstractWizardPanel extends DockPanel implements IWizardPanel {
 
   private static final String WIZARD_PANEL = "pentaho-wizard-panel"; //$NON-NLS-1$
-  private boolean canContinue = false;
-  private boolean canFinish = false;
+  protected boolean canContinue = false;
+  protected boolean canFinish = false;
   private Object userData;
 
-  private WizardPanelListenerCollection wizardPanelListenerCollection = new WizardPanelListenerCollection();
+  protected WizardPanelListenerCollection wizardPanelListenerCollection = new WizardPanelListenerCollection();
 
   public AbstractWizardPanel() {
     super();

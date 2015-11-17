@@ -64,37 +64,37 @@ import java.util.Map;
 
 @SuppressWarnings( "deprecation" )
 public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
+  public static final int VALUE_OF_SUNDAY = 1;
 
   private static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
   private static final String DOW_CHECKBOX = "day-of-week-checkbox"; //$NON-NLS-1$
 
-  private TimePicker startTimePicker = null;
+  protected TimePicker startTimePicker = null;
 
-  private SecondlyRecurrenceEditor secondlyEditor = null;
+  protected SecondlyRecurrenceEditor secondlyEditor = null;
 
-  private MinutelyRecurrenceEditor minutelyEditor = null;
+  protected MinutelyRecurrenceEditor minutelyEditor = null;
 
-  private HourlyRecurrenceEditor hourlyEditor = null;
+  protected HourlyRecurrenceEditor hourlyEditor = null;
 
-  private DailyRecurrenceEditor dailyEditor = null;
+  protected DailyRecurrenceEditor dailyEditor = null;
 
-  private WeeklyRecurrenceEditor weeklyEditor = null;
+  protected WeeklyRecurrenceEditor weeklyEditor = null;
 
-  private MonthlyRecurrenceEditor monthlyEditor = null;
+  protected MonthlyRecurrenceEditor monthlyEditor = null;
 
-  private YearlyRecurrenceEditor yearlyEditor = null;
+  protected YearlyRecurrenceEditor yearlyEditor = null;
 
-  private DateRangeEditor dateRangeEditor = null;
+  protected DateRangeEditor dateRangeEditor = null;
 
-  private TemporalValue temporalState = null;
+  protected TemporalValue temporalState = null;
   private DeckPanel deckPanel = null;
 
   private static final String SPACE = " "; //$NON-NLS-1$
 
-  private static int VALUE_OF_SUNDAY = 1;
   private ICallback<IChangeHandler> onChangeHandler;
 
-  private Map<TemporalValue, Panel> temporalPanelMap = new LinkedHashMap<TemporalValue, Panel>();
+  protected Map<TemporalValue, Panel> temporalPanelMap = new LinkedHashMap<TemporalValue, Panel>();
 
   public enum TemporalValue {
     SECONDS( 0, Messages.getString( "schedule.seconds" ) ),
@@ -361,7 +361,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     temporalPanelMap.put( TemporalValue.YEARLY, yearlyEditor );
   }
 
-  private class SimpleRecurrencePanel extends VerticalPanel implements IChangeHandler {
+  public class SimpleRecurrencePanel extends VerticalPanel implements IChangeHandler {
     private TextBox valueTb = new TextBox();
     private ErrorLabel valueLabel = null;
     private ICallback<IChangeHandler> onChangeHandler;
@@ -453,8 +453,8 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
   public class DailyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     private TextBox repeatValueTb = new TextBox();
-    private RadioButton everyNDaysRb = new RadioButton( DAILY_RB_GROUP, Messages.getString( "schedule.every" ) );
-    private RadioButton everyWeekdayRb = new RadioButton( DAILY_RB_GROUP,
+    protected RadioButton everyNDaysRb = new RadioButton( DAILY_RB_GROUP, Messages.getString( "schedule.every" ) );
+    protected RadioButton everyWeekdayRb = new RadioButton( DAILY_RB_GROUP,
       Messages.getString( "schedule.everyWeekDay" ) );
     private ErrorLabel repeatLabel = null;
     private ICallback<IChangeHandler> onChangeHandler;
@@ -556,7 +556,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   public class WeeklyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
-    private Map<DayOfWeek, CheckBox> dayToCheckBox = new HashMap<DayOfWeek, CheckBox>();
+    protected Map<DayOfWeek, CheckBox> dayToCheckBox = new HashMap<DayOfWeek, CheckBox>();
     private ErrorLabel everyWeekOnLabel = null;
     private ICallback<IChangeHandler> onChangeHandler;
 
@@ -699,8 +699,8 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   public class MonthlyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
-    private RadioButton dayNOfMonthRb = new RadioButton( MONTHLY_RB_GROUP, Messages.getString( "schedule.day" ) );
-    private RadioButton nthDayNameOfMonthRb = new RadioButton( MONTHLY_RB_GROUP, Messages.getString( "schedule.the" ) );
+    protected RadioButton dayNOfMonthRb = new RadioButton( MONTHLY_RB_GROUP, Messages.getString( "schedule.day" ) );
+    protected RadioButton nthDayNameOfMonthRb = new RadioButton( MONTHLY_RB_GROUP, Messages.getString( "schedule.the" ) );
     private TextBox dayOfMonthTb = new TextBox();
     private ListBox whichWeekLb = createWhichWeekListBox();
     private ListBox dayOfWeekLb = createDayOfWeekListBox();
@@ -837,9 +837,9 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   public class YearlyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
-    private RadioButton everyMonthOnNthDayRb = new RadioButton( YEARLY_RB_GROUP,
+    protected RadioButton everyMonthOnNthDayRb = new RadioButton( YEARLY_RB_GROUP,
       Messages.getString( "schedule.every" ) );
-    private RadioButton nthDayNameOfMonthNameRb = new RadioButton( YEARLY_RB_GROUP, Messages.getString( "schedule.the" ) );
+    protected RadioButton nthDayNameOfMonthNameRb = new RadioButton( YEARLY_RB_GROUP, Messages.getString( "schedule.the" ) );
     private TextBox dayOfMonthTb = new TextBox();
     private ListBox monthOfYearLb0 = createMonthOfYearListBox();
     private ListBox monthOfYearLb1 = createMonthOfYearListBox();
@@ -1164,7 +1164,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
    * @return
    * @throws RuntimeException
    */
-  private String getDailyCronString() throws RuntimeException {
+  protected String getDailyCronString() throws RuntimeException {
     String cronStr;
     StringBuilder recurrenceSb = new StringBuilder();
     if ( dailyEditor.isEveryNDays() ) {
@@ -1181,7 +1181,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     }
   }
 
-  private String getWeeklyCronString() throws RuntimeException {
+  protected String getWeeklyCronString() throws RuntimeException {
     String cronStr;
     StringBuilder recurrenceSb = new StringBuilder();
     // WeeklyOn 0 33 6 1,3,5
@@ -1196,7 +1196,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   }
 
-  private String getMonthlyCronString() throws RuntimeException {
+  protected String getMonthlyCronString() throws RuntimeException {
     String cronStr;
     StringBuilder recurrenceSb = new StringBuilder();
     if ( monthlyEditor.isDayNOfMonth() ) {
@@ -1224,7 +1224,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     return cronStr;
   }
 
-  private String getYearlyCronString() throws RuntimeException {
+  protected String getYearlyCronString() throws RuntimeException {
     String cronStr;
     StringBuilder recurrenceSb = new StringBuilder();
     if ( yearlyEditor.isEveryMonthOnNthDay() ) {

@@ -47,6 +47,8 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
   private static final String WIZARD_BUTTON_PANEL = "pentaho-wizard-button-panel"; //$NON-NLS-1$
 
+  public static final String PENTAHO_BUTTON = "pentaho-button";
+
   public enum ScheduleDialogType {
     SCHEDULER, BLOCKOUT
   }
@@ -97,10 +99,10 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     cancelButton.getElement().setId( "wizard-cancel-button" );
     finishButton.getElement().setId( "wizard-finish-button" );
 
-    backButton.setStyleName( "pentaho-button" );
-    nextButton.setStyleName( "pentaho-button" );
-    cancelButton.setStyleName( "pentaho-button" );
-    finishButton.setStyleName( "pentaho-button" );
+    backButton.setStyleName( PENTAHO_BUTTON );
+    nextButton.setStyleName( PENTAHO_BUTTON );
+    cancelButton.setStyleName( PENTAHO_BUTTON );
+    finishButton.setStyleName( PENTAHO_BUTTON );
 
     nextButton.addClickListener( new ClickListener() {
       @Override

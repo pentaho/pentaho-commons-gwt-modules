@@ -39,9 +39,9 @@ import java.util.Date;
 public class CronEditor extends VerticalPanel implements IChangeHandler {
   private static final String CRON_LABEL = "cron-label"; //$NON-NLS-1$
 
-  private TextBox cronTb = new TextBox();
-  private DateRangeEditor dateRangeEditor = null;
-  private ErrorLabel cronLabel = null;
+  protected TextBox cronTb = new TextBox();
+  protected DateRangeEditor dateRangeEditor = null;
+  protected ErrorLabel cronLabel = null;
   private ICallback<IChangeHandler> onChangeHandler;
 
   public CronEditor() {

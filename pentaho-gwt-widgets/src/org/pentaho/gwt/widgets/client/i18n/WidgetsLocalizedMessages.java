@@ -35,6 +35,14 @@ public interface WidgetsLocalizedMessages extends com.google.gwt.i18n.client.Mes
   String dateFormatLongMedium();
 
   /**
+   * Translated "MMM dd, yyyy HH:mm:ss a".
+   *
+   * @return translated "MMM dd, yyyy HH:mm:ss a"
+   */
+  @DefaultMessage( "MMM dd, yyyy" )
+  String dateFormat();
+
+  /**
    * Translated "getDayOfMonth() not valid for recurrence type: {0}.".
    * 
    * @return translated "getDayOfMonth() not valid for recurrence type: {0}."

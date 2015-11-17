@@ -24,7 +24,6 @@ import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.DailyRecurr
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.HourlyRecurrenceEditor;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.MinutelyRecurrenceEditor;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.MonthlyRecurrenceEditor;
-import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.SecondlyRecurrenceEditor;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.WeeklyRecurrenceEditor;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.YearlyRecurrenceEditor;
 
@@ -37,7 +36,7 @@ import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.YearlyRecur
 public class RecurrenceEditorValidator implements IUiValidator {
 
   private RecurrenceEditor recurrenceEditor = null;
-  private DateRangeEditorValidator dateRangeEditorValidator = null;
+  protected DateRangeEditorValidator dateRangeEditorValidator = null;
 
   public RecurrenceEditorValidator( RecurrenceEditor recurrenceEditor ) {
     this.recurrenceEditor = recurrenceEditor;
@@ -48,32 +47,29 @@ public class RecurrenceEditorValidator implements IUiValidator {
     boolean isValid = true;
     switch ( recurrenceEditor.getTemporalState() ) {
       case SECONDS:
-        SecondlyRecurrenceEditor sEd = recurrenceEditor.getSecondlyEditor();
+        RecurrenceEditor.SecondlyRecurrenceEditor sEd = recurrenceEditor.getSecondlyEditor();
         String seconds = sEd.getValue();
-        if ( !StringUtils.isPositiveInteger( seconds ) || ( Integer.parseInt( seconds ) <= 0 ) ) {
-          isValid = false;
-        }
-        if ( Integer.parseInt( seconds ) > TimeUtil.MAX_SECOND_BY_MILLISEC ) {
+        if ( !StringUtils.isPositiveInteger( seconds )
+            || ( Integer.parseInt( seconds ) <= 0 )
+            || Integer.parseInt( seconds ) > TimeUtil.MAX_SECOND_BY_MILLISEC ) {
           isValid = false;
         }
         break;
       case MINUTES:
         MinutelyRecurrenceEditor mEd = recurrenceEditor.getMinutelyEditor();
         String minutes = mEd.getValue();
-        if ( !StringUtils.isPositiveInteger( minutes ) || ( Integer.parseInt( minutes ) <= 0 ) ) {
-          isValid = false;
-        }
-        if ( Integer.parseInt( minutes ) > TimeUtil.MAX_MINUTE_BY_MILLISEC ) {
+        if ( !StringUtils.isPositiveInteger( minutes )
+            || ( Integer.parseInt( minutes ) <= 0 )
+            || Integer.parseInt( minutes ) > TimeUtil.MAX_MINUTE_BY_MILLISEC ) {
           isValid = false;
         }
         break;
       case HOURS:
         HourlyRecurrenceEditor hEd = recurrenceEditor.getHourlyEditor();
         String hours = hEd.getValue();
-        if ( !StringUtils.isPositiveInteger( hours ) || ( Integer.parseInt( hours ) <= 0 ) ) {
-          isValid = false;
-        }
-        if ( Integer.parseInt( hours ) > TimeUtil.MAX_HOUR_BY_MILLISEC ) {
+        if ( !StringUtils.isPositiveInteger( hours )
+            || ( Integer.parseInt( hours ) <= 0 )
+            || Integer.parseInt( hours ) > TimeUtil.MAX_HOUR_BY_MILLISEC ) {
           isValid = false;
         }
         break;

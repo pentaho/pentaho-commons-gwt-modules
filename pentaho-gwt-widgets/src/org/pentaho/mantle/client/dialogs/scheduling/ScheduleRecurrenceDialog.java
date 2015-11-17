@@ -91,7 +91,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   boolean isBlockoutDialog = false;
   private ScheduleEmailDialog scheduleEmailDialog;
   private ScheduleParamsDialog scheduleParamsDialog;
-  private ScheduleEditorWizardPanel scheduleEditorWizardPanel;
+  protected ScheduleEditorWizardPanel scheduleEditorWizardPanel;
 
   protected JsJob editJob = null;
   private Boolean done = false;
@@ -102,7 +102,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   private ScheduleEditor scheduleEditor;
 
   private PromptDialogBox parentDialog;
-  
+
   private boolean newSchedule = true;
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, JsJob jsJob, IDialogCallback callback,
@@ -835,7 +835,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
       RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob );
       if ( editJob != null ) {
-    	  scheduleRequest.put( "jobId", new JSONString( editJob.getJobId() ) );
+        scheduleRequest.put( "jobId", new JSONString( editJob.getJobId() ) );
       }
 
       try {

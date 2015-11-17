@@ -26,7 +26,7 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.json.client.JSONObject;
 
 public class NewBlockoutScheduleDialog extends ScheduleRecurrenceDialog {
-  private boolean updateMode = false;
+  protected boolean updateMode = false;
 
   public NewBlockoutScheduleDialog( final String filePath, final IDialogCallback callback, final boolean hasParams,
       final boolean isEmailConfValid ) {
