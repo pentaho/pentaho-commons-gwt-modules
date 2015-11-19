@@ -20,7 +20,6 @@ package org.pentaho.mantle.client.dialogs.scheduling;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -150,7 +149,7 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     }
   }
 
-  private native void setRadioButton( String value )/*-{
+  protected native void setRadioButton( String value )/*-{
     //CHECKSTYLE IGNORE LineLength FOR NEXT 1 LINES
     var elementTypes = $doc.getElementById('schedulerParamsFrame').contentWindow.document.body.getElementsByTagName('input');
       if(elementTypes.length){

@@ -43,12 +43,12 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
 
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
 
-  private RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", "Yes" );
-  private RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", "No" );
-  private TextBox toAddressTextBox = new TextBox();
-  private TextBox subjectTextBox = new TextBox();
-  private TextBox attachmentNameTextBox = new TextBox();
-  private TextArea messageTextArea = new TextArea();
+  protected RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", "Yes" );
+  protected RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", "No" );
+  protected TextBox toAddressTextBox = new TextBox();
+  protected TextBox subjectTextBox = new TextBox();
+  protected TextBox attachmentNameTextBox = new TextBox();
+  protected TextArea messageTextArea = new TextArea();
 
   private String filePath;
   private JSONObject jobSchedule;
@@ -220,7 +220,7 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
     return Messages.getString( "schedule.scheduleEdit" );
   }
 
-  private boolean isValidConfig() {
+  protected boolean isValidConfig() {
     if ( no.getValue() ) {
       return true;
     }

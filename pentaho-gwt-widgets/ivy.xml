@@ -33,7 +33,7 @@
 
         <dependency org="GWT-FX" name="GWT-FX" rev="0.5.0" conf="codegen->default" transitive="false"/>
         <!--  Testing dependencies -->
-        <dependency org="junit"          name="junit"          rev="4.4"   conf="test->default"/>
+        <dependency org="junit"          name="junit"          rev="${dependency.junit.revision}"   conf="test->default"/>
         <dependency org="com.google.gwt" name="gwt-user"       rev="${dependency.gwt.revision}" conf="test->default"/>
         <dependency org="com.google.gwt.gwtmockito" name="gwtmockito" rev="1.1.5" conf="test->default">
           <exclude org="com.google.gwt"/>

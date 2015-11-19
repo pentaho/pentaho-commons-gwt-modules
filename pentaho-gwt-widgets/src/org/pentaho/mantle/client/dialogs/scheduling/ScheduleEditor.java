@@ -70,7 +70,7 @@ import com.google.gwt.user.datepicker.client.CalendarUtil;
  * @author Steven Barkdull
  */
 public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
-  
+
   private static final int DEFAULT_START_HOUR = 12; //$NON-NLS-1$
   private static final int DEFAULT_START_MINUTE = 0; //$NON-NLS-1$
 
@@ -157,11 +157,11 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     }
   } /* end enum */
 
-  private RunOnceEditor runOnceEditor = null;
+  protected RunOnceEditor runOnceEditor = null;
 
-  private RecurrenceEditor recurrenceEditor = null;
+  protected RecurrenceEditor recurrenceEditor = null;
 
-  private CronEditor cronEditor = null;
+  protected CronEditor cronEditor = null;
 
   // TODO sbarkdull, can this be static?
   private final Map<ScheduleType, Panel> scheduleTypeMap = new HashMap<ScheduleType, Panel>();
@@ -172,7 +172,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   private final Map<ScheduleType, TemporalValue> scheduleTypeToTemporalValueMap =
       createScheduleTypeMapToTemporalValue();
 
-  private ListBox scheduleCombo = null;
+  protected ListBox scheduleCombo = null;
 
   private ICallback<IChangeHandler> onChangeHandler = null;
 
@@ -180,7 +180,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   private TimePicker startTimePicker = null;
 
-  private TimePicker blockoutEndTimePicker = null;
+  protected TimePicker blockoutEndTimePicker = null;
 
   private Widget startTimePanel = null;
 
@@ -188,20 +188,20 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   private RadioButton durationRadioButton = null;
 
-  private ListBox daysListBox = null;
+  protected ListBox daysListBox = null;
 
-  private ListBox hoursListBox = null;
+  protected ListBox hoursListBox = null;
 
-  private ListBox minutesListBox = null;
+  protected ListBox minutesListBox = null;
 
   protected Button blockoutCheckButton = new Button( Messages.getString( "schedule.viewBlockoutTimes" ) );
 
   protected ListBox timeZonePicker = null;
-  
+
   private final Date defaultDate = initDefaultDate();
-  
+
   @SuppressWarnings( "deprecation" )
-  private Date initDefaultDate(){
+  private Date initDefaultDate() {
     Date date = new Date();
     date.setHours( DEFAULT_START_HOUR );
     date.setMinutes( DEFAULT_START_MINUTE );
@@ -211,7 +211,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   public ScheduleEditor( ScheduleDialogType type ) {
     super();
-    isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );    
+    isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );
     startTimePicker = new TimePicker();
 
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
@@ -450,18 +450,17 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       vp.add( hspacer );
       add( blockoutButtonPanel );
     }
-    
+
     reset( defaultDate );
 
     configureOnChangeHandler();
   }
 
   @SuppressWarnings( "deprecation" )
-  private void addMinutes( Date date, int count )
-  {
+  private void addMinutes( Date date, int count ) {
     date.setMinutes( date.getMinutes() + count );
   }
-  
+
   private void show( boolean applyToParent, UIObject... objs ) {
     for ( UIObject obj : objs ) {
       Element ele = obj.getElement();
@@ -882,7 +881,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     selectScheduleTypeEditor( schedType );
   }
 
-  private void selectScheduleTypeEditor( ScheduleType scheduleType ) {
+  protected void selectScheduleTypeEditor( ScheduleType scheduleType ) {
     // if we are switching to cron type, then hide the start time panel
     if ( ( isBlockoutDialog == false ) && ( startTimePanel != null ) ) {
       if ( scheduleType == ScheduleType.CRON ) {
@@ -935,7 +934,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     return m;
   }
 
-  private ScheduleType temporalValueToScheduleType( TemporalValue tv ) {
+  protected ScheduleType temporalValueToScheduleType( TemporalValue tv ) {
     return temporalValueToScheduleTypeMap.get( tv );
   }
 

@@ -57,7 +57,7 @@ public class MantleLoginDialog extends PromptDialogBox {
   private final ListBox usersListBox = new ListBox();
   private final PasswordTextBox passwordTextBox = new PasswordTextBox();
   private CheckBox newWindowChk = new CheckBox();
-  private String returnLocation = null;
+  protected String returnLocation = null;
 
   private static boolean showNewWindowOption = true;
 
@@ -191,7 +191,7 @@ public class MantleLoginDialog extends PromptDialogBox {
     }
   }
 
-  private Widget buildLoginPanel( boolean openInNewWindowDefault ) {
+  protected Widget buildLoginPanel( boolean openInNewWindowDefault ) {
     userTextBox.setWidth( "100%" ); //$NON-NLS-1$
     passwordTextBox.setWidth( "100%" ); //$NON-NLS-1$
     usersListBox.setWidth( "100%" ); //$NON-NLS-1$

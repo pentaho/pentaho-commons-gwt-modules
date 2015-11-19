@@ -42,7 +42,7 @@ public class Rectangle {
 
   }
 
-  public boolean pointWithin( Point p ) {
+  private boolean pointWithin( Point p ) {
     if ( ( p.x > this.x && p.x < this.x + this.width ) && ( p.y > this.y && p.y < this.y + this.height ) ) {
       return true;
     }

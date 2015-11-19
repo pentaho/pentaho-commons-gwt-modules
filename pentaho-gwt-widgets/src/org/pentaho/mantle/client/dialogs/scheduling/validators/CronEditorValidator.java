@@ -23,7 +23,7 @@ import org.pentaho.mantle.client.dialogs.scheduling.CronEditor;
 public class CronEditorValidator implements IUiValidator {
 
   private CronEditor editor = null;
-  private DateRangeEditorValidator dateRangeEditorValidator = null;
+  protected DateRangeEditorValidator dateRangeEditorValidator = null;
 
   public CronEditorValidator( CronEditor editor ) {
     this.editor = editor;
