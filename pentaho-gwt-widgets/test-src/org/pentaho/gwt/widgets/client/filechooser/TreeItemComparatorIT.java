@@ -20,7 +20,7 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.TreeItem;
 
-public class TreeItemComparatorTest extends GWTTestCase {
+public class TreeItemComparatorIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }

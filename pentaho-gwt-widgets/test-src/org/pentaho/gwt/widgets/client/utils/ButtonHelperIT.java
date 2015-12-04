@@ -21,7 +21,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Image;
 
 
-public class ButtonHelperTest extends GWTTestCase {
+public class ButtonHelperIT extends GWTTestCase {
   public void testCreateButtonLabel() throws Exception {
     final String text = "text";
     final Image img = new Image();

@@ -22,7 +22,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 import java.util.Date;
 
 
-public class TimeUtilTest extends GWTTestCase {
+public class TimeUtilIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }

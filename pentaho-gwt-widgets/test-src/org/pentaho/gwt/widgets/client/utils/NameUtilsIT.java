@@ -19,7 +19,7 @@ package org.pentaho.gwt.widgets.client.utils;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
-public class NameUtilsTest extends GWTTestCase {
+public class NameUtilsIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }
