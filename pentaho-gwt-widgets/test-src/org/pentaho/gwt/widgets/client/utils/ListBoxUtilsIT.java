@@ -20,7 +20,7 @@ package org.pentaho.gwt.widgets.client.utils;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.ListBox;
 
-public class ListBoxUtilsTest extends GWTTestCase {
+public class ListBoxUtilsIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }

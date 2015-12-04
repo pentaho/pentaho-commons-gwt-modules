@@ -21,7 +21,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HTML;
 
-public class WindowPanelTest extends GWTTestCase {
+public class WindowPanelIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }

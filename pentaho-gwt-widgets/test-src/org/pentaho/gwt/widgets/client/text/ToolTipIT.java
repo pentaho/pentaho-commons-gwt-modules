@@ -20,7 +20,7 @@ package org.pentaho.gwt.widgets.client.text;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.Timer;
 
-public class ToolTipTest extends GWTTestCase {
+public class ToolTipIT extends GWTTestCase {
 
   private final int delay = 200;
 

@@ -24,7 +24,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 
 import java.util.List;
 
-public class JsonToRepositoryFileTreeConverterTest extends GWTTestCase {
+public class JsonToRepositoryFileTreeConverterIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }

@@ -21,7 +21,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Label;
 
-public class ProgressIndicatorWidgetTest extends GWTTestCase {
+public class ProgressIndicatorWidgetIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }

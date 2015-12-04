@@ -20,7 +20,7 @@ package org.pentaho.gwt.widgets.client.utils;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.ui.Image;
 
-public class ImageUtilTest extends GWTTestCase {
+public class ImageUtilIT extends GWTTestCase {
   public String getModuleName() {
     return "org.pentaho.gwt.widgets.Widgets"; //$NON-NLS-1$
   }
