@@ -344,7 +344,7 @@ public class BlockoutPanel extends SimplePanel {
 
   private native JsArray<JsJob> parseJson( String json )
   /*-{
-    var obj = JSON.parse('(' + json + ')');
+    var obj = JSON.parse(json);
     return obj.job;
   }-*/;
 
