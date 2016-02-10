@@ -34,6 +34,7 @@ public class PentahoTabPanel extends VerticalPanel {
     add( tabBar );
     add( tabDeck );
     tabDeck.getElement().getParentElement().setClassName( "pentaho-tab-deck-panel" );
+    tabDeck.setHeight( "100%" );
   }
 
   public void addTab( String text, String tooltip, boolean closeable, Widget content ) {
