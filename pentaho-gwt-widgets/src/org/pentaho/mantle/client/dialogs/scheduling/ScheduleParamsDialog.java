@@ -200,10 +200,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       JSONObject scheduleRequest = (JSONObject) JSONParser.parseStrict( jobSchedule.toString() );
       scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    
 
-      RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob );
-      if ( editJob != null ) {
-    	  scheduleRequest.put( "jobId", new JSONString( editJob.getJobId() ) );
-      }
+      RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 
       try {
         scheduleFileRequestBuilder.sendRequest( scheduleRequest.toString(), new RequestCallback() {
