@@ -74,7 +74,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author wseyler
- * 
+ *
  */
 public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
@@ -364,7 +364,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   /**
    * Returns an object suitable for posting into quartz via the the "JOB" rest service.
-   * 
+   *
    * @return
    */
   @SuppressWarnings( "deprecation" )
@@ -436,7 +436,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
             startDateTime, endDate ) );
       }
     }
-    schedule.put( "inputFile", new JSONString( filePath ) ); //$NON-NLS-1$ 
+    schedule.put( "inputFile", new JSONString( filePath ) ); //$NON-NLS-1$
     schedule.put( "outputFile", new JSONString( outputLocation ) ); //$NON-NLS-1$
     return schedule;
   }
@@ -749,7 +749,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   /**
    * Before creating a new schedule, we want to check to see if the schedule that is being created is going to conflict
    * with any one of the blockout periods if one is provisioned.
-   * 
+   *
    * @param schedule
    * @param trigger
    */
@@ -833,10 +833,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
       }
 
-      RequestBuilder scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/job" ); //$NON-NLS-1$
-      scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
-      scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
+      RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 
       try {
         scheduleFileRequestBuilder.sendRequest( scheduleRequest.toString(), new RequestCallback() {
@@ -886,7 +883,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog#finish()
    */
   @Override
@@ -1028,7 +1025,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog#onNext(org.pentaho.gwt.widgets.client.wizards.
    * IWizardPanel, org.pentaho.gwt.widgets.client.wizards.IWizardPanel)
    */
@@ -1039,7 +1036,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog#onPrevious(org.pentaho.gwt.widgets.client.wizards
    * .IWizardPanel, org.pentaho.gwt.widgets.client.wizards.IWizardPanel)
    */
