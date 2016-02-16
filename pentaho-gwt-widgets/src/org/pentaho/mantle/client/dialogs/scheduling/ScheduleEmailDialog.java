@@ -37,8 +37,6 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONString;
-import com.google.gwt.json.client.JSONValue;
 
 public class ScheduleEmailDialog extends AbstractWizardDialog {
   String moduleBaseURL = GWT.getModuleBaseURL();
@@ -56,7 +54,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
   JsJob editJob;
 
   Boolean done = false;
-  
+
   private boolean newSchedule = true;
 
   public ScheduleEmailDialog( AbstractWizardDialog parentDialog, String filePath, JSONObject jobSchedule,
