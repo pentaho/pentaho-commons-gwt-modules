@@ -249,7 +249,7 @@ public class ScheduleHelper {
     } else {
       scheduleFileRequestBuilder =
         new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + UPDATE_JOB_SCHEDULER_URL );
-      if ( null != requestPayload) {
+      if ( null != requestPayload ) {
         requestPayload.put( "jobId", new JSONString( editJob.getJobId() ) );
       }
     }

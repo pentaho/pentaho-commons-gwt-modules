@@ -17,7 +17,6 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
-import org.mortbay.util.ajax.JSONObjectConvertor;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
@@ -34,9 +33,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayString;
-import com.google.gwt.dev.json.JsonArray;
-import com.google.gwt.dev.json.JsonString;
-import com.google.gwt.dev.json.JsonValue;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -54,7 +50,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * @author wseyler
- * 
+ *
  */
 public class ScheduleParamsDialog extends AbstractWizardDialog {
   String moduleBaseURL = GWT.getModuleBaseURL();
@@ -79,7 +75,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   private boolean isNewJob = true;
 
   private boolean newSchedule = true;
-  
+
   public ScheduleParamsDialog( ScheduleRecurrenceDialog parentDialog, boolean isEmailConfValid, JsJob editJob ) {
     super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
     this.parentDialog = parentDialog;
@@ -175,7 +171,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog#finish()
    */
   @Override
@@ -198,7 +194,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     } else {
       hide();
       JSONObject scheduleRequest = (JSONObject) JSONParser.parseStrict( jobSchedule.toString() );
-      scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    
+      scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$
 
       RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 
@@ -228,7 +224,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
             } else {
               MessageDialogBox dialogBox =
                   new MessageDialogBox( Messages.getString( "error" ),
-                      Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode(), //$NON-NLS-1$ 
+                      Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode(), //$NON-NLS-1$
                       false, false, true );
               dialogBox.center();
               setDone( false );
@@ -302,7 +298,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog#onNext(org.pentaho.gwt.widgets.client.wizards.
    * IWizardPanel, org.pentaho.gwt.widgets.client.wizards.IWizardPanel)
    */
@@ -313,7 +309,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog#onPrevious(org.pentaho.gwt.widgets.client.wizards
    * .IWizardPanel, org.pentaho.gwt.widgets.client.wizards.IWizardPanel)
    */
@@ -440,20 +436,20 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   public interface IAfterResponse {
     void onResponse( JSONValue rib );
   }
-  
+
   public void setNewSchedule( boolean newSchedule ) {
     this.newSchedule = newSchedule;
   }
 
-private boolean isNewSchedule() {
-	return newSchedule;
-}
+  private boolean isNewSchedule() {
+    return newSchedule;
+  }
 
-public boolean isNewJob() {
-	return isNewJob;
-}
+  public boolean isNewJob() {
+    return isNewJob;
+  }
 
-public void setNewJob(boolean isNewJob) {
-	this.isNewJob = isNewJob;
-}  
+  public void setNewJob( boolean isNewJob ) {
+    this.isNewJob = isNewJob;
+  }
 }
