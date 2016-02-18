@@ -17,6 +17,7 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import com.google.gwt.json.client.JSONObject;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
@@ -44,11 +45,14 @@ public class ScheduleHelper {
     setupNativeHooks( new ScheduleHelper() );
   }
 
+  public static String JOB_SCHEDULER_URL = "api/scheduler/job";
+  public static String UPDATE_JOB_SCHEDULER_URL = "api/scheduler/job/update";
+
   private static native void setupNativeHooks( ScheduleHelper scheduleHelper )
   /*-{
     $wnd.mantle_confirmBackgroundExecutionDialog = function(url) {
       //CHECKSTYLE IGNORE LineLength FOR NEXT 1 LINES
-      @org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper::confirmBackgroundExecutionDialog(Ljava/lang/String;)(url);      
+      @org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper::confirmBackgroundExecutionDialog(Ljava/lang/String;)(url);
     }
   }-*/;
 
@@ -172,7 +176,7 @@ public class ScheduleHelper {
    * The passed in URL has all the parameters set for background execution. We simply call GET on the URL and
    * handle the response object. If the response object contains a particular string then we display success
    * message box.
-   * 
+   *
    * @param url
    *          Complete url with all the parameters set for scheduling a job in the background.
    */
@@ -231,6 +235,27 @@ public class ScheduleHelper {
     };
     scheduleInBackground.setCallback( callback );
     scheduleInBackground.center();
+  }
+
+  public static RequestBuilder buildRequestForJob( JsJob editJob, JSONObject requestPayload ) {
+
+    RequestBuilder scheduleFileRequestBuilder = null;
+
+    if ( editJob == null || editJob.getJobId() == null ) {
+      scheduleFileRequestBuilder =
+          new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + JOB_SCHEDULER_URL );
+    } else {
+      scheduleFileRequestBuilder =
+        new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + UPDATE_JOB_SCHEDULER_URL );
+      if ( null != requestPayload) {
+        requestPayload.put( "jobId", new JSONString( editJob.getJobId() ) );
+      }
+    }
+
+    scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
+    scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
+
+    return scheduleFileRequestBuilder;
   }
 
   public static native String getFullyQualifiedURL()
