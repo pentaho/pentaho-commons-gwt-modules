@@ -4193,14 +4193,6 @@ vertical-align: middle;
   background: url('images/gemBar_filter.png') no-repeat;
   width: 35px;
 }
-
-.fieldListTree .attribute {
-  background: url('images/gemBar_level.png') no-repeat;
-}
-
-.fieldListTree .measure {
-  background: url('images/gemBar_measure.png') no-repeat;
-}
 .pentaho-undobutton{
   background: url('images/undo.png') no-repeat;
   width: 22px;
@@ -5541,4 +5533,12 @@ treecontrol.tree-classic li .tree-selected {
 
 #sidepanel #sidepaneltabset > div[tabid=generaltab] > span{
   max-width:62px;
+}
+
+.fieldListTree .attribute {
+  background: url('images/gemBar_level.png') no-repeat;
+}
+
+.fieldListTree .measure {
+  background: url('images/gemBar_measure.png') no-repeat;
 }
