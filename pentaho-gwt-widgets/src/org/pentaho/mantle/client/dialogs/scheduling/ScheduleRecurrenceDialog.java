@@ -877,7 +877,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       if (null == json || "" == json) {
           return null;
       }
-      var obj = eval('(' + json + ')');
+      var obj = JSON.parse(json);
       return obj;
   }-*/;
 
