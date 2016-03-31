@@ -168,6 +168,10 @@ public class PentahoTab extends SimplePanel {
   }
 
   public static native void fireCloseTab( String frameId ) /*-{
-    $wnd.mantle_fireEvent('GenericEvent', {"eventSubType": "tabClosing", "stringParam": frameId});
+    try {
+      $wnd.mantle_fireEvent('GenericEvent', {"eventSubType": "tabClosing", "stringParam": frameId});
+    } catch(e) {
+      // in case when mantle handler was added in a window which no longer exists(got unloaded) - IE will throw an exception, ignore it
+    }
   }-*/;
 }
