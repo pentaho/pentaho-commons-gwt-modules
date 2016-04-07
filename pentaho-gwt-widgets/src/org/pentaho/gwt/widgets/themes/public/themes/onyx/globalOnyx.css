@@ -3762,3 +3762,23 @@ treecontrol.tree-classic li .tree-selected {
   background-repeat: no-repeat;
   overflow: hidden;
 }
+
+/* styling for formatCombo */
+.dijitMenuItemHover {
+    background-color: #cbefa3;
+}
+.dijitMenuItemSelected {
+    background-color: #dbdbdb;
+}
+.pentahoFormatCombo .dijitPlaceHolder {
+    padding-top: 3px;
+    padding-left: 4px;
+}
+.pentahoFormatCombo INPUT.dijitInputInner {
+    padding-left: 4px !important; /* only doing this to get past dojo's usage of !important */
+}
+
+.dijitMenu.dijitComboBoxMenu {
+    padding: 2px;
+}
+/* end styling for formatCombo */
