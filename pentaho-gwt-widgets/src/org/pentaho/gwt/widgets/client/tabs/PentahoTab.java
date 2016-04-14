@@ -148,6 +148,10 @@ public class PentahoTab extends SimplePanel {
   }
 
   protected void closeTab() {
+    if ( getContent().getElement().getElementsByTagName( "iframe" ).getLength() > 0 ) {
+      String frameId = getContent().getElement().getElementsByTagName( "iframe" ).getItem( 0 ).getAttribute( "id" );
+      fireCloseTab( frameId );
+    }
     tabPanel.closeTab( this, true );
   }
 
@@ -162,4 +166,8 @@ public class PentahoTab extends SimplePanel {
   public void setSolutionBrowserShowing( boolean solutionBrowserShowing ) {
     this.solutionBrowserShowing = solutionBrowserShowing;
   }
+
+  public static native void fireCloseTab( String frameId ) /*-{
+    $wnd.mantle_fireEvent('GenericEvent', {"eventSubType": "tabClosing", "stringParam": frameId});
+  }-*/;
 }
