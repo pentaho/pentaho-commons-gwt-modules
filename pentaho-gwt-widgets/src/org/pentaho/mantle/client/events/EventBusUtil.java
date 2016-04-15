@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.events;
@@ -21,11 +21,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 public interface EventBusUtil {
   public static final EventBus EVENT_BUS = GWT.create( SimpleEventBus.class );
 
-  public void addHandler( String eventType, JavaScriptObject handler );
+  HandlerRegistration addHandler( String eventType, JavaScriptObject handler );
 
   public void invokeEventBusJSO( JavaScriptObject handler, String parameterJSON );
 
