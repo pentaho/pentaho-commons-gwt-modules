@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.tabs;
@@ -25,7 +25,6 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -148,10 +147,6 @@ public class PentahoTab extends SimplePanel {
   }
 
   protected void closeTab() {
-    if ( getContent().getElement().getElementsByTagName( "iframe" ).getLength() > 0 ) {
-      String frameId = getContent().getElement().getElementsByTagName( "iframe" ).getItem( 0 ).getAttribute( "id" );
-      fireCloseTab( frameId );
-    }
     tabPanel.closeTab( this, true );
   }
 
@@ -166,8 +161,4 @@ public class PentahoTab extends SimplePanel {
   public void setSolutionBrowserShowing( boolean solutionBrowserShowing ) {
     this.solutionBrowserShowing = solutionBrowserShowing;
   }
-
-  public static native void fireCloseTab( String frameId ) /*-{
-    $wnd.mantle_fireEvent('GenericEvent', {"eventSubType": "tabClosing", "stringParam": frameId});
-  }-*/;
 }
