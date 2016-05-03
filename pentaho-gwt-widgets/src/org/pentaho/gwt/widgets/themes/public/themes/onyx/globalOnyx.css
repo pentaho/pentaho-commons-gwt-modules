@@ -3791,6 +3791,7 @@ treecontrol.tree-classic li .tree-selected {
 
 .tundra .pentahoFormatCombo.dijitTextBox {
   background-image: none;
+  margin: 0px;
 }
 .tundra .pentahoFormatCombo.dijitComboBox .dijitArrowButton input[type='text'] {
   border: none;
