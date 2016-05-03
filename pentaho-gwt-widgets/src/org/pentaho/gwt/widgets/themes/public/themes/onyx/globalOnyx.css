@@ -3776,9 +3776,23 @@ treecontrol.tree-classic li .tree-selected {
 }
 .pentahoFormatCombo INPUT.dijitInputInner {
     padding-left: 4px !important; /* only doing this to get past dojo's usage of !important */
+    height: 18px;
 }
 
 .dijitMenu.dijitComboBoxMenu {
     padding: 2px;
+}
+
+.tundra .pentahoFormatCombo.dijitComboBox,
+.tundra .pentahoFormatCombo.dijitComboBox .dijitButtonNode {
+  border-radius: 0;
+  background-color: #ffffff;
+}
+
+.tundra .pentahoFormatCombo.dijitTextBox {
+  background-image: none;
+}
+.tundra .pentahoFormatCombo.dijitComboBox .dijitArrowButton input[type='text'] {
+  border: none;
 }
 /* end styling for formatCombo */
