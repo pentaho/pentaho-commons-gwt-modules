@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -23,6 +23,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -42,22 +43,30 @@ import org.pentaho.mantle.client.workspace.JsJobParam;
 public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
 
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
+  public static final String EMAIL_MIME = "mime-message/text/html";
 
   protected RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", "Yes" );
   protected RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", "No" );
   protected TextBox toAddressTextBox = new TextBox();
   protected TextBox subjectTextBox = new TextBox();
   protected TextBox attachmentNameTextBox = new TextBox();
+  protected Label attachmentLabel = new Label( Messages.getString( "attachmentNameColon" ) );
   protected TextArea messageTextArea = new TextArea();
 
   private String filePath;
   private JSONObject jobSchedule;
+  private JSONArray scheduleParams;
 
   public ScheduleEmailWizardPanel( String filePath, JSONObject jobSchedule, JsJob job ) {
+    this( filePath, jobSchedule, job, null );
+  }
+
+  public ScheduleEmailWizardPanel( String filePath, JSONObject jobSchedule, JsJob editJob, JSONArray scheduleParams ) {
     super();
     this.filePath = filePath;
     this.jobSchedule = jobSchedule;
-    layout( job );
+    this.scheduleParams = scheduleParams;
+    layout( editJob );
   }
 
   private native JsArray<JsSchedulingParameter> getParams( String to, String cc, String bcc, String subject,
@@ -180,10 +189,10 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
     emailSchedulePanel.setWidget( 3, 0, subjectLabel );
     emailSchedulePanel.setWidget( 4, 0, subjectTextBox );
 
-    Label attachmentLabel = new Label( Messages.getString( "attachmentNameColon" ) );
     attachmentLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
     attachmentNameTextBox.getElement().getStyle().setHeight( 25, Unit.PX );
     attachmentNameTextBox.getElement().getStyle().setPaddingLeft( 5, Unit.PX );
+
     emailSchedulePanel.setWidget( 5, 0, attachmentLabel );
     emailSchedulePanel.setWidget( 6, 0, attachmentNameTextBox );
 
@@ -216,6 +225,18 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
     panelWidgetChanged( null );
   }
 
+  private void toggleAttachmentFields() {
+    if ( attachmentLabel != null && attachmentNameTextBox != null ) {
+      if ( scheduleParams != null && scheduleParams.toString().contains( EMAIL_MIME ) ) {
+        attachmentLabel.setVisible( false );
+        attachmentNameTextBox.setVisible( false );
+      } else {
+        attachmentLabel.setVisible( true );
+        attachmentNameTextBox.setVisible( true );
+      }
+    }
+  }
+
   public String getName() {
     return Messages.getString( "schedule.scheduleEdit" );
   }
@@ -237,6 +258,11 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
   protected void panelWidgetChanged( Widget changedWidget ) {
     setCanContinue( isValidConfig() );
     setCanFinish( isValidConfig() );
+    toggleAttachmentFields();
+  }
+
+  public void setScheduleParams( JSONArray scheduleParams ) {
+    this.scheduleParams = scheduleParams;
   }
 
   public void setFocus() {
