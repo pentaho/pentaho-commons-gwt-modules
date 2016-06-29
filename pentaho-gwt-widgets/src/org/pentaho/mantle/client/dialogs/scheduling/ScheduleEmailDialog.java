@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -69,7 +69,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
   }
 
   public void initDialog() {
-    scheduleEmailWizardPanel = new ScheduleEmailWizardPanel( filePath, jobSchedule, editJob );
+    scheduleEmailWizardPanel = new ScheduleEmailWizardPanel( filePath, jobSchedule, editJob, scheduleParams );
     IWizardPanel[] wizardPanels = { scheduleEmailWizardPanel };
     this.setWizardPanels( wizardPanels );
     setPixelSize( 635, 375 );
@@ -264,6 +264,8 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
 
   public void setScheduleParams( JSONArray scheduleParams ) {
     this.scheduleParams = scheduleParams;
+    this.scheduleEmailWizardPanel.setScheduleParams( scheduleParams );
+    this.scheduleEmailWizardPanel.panelWidgetChanged( this );
   }
 
   public JsJob getEditJob() {
