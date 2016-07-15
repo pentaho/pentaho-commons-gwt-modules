@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -47,6 +47,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   private String filePath;
 
   private TextBox scheduleNameTextBox = new TextBox();
+  private Label scheduleNameLabel;
   private static TextBox scheduleLocationTextBox = new TextBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
@@ -72,7 +73,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     VerticalPanel content = new VerticalPanel();
 
     HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
-    Label scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
+    scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
 
     Label scheduleNameInfoLabel = new Label( Messages.getString( "scheduleNameInfo" ) );
@@ -203,4 +204,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     okButton.setText( text );
   }
 
+  public void setScheduleNameText( String text ) {
+    scheduleNameLabel.setText( text );
+  }
 }
