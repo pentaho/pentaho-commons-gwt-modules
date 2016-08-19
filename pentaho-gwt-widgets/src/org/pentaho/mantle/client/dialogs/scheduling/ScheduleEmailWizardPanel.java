@@ -45,8 +45,8 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
   public static final String EMAIL_MIME = "mime-message/text/html";
 
-  protected RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", "Yes" );
-  protected RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", "No" );
+  protected RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", Messages.getString( "yes" ) );
+  protected RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", Messages.getString( "no" ) );
   protected TextBox toAddressTextBox = new TextBox();
   protected TextBox subjectTextBox = new TextBox();
   protected TextBox attachmentNameTextBox = new TextBox();
