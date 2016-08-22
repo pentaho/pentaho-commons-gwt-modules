@@ -4358,9 +4358,6 @@ vertical-align: middle;
   width: 22px;
   height: 22px;
 }
-#dijit_ToolbarSeparator_4{
-  display: none;
-}
 .filterIndicatorBackground_1 {
 background: url("images/filter_indicators/num_filter_bg_1.png") no-repeat;
 }
@@ -4452,6 +4449,11 @@ background: url("images/connector_top.png") no-repeat top left;
 }
 .dijitEditorIconParameters, .dijitToolbar .dijitEditorIconParameters{
   background: url('images/list_22x22.png') no-repeat !important;
+  height: 22px !important;
+  width: 22px !important;
+}
+.dijitEditorIconParameters, .dijitToolbar .dijitEditorIconRefresh{
+  background: url('images/refresh_report.png') no-repeat !important;
   height: 22px !important;
   width: 22px !important;
 }
