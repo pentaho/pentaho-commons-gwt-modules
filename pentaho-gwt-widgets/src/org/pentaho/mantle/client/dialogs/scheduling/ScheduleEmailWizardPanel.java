@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -43,8 +43,8 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
 
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
 
-  private RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", "Yes" );
-  private RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", "No" );
+  private RadioButton yes = new RadioButton( "SCH_EMAIL_YESNO", Messages.getString( "yes" ) );
+  private RadioButton no = new RadioButton( "SCH_EMAIL_YESNO", Messages.getString( "no" ) );
   private TextBox toAddressTextBox = new TextBox();
   private TextBox subjectTextBox = new TextBox();
   private TextBox attachmentNameTextBox = new TextBox();
