@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.toolbar;
@@ -34,8 +34,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pentaho.gwt.widgets.client.text.ToolTip;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
+import org.junit.Assert;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class ToolbarButtonTest {
@@ -43,202 +43,203 @@ public class ToolbarButtonTest {
 
   @Before
   public void setUp() throws Exception {
-    button = mock( ToolbarButton.class );
-    button.button = mock( DockPanel.class );
+    button = Mockito.mock( ToolbarButton.class );
+    button.button = Mockito.mock( DockPanel.class );
   }
 
   @Test
   public void testSetId() throws Exception {
-    doCallRealMethod().when( button ).setId( anyString() );
+    Mockito.doCallRealMethod().when( button ).setId( Mockito.anyString() );
 
-    final Element buttonElement = mock( Element.class );
-    when( button.button.getElement() ).thenReturn( buttonElement );
-    button.eventWrapper = mock( FocusPanel.class );
-    final Element eventWrapperElement = mock( Element.class );
-    when( button.eventWrapper.getElement() ).thenReturn( eventWrapperElement );
+    final Element buttonElement = Mockito.mock( Element.class );
+    Mockito.when( button.button.getElement() ).thenReturn( buttonElement );
+    button.eventWrapper = Mockito.mock( FocusPanel.class );
+    final Element eventWrapperElement = Mockito.mock( Element.class );
+    Mockito.when( button.eventWrapper.getElement() ).thenReturn( eventWrapperElement );
 
     final String id = "id";
     button.setId( id );
-    verify( buttonElement ).setId( contains( id ) );
-    verify( eventWrapperElement ).setId( eq( id ) );
+    Mockito.verify( buttonElement ).setId( Mockito.contains( id ) );
+    Mockito.verify( eventWrapperElement ).setId( Mockito.eq( id ) );
   }
 
   @Test
   public void testSetStylePrimaryName() throws Exception {
-    doCallRealMethod().when( button ).setStylePrimaryName( anyString() );
+    Mockito.doCallRealMethod().when( button ).setStylePrimaryName( Mockito.anyString() );
 
     final String styleName = "name";
     button.setStylePrimaryName( styleName );
-    verify( button.button ).setStylePrimaryName( styleName );
+    Mockito.verify( button.button ).setStylePrimaryName( styleName );
   }
 
   @Test
   @SuppressWarnings( "deprecation" )
   public void testAddStyleMouseListener() throws Exception {
-    doCallRealMethod().when( button ).addStyleMouseListener();
+    Mockito.doCallRealMethod().when( button ).addStyleMouseListener();
 
-    button.eventWrapper = mock( FocusPanel.class );
+    button.eventWrapper = Mockito.mock( FocusPanel.class );
 
     button.addStyleMouseListener();
-    verify( button.eventWrapper ).addClickListener( any( ClickListener.class ) );
-    verify( button.eventWrapper ).addMouseListener( any( MouseListener.class ) );
+    Mockito.verify( button.eventWrapper ).addClickListener( Mockito.any( ClickListener.class ) );
+    Mockito.verify( button.eventWrapper ).addMouseListener( Mockito.any( MouseListener.class ) );
   }
 
   @Test
   public void testSetEnabled() throws Exception {
-    doCallRealMethod().when( button ).setEnabled( anyBoolean() );
+    Mockito.doCallRealMethod().when( button ).setEnabled( Mockito.anyBoolean() );
 
-    final Image disabledImage = mock( Image.class );
+    final Image disabledImage = Mockito.mock( Image.class );
     button.disabledImage = disabledImage;
-    final Image currentImage = mock( Image.class );
+    final Image currentImage = Mockito.mock( Image.class );
     button.currentImage = currentImage;
-    final Image image = mock( Image.class );
+    final Image image = Mockito.mock( Image.class );
     button.image = image;
+    button.eventWrapper = Mockito.mock( FocusPanel.class );
 
     button.setEnabled( true );
-    verify( button.button ).removeStyleName( contains( "disabled" ) );
-    verify( button.button ).remove( currentImage );
-    verify( button.button ).add( any( Image.class ), eq( DockPanel.CENTER ) );
-    verify( button.button ).setCellHorizontalAlignment( image, DockPanel.ALIGN_CENTER );
-    verify( button.button ).setCellVerticalAlignment( image, DockPanel.ALIGN_MIDDLE );
+    Mockito.verify( button.button ).removeStyleName( Mockito.contains( "disabled" ) );
+    Mockito.verify( button.button ).remove( currentImage );
+    Mockito.verify( button.button ).add( Mockito.any( Image.class ), Mockito.eq( DockPanel.CENTER ) );
+    Mockito.verify( button.button ).setCellHorizontalAlignment( image, DockPanel.ALIGN_CENTER );
+    Mockito.verify( button.button ).setCellVerticalAlignment( image, DockPanel.ALIGN_MIDDLE );
 
     button.setEnabled( false );
-    verify( button.button ).addStyleName( contains( "disabled" ) );
-    verify( button.button, times( 2 ) ).remove( currentImage );
-    verify( button.button, times( 2 ) ).add( any( Image.class ), eq( DockPanel.CENTER ) );
-    verify( button.button ).setCellHorizontalAlignment( disabledImage, DockPanel.ALIGN_CENTER );
-    verify( button.button ).setCellVerticalAlignment( disabledImage, DockPanel.ALIGN_MIDDLE );
+    Mockito.verify( button.button ).addStyleName( Mockito.contains( "disabled" ) );
+    Mockito.verify( button.button, Mockito.times( 2 ) ).remove( currentImage );
+    Mockito.verify( button.button, Mockito.times( 2 ) ).add( Mockito.any( Image.class ), Mockito.eq( DockPanel.CENTER ) );
+    Mockito.verify( button.button ).setCellHorizontalAlignment( disabledImage, DockPanel.ALIGN_CENTER );
+    Mockito.verify( button.button ).setCellVerticalAlignment( disabledImage, DockPanel.ALIGN_MIDDLE );
   }
 
   @Test
   public void testSetTempDisabled() throws Exception {
-    doCallRealMethod().when( button ).setTempDisabled( anyBoolean() );
+    Mockito.doCallRealMethod().when( button ).setTempDisabled( Mockito.anyBoolean() );
 
     button.enabled = true;
     button.setTempDisabled( true );
-    verify( button.button ).setStyleName( contains( "disabled" ) );
+    Mockito.verify( button.button ).setStyleName( Mockito.contains( "disabled" ) );
 
     button.setTempDisabled( false );
-    verify( button.button ).setStyleName( contains( "disabled" ) );
+    Mockito.verify( button.button ).setStyleName( Mockito.contains( "disabled" ) );
 
     button.enabled = false;
     button.setTempDisabled( true );
-    verify( button.button, times( 2 ) ).setStyleName( contains( "disabled" ) );
+    Mockito.verify( button.button, Mockito.times( 2 ) ).setStyleName( Mockito.contains( "disabled" ) );
 
     button.enabled = false;
     button.setTempDisabled( false );
-    verify( button.button, times( 3 ) ).setStyleName( contains( "disabled" ) );
+    Mockito.verify( button.button, Mockito.times( 3 ) ).setStyleName( Mockito.contains( "disabled" ) );
   }
 
   @Test
   public void testSetVisible() throws Exception {
-    doCallRealMethod().when( button ).setVisible( anyBoolean() );
+    Mockito.doCallRealMethod().when( button ).setVisible( Mockito.anyBoolean() );
 
     final boolean visible = true;
     button.setVisible( visible );
-    verify( button.button ).setVisible( visible );
+    Mockito.verify( button.button ).setVisible( visible );
   }
 
   @Test
   public void testSetImage() throws Exception {
-    doCallRealMethod().when( button ).setImage( any( Image.class ) );
+    Mockito.doCallRealMethod().when( button ).setImage( Mockito.any( Image.class ) );
 
-    final Image currentImage = mock( Image.class );
+    final Image currentImage = Mockito.mock( Image.class );
     button.currentImage = currentImage;
 
-    final Image image = mock( Image.class );
-    final Image calcImage = mock( Image.class );
-    when( button.calculateApporiateImage() ).thenReturn( calcImage );
+    final Image image = Mockito.mock( Image.class );
+    final Image calcImage = Mockito.mock( Image.class );
+    Mockito.when( button.calculateApporiateImage() ).thenReturn( calcImage );
     button.setImage( image );
-    verify( button.button ).remove( currentImage );
-    verify( button.button ).add( calcImage, DockPanel.CENTER );
-    verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
-    verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
+    Mockito.verify( button.button ).remove( currentImage );
+    Mockito.verify( button.button ).add( calcImage, DockPanel.CENTER );
+    Mockito.verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
+    Mockito.verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
   }
 
   @Test
   public void testSetDisabledImage() throws Exception {
-    doCallRealMethod().when( button ).setDisabledImage( any( Image.class ) );
+    Mockito.doCallRealMethod().when( button ).setDisabledImage( Mockito.any( Image.class ) );
 
-    final Image currentImage = mock( Image.class );
+    final Image currentImage = Mockito.mock( Image.class );
     button.currentImage = currentImage;
-    final Image calcImage = mock( Image.class );
-    when( button.calculateApporiateImage() ).thenReturn( calcImage );
+    final Image calcImage = Mockito.mock( Image.class );
+    Mockito.when( button.calculateApporiateImage() ).thenReturn( calcImage );
 
-    final Image disabledImage = mock( Image.class );
+    final Image disabledImage = Mockito.mock( Image.class );
     button.setDisabledImage( disabledImage );
-    verify( button.button ).remove( currentImage );
-    verify( button.button ).add( calcImage, DockPanel.CENTER );
-    verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
-    verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
+    Mockito.verify( button.button ).remove( currentImage );
+    Mockito.verify( button.button ).add( calcImage, DockPanel.CENTER );
+    Mockito.verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
+    Mockito.verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
   }
 
   @Test
   public void testSetText() throws Exception {
-    doCallRealMethod().when( button ).setText( anyString() );
+    Mockito.doCallRealMethod().when( button ).setText( Mockito.anyString() );
 
-    button.label = mock( Label.class );
+    button.label = Mockito.mock( Label.class );
     final String text = "text";
     button.setText( text );
-    verify( button.label ).setText( text );
+    Mockito.verify( button.label ).setText( text );
   }
 
   @Test
   @SuppressWarnings( "deprecation" )
   public void testSetToolTip() throws Exception {
-    doCallRealMethod().when( button ).setToolTip( anyString() );
+    Mockito.doCallRealMethod().when( button ).setToolTip( Mockito.anyString() );
 
-    final ToolTip toolTipWidget = mock( ToolTip.class );
+    final ToolTip toolTipWidget = Mockito.mock( ToolTip.class );
     button.toolTipWidget = toolTipWidget;
-    final FocusPanel eventWrapper = mock( FocusPanel.class );
+    final FocusPanel eventWrapper = Mockito.mock( FocusPanel.class );
     button.eventWrapper = eventWrapper;
 
     final String tip = "tip";
     button.setToolTip( tip );
-    verify( eventWrapper ).removeMouseListener( toolTipWidget );
-    verify( eventWrapper ).addMouseListener( any( MouseListener.class ) );
+    Mockito.verify( eventWrapper ).removeMouseListener( toolTipWidget );
+    Mockito.verify( eventWrapper ).addMouseListener( Mockito.any( MouseListener.class ) );
   }
 
   @Test
   public void testCalculateApporiateImage() throws Exception {
-    doCallRealMethod().when( button ).calculateApporiateImage();
+    Mockito.doCallRealMethod().when( button ).calculateApporiateImage();
 
-    final Image image = mock( Image.class );
-    final Image disabledImage = mock( Image.class );
+    final Image image = Mockito.mock( Image.class );
+    final Image disabledImage = Mockito.mock( Image.class );
     button.enabled = true;
     button.disabledImage = null;
     button.image = image;
-    assertEquals( image, button.calculateApporiateImage() );
+    Assert.assertEquals( image, button.calculateApporiateImage() );
 
     button.enabled = false;
-    assertEquals( image, button.calculateApporiateImage() );
+    Assert.assertEquals( image, button.calculateApporiateImage() );
 
     button.disabledImage = disabledImage;
-    assertEquals( disabledImage, button.calculateApporiateImage() );
+    Assert.assertEquals( disabledImage, button.calculateApporiateImage() );
   }
 
   @Test
   public void testAddClassName() throws Exception {
-    doCallRealMethod().when( button ).addClassName( anyString() );
+    Mockito.doCallRealMethod().when( button ).addClassName( Mockito.anyString() );
 
-    final Image image = mock( Image.class );
+    final Image image = Mockito.mock( Image.class );
     button.image = image;
-    final Image disabledImage = mock( Image.class );
+    final Image disabledImage = Mockito.mock( Image.class );
     button.disabledImage = disabledImage;
     final String className = "name";
     button.addClassName( className );
-    verify( image ).addStyleName( className );
-    verify( image ).removeStyleName( contains( "disabled" ) );
-    verify( image ).addMouseOverHandler( any( MouseOverHandler.class ) );
-    verify( image ).addMouseOutHandler( any( MouseOutHandler.class ) );
-    verify( image ).addMouseDownHandler( any( MouseDownHandler.class ) );
-    verify( image ).addMouseUpHandler( any( MouseUpHandler.class ) );
+    Mockito.verify( image ).addStyleName( className );
+    Mockito.verify( image ).removeStyleName( Mockito.contains( "disabled" ) );
+    Mockito.verify( image ).addMouseOverHandler( Mockito.any( MouseOverHandler.class ) );
+    Mockito.verify( image ).addMouseOutHandler( Mockito.any( MouseOutHandler.class ) );
+    Mockito.verify( image ).addMouseDownHandler( Mockito.any( MouseDownHandler.class ) );
+    Mockito.verify( image ).addMouseUpHandler( Mockito.any( MouseUpHandler.class ) );
 
-    verify( disabledImage ).addStyleName( className );
-    verify( disabledImage ).addStyleName( contains( "disabled" ) );
-    verify( disabledImage ).addMouseOverHandler( any( MouseOverHandler.class ) );
-    verify( disabledImage ).addMouseOutHandler( any( MouseOutHandler.class ) );
-    verify( disabledImage ).addMouseDownHandler( any( MouseDownHandler.class ) );
-    verify( disabledImage ).addMouseUpHandler( any( MouseUpHandler.class ) );
+    Mockito.verify( disabledImage ).addStyleName( className );
+    Mockito.verify( disabledImage ).addStyleName( Mockito.contains( "disabled" ) );
+    Mockito.verify( disabledImage ).addMouseOverHandler( Mockito.any( MouseOverHandler.class ) );
+    Mockito.verify( disabledImage ).addMouseOutHandler( Mockito.any( MouseOutHandler.class ) );
+    Mockito.verify( disabledImage ).addMouseDownHandler( Mockito.any( MouseDownHandler.class ) );
+    Mockito.verify( disabledImage ).addMouseUpHandler( Mockito.any( MouseUpHandler.class ) );
   }
 }
