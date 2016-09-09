@@ -2192,7 +2192,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <taskdef name="junit" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask">
       <classpath>
         <path refid="classpath"/>
-        <path refid="test.classpath"/>
+        <path refid="inttest.classpath"/>
       </classpath>
     </taskdef>
 
@@ -2238,7 +2238,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
               <mapper type="glob" from="junit.sysprop.*" to="*"/>
             </syspropertyset>
 
-            <classpath refid="test.classpath"/>
+            <classpath refid="inttest.classpath"/>
             <classpath refid="jacoco.classpath"/>
 
             <formatter type="xml"/>
