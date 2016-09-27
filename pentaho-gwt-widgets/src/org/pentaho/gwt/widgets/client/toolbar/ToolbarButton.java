@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.toolbar;
@@ -240,6 +240,7 @@ public class ToolbarButton {
         button.add( calculateApporiateImage(), DockPanel.CENTER );
         button.setCellHorizontalAlignment( this.image, DockPanel.ALIGN_CENTER );
         button.setCellVerticalAlignment( this.image, DockPanel.ALIGN_MIDDLE );
+        eventWrapper.addMouseListener( toolTipWidget );
       }
 
     } else {
@@ -251,6 +252,9 @@ public class ToolbarButton {
         button.add( calculateApporiateImage(), DockPanel.CENTER );
         button.setCellHorizontalAlignment( this.disabledImage, DockPanel.ALIGN_CENTER );
         button.setCellVerticalAlignment( this.disabledImage, DockPanel.ALIGN_MIDDLE );
+      }
+      if ( toolTipWidget != null ) {
+        eventWrapper.removeMouseListener( toolTipWidget );
       }
     }
   }
