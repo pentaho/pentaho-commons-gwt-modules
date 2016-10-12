@@ -319,7 +319,7 @@ public class ScheduleEditorTest {
     Calendar calendarRequest = Calendar.getInstance();
     calendarRequest.setTime( date );
     when( scheduleEditor.runOnceEditor.getStartDate() ).thenReturn( calendarRequest.getTime() );
-    when( scheduleEditor.runOnceEditor.getStartTime() ).thenReturn( "2:50:33 PM" );
+    when( scheduleEditor.runOnceEditor.getStartTime() ).thenReturn( "2:50:33 " + TimeUtil.TimeOfDay.PM.toString() );
     when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.RUN_ONCE );
     final Date startDate = scheduleEditor.getStartDate();
     Calendar calendarResponse = Calendar.getInstance();
