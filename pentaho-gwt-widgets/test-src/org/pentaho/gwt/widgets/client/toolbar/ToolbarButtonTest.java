@@ -94,7 +94,6 @@ public class ToolbarButtonTest {
     button.currentImage = currentImage;
     final Image image = Mockito.mock( Image.class );
     button.image = image;
-    button.eventWrapper = Mockito.mock( FocusPanel.class );
 
     button.setEnabled( true );
     Mockito.verify( button.button ).removeStyleName( Mockito.contains( "disabled" ) );

@@ -240,7 +240,6 @@ public class ToolbarButton {
         button.add( calculateApporiateImage(), DockPanel.CENTER );
         button.setCellHorizontalAlignment( this.image, DockPanel.ALIGN_CENTER );
         button.setCellVerticalAlignment( this.image, DockPanel.ALIGN_MIDDLE );
-        eventWrapper.addMouseListener( toolTipWidget );
       }
 
     } else {
@@ -252,9 +251,6 @@ public class ToolbarButton {
         button.add( calculateApporiateImage(), DockPanel.CENTER );
         button.setCellHorizontalAlignment( this.disabledImage, DockPanel.ALIGN_CENTER );
         button.setCellVerticalAlignment( this.disabledImage, DockPanel.ALIGN_MIDDLE );
-      }
-      if ( toolTipWidget != null ) {
-        eventWrapper.removeMouseListener( toolTipWidget );
       }
     }
   }
