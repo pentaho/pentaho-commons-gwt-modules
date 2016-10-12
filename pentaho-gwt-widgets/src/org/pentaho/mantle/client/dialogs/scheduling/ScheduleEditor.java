@@ -802,7 +802,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
         String[] times = startTime.split( ":" ); //$NON-NLS-1$
         int hour = Integer.parseInt( times[0] );
         int minute = Integer.parseInt( times[1] );
-        if ( startTime.indexOf( "PM" ) >= 0 ) { //$NON-NLS-1$
+        if ( startTime.indexOf( TimeOfDay.PM.toString() ) >= 0 ) { //$NON-NLS-1$
           hour += 12;
         }
 
