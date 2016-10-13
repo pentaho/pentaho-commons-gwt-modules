@@ -78,6 +78,8 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
+  private static final String HOUR_MINUTE_SECOND = "h:mm:ss a";
+
   private final String moduleBaseURL = GWT.getModuleBaseURL();
   private final String moduleName = GWT.getModuleName();
   private final String contextURL = moduleBaseURL.substring( 0, moduleBaseURL.lastIndexOf( moduleName ) );
@@ -285,7 +287,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
         }
       }
       scheduleEditor.setStartDate( jsJobTrigger.getStartTime() );
-      scheduleEditor.setStartTime( DateTimeFormat.getFormat( PredefinedFormat.HOUR_MINUTE_SECOND ).format(
+      scheduleEditor.setStartTime( DateTimeFormat.getFormat( HOUR_MINUTE_SECOND ).format(
           jsJobTrigger.getStartTime() ) );
       if ( jsJobTrigger.getEndTime() == null ) {
         scheduleEditor.setNoEndDate();
