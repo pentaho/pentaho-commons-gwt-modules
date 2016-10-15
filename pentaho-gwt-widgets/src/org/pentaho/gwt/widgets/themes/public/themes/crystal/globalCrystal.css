@@ -1314,6 +1314,7 @@ input:focus {
 .pentaho-titled-toolbar .pentaho-titled-toolbar-label {
   color: #26363d;
   font-size: 13px;
+  white-space: nowrap;
 }
 
 .pentaho-bottom-bar {
