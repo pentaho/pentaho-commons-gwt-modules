@@ -4311,13 +4311,14 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 .IE #preview,
 #selectAll,
 #tempPreviewButton,
-#preview {
+#preview{
   padding: 4px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  background: #ffffff;
-  color: #005eaa;
+  background: #f5f6f8;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); /* IE6-9 */
+  color: #1973BC;
 }
 
 .IE #selectAll:hover, .IE #selectAll:active,
@@ -4392,6 +4393,8 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   line-height: 22px;
   padding-top: 2px;
   padding-bottom: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 span.gwt-RadioButton label {
