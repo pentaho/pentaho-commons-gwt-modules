@@ -3690,11 +3690,6 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
   border-top: solid 1px #CCC;
 }
 
-/* test this */
-#buttonsHeader {
-  display: none;
-}
-
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:link,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:visited,
