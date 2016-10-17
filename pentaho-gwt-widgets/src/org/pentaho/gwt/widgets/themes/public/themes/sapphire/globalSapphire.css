@@ -4312,7 +4312,21 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 #selectAll,
 #tempPreviewButton,
 #preview {
-  text-decoration: none !important;
+  padding: 4px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background: #ffffff;
+  color: #005eaa;
+}
+
+.IE #selectAll:hover, .IE #selectAll:active,
+.IE #tempPreviewButton:hover, .IE #tempPreviewButton:active,
+.IE #preview:hover, .IE #preview:active,
+#selectAll:hover, #selectAll:active,
+#tempPreviewButton:hover, #tempPreviewButton:active,
+#preview:hover, #preview:active {
+  color: #0f2b5b;
 }
 
 .IE #createJoinButton,
