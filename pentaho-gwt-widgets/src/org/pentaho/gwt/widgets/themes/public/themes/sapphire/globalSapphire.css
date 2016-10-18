@@ -468,7 +468,7 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
   -webkit-background-clip: none;
   -moz-background-clip: none;
-  background-clip: none;
+  background-clip: border-box; /*default*/
 }
 
 .pentaho-dialog #override-description {
@@ -1227,8 +1227,7 @@ input:focus {
 }
 
 .IE .toolbar-toggle-button-down {
-  border: 1px solid #3d6380;
-  !important;
+  border: 1px solid #3d6380 !important;
 
   /* override the transparent value set in toolbar-toggle-button*/
 }
@@ -1240,8 +1239,7 @@ input:focus {
 }
 
 .IE .toolbar-toggle-button-down-hovering {
-  border: 1px solid #E6EFF6;
-  !important;
+  border: 1px solid #E6EFF6 !important;
   background: none;
   margin: 0px;
   cursor: pointer;
@@ -3702,7 +3700,7 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
   padding: 4px 0;
-  ouline: 0 none;
+  outline: 0 none;
   background: none;
   color: #005EAA;
 }
