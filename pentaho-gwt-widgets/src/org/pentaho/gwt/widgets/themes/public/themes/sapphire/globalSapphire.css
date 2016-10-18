@@ -4373,6 +4373,8 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 #uploadedFile.xul-textbox {
   height: 28px !important;
   margin-right: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 #queryDeckPanel .xul-label {
