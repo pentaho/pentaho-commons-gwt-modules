@@ -444,7 +444,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-user-select: moz-none;
   -ms-user-select: none;
   user-select: none;
-  overflow: auto !important;
+/*  overflow: auto !important;*/
   max-height: 90%;
 }
 
@@ -604,8 +604,8 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialog-content {
   padding: 0 !important;
-  font-size: 14px;
-  line-height: 20px;
+  /* font-size: 14px; */
+ /* line-height: 20px;*/
   color: #333;
 }
 
