@@ -2999,7 +2999,7 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
   font-weight: normal;
   font-size: 14px;
   white-space: normal;
-  width: 262px;
+  width: 242px;
 }
 
 /* == == == == */
@@ -4392,6 +4392,7 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   padding-bottom: 2px;
   padding-left: 2px;
   padding-right: 2px;
+  width: 30px !important;
 }
 
 span.gwt-RadioButton label {
