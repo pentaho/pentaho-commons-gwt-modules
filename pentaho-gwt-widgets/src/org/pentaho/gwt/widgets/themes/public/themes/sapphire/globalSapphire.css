@@ -118,9 +118,9 @@ input[type='text'],
   line-height: 17px;
   border-radius: 4px;
   font-family: opensansregular;
-  -webkit-box-sizing: border-box;
+  /*-webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  box-sizing: border-box;*/
   height: auto;
 }
 
@@ -132,9 +132,9 @@ SELECT,
   font-size: 14px;
   overflow: auto;
   font-family: opensansregular;
-  -webkit-box-sizing: border-box;
+  /*-webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  box-sizing: border-box;*/
 }
 
 select[multiple],
@@ -444,7 +444,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-user-select: moz-none;
   -ms-user-select: none;
   user-select: none;
-  overflow: auto !important;
+/*  overflow: auto !important;*/
   max-height: 90%;
 }
 
@@ -604,8 +604,8 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialog-content {
   padding: 0 !important;
-  font-size: 14px;
-  line-height: 20px;
+  /* font-size: 14px; */
+ /* line-height: 20px;*/
   color: #333;
 }
 
@@ -4233,11 +4233,11 @@ td.tab-spacer-wrapper {
 #reportControlPanel {
   max-height: 370px;
   margin: 0px;
-  background-color: #F8F8F8;
-  border-top: 1px solid #CCC;
-  border-bottom: 1px solid #CCC;
-  border-left: 0px solid #CCC;
-  border-right: 0px solid #CCC;
+  background-color: #FFFFFF;
+  border-top: 1px solid #FFF;
+  border-bottom: 1px solid #FFF;
+  border-left: 0px solid #FFF;
+  border-right: 0px solid #FFF;
   width: 100%;
 }
 
