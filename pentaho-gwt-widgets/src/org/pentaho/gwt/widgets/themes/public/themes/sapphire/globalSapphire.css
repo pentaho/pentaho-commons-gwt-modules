@@ -4233,11 +4233,11 @@ td.tab-spacer-wrapper {
 #reportControlPanel {
   max-height: 370px;
   margin: 0px;
-  background-color: #F8F8F8;
-  border-top: 1px solid #CCC;
-  border-bottom: 1px solid #CCC;
-  border-left: 0px solid #CCC;
-  border-right: 0px solid #CCC;
+  background-color: #FFFFFF;
+  border-top: 1px solid #FFF;
+  border-bottom: 1px solid #FFF;
+  border-left: 0px solid #FFF;
+  border-right: 0px solid #FFF;
   width: 100%;
 }
 
