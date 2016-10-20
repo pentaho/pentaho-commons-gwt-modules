@@ -18,7 +18,6 @@
 package org.pentaho.mantle.client.dialogs.scheduling;
 
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -178,20 +177,14 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
     } );
 
     emailSchedulePanel.setWidget( 0, 0, toLabelPanel );
-    toAddressTextBox.getElement().getStyle().setHeight( 25, Unit.PX );
-    toAddressTextBox.getElement().getStyle().setPaddingLeft( 5, Unit.PX );
     emailSchedulePanel.setWidget( 1, 0, toAddressTextBox );
 
     Label subjectLabel = new Label( Messages.getString( "subjectColon" ) );
     subjectLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
-    subjectTextBox.getElement().getStyle().setHeight( 25, Unit.PX );
-    subjectTextBox.getElement().getStyle().setPaddingLeft( 5, Unit.PX );
     emailSchedulePanel.setWidget( 3, 0, subjectLabel );
     emailSchedulePanel.setWidget( 4, 0, subjectTextBox );
 
     attachmentLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
-    attachmentNameTextBox.getElement().getStyle().setHeight( 25, Unit.PX );
-    attachmentNameTextBox.getElement().getStyle().setPaddingLeft( 5, Unit.PX );
 
     emailSchedulePanel.setWidget( 5, 0, attachmentLabel );
     emailSchedulePanel.setWidget( 6, 0, attachmentNameTextBox );
