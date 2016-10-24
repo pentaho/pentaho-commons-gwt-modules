@@ -756,6 +756,12 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 .dialog-content .pentaho-tabWidget .pentaho-tabWidgetLabel {
   font-size: 14px;
 }
+/* should only target PIR's color picker */
+#backColorPicker .dialog-content .pentaho-tabWidget .pentaho-tabWidgetLabel,
+#foreColorPicker .dialog-content .pentaho-tabWidget .pentaho-tabWidgetLabel {
+  padding: 0;
+  line-height: 19px;
+}
 
 .pentaho-tabWidget-selected {
   border-top: solid 1px #CCC;
