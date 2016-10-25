@@ -118,9 +118,9 @@ input[type='text'],
   line-height: 17px;
   border-radius: 4px;
   font-family: opensansregular;
-  /*-webkit-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;*/
+  box-sizing: border-box;
   height: auto;
 }
 
@@ -199,9 +199,9 @@ input[type="password"] {
   padding: 10px 10px;
   font-size: 14px;
   border-radius: 4px;
-  /*-webkit-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;*/
+  box-sizing: border-box;
 }
 
 .scroll-panel {
