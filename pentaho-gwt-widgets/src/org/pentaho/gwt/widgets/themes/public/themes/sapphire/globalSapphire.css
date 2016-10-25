@@ -1889,18 +1889,23 @@ body.IE>table {
   cursor: default;
 }
 
+.fieldList .fieldListTop .clearSearchField,
+.clearSearchField.pentaho-deletebutton,
 .pentaho-deletebutton {
   width: 22px;
   height: 22px;
   background: url('images/remove.png') no-repeat center;
   cursor: pointer;
+  top: 0px;
 }
 
+.clearSearchField.pentaho-deletebutton.pentaho-imagebutton-disabled,
 .pentaho-deletebutton.pentaho-imagebutton-disabled {
   width: 22px;
   height: 22px;
   background: url('images/remove_disabled.png') no-repeat center;
   cursor: default;
+  top: 0px;
 }
 
 .pentaho-datasourcebutton {
