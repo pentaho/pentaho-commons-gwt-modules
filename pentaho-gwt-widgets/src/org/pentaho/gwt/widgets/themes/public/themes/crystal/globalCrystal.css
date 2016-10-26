@@ -3245,6 +3245,9 @@ button.adminButton {
   background: #d2d2d2 scroll left bottom;
   padding-right: 0px;
 }
+.IE11 .gwt-ScrollTable .headerTable {
+  padding-right: 17px!important;
+}
 .IE .gwt-ScrollTable .headerTable td {
 background-image: none;
 background-color: #8ab3c6;
