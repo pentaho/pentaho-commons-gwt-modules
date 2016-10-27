@@ -12,7 +12,7 @@ which java class/code the style is associated with */
 }
 
 .popupContent {
-  font-color: #000000;
+  color: #000000;
 }
 
 .drop-popup .listbox-scroll-panel {
@@ -29,7 +29,6 @@ which java class/code the style is associated with */
 
 .blue-month-line {
   background-color: #D2D2D2;
-  font-color: #000000;
   color: #000000;
 }
 
@@ -273,7 +272,7 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
   opacity: 0.20;
   background-color:  #000000;
   z-index:250;
-  filter:alpha(opacity=20)
+  filter:alpha(opacity=20);
 
   cursor: wait;
 }
@@ -354,7 +353,7 @@ body{
 /* begin resizable dialogbox styles ------------------------------------------------ */
 
 .dragdrop-handle {
-  cursor: ;
+  /* cursor: ; */
 }
 
 .dragdrop-draggable {
@@ -456,7 +455,7 @@ body{
 }
 
 .custom-list-item input[type='text'] {
-  height: normal;
+  line-height: normal;
 }
 
 .combo-arrow{
