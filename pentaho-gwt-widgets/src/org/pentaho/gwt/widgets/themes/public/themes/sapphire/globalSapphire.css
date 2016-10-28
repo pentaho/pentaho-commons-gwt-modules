@@ -124,6 +124,10 @@ input[type='text'],
   height: auto;
 }
 
+#filterDropDownGroupbox input[type='text'] {
+  padding: 0;
+}
+
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
