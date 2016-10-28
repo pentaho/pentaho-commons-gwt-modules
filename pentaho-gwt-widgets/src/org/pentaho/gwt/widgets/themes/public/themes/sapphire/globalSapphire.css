@@ -4187,6 +4187,10 @@ td.tab-spacer-wrapper {
   box-sizing: border-box;
 }
 
+#datasourceInfoBox .custom-list-item {
+  background-color: transparent;
+}
+
 .combo-arrow {
   padding: 4px;
   background: none;
