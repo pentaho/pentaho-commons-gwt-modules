@@ -3918,6 +3918,10 @@ button.adminButton {
   padding: 4px 10px 4px 10px;
 }
 
+.IE11 .gwt-ScrollTable .headerTable {
+  padding-right: 17px!important;
+}
+
 .gwt-ScrollTable .headerTable {
   background: #8ab3c6;
 }
