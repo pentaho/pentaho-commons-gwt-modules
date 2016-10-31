@@ -128,6 +128,10 @@ input[type='text'],
   padding: 0;
 }
 
+input[type='text']#displayNameText {
+  padding: 0px 10px;
+}
+
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
