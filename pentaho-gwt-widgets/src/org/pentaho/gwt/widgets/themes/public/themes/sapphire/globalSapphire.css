@@ -577,8 +577,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   font-family: OpenSansLight;
   color: #333;
   text-align: center;
-  float: left;
-  width: 100%;
   padding-bottom: 20px;
 }
 
@@ -606,7 +604,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   padding: 0;
   width: 100%;
   height: auto;
-  float: left;
 }
 
 .pentaho-dialog .dialog-content {
@@ -4711,10 +4708,6 @@ span.gwt-RadioButton label {
 
 #standardDialog #dialogMessageBar .dlgInfo {
   background: url(images/info.png) no-repeat;
-}
-
-#standardDialog {
-  float: left;
 }
 
 /* Analyzer drag and drop indicators */
