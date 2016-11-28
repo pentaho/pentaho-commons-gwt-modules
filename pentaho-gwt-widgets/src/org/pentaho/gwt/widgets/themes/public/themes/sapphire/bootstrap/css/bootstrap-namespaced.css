@@ -2718,10 +2718,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007297', end
   background: -ms-linear-gradient(top,  #ffffff 49%,#ededed 100%); /* IE10+ */
   background: linear-gradient(to bottom,  #ffffff 49%,#ededed 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
-    
+
   font-weight: bold;
   font-size: 12px;
-  color: #007297;  
+  color: #007297;
 }
 
 .bootstrap .btn:hover,
@@ -4671,19 +4671,19 @@ height: auto;
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #144b64;
+  background-color: #000;
   /* IE8 css hack for opacity */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=80)";
-  filter: alpha(opacity = 80);
-  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+  filter: alpha(opacity = 60);
+  opacity: 0.6;
 }
 .bootstrap .modal-backdrop.fade {
   opacity: 0;
 }
 .bootstrap .modal-backdrop,
 .bootstrap .modal-backdrop.fade.in {
-  opacity: 0.8;
-  filter: alpha(opacity=80);
+  opacity: 0.6;
+  filter: alpha(opacity=60);
 }
 .bootstrap .modal {
   position: fixed;
