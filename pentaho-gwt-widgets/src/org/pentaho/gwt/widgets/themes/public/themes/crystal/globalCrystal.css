@@ -110,6 +110,11 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
   border-radius: 0px;
 }
 
+input[type='text']#paramNameTextBox,
+input[type='text']#paramValueTextBox {
+  height: 20px;  
+}
+
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
