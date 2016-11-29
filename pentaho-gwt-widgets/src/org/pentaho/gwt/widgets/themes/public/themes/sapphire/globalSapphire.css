@@ -184,6 +184,10 @@ table#contentCleanerPanel > tbody > tr > td > table {
   margin-top: 20px;
 }
 
+#ldapTestMsgDialog {
+  max-height: none;
+}
+
 #ldapTreeDialogContent {
   padding: 0 4px;
 }
