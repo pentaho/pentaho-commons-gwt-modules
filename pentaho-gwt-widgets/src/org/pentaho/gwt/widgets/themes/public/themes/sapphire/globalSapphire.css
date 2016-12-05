@@ -126,7 +126,7 @@ input[type='text'],
 
 input[type='text']#paramNameTextBox,
 input[type='text']#paramValueTextBox {
-  padding: 2px 10px;  
+  padding: 2px 10px;
 }
 
 #filterDropDownGroupbox input[type='text'] {
@@ -3677,7 +3677,7 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
 }
 
 .fileChooser-scrollPanel > div > table > tbody > tr > td:last-child {
-  border-right: 1px solid #e0e0e0;
+  /*border-right: 1px solid #e0e0e0;*/
 }
 
 .fileChooser-scrollPanel > div > table > tbody > tr:first-child > td {
