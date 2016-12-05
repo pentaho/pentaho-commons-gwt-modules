@@ -709,6 +709,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     public MonthlyRecurrenceEditor() {
       setSpacing( 6 );
+      getElement().removeAttribute( "cellpadding" );
 
       HorizontalPanel hp = new HorizontalPanel();
       dayNOfMonthRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
@@ -852,6 +853,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     public YearlyRecurrenceEditor() {
       setSpacing( 6 );
+      getElement().removeAttribute( "cellpadding" );
 
       HorizontalPanel p = new HorizontalPanel();
       everyMonthOnNthDayRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
