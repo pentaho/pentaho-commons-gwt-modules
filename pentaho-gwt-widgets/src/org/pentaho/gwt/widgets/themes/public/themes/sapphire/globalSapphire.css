@@ -7205,3 +7205,188 @@ button#preview[disabled]:active {
 #evaluationPanel .login-role + .row-fluid  {
   padding: 8px 10px 4px;
 }
+
+.pluginListItem .pluginActionContainer button {
+  margin-top: 1px;
+  line-height: 32px;
+  padding: 0 14px;
+}
+
+button.pentaho-button.installVersionButton,
+button.pentaho-button.installVersionButton:link,
+button.pentaho-button.installVersionButton:visited,
+button.pentaho-button.installVersionButton:hover,
+button.pentaho-button.installVersionButton:active,
+button.pentaho-button.installVersionButton.install,
+button.pentaho-button.installVersionButton.install:link,
+button.pentaho-button.installVersionButton.install:visited,
+button.pentaho-button.installVersionButton.install:hover,
+button.pentaho-button.installVersionButton.install:active,
+button.pentaho-button.uninstallButton,
+button.pentaho-button.uninstallButton:link,
+button.pentaho-button.uninstallButton:visited,
+button.pentaho-button.uninstallButton:hover,
+button.pentaho-button.uninstallButton:active {
+  line-height: 32px;
+  padding: 0 14px;
+  border: 1px solid #005DA6;
+  background: #005DA6;
+  filter: none;
+}
+
+button.pentaho-button.installVersionButton.install:hover,
+button.pentaho-button.installVersionButton.install:active,
+button.pentaho-button.installVersionButton:hover,
+button.pentaho-button.installVersionButton:active,
+button.pentaho-button.uninstallButton:hover,
+button.pentaho-button.uninstallButton:active {
+  border: 1px solid #0F2B5B;
+  background: #0F2B5B;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+button.pentaho-button.installVersionButton.update,
+button.pentaho-button.installVersionButton.update:link,
+button.pentaho-button.installVersionButton.update:visited,
+button.pentaho-button.installVersionButton.update:hover,
+button.pentaho-button.installVersionButton.update:active {
+  background: #F4A425;
+  border-color: #F4A425;
+  filter: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+button.pentaho-button.installVersionButton.update:hover,
+button.pentaho-button.installVersionButton.update:active {
+  background: #E6910C;
+  border-color: #E6910C;
+}
+
+button.pentaho-button.installVersionButton.upToDate,
+button.pentaho-button.installVersionButton.upToDate:link,
+button.pentaho-button.installVersionButton.upToDate:visited,
+button.pentaho-button.installVersionButton.upToDate:hover,
+button.pentaho-button.installVersionButton.upToDate:active {
+  background: #FFFFFF;
+  border-color: #005DA6;
+  color: #005DA6;
+  filter: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+button.pentaho-button.uninstallButton:disabled,
+button.pentaho-button.uninstallButton:disabled:link,
+button.pentaho-button.uninstallButton:disabled:visited,
+button.pentaho-button.uninstallButton:disabled:hover,
+button.pentaho-button.uninstallButton:disabled:active {
+  line-height: 32px;
+  padding: 0 14px;
+  border: 1px solid #E4E4E4;
+  background: #E4E4E4;
+  color: #888;
+  filter: none;
+}
+
+.bootstrap.admin-perspective .pentaho-tab-deck-panel,
+.filterBar,
+.filterBar .filterContainer .multiselect button.btn.btn-primary.dropdown-toggle,
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-menu,
+.bootstrap input.search,
+.bootstrap .filteredPluginsContainer ul > li,
+.bootstrap .filteredPluginsContainer ul > li:last-of-type,
+.pluginListItem .dev-stage,
+.bootstrap .modal .modal-dialog,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .sectionHeader,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailBottom,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailBottom > div.devStageName,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailTop .pluginDetailLeft .versionSelectDropdown button.btn.btn-primary.dropdown-toggle,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailTop .pluginDetailLeft .versionSelectDropdown .dropdown-menu,
+.bootstrap .modal.stagesInfoDialog .sectionHeader {
+  border-color: #CCC;
+}
+
+body.bootstrap .modal.pluginDetailDialog,
+body.bootstrap .modal.confirmationDialog {
+  border: 0 none;
+}
+
+.bootstrap .filteredPluginsContainer ul > li:hover {
+    background: #E6EFF6;
+}
+
+.bootstrap.admin-perspective .pentaho-tab-deck-panel {
+  margin-top: -1px;
+}
+
+.bootstrap .filteredPluginsContainer ul > li .pluginName,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginHeaderInfo .pluginName,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .sectionHeader {
+  color: #005EAA;
+}
+
+.filterBar {
+  background: #F0F0F0;
+}
+
+.bootstrap .filterBar a,
+.bootstrap .filterBar a:link,
+.bootstrap .filterBar a:visited,
+.bootstrap .modal.pluginDetailDialog a,
+.bootstrap .modal.pluginDetailDialog a:link,
+.bootstrap .modal.pluginDetailDialog a:visited {
+  color: #005EAA;
+}
+
+.bootstrap .filterBar a:hover,
+.bootstrap .filterBar a:active,
+.bootstrap .modal.pluginDetailDialog a:hover,
+.bootstrap .modal.pluginDetailDialog a:active {
+  color: #0F2B5B
+}
+
+.filterBar .filterContainer .multiselect button.btn.btn-primary.dropdown-toggle,
+body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailTop .pluginDetailLeft .versionSelectDropdown button.btn.btn-primary.dropdown-toggle {
+  color: #666;
+}
+
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-menu > li > a {
+  color: #333;
+}
+
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-menu > li > a:hover,
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-menu > li > a:focus,
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-submenu:hover > a,
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-submenu:focus > a {
+    background: #E6EFF6;
+}
+
+.bootstrap .filterBar .filterContainer .multiselect .dropdown-menu .divider {
+    margin: 9px 0;
+    background-color: #CCC;
+}
+
+.bootstrap .filteredPluginsContainer ul > li .pluginAuthor,
+.bootstrap .filteredPluginsContainer ul > li {
+  color: #666;
+}
+
+.infoBar {
+  background: #005DA6;
+  border-color: #005DA6;
+}
+
+.infoBar:hover,
+.infoBar:active {
+  background: #0F2B5B;
+  border-color: #0F2B5B;
+}
+
+body.bootstrap .modal.pluginDetailDialog .pluginDetail {
+  color: #333;
+}
