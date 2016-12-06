@@ -6759,7 +6759,7 @@ select#datasources {
 
 /* reporting */
 .tundra .dijitInputContainer input {
-  padding: 5px !important;
+  padding: 1px !important;
   background: #fff;
   -webkit-box-shadow: none;
   box-shadow: none;
