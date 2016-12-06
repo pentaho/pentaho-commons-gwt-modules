@@ -586,7 +586,7 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 .pentaho-dialog .Caption {
   background: none;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 30px;
   font-family: OpenSansLight;
   color: #333;
   text-align: center;
