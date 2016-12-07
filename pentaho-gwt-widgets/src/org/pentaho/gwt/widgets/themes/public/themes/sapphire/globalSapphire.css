@@ -124,6 +124,10 @@ input[type='text'],
   height: auto;
 }
 
+div.povdiv input[type='text'] {
+  padding: 4px 2px 4px 4px;
+}
+
 input[type='text']#paramNameTextBox,
 input[type='text']#paramValueTextBox {
   padding: 2px 10px;
@@ -325,15 +329,10 @@ div#FilterPanel div.povdiv {
   color: #ffffff;
   padding: 8px 10px;
   border: 0 none;
-  border-left: 1px solid #FFF;
   white-space: nowrap;
   text-align: center;
   cursor: pointer;
   cursor: hand;
-}
-
-.pentaho-toggle-button:first-child {
-  border-left: 0 none;
 }
 
 .pentaho-toggle-button-container .pentaho-toggle-button button,
