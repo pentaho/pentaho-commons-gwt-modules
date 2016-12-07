@@ -7390,3 +7390,19 @@ body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailTop .pluginD
 body.bootstrap .modal.pluginDetailDialog .pluginDetail {
   color: #333;
 }
+
+body.bootstrap .modal.confirmationDialog .dialog div.title {
+  background: none;
+  font-size: 24px;
+  line-height: 30px;
+  font-family: OpenSansLight;
+  color: #333;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+body.bootstrap .modal.confirmationDialog .dialog div.body {
+  line-height: 20px;
+  color: #333;
+  padding-bottom: 20px;
+}
