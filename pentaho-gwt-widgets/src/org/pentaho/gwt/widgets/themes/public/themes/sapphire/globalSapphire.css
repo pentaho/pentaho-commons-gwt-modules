@@ -5530,10 +5530,12 @@ span.gwt-RadioButton label {
 
 #propertiesPanelTitle {
   width: 200px !important;
+  height: 25px !important;
 }
 
 #propertiesPanelRefreshPeriod {
   width: 30px !important;
+  height: 25px !important;
 }
 
 .flag {
