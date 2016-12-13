@@ -59,7 +59,7 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 
 input[type='text']#paramNameTextBox,
 input[type='text']#paramValueTextBox {
-  height: 20px;  
+  height: 20px;
 }
 
 *:focus {outline: none;}
@@ -3810,3 +3810,10 @@ treecontrol.tree-classic li .tree-selected {
   border: none;
 }
 /* end styling for formatCombo */
+
+/* begin BACKLOG-8759 Makes usage of colons in property labels theme dependent */
+.pentahoPropertiesPanel .dijitTitlePane:last-child .caption-text::after{
+    /* the labels of properties that have dropdowns should have a colon */
+    content: ":";
+}
+/* end BACKLOG-8759 Makes usage of colons in property labels theme dependent */
