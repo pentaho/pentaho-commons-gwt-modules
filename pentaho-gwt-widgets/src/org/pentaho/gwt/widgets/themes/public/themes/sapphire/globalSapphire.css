@@ -188,6 +188,10 @@ table#contentCleanerPanel > tbody > tr > td > table {
   margin-top: 20px;
 }
 
+#filterControlsGroupbox {
+ margin-left: -6px;
+}
+
 #ldapTestMsgDialog {
   max-height: none;
 }
@@ -265,6 +269,15 @@ input[type="password"] {
 
 .gwt-MenuBarPopup + .gwt-MenuBarPopup {
   margin-top: -1px;
+}
+
+div#data-controlproperties-spacer {
+  width: 7px;
+}
+
+fieldset#filterDataGroupbox>table.vbox>tbody>tr>td>div,
+fieldset#filterDropDownGroupbox>table.vbox>tbody>tr>td>div {
+  margin: 4px;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */

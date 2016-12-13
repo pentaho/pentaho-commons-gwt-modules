@@ -477,6 +477,10 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   width: 100%;
 }
 
+div#data-controlproperties-spacer {
+  width: 2px;
+}
+
 .IE .pentaho-dialog {
   /*border: 1px solid #000000;
   background: url('../images/wt_transparent.png') repeat;*/

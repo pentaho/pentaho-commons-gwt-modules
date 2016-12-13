@@ -413,6 +413,10 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   height: 500px !important;
 }
 
+div#data-controlproperties-spacer {
+  width: 2px;
+}
+
 /* Secondary style applied to pentaho-dialog elements to add a continuous 8px padding. */
 .pentaho-dialog-buttonless {
     padding: 8px 8px 3px 8px;
