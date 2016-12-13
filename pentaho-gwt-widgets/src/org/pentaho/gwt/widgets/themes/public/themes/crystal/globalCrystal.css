@@ -112,7 +112,7 @@ input[type='text'], .bootstrap .pentaho-dialog input[type='text'] {
 
 input[type='text']#paramNameTextBox,
 input[type='text']#paramValueTextBox {
-  height: 20px;  
+  height: 20px;
 }
 
 SELECT,
@@ -2814,7 +2814,7 @@ padding: 10px 0 10px 0;
 .icon-medium.icon-edit.disabled {
   background: url('../images/editContent_32_disabled.png');
 }
-  /* added by brett to override anlyzer styles */
+  /* added by brett to override analyzer styles */
 .dijitTitlePane{
   background-color: #f1f1f1;
 }
@@ -4767,7 +4767,7 @@ div.listbox .pentaho-listbox {
   height: 22px;
 }
 
-/* layout anel gem styling */
+/* layout panel gem styling */
 .gem{
   height: 17px;
   border-radius: 0px;
@@ -5556,3 +5556,10 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 /* end styling for formatCombo */
+
+/* begin BACKLOG-8759 Makes usage of colons in property labels theme dependent */
+.pentahoPropertiesPanel .dijitTitlePane:last-child .caption-text::after{
+  /* the labels of properties that have dropdowns should have a colon */
+  content: ":";
+}
+/* end BACKLOG-8759 Makes usage of colons in property labels theme dependent */
