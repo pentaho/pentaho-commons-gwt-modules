@@ -758,6 +758,21 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   top: 3px;
 }
 
+input#FT_rankCount,
+input#FT_condOp1,
+select#FT_condOp,
+select#FT_condMetric,
+select#FT_rankMetric,
+select#FT_rankType,
+select#FT_attribute {
+  height: 24px;
+  padding: 0 5px 2px 2px;
+}
+
+input#FT_rankCount {
+  width: 40px;
+}
+
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
   margin: 0px;
   padding-bottom: 0px;
@@ -5476,7 +5491,6 @@ span.gwt-RadioButton label {
   background: url('images/add_16.png') no-repeat;
 }
 
-#standardDialog .filterConditionDelete,
 #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-pressed,
 #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-over,
 #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button,
@@ -5484,6 +5498,11 @@ span.gwt-RadioButton label {
 #editPovContainerPanel #povTableRemoveSelected img.image-button-over,
 #editPovContainerPanel #povTableRemoveSelected img.image-button {
   background: url('images/remove_16.png') no-repeat;
+}
+
+#standardDialog .filterConditionDelete {
+  background: url('images/remove_16.png') no-repeat;
+  background-position: center;
 }
 
 #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed,
