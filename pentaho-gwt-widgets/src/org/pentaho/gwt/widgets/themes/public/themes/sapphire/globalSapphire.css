@@ -201,6 +201,10 @@ table#contentCleanerPanel > tbody > tr > td > table {
   padding: 0 4px;
 }
 
+input.ldapPasswordInput.authValue.adminField {
+    height: auto;
+}
+
 .soria .dijitTreeRowSelected {
   background-color: #E6EFF6;
 }
