@@ -190,6 +190,7 @@ table#contentCleanerPanel > tbody > tr > td > table {
 
 #filterControlsGroupbox {
  margin-left: -6px;
+ width: 101.6% !important;
 }
 
 #ldapTestMsgDialog {
