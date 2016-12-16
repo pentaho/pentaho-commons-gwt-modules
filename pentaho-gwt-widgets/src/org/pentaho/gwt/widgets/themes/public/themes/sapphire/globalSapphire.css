@@ -3593,6 +3593,7 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
 
 #tab-dashboard-settings-panel div.panelContent button {
   padding: 6px 14px;
+  margin-top: -3px;
 }
 
 .edit-panel {
