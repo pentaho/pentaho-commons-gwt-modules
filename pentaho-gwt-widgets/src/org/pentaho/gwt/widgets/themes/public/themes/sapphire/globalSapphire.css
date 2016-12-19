@@ -111,6 +111,7 @@ input[type='radio'] {
 }
 
 input[type='text'],
+textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #CCC;
   padding: 10px 10px;
