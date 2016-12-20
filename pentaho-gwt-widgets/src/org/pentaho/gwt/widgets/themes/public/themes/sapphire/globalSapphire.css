@@ -286,13 +286,26 @@ fieldset#filterDropDownGroupbox>table.vbox>tbody>tr>td>div {
   margin: 4px;
 }
 
+div.sectionBar {
+  background-color: #F8F8F8 !important;
+}
+
+div.filterCondition table {
+  background-color: #CCDFED !important;
+}
+
+div.filterConditionAdd {
+  margin-top: 14px !important;
+}
+
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
 button.pentaho-button,
 button.pentaho-button:link,
 button.pentaho-button:visited,
 button.pentaho-button:hover,
 button.pentaho-button:active,
-button.pentaho-button:focus {
+button.pentaho-button:focus,
+span.button-add-condition {
   background: #005DA6;
   filter: none;
   font-size: 14px;
@@ -315,7 +328,10 @@ button.pentaho-button:focus {
 
 button.pentaho-button:hover,
 button.pentaho-button:active,
-button.pentaho-button:focus {
+button.pentaho-button:focus,
+span.button-add-condition:hover,
+span.button-add-condition:active,
+span.button-add-condition:focus {
   background: #0F2B5B;
 }
 
