@@ -286,6 +286,48 @@ fieldset#filterDropDownGroupbox>table.vbox>tbody>tr>td>div {
   margin: 4px;
 }
 
+textarea#sqlQueryText {
+  margin-top: -10px;
+  width: 252px !important;
+  border-radius: 0;
+}
+
+div#editQueryButton,
+div#mqlFilterEditButton {
+  margin-right: 10px;
+}
+
+button#sqlParameterButton {
+  margin-bottom: 19px;
+  margin-right: 10px;
+}
+
+button#mqlFilterSelectDataSourceBtn {
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+
+button#mqlParameterButton {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+table#mqlFilterSelectedColumns>tbody>tr>td>div {
+  width: 250px !important;
+}
+
+div#filterDataDeck {
+  height: 350px !important;
+}
+
+div#staticSelectionTable {
+  margin-bottom: 110px;
+}
+
+div#filterTypeDeck>div>table>tbody>tr>td>div {
+  width: 250px !important;
+}
+
 div.sectionBar {
   background-color: #F8F8F8 !important;
 }
