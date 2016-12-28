@@ -340,6 +340,15 @@ div.filterConditionAdd {
   margin-top: 14px !important;
 }
 
+#editFilterDateRestriction, #editFilterPropDateFormat {
+  margin-bottom: 5px !important;
+}
+
+#editFilterPropDateFrom, #editFilterPropDateTo {
+  width: 95% !important;
+  margin-bottom: 5px !important;
+}
+
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
 button.pentaho-button,
 button.pentaho-button:link,
