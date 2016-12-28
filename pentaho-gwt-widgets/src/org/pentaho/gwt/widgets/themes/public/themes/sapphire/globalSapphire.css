@@ -114,15 +114,13 @@ input[type='text'],
 textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #CCC;
-  padding: 10px 10px;
-  font-size: 14px;
+  padding: 10px 2px 8px 4px;
   line-height: 17px;
   border-radius: 4px;
-  font-family: opensansregular;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: auto;
+  width: 34px;
 }
 
 div.povdiv input[type='text'] {
