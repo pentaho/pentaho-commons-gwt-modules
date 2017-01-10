@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -79,7 +79,7 @@ public class NewScheduleDialog extends PromptDialogBox {
    */
   public NewScheduleDialog( JsJob jsJob, IDialogCallback callback, boolean isEmailConfValid ) {
     super(
-        Messages.getString( "newSchedule" ), Messages.getString( "nextStep" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        Messages.getString( "newSchedule" ), Messages.getString( "next" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     this.jsJob = jsJob;
     this.filePath = jsJob.getFullResourceName();
     this.callback = callback;
@@ -87,10 +87,10 @@ public class NewScheduleDialog extends PromptDialogBox {
     createUI();
   }
 
-  public NewScheduleDialog( String filePath, IDialogCallback callback, boolean isEmailConfValid) {
+  public NewScheduleDialog( String filePath, IDialogCallback callback, boolean isEmailConfValid ) {
 
     super(
-        Messages.getString( "newSchedule" ), Messages.getString( "nextStep" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        Messages.getString( "newSchedule" ), Messages.getString( "next" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     this.filePath = filePath;
     this.callback = callback;
     this.isEmailConfValid = isEmailConfValid;
@@ -101,14 +101,10 @@ public class NewScheduleDialog extends PromptDialogBox {
     VerticalPanel content = new VerticalPanel();
 
     HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
-    Label scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
+    Label scheduleNameLabel = new Label( Messages.getString( "scheduleAndReportName" ) );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
 
-    Label scheduleNameInfoLabel = new Label( Messages.getString( "scheduleNameInfo" ) );
-    scheduleNameInfoLabel.setStyleName( "msg-Label" );
-
     scheduleNameLabelPanel.add( scheduleNameLabel );
-    scheduleNameLabelPanel.add( scheduleNameInfoLabel );
 
     String defaultName = filePath.substring( filePath.lastIndexOf( "/" ) + 1, filePath.lastIndexOf( "." ) );
     scheduleNameTextBox.getElement().setId( "schedule-name-input" );
@@ -117,11 +113,11 @@ public class NewScheduleDialog extends PromptDialogBox {
     content.add( scheduleNameLabelPanel );
     content.add( scheduleNameTextBox );
 
-    Label scheduleLocationLabel = new Label( Messages.getString( "generatedContentLocation" ) );
+    Label scheduleLocationLabel = new Label( Messages.getString( "reportLocation" ) );
     scheduleLocationLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
     content.add( scheduleLocationLabel );
 
-    Button browseButton = new Button( Messages.getString( "select" ) );
+    Button browseButton = new Button( Messages.getString( "browse" ) );
     browseButton.addClickHandler( new ClickHandler() {
 
       public void onClick( ClickEvent event ) {
@@ -138,6 +134,7 @@ public class NewScheduleDialog extends PromptDialogBox {
       }
     } );
     browseButton.setStyleName( "pentaho-button" );
+    browseButton.getElement().setId( "schedule-dialog-browse-button" );
 
     ChangeHandler ch = new ChangeHandler() {
       public void onChange( ChangeEvent event ) {
@@ -176,7 +173,10 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     setContent( content );
     content.getElement().getParentElement().addClassName( "schedule-dialog-content" );
+    content.getElement().getParentElement().addClassName( "schedule-dialog-content-crystal" );
+    content.getElement().getParentElement().addClassName( "schedule-dialog-content-onyx" );
     content.getElement().getParentElement().removeClassName( "dialog-content" );
+    content.getElement().getParentElement().getStyle().clearPadding();
     content.getElement().getStyle().clearHeight();
     content.getParent().setHeight( "100%" );
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );

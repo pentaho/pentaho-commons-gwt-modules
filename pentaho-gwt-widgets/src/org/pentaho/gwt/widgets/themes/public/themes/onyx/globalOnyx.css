@@ -177,6 +177,10 @@ input[type='text']#paramValueTextBox {
     border: inherit;
 }
 
+.schedule-dialog-content-onyx {
+  padding: 5px 10px 10px 10px;
+}
+
 .pentaho-toggle-button {
     /* fallback color */
     background: #000000;
