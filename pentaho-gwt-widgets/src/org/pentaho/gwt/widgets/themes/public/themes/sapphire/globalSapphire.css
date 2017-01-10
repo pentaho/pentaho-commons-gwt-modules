@@ -175,6 +175,7 @@ select[multiple],
 
 .gwt-Label {
   color: #666;
+  margin-bottom: 5px;
 }
 
 *:focus {
@@ -670,10 +671,9 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 .pentaho-dialog .Caption {
   background: none;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 24px;
   font-family: OpenSansLight;
   color: #333;
-  text-align: center;
   padding-bottom: 20px;
 }
 
@@ -689,6 +689,10 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .button-panel.center {
   text-align: center;
+}
+
+input#generated-content-location {
+  height: 39px;
 }
 
 .IE .pentaho-dialog .Caption {
@@ -776,6 +780,13 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialogBottomRight {
   display: none;
+}
+
+button#schedule-dialog-browse-button {
+  border-radius: 0 4px 4px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 39px;
 }
 
 /* Find a home for these */

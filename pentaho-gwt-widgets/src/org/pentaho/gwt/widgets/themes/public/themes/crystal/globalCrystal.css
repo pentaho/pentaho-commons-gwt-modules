@@ -165,6 +165,11 @@ input, input[type="password"]{
   background: url('images/bg_page.png') repeat-x top left;
   background-color: #FFF;
 }
+
+.schedule-dialog-content-crystal {
+  padding: 5px 10px 10px 10px;
+}
+
 #pucHeader {
   display: block;
   height: 60px;
