@@ -101,10 +101,14 @@ public class NewScheduleDialog extends PromptDialogBox {
     VerticalPanel content = new VerticalPanel();
 
     HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
-    Label scheduleNameLabel = new Label( Messages.getString( "scheduleAndReportName" ) );
+    Label scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
 
+    Label scheduleNameInfoLabel = new Label( Messages.getString( "scheduleNameInfo" ) );
+    scheduleNameInfoLabel.setStyleName( "msg-Label" );
+
     scheduleNameLabelPanel.add( scheduleNameLabel );
+    scheduleNameLabelPanel.add( scheduleNameInfoLabel );
 
     String defaultName = filePath.substring( filePath.lastIndexOf( "/" ) + 1, filePath.lastIndexOf( "." ) );
     scheduleNameTextBox.getElement().setId( "schedule-name-input" );
@@ -113,11 +117,11 @@ public class NewScheduleDialog extends PromptDialogBox {
     content.add( scheduleNameLabelPanel );
     content.add( scheduleNameTextBox );
 
-    Label scheduleLocationLabel = new Label( Messages.getString( "reportLocation" ) );
+    Label scheduleLocationLabel = new Label( Messages.getString( "generatedContentLocation" ) );
     scheduleLocationLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
     content.add( scheduleLocationLabel );
 
-    Button browseButton = new Button( Messages.getString( "browse" ) );
+    Button browseButton = new Button( Messages.getString( "select" ) );
     browseButton.addClickHandler( new ClickHandler() {
 
       public void onClick( ClickEvent event ) {
@@ -134,7 +138,7 @@ public class NewScheduleDialog extends PromptDialogBox {
       }
     } );
     browseButton.setStyleName( "pentaho-button" );
-    browseButton.getElement().setId( "schedule-dialog-browse-button" );
+    browseButton.getElement().setId( "schedule-dialog-select-button" );
 
     ChangeHandler ch = new ChangeHandler() {
       public void onChange( ChangeEvent event ) {

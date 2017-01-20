@@ -782,7 +782,7 @@ input#generated-content-location {
   display: none;
 }
 
-button#schedule-dialog-browse-button {
+button#schedule-dialog-select-button {
   border-radius: 0 4px 4px 0;
   padding-left: 20px;
   padding-right: 20px;
