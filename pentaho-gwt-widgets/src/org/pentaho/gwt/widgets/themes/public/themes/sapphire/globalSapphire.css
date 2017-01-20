@@ -122,7 +122,8 @@ textarea,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: auto;
+  height: 30px;
+  color: #666;
 }
 
 div.povdiv input[type='text'] {
@@ -145,14 +146,22 @@ input[type='text']#displayNameText {
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
+  height: 30px;
   border: 1px solid #CCC;
   padding: 7px 10px;
   font-size: 14px;
   overflow: auto;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #666;
   font-family: opensansregular;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+form SELECT {
+  padding: 0 5px;
 }
 
 select[multiple],
@@ -739,7 +748,7 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 .pentaho-dialog .Caption {
   background: none;
   font-size: 24px;
-  line-height: 24px;
+  line-height: 30px;
   font-family: OpenSansLight;
   color: #333;
   padding-bottom: 20px;
@@ -6861,6 +6870,7 @@ html.bootstrap .popover.bottom .arrow:after {
 
 select#datasources {
   padding: 0;
+  height: auto;
 }
 
 .empty-panel .pentaho-button {
