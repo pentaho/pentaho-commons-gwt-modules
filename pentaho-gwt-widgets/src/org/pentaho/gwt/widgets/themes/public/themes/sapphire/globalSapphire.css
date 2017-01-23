@@ -176,6 +176,7 @@ select[multiple],
 .gwt-Label {
   color: #666;
   margin-bottom: 5px;
+  line-height: 14px;
 }
 
 *:focus {
@@ -347,6 +348,73 @@ div.filterConditionAdd {
 #editFilterPropDateFrom, #editFilterPropDateTo {
   width: 95% !important;
   margin-bottom: 5px !important;
+}
+
+select#schedule-main-gwt-listbox {
+  width: 112px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.schedule-dropdown-arrow,
+select.date-picker-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url('images/arrow_down_gray.svg') no-repeat;
+  background-size: 12px 12px;
+  background-position: right 8px center;
+}
+
+.schedule-dropdown-arrow::-ms-expand,
+select.date-picker-select::-ms-expand {
+  display: none;
+}
+
+table.pentaho-schedule-create {
+  padding: 0;
+}
+
+fieldset.schedule-editor-caption-panel {
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 10px 15px 15px 15px;
+}
+
+fieldset.schedule-editor-caption-panel table {
+  border-spacing: 0;
+}
+
+fieldset.schedule-editor-caption-panel legend {
+  padding: 0 2px;
+}
+
+div#reccurence-label {
+  margin-top: 0;
+  line-height: 14px;
+}
+
+select.date-picker-select {
+  margin-right: 10px;
+  border-radius: 4px;
+  width: 60px;
+}
+
+button#wizard-finish-button {
+  margin-left: 8px;
+}
+
+button#wizard-cancel-button {
+  margin-left: 10px;
+}
+
+fieldset#schedule-start-date-input input{
+  width: 131px;
+  height: 38px;
+  background-image: url('./images/calendar-white.png'), -webkit-linear-gradient(right, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
+  background-image: url('./images/calendar-white.png'), linear-gradient(right, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
+  background-repeat: no-repeat;
+  background-position: 90% 47%;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
