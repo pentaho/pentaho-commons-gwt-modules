@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.controls;
@@ -44,6 +44,8 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
   protected ListBox minuteLB = new ListBox();
   protected ListBox timeOfDayLB = new ListBox();
   private ICallback<IChangeHandler> onChangeHandler = null;
+
+  private static String DATE_PICKER_SELECT = "date-picker-select";
 
   public TimePicker() {
     setSpacing( 5 );
@@ -111,6 +113,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
       String strHrValue = ( ii == 12 ) ? "0" : Integer.toString( ii ); //$NON-NLS-1$
       hourLB.addItem( strHrDisplay, strHrValue );
     }
+    hourLB.setStyleName( DATE_PICKER_SELECT );
   }
 
   private void initMinuteLB() {
@@ -120,12 +123,14 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
       strMinute = ( strMinute.length() == 1 ) ? "0" + strMinute : strMinute; // left pad single digit values with 0 //$NON-NLS-1$
       minuteLB.addItem( strMinute );
     }
+    minuteLB.setStyleName( DATE_PICKER_SELECT );
   }
 
   private void initAmPmLB() {
     timeOfDayLB.setVisibleItemCount( 1 );
     timeOfDayLB.addItem( TimeUtil.TimeOfDay.AM.toString() );
     timeOfDayLB.addItem( TimeUtil.TimeOfDay.PM.toString() );
+    timeOfDayLB.setStyleName( DATE_PICKER_SELECT );
   }
 
   /**
@@ -149,7 +154,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
   public void setHour( String hour ) {
     setHour( Integer.parseInt( hour ) );
   }
-  
+
   public void setHour( int hour ) {
     hourLB.setSelectedIndex( hour - 1 );
   }
@@ -171,7 +176,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
   public void setMinute( String minute ) {
     setMinute( Integer.parseInt( minute ) );
   }
-  
+
   public void setMinute( int minute ) {
     minuteLB.setSelectedIndex( minute );
   }

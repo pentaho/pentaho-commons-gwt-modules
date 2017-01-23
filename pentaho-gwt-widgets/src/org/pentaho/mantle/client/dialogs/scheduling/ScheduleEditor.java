@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -100,6 +100,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       return time;
     }
   }
+
+  protected static final String SCHEDULE_DROPDOWN_ARROW = "schedule-dropdown-arrow";
+
+  protected static final String RECURRENCE_LABEL = "reccurence-label";
 
   protected static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
 
@@ -218,6 +222,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
     scheduleCombo = createScheduleCombo();
     Label l = new Label( Messages.getString( "schedule.recurrenceColon" ) );
+    l.getElement().setId( RECURRENCE_LABEL );
     l.setStyleName( SCHEDULE_LABEL );
     add( l );
     add( scheduleCombo );
@@ -725,6 +730,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       }
     }
     lb.setItemSelected( 0, true );
+    lb.getElement().setId( "schedule-main-gwt-listbox" );
+    lb.setStyleName( SCHEDULE_DROPDOWN_ARROW );
 
     return lb;
   }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -40,6 +40,7 @@ import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
 
   private static final String SCHEDULER_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
+  private static final String SCHEDULE_START_DATE_INPUT = "schedule-start-date-input";
 
   protected TimePicker startTimePicker = null;
   private DefaultFormat format = new DefaultFormat( DateTimeFormat.getFormat( PredefinedFormat.DATE_SHORT ) );
@@ -53,6 +54,7 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
 
     CaptionPanel startDateCaptionPanel = new CaptionPanel( Messages.getString( "schedule.startDate" ) );
     startDateCaptionPanel.setStyleName( SCHEDULER_CAPTION_PANEL );
+    startDateCaptionPanel.getElement().setId( SCHEDULE_START_DATE_INPUT );
     startDateCaptionPanel.add( startDatePicker.getDatePicker() );
     add( startDateCaptionPanel );
 
