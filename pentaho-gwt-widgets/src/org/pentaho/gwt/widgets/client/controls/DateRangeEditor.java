@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.controls;
@@ -45,6 +45,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
   private static final String END_DATE_RB_GROUP = "end-date-group"; //$NON-NLS-1$
   private static final String END_DATE_PICKER = "end-date-picker"; //$NON-NLS-1$
   private static final String START_DATE_PICKER = "start-date-picker"; //$NON-NLS-1$
+  private static final String ROR_INNER_HP = "ror-inner-hp";
 
   private DatePickerEx startDatePicker = null;
   private EndDatePanel endDatePanel = null;
@@ -63,6 +64,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     add( outerHP );
 
     HorizontalPanel hp = new HorizontalPanel();
+    hp.getElement().setId( ROR_INNER_HP );
     Label l = new Label( Messages.getString( "DateRangeEditor.startLabel" ) );
     l.setStyleName( "startLabel" ); //$NON-NLS-1$
     hp.add( l );
@@ -155,12 +157,15 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     private RadioButton endByRb = null;
     private ErrorLabel endByLabel = null;
     private ICallback<IChangeHandler> onChangeHandler = null;
+    private static final String END_DATE_PANEL = "end-date-panel";
 
     public EndDatePanel( Date date ) {
+      this.getElement().setId( END_DATE_PANEL );
       final EndDatePanel localThis = this;
 
-      noEndDateRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber
-          , Messages.getString( "DateRangeEditor.noEndDateLabel" ) );
+      noEndDateRb =
+          new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, Messages.getString(
+              "DateRangeEditor.noEndDateLabel" ) );
       noEndDateRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       noEndDateRb.setValue( true );
       add( noEndDateRb );
@@ -168,8 +173,9 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
       add( hp );
 
       HorizontalPanel endByPanel = new HorizontalPanel();
-      endByRb = new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber
-          , Messages.getString( "DateRangeEditor.endByLabel" ) );
+      endByRb =
+          new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, Messages.getString(
+              "DateRangeEditor.endByLabel" ) );
       endByRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       endByPanel.add( endByRb );
       DefaultFormat format = new DefaultFormat( DateTimeFormat.getShortDateFormat() );

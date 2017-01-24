@@ -408,13 +408,39 @@ button#wizard-cancel-button {
   margin-left: 10px;
 }
 
-fieldset#schedule-start-date-input input{
+fieldset#schedule-start-date-input input,
+input.start-date-picker,
+input.end-date-picker {
   width: 131px;
   height: 38px;
   background-image: url('./images/calendar-white.png'), -webkit-linear-gradient(right, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
-  background-image: url('./images/calendar-white.png'), linear-gradient(right, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
+  background-image: url('./images/calendar-white.png'), linear-gradient(to left, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
   background-repeat: no-repeat;
   background-position: 90% 47%;
+}
+
+input.end-date-picker:disabled {
+  background-image: url('./images/calendar-gray.png'), -webkit-linear-gradient(right, #E4E4E4, #E4E4E4 30%, transparent 30%, transparent 100%);
+  background-image: url('./images/calendar-gray.png'), linear-gradient(to left, #E4E4E4, #E4E4E4 30%, transparent 30%, transparent 100%);
+  background-color: #F2F2F2;
+}
+
+input.every-txtbox {
+  width: 60px;
+}
+
+table#recur-pattern-hp td,
+table#ror-inner-hp td,
+table#end-date-panel td {
+  vertical-align: middle !important;
+}
+
+table#end-date-panel {
+  margin-left: 30px;
+}
+
+.recurrenceRadioButton input[type="radio"] {
+  margin: 0 5px 10px 0;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
