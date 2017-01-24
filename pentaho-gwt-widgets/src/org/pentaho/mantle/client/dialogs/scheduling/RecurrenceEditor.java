@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -68,6 +68,8 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   private static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
   private static final String DOW_CHECKBOX = "day-of-week-checkbox"; //$NON-NLS-1$
+  private static final String EVERY_TXTBOX = "every-txtbox";
+  private static final String RECUR_PATTERN_HP = "recur-pattern-hp";
 
   protected TimePicker startTimePicker = null;
 
@@ -369,12 +371,13 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     public SimpleRecurrencePanel( String strLabel ) {
 
       HorizontalPanel hp = new HorizontalPanel();
+      hp.getElement().setId( RECUR_PATTERN_HP );
       Label l = new Label( Messages.getString( "schedule.every" ) );
       l.setStyleName( "startLabel" ); //$NON-NLS-1$
       hp.add( l );
 
-      valueTb.setWidth( "3em" ); //$NON-NLS-1$
       valueTb.setTitle( Messages.getString( "schedule.numberOfXToRepeat", strLabel ) );
+      valueTb.setStyleName( EVERY_TXTBOX );
       hp.add( valueTb );
 
       l = new Label( strLabel );

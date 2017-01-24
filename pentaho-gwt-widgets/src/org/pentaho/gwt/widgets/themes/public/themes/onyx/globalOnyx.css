@@ -337,6 +337,10 @@ div#FilterPanel div.pentaho-toggle-button-up button{
   color: inherit;
 }
 
+input.every-txtbox {
+  width: 3em;
+}
+
 /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
 has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
 .pentaho-dialog, .bootstrap .modal.pentaho-dialog {
