@@ -371,7 +371,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     public SimpleRecurrencePanel( String strLabel ) {
 
       HorizontalPanel hp = new HorizontalPanel();
-      hp.getElement().setId( RECUR_PATTERN_HP );
+      hp.setStyleName( RECUR_PATTERN_HP );
       Label l = new Label( Messages.getString( "schedule.every" ) );
       l.setStyleName( "startLabel" ); //$NON-NLS-1$
       hp.add( l );
@@ -437,7 +437,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   public class SecondlyRecurrenceEditor extends SimpleRecurrencePanel {
     public SecondlyRecurrenceEditor() {
-      super( Messages.getString( "schedule.seconds" ) );
+      super( Messages.getString( "seconds" ) );
     }
   }
 
@@ -464,11 +464,13 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     public DailyRecurrenceEditor() {
       HorizontalPanel hp = new HorizontalPanel();
+      hp.setStyleName( RECUR_PATTERN_HP );
+      hp.getElement().setId( "daily-recur-hp" );
       everyNDaysRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       everyNDaysRb.setChecked( true );
       hp.add( everyNDaysRb );
 
-      repeatValueTb.setWidth( "3em" ); //$NON-NLS-1$
+      repeatValueTb.setStyleName( EVERY_TXTBOX );
       repeatValueTb.setTitle( Messages.getString( "schedule.numDaysToRepeat" ) );
       hp.add( repeatValueTb );
 
