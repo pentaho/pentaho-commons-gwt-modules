@@ -147,6 +147,10 @@ input[type='text']#displayNameText {
   padding: 0px 10px;
 }
 
+div.pentaho-dialog.schedule-recurrence-dialog SELECT {
+  height: auto;
+}
+
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
@@ -466,6 +470,26 @@ table#daily-recur-hp {
 
 div.pentaho-dialog.schedule-recurrence-dialog span.recurrenceRadioButton {
   margin-left: 0;
+}
+
+input#schedule-name-input {
+  height: auto;
+}
+
+table.weeklyRecurrencePanel .startLabel {
+  line-height: 14px;
+}
+
+table#weekly-recur span.day-of-week-checkbox {
+  padding: 0;
+}
+
+table#weekly-recur span.day-of-week-checkbox input[type="checkbox"] {
+  margin: 10px 5px 0 0;
+}
+
+table#weekly-recur tbody tr td:not(:first-child) span.day-of-week-checkbox input[type="checkbox"] {
+  margin-left: 15px;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */

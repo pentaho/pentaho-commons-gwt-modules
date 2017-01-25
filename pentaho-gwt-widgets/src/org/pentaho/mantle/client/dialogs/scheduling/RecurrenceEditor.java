@@ -564,6 +564,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     protected Map<DayOfWeek, CheckBox> dayToCheckBox = new HashMap<DayOfWeek, CheckBox>();
     private ErrorLabel everyWeekOnLabel = null;
     private ICallback<IChangeHandler> onChangeHandler;
+    private static final String WEEKLY_RECUR = "weekly-recur";
 
     public WeeklyRecurrenceEditor() {
       setStyleName( "weeklyRecurrencePanel" ); //$NON-NLS-1$
@@ -574,6 +575,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       add( everyWeekOnLabel );
 
       FlexTable gp = new FlexTable();
+      gp.getElement().setId( WEEKLY_RECUR );
       gp.setCellPadding( 0 );
       gp.setCellSpacing( 0 );
       // add Sun - Wed
