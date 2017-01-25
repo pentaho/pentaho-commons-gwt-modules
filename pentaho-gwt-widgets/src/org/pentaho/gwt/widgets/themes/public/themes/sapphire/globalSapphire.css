@@ -83,6 +83,10 @@ label {
   font-size: 13px;
 }
 
+div.pentaho-dialog.schedule-recurrence-dialog label {
+  font-size: 14px;
+}
+
 legend {
   color: #777;
 }
@@ -438,7 +442,7 @@ input.every-txtbox {
   width: 60px;
 }
 
-table#recur-pattern-hp td,
+table.recur-pattern-hp td,
 table#ror-inner-hp td,
 table#end-date-panel td {
   vertical-align: middle !important;
@@ -448,8 +452,20 @@ table#end-date-panel {
   margin-left: 30px;
 }
 
+table#end-date-panel tr:not(:last-child) td {
+  padding-bottom: 5px;
+}
+
+table#daily-recur-hp {
+  margin-bottom: 10px;
+}
+
 .recurrenceRadioButton input[type="radio"] {
-  margin: 0 5px 10px 0;
+  margin: 0 5px 0 0;
+}
+
+div.pentaho-dialog.schedule-recurrence-dialog span.recurrenceRadioButton {
+  margin-left: 0;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
