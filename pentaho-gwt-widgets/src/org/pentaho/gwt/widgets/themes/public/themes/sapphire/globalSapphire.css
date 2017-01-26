@@ -374,7 +374,8 @@ select#schedule-main-gwt-listbox {
 }
 
 .schedule-dropdown-arrow,
-select.date-picker-select {
+select.date-picker-select,
+table.recur-pattern-hp select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -383,8 +384,13 @@ select.date-picker-select {
   background-position: right 8px center;
 }
 
+table.recur-pattern-hp select {
+  width: 112px;
+}
+
 .schedule-dropdown-arrow::-ms-expand,
-select.date-picker-select::-ms-expand {
+select.date-picker-select::-ms-expand,
+table.recur-pattern-hp select::-ms-expand {
   display: none;
 }
 
@@ -421,7 +427,8 @@ button#wizard-finish-button {
   margin-left: 8px;
 }
 
-button#wizard-cancel-button {
+button#wizard-cancel-button,
+select#day-of-week-lb {
   margin-left: 10px;
 }
 
@@ -460,7 +467,8 @@ table#end-date-panel tr:not(:last-child) td {
   padding-bottom: 5px;
 }
 
-table#daily-recur-hp {
+table#daily-recur-hp,
+table#day-n-of-month-radio {
   margin-bottom: 10px;
 }
 
