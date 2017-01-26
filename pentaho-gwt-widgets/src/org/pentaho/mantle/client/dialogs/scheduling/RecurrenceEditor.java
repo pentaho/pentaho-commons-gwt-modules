@@ -716,13 +716,15 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     public MonthlyRecurrenceEditor() {
       setSpacing( 6 );
+      this.setStyleName( RECUR_PATTERN_HP );
       getElement().removeAttribute( "cellpadding" );
 
       HorizontalPanel hp = new HorizontalPanel();
+      hp.getElement().setId( "day-n-of-month-radio" );
       dayNOfMonthRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       dayNOfMonthRb.setChecked( true );
       hp.add( dayNOfMonthRb );
-      dayOfMonthTb.setWidth( "3em" ); //$NON-NLS-1$
+      dayOfMonthTb.setStyleName( EVERY_TXTBOX );
       hp.add( dayOfMonthTb );
       Label l = new Label( Messages.getString( "schedule.ofEveryMonth" ) );
       l.setStyleName( "endLabel" ); //$NON-NLS-1$
@@ -736,6 +738,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       hp.add( nthDayNameOfMonthRb );
       hp.add( whichWeekLb );
 
+      dayOfWeekLb.getElement().setId( "day-of-week-lb" );
       hp.add( dayOfWeekLb );
       l = new Label( Messages.getString( "schedule.ofEveryMonth" ) );
       l.setStyleName( "endLabel" ); //$NON-NLS-1$
