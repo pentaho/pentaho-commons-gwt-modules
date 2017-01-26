@@ -102,10 +102,12 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
     Label scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
+    scheduleNameLabel.addStyleName( "schedule-name" );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
 
     Label scheduleNameInfoLabel = new Label( Messages.getString( "scheduleNameInfo" ) );
     scheduleNameInfoLabel.setStyleName( "msg-Label" );
+    scheduleNameInfoLabel.addStyleName( "schedule-name-info" );
 
     scheduleNameLabelPanel.add( scheduleNameLabel );
     scheduleNameLabelPanel.add( scheduleNameInfoLabel );

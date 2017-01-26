@@ -151,6 +151,10 @@ div.pentaho-dialog.schedule-recurrence-dialog SELECT {
   height: auto;
 }
 
+div.pentaho-dialog.schedule-recurrence-dialog input[type="text"] {
+  height: 33px;
+}
+
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
@@ -192,8 +196,6 @@ select[multiple],
 
 .gwt-Label {
   color: #666;
-  margin-bottom: 5px;
-  line-height: 14px;
 }
 
 *:focus {
@@ -414,7 +416,6 @@ fieldset.schedule-editor-caption-panel legend {
 
 div#reccurence-label {
   margin-top: 0;
-  line-height: 14px;
 }
 
 select.date-picker-select {
@@ -428,15 +429,19 @@ button#wizard-finish-button {
 }
 
 button#wizard-cancel-button,
-select#day-of-week-lb {
+select#day-of-week-lb,
+input#day-of-month-tb {
   margin-left: 10px;
+}
+
+input#day-of-month-tb {
+  height: 35px !important;
 }
 
 fieldset#schedule-start-date-input input,
 input.start-date-picker,
 input.end-date-picker {
   width: 131px;
-  height: 38px;
   background-image: url('./images/calendar-white.png'), -webkit-linear-gradient(right, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
   background-image: url('./images/calendar-white.png'), linear-gradient(to left, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
   background-repeat: no-repeat;
@@ -468,7 +473,8 @@ table#end-date-panel tr:not(:last-child) td {
 }
 
 table#daily-recur-hp,
-table#day-n-of-month-radio {
+table#day-n-of-month-radio,
+table#every-month-on-nth-day-radio {
   margin-bottom: 10px;
 }
 
@@ -498,6 +504,14 @@ table#weekly-recur span.day-of-week-checkbox input[type="checkbox"] {
 
 table#weekly-recur tbody tr td:not(:first-child) span.day-of-week-checkbox input[type="checkbox"] {
   margin-left: 15px;
+}
+
+div.schedule-name {
+  margin: 0 4px 5px 0;
+}
+
+div.schedule-name-info {
+  margin-top: 1px;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
