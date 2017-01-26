@@ -863,15 +863,18 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
     public YearlyRecurrenceEditor() {
       setSpacing( 6 );
+      this.setStyleName( RECUR_PATTERN_HP );
       getElement().removeAttribute( "cellpadding" );
 
       HorizontalPanel p = new HorizontalPanel();
+      p.getElement().setId( "every-month-on-nth-day-radio" );
       everyMonthOnNthDayRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       everyMonthOnNthDayRb.setChecked( true );
       p.add( everyMonthOnNthDayRb );
       p.add( monthOfYearLb0 );
-      dayOfMonthTb.setStylePrimaryName( "DAY_OF_MONTH_TB" ); //$NON-NLS-1$
-      dayOfMonthTb.setWidth( "3em" ); //$NON-NLS-1$
+      dayOfMonthTb.addStyleName( "DAY_OF_MONTH_TB" ); //$NON-NLS-1$
+      dayOfMonthTb.addStyleName( EVERY_TXTBOX );
+      dayOfMonthTb.getElement().setId( "day-of-month-tb" );
       p.add( dayOfMonthTb );
       dayOfMonthLabel = new ErrorLabel( p );
       add( dayOfMonthLabel );
@@ -880,6 +883,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       nthDayNameOfMonthNameRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       p.add( nthDayNameOfMonthNameRb );
       p.add( whichWeekLb );
+      dayOfWeekLb.getElement().setId( "day-of-week-lb" );
       p.add( dayOfWeekLb );
       Label l = new Label( Messages.getString( "schedule.of" ) );
       l.setStyleName( "middleLabel" ); //$NON-NLS-1$
