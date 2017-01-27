@@ -514,6 +514,15 @@ div.schedule-name-info {
   margin-top: 1px;
 }
 
+div.cron-label {
+  margin: 0 0 5px 0;
+}
+
+input#cron-tb {
+  width: 225px;
+  margin-bottom: 15px;
+}
+
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
 button.pentaho-button,
 button.pentaho-button:link,
