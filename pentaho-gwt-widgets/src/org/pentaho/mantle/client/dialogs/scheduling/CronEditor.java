@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -51,6 +51,7 @@ public class CronEditor extends VerticalPanel implements IChangeHandler {
     Label l = new Label( Messages.getString( "schedule.cronLabel" ) );
     l.setStylePrimaryName( CRON_LABEL );
     cronLabel = new ErrorLabel( l );
+    cronTb.getElement().setId( "cron-tb" );
 
     add( cronLabel );
     add( cronTb );
