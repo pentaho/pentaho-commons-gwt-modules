@@ -147,14 +147,6 @@ input[type='text']#displayNameText {
   padding: 0px 10px;
 }
 
-div.pentaho-dialog.schedule-recurrence-dialog SELECT {
-  height: auto;
-}
-
-div.pentaho-dialog.schedule-recurrence-dialog input[type="text"] {
-  height: 33px;
-}
-
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
@@ -434,10 +426,6 @@ input#day-of-month-tb {
   margin-left: 10px;
 }
 
-input#day-of-month-tb {
-  height: 35px !important;
-}
-
 fieldset#schedule-start-date-input input,
 input.start-date-picker,
 input.end-date-picker {
@@ -484,10 +472,6 @@ table#every-month-on-nth-day-radio {
 
 div.pentaho-dialog.schedule-recurrence-dialog span.recurrenceRadioButton {
   margin-left: 0;
-}
-
-input#schedule-name-input {
-  height: auto;
 }
 
 table.weeklyRecurrencePanel .startLabel {
@@ -865,10 +849,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   text-align: center;
 }
 
-input#generated-content-location {
-  height: 39px;
-}
-
 .IE .pentaho-dialog .Caption {
 
   /*background: url('images/bg_title.png') repeat-x;*/
@@ -958,9 +938,8 @@ input#generated-content-location {
 
 button#schedule-dialog-select-button {
   border-radius: 0 4px 4px 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 39px;
+  padding: 0 20px;
+  height: 33px;
 }
 
 /* Find a home for these */
