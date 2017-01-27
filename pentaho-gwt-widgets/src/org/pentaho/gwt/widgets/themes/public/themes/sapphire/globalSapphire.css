@@ -118,7 +118,7 @@ input[type='text'],
 textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #CCC;
-  padding: 10px 10px;
+  padding: 0 10px;
   font-size: 14px;
   line-height: 17px;
   border-radius: 4px;
@@ -126,7 +126,7 @@ textarea,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: 30px;
+  height: 33px;
   color: #666;
 }
 
@@ -158,9 +158,9 @@ div.pentaho-dialog.schedule-recurrence-dialog input[type="text"] {
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
-  height: 30px;
+  height: 33px;
   border: 1px solid #CCC;
-  padding: 7px 10px;
+  padding: 0 10px;
   font-size: 14px;
   overflow: auto;
   border-radius: 4px;
