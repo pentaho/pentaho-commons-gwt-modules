@@ -4564,6 +4564,7 @@ div.prompt-panel .pentaho-toggle-button-container {
 div.prompt-panel .pentaho-toggle-button-container > DIV {
   height: 30px;
   padding: 3px;
+  display: inline-flex;
 }
 
 .wrapper_license_message {
