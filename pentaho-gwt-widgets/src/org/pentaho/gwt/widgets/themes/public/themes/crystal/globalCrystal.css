@@ -4617,6 +4617,12 @@ background: url("images/connector_top.png") no-repeat top left;
 #modelSelectDialog div.dijitSelect {
   display: inline-table;
   width: 345px !important;
+  height: 100px !important;
+}
+
+#modelSelectDialog div.dijitSelect .pentaho-listbox {
+  width: 345px !important;
+  height: 100px !important;
 }
 
 div.listbox {
