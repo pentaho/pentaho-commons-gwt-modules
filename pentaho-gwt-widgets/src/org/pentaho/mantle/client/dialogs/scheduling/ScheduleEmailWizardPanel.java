@@ -12,12 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -49,7 +50,7 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
   protected TextBox toAddressTextBox = new TextBox();
   protected TextBox subjectTextBox = new TextBox();
   protected TextBox attachmentNameTextBox = new TextBox();
-  protected Label attachmentLabel = new Label( Messages.getString( "attachmentNameColon" ) );
+  protected Label attachmentLabel = new Label( Messages.getString( "attachmentName" ) );
   protected TextArea messageTextArea = new TextArea();
 
   private String filePath;
@@ -118,8 +119,10 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
     this.addStyleName( PENTAHO_SCHEDULE );
 
     final FlexTable emailSchedulePanel = new FlexTable();
+    emailSchedulePanel.getElement().setId( "email-schedule-panel" );
     emailSchedulePanel.setVisible( false );
     HorizontalPanel emailYesNoPanel = new HorizontalPanel();
+    emailYesNoPanel.getElement().setId( "email-yes-no-panel" );
     emailYesNoPanel.add( ( new Label( Messages.getString( "wouldYouLikeToEmail" ) ) ) );
     no.addClickHandler( new ClickHandler() {
       public void onClick( ClickEvent event ) {
@@ -159,7 +162,8 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
       attachmentNameTextBox.setText( jobSchedule.get( "jobName" ).isString().stringValue() );
     }
 
-    Label toLabel = new Label( Messages.getString( "toColon" ) );
+    Label toLabel = new Label( Messages.getString( "to" ) );
+    toLabel.getElement().getStyle().setMarginRight( 3, Unit.PX );
     // toLabel.setWidth("130px");
     toLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
     Label toAddressLabel = new Label( Messages.getString( "scheduleAddressSeparatorMessage" ) );
@@ -179,7 +183,7 @@ public class ScheduleEmailWizardPanel extends AbstractWizardPanel {
     emailSchedulePanel.setWidget( 0, 0, toLabelPanel );
     emailSchedulePanel.setWidget( 1, 0, toAddressTextBox );
 
-    Label subjectLabel = new Label( Messages.getString( "subjectColon" ) );
+    Label subjectLabel = new Label( Messages.getString( "subject" ) );
     subjectLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
     emailSchedulePanel.setWidget( 3, 0, subjectLabel );
     emailSchedulePanel.setWidget( 4, 0, subjectTextBox );

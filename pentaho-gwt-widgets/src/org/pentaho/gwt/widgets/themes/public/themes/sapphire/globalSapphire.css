@@ -367,29 +367,108 @@ select#schedule-main-gwt-listbox {
   margin-bottom: 15px;
 }
 
-.schedule-dropdown-arrow,
-select.date-picker-select,
-table.recur-pattern-hp select {
+div#promptPanel select,
+table.pentaho-schedule-create select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background: url('images/arrow_down_gray.svg') no-repeat;
   background-size: 12px 12px;
   background-position: right 8px center;
+  padding-right: 25px;
+}
+
+div#promptPanel select,
+table.pentaho-schedule-create select:not(.date-picker-select) {
+  padding-right: 25px;
+}
+
+div#promptPanel select::-ms-expand,
+table.pentaho-schedule-create select::-ms-expand {
+  display: none;
+}
+
+table#email-yes-no-panel {
+  margin-bottom: 8px;
+}
+
+table#email-yes-no-panel td {
+  display: inline;
+}
+
+table#email-yes-no-panel td span,
+table#email-yes-no-panel td div {
+  display: block;
+  margin-bottom: 10px;
+}
+
+table#email-schedule-panel {
+  line-height: 14px;
+}
+
+table#email-schedule-panel input,
+table#email-schedule-panel textarea {
+  margin-bottom: 20px;
+  width: 644px;
+}
+
+table#email-schedule-panel tr:nth-child(2) input {
+  margin-bottom: 18px;
+}
+
+div#reportControlPanel select {
+  padding: 0 25px 0 10px;
+  margin: 0;
+}
+
+form#REPORT_FORMAT_TYPE {
+  margin-left: -15px;
+}
+
+form#REPORT_FORMAT_TYPE p {
+  color: #666;
+}
+
+input[name="REPORT_FORMAT_TYPE"] + br {
+  display: none;
+}
+
+input[name="REPORT_FORMAT_TYPE"] {
+  margin: 0 3px 10px 0;
+}
+
+div#reportControlPanel select[style*="overflow-y: scroll"] {
+  height: auto;
+  padding: 0;
+  background: none;
 }
 
 table.recur-pattern-hp select {
   width: 112px;
 }
 
-.schedule-dropdown-arrow::-ms-expand,
-select.date-picker-select::-ms-expand,
-table.recur-pattern-hp select::-ms-expand {
-  display: none;
+table.pentaho-schedule-create,
+div#promptPanel div.prompt-panel,
+div#toppanelinner {
+  padding: 0;
 }
 
-table.pentaho-schedule-create {
-  padding: 0;
+div#toppanel {
+  margin-top: 20px;
+}
+
+div.parameter div.parameter-label {
+  margin-bottom: 5px;
+}
+
+div#promptPanel div.parameter {
+  margin-bottom: 20px;
+}
+
+div#reportControlPanel {
+  margin: 0;
+  border: none;
+  background: none;
 }
 
 fieldset.schedule-editor-caption-panel {
@@ -410,10 +489,15 @@ div#reccurence-label {
   margin-top: 0;
 }
 
-select.date-picker-select {
+select.date-picker-select,
+select.blockout-select {
   margin-right: 10px;
   border-radius: 4px;
   width: 60px;
+}
+
+div.blockout-label {
+  margin-right: 20px;
 }
 
 button#wizard-finish-button {
@@ -462,8 +546,13 @@ table#end-date-panel tr:not(:last-child) td {
 
 table#daily-recur-hp,
 table#day-n-of-month-radio,
-table#every-month-on-nth-day-radio {
+table#every-month-on-nth-day-radio,
+table#radio-buttons-panel {
   margin-bottom: 10px;
+}
+
+table#blockout-start-panel td {
+  padding-top: 0 !important;
 }
 
 .recurrenceRadioButton input[type="radio"] {
@@ -2644,18 +2733,13 @@ body.IE>table {
 .dialog-content .dijitComboBox .dijitArrowButton input[type='text'],
 div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
   border: none;
-  height: 20px !important;
+  height: 33px !important;
+  margin-right: 3px;
 }
 
-.dijitComboBox {
-
-  /* Standard form */
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;  /* Firefox */
-  -moz-border-top-right-radius: 5px;
-  -moz-border-bottom-right-radius: 5px;  /* Safari/Chrome */
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
+div.dijitDateTextBox.dijitComboBox {
+  border-radius: 4px;
+  margin-bottom: 15px;
 }
 
 .dijitSelect {
@@ -6497,7 +6581,7 @@ div.listbox .pentaho-listbox {
 
 [id*=DP] .dijitDownArrowButton,
 div.dijitDateTextBox .dijitDownArrowButton {
-  height: 20px;
+  height: 33px;
   background-image: none !important;
 }
 
@@ -6509,7 +6593,6 @@ div.dijitDateTextBox .dijitDownArrowButton input {
 #widget_DP_range1_lookup,
 #widget_DP_range2_lookup,
 div.dijitDateTextBox {
-  height: 20px;
   width: 120px;
 }
 
@@ -6523,8 +6606,7 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
   box-shadow: none;
 }
 
-#date-picker-dlg-wrapper .dijitComboBox,
-div.dijitDateTextBox.dijitComboBox {
+#date-picker-dlg-wrapper .dijitComboBox {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }

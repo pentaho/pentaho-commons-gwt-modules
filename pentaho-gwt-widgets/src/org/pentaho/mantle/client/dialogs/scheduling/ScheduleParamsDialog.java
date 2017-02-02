@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -85,7 +85,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     this.editJob = editJob;
     initDialog();
     if ( isEmailConfValid ) {
-      finishButton.setText( Messages.getString( "nextStep" ) );
+      finishButton.setText( Messages.getString( "next" ) );
     }
   }
 
@@ -96,7 +96,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     this.isEmailConfValid = isEmailConfValid;
     initDialog();
     if ( isEmailConfValid ) {
-      finishButton.setText( Messages.getString( "nextStep" ) );
+      finishButton.setText( Messages.getString( "next" ) );
     }
   }
 
@@ -150,7 +150,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
         }
       }
     }
-    setParametersUrl(ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
+    setParametersUrl( ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     wizardDeckPanel.setHeight( "100%" ); //$NON-NLS-1$
 
     wizardDeckPanel.getElement().getParentElement().addClassName( "schedule-dialog-content" );
@@ -343,7 +343,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
               name.stringValue().replace( "\"", "" ) + "=" + stringValueArr.get( j ).toString().replace( "\"", "" );
         }
       }
-      setParametersUrl(ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
+      setParametersUrl( ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     super.center();
   }

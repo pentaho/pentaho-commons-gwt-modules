@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.wizards;
@@ -309,7 +309,7 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
       ( (IWizardPanel) wizardDeckPanel.getWidget( 0 ) ).addWizardPanelListener( this );
       if ( wizardPanels.length == 1 ) { // We only have one item so change the Finish button to ok.
-        finishButton.setText( Messages.getString( "dialog.button.ok" ) );
+        finishButton.setText( Messages.getString( "dialog.button.finish" ) );
       }
 
       updateGUI( 0 );
