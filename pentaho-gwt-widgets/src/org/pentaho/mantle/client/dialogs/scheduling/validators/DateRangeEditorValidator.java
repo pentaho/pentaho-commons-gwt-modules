@@ -12,12 +12,15 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
 
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 import org.pentaho.gwt.widgets.client.controls.DateRangeEditor;
+
+import java.util.Date;
 
 public class DateRangeEditorValidator implements IUiValidator {
 
@@ -32,6 +35,10 @@ public class DateRangeEditorValidator implements IUiValidator {
 
     if ( null == dateRangeEditor.getStartDate() ) {
       isValid = false;
+    } else {
+      if ( CalendarUtil.getDaysBetween( new Date(), dateRangeEditor.getStartDate() ) < 0 ) {
+        isValid = false;
+      }
     }
 
     if ( dateRangeEditor.isEndBy() && ( null == dateRangeEditor.getEndDate() ) ) {

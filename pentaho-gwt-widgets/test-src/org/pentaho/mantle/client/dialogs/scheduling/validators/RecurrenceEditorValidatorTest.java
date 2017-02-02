@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
@@ -23,6 +23,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor;
+
+import java.util.Date;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -37,6 +39,8 @@ public class RecurrenceEditorValidatorTest {
     recurrenceEditor = mock( RecurrenceEditor.class );
     validator = new RecurrenceEditorValidator( recurrenceEditor );
     validator.dateRangeEditorValidator = mock( DateRangeEditorValidator.class );
+    when( recurrenceEditor.getStartDate() ).thenReturn( new Date( System.currentTimeMillis() + 86400000 ) );
+    when( recurrenceEditor.getStartTime() ).thenReturn( "7:12:28 PM" );
   }
 
   @Test
