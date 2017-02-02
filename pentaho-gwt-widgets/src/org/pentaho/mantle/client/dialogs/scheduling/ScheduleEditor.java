@@ -109,6 +109,10 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   protected static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 
+  protected static final String BLOCKOUT_SELECT = "blockout-select";
+
+  protected static final String BLOCKOUT_LABEL = "blockout-label";
+
   public enum ScheduleType {
       //@formatter:off
       RUN_ONCE( 0, Messages.getString( "schedule.runOnce" ) ),
@@ -265,24 +269,30 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       // Units of time Drop Down
       daysListBox = new ListBox();
       daysListBox.getElement().setId( "daysListBox" ); //$NON-NLS-1$
+      daysListBox.addStyleName( BLOCKOUT_SELECT );
       populateListItems( daysListBox, daysList, 0, 365 );
 
       final Label daysLabel = new Label( Messages.getString( "schedule.dayOrDays" ) );
+      daysLabel.addStyleName( BLOCKOUT_LABEL );
       daysLabel.getElement().setAttribute( "for", daysListBox.getElement().getId() ); //$NON-NLS-1$
 
       hoursListBox = new ListBox();
       hoursListBox.getElement().setId( "hoursListBox" ); //$NON-NLS-1$
+      hoursListBox.addStyleName( BLOCKOUT_SELECT );
       populateListItems( hoursListBox, hoursList, 0, 24 );
 
       final Label hoursLabel = new Label( Messages.getString( "schedule.hourOrHours" ) );
+      hoursLabel.addStyleName( BLOCKOUT_LABEL );
       hoursLabel.getElement().setAttribute( "for", hoursListBox.getElement().getId() ); //$NON-NLS-1$
 
       minutesListBox = new ListBox();
       minutesListBox.getElement().setId( "minutesListBox" ); //$NON-NLS-1$
+      minutesListBox.addStyleName( BLOCKOUT_SELECT );
       populateListItems( minutesListBox, minutesList, 0, 60 );
       minutesListBox.setSelectedIndex( 1 ); // default value for Validator
 
       final Label minutesLabel = new Label( Messages.getString( "schedule.minuteOrMinutes" ) );
+      minutesLabel.addStyleName( BLOCKOUT_LABEL );
       minutesLabel.getElement().setAttribute( "for", minutesListBox.getElement().getId() ); //$NON-NLS-1$
 
       final HorizontalPanel durationPanel = new HorizontalPanel();
@@ -375,6 +385,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       // Radio Buttons Panel
       HorizontalPanel radioButtonsPanel = new HorizontalPanel();
       radioButtonsPanel.setVerticalAlignment( HasVerticalAlignment.ALIGN_MIDDLE );
+      radioButtonsPanel.getElement().setId( "radio-buttons-panel" );
       radioButtonsPanel.add( durationRadioButton );
       radioButtonsPanel.add( endTimeRadioButton );
 
@@ -386,7 +397,9 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
       // Blockout period
       CaptionPanel blockoutStartCaptionPanel = new CaptionPanel( Messages.getString( "schedule.startTime" ) );
+      blockoutStartCaptionPanel.setStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
       HorizontalPanel blockoutStartPanel = new HorizontalPanel();
+      blockoutStartPanel.getElement().setId( "blockout-start-panel" );
       blockoutStartPanel.add( getStartTimePicker() );
       timeZonePicker = new ListBox();
       timeZonePicker.setStyleName( "timeZonePicker" );
@@ -399,6 +412,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
       // Ends Caption Panel
       CaptionPanel endCaptionPanel = new CaptionPanel( Messages.getString( "schedule.endsCaptionTitle" ) );
+      endCaptionPanel.setStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
       endCaptionPanel.add( endsPanel );
 
       VerticalPanel blockoutPanel = new VerticalPanel();

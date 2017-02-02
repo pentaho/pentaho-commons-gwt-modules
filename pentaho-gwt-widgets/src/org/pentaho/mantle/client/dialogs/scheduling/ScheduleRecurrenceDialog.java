@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -205,9 +205,9 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     setPixelSize( 475, 465 );
     center();
     if ( ( hasParams || isEmailConfValid ) && ( isBlockoutDialog == false ) ) {
-      finishButton.setText( Messages.getString( "nextStep" ) ); //$NON-NLS-1$
+      finishButton.setText( Messages.getString( "next" ) ); //$NON-NLS-1$
     } else {
-      finishButton.setText( Messages.getString( "ok" ) ); //$NON-NLS-1$
+      finishButton.setText( Messages.getString( "finish" ) ); //$NON-NLS-1$
     }
     setupExisting( jsJob );
 
