@@ -130,6 +130,25 @@ textarea,
   color: #666;
 }
 
+textarea:disabled,
+input:not([type]):disabled,
+input[type="color" i]:disabled,
+input[type="date" i]:disabled,
+input[type="datetime" i]:disabled,
+input[type="datetime-local" i]:disabled,
+input[type="email" i]:disabled,
+input[type="month" i]:disabled,
+input[type="password" i]:disabled,
+input[type="number" i]:disabled,
+input[type="search" i]:disabled,
+input[type="tel" i]:disabled,
+input[type="text" i]:disabled,
+input[type="time" i]:disabled,
+input[type="url" i]:disabled,
+input[type="week" i]:disabled {
+  background-color: #F2F2F2;
+}
+
 div.povdiv input[type='text'] {
   padding: 4px 2px 4px 4px;
 }
@@ -523,7 +542,6 @@ input.end-date-picker {
 input.end-date-picker:disabled {
   background-image: url('./images/calendar-gray.png'), -webkit-linear-gradient(right, #E4E4E4, #E4E4E4 30%, transparent 30%, transparent 100%);
   background-image: url('./images/calendar-gray.png'), linear-gradient(to left, #E4E4E4, #E4E4E4 30%, transparent 30%, transparent 100%);
-  background-color: #F2F2F2;
 }
 
 input.every-txtbox {
