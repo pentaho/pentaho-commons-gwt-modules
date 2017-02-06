@@ -6689,6 +6689,20 @@ div.dijitDateTextBox.dijitTextBox {
   background-image: none;
 }
 
+div#widget_pentaho_common_DateTextBox_0 {
+  margin-top: -3px;
+  display: inline-block;
+}
+
+div#widget_dijit_form_TextBox_1 {
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+span#filterContextMenu {
+    font-size: 14px;
+}
+
 /*Angular Tree control directive*/
 [treecontrol] .treeControlView,
 treecontrol .treeControlView {
