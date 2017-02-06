@@ -166,6 +166,15 @@ input[type='text']#displayNameText {
   padding: 0px 10px;
 }
 
+input#rowsNumberInput,
+div#widget_dijit_form_NumberTextBox_0 {
+    margin-top: 3px;
+}
+
+input#dijit_form_NumberTextBox_0 {
+    height: inherit;
+}
+
 SELECT,
 .gwt-ListBox,
 .timeZonePicker {
