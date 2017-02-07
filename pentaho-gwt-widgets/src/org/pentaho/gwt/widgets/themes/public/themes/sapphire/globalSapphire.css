@@ -623,6 +623,15 @@ input#cron-tb {
   margin-bottom: 15px;
 }
 
+input#AL_fileLabel {
+  width: 335px;
+}
+
+td.valueCell input[type="text"] {
+  width: 320px;
+  margin-left: 3px;
+}
+
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
 button.pentaho-button,
 button.pentaho-button:link,
