@@ -627,6 +627,13 @@ input#AL_fileLabel {
   width: 335px;
 }
 
+input#AL_filePicker {
+  height: 33px;
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: top;
+}
+
 td.valueCell input[type="text"] {
   width: 320px;
   margin-left: 3px;
