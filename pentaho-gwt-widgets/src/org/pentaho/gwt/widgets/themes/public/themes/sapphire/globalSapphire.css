@@ -467,7 +467,7 @@ input[name="REPORT_FORMAT_TYPE"] + br {
 }
 
 input[name="REPORT_FORMAT_TYPE"] {
-  margin: 0 3px 10px 0;
+  margin: 0 3px 10px 1px;
 }
 
 div#reportControlPanel select[style*="overflow-y: scroll"] {
