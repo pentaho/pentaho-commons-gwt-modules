@@ -396,14 +396,18 @@ select#schedule-main-gwt-listbox {
 }
 
 div#promptPanel select,
-table.pentaho-schedule-create select {
+table.pentaho-schedule-create select,
+div.filterDialogMatchContainer select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background: url('images/arrow_down_gray.svg') no-repeat;
   background-size: 12px 12px;
   background-position: right 8px center;
-  padding-right: 25px;
+}
+
+div.filterDialogMatchContainer select{
+  padding-right: 30px;
 }
 
 div#promptPanel select,
@@ -412,7 +416,8 @@ table.pentaho-schedule-create select:not(.date-picker-select) {
 }
 
 div#promptPanel select::-ms-expand,
-table.pentaho-schedule-create select::-ms-expand {
+table.pentaho-schedule-create select::-ms-expand,
+div.filterDialogMatchContainer select::-ms-expand {
   display: none;
 }
 
@@ -2720,13 +2725,12 @@ body.IE>table {
 
 .pentaho-dropdownbutton-outer {
   padding: 4px;
-  background: #888;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AAA), color-stop(0.10, #888), color-stop(0.50, #3f3f3f), color-stop(0.55, #000), color-stop(0.90, #121212));
-  background: -moz-linear-gradient(#AAAAAA, #888888 10%, #3F3F3F 50%, #000000 55%, #121212 90%);
-  border: 1px outset gray;
+  background: #005DA6;
   cursor: pointer;
   font-size: 0px;
   zoom: 1;
+  width: 26px;
+  height: 23px;
 }
 
 .pentaho-dropdownbutton-outer.pentaho-disabled {
@@ -2738,12 +2742,12 @@ body.IE>table {
 }
 
 .pentaho-dropdownbutton-inner {
-  background-image: url('../images/combo_drop_arrow.png');
+  background-image: url('./images/calendar-white.png');
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
-  height: 8px;
-  width: 10px;
+  height: 21px;
+  width: 25px;
   font-size: 0px;
 }
 
@@ -6708,11 +6712,14 @@ div.dijitDateTextBox.dijitTextBox {
 div#widget_pentaho_common_DateTextBox_0 {
   margin-top: -3px;
   display: inline-block;
+  overflow: hidden;
+  height: 31px;
 }
 
 div#widget_dijit_form_TextBox_1 {
     border-radius: 4px;
     margin-left: 5px;
+    background-image: none;
 }
 
 span#filterContextMenu {
