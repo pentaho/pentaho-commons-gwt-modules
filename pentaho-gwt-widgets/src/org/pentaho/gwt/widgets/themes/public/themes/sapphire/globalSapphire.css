@@ -397,7 +397,8 @@ select#schedule-main-gwt-listbox {
 
 div#promptPanel select,
 table.pentaho-schedule-create select,
-div.filterDialogMatchContainer select {
+div.filterDialogMatchContainer select,
+div#standardDialog select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -406,7 +407,8 @@ div.filterDialogMatchContainer select {
   background-position: right 8px center;
 }
 
-div.filterDialogMatchContainer select{
+div.filterDialogMatchContainer select,
+div#standardDialog select {
   padding-right: 30px;
 }
 
@@ -417,7 +419,8 @@ table.pentaho-schedule-create select:not(.date-picker-select) {
 
 div#promptPanel select::-ms-expand,
 table.pentaho-schedule-create select::-ms-expand,
-div.filterDialogMatchContainer select::-ms-expand {
+div.filterDialogMatchContainer select::-ms-expand,
+div#standardDialog select::-ms-expand {
   display: none;
 }
 
@@ -626,22 +629,6 @@ div.cron-label {
 input#cron-tb {
   width: 225px;
   margin-bottom: 15px;
-}
-
-input#AL_fileLabel {
-  width: 335px;
-}
-
-input#AL_filePicker {
-  height: 33px;
-  padding-top: 0;
-  padding-bottom: 0;
-  vertical-align: top;
-}
-
-td.valueCell input[type="text"] {
-  width: 320px;
-  margin-left: 3px;
 }
 
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
