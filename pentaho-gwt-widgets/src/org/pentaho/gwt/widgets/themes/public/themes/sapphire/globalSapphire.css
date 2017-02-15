@@ -398,7 +398,8 @@ select#schedule-main-gwt-listbox {
 div#promptPanel select,
 table.pentaho-schedule-create select,
 div.filterDialogMatchContainer select,
-div#standardDialog select {
+div#standardDialog select:not([size]),
+div#standardDialog select[size="1"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -408,7 +409,8 @@ div#standardDialog select {
 }
 
 div.filterDialogMatchContainer select,
-div#standardDialog select {
+div#standardDialog select:not([size]),
+div#standardDialog select[size="1"] {
   padding-right: 30px;
 }
 
@@ -420,7 +422,8 @@ table.pentaho-schedule-create select:not(.date-picker-select) {
 div#promptPanel select::-ms-expand,
 table.pentaho-schedule-create select::-ms-expand,
 div.filterDialogMatchContainer select::-ms-expand,
-div#standardDialog select::-ms-expand {
+div#standardDialog select:not([size])::-ms-expand,
+div#standardDialog select[size="1"]::-ms-expand {
   display: none;
 }
 
