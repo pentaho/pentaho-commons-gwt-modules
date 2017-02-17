@@ -524,6 +524,14 @@ fieldset.schedule-editor-caption-panel legend {
   padding: 0 2px;
 }
 
+table.parameter_table fieldset.parameter_fieldset {
+  margin-left: -9px;
+}
+
+table.parameter_table fieldset.parameter_fieldset input[type="radio"] {
+  margin-left: 10px;
+}
+
 div#reccurence-label {
   margin-top: 0;
 }
