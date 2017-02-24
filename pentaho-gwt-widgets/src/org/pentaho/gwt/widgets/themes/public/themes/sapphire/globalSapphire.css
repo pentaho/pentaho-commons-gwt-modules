@@ -6952,7 +6952,7 @@ treecontrol.tree-classic li .tree-selected {
 
 .pentahoFormatCombo INPUT.dijitInputInner {
   padding-left: 4px !important; /* only doing this to get past dojo's usage of !important */
-  height: 15px;
+  height: 33px;
 }
 
 .dijitMenu.dijitComboBoxMenu {
@@ -6974,7 +6974,6 @@ treecontrol.tree-classic li .tree-selected {
 
 .tundra .pentahoFormatCombo.dijitComboBox .dijitArrowButton input[type='text'] {
   border: none;
-  height: 15px !important;
 }
 
 /* end styling for formatCombo */
@@ -7832,4 +7831,8 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 .IE11 table.dijitSelect.dijitDownArrowButton td.dijitButtonContents, .IE11 table.dijitSelect.dijitDownArrowButton td.dijitArrowButton {
   background: transparent;
+}
+
+.dialog-content select.form-input {
+  height: 33px;
 }
