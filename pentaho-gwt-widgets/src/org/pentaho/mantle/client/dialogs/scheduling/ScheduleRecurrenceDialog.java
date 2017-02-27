@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2016 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -217,6 +217,8 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     //setHeight("100%"); //$NON-NLS-1$
     setSize( "650px", "450px" );
     addStyleName( "schedule-recurrence-dialog" );
+
+    updateGUI( getIndex() );
   }
 
   private void setupExisting( JsJob jsJob ) {
