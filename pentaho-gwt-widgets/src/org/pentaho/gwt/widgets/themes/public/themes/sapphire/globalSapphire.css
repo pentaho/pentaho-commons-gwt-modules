@@ -5676,8 +5676,9 @@ span.gwt-RadioButton label {
 .tundra .dijitDisabled .dijitEditorIconIndent {
   background-image: url("images/indicator_circle_ball_stop.png");
   background-position: 0;
-  height: 22px;
-  width: 22px;
+  height: 20px;
+  width: 20px;
+  margin: 1px;
 }
 
 .pentaho_dijitEditorIconExport {
