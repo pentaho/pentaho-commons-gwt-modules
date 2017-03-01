@@ -138,7 +138,13 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
           }
         } else if ( jparams.get( i ).getValue().startsWith( "[" ) && jparams.get( i ).getValue().indexOf( "." ) >= 0 ) {
           // mondrian style param
-          urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( jparams.get( i ).getValue().trim() );
+          String param = jparams.get( i ).getValue().trim();
+          if ( param.startsWith( "[[" ) && param.endsWith( "]" ) ) {
+            // singleton array of mondrian style param
+            param = param.substring( 1 );
+            param = param.substring( 0, param.length() - 1 );
+          }
+          urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( param );
         } else if ( jparams.get( i ).getValue().startsWith( "[" ) && jparams.get( i ).getValue().endsWith( "]" ) ) {
           // single value, remove []
           String param = jparams.get( i ).getValue().trim();
