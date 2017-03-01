@@ -12,12 +12,11 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
 import org.pentaho.gwt.widgets.client.utils.StringUtils;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor;
@@ -27,8 +26,6 @@ import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.MinutelyRec
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.MonthlyRecurrenceEditor;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.WeeklyRecurrenceEditor;
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.YearlyRecurrenceEditor;
-
-import java.util.Date;
 
 /**
  * 
@@ -114,19 +111,6 @@ public class RecurrenceEditorValidator implements IUiValidator {
       default:
     }
     isValid &= dateRangeEditorValidator.isValid();
-
-    if ( recurrenceEditor.getStartDate() == null || recurrenceEditor.getStartTime() == null ) {
-      isValid = false;
-    } else {
-      final DateTimeFormat format = DateTimeFormat.getFormat( "MM-dd-yyyy" ); //$NON-NLS-1$
-      final String date = format.format( recurrenceEditor.getStartDate() );
-      final String dateTime = date + " " + recurrenceEditor.getStartTime(); //$NON-NLS-1$
-
-      if ( DateTimeFormat.getFormat( "MM-dd-yyyy hh:mm:ss a" ).parse( dateTime ).before( new Date() ) ) { //$NON-NLS-1$
-        isValid = false;
-      }
-    }
-
     return isValid;
   }
 
