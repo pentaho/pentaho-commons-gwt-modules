@@ -217,8 +217,6 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     //setHeight("100%"); //$NON-NLS-1$
     setSize( "650px", "450px" );
     addStyleName( "schedule-recurrence-dialog" );
-
-    updateGUI( getIndex() );
   }
 
   private void setupExisting( JsJob jsJob ) {
