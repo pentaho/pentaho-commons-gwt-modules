@@ -20,8 +20,6 @@ package org.pentaho.mantle.client.dialogs.scheduling;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
 import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
 import org.pentaho.mantle.client.messages.Messages;
@@ -121,33 +119,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       JsArray<JsJobParam> jparams = editJob.getJobParams();
       for ( int i = 0; i < jparams.length(); i++ ) {
         urlParams += i == 0 ? "?" : "&";
-        if ( jparams.get( i ).getValue().startsWith( "[" ) && jparams.get( i ).getValue().indexOf( "," ) >= 0 ) {
-          // it's an array!
-          StringTokenizer st = new StringTokenizer( jparams.get( i ).getValue(), "[]," );
-          int tokens = st.countTokens();
-          int numParamsAdded = 0;
-          for ( int j = 0; j < tokens; j++ ) {
-            String token = st.tokenAt( j );
-            if ( !StringUtils.isEmpty( token ) ) {
-              if ( numParamsAdded > 0 ) {
-                urlParams += "&";
-              }
-              numParamsAdded++;
-              urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( token.trim() );
-            }
-          }
-        } else if ( jparams.get( i ).getValue().startsWith( "[" ) && jparams.get( i ).getValue().indexOf( "." ) >= 0 ) {
-          // mondrian style param
-          urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( jparams.get( i ).getValue().trim() );
-        } else if ( jparams.get( i ).getValue().startsWith( "[" ) && jparams.get( i ).getValue().endsWith( "]" ) ) {
-          // single value, remove []
-          String param = jparams.get( i ).getValue().trim();
-          param = param.substring( 1 );
-          param = param.substring( 0, param.length() - 1 );
-          urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( param );
-        } else {
-          urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( jparams.get( i ).getValue().trim() );
-        }
+        urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( jparams.get( i ).getValue().trim() );
       }
     }
     setParametersUrl( ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
