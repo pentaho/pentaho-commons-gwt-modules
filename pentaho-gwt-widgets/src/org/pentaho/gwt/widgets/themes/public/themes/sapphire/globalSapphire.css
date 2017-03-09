@@ -399,7 +399,9 @@ div#promptPanel select,
 table.pentaho-schedule-create select,
 div.filterDialogMatchContainer select,
 div#standardDialog select:not([size]),
-div#standardDialog select[size="1"] {
+div#standardDialog select[size="1"],
+div.dialog-content select:not([size]),
+div.dialog-content select[size="1"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -410,7 +412,9 @@ div#standardDialog select[size="1"] {
 
 div.filterDialogMatchContainer select,
 div#standardDialog select:not([size]),
-div#standardDialog select[size="1"] {
+div#standardDialog select[size="1"],
+div.dialog-content select:not([size]),
+div.dialog-content select[size="1"] {
   padding-right: 30px;
 }
 
@@ -423,7 +427,9 @@ div#promptPanel select::-ms-expand,
 table.pentaho-schedule-create select::-ms-expand,
 div.filterDialogMatchContainer select::-ms-expand,
 div#standardDialog select:not([size])::-ms-expand,
-div#standardDialog select[size="1"]::-ms-expand {
+div#standardDialog select[size="1"]::-ms-expand,
+div.dialog-content select:not([size])::-ms-expand,
+div.dialog-content select[size="1"]::-ms-expand {
   display: none;
 }
 
@@ -2764,7 +2770,9 @@ body.IE>table {
 }
 
 .tundra .dijitArrowButtonInner {
-  background: url("images/16x16_down.png") no-repeat scroll 0px center;
+  background: url('images/arrow_down_gray.svg') no-repeat;
+  background-size: 12px 12px;
+  background-position: 1px center !important;
   width: 16px;
   height: 16px;
   margin: 0;
