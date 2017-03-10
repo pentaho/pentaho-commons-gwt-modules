@@ -6955,8 +6955,7 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .pentahoFormatCombo .dijitPlaceHolder {
-  padding-top: 3px;
-  padding-left: 4px;
+  padding-top: 8px;
 }
 
 .pentahoFormatCombo INPUT.dijitInputInner {
