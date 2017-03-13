@@ -2770,12 +2770,16 @@ body.IE>table {
 }
 
 .tundra .dijitArrowButtonInner {
-  background: url('images/arrow_down_gray.svg') no-repeat;
-  background-size: 12px 12px;
-  background-position: 1px center !important;
+  background: url("images/16x16_down.png") no-repeat scroll 0px center;
   width: 16px;
   height: 16px;
   margin: 0;
+}
+
+#measure-properties-dialog .dijitArrowButtonInner {
+  background: url('images/arrow_down_gray.svg') no-repeat;
+  background-size: 12px 12px;
+  background-position: 1px center;
 }
 
 .IE .dialog-content .dijitComboBox .dijitArrowButton {
