@@ -5750,8 +5750,11 @@ span.gwt-RadioButton label {
 
 .pentaho-optionsbutton {
   background: url('images/options.png') no-repeat !important;
+  background-position: center !important;
   height: 22px;
   width: 22px;
+  padding: 2px;
+  border: 1px solid transparent;
 }
 
 .pentaho-optionsdatasourcebutton {
