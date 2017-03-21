@@ -12,16 +12,21 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2015 Pentaho Corporation..  All rights reserved.
+* Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
+import java.util.UUID;
 
+import static org.mockito.Mockito.*;
+
+@RunWith( GwtMockitoTestRunner.class )
 public class GlassPaneTest {
 
   @Test
@@ -52,5 +57,54 @@ public class GlassPaneTest {
     gp.hide();
 
     // no exceptions
+  }
+
+  @Mock
+  private GlassPaneListener listener;
+  @Mock
+  private GlassPaneListener listener2;
+
+
+  @Test
+  public void testRemove() throws Exception {
+    GlassPane gp = GlassPane.getInstance();
+
+    gp.setUuidGenerator( new GlassPane.UUIDGenerator() {
+
+      @Override public String getUniqueId() {
+        return UUID.randomUUID().toString();
+      }
+    } );
+
+
+    final String uuid = gp.addGlassPaneListener( listener );
+    final String uuid2 = gp.addGlassPaneListener( listener2 );
+
+    gp.hide();
+
+    verify( listener, times( 1 ) ).glassPaneHidden();
+    verify( listener2, times( 1 ) ).glassPaneHidden();
+
+    gp.show();
+
+    reset( listener, listener2 );
+
+    gp.removeGlassPaneListenerById( uuid );
+
+    gp.hide();
+
+    verify( listener, times( 0 ) ).glassPaneHidden();
+    verify( listener2, times( 1 ) ).glassPaneHidden();
+
+    gp.show();
+
+    reset( listener, listener2 );
+
+    gp.removeGlassPaneListener( listener2 );
+
+    gp.hide();
+
+    verify( listener, times( 0 ) ).glassPaneHidden();
+    verify( listener2, times( 0 ) ).glassPaneHidden();
   }
 }
