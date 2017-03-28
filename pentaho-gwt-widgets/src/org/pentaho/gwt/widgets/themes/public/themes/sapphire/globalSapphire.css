@@ -192,6 +192,10 @@ SELECT,
   box-sizing: border-box;
 }
 
+SELECT[size] {
+  height: auto;
+}
+
 form SELECT {
   padding: 0 5px;
 }
