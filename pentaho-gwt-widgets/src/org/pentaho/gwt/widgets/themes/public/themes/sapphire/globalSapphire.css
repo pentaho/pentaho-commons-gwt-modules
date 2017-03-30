@@ -190,6 +190,15 @@ SELECT,
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(images/arrow_down_gray.svg) no-repeat;
+  background-size: 12px 12px;
+  background-position: right 8px center
+}
+SELECT::-ms-expand {
+  display: none; /*hides dropdown arrow in IE*/
 }
 
 SELECT[size] {
