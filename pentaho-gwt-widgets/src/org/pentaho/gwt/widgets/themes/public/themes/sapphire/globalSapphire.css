@@ -3972,10 +3972,6 @@ div.dijitDateTextBox.dijitComboBox {
   border: 0;
 }
 
-#tab-dashboard-settings-panel div.panelContent {
-  overflow: hidden;
-}
-
 #tab-dashboard-settings-panel div.panelContent button {
   padding: 6px 14px;
   margin-top: -3px;
