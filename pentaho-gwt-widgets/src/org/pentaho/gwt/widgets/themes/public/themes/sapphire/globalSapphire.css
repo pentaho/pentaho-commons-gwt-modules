@@ -4268,7 +4268,7 @@ button.adminButton {
 /*Overrides Analyzer styles for filter panels*/
 .reportArea #selectionFilterPanel {
   margin-top: 2px;
-  padding: 1px 3px 11px 3px;
+  padding: 1px 3px 13px 3px;
   background-color: transparent;
   border-left: none;
   border-right: none;
