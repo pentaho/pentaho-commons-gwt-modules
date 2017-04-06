@@ -176,10 +176,9 @@ input#dijit_form_NumberTextBox_0 {
 }
 
 SELECT,
-.gwt-ListBox,
-.timeZonePicker {
+.gwt-ListBox {
   border: 1px solid #CCC;
-  padding: 0 10px;
+  padding: 0;
   font-size: 14px;
   overflow: auto;
   border-radius: 4px;
@@ -192,21 +191,21 @@ SELECT,
 }
 SELECT[size="1"],
 SELECT:not([size]),
-.gwt-ListBox,
-.timeZonePicker {
+.gwt-ListBox[size="1"],
+.gwt-ListBox:not([size]) {
   height: 33px;
-}
-SELECT[size="1"],
-SELECT:not([size]) {
+  padding: 0 30px 0 10px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background: url(images/arrow_down_gray.svg) no-repeat;
   background-size: 12px 12px;
-  background-position: right 8px center
+  background-position: right 8px center;
 }
 SELECT[size="1"]::-ms-expand,
-SELECT:not([size])::-ms-expand {
+SELECT:not([size])::-ms-expand,
+.gwt-ListBox[size="1"]::-ms-expand,
+.gwt-ListBox:not([size])::-ms-expand {
   display: none; /*hides dropdown arrow in IE*/
 }
 
@@ -214,9 +213,10 @@ form SELECT {
   padding: 0 5px;
 }
 
-select[multiple],
-.gwt-ListBox[multiple] {
-  padding: 0;
+select option,
+.gwt-ListBox option {
+  padding: 3px 10px;
+  font-family: opensansregular;
 }
 
 .IE .scheduleEditor SELECT {
@@ -225,11 +225,6 @@ select[multiple],
 
 .IE .scheduleEditor FIELDSET TD {
   padding-top: 0px !important;
-}
-
-.gwt-ListBox option {
-  padding: 3px 10px;
-  font-family: opensansregular;
 }
 
 .gwt-Label {
@@ -413,44 +408,6 @@ select#schedule-main-gwt-listbox {
   margin-bottom: 15px;
 }
 
-div#promptPanel select,
-table.pentaho-schedule-create select,
-div.filterDialogMatchContainer select,
-div#standardDialog select:not([size]),
-div#standardDialog select[size="1"],
-div.dialog-content select:not([size]),
-div.dialog-content select[size="1"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: url('images/arrow_down_gray.svg') no-repeat;
-  background-size: 12px 12px;
-  background-position: right 8px center;
-}
-
-div.filterDialogMatchContainer select,
-div#standardDialog select:not([size]),
-div#standardDialog select[size="1"],
-div.dialog-content select:not([size]),
-div.dialog-content select[size="1"] {
-  padding-right: 30px;
-}
-
-div#promptPanel select,
-table.pentaho-schedule-create select:not(.date-picker-select) {
-  padding-right: 25px;
-}
-
-div#promptPanel select::-ms-expand,
-table.pentaho-schedule-create select::-ms-expand,
-div.filterDialogMatchContainer select::-ms-expand,
-div#standardDialog select:not([size])::-ms-expand,
-div#standardDialog select[size="1"]::-ms-expand,
-div.dialog-content select:not([size])::-ms-expand,
-div.dialog-content select[size="1"]::-ms-expand {
-  display: none;
-}
-
 table#email-yes-no-panel {
   margin-bottom: 8px;
 }
@@ -480,8 +437,11 @@ table#email-schedule-panel tr:nth-child(2) input {
 }
 
 div#reportControlPanel select {
-  padding: 0 25px 0 10px;
   margin: 0;
+}
+div#reportControlPanel select[style*="overflow-y: scroll"] {
+  height: auto;
+  background: none;
 }
 
 form#REPORT_FORMAT_TYPE {
@@ -498,12 +458,6 @@ input[name="REPORT_FORMAT_TYPE"] + br {
 
 input[name="REPORT_FORMAT_TYPE"] {
   margin: 0 3px 10px 1px;
-}
-
-div#reportControlPanel select[style*="overflow-y: scroll"] {
-  height: auto;
-  padding: 0;
-  background: none;
 }
 
 table.recur-pattern-hp select {
