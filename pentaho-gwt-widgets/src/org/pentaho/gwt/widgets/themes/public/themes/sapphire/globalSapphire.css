@@ -465,9 +465,12 @@ table.recur-pattern-hp select {
 }
 
 table.pentaho-schedule-create,
-div#promptPanel div.prompt-panel,
 div#toppanelinner {
   padding: 0;
+}
+
+div#promptPanel div.prompt-panel {
+  padding: 4px 0 0 8px;
 }
 
 div#toppanel {
