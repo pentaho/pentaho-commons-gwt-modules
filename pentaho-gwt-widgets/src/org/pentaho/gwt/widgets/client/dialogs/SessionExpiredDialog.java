@@ -18,6 +18,7 @@
 package org.pentaho.gwt.widgets.client.dialogs;
 
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import org.pentaho.gwt.widgets.client.messages.Messages;
@@ -36,10 +37,19 @@ public class SessionExpiredDialog extends PromptDialogBox {
     setCallback( new SessionExpiredDialogCallback() );
   }
 
+  @Override public void center() {
+    super.center();
+    this.getElement().getStyle().setZIndex( Integer.MAX_VALUE );
+    final FocusPanel background = getPageBackground();
+    if ( background != null ) {
+      background.getElement().getStyle().setZIndex( Integer.MAX_VALUE - 1 );
+    }
+  }
+
   private class SessionExpiredDialogCallback implements IDialogCallback {
 
     @Override public void okPressed() {
-      //OK button is always hidden
+      redirectToPUCLogin();
     }
 
     @Override public void cancelPressed() {
@@ -49,7 +59,7 @@ public class SessionExpiredDialog extends PromptDialogBox {
     private void redirectToPUCLogin() {
       final String[] pathArray = Window.Location.getPath().split( "/" );
       if ( null != pathArray && pathArray.length > 1 ) {
-        Window.Location.assign(  "/" + pathArray[ 1 ] + "/Login"  );
+        Window.Location.assign( "/" + pathArray[ 1 ] + "/Login" );
       }
     }
   }
