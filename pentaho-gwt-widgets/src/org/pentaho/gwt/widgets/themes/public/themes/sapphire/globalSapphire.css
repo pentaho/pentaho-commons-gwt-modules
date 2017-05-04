@@ -6843,7 +6843,13 @@ treecontrol.tree-classic li .tree-selected {
   padding-top: 0px;
   color: #333;
   font-size: 13px;
-  background-color: #fefde7;
+  overflow: hidden;
+  max-height: 57px;
+  line-height: 19px;
+}
+
+#standardDialog .dialogMessageBar {
+  margin-bottom: 10px;
 }
 
 #standardDialog #dialogMessageBar2 {
