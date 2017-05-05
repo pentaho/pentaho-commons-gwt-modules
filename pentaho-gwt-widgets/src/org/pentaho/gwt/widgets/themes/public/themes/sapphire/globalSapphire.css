@@ -2110,8 +2110,8 @@ body.IE>table {
 }
 
 .pentaho-listitem-hover {
-  background-color: #005da6;
-  color: #FFF;
+  background-color: #E6EFF6;
+  color: #333;
   cursor: pointer;
 }
 
