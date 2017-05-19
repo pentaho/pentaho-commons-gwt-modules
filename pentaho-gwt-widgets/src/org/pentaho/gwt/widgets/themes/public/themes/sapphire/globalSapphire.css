@@ -2326,24 +2326,12 @@ body.IE>table {
 }
 
 .pentaho-closebutton-big {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background: url('images/close_big.png') no-repeat center;
   cursor: pointer;
-}
-
-.pentaho-closebutton-big.pentaho-imagebutton-disabled {
-  width: 30px;
-  height: 30px;
-  background: url('images/close_big.png') no-repeat center;
-  cursor: default;
-}
-
-.pentaho-closebutton-big.pentaho-imagebutton-hover {
-  width: 30px;
-  height: 30px;
-  background: url('images/close_big_hover.png') no-repeat center;
-  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 .pentaho-undobutton {
