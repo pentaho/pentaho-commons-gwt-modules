@@ -7817,3 +7817,11 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .dialog-content select.form-input {
   height: 33px;
 }
+
+#protocolPanel tr td {
+  display: block;
+}
+
+#protocolPanel select {
+  width: 220px;
+}

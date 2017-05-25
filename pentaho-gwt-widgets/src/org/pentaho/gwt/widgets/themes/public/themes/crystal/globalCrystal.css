@@ -5588,3 +5588,12 @@ treecontrol.tree-classic li .tree-selected {
   content: ":";
 }
 /* end BACKLOG-8759 Makes usage of colons in property labels theme dependent */
+
+#protocolPanel tr td {
+  display: block;
+}
+
+#protocolPanel select {
+  width: 228px;
+  padding: 4px 4px 2px 4px;
+}
