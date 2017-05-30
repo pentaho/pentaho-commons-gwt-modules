@@ -5595,5 +5595,5 @@ treecontrol.tree-classic li .tree-selected {
 
 #protocolPanel select {
   width: 228px;
-  padding: 4px 4px 2px 4px;
+  height: 23px;
 }
