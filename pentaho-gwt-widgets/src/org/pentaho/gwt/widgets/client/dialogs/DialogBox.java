@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.dialogs;
@@ -144,6 +144,10 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
     // Notify listeners that we're hiding a dialog (re-show PDFs, flash).
     GlassPane.getInstance().hide();
+  }
+
+  protected static FocusPanel getPageBackground() {
+    return pageBackground;
   }
 
 }
