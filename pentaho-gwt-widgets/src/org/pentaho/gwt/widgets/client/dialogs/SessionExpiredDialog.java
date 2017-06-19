@@ -17,7 +17,7 @@
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
-import com.google.gwt.user.client.Window;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -34,35 +34,37 @@ public class SessionExpiredDialog extends PromptDialogBox {
     final Label contentString = new Label( Messages.getString( "dialog.sessionExpired.content" ) );
     content.add( contentString );
     setContent( content );
-    setCallback( new SessionExpiredDialogCallback() );
   }
 
   @Override public void center() {
-    super.center();
     this.getElement().getStyle().setZIndex( Integer.MAX_VALUE );
     final FocusPanel background = getPageBackground();
     if ( background != null ) {
       background.getElement().getStyle().setZIndex( Integer.MAX_VALUE - 1 );
     }
+    setEventListener( this.cancelButton.getElement() );
+    super.center();
   }
 
-  private class SessionExpiredDialogCallback implements IDialogCallback {
-
-    @Override public void okPressed() {
-      redirectToPUCLogin();
-    }
-
-    @Override public void cancelPressed() {
-      redirectToPUCLogin();
-    }
-
-    private void redirectToPUCLogin() {
-      final String[] pathArray = Window.Location.getPath().split( "/" );
-      if ( null != pathArray && pathArray.length > 1 ) {
-        Window.Location.assign( "/" + pathArray[ 1 ] + "/Login" );
+  /**
+   * When data-access or other some plugin is loaded, its GWT module sets its own event listener with capture=true.
+   * This might prevent Mantle's listener to be executed.
+   *
+   * We have to add our listener manually, also with capture=true,
+   * and intercept an event before it goes to plugin' listener which cannot handle it.
+   */
+  public native void setEventListener( Element element )
+  /*-{
+    var funct = function(event) {
+      if (event.target === element) {
+        event.stopPropagation();
+        var pathArray = $wnd.location.pathname.split( '/' );
+        if ( null != pathArray && pathArray.length > 1 ) {
+          $wnd.location.assign( '/' + pathArray[ 1 ] + '/Login' );
+        }
       }
-    }
-  }
-
+    };
+    $wnd.addEventListener( 'click', funct, true );
+  }-*/;
 
 }
