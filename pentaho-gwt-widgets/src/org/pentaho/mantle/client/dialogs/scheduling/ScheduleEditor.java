@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -26,6 +26,7 @@ import org.pentaho.gwt.widgets.client.utils.CronParser;
 import org.pentaho.gwt.widgets.client.utils.EnumException;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil.TimeOfDay;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
+
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.TemporalValue;
 import org.pentaho.mantle.client.messages.Messages;
 
@@ -35,12 +36,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -740,6 +743,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       String itemText = scheduleCombo.getItemText( i );
       if ( itemText.equals( scheduleType.toString() ) ) {
         scheduleCombo.setSelectedIndex( i );
+        DomEvent.fireNativeEvent( Document.get().createChangeEvent(), scheduleCombo );
       }
     }
     selectScheduleTypeEditor( scheduleType );
