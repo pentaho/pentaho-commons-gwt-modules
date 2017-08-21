@@ -221,9 +221,13 @@ public class PromptDialogBox extends DialogBox {
     }
   }
 
-  private native boolean isIEBrowser()
+  private boolean isIEBrowser() {
+    return getUserAgent().contains( "msie" );
+  }
+
+  private static native String getUserAgent()
   /*-{
-    return !!document.documentMode;
+    return navigator.userAgent.toLowerCase();
   }-*/;
 
 }
