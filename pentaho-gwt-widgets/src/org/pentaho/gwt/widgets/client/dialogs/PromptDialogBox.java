@@ -211,6 +211,7 @@ public class PromptDialogBox extends DialogBox {
       this.getElement().getStyle().setZIndex( Integer.MAX_VALUE );
       final FocusPanel background = getPageBackground();
       if ( background != null ) {
+        background.getElement().getStyle().setZIndex( Integer.MAX_VALUE - 1 );
         Frame iFrame = new Frame( "about:blank" );
         Style iFrameStyle = iFrame.getElement().getStyle();
         iFrameStyle.setWidth( 100, Style.Unit.PCT );
