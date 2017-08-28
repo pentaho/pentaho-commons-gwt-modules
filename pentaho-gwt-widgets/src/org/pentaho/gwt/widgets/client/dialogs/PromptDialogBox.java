@@ -12,19 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
-import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -203,27 +200,4 @@ public class PromptDialogBox extends DialogBox {
     }
     hide();
   }
-
-  @Override
-  public void center() {
-    super.center();
-    if ( isIEBrowser() ) {
-      this.getElement().getStyle().setZIndex( Integer.MAX_VALUE );
-      final FocusPanel background = getPageBackground();
-      if ( background != null ) {
-        Frame iFrame = new Frame( "about:blank" );
-        Style iFrameStyle = iFrame.getElement().getStyle();
-        iFrameStyle.setWidth( 100, Style.Unit.PCT );
-        iFrameStyle.setHeight( 100, Style.Unit.PCT );
-        iFrameStyle.setBorderStyle( Style.BorderStyle.NONE );
-        background.add( iFrame );
-      }
-    }
-  }
-
-  private native boolean isIEBrowser()
-  /*-{
-    return !!document.documentMode;
-  }-*/;
-
 }
