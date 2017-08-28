@@ -52,13 +52,13 @@ html.bootstrap body {
 a,
 a:link,
 a:visited {
-  color: #005EAA;
+  color: #CC0000;
 }
 
 a,
 a:active,
 a:hover {
-  color: #0F2B5B;
+  color: #7C0B2B;
   text-decoration: none;
 }
 
@@ -1192,6 +1192,13 @@ input#FT_rankCount {
   margin: 0px;
   padding-bottom: 0px;
   white-space: nowrap;
+  color: #333333;
+}
+
+.pentaho-tabBar .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
+  margin: 0px;
+  padding-bottom: 0px;
+  white-space: nowrap;
   color: #CC0000;
 }
 
@@ -2109,7 +2116,7 @@ body.IE>table {
 }
 
 .pentaho-listitem-selected {
-  background-color: #0F2B5B;
+  background-color: #CC0000;
   color: #FFF;
   cursor: default;
   outline: none;
@@ -2122,8 +2129,8 @@ body.IE>table {
 }
 
 .pentaho-listitem-hover {
-  background-color: #E6EFF6;
-  color: #333;
+  background-color: #CC0000;
+  color: #FFF;
   cursor: pointer;
 }
 
@@ -2141,8 +2148,8 @@ body.IE>table {
 }
 
 .pentaho-menuitem.pentaho-menuitem-hover {
-  background-color: #E6EFF6;
-  color: #000000;
+  background-color: #CC0000;
+  color: #FFF;
   padding: 2px;
   cursor: default;
 }
@@ -2681,7 +2688,7 @@ body.IE>table {
 
 .splashtitle {
   padding-top: 0px;
-  color: #005da6;
+  color: #333333;
   font-family: opensanslight, Helvetica, Arial, Sans serif;
   font-size: 16px;
   vertical-align: top;
