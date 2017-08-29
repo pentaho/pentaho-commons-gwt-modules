@@ -7736,8 +7736,8 @@ button.pentaho-button.uninstallButton:hover,
 button.pentaho-button.uninstallButton:active {
   line-height: 32px;
   padding: 0 14px;
-  border: 1px solid #005DA6;
-  background: #005DA6;
+  border: 1px solid #cc0000;
+  background: transparent;
   filter: none;
 }
 
@@ -7778,9 +7778,9 @@ button.pentaho-button.installVersionButton.upToDate:link,
 button.pentaho-button.installVersionButton.upToDate:visited,
 button.pentaho-button.installVersionButton.upToDate:hover,
 button.pentaho-button.installVersionButton.upToDate:active {
-  background: #FFFFFF;
-  border-color: #005DA6;
-  color: #005DA6;
+  background: transparent;
+  border-color: #cc0000;
+  color: #cc0000;
   filter: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -7834,7 +7834,7 @@ body.bootstrap .modal.confirmationDialog {
 .bootstrap .filteredPluginsContainer ul > li .pluginName,
 body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginHeaderInfo .pluginName,
 body.bootstrap .modal.pluginDetailDialog .pluginDetail .sectionHeader {
-  color: #005EAA;
+  color: #414141;
 }
 
 .filterBar {
@@ -7847,7 +7847,7 @@ body.bootstrap .modal.pluginDetailDialog .pluginDetail .sectionHeader {
 .bootstrap .modal.pluginDetailDialog a,
 .bootstrap .modal.pluginDetailDialog a:link,
 .bootstrap .modal.pluginDetailDialog a:visited {
-  color: #005EAA;
+  color: #414141;
 }
 
 .bootstrap .filterBar a:hover,
@@ -7927,4 +7927,10 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 #protocolPanel select {
   width: 220px;
+}
+
+.datePickerDays .datePickerDayIsValue,
+.datePickerDays .datePickerDayIsHighlighted {
+  background-color: #CC0000;
+  color: #FFF;
 }

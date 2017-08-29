@@ -684,7 +684,7 @@ body{
   color: #888888;
 }
 .datePickerDayIsValue {
-  background: #CC0000;
+  background: #777777;
   color: #FFFFFF;
 }
 .datePickerDayIsDisabled {
@@ -692,8 +692,7 @@ body{
   font-style: italic;
 }
 .datePickerDayIsHighlighted {
-  background: #CC0000;
-  color: #FFFFFF;
+  background: #F0E68C;
 }
 .datePickerDayIsValueAndHighlighted {
   background: #bbddd9;
@@ -807,7 +806,7 @@ input[type=password]:focus {
 }
 
 .gwt-ScrollTable .dataTable .cellTableOddRow {
-  background-color: #fafafa;
+  background-color: #f0f0f0;
 }
 
 .gwt-ScrollTable .dataTable-disabled tr {
