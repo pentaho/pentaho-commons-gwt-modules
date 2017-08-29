@@ -294,6 +294,12 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
+.gwt-PasswordTextBox,
+input,
+input[type="password"]:focus {
+	border: 1px solid #414141;
+}
+
 .scroll-panel {
   position: relative;
   overflow: auto;
@@ -549,8 +555,8 @@ fieldset#schedule-start-date-input input,
 input.start-date-picker,
 input.end-date-picker {
   width: 131px;
-  background-image: url('./images/calendar-white.png'), -webkit-linear-gradient(right, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
-  background-image: url('./images/calendar-white.png'), linear-gradient(to left, #005DA6, #005DA6 30%, transparent 30%, transparent 100%);
+  background-image: url('./images/calendar-white.png'), -webkit-linear-gradient(right, #CC0000, #CC0000 30%, transparent 30%, transparent 100%);
+  background-image: url('./images/calendar-white.png'), linear-gradient(to left, #CC0000, #CC0000 30%, transparent 30%, transparent 100%);
   background-repeat: no-repeat;
   background-position: 90% 47%;
 }
@@ -1606,7 +1612,7 @@ input:focus {
 }
 
 .toolbar-button.toolbar-button-hovering {
-  border: 1px solid #FFF;
+  border: 1px solid #CC0000;
   background: none;
   cursor: pointer;
   margin: 0px;
@@ -1618,7 +1624,7 @@ input:focus {
 
 .IE .toolbar-button.toolbar-button-hovering {
   background: none;
-  border: 1px solid #FFF;
+  border: 1px solid #CC0000;
 }
 
 .toolbar-toggle-button {
@@ -1634,7 +1640,7 @@ input:focus {
 }
 
 .toolbar-toggle-button-down {
-  border: 1px solid #FFF;
+  border: 1px solid #333333;
   margin: 0px;
   width: 22px;
   height: 22px;
@@ -1648,13 +1654,13 @@ input:focus {
 }
 
 .toolbar-toggle-button-down-hovering {
-  border: 1px solid #FFF;
+  border: 1px solid #CC0000;
   margin: 0px;
   cursor: pointer;
 }
 
 .IE .toolbar-toggle-button-down-hovering {
-  border: 1px solid #E6EFF6 !important;
+  border: 1px solid #CC0000 !important;
   background: none;
   margin: 0px;
   cursor: pointer;
@@ -1662,7 +1668,7 @@ input:focus {
 
 .toolbar-toggle-button-hovering {
   background: rgba(255, 255, 255, 0.2);
-  border: 1px solid #E6EFF6;
+  border: 1px solid #CC0000;
   cursor: pointer;
   margin: 0px;
 }
@@ -3732,6 +3738,13 @@ div.dijitDateTextBox.dijitComboBox {
   width: 22px;
 }
 
+.fileBrowserColumn .body div.folder > div.element:hover > div.icon,
+.fileBrowserColumn .body div.folder.empty > div.element:hover > div.icon,
+.fileBrowserColumn .body div.folder.open.empty > div.element:hover > div.icon {
+  background: url("images/folder_closed_white.png") no-repeat;
+  width: 22px;
+}
+
 .fileBrowserColumn .body div.folder.selected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.empty.selected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty.selected > div.element > div.icon,
@@ -3751,6 +3764,12 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.trash.trash.selected > div.element > div.icon,
 .fileBrowserColumn .body div.trash.trash.empty.selected > div.element > div.icon,
 .fileBrowserColumn .body div.trash.trash.open.empty.selected > div.element > div.icon {
+  background: url("images/trash_white.png") no-repeat;
+}
+
+.fileBrowserColumn .body div.trash.trash > div.element:hover > div.icon,
+.fileBrowserColumn .body div.trash.trash.empty > div.element:hover > div.icon,
+.fileBrowserColumn .body div.trash.trash.open.empty > div.element:hover > div.icon {
   background: url("images/trash_white.png") no-repeat;
 }
 
@@ -3863,6 +3882,16 @@ div.dijitDateTextBox.dijitComboBox {
   margin: 0 5px;
 }
 
+.fileBrowserColumn .body div.folder > div.element:hover > div.expandCollapse {
+  background-image: url("images/folders-arrows.png");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+}
+
+
 .fileBrowserColumn .body div.folder.selected > div.element > div.expandCollapse,
 .fileBrowserColumn .body div.folder.secondarySelected > div.element > div.expandCollapse {
   background-position: bottom right;
@@ -3876,9 +3905,21 @@ div.dijitDateTextBox.dijitComboBox {
   width: 20px;
 }
 
+.fileBrowserColumn .body div.folder.open > div.element:hover > div.expandCollapse {
+  background-image: url("images/folders-arrows.png");
+  background-repeat: no-repeat;
+  background-position: top right;
+  height: 20px;
+  width: 20px;
+}
+
 .fileBrowserColumn .body div.folder.open.selected > div.element > div.expandCollapse,
 .fileBrowserColumn .body div.folder.open.secondarySelected > div.element > div.expandCollapse {
   background-position: top right;
+}
+
+.fileBrowserColumn .body div.folder.empty > div.element:hover > div.expandCollapse {
+  background-image: none;
 }
 
 .file-xanalyzer {
@@ -3988,7 +4029,7 @@ div.dijitDateTextBox.dijitComboBox {
   border: 0;
   font-size: 16px;
   line-height: 22px;
-  color: #005EAA;
+  color: #333333;
   padding: 0;
   margin-bottom: 10px;
   cursor: default;
@@ -4013,6 +4054,19 @@ div.dijitDateTextBox.dijitComboBox {
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
 }
+
+.fileBrowserColumn .body .folder .element:hover {
+  color: #FFF;
+  background-color: #CC0000;
+}
+
+/*.fileBrowserColumn .body .folder .element:hover .icon {
+  background: url(images/folder_closed_white.png) no-repeat !important;
+}
+
+.fileBrowserColumn .body .folder .element:hover .expandCollapse {
+  background: url(images/folders-arrows.png) no-repeat bottom right !important;
+}*/
 
 #fileBrowserButtons .body {
   top: 51px;
@@ -5072,9 +5126,16 @@ span.gwt-RadioButton label {
   background-color: #CC0000;
 }
 
+.custom-list-item-hover .gwt-Label {
+  color: #FFFFFF;
+}
+
 .custom-list-item-selected {
   background-color: #CC0000;
-  color: #FFF !important;
+}
+
+.custom-list-item-selected .gwt-Label {
+  color: #FFFFFF;
 }
 
 .objectlist a:hover {
@@ -5777,7 +5838,7 @@ span.gwt-RadioButton label {
 .tundra .dijitToolbar#toolbar .dijitButtonChecked,
 .tundra .dijitToolbar#toolbar .dijitToggleButtonChecked {
   background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid #3D6380;
+  border: 1px solid #CC0000;
 }
 
 .tundra .dijitToolbar .dijitButtonHover,
@@ -5793,7 +5854,7 @@ span.gwt-RadioButton label {
 
   /* TODO: change this from Hover to Selected so that button is still highlighted while drop down is being used */
   background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid #3D6380;
+  border: 1px solid #CC0000;
 }
 
 .pentaho-datasourcebutton {
@@ -7561,8 +7622,8 @@ button#preview[disabled]:active {
 #buttonWrapper button:hover,
 #buttonWrapper button:active,
 #buttonWrapper button:focus {
-  background: #7C0B2B;
-  border-color: #7C0B2B;
+  background: #CC0000;
+  border-color: #CC0000;
   filter: none;
   color: #FFF;
 }
