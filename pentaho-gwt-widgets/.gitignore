@@ -1,8 +1,0 @@
-/test-lib
-/war
-/bin
-/dev-lib
-/dist
-.DS_Store
-.idea
-*.iml

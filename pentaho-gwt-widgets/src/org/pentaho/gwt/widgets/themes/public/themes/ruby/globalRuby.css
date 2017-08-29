@@ -236,6 +236,11 @@ select option,
   color: #333333;
 }
 
+.custom-list-item-selected .gwt-Label,
+.custom-list-item-hover .gwt-Label {
+  color: #FFFFFF;
+}
+
 *:focus {
   outline: none;
 }
