@@ -224,6 +224,11 @@ select option,
   font-family: opensansregular;
 }
 
+select option:focus, select option:hover {
+  color: #FFFFFF ;
+  background-color: #CC0000 ;
+}
+
 .IE .scheduleEditor SELECT {
   margin: 2px;
 }
@@ -6301,6 +6306,19 @@ div.listbox .pentaho-listbox {
   background-image: url('images/16x16_down.png');
 }
 
+#fieldListTree .gem .gemMenuHandle {
+  float: right;
+  background-image: url('images/16x16_down_white.png');
+}
+
+#fieldListTree .gem.over .gemMenuHandle {
+  background-image: url('images/16x16_down_white.png');
+}
+
+#fieldListTree .gem.over .gemMenuHandle.over {
+  background-image: url('images/16x16_down_white.png');
+}
+
 #getting-started-message-content #title {
   font-size: 22px;
   color: #414141;
@@ -7040,17 +7058,27 @@ treecontrol.tree-classic li .tree-selected {
   background: url('images/gemBar_level.png') no-repeat;
 }
 
+.fieldListTree .attribute:hover {
+  background: url('images/gemBar_level_white.png') no-repeat;
+}
+
 .fieldListTree .measure {
   background: url('images/gemBar_measure.png') no-repeat;
 }
 
+.fieldListTree .measure:hover {
+  background: url('images/gemBar_measure_white.png') no-repeat;
+}
+
 /* styling for formatCombo */
 .dijitMenuItemHover {
-  background-color: #E6EFF6;
+  background-color: #cc0000;
+  color: #ffffff;
 }
 
 .dijitMenuItemSelected {
-  background-color: #E6EFF6;
+  background-color: #cc0000;
+  color: #ffffff;
 }
 
 .pentahoFormatCombo .dijitPlaceHolder {
@@ -7604,7 +7632,7 @@ button#preview[disabled]:active {
   width: 16px;
   height: 8px;
   border-radius: 16px 16px 0 0;
-  border-color: #005da6;
+  border-color: #cc0000;
   border-style: solid;
   border-width: 2px;
   border-bottom-width: 0;
