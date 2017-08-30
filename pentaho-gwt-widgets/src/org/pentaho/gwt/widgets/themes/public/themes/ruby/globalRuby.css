@@ -1160,7 +1160,7 @@ input#FT_rankCount {
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel:hover {
-  color: #7C0B2B;
+  color: #CC0000;
 }
 
 #sidepaneltabset .pentaho-tabWidgetLabel {
@@ -3977,9 +3977,9 @@ div.dijitDateTextBox.dijitComboBox {
 
 /* #8ac06e; */
 .highlight-shadow {
-  -moz-box-shadow: 0 0 0px 1px #005da6;
-  -webkit-box-shadow: 0 0 0px 1px #005da6;
-  box-shadow: 0 0 0px 1px #005da6;
+  -moz-box-shadow: 0 0 0px 1px #CC0000;
+  -webkit-box-shadow: 0 0 0px 1px #CC0000;
+  box-shadow: 0 0 0px 1px #CC0000;
 }
 
 .panelContent {
@@ -5150,7 +5150,7 @@ span.gwt-RadioButton label {
 
 .objectlist-selected a {
   cursor: pointer;
-  background-color: #0F2B5B;
+  background-color: #CC0000;
   padding-left: 3px;
   padding-right: 3px;
   color: #FFF;
@@ -5160,7 +5160,7 @@ span.gwt-RadioButton label {
 
 .objectlist-selected a:hover {
   color: #FFF;
-  background-color: #7C0B2B;
+  background-color: #CC0000;
 }
 
 #launch-widget-body {
