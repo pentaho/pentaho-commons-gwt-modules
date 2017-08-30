@@ -670,6 +670,10 @@ span.button-add-condition {
   border: 1px solid #cc0000;
 }
 
+button.pentaho-button#uploadMetaButton {
+  line-height:10px;
+}
+
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
@@ -1160,7 +1164,7 @@ input#FT_rankCount {
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel:hover {
-  color: #7C0B2B;
+  color: #CC0000;
 }
 
 #sidepaneltabset .pentaho-tabWidgetLabel {
@@ -1203,7 +1207,7 @@ input#FT_rankCount {
   margin: 0px;
   padding-bottom: 0px;
   white-space: nowrap;
-  color: #333333;
+  color: #CC0000;
 }
 
 .pentaho-tabBar .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
@@ -1645,7 +1649,6 @@ input:focus {
 }
 
 .toolbar-toggle-button-down {
-  border: 1px solid #333333;
   margin: 0px;
   width: 22px;
   height: 22px;
@@ -3783,6 +3786,7 @@ div.dijitDateTextBox.dijitComboBox {
   margin: 0 5px;
 }
 
+.fileBrowserColumn .body .file:hover .icon,
 .fileBrowserColumn .body .file.selected .icon {
   background: url("images/file_generic_white.png") no-repeat;
   margin: 0 5px;
@@ -3792,6 +3796,7 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/file_url.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.url,
 .fileBrowserColumn .body .file.selected .icon.url {
   background: url("images/file_url_white.png") no-repeat;
 }
@@ -3800,6 +3805,7 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/file_analysis.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.xanalyzer,
 .fileBrowserColumn .body .file.selected .icon.xanalyzer {
   background: url("images/file_analysis_white.png") no-repeat;
 }
@@ -3809,8 +3815,10 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/file_dashboard.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.selected .icon.xdash,
-.fileBrowserColumn .body .file.selected .xdash {
+.fileBrowserColumn .body .file:hover .icon.xdash,
+.fileBrowserColumn .body .file:hover .xdash,
+.fileBrowserColumn .body .file:hover .icon.xdash,
+.fileBrowserColumn .body .file:hover .xdash {
   background: url("images/file_dashboard_white.png") no-repeat;
 }
 
@@ -3819,6 +3827,8 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/kettle_transformation.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.ktr,
+.fileBrowserColumn .body .file:hover .ktr,
 .fileBrowserColumn .body .file.selected .icon.ktr,
 .fileBrowserColumn .body .file.selected .ktr {
   background: url("images/kettle_transformation_white.png") no-repeat;
@@ -3829,6 +3839,8 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/file_action.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.xaction,
+.fileBrowserColumn .body .file:hover .xaction,
 .fileBrowserColumn .body .file.selected .icon.xaction,
 .fileBrowserColumn .body .file.selected .xaction {
   background: url("images/file_action_white.png") no-repeat;
@@ -3839,6 +3851,8 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/prptFile.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.prpt,
+.fileBrowserColumn .body .file:hover .prpt,
 .fileBrowserColumn .body .file.selected .icon.prpt,
 .fileBrowserColumn .body .file.selected .prpt {
   background: url("images/prptFile_white.png") no-repeat;
@@ -3849,6 +3863,8 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/prptiFile.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.prpti,
+.fileBrowserColumn .body .file:hover .prpti,
 .fileBrowserColumn .body .file.selected .icon.prpti,
 .fileBrowserColumn .body .file.selected .prpti {
   background: url("images/prptiFile_white.png") no-repeat;
@@ -3873,6 +3889,8 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/cdf_20.png") no-repeat;
 }
 
+.fileBrowserColumn .body .file:hover .icon.xcdf.xcdf,
+.fileBrowserColumn .body .file:hover .xcdf.xcdf,
 .fileBrowserColumn .body .file.selected .icon.xcdf.xcdf,
 .fileBrowserColumn .body .file.selected .xcdf.xcdf {
   background: url("images/cdf_20_white.png") no-repeat;
@@ -4085,6 +4103,11 @@ div.dijitDateTextBox.dijitComboBox {
   padding: 8px 0;
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
+}
+
+.fileBrowserColumn .body .file:hover {
+  background-color: #CC0000;
+  color: #FFF;
 }
 
 .fileBrowserColumn .body .folder.selected > .element {
@@ -6001,6 +6024,7 @@ span.gwt-RadioButton label {
   width: 365px !important;
   overflow: hidden;
   padding: 5px;
+  border-radius: 4px;
 }
 
 #propertiesPanelTitle {
@@ -7120,15 +7144,15 @@ html.bootstrap .popover.bottom .arrow:after {
 .bootstrap .btn.btn-large:hover,
 .bootstrap .btn.btn-large:active,
 .bootstrap .btn.btn-large:focus {
-  background: #CC0000;
+  background: transparent;
   filter: none;
   font-size: 14px;
   line-height: 20px;
-  color: #FFF;
+  color: #CC0000;
   padding: 9px 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   border-radius: 4px;
-  border: 0 none;
+  border: 1px solid #CC0000;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -7140,7 +7164,8 @@ html.bootstrap .popover.bottom .arrow:after {
 .bootstrap .btn.btn-large:hover,
 .bootstrap .btn.btn-large:active,
 .bootstrap .btn.btn-large:focus {
-  background: #7C0B2B;
+  background: #CC0000;
+  color: #FFF;
 }
 
 /* lighter gray with white text */
@@ -7163,6 +7188,7 @@ html.bootstrap .popover.bottom .arrow:after {
 #uploadAnalysisButton {
   padding-top: 5px;
   padding-bottom: 5px;
+  line-height: 18px;
 }
 
 #domainIdText {
@@ -7247,7 +7273,7 @@ select#datasources {
 .bootstrap .widget-panel#launch-widget .nav-tabs > li > a:hover,
 .bootstrap .widget-panel#launch-widget .nav-tabs > li > a:active,
 .bootstrap .widget-panel#launch-widget .nav-tabs > li > a:focus {
-  color: #7C0B2B;
+  color: #CC0000;
 }
 
 .bootstrap .widget-panel#getting-started .nav-tabs > li.active > a,
