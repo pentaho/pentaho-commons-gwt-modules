@@ -7007,7 +7007,8 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .leaf-widget .gwt-TreeItem-selected > table {
-  background-color: #E6EFF6;
+  background-color: #CC0000;
+  color: white;
 }
 
 .leaf-widget .leaf-widget-hidden .gwt-TreeItem > table {
