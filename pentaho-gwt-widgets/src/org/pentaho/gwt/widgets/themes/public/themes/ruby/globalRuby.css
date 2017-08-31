@@ -7021,7 +7021,8 @@ treecontrol.tree-classic li .tree-selected {
   color: #333;
 }
 
-.leaf-widget .gwt-TreeItem-selected > table {
+.leaf-widget .gwt-TreeItem-selected > table,
+.leaf-widget .gwt-TreeItem:hover > table {
   background-color: #CC0000;
   color: white;
 }
@@ -7038,6 +7039,16 @@ treecontrol.tree-classic li .tree-selected {
   opacity: .7;
   font-style: italic;
   background-color: #dbdbdb;
+}
+
+.gwt-TreeItem-selected .icon-folder,
+.gwt-TreeItem:hover .icon-folder {
+  background: url(images/folder_16_white.png) no-repeat;
+}
+
+.open > table .gwt-TreeItem-selected .icon-folder,
+.open > table .gwt-TreeItem-selected .icon-folder {
+  background: url(images/folder_16_white-open.png) no-repeat;
 }
 
 .gwt-TreeItem > table > tbody > tr > td:first-child {
