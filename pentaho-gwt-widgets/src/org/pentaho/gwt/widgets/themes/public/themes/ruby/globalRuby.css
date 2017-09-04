@@ -4393,8 +4393,8 @@ button.adminButton {
 }
 
 .schedulesPanel .cellTableCell.cellTableHoveredRowCell:not(.cellTableSelectedRowCell) {
-  background: #CC0000;
-  color: #FFF;
+  background: #cccccc;
+  color: #666666;
 }
 
 .schedulesPanel #blockout-table,
