@@ -3761,7 +3761,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.folder > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element:hover > div.icon {
-  background: url("images/folder_closed_white.png") no-repeat;
+  background: url("images/folder_closed.png") no-repeat;
   width: 22px;
 }
 
@@ -3790,7 +3790,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.trash.trash > div.element:hover > div.icon,
 .fileBrowserColumn .body div.trash.trash.empty > div.element:hover > div.icon,
 .fileBrowserColumn .body div.trash.trash.open.empty > div.element:hover > div.icon {
-  background: url("images/trash_white.png") no-repeat;
+  background: url("images/trash.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon {
@@ -7021,15 +7021,15 @@ treecontrol.tree-classic li .tree-selected {
   color: #333;
 }
 
+.leaf-widget .gwt-TreeItem:hover > table {
+  background-color: #CCCCCC;
+  color: #414141;
+}
+
 .leaf-widget .gwt-TreeItem-selected > table,
 .leaf-widget .gwt-TreeItem-selected:hover > table {
   background-color: #CC0000;
   color: #FFFFFF;
-}
-
-.leaf-widget .gwt-TreeItem:hover > table {
-  background-color: #CCCCCC;
-  color: #414141;
 }
 
 .leaf-widget .leaf-widget-hidden .gwt-TreeItem > table {
@@ -7046,13 +7046,27 @@ treecontrol.tree-classic li .tree-selected {
   background-color: #dbdbdb;
 }
 
-.gwt-TreeItem-selected .icon-folder,
 .gwt-TreeItem:hover .icon-folder {
+  background: url(images/folder_16.png) no-repeat;
+}
+
+.gwt-TreeItem-selected:hover .icon-folder {
   background: url(images/folder_16_white.png) no-repeat;
 }
 
-.open > table .gwt-TreeItem-selected .icon-folder,
+.gwt-TreeItem-selected .icon-folder {
+  background: url(images/folder_16_white.png) no-repeat;
+}
+
+.open > table .gwt-TreeItem-selected:hover .icon-folder {
+  background: url(images/folder_16-open.png) no-repeat;
+}
+
 .open > table .gwt-TreeItem-selected .icon-folder {
+  background: url(images/folder_16_white-open.png) no-repeat;
+}
+
+.open > table .gwt-TreeItem-selected:hover .icon-folder {
   background: url(images/folder_16_white-open.png) no-repeat;
 }
 
