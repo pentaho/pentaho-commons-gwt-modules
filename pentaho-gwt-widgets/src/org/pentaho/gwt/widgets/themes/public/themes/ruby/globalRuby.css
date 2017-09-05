@@ -58,7 +58,7 @@ a:visited {
 a,
 a:active,
 a:hover {
-  color: #7C0B2B;
+  color: #CCCCCC;
   text-decoration: none;
 }
 
@@ -225,8 +225,8 @@ select option,
 }
 
 select option:focus, select option:hover {
-  color: #FFFFFF;
-  background-color: #CC0000;
+  color: #414141;
+  background-color: #CCCCCC;
 }
 
 .IE .scheduleEditor SELECT {
@@ -654,7 +654,7 @@ button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
 span.button-add-condition {
-  background: transparent;
+  background: white;
   filter: none;
   font-size: 14px;
   line-height: 20px;
@@ -1219,7 +1219,7 @@ input#FT_rankCount {
   margin: 0px;
   padding-bottom: 0px;
   white-space: nowrap;
-  color: #CC0000;
+  color: #414141;
 }
 
 .pentaho-tabBar .pentaho-tabWidget-selected .pentaho-tabWidgetLabel {
@@ -2155,8 +2155,8 @@ body.IE>table {
 }
 
 .pentaho-listitem-hover {
-  background-color: #CC0000;
-  color: #FFF;
+  background-color: #CCCCCC;
+  color: #414141;
   cursor: pointer;
 }
 
@@ -2174,8 +2174,8 @@ body.IE>table {
 }
 
 .pentaho-menuitem.pentaho-menuitem-hover {
-  background-color: #CC0000;
-  color: #FFF;
+  background-color: #CCCCCC;
+  color: #414141;
   padding: 2px;
   cursor: default;
 }
@@ -4534,33 +4534,33 @@ td.tab-spacer-wrapper {
 }
 
 .gwt-ScrollTable .dataTable tr.hovering {
-  background: #E6EFF6;
+  background: #CCCCCC;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable-disabled tr.hovering {
-  background: #E6EFF6;
+  background: #CCCCCC;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable td.hovering {
-  background: #E6EFF6;
+  background: #CCCCCC;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
 
 .gwt-ScrollTable .dataTable tr.selected,
 .gwt-ScrollTable .dataTable tr.selected:hover {
-  background: #7C0B2B !important;
+  background: #CC0000 !important;
   color: #FFF !important;
   cursor: default;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
-  background: #CC0000;
-  color: #FFF;
+  background: #CCCCCC;
+  color: #414141;
   cursor: pointer;
 }
 
@@ -4580,20 +4580,20 @@ td.tab-spacer-wrapper {
 }
 
 .gwt-Tree .gwt-TreeItem-selected {
-  background-color: #E6EFF6;
+  background-color: #CC0000;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
 
 .tree-item-custom-widget-selected {
-  background-color: #E6EFF6;
+  background-color: #CC0000;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
 
 .tree-item-custom-widget-drop-hover {
-  border: 1px solid #8ab3c6;
-  background-color: #E6EFF6;
+  border: 1px solid #848484;
+  background-color: #CCCCCC;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
@@ -4650,7 +4650,7 @@ td.tab-spacer-wrapper {
 }
 
 .soria .dojoxGridRowSelected {
-  background-color: #7C0B2B !important;
+  background-color: #CC0000 !important;
   color: #fff;
 }
 
@@ -5163,11 +5163,11 @@ span.gwt-RadioButton label {
 }
 
 .custom-list-item-hover {
-  background-color: #CC0000;
+  background-color: #CCCCCC;
 }
 
 .custom-list-item-hover .gwt-Label {
-  color: #FFFFFF;
+  color: #414141;
 }
 
 .custom-list-item-selected {
@@ -5179,8 +5179,8 @@ span.gwt-RadioButton label {
 }
 
 .objectlist a:hover {
-  background: #CC0000;
-  color: #FFF;
+  background: #CCCCCC;
+  color: #414141;
 }
 
 .objectlist-selected a {
@@ -6909,7 +6909,7 @@ treecontrol.tree-classic li.tree-normal i {
 
 [treecontrol].tree-classic li .tree-selected,
 treecontrol.tree-classic li .tree-selected {
-  background-color: #E6EFF6;
+  background-color: #CC0000;
 }
 
 .bootstrap .pentaho-toggle .btn.toggle-on.active {
@@ -7022,9 +7022,14 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .leaf-widget .gwt-TreeItem-selected > table,
-.leaf-widget .gwt-TreeItem:hover > table {
+.leaf-widget .gwt-TreeItem-selected:hover > table {
   background-color: #CC0000;
-  color: white;
+  color: #FFFFFF;
+}
+
+.leaf-widget .gwt-TreeItem:hover > table {
+  background-color: #CCCCCC;
+  color: #414141;
 }
 
 .leaf-widget .leaf-widget-hidden .gwt-TreeItem > table {
