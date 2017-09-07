@@ -58,7 +58,7 @@ a:visited {
 a,
 a:active,
 a:hover {
-  color: #CCCCCC;
+  color: #7C0B2B;
   text-decoration: none;
 }
 
@@ -409,7 +409,7 @@ div.sectionBar {
 }
 
 div.filterCondition table {
-  background-color: #CCDFED !important;
+  background-color: #ffffff; !important;
 }
 
 div.filterConditionAdd {
