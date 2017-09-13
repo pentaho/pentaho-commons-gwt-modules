@@ -7944,7 +7944,7 @@ body.bootstrap .modal.confirmationDialog {
 }
 
 .bootstrap .filteredPluginsContainer ul > li:hover {
-    background: #E6EFF6;
+    background: #CCCCCC;
 }
 
 .bootstrap.admin-perspective .pentaho-tab-deck-panel {
@@ -8004,14 +8004,14 @@ body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailTop .pluginD
 }
 
 .infoBar {
-  background: #005DA6;
-  border-color: #005DA6;
+  background: #CC0000;
+  border-color: #CC0000;
 }
 
 .infoBar:hover,
 .infoBar:active {
-  background: #0F2B5B;
-  border-color: #0F2B5B;
+  background: #7C0B2B;
+  border-color: #7C0B2B;
 }
 
 body.bootstrap .modal.pluginDetailDialog .pluginDetail {
