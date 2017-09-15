@@ -2142,8 +2142,7 @@ body.IE>table {
 }
 
 .pentaho-listitem-selected {
-  background-color: #CC0000;
-  color: #FFF;
+  background-color: rgba(204, 0, 0, 0.2);
   cursor: default;
   outline: none;
 }
@@ -2155,7 +2154,7 @@ body.IE>table {
 }
 
 .pentaho-listitem-hover {
-  background-color: #CCCCCC;
+  background-color: #E0E0E0;
   color: #414141;
   cursor: pointer;
 }
@@ -2737,7 +2736,7 @@ body.IE>table {
 
 .pentaho-dropdownbutton-outer {
   padding: 4px;
-  background: #005DA6;
+  background: #CC0000;
   cursor: pointer;
   font-size: 0px;
   zoom: 1;
@@ -3747,7 +3746,7 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body div.folder.open.selected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.secondarySelected > div.element > div.icon {
-  background: url("images/folder_open_white.png") no-repeat;
+  background: url("images/folder_open.png") no-repeat;
   width: 22px;
 }
 
@@ -3771,7 +3770,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.folder.secondarySelected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.empty.secondarySelected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty.secondarySelected > div.element > div.icon {
-  background: url("images/folder_closed_white.png") no-repeat;
+  background: url("images/folder_closed.png") no-repeat;
   width: 22px;
 }
 
@@ -3784,7 +3783,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.trash.trash.selected > div.element > div.icon,
 .fileBrowserColumn .body div.trash.trash.empty.selected > div.element > div.icon,
 .fileBrowserColumn .body div.trash.trash.open.empty.selected > div.element > div.icon {
-  background: url("images/trash_white.png") no-repeat;
+  background: url("images/trash.png") no-repeat;
 }
 
 .fileBrowserColumn .body div.trash.trash > div.element:hover > div.icon,
@@ -3800,7 +3799,7 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file:hover .icon,
 .fileBrowserColumn .body .file.selected .icon {
-  background: url("images/file_generic_white.png") no-repeat;
+  background: url("images/file_generic.png") no-repeat;
   margin: 0 5px;
 }
 
@@ -3810,7 +3809,7 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file:hover .icon.url,
 .fileBrowserColumn .body .file.selected .icon.url {
-  background: url("images/file_url_white.png") no-repeat;
+  background: url("images/file_url.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.xanalyzer {
@@ -3819,7 +3818,7 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file:hover .icon.xanalyzer,
 .fileBrowserColumn .body .file.selected .icon.xanalyzer {
-  background: url("images/file_analysis_white.png") no-repeat;
+  background: url("images/file_analysis.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.xdash,
@@ -3831,7 +3830,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file:hover .xdash,
 .fileBrowserColumn .body .file:hover .icon.xdash,
 .fileBrowserColumn .body .file:hover .xdash {
-  background: url("images/file_dashboard_white.png") no-repeat;
+  background: url("images/file_dashboard.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.ktr,
@@ -3843,7 +3842,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file:hover .ktr,
 .fileBrowserColumn .body .file.selected .icon.ktr,
 .fileBrowserColumn .body .file.selected .ktr {
-  background: url("images/kettle_transformation_white.png") no-repeat;
+  background: url("images/kettle_transformation.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.xaction,
@@ -3855,7 +3854,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file:hover .xaction,
 .fileBrowserColumn .body .file.selected .icon.xaction,
 .fileBrowserColumn .body .file.selected .xaction {
-  background: url("images/file_action_white.png") no-repeat;
+  background: url("images/file_action.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.prpt,
@@ -3867,7 +3866,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file:hover .prpt,
 .fileBrowserColumn .body .file.selected .icon.prpt,
 .fileBrowserColumn .body .file.selected .prpt {
-  background: url("images/prptFile_white.png") no-repeat;
+  background: url("images/prptFile.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.prpti,
@@ -3879,7 +3878,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file:hover .prpti,
 .fileBrowserColumn .body .file.selected .icon.prpti,
 .fileBrowserColumn .body .file.selected .prpti {
-  background: url("images/prptiFile_white.png") no-repeat;
+  background: url("images/prptiFile.png") no-repeat;
 }
 
 .fileBrowserColumn .body .file .icon.trashFolder {
@@ -3905,7 +3904,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file:hover .xcdf.xcdf,
 .fileBrowserColumn .body .file.selected .icon.xcdf.xcdf,
 .fileBrowserColumn .body .file.selected .xcdf.xcdf {
-  background: url("images/cdf_20_white.png") no-repeat;
+  background: url("images/cdf_20.png") no-repeat;
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.expandCollapse {
@@ -4091,8 +4090,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .folder .element:hover {
-  color: #FFF;
-  background-color: #CC0000;
+  background-color: #E0E0E0;
 }
 
 /*.fileBrowserColumn .body .folder .element:hover .icon {
@@ -4118,23 +4116,19 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .file:hover {
-  background-color: #CC0000;
-  color: #FFF;
+  background-color: #E0E0E0;
 }
 
 .fileBrowserColumn .body .folder.selected > .element {
-  background: #7C0B2B;
-  color: #FFF;
+  background: rgba(204, 0, 0, 0.2);
 }
 
 .fileBrowserColumn .body .folder.secondarySelected > .element {
-  background: #7C0B2B;
-  color: #FFF;
+  background: rgba(204, 0, 0, 0.2);
 }
 
 .fileBrowserColumn .body .file.selected {
-  background: #cc0000;
-  color: #FFF;
+  background: rgba(204, 0, 0, 0.2);
 }
 
 #fileBrowserButtons {
@@ -4580,7 +4574,7 @@ td.tab-spacer-wrapper {
 }
 
 .gwt-Tree .gwt-TreeItem-selected {
-  background-color: #CC0000;
+  background-color: rgba(204, 0, 0, 0.2);
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
@@ -4644,13 +4638,12 @@ td.tab-spacer-wrapper {
 }
 
 .soria .dojoxGridRowOver .dojoxGridCell {
-  background-color: #CC0000;
-  color: #fff;
+  background-color: #E0E0E0;
   cursor: pointer;
 }
 
 .soria .dojoxGridRowSelected {
-  background-color: #CC0000 !important;
+  background-color: rgba(204, 0, 0, 0.2) !important;
   color: #fff;
 }
 
@@ -5179,23 +5172,21 @@ span.gwt-RadioButton label {
 }
 
 .objectlist a:hover {
-  background: #CCCCCC;
+  background: #E0E0E0;
   color: #414141;
 }
 
 .objectlist-selected a {
   cursor: pointer;
-  background-color: #CC0000;
+  background-color: rgba(204, 0, 0, 0.2);
   padding-left: 3px;
   padding-right: 3px;
-  color: #FFF;
   vertical-align: top;
   font-size: 12px;
 }
 
 .objectlist-selected a:hover {
-  color: #FFF;
-  background-color: #CC0000;
+  background-color: #E0E0E0;
 }
 
 #launch-widget-body {
@@ -6315,15 +6306,15 @@ div.listbox .pentaho-listbox {
 
 #fieldListTree .gem .gemMenuHandle {
   float: right;
-  background-image: url('images/16x16_down_white.png');
+  background-image: url('images/16x16_down.png');
 }
 
 #fieldListTree .gem.over .gemMenuHandle {
-  background-image: url('images/16x16_down_white.png');
+  background-image: url('images/16x16_down.png');
 }
 
 #fieldListTree .gem.over .gemMenuHandle.over {
-  background-image: url('images/16x16_down_white.png');
+  background-image: url('images/16x16_down.png');
 }
 
 #getting-started-message-content #title {
@@ -6708,6 +6699,14 @@ div.listbox .pentaho-listbox {
   color: #FFF;
 }
 
+.dijitCalendarContainer .dijitCalendarCurrentMonth.pentaho-listitem-hover,
+.dijitCalendarContainer .dijitCalendarCurrentMonth.pentaho-listitem-hover span,
+.dijitCalendarContainer .dijitCalendarCurrentMonth.dijitCalendarHoveredDate,
+.dijitCalendarContainer .dijitCalendarCurrentMonth.dijitCalendarHoveredDate span {
+  background-color: #CC0000;
+  color: #FFF;
+}
+
 .dijitCalendarMonthMenu.dijitMenu {
   background-color: #FFF;
   border: 2px solid #CCC;
@@ -6726,12 +6725,12 @@ div.listbox .pentaho-listbox {
 }
 
 .dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabelHover {
-  background-color: #CC0000;
-  color: #FFF;
+  background-color: #E0E0E0;
+  color: #000;
 }
 
 .dijitCalendarMonthMenu.dijitMenu .dijitCalendarMonthLabelHover:active {
-  background-color: #CC0000;
+  background-color: #E0E0E0;
 }
 
 .dijitCalendarContainer .dijitCalendarDayLabelTemplate {
@@ -6909,7 +6908,7 @@ treecontrol.tree-classic li.tree-normal i {
 
 [treecontrol].tree-classic li .tree-selected,
 treecontrol.tree-classic li .tree-selected {
-  background-color: #CC0000;
+  background-color: rgba(204, 0, 0, 0.2);
 }
 
 .bootstrap .pentaho-toggle .btn.toggle-on.active {
@@ -7022,14 +7021,13 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .leaf-widget .gwt-TreeItem:hover > table {
-  background-color: #CCCCCC;
+  background-color: #E0E0E0;
   color: #414141;
 }
 
 .leaf-widget .gwt-TreeItem-selected > table,
 .leaf-widget .gwt-TreeItem-selected:hover > table {
-  background-color: #CC0000;
-  color: #FFFFFF;
+  background-color: rgba(204, 0, 0, 0.2);
 }
 
 .leaf-widget .leaf-widget-hidden .gwt-TreeItem > table {
@@ -7051,11 +7049,11 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16_white.png) no-repeat;
+  background: url(images/folder_16.png) no-repeat;
 }
 
 .gwt-TreeItem-selected .icon-folder {
-  background: url(images/folder_16_white.png) no-repeat;
+  background: url(images/folder_16.png) no-repeat;
 }
 
 .open > table .gwt-TreeItem-selected:hover .icon-folder {
@@ -7063,11 +7061,11 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .open > table .gwt-TreeItem-selected .icon-folder {
-  background: url(images/folder_16_white-open.png) no-repeat;
+  background: url(images/folder_16-open.png) no-repeat;
 }
 
 .open > table .gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16_white-open.png) no-repeat;
+  background: url(images/folder_16-open.png) no-repeat;
 }
 
 .gwt-TreeItem > table > tbody > tr > td:first-child {
@@ -7105,7 +7103,7 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .fieldListTree .attribute:hover {
-  background: url('images/gemBar_level_white.png') no-repeat;
+  background: url('images/gemBar_level.png') no-repeat;
 }
 
 .fieldListTree .measure {
@@ -7113,18 +7111,16 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .fieldListTree .measure:hover {
-  background: url('images/gemBar_measure_white.png') no-repeat;
+  background: url('images/gemBar_measure.png') no-repeat;
 }
 
 /* styling for formatCombo */
 .dijitMenuItemHover {
-  background-color: #cc0000;
-  color: #ffffff;
+  background-color: #E0E0E0;
 }
 
 .dijitMenuItemSelected {
-  background-color: #cc0000;
-  color: #ffffff;
+  background-color: #E0E0E0;
 }
 
 .pentahoFormatCombo .dijitPlaceHolder {
@@ -8052,7 +8048,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .datePickerDays .datePickerDayIsValue,
 .datePickerDays .datePickerDayIsHighlighted {
   background-color: #CC0000;
-  color: #FFF;
+  color: #FFFFFF;
 }
 
 #datasourceInfoBox .custom-list {
