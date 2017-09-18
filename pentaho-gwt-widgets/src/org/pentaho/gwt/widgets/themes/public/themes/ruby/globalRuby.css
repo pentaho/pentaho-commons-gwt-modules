@@ -41,34 +41,30 @@
 html,
 body,
 html.bootstrap body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   font-family: OpenSansRegular, sans-serif;
   font-size: 14px;
   background: transparent;
   color: #333;
 }
 
-a,
-a:link,
-a:visited {
-  color: #CC0000;
-}
-
-a,
-a:active,
-a:hover {
+a, a:link {
   color: #7C0B2B;
   text-decoration: none;
 }
 
+a:active, a:hover {
+  text-decoration: underline;
+}
+
 div {
-  outline: 0px;
+  outline: 0;
   hideFocus: true;
 }
 
 img {
-  outline: 0px;
+  outline: 0;
   -moz-user-focus: none;
   user-focus: none;
 }
@@ -93,7 +89,7 @@ legend {
 
 fieldset,
 fieldset.xul-fieldset {
-  padding: 0px;
+  padding: 0;
   width: auto;
   border: 1px solid #CCC;
 }
