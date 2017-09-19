@@ -237,11 +237,6 @@ select option:focus, select option:hover {
   color: #333333;
 }
 
-.custom-list-item-selected .gwt-Label,
-.custom-list-item-hover .gwt-Label {
-  color: #FFFFFF;
-}
-
 *:focus {
   outline: none;
 }
@@ -2069,7 +2064,7 @@ body.IE>table {
 
 /* ======================= File Chooser Styles ========================= */
 .pentaho-file-chooser-selection {
-  background-color: #dbdbdb;
+  background-color: rgba(204, 0, 0, 0.2);
 }
 
 /* ======================= Launcher Styles ========================= */
@@ -3541,6 +3536,10 @@ div.dijitDateTextBox.dijitComboBox {
   line-height: 26px;
 }
 
+.fileChooserCell:hover:not(.pentaho-file-chooser-selection) {
+  background-color: #E0E0E0;
+}
+
 .fileChooserCell img {
   display: block;
   margin: 2px 0;
@@ -4543,13 +4542,12 @@ td.tab-spacer-wrapper {
 
 .gwt-ScrollTable .dataTable tr.selected,
 .gwt-ScrollTable .dataTable tr.selected:hover {
-  background: #CC0000 !important;
-  color: #FFF !important;
+  background: rgba(204, 0, 0, 0.2) !important;
   cursor: default;
 }
 
 .gwt-ScrollTable .dataTable tr:hover {
-  background: #CCCCCC;
+  background: #E0E0E0;
   color: #414141;
   cursor: pointer;
 }
@@ -4575,10 +4573,14 @@ td.tab-spacer-wrapper {
   -webkit-transition: all 600ms;
 }
 
-.tree-item-custom-widget-selected {
-  background-color: #CC0000;
+.tree-item-custom-widget-selected, .tree-item-custom-widget-selected:hover {
+  background-color: rgba(254,0,0,0.2) !important;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
+}
+
+.tree-item-custom-widget:hover:not(.tree-item-custom-widget-selected) {
+  background-color: #E0E0E0;
 }
 
 .tree-item-custom-widget-drop-hover {
@@ -4640,7 +4642,6 @@ td.tab-spacer-wrapper {
 
 .soria .dojoxGridRowSelected {
   background-color: rgba(204, 0, 0, 0.2) !important;
-  color: #fff;
 }
 
 /* cells */
@@ -5152,7 +5153,7 @@ span.gwt-RadioButton label {
 }
 
 .custom-list-item-hover {
-  background-color: #CCCCCC;
+  background-color: #E0E0E0;
 }
 
 .custom-list-item-hover .gwt-Label {
@@ -5160,11 +5161,7 @@ span.gwt-RadioButton label {
 }
 
 .custom-list-item-selected {
-  background-color: #CC0000;
-}
-
-.custom-list-item-selected .gwt-Label {
-  color: #FFFFFF;
+  background-color: rgba(204, 0, 0, 0.2);
 }
 
 .objectlist a:hover {
@@ -8049,4 +8046,8 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 #datasourceInfoBox .custom-list {
   border-radius: 4px;
+}
+
+.hyperlink {
+  color: #7C0B2B;
 }
