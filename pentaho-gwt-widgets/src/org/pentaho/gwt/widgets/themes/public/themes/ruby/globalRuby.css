@@ -807,6 +807,18 @@ div#FilterPanel .pentaho-toggle-button-horizontal {
   padding: 0 6px;
 }
 
+.pentaho-toggle-button-down + .pentaho-toggle-button-down,
+.pentaho-toggle-button-down-disabled + .pentaho-toggle-button-down,
+.pentaho-toggle-button-down-hovering + .pentaho-toggle-button-down,
+.pentaho-toggle-button-up:hover + .pentaho-toggle-button-down,
+.pentaho-toggle-button-up:hover + .pentaho-toggle-button-down-disabled,
+.pentaho-toggle-button-up:hover + .pentaho-toggle-button-down-hovering,
+.pentaho-toggle-button-down + .pentaho-toggle-button-up:hover,
+.pentaho-toggle-button-down-disabled + .pentaho-toggle-button-up:hover,
+.pentaho-toggle-button-down-hovering + .pentaho-toggle-button-up:hover {
+    border-left: 1px solid white;
+}
+
 .IE .pentaho-toggle-button-down,
 .IE .pentaho-toggle-button-down-disabled {
 
