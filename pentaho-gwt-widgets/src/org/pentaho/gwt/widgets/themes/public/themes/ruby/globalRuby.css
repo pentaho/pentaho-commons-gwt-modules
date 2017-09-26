@@ -4830,7 +4830,8 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   box-shadow: none;
   background: #ffffff;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); /* IE6-9 */
-  color: #1973BC;
+  color: #7C0B2B;
+  border: none;
 }
 
 .IE #selectAll:hover, .IE #selectAll:active,
@@ -4839,7 +4840,7 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 #selectAll:hover, #selectAll:active,
 #tempPreviewButton:hover, #tempPreviewButton:active,
 #preview:hover, #preview:active {
-  color: #0f2b5b;
+  color: #7C0B2B;
 }
 
 .IE #createJoinButton,
