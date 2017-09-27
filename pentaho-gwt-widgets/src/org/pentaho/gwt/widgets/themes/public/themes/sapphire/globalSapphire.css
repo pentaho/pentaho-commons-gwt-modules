@@ -3772,13 +3772,27 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .file .icon.ktr,
-.fileBrowserColumn .body .file .ktr {
-  background: url("images/kettle_transformation.png") no-repeat;
+.fileBrowserColumn .body .file .ktr,
+.fileBrowserColumn .body .file:hover .icon.ktr,
+.fileBrowserColumn .body .file:hover .ktr {
+  background: url("images/kettle_transformation.png") no-repeat 3px;
 }
 
 .fileBrowserColumn .body .file.selected .icon.ktr,
 .fileBrowserColumn .body .file.selected .ktr {
-  background: url("images/kettle_transformation_white.png") no-repeat;
+  background: url("images/kettle_transformation_white.png") no-repeat 3px;
+}
+
+.fileBrowserColumn .body .file .icon.kjb,
+.fileBrowserColumn .body .file .kjb,
+.fileBrowserColumn .body .file:hover .icon.kjb,
+.fileBrowserColumn .body .file:hover .kjb {
+  background: url("images/kettle_job.png") no-repeat 3px;
+}
+
+.fileBrowserColumn .body .file.selected .icon.kjb,
+.fileBrowserColumn .body .file.selected .kjb {
+  background: url("images/kettle_job_white.png") no-repeat 3px;
 }
 
 .fileBrowserColumn .body .file .icon.xaction,
