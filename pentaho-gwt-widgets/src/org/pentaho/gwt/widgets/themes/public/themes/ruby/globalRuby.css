@@ -4598,7 +4598,7 @@ td.tab-spacer-wrapper {
 }
 
 .tree-item-custom-widget-selected, .tree-item-custom-widget-selected:hover {
-  background-color: rgba(254,0,0,0.2) !important;
+  background-color: rgba(204,0,0,0.2) !important;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
 }
