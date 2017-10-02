@@ -3781,6 +3781,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file.selected .icon.ktr,
 .fileBrowserColumn .body .file.selected .ktr {
   background: url("images/kettle_transformation.png") no-repeat -15px;
+  margin-left: 7px;
 }
 
 .fileBrowserColumn .body .file .icon.kjb,
@@ -3793,6 +3794,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file.selected .icon.kjb,
 .fileBrowserColumn .body .file.selected .kjb {
   background: url("images/kettle_job.png") no-repeat -15px;
+  margin-left: 7px;  
 }
 
 .fileBrowserColumn .body .file .icon.xaction,
