@@ -4406,7 +4406,7 @@ button.adminButton {
 }
 
 .schedulesPanel .cellTableCell.cellTableHoveredRowCell:not(.cellTableSelectedRowCell) {
-  background: #cccccc;
+  background: #E0E0E0;
   color: #666666;
 }
 
