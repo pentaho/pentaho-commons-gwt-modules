@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Portions Copyright 2008-2013 Pentaho Corporation.  All rights reserved.
+ * Portions Copyright 2008-2017 Hitachi Vantara.  All rights reserved.
  * Portions Copyright 2009 - Fred Sauer
  */
 

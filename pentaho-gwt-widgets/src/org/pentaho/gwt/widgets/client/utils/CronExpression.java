@@ -15,13 +15,13 @@
  *   a- Removed all non-GWT friendly classes (Locale, Calendar, StringTokenizer, ObjectOutputStream, etc.
  *   b- Re-implemented the buildExpression method using split instead of StringTokenizer
  *   c- Externalized all strings to the i18n package
- *   d- Code-formatted to meet Pentaho standards
+ *   d- Code-formatted to meet Hitachi Vantara standards
  *   e- Removed extraneous helper methods not needed for cron validation
  *
  * These changes were expressly made to allow GWT compilation (read Javascript translation) for validation of
  * Quartz-specific cron expressions. All other comments and attributions remain intact.
  *
- * Copyright 2012 Pentaho Corporation.  All rights reserved.
+ * Copyright 2012 - 2017 Hitachi Vantara.  All rights reserved.
  *
  ***********************************************************************************************************************
  */
