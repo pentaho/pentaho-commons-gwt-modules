@@ -37,13 +37,13 @@ public class SessionExpiredDialog extends PromptDialogBox {
   }
 
   @Override public void center() {
+    super.center();
     this.getElement().getStyle().setZIndex( Integer.MAX_VALUE );
     final FocusPanel background = getPageBackground();
     if ( background != null ) {
       background.getElement().getStyle().setZIndex( Integer.MAX_VALUE - 1 );
     }
     setEventListener( this.cancelButton.getElement() );
-    super.center();
   }
 
   /**
