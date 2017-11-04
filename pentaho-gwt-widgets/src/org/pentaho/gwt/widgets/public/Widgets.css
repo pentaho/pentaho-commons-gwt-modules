@@ -931,6 +931,30 @@ input[type=password]:focus {
    width: 18px;
 }
 
+div.schedule-name-preview {
+  text-align: center;
+  margin-bottom: 9px;
+  font-style: italic;
+}
+
+.schedule-timestamp-listbox {
+  margin-left: 10px;
+  margin-bottom: 15px;
+  width: 265px;
+}
+
+.schedule-caption-panel {
+  margin-top: 5px;
+}
+
+#schedule-name-input {
+  margin-bottom: 15px;
+}
+
+#generated-content-location {
+  margin-bottom: 15px;
+}
+
 .validation-textbox-image-panel {
 
 }

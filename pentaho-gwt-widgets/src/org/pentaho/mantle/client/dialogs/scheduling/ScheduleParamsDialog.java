@@ -138,6 +138,37 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     for ( int i = 0; i < schedulingParams.length(); i++ ) {
       params.set( i, new JSONObject( schedulingParams.get( i ) ) );
     }
+
+    if ( jobSchedule.get( "appendDateFormat" ) != null ) {
+      String dateFormat = jobSchedule.get( "appendDateFormat" ).toString();
+      dateFormat = dateFormat.substring( 1, dateFormat.length() - 1 ); // get rid of ""
+      JsArrayString appendDateFormat = (JsArrayString) JavaScriptObject.createArray().cast();
+      appendDateFormat.push( dateFormat );
+      JsSchedulingParameter jspDateFormat = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
+      jspDateFormat.setName( "appendDateFormat" );
+      jspDateFormat.setStringValue( appendDateFormat );
+      jspDateFormat.setType( "string" );
+
+      params.set( params.size(), new JSONObject( jspDateFormat ) );
+    }
+
+    if ( jobSchedule.get( "overwriteFile" ) != null ) {
+      String overwriteFile = jobSchedule.get( "overwriteFile" ).toString();
+      overwriteFile = overwriteFile.substring( 1, overwriteFile.length() - 1 );
+      boolean overwrite = Boolean.valueOf( overwriteFile ).booleanValue();
+
+      if ( overwrite ) {
+        JsArrayString autoCreateUniqueFilenameValue = (JsArrayString) JavaScriptObject.createArray().cast();
+        autoCreateUniqueFilenameValue.push( String.valueOf( !overwrite ) );
+
+        JsSchedulingParameter jspOverwrite = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
+        jspOverwrite.setName( "autoCreateUniqueFilename" );
+        jspOverwrite.setStringValue( autoCreateUniqueFilenameValue );
+        jspOverwrite.setType( "boolean" );
+        params.set( params.size(), new JSONObject( jspOverwrite ) );
+      }
+    }
+
     return params;
   }
 
@@ -165,6 +196,14 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       showScheduleEmailDialog( scheduleParams );
     } else {
       hide();
+
+      if ( jobSchedule.containsKey( "appendDateFormat" ) ) {
+        jobSchedule.put( "appendDateFormat", null ); // will be stored in 'jobParameters'
+      }
+      if ( jobSchedule.containsKey( "overwriteFile" ) ) {
+        jobSchedule.put( "overwriteFile", null );
+      }
+
       JSONObject scheduleRequest = (JSONObject) JSONParser.parseStrict( jobSchedule.toString() );
       scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$
 
