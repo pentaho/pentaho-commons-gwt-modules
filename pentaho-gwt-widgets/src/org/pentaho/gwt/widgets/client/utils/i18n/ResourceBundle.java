@@ -101,6 +101,10 @@ public class ResourceBundle {
     this.localeName = StringUtils.defaultIfEmpty( Window.Location.getParameter( "locale" ), getLanguagePreference() ); //$NON-NLS-1$
   }
 
+  public ResourceBundle( String localeName ) {
+    this.localeName = StringUtils.defaultIfEmpty( localeName, getLanguagePreference() ); //$NON-NLS-1$
+  }
+
   /**
    * The MessageBundle class fetches localized properties files by using the GWT RequestBuilder against the supplied
    * path. Ideally the path should be relative, but absolute paths are accepted. When the ResourceBundle has fetched and
@@ -276,9 +280,9 @@ public class ResourceBundle {
           // 3. fetch bundleName_lang_country.properties
 
           // need to match case-insensitive on country
-          if( !isSupportedLanguage( localeName ) ) {
+          if ( !isSupportedLanguage( localeName ) ) {
             // try to switch the case on the trailing characters
-            if( isSupportedLanguage( st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase() ) ) {
+            if ( isSupportedLanguage( st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase() ) ) {
               localeName = st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase();
             }
           }
