@@ -20,18 +20,23 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
-
 import org.pentaho.gwt.widgets.client.filechooser.FileChooser.FileChooserMode;
 import org.pentaho.gwt.widgets.client.utils.i18n.IResourceBundleLoadCallback;
 import org.pentaho.gwt.widgets.client.utils.i18n.ResourceBundle;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCallback {
 
-  public static ResourceBundle messages = new ResourceBundle();
+  public static ResourceBundle messages = null;
 
   public void onModuleLoad() {
     if ( messages == null ) {
-      messages = new ResourceBundle();
+      String localeName = getSessionLocaleName();
+      if ( StringUtils.isEmpty( localeName ) ) {
+        messages = new ResourceBundle();
+      } else {
+        messages = new ResourceBundle( localeName );
+      }
     }
     messages
         .loadBundle( GWT.getModuleBaseURL() + "messages/", "filechooser_messages", true, FileChooserEntryPoint.this );
@@ -74,7 +79,7 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
       }
     } );
   }
-  
+
   public void openFolderChooserDialog( final JavaScriptObject callback, String selectedPath ) {
     FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.OPEN, selectedPath, false, true );
     dialog.addFileChooserListener( new FileChooserListener() {
@@ -90,7 +95,7 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
       }
     } );
     dialog.setFileFilter( new FileFilter() {
-      
+
       @Override
       public boolean accept( String name, boolean isDirectory, boolean isVisible ) {
         return isDirectory;
@@ -100,16 +105,16 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
 
   public void saveFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
     FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true );
-    addFileChooserListener(dialog, callback);
+    addFileChooserListener( dialog, callback );
   }
-  
+
   public void saveAsFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
-    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true, 
+    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true,
         messages.getString( "SaveAs" ), messages.getString( "Save" ) );
-    addFileChooserListener(dialog, callback);
+    addFileChooserListener( dialog, callback );
   }
-  
-  private void addFileChooserListener(FileChooserDialog dialog, final JavaScriptObject callback) {
+
+  private void addFileChooserListener( FileChooserDialog dialog, final JavaScriptObject callback ) {
     dialog.addFileChooserListener( new FileChooserListener() {
       public void fileSelected( RepositoryFile file, String filePath, String fileName, String title ) {
         notifyCallback( callback, file, filePath, fileName, title );
@@ -123,6 +128,11 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
       }
     } );
   }
+
+  public static native String getSessionLocaleName()
+  /*-{
+        return (typeof $wnd.SESSION_LOCALE === 'undefined' || $wnd.SESSION_LOCALE === null) ? '' : $wnd.SESSION_LOCALE;
+  }-*/;
 
   public native void setupNativeHooks( FileChooserEntryPoint fileChooserEntryPoint )
   /*-{
