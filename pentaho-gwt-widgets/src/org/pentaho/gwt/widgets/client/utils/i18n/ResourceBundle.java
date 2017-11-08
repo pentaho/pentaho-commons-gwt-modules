@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2017 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils.i18n;
@@ -99,6 +99,10 @@ public class ResourceBundle {
 
   public ResourceBundle() {
     this.localeName = StringUtils.defaultIfEmpty( Window.Location.getParameter( "locale" ), getLanguagePreference() ); //$NON-NLS-1$
+  }
+
+  public ResourceBundle( String localeName ) {
+    this.localeName = StringUtils.defaultIfEmpty( localeName, getLanguagePreference() ); //$NON-NLS-1$
   }
 
   /**
@@ -276,9 +280,9 @@ public class ResourceBundle {
           // 3. fetch bundleName_lang_country.properties
 
           // need to match case-insensitive on country
-          if( !isSupportedLanguage( localeName ) ) {
+          if ( !isSupportedLanguage( localeName ) ) {
             // try to switch the case on the trailing characters
-            if( isSupportedLanguage( st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase() ) ) {
+            if ( isSupportedLanguage( st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase() ) ) {
               localeName = st.tokenAt( 0 ) + "_" + st.tokenAt( 1 ).toUpperCase();
             }
           }
