@@ -5618,3 +5618,10 @@ treecontrol.tree-classic li .tree-selected {
   width: 228px;
   height: 23px;
 }
+
+#standardDialog select#MT_trendFields,
+#standardDialog select#MT_trendType,
+#standardDialog select#MT_formatScale {
+  height: 26px;
+}
+
