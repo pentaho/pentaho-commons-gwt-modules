@@ -87,6 +87,8 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   protected String filePath;
   protected String outputLocation;
   protected String scheduleName;
+  protected String appendDateFormat;
+  protected boolean overwriteFile;
 
   private IDialogCallback callback;
 
@@ -116,17 +118,23 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     editJob = jsJob;
     this.parentDialog = parentDialog;
     newSchedule = false;
-    constructDialog( jsJob.getFullResourceName(), jsJob.getOutputPath(), jsJob.getJobName(), hasParams,
+    String dateFormat = jsJob.getJobParamValue( "appendDateFormat" );
+    String autoCreateUniqueFilename = jsJob.getJobParamValue( "autoCreateUniqueFilename" );
+    boolean overwrite = false;
+    if ( autoCreateUniqueFilename != null ) {
+      overwrite = !Boolean.valueOf( autoCreateUniqueFilename ).booleanValue();
+    }
+    constructDialog( jsJob.getFullResourceName(), jsJob.getOutputPath(), jsJob.getJobName(), dateFormat, overwrite, hasParams,
         isEmailConfValid, jsJob );
   }
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, String filePath, String outputLocation,
-      String scheduleName, IDialogCallback callback, boolean hasParams, boolean isEmailConfValid ) {
+      String scheduleName, String dateFormat, boolean overwriteFile, IDialogCallback callback, boolean hasParams, boolean isEmailConfValid ) {
     super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
     isBlockoutDialog = false;
     setCallback( callback );
     this.parentDialog = parentDialog;
-    constructDialog( filePath, outputLocation, scheduleName, hasParams, isEmailConfValid, null );
+    constructDialog( filePath, outputLocation, scheduleName, dateFormat, overwriteFile, hasParams, isEmailConfValid, null );
   }
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, ScheduleDialogType type, String title,
@@ -136,7 +144,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );
     setCallback( callback );
     this.parentDialog = parentDialog;
-    constructDialog( filePath, outputLocation, scheduleName, hasParams, isEmailConfValid, null );
+    constructDialog( filePath, outputLocation, scheduleName, null, false, hasParams, isEmailConfValid, null );
   }
 
   @Override
@@ -155,13 +163,15 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     scheduleEditorWizardPanel.add( w, position );
   }
 
-  private void constructDialog( String filePath, String outputLocation, String scheduleName, boolean hasParams,
+  private void constructDialog( String filePath, String outputLocation, String scheduleName, String dateFormat, boolean overwriteFile, boolean hasParams,
       boolean isEmailConfValid, JsJob jsJob ) {
     this.hasParams = hasParams;
     this.filePath = filePath;
     this.isEmailConfValid = isEmailConfValid;
     this.outputLocation = outputLocation;
     this.scheduleName = scheduleName;
+    this.appendDateFormat = dateFormat;
+    this.overwriteFile = overwriteFile;
     scheduleEditorWizardPanel = new ScheduleEditorWizardPanel( getDialogType() );
     scheduleEditor = scheduleEditorWizardPanel.getScheduleEditor();
     String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/hasblockouts?ts=" + System.currentTimeMillis(); //$NON-NLS-1$
@@ -394,6 +404,10 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
     JSONObject schedule = new JSONObject();
     schedule.put( "jobName", new JSONString( scheduleName ) ); //$NON-NLS-1$
+    if ( appendDateFormat != null ) {
+      schedule.put( "appendDateFormat", new JSONString( appendDateFormat ) ); //$NON-NLS-1$
+    }
+    schedule.put( "overwriteFile", new JSONString( String.valueOf( overwriteFile ) ) ); //$NON-NLS-1$
 
     if ( scheduleType == ScheduleType.RUN_ONCE ) { // Run once types
       schedule.put( "simpleJobTrigger", getJsonSimpleTrigger( 0, 0, startDateTime, null ) ); //$NON-NLS-1$

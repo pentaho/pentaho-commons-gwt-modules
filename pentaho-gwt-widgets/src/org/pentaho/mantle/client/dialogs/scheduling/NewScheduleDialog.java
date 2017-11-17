@@ -17,9 +17,12 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import java.util.Date;
+
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.formatter.JSDateTextFormatter;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
@@ -27,7 +30,10 @@ import org.pentaho.mantle.client.dialogs.WaitPopup;
 import org.pentaho.mantle.client.dialogs.folderchooser.SelectFolderDialog;
 import org.pentaho.mantle.client.messages.Messages;
 import org.pentaho.mantle.client.workspace.JsJob;
+import org.pentaho.mantle.client.workspace.JsJobParam;
 
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style.VerticalAlign;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -44,10 +50,13 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -62,6 +71,11 @@ public class NewScheduleDialog extends PromptDialogBox {
 
   private TextBox scheduleNameTextBox = new TextBox();
   private static TextBox scheduleLocationTextBox = new TextBox();
+  private CheckBox appendTimeChk = new CheckBox();
+  private ListBox timestampLB = new ListBox();
+  private CaptionPanel previewCaptionPanel;
+  private Label scheduleNamePreviewLabel;
+  private CheckBox overrideExistingChk = new CheckBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
 
@@ -72,6 +86,11 @@ public class NewScheduleDialog extends PromptDialogBox {
   private static native String getDefaultSaveLocation()
   /*-{
       return window.top.HOME_FOLDER;
+  }-*/;
+
+  private static native void delete( JsArray<?> array, int index, int count )
+  /*-{
+      array.splice(index, count);
   }-*/;
 
   /**
@@ -117,7 +136,62 @@ public class NewScheduleDialog extends PromptDialogBox {
     scheduleNameTextBox.setText( defaultName );
 
     content.add( scheduleNameLabelPanel );
-    content.add( scheduleNameTextBox );
+
+    timestampLB.addStyleName( "schedule-timestamp-listbox" );
+
+    timestampLB.addItem( "yyyyMMddHHmmss" );
+    timestampLB.addItem( "yyyy-MM-dd" );
+    timestampLB.addItem( "yyyyMMdd" );
+    timestampLB.addItem( "MM-dd-yyyy" );
+    timestampLB.addItem( "MM-dd-yy" );
+    timestampLB.addItem( "dd-MM-yyyy" );
+
+    timestampLB.addClickHandler( new ClickHandler() {
+      @Override
+      public void onClick( ClickEvent event ) {
+        int index = ( (ListBox) event.getSource() ).getSelectedIndex();
+        scheduleNamePreviewLabel.setText( getPreviewName( index ) );
+      }
+    } );
+
+    timestampLB.setVisible( false );
+
+    HorizontalPanel myPanel = new HorizontalPanel();
+    myPanel.add( scheduleNameTextBox );
+    myPanel.setCellVerticalAlignment( scheduleNameTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
+    myPanel.add( timestampLB );
+
+    content.add( myPanel );
+
+    appendTimeChk.setText( Messages.getString( "appendTimeToName" ) ); //$NON-NLS-1$
+    appendTimeChk.setStylePrimaryName( "checkbox" );
+    appendTimeChk.addClickHandler( new ClickHandler() {
+      @Override
+      public void onClick( ClickEvent event ) {
+        boolean checked = ( (CheckBox) event.getSource() ).getValue().booleanValue();
+        if ( checked ) {
+          previewCaptionPanel.setVisible( true );
+          timestampLB.setVisible( true );
+          overrideExistingChk.setText( Messages.getString( "overrideExistingFileAndTime" ) ); //$NON-NLS-1$
+        } else {
+          previewCaptionPanel.setVisible( false );
+          timestampLB.setVisible( false );
+          overrideExistingChk.setText( Messages.getString( "overrideExistingFile" ) ); //$NON-NLS-1$
+        }
+      }
+    } );
+    content.add( appendTimeChk );
+
+    previewCaptionPanel = new CaptionPanel( Messages.getString( "preview" ) );
+    previewCaptionPanel.setStyleName( "schedule-caption-panel" );
+
+    scheduleNamePreviewLabel = new Label( getPreviewName( timestampLB.getSelectedIndex() ) );
+    scheduleNamePreviewLabel.addStyleName( "schedule-name-preview" );
+
+    previewCaptionPanel.add( scheduleNamePreviewLabel );
+    previewCaptionPanel.setVisible( false );
+
+    content.add( previewCaptionPanel );
 
     Label scheduleLocationLabel = new Label( Messages.getString( "generatedContentLocation" ) );
     scheduleLocationLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
@@ -171,10 +245,34 @@ public class NewScheduleDialog extends PromptDialogBox {
     locationPanel.add( browseButton );
 
     content.add( locationPanel );
-
+    if ( appendTimeChk.getValue().booleanValue() ) {
+      overrideExistingChk.setText( Messages.getString( "overrideExistingFileAndTime" ) ); //$NON-NLS-1$
+    } else {
+      overrideExistingChk.setText( Messages.getString( "overrideExistingFile" ) ); //$NON-NLS-1$
+    }
+    content.add( overrideExistingChk );
     if ( jsJob != null ) {
       scheduleNameTextBox.setText( jsJob.getJobName() );
       scheduleLocationTextBox.setText( jsJob.getOutputPath() );
+      String autoCreateUniqueFilename = jsJob.getJobParamValue( "autoCreateUniqueFilename" );
+      if ( autoCreateUniqueFilename != null ) {
+        boolean autoCreate = Boolean.valueOf( autoCreateUniqueFilename );
+        if ( !autoCreate ) {
+          overrideExistingChk.setValue( true );
+        }
+      }
+
+      String appendDateFormat = jsJob.getJobParamValue( "appendDateFormat" );
+      if ( appendDateFormat != null ) {
+        appendTimeChk.setValue( true );
+        timestampLB.setVisible( true );
+        for ( int i = 0; i < timestampLB.getItemCount(); i++ ) {
+          if ( appendDateFormat.equals( timestampLB.getValue( i ) ) ) {
+            timestampLB.setSelectedIndex( i );
+            break;
+          }
+        }
+      }
     }
 
     setContent( content );
@@ -248,10 +346,48 @@ public class NewScheduleDialog extends PromptDialogBox {
             } else {
               hasParams = Boolean.parseBoolean( response.getText() );
             }
-
+            boolean overwriteFile = overrideExistingChk.getValue().booleanValue();
+            String dateFormat = null;
+            if ( appendTimeChk.getValue().booleanValue() ) {
+              dateFormat = timestampLB.getValue( timestampLB.getSelectedIndex() );
+            }
             if ( jsJob != null ) {
               jsJob.setJobName( scheduleNameTextBox.getText() );
               jsJob.setOutputPath( scheduleLocationTextBox.getText(), scheduleNameTextBox.getText() );
+
+              if ( jsJob.getJobParamValue( "appendDateFormat" ) != null ) {
+                if ( dateFormat != null ) {
+                  JsJobParam jp = jsJob.getJobParam( "appendDateFormat" );
+                  jp.setValue( dateFormat );
+                } else {
+                  for ( int j = 0; j < jsJob.getJobParams().length(); j++ ) {
+                    JsJobParam jjp = jsJob.getJobParams().get( j );
+                    if ( "appendDateFormat".equals( jjp.getName() ) ) {
+                      delete( jsJob.getJobParams(), j, 1 );
+                    }
+                  }
+                }
+              } else {
+                if ( dateFormat != null ) {
+                  JsJobParam jjp = (JsJobParam) JavaScriptObject.createObject().cast();
+                  jjp.setName( "appendDateFormat" );
+                  jjp.setValue( dateFormat );
+                  jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
+                }
+              }
+
+              if ( jsJob.getJobParamValue( "autoCreateUniqueFilename" ) != null ) {
+                if ( !jsJob.getJobParamValue( "autoCreateUniqueFilename" ).equals( String.valueOf( !overwriteFile ) ) ) {
+                  JsJobParam jp = jsJob.getJobParam( "autoCreateUniqueFilename" );
+                  jp.setValue( String.valueOf( !overwriteFile ) );
+                }
+              } else {
+                JsJobParam jjp = (JsJobParam) JavaScriptObject.createObject().cast();
+                jjp.setName( "autoCreateUniqueFilename" );
+                jjp.setValue( String.valueOf( !overwriteFile ) );
+                jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
+              }
+
               if ( recurrenceDialog == null ) {
                 recurrenceDialog =
                     new ScheduleRecurrenceDialog( NewScheduleDialog.this, jsJob, callback, hasParams, isEmailConfValid,
@@ -260,7 +396,7 @@ public class NewScheduleDialog extends PromptDialogBox {
             } else if ( recurrenceDialog == null ) {
               recurrenceDialog =
                   new ScheduleRecurrenceDialog( NewScheduleDialog.this, filePath, scheduleLocationTextBox.getText(),
-                      scheduleNameTextBox.getText(), callback, hasParams, isEmailConfValid );
+                      scheduleNameTextBox.getText(), dateFormat, overwriteFile, callback, hasParams, isEmailConfValid );
             } else {
               recurrenceDialog.scheduleName = scheduleNameTextBox.getText();
               recurrenceDialog.outputLocation = scheduleLocationTextBox.getText();
@@ -289,6 +425,12 @@ public class NewScheduleDialog extends PromptDialogBox {
 
   public String getScheduleName() {
     return scheduleNameTextBox.getText();
+  }
+
+  public String getPreviewName( int index ) {
+    JSDateTextFormatter formatter = new JSDateTextFormatter( timestampLB.getValue( index ) );
+    Date date = new Date();
+    return scheduleNameTextBox.getText() + formatter.format( String.valueOf( date.getTime() ) );
   }
 
   public void setScheduleName( String scheduleName ) {
