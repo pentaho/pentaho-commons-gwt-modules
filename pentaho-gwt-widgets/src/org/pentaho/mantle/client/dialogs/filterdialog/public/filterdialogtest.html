@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- /*!
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ */ -->
+
+<html>
+<head>
+  <title>Filter Dialog Test</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="../../../../../mantle/Widgets.css"/>
+  <link rel="stylesheet" href="filterDialog.css">
+
+  <script type="text/javascript" src="webcontext.js?context=filterdialog"></script>
+  <!--  -->
+  <script language="javascript" src="filterdialog.nocache.js"></script>
+
+  <script type="text/javascript">
+    var filter = undefined;
+    var onSave = function (f) {
+      alert('Filter Dialog saved. window.filter should reflect dialog settings. Click edit to edit the filter');
+      filter = f;
+    }
+
+    var onCancel = function () {
+      alert('Filter Dialog closed');
+    }
+
+    var createFilter = function () {
+      pentaho.filterdialog.addFilter(onSave, onCancel);
+    }
+
+    var editFilter = function () {
+      if (!filter) {
+        alert('No filter defined. Use the Add Filter button to save one first.');
+        return;
+      }
+      pentaho.filterdialog.editFilter(filter, onSave, onCancel);
+    }
+
+    gwtModuleLoaded = function (name) {
+      console.log("module loaded: " + name);
+      pentaho.filterdialog.init();
+    }
+  </script>
+</head>
+<body>
+<h1>Filter Dialog Test</h1>
+<button onclick="createFilter()">Add Filter</button>
+<button onclick="editFilter()">Edit Filter</button>
+</body>
+</html>

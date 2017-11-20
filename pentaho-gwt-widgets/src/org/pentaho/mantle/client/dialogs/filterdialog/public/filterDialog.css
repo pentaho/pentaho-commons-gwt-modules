@@ -1,0 +1,309 @@
+/*!
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ */
+
+  /* disable default border in xul groupboxes inside data/properties decks */
+  #filterPropertiesDeck tr .xul-fieldset, #filterDataDeck tr .xul-fieldset {
+    border-style: none;
+  }
+
+  #editFilterDialogContent {
+    border-collapse: separate;
+  }
+
+  .xul-label {
+    white-space: nowrap;
+    font-size: 0.85em;
+  }
+
+  .popupContent {
+    font-size: 16px;
+  }
+
+  .checkbox label {
+    padding-left: 3px;
+    font-size: 0.85em;
+  }
+
+  #dlgFilterParameterAssignmentTable .gwt-ScrollTable .headerTable {
+    width: 100% !important;
+  }
+
+  #filterControlsGroupbox #dropDownFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #dropDownFilterButton img.image-button-over,
+  #filterControlsGroupbox #dropDownFilterButton img.image-button {
+    background: url("componentIcons/dropdown.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #dropDownFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #dropDownFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #dropDownFilterButton img.disabled-image-button {
+    background: url("componentIcons/dropdown_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #listFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #listFilterButton img.image-button-over,
+  #filterControlsGroupbox #listFilterButton img.image-button {
+    background: url("componentIcons/list.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #listFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #listFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #listFilterButton img.disabled-image-button {
+    background: url("componentIcons/list_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #radioFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #radioFilterButton img.image-button-over,
+  #filterControlsGroupbox #radioFilterButton img.image-button {
+    background: url("componentIcons/radio.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #radioFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #radioFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #radioFilterButton img.disabled-image-button {
+    background: url("componentIcons/radio_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #checkboxFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #checkboxFilterButton img.image-button-over,
+  #filterControlsGroupbox #checkboxFilterButton img.image-button {
+    background: url("componentIcons/checkbox.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #checkboxFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #checkboxFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #checkboxFilterButton img.disabled-image-button {
+    background: url("componentIcons/checkbox_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #buttonFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #buttonFilterButton img.image-button-over,
+  #filterControlsGroupbox #buttonFilterButton img.image-button {
+    background: url("componentIcons/button.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #buttonFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #buttonFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #buttonFilterButton img.disabled-image-button {
+    background: url("componentIcons/button_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #textfieldFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #textfieldFilterButton img.image-button-over,
+  #filterControlsGroupbox #textfieldFilterButton img.image-button {
+    background: url("componentIcons/textfield.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #textfieldFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #textfieldFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #textfieldFilterButton img.disabled-image-button {
+    background: url("componentIcons/textfield_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #datepickerFilterButton img.image-button-pressed,
+  #filterControlsGroupbox #datepickerFilterButton img.image-button-over,
+  #filterControlsGroupbox #datepickerFilterButton img.image-button {
+    background: url("componentIcons/datepicker.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterControlsGroupbox #datepickerFilterButton img.disabled-image-button-pressed,
+  #filterControlsGroupbox #datepickerFilterButton img.disabled-image-button-over,
+  #filterControlsGroupbox #datepickerFilterButton img.disabled-image-button {
+    background: url("componentIcons/datepicker_selected.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+  }
+
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button-pressed,
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button-over,
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button {
+    background: url("16x16_Up.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button-pressed,
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button-over,
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button {
+    background: url("16x16_Up_disabled.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button-pressed,
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button-over,
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button {
+    background: url("16x16_down.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button-pressed,
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button-over,
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button {
+    background: url("16x16_down_disabled.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableEditSelected img.image-button-pressed,
+  #filterTypeDeck #staticSelectionTableEditSelected img.image-button-over,
+  #filterTypeDeck #staticSelectionTableEditSelected img.image-button {
+    background: url("Edit.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-pressed,
+  #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-over,
+  #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button {
+    background: url("Edit_disable.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableAdd img.image-button-pressed,
+  #filterTypeDeck #staticSelectionTableAdd img.image-button-over,
+  #filterTypeDeck #staticSelectionTableAdd img.image-button {
+    background: url("Add.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableAdd img.disabled-image-button-pressed,
+  #filterTypeDeck #staticSelectionTableAdd img.disabled-image-button-over,
+  #filterTypeDeck #staticSelectionTableAdd img.disabled-image-button {
+    background: url("Add_disabled.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-pressed,
+  #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-over,
+  #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button {
+    background: url("Remove.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed,
+  #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-over,
+  #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button {
+    background: url("Remove_disabled.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #mqlFilterGroupbox #mqlFilterEditButton img.image-button-pressed,
+  #mqlFilterGroupbox #mqlFilterEditButton img.image-button-over,
+  #sqlFilterGroupbox #editQueryButton img.image-button-pressed,
+  #sqlFilterGroupbox #editQueryButton img.image-button-over,
+  #mqlFilterGroupbox #mqlFilterEditButton img.image-button,
+  #sqlFilterGroupbox #editQueryButton img.image-button {
+    background: url("Edit.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }
+
+  #mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button-pressed,
+  #mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button-over,
+  #sqlFilterGroupbox #editQueryButton img.disabled-image-button-pressed,
+  #sqlFilterGroupbox #editQueryButton img.disabled-image-button-over,
+  #mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button,
+  #sqlFilterGroupbox #editQueryButton img.disabled-image-button {
+    background: url("Edit_disable.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+  }

@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!--===========================================================================
+HITACHI VANTARA PROPRIETARY AND CONFIDENTIAL
+
+Copyright 2002 - 2017 Hitachi Vantara. All rights reserved.
+
+NOTICE: All information including source code contained herein is, and
+remains the sole property of Hitachi Vantara and its licensors. The intellectual
+and technical concepts contained herein are proprietary and confidential
+to, and are trade secrets of Hitachi Vantara and may be covered by U.S. and foreign
+patents, or patents in process, and are protected by trade secret and
+copyright laws. The receipt or possession of this source code and/or related
+information does not convey or imply any rights to reproduce, disclose or
+distribute its contents, or to manufacture, use, or sell anything that it
+may describe, in whole or in part. Any reproduction, modification, distribution,
+or public display of this information without the express written authorization
+from Hitachi Vantara is strictly prohibited and in violation of applicable laws and
+international treaties. Access to the source code contained herein is strictly
+prohibited to anyone except those individuals and entities who have executed
+confidentiality and non-disclosure agreements or other agreements with Hitachi Vantara,
+explicitly covering such access.
+============================================================================-->
+<window width="400" height="275" title="${filter.title}"
+        xmlns="http://www.pentaho.org/there.is.only.xul"
+        xmlns:pen="http://www.pentaho.com">
+
+  <dialog
+      id="addSelectionDialog"
+      buttonlabelaccept="${addButton}"
+      buttonlabelcancel="${closeButton}"
+      pen:buttonlabelaccepttooltiptext="${addButtonToolTip}"
+      pen:buttonlabelcanceltooltiptext="${closeButtonToolTip}"
+      buttons="accept,cancel"
+      ondialogaccept="editFilterController.addSelectionDialogAdd()"
+      ondialogcancel="editFilterController.addSelectionDialogClose()"
+      buttonalign="right" title="${addSelectionDialogTitle}" width="225" height="200">
+    <vbox>
+      <label value="${label}" tooltiptext="${labelToolTip}"/>
+      <textbox id="addSelectionLabelText" onblur="editFilterController.setFocusAddValue()"
+               oncommand="editFilterController.addSelectionDialogAdd()"/>
+      <label value="${value}" tooltiptext="${valueToolTip}"/>
+      <textbox id="addSelectionValueText" onblur="editFilterController.setFocusAddLabel()"
+               oncommand="editFilterController.addSelectionDialogAdd()"/>
+    </vbox>
+  </dialog>
+
+  <dialog
+      id="editSelectionDialog"
+      buttonlabelaccept="${saveButton}"
+      buttonlabelcancel="${cancelButton}"
+      pen:buttonlabelaccepttooltiptext="${saveButtonToolTip}"
+      pen:buttonlabelcanceltooltiptext="${cancelButtonToolTip}"
+      buttons="accept,cancel"
+      ondialogaccept="editFilterController.editSelectionDialogSave()"
+      ondialogcancel="editFilterController.editSelectionDialogCancel()"
+      buttonalign="right" title="${editDialogTitle}" width="225" height="200">
+    <vbox>
+      <label value="${label}" tooltiptext="${labelToolTip}"/>
+      <textbox id="editSelectionLabelText" onblur="editFilterController.setFocusEditValue()"
+               oncommand="editFilterController.editSelectionDialogSave()"/>
+      <label value="${value}" tooltiptext="${valueToolTip}"/>
+      <textbox id="editSelectionValueText" onblur="editFilterController.setFocusEditLabel()"
+               oncommand="editFilterController.editSelectionDialogSave()"/>
+    </vbox>
+  </dialog>
+
+  <!-- sql test results -->
+  <dialog id="testResultsDialog" buttonlabelaccept="${closeButton}"
+          pen:buttonlabelaccepttooltiptext="${closeButtonToolTip}" buttons="accept"
+          ondialogaccept="editFilterController.closeTestResultsDialog()" buttonalign="right"
+          title="${resultsDialogTitle}" width="400" height="300" resizable="true">
+    <vbox id="testResultsTableContainer" padding="10" flex="1">
+      <tree id="testResultsTable" editable="false" seltype="none" enableColumnDrag="false" flex="1" width="390"
+            height="265">
+        <treecols/>
+        <treechildren/>
+      </tree>
+    </vbox>
+  </dialog>
+
+  <!-- parameters dialog -->
+  <dialog id="parametersDialog" buttonlabelaccept="${okButton}" buttonlabelcancel="${cancelButton}"
+          pen:buttonlabelaccepttooltiptext="${applyButtonTooltip}" buttons="accept,cancel"
+          ondialogaccept="editFilterController.closeParametersDialog()"
+          ondialogcancel="editFilterController.cancelParametersDialog()" buttonalign="right"
+          title="${propPanelParameters}">
+    <!-- TESTING: parameter assignment table.. -->
+    <tree rows="3" width="345" id="dlgFilterParameterAssignmentTable" height="120" seltype="single" editable="true">
+      <treecols>
+        <treecol pen:binding="name" label="${propPanelParametersNameCol}" tooltiptext="${propPanelParametersNameCol}"
+                 flex="1"/>
+        <treecol pen:binding="_value_" label="${propPanelParametersSourceCol}"
+                 tooltiptext="${propPanelParametersSourceCol}" pen:combobinding="valueOptions"
+                 type="dynamic" pen:columntypebinding="cellType" editable="true" flex="1"/>
+      </treecols>
+      <treechildren/>
+    </tree>
+  </dialog>
+
+  <dialog id="waitingDialog" title="${sqlLoading}" width="200" height="100">
+    <label value="${executingSqlStatement}"/>
+  </dialog>
+
+  <!-- EDIT FILTER DIALOG -->
+  <dialog id="editFilterDialog" buttonlabelaccept="${okButton}" pen:buttonlabelaccepttooltiptext="${okButtonToolTip}"
+          buttonlabelcancel="${cancelButton}" pen:buttonlabelcanceltooltiptext="${cancelButtonToolTip}"
+          buttons="accept,cancel"
+          ondialogaccept="editFilterController.save()" ondialogcancel="editFilterController.cancel()"
+          buttonalign="right"
+          title="${filterPropertiesDialogTitle}" width="680" height="510">
+    <vbox flex="100" padding="3" id="editFilterDialogContent">
+      <hbox height="55">
+        <vbox>
+          <label value="${name}" tooltiptext="${nameToolTip}"/>
+          <textbox id="displayNameText" width="225" height="23"/>
+        </vbox>
+        <vbox id="displayNameOptionContainer">
+          <spacer height="19"/>
+          <checkbox id="displayNameChecked" label="${displayNameAsControl}" tooltiptext="${displayNameAsControlToolTip}"
+                    flex="1"/>
+        </vbox>
+      </hbox>
+
+      <vbox height="64">
+        <vbox height="64">
+          <groupbox id="filterControlsGroupbox" align="center">
+            <caption label="${filterControls}"/>
+            <hbox>
+              <button id="dropDownFilterButton"
+                      image="images/spacer.gif"
+                      pen:disabledimage="images/spacer.gif"
+                      onclick="editFilterController.setPovWidgetType('DROP_DOWN')"
+                      tooltiptext="${EditFilter.DropDown.label}"/>
+              <spacer flex="1"/>
+              <button image="images/spacer.gif" id="listFilterButton"
+                      onclick="editFilterController.setPovWidgetType('LIST')" pen:disabledimage="images/spacer.gif"
+                      tooltiptext="${EditFilter.Prop.List.label}"/>
+              <spacer flex="1"/>
+              <button image="images/spacer.gif" id="radioFilterButton"
+                      onclick="editFilterController.setPovWidgetType('RADIO')" pen:disabledimage="images/spacer.gif"
+                      tooltiptext="${EditFilter.Prop.Radio.label}"/>
+              <spacer flex="1"/>
+              <button image="images/spacer.gif" id="checkboxFilterButton"
+                      onclick="editFilterController.setPovWidgetType('CHECK')" pen:disabledimage="images/spacer.gif"
+                      tooltiptext="${EditFilter.Prop.Checkbox.label}"/>
+              <spacer flex="1"/>
+              <button image="images/spacer.gif" id="buttonFilterButton"
+                      onclick="editFilterController.setPovWidgetType('BUTTON')" pen:disabledimage="images/spacer.gif"
+                      tooltiptext="${EditFilter.Prop.Button.label}"/>
+              <spacer flex="1"/>
+              <button image="images/spacer.gif" id="textfieldFilterButton"
+                      onclick="editFilterController.setPovWidgetType('TEXT')" pen:disabledimage="images/spacer.gif"
+                      tooltiptext="${EditFilter.Prop.Text.label}"/>
+              <spacer flex="1"/>
+              <button image="images/spacer.gif" id="datepickerFilterButton"
+                      onclick="editFilterController.setPovWidgetType('DATE')" pen:disabledimage="images/spacer.gif"
+                      tooltiptext="${EditFilter.Prop.Date.label}"/>
+            </hbox>
+          </groupbox>
+        </vbox>
+      </vbox>
+
+
+      <hbox height="316">
+        <!-- filter select data -->
+        <deck id="filterDataDeck" height="316">
+          <groupbox id="filterDataGroupbox" flex="1">
+            <caption label="${filterDataGroupboxName}"/>
+
+
+            <vbox>
+              <label value="${dataType}" tooltiptext="${dataTypeToolTip}"/>
+            </vbox>
+            <vbox>
+              <menulist id="filterTypeList" oncommand="editFilterController.typeSelected()" width="250">
+                <menupopup>
+                  <menuitem label="${staticLabel}" value="static"/>
+                  <menuitem label="${mqlLabel}" value="mql"/>
+                </menupopup>
+              </menulist>
+            </vbox>
+
+            <deck id="filterTypeDeck" flex="1">
+              <!-- Static Filter -->
+              <vbox>
+                <hbox>
+                  <spacer flex="1"/>
+                  <button id="staticSelectionTableMoveSelectedUp" image="images/spacer.gif"
+                          pen:disabledimage="images/spacer.gif" tooltiptext="${upImageToolTip}"
+                          onclick="editFilterController.moveUpSelection()" disabled="true"/>
+                  <button id="staticSelectionTableMoveSelectedDown" image="images/spacer.gif"
+                          pen:disabledimage="images/spacer.gif" tooltiptext="${downImageToolTip}"
+                          onclick="editFilterController.moveDownSelection()" disabled="true"/>
+                  <button id="staticSelectionTableEditSelected" image="images/spacer.gif"
+                          tooltiptext="${editImageToolTip}"
+                          pen:disabledimage="images/spacer.gif"
+                          onclick="editFilterController.editSelection()" disabled="true"/>
+                  <button id="staticSelectionTableAdd" image="images/spacer.gif" tooltiptext="${addImageToolTip}"
+                          onclick="editFilterController.addSelection()"/>
+                  <button id="staticSelectionTableRemoveSelected" image="images/spacer.gif"
+                          pen:disabledimage="images/spacer.gif" tooltiptext="${removeImageToolTip}"
+                          onclick="editFilterController.removeSelection()" disabled="true"/>
+                </hbox>
+                <tree id="staticSelectionTable" height="125" width="250" seltype="single">
+                  <treecols>
+                    <treecol id="staticValLabelCol" flex="1" label="${label}" tooltiptext="${labelToolTip}"/>
+                    <treecol id="staticValValueCol" flex="1" label="${value}" tooltiptext="${valueToolTip}"/>
+                  </treecols>
+                  <treechildren/>
+                </tree>
+              </vbox>
+
+              <!-- SQL Filter -->
+              <deck id="sqlFilterGroupbox" height="234">
+                <!--caption label="${sqlLabel}" tooltiptext=""/-->
+                <hbox height="234">
+                  <vbox>
+                    <label value="${datasource}" tooltiptext="${datasourceTooltip}"/>
+
+                    <menulist id="sqlDatasourceList" width="250">
+                      <menupopup/>
+                    </menulist>
+
+                    <hbox spacing="0" height="16">
+                      <label value="${query}" tooltiptext="${queryToolTip}"/>
+                      <spacer flex="1"/>
+                      <button id="editQueryButton" image="images/spacer.gif" tooltiptext="${edit.query.label}"
+                              onclick="editFilterController.displayQueryDialog()"/>
+                    </hbox>
+                    <textbox id="sqlQueryText" multiline="true" rows="4" cols="50" disabled="true" height="65"/>
+                    <hbox height="27">
+                      <spacer flex="1"/>
+                      <button id="sqlParameterButton" label="${parametersButton}"
+                              onclick="editFilterController.displayQueryParameters()"
+                              tooltiptext="${parametersButtonTooltip}"/>
+                    </hbox>
+                  </vbox>
+                </hbox>
+              </deck>
+              <!-- Metadata Filter -->
+              <deck id="mqlFilterGroupbox" height="234">
+                <!--caption label="${mqlLabel}" /-->
+                <hbox height="234">
+                  <vbox>
+                    <label value="${datasource}"/>
+                    <hbox height="27">
+                      <label id="mqlFilterSelectedDataSource" value="" flex="1"/>
+                      <button id="mqlFilterSelectDataSourceBtn" label="${mqlSelectDataSource}"
+                              onclick="editFilterController.selectMqlDataSource()"
+                              tooltipText="${mqlSelectDataSourceTooltip}"/>
+                    </hbox>
+                    <hbox height="16">
+                      <label value="${mqlSelectedItems}" flex="1"/>
+                      <button id="mqlFilterEditButton" image="images/spacer.gif" tooltiptext="${mqlEditQueryTooltip}"
+                              onclick="editFilterController.editMqlQuery()" pen:disabledimage="images/spacer.gif"/>
+                    </hbox>
+                    <listbox id="mqlFilterSelectedColumns" height="55" width="245"/>
+                    <hbox height="27">
+                      <spacer flex="1"/>
+                      <button id="mqlParameterButton" label="${parametersButton}"
+                              onclick="editFilterController.displayQueryParameters()"
+                              tooltiptext="${parametersButtonTooltip}"/>
+                    </hbox>
+                  </vbox>
+                </hbox>
+              </deck>
+            </deck>
+          </groupbox>
+          <!-- data disabled by type of component -->
+          <groupbox flex="1">
+            <caption label="${filterDataGroupboxName}"/>
+            <label value="${EditFilter.Data.notApplicable}"/>
+          </groupbox>
+        </deck>
+        <!-- end/filterTypeDeck -->
+
+        <spacer id="data-controlproperties-spacer"/>
+        <!-- Filter Component Type Properties -->
+        <groupbox id="filterDropDownGroupbox" flex="1">
+          <caption label="${filterPropertiesGroupboxName}"/>
+
+          <label value="${EditFilter.Prop.initiallySelected}"/>
+          <radiogroup id="dropdownFilterDefault">
+            <grid width="250" height="70">
+              <columns>
+                <column flex="1"/>
+                <column flex="2"/>
+              </columns>
+              <rows>
+                <row>
+                  <radio id="useFirstRadio" value="USE_FIRST" label="${EditFilter.Prop.Default.First}"/>
+                  <spacer/>
+                </row>
+                <row>
+                  <radio id="specifyRadio" value="SPECIFY" label="${EditFilter.Prop.Default.Specify}"/>
+                  <deck id="specifyWidgetDeck">
+                    <textbox id="specifyTextbox" width="125"/>
+                    <menulist id="specifyList">
+                      <menupopup></menupopup>
+                    </menulist>
+                  </deck>
+                </row>
+              </rows>
+
+            </grid>
+          </radiogroup>
+
+          <!-- DropDown Component -->
+          <deck id="filterPropertiesDeck" flex="50">
+
+            <vbox id="filterDropDownDefaults" flex="1">
+
+              <!-- query default/label/value -->
+              <vbox spacing="0" id="dropdown-label-container">
+
+                <label value="${EditFilter.Prop.labelLabel}"/>
+                <menulist id="editFilterDropdownLabelListbox" width="250">
+                  <menupopup/>
+                </menulist>
+
+                <label value="${EditFilter.Prop.valueLabel}"/>
+                <menulist id="editFilterDropdownValueListbox" width="250" disabled="true">
+                  <menupopup/>
+                </menulist>
+
+              </vbox>
+
+              <spacer flex="1"/>
+
+            </vbox>
+
+            <!-- List Component -->
+
+
+            <vbox id="filterListDefaults">
+
+              <vbox spacing="0" id="list-label-container">
+                <label value="${EditFilter.Prop.labelLabel}"/>
+                <menulist id="editFilterListLabelListbox" width="250">
+                  <menupopup/>
+                </menulist>
+
+                <label value="${EditFilter.Prop.valueLabel}"/>
+                <menulist id="editFilterListValueListbox" width="250" disabled="true">
+                  <menupopup/>
+                </menulist>
+              </vbox>
+
+              <spacer/>
+              <vbox spacing="0" flex="1">
+
+                <label value="${EditFilter.Prop.List.size}"/>
+                <textbox id="editFilterPropListSize" width="150"/>
+
+
+                <checkbox id="editFilterPropListIsMultiple" label="${EditFilter.Prop.List.isMultiple}"/>
+
+                <spacer flex="1"/>
+              </vbox>
+
+            </vbox>
+
+            <!-- Radio Component -->
+
+            <vbox flex="1" id="filterRadioDefaults">
+              <vbox spacing="0" id="radio-label-container">
+
+                <label value="${EditFilter.Prop.labelLabel}"/>
+                <menulist id="editFilterRadioLabelListbox" width="250">
+                  <menupopup/>
+                </menulist>
+                <label value="${EditFilter.Prop.valueLabel}"/>
+                <menulist id="editFilterRadioValueListbox" width="250" disabled="true">
+                  <menupopup/>
+                </menulist>
+
+              </vbox>
+
+              <vbox id="radio_orientation_container">
+                <label value="${display}"/>
+                <menulist id="radio_orientation" width="250">
+                  <menupopup>
+                    <menuitem label="${vertical}"/>
+                    <menuitem label="${horizontal}"/>
+                  </menupopup>
+                </menulist>
+              </vbox>
+
+              <spacer flex="1"/>
+            </vbox>
+            <!-- Checkbox Component -->
+
+
+            <vbox id="filterCheckboxDefaults" flex="1">
+
+              <vbox spacing="0" id="checkbox-label-container">
+
+                <label value="${EditFilter.Prop.labelLabel}"/>
+                <menulist id="editFilterCheckboxLabelListbox" width="250">
+                  <menupopup/>
+                </menulist>
+                <label value="${EditFilter.Prop.valueLabel}"/>
+                <menulist id="editFilterCheckboxValueListbox" width="250" disabled="true">
+                  <menupopup/>
+                </menulist>
+
+              </vbox>
+
+              <vbox id="checkbox_orientation_container">
+                <label value="${display}"/>
+                <menulist id="checkbox_orientation" width="250">
+                  <menupopup>
+                    <menuitem label="${vertical}"/>
+                    <menuitem label="${horizontal}"/>
+                  </menupopup>
+                </menulist>
+              </vbox>
+
+              <spacer flex="1"/>
+            </vbox>
+
+            <!-- Button Component -->
+            <vbox flex="1">
+
+              <vbox spacing="0" id="button-label-container">
+
+                <label value="${EditFilter.Prop.labelLabel}"/>
+                <menulist id="editFilterButtonLabelListbox" width="250">
+                  <menupopup/>
+                </menulist>
+
+                <label value="${EditFilter.Prop.valueLabel}"/>
+                <menulist id="editFilterButtonValueListbox" width="250" disabled="true">
+                  <menupopup/>
+                </menulist>
+
+              </vbox>
+              <vbox id="button_orientation_container">
+                <label value="${display}"/>
+                <menulist id="button_orientation" width="250">
+                  <menupopup>
+                    <menuitem label="${vertical}"/>
+                    <menuitem label="${horizontal}"/>
+                  </menupopup>
+                </menulist>
+              </vbox>
+              <checkbox id="editFilterPropButtonIsMultiple" label="${EditFilter.Prop.Button.isMultiple}"/>
+
+              <spacer flex="1"/>
+            </vbox>
+
+            <!-- Text Component -->
+            <vbox>
+
+              <vbox id="editFilterPropTextContainer"><!-- for alignment-->
+                <!-- max chars -->
+                <label value="${EditFilter.Prop.Text.maxChars}"/>
+                <textbox id="editFilterPropTextMaxChars" width="100"/>
+                <!-- width -->
+                <label value="${EditFilter.Prop.Text.width}"/>
+                <textbox id="editFilterPropTextWidth" width="100"/>
+              </vbox>
+            </vbox>
+            <!-- DatePicker Component -->
+            <vbox>
+              <vbox>
+                <label value="${EditFilter.Prop.Date.format}"/>
+                <textbox id="editFilterPropDateFormat" tooltiptext="${EditFilter.Date.formatTooltip}" width="260"/>
+              </vbox>
+              <!--radiogroup id="filterPropDateRestriction">
+                  <radio value="NONE" label="${EditFilter.Prop.Date.restrictionNone}" />
+                  <radio value="FUTURE_ONLY" label="${EditFilter.Prop.Date.restrictionFutureOnly}" />
+                  <radio value="PAST_ONLY" label="${EditFilter.Prop.Date.restrictionPastOnly}" />
+                  <radio value="RANGE" label="${EditFilter.Prop.Date.restrictionRange}" />
+              </radiogroup-->
+              <vbox id="editFilterDateRestrictionsContainer">
+                <vbox>
+                  <label value="${EditFilter.Prop.Date.calendarRestrictions}"/>
+                  <menulist id="editFilterDateRestriction" oncommand="editFilterController.dateRestrictionSelected()"
+                            width="250">
+                    <menupopup>
+                      <menuitem label="${EditFilter.Prop.Date.restrictionNone}" value="NONE"/>
+                      <menuitem label="${EditFilter.Prop.Date.restrictionFutureOnly}" value="FUTURE_ONLY"/>
+                      <menuitem label="${EditFilter.Prop.Date.restrictionPastOnly}" value="PAST_ONLY"/>
+                      <menuitem label="${EditFilter.Prop.Date.restrictionRange}" value="RANGE"/>
+                    </menupopup>
+                  </menulist>
+                </vbox>
+                <vbox>
+                  <hbox spacing="0">
+                    <label value="${EditFilter.Prop.Date.from}"/>
+                    <spacer width="6"/>
+                    <textbox id="editFilterPropDateFrom" flex="1"/>
+                  </hbox>
+
+                  <hbox spacing="0">
+                    <label value="${EditFilter.Prop.Date.to}"/>
+                    <spacer width="6"/>
+                    <textbox id="editFilterPropDateTo" flex="1"/>
+                  </hbox>
+                </vbox>
+              </vbox>
+              <spacer flex="1"/>
+            </vbox>
+
+          </deck>
+        </groupbox>
+      </hbox>
+    </vbox>
+  </dialog>
+  <!-- END EDIT FILTER DIALOG -->
+
+  <!-- parameters dialog -->
+  <dialog id="queryDialog" buttonlabelaccept="${okButton}" buttonlabelcancel="${cancelButton}"
+          pen:buttonlabelaccepttooltiptext="${applyButtonTooltip}" buttons="accept,cancel"
+          ondialogaccept="editFilterController.okQueryDialog()" ondialogcancel="editFilterController.closeQueryDialog()"
+          buttonalign="right"
+          title="${queryToolTip}" width="370" height="370">
+    <vbox>
+      <spacer flex="1"/>
+      <textbox id="paramsSqlQueryText" multiline="true" rows="4" height="100" width="395"/>
+      <spacer flex="1"/>
+      <label value="${queryNote}"/>
+      <spacer flex="1"/>
+      <label value="${parameterDefaults}"/>
+      <spacer flex="1"/>
+      <tree id="sqlParameterDefaults" rows="3" width="400" height="120" seltype="single" editable="true">
+        <treecols>
+          <treecol pen:binding="name" label="${EditFilter.Prop.Text.name}" tooltiptext="${EditFilter.Prop.Text.name}"
+                   flex="1"/>
+          <treecol pen:binding="_value_" label="${EditFilter.Prop.Text.defaultValue}"
+                   tooltiptext="${EditFilter.Prop.Text.defaultValue}" pen:combobinding="valueOptions"
+                   type="dynamic" pen:columntypebinding="cellType" editable="true" flex="1"/>
+        </treecols>
+        <treechildren/>
+      </tree>
+      <hbox>
+        <spacer flex="1"/>
+        <button label="${testButton}" onclick="editFilterController.displayTestResults()"
+                tooltiptext="${testButtonToolTip}"/>
+      </hbox>
+    </vbox>
+  </dialog>
+  <!-- parameters dialog -->
+
+  <!-- SQL Error Query Dialog -->
+  <dialog id="sqlErrorQueryDialog" buttonlabelaccept="${okButton}" buttonlabelcancel="${cancelButton}"
+          pen:buttonlabelaccepttooltiptext="${applyButtonTooltip}" buttons="accept,cancel"
+          ondialogaccept="editFilterController.okErrorQueryDialog()"
+          ondialogcancel="editFilterController.closeErrorQueryDialog()" buttonalign="middle"
+          title="${queryError}">
+    <vbox>
+      <hbox>
+        <spacer flex="1"/>
+      </hbox>
+      <label value="${querError.msg1}"/>
+      <label value="${querError.msg2}"/>
+      <hbox>
+        <spacer flex="1"/>
+      </hbox>
+    </vbox>
+  </dialog>
+  <!-- SQL Error Query Dialog -->
+
+  <!-- Generic error dialog -->
+  <dialog id="errorDialog" buttonlabelaccept="${okButton}" buttons="accept"
+          ondialogaccept="editFilterController.okErrorDialog()" buttonalign="right">
+    <vbox>
+      <hbox>
+        <spacer flex="1"/>
+      </hbox>
+      <label id="errorDialogMessage" value="${message}"/>
+      <hbox>
+        <spacer flex="1"/>
+      </hbox>
+    </vbox>
+  </dialog>
+</window>
