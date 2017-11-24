@@ -131,6 +131,15 @@ SELECT,
 
 *:focus {outline: none;}
 
+SELECT[size="1"],
+SELECT:not([size]),
+.gwt-ListBox[size="1"],
+.gwt-ListBox:not([size]) {
+  height: 35px;
+  padding: 0 30px 0 10px;
+  background-size: 12px 12px;
+  background-position: right 8px center;
+}
 .adminField {
 margin-left: 4px;
 }
