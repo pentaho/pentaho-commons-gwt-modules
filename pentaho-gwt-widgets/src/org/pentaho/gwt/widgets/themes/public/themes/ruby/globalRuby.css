@@ -234,7 +234,7 @@ select option:focus, select option:hover {
 }
 
 .gwt-Label {
-  color: #333333;
+  color: #666666;
 }
 
 *:focus {
@@ -626,6 +626,8 @@ div.schedule-name {
 
 div.schedule-name-info {
   margin-top: 1px;
+  font-size: 14px;
+  color: #666666;
 }
 
 div.cron-label {

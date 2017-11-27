@@ -156,15 +156,14 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     timestampLB.setVisible( false );
 
-    HorizontalPanel myPanel = new HorizontalPanel();
-    myPanel.add( scheduleNameTextBox );
-    myPanel.setCellVerticalAlignment( scheduleNameTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
-    myPanel.add( timestampLB );
+    HorizontalPanel scheduleNamePanel = new HorizontalPanel();
+    scheduleNamePanel.add( scheduleNameTextBox );
+    scheduleNamePanel.setCellVerticalAlignment( scheduleNameTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
+    scheduleNamePanel.add( timestampLB );
 
-    content.add( myPanel );
+    content.add( scheduleNamePanel );
 
     appendTimeChk.setText( Messages.getString( "appendTimeToName" ) ); //$NON-NLS-1$
-    appendTimeChk.setStylePrimaryName( "checkbox" );
     appendTimeChk.addClickHandler( new ClickHandler() {
       @Override
       public void onClick( ClickEvent event ) {
@@ -218,11 +217,13 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     ChangeHandler ch = new ChangeHandler() {
       public void onChange( ChangeEvent event ) {
+        scheduleNamePreviewLabel.setText( getPreviewName( timestampLB.getSelectedIndex() ) );
         updateButtonState();
       }
     };
     KeyUpHandler kh = new KeyUpHandler() {
       public void onKeyUp( KeyUpEvent event ) {
+        scheduleNamePreviewLabel.setText( getPreviewName( timestampLB.getSelectedIndex() ) );
         updateButtonState();
       }
     };
