@@ -947,6 +947,11 @@ div.schedule-name-preview {
   margin-top: 5px;
 }
 
+.schedule-caption-panel legend {
+  font-size: 14px;
+  color: #999999;
+}
+
 #schedule-name-input {
   margin-bottom: 15px;
 }
