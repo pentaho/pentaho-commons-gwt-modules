@@ -139,9 +139,9 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     timestampLB.addStyleName( "schedule-timestamp-listbox" );
 
-    timestampLB.addItem( "yyyyMMddHHmmss" );
     timestampLB.addItem( "yyyy-MM-dd" );
     timestampLB.addItem( "yyyyMMdd" );
+    timestampLB.addItem( "yyyyMMddHHmmss" );
     timestampLB.addItem( "MM-dd-yyyy" );
     timestampLB.addItem( "MM-dd-yy" );
     timestampLB.addItem( "dd-MM-yyyy" );
