@@ -64,7 +64,7 @@ public class SessionExpiredDialog extends PromptDialogBox {
           redirect = 'Home'
         }
         if ( null != pathArray && pathArray.length > 1 ) {
-          $wnd.location.assign( '/' + pathArray[1] + '/' + redirect );
+          $wnd.location.assign( '/' + pathArray[ 1 ] + '/' + redirect );
         }
       }
     };
