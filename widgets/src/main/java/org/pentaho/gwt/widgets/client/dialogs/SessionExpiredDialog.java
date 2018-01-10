@@ -58,9 +58,13 @@ public class SessionExpiredDialog extends PromptDialogBox {
     var funct = function(event) {
       if (event.target === element) {
         event.stopPropagation();
-        var pathArray = $wnd.location.pathname.split( '/' );
+        var pathArray = $wnd.location.pathname.split('/');
+        var redirect = 'Login'
+        if ( this.ssoEnabled !== 'undefined' && this.ssoEnabled ) {
+            redirect = 'Home'
+        }
         if ( null != pathArray && pathArray.length > 1 ) {
-          $wnd.location.assign( '/' + pathArray[ 1 ] + '/Login' );
+          $wnd.location.assign( '/' + pathArray[1] + '/' + redirect );
         }
       }
     };
