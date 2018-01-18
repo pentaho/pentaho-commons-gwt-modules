@@ -278,7 +278,7 @@ public class ScheduleHelper {
 
   public static void showOptionToDistributeLoadViaWorkerNodes( final CheckBox useWorkerNodesCheckbox ) {
 
-    if( useWorkerNodesCheckbox == null ) {
+    if ( useWorkerNodesCheckbox == null ) {
       return;
     }
 
@@ -305,7 +305,7 @@ public class ScheduleHelper {
         }
       } );
 
-    } catch( Throwable t ) {
+    } catch ( Throwable t ) {
       // Do nothing. Worker nodes capability may not be installed, and therefore this endpoint would not be available
     }
   }

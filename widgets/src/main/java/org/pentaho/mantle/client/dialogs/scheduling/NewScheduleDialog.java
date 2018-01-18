@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -278,7 +278,7 @@ public class NewScheduleDialog extends PromptDialogBox {
       }
     }
 
-    useWorkerNodesChk.setText( Messages.getString("useWorkerNodes" ) ); //$NON-NLS-1$
+    useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
     useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
     ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( useWorkerNodesChk );
     content.add( useWorkerNodesChk );
@@ -396,10 +396,10 @@ public class NewScheduleDialog extends PromptDialogBox {
                 jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
               }
 
-              if( useWorkerNodesChk != null && useWorkerNodesChk.isVisible() ) {
+              if ( useWorkerNodesChk != null && useWorkerNodesChk.isVisible() ) {
                 JsJobParam jjp = (JsJobParam) JavaScriptObject.createObject().cast();
                 jjp.setName( "useWorkerNodes" );
-                jjp.setValue(String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) );
+                jjp.setValue( String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) );
                 jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
               }
 
