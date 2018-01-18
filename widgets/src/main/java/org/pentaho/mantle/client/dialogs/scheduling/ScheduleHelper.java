@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -38,6 +38,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -49,6 +50,16 @@ public class ScheduleHelper {
 
   public static String JOB_SCHEDULER_URL = "api/scheduler/job";
   public static String UPDATE_JOB_SCHEDULER_URL = "api/scheduler/job/update";
+
+  // URL that allows to check is the system has been configured to leverage on worker nodes capability to distribute load
+  public static String CHECK_DISTRIBUTE_LOAD_VIA_WORKER_NODES_URL = "osgi/cxf/workernodes/configuration/orchestrationEnabled";
+
+  // Only what the system has been configured to leverage on worker nodes capability will the checkbox be displayed
+  // As the default system settings have worker nodes disabled, so shall the default checkbox visibility be 'false'
+  public static boolean DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY = false;
+
+  // If the system has been configured to leverage on worker nodes capability, the default setting is to use it
+  public static boolean DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING = true;
 
   private static native void setupNativeHooks( ScheduleHelper scheduleHelper )
   /*-{
@@ -265,4 +276,37 @@ public class ScheduleHelper {
     return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
   }-*/;
 
+  public static void showOptionToDistributeLoadViaWorkerNodes( final CheckBox useWorkerNodesCheckbox ) {
+
+    if( useWorkerNodesCheckbox == null ) {
+      return;
+    }
+
+    // default is false; only render checkbox if Worker Nodes capability is enabled in the system
+    useWorkerNodesCheckbox.setVisible( DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY );
+
+    try {
+
+      final String url = ScheduleHelper.getFullyQualifiedURL() + CHECK_DISTRIBUTE_LOAD_VIA_WORKER_NODES_URL;
+      RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
+      requestBuilder.setHeader( "accept", "text/plain" );
+      requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
+      requestBuilder.sendRequest( null, new RequestCallback() {
+
+        public void onError( Request request, Throwable exception ) {
+          // Do nothing. Worker nodes capability may not be installed, and therefore this endpoint would not be available
+        }
+
+        public void onResponseReceived( Request request, Response response ) {
+
+          if ( response != null && response.getStatusCode() == Response.SC_OK ) {
+            useWorkerNodesCheckbox.setVisible( Boolean.TRUE.toString().equalsIgnoreCase( response.getText() ) );
+          }
+        }
+      } );
+
+    } catch( Throwable t ) {
+      // Do nothing. Worker nodes capability may not be installed, and therefore this endpoint would not be available
+    }
+  }
 }

@@ -169,6 +169,25 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       }
     }
 
+    if ( jobSchedule.get( "useWorkerNodes" ) != null ) {
+      String useWorkerNodes = jobSchedule.get( "useWorkerNodes" ).toString();
+      useWorkerNodes = useWorkerNodes.substring( 1, useWorkerNodes.length() - 1 );
+
+      if( useWorkerNodes != null && !useWorkerNodes.trim().isEmpty() ) {
+
+        boolean useWorkerNodesBoolean = Boolean.valueOf(useWorkerNodes).booleanValue();
+
+        JsArrayString useWorkerNodesValue = (JsArrayString) JavaScriptObject.createArray().cast();
+        useWorkerNodesValue.push( String.valueOf( useWorkerNodesBoolean ) );
+
+        JsSchedulingParameter jspUseWorkerNodes = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
+        jspUseWorkerNodes.setName("useWorkerNodes");
+        jspUseWorkerNodes.setStringValue(useWorkerNodesValue);
+        jspUseWorkerNodes.setType("boolean");
+        params.set( params.size(), new JSONObject( jspUseWorkerNodes ) );
+      }
+    }
+
     return params;
   }
 
