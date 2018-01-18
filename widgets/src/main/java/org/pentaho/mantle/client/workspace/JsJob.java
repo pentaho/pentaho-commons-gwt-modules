@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.workspace;
@@ -89,8 +89,7 @@ public class JsJob extends JavaScriptObject {
     }
     if ( getJobName().contains( ":" ) ) {
       resource = resource.substring( resource.indexOf( "/" ), resource.indexOf( ":outputFile = /" ) );
-    }
-    else {
+    } else {
       resource = resource.substring( resource.indexOf( "/" ), resource.indexOf( ":" ) );
     }
     return resource;
@@ -117,6 +116,14 @@ public class JsJob extends JavaScriptObject {
     String resource = getFullResourceName();
     if ( resource.indexOf( "/" ) != -1 ) {
       resource = resource.substring( resource.lastIndexOf( "/" ) + 1 );
+    }
+    return resource;
+  }
+
+  public final String getUseWorkerNodes() {
+    String resource = getJobParamValue( "useWorkerNodes" );
+    if ( resource == null || "".equals( resource ) ) {
+      return "";
     }
     return resource;
   }

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -166,6 +166,25 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
         jspOverwrite.setStringValue( autoCreateUniqueFilenameValue );
         jspOverwrite.setType( "boolean" );
         params.set( params.size(), new JSONObject( jspOverwrite ) );
+      }
+    }
+
+    if ( jobSchedule.get( "useWorkerNodes" ) != null ) {
+      String useWorkerNodes = jobSchedule.get( "useWorkerNodes" ).toString();
+      useWorkerNodes = useWorkerNodes.substring( 1, useWorkerNodes.length() - 1 );
+
+      if ( useWorkerNodes != null && !useWorkerNodes.trim().isEmpty() ) {
+
+        boolean useWorkerNodesBoolean = Boolean.valueOf( useWorkerNodes ).booleanValue();
+
+        JsArrayString useWorkerNodesValue = (JsArrayString) JavaScriptObject.createArray().cast();
+        useWorkerNodesValue.push( String.valueOf( useWorkerNodesBoolean ) );
+
+        JsSchedulingParameter jspUseWorkerNodes = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
+        jspUseWorkerNodes.setName( "useWorkerNodes" );
+        jspUseWorkerNodes.setStringValue( useWorkerNodesValue );
+        jspUseWorkerNodes.setType( "boolean" );
+        params.set( params.size(), new JSONObject( jspUseWorkerNodes ) );
       }
     }
 

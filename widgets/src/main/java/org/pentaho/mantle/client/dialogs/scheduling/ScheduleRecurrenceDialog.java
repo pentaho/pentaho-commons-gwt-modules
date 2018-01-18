@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -89,6 +89,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   protected String scheduleName;
   protected String appendDateFormat;
   protected boolean overwriteFile;
+  protected String useWorkerNodes;
 
   private IDialogCallback callback;
 
@@ -125,16 +126,21 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       overwrite = !Boolean.valueOf( autoCreateUniqueFilename ).booleanValue();
     }
     constructDialog( jsJob.getFullResourceName(), jsJob.getOutputPath(), jsJob.getJobName(), dateFormat, overwrite, hasParams,
-        isEmailConfValid, jsJob );
+        isEmailConfValid, jsJob.getUseWorkerNodes(), jsJob );
   }
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, String filePath, String outputLocation,
-      String scheduleName, String dateFormat, boolean overwriteFile, IDialogCallback callback, boolean hasParams, boolean isEmailConfValid ) {
+                                   String scheduleName, String dateFormat, boolean overwriteFile, IDialogCallback callback, boolean hasParams, boolean isEmailConfValid ) {
+    this( parentDialog, filePath, outputLocation, scheduleName, dateFormat, overwriteFile, callback, hasParams, isEmailConfValid, "" );
+  }
+
+  public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, String filePath, String outputLocation,
+      String scheduleName, String dateFormat, boolean overwriteFile, IDialogCallback callback, boolean hasParams, boolean isEmailConfValid, String useWorkerNodes ) {
     super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
     isBlockoutDialog = false;
     setCallback( callback );
     this.parentDialog = parentDialog;
-    constructDialog( filePath, outputLocation, scheduleName, dateFormat, overwriteFile, hasParams, isEmailConfValid, null );
+    constructDialog( filePath, outputLocation, scheduleName, dateFormat, overwriteFile, hasParams, isEmailConfValid, useWorkerNodes, null );
   }
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, ScheduleDialogType type, String title,
@@ -164,7 +170,12 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   }
 
   private void constructDialog( String filePath, String outputLocation, String scheduleName, String dateFormat, boolean overwriteFile, boolean hasParams,
-      boolean isEmailConfValid, JsJob jsJob ) {
+                                boolean isEmailConfValid, JsJob jsJob ) {
+    constructDialog( filePath, outputLocation, scheduleName, dateFormat, overwriteFile, hasParams, isEmailConfValid, null, jsJob );
+  }
+
+  private void constructDialog( String filePath, String outputLocation, String scheduleName, String dateFormat, boolean overwriteFile, boolean hasParams,
+      boolean isEmailConfValid, String useWorkerNodes, JsJob jsJob ) {
     this.hasParams = hasParams;
     this.filePath = filePath;
     this.isEmailConfValid = isEmailConfValid;
@@ -172,6 +183,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     this.scheduleName = scheduleName;
     this.appendDateFormat = dateFormat;
     this.overwriteFile = overwriteFile;
+    this.useWorkerNodes = useWorkerNodes;
     scheduleEditorWizardPanel = new ScheduleEditorWizardPanel( getDialogType() );
     scheduleEditor = scheduleEditorWizardPanel.getScheduleEditor();
     String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/hasblockouts?ts=" + System.currentTimeMillis(); //$NON-NLS-1$
@@ -454,6 +466,9 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     }
     schedule.put( "inputFile", new JSONString( filePath ) ); //$NON-NLS-1$
     schedule.put( "outputFile", new JSONString( outputLocation ) ); //$NON-NLS-1$
+    if ( useWorkerNodes != null && !useWorkerNodes.trim().isEmpty() ) {
+      schedule.put( "useWorkerNodes", new JSONString( useWorkerNodes ) ); //$NON-NLS-1$
+    }
     return schedule;
   }
 
