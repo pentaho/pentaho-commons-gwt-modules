@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -36,6 +36,7 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -51,6 +52,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   private static TextBox scheduleLocationTextBox = new TextBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
+  private CheckBox useWorkerNodesChk = new CheckBox();
 
   static {
     scheduleLocationTextBox.setText( getDefaultSaveLocation() );
@@ -141,6 +143,11 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
 
     content.add( locationPanel );
 
+    useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
+    useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
+    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( useWorkerNodesChk );
+    content.add( useWorkerNodesChk );
+
     setContent( content );
     content.getElement().getStyle().clearHeight();
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
@@ -173,7 +180,9 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     setCallback( new IDialogCallback() {
       @Override
       public void okPressed() {
-        onSelect( scheduleNameTextBox.getText(), scheduleLocationTextBox.getText() );
+        onSelect( scheduleNameTextBox.getText(), scheduleLocationTextBox.getText(),
+                ( useWorkerNodesChk != null && useWorkerNodesChk.isVisible()
+                        ? String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) : null ) );
       }
 
       @Override
@@ -198,7 +207,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     OutputLocationUtils.validateOutputLocation( scheduleLocationTextBox.getText(), null, errorCallback );
   }
 
-  protected abstract void onSelect( String name, String outputLocationPath );
+  protected abstract void onSelect( String name, String outputLocationPath, String useWorkerNodes );
 
   public void setOkButtonText( String text ) {
     okButton.setText( text );

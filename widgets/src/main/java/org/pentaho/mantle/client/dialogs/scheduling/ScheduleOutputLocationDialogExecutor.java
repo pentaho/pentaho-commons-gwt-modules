@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -44,6 +44,7 @@ public class ScheduleOutputLocationDialogExecutor {
   private String outputLocationPath = null;
   private String outputName = null;
   private String reportFile;
+  private String useWorkerNodes;
 
   public ScheduleOutputLocationDialogExecutor( String reportFile ) {
     this.reportFile = reportFile;
@@ -81,6 +82,14 @@ public class ScheduleOutputLocationDialogExecutor {
     this.outputName = outputName;
   }
 
+  public String getUseWorkerNodes() {
+    return useWorkerNodes;
+  }
+
+  public void setUseWorkerNodes( String useWorkerNode ) {
+    this.useWorkerNodes = useWorkerNodes;
+  }
+
   protected void performOperation() {
     showDialog();
   }
@@ -107,9 +116,10 @@ public class ScheduleOutputLocationDialogExecutor {
   protected void showDialog( ) {
     final ScheduleOutputLocationDialog outputLocationDialog = new ScheduleOutputLocationDialog( reportFile ) {
       @Override
-      protected void onSelect( final String name, final String outputLocationPath ) {
+      protected void onSelect( final String name, final String outputLocationPath, String useWorkerNodes ) {
         setOutputName( name );
         setOutputLocationPath( outputLocationPath );
+        setUseWorkerNodes( useWorkerNodes );
         performOperation( false );
       }
     };
@@ -218,6 +228,10 @@ public class ScheduleOutputLocationDialogExecutor {
               scheduleRequest.put( "outputFile", JSONNull.getInstance() ); //$NON-NLS-1$
             } else {
               scheduleRequest.put( "outputFile", new JSONString( getOutputLocationPath() ) ); //$NON-NLS-1$
+            }
+
+            if ( !StringUtils.isEmpty( getUseWorkerNodes() ) ) {
+              scheduleRequest.put( "useWorkerNodes", new JSONString( getUseWorkerNodes() ) ); //$NON-NLS-1$
             }
 
             // BISERVER-9321
