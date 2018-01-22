@@ -78,6 +78,7 @@ public class NewScheduleDialog extends PromptDialogBox {
   private CheckBox overrideExistingChk = new CheckBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
+  private Label runOptionsLabel;
   private CheckBox useWorkerNodesChk = new CheckBox();
 
   static {
@@ -278,9 +279,12 @@ public class NewScheduleDialog extends PromptDialogBox {
       }
     }
 
+    runOptionsLabel = new Label( Messages.getString( "runOptions" ) );
+    runOptionsLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
     useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
     useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
-    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( useWorkerNodesChk );
+    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( runOptionsLabel, useWorkerNodesChk );
+    content.add( runOptionsLabel );
     content.add( useWorkerNodesChk );
 
     setContent( content );
