@@ -276,7 +276,7 @@ public class ScheduleHelper {
     return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
   }-*/;
 
-  public static void showOptionToDistributeLoadViaWorkerNodes( final CheckBox useWorkerNodesCheckbox ) {
+  public static void showOptionToDistributeLoadViaWorkerNodes( final Label panelLabel, final CheckBox useWorkerNodesCheckbox ) {
 
     if ( useWorkerNodesCheckbox == null ) {
       return;
@@ -284,6 +284,7 @@ public class ScheduleHelper {
 
     // default is false; only render checkbox if Worker Nodes capability is enabled in the system
     useWorkerNodesCheckbox.setVisible( DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY );
+    panelLabel.setVisible( useWorkerNodesCheckbox.isVisible() );
 
     try {
 
@@ -301,6 +302,9 @@ public class ScheduleHelper {
 
           if ( response != null && response.getStatusCode() == Response.SC_OK ) {
             useWorkerNodesCheckbox.setVisible( Boolean.TRUE.toString().equalsIgnoreCase( response.getText() ) );
+
+            // if the checkbox becomes visible, so should its panel label
+            panelLabel.setVisible( useWorkerNodesCheckbox.isVisible() );
           }
         }
       } );
