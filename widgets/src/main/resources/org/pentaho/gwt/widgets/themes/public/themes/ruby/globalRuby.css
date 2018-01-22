@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2017 Hitachi Vantara.  All rights reserved.
+* Copyright 2017-2018 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -6854,7 +6854,8 @@ div.dijitPopup.dijitCalendarPopup {
 #widget_DP_range1_lookup .dijitArrowButtonInner,
 #widget_DP_range2_lookup .dijitArrowButtonInner,
 div.dijitDateTextBox .dijitArrowButtonInner {
-  background-image: url("images/calendar_icon.png") !important;
+  margin-top: 8px;
+  width: 16px;
 }
 
 #widget_DP_range1_lookup,
@@ -7165,19 +7166,19 @@ treecontrol.tree-classic li .tree-selected {
   width: 22px;
 }
 
-#DP_range1 #widget_DP_range1_lookup, 
+#DP_range1 #widget_DP_range1_lookup,
+#DP_range2 #widget_DP_range2_lookup, 
 div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitArrowButton.dijitDownArrowButton.dijitArrowButtonContainer {
   background-color: #cc0000;
   color: #fff;
   border-radius: 0 4px 4px 0;
 }
 
-#DP_range1 #widget_DP_range1_lookup, 
+#DP_range1 #widget_DP_range1_lookup,
+#DP_range2 #widget_DP_range2_lookup,
 div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitArrowButton.dijitDownArrowButton.dijitArrowButtonContainer input {
-  margin-left: 3px;
+  margin: 8px 0 0 3px;
   background: url(images/calendar-white.png) no-repeat !important;
-  margin-top: 8px;
-  height: 18px !important;
 }
 
 .tundra .pentahoFormatCombo.dijitComboBox,
