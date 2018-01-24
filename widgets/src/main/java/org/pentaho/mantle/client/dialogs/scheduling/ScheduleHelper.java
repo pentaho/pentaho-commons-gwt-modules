@@ -285,7 +285,7 @@ public class ScheduleHelper {
     useWorkerNodesCheckbox.setVisible( DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY );
     panelLabel.setVisible( useWorkerNodesCheckbox.isVisible() );
 
-    if ( useWorkerNodesCheckbox == null || StringUtils.isEmpty( filename) ) {
+    if ( useWorkerNodesCheckbox == null || StringUtils.isEmpty( filename ) ) {
       return; // not much we can do
     }
 
@@ -296,7 +296,7 @@ public class ScheduleHelper {
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-      requestBuilder.sendRequest( null , new RequestCallback() {
+      requestBuilder.sendRequest( null, new RequestCallback() {
 
         public void onError( Request request, Throwable exception ) {
           // Do nothing. Worker nodes capability may not be installed, and therefore this endpoint would not be available
