@@ -148,7 +148,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     runOptionsLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
     useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
     useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
-    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( runOptionsLabel, useWorkerNodesChk );
+    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( runOptionsLabel, useWorkerNodesChk, filePath );
     content.add( runOptionsLabel );
     content.add( useWorkerNodesChk );
 
