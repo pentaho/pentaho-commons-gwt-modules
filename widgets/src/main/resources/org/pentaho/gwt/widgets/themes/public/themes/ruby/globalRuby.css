@@ -1666,6 +1666,7 @@ input:focus {
 }
 
 .toolbar-toggle-button-down {
+  border: 1px solid #CC0000;	
   margin: 0px;
   width: 22px;
   height: 22px;
@@ -1673,7 +1674,7 @@ input:focus {
 }
 
 .IE .toolbar-toggle-button-down {
-  border: 1px solid #3d6380 !important;
+  border: 1px solid #CC0000 !important;
 
   /* override the transparent value set in toolbar-toggle-button*/
 }
