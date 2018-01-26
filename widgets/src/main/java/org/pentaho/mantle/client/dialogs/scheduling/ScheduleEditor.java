@@ -110,6 +110,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   protected static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
 
+  protected static final String SECTION_DIVIDER_TITLE_LABEL = "section-divider-title"; //$NON-NLS-1$
+
   protected static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 
   protected static final String BLOCKOUT_SELECT = "blockout-select";
