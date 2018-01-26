@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -109,6 +109,8 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   protected static final String RECURRENCE_LABEL = "reccurence-label";
 
   protected static final String SCHEDULE_LABEL = "schedule-label"; //$NON-NLS-1$
+
+  protected static final String SECTION_DIVIDER_TITLE_LABEL = "section-divider-title"; //$NON-NLS-1$
 
   protected static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
 

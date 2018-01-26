@@ -280,7 +280,7 @@ public class NewScheduleDialog extends PromptDialogBox {
     }
 
     runOptionsLabel = new Label( Messages.getString( "runOptions" ) );
-    runOptionsLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
+    runOptionsLabel.setStyleName( ScheduleEditor.SECTION_DIVIDER_TITLE_LABEL );
     useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
     useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
     ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( runOptionsLabel, useWorkerNodesChk, filePath );
