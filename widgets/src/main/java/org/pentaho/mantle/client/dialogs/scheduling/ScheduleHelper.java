@@ -54,7 +54,7 @@ public class ScheduleHelper {
   public static String UPDATE_JOB_SCHEDULER_URL = "api/scheduler/job/update";
 
   // URL that allows to check is worker nodes support this file type
-  public static String IS_FILE_SUPPORTED_IN_WORKER_NODES_URL = "osgi/cxf/workernodes/configuration/isSupportedFile?filename=";
+  public static String IS_FILE_SUPPORTED_IN_WORKER_NODES_URL = "osgi/cxf/workernodes/configuration/displayWorkerNodesOption?filename=";
 
   // Only what the system has been configured to leverage on worker nodes capability will the checkbox be displayed
   // As the default system settings have worker nodes disabled, so shall the default checkbox visibility be 'false'
