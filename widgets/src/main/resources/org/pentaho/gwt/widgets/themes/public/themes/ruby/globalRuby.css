@@ -6806,6 +6806,7 @@ div.dijitDateTextBox {
 div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
   border: none;
   box-shadow: none;
+  border-radius: 0 3px 3px 0;
 }
 
 #date-picker-dlg-wrapper .dijitComboBox {
@@ -7172,7 +7173,7 @@ treecontrol.tree-classic li .tree-selected {
 div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitArrowButton.dijitDownArrowButton.dijitArrowButtonContainer {
   background-color: #cc0000;
   color: #fff;
-  border-radius: 0 4px 4px 0;
+  border-radius: 3px;
 }
 
 #DP_range1 #widget_DP_range1_lookup,

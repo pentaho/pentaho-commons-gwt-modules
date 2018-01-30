@@ -2758,7 +2758,7 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton input[type='text'] {
 }
 
 div.dijitDateTextBox.dijitComboBox {
-  border-radius: 4px;
+  border-radius: 3px;
   margin-bottom: 15px;
 }
 
@@ -6644,8 +6644,6 @@ div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
 }
 
 #date-picker-dlg-wrapper .dijitComboBox {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
 }
 
 #date-picker-dlg-wrapper #DP_range1,
@@ -6691,6 +6689,7 @@ div.dijitPopup.dijitCalendarPopup {
 #widget_DP_range2_lookup .dijitArrowButtonInner,
 div.dijitDateTextBox .dijitArrowButtonInner {
   background-image: url("images/calendar_icon.png") !important;
+  width: 16px;
 }
 
 #widget_DP_range1_lookup,
