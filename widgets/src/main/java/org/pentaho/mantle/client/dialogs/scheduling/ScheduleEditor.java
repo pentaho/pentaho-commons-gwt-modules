@@ -226,6 +226,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     super();
     isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );
     startTimePicker = new TimePicker();
+    timeZonePicker = new ListBox();
 
     setStylePrimaryName( "scheduleEditor" ); //$NON-NLS-1$
 
@@ -406,9 +407,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       HorizontalPanel blockoutStartPanel = new HorizontalPanel();
       blockoutStartPanel.getElement().setId( "blockout-start-panel" );
       blockoutStartPanel.add( getStartTimePicker() );
-      timeZonePicker = new ListBox();
-      timeZonePicker.setStyleName( "timeZonePicker" );
-      timeZonePicker.setVisibleItemCount( 1 );
+      configureTimeZonePicker();
       blockoutStartPanel.add( timeZonePicker );
       timeZonePicker.getElement().getParentElement().getStyle().setPaddingTop( 5, Unit.PX );
 
@@ -573,6 +572,11 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     return timeZonePicker;
   }
 
+  void configureTimeZonePicker() {
+    timeZonePicker.setStyleName( "timeZonePicker" );
+    timeZonePicker.setVisibleItemCount( 1 );
+  }
+
   public void setBlockoutButtonHandler( final ClickHandler handler ) {
     blockoutCheckButton.addClickHandler( handler );
   }
@@ -644,8 +648,15 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   protected Widget createStartTimePanel() {
     CaptionPanel startTimeGB = new CaptionPanel( Messages.getString( "schedule.startTime" ) );
     startTimeGB.setStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
+    HorizontalPanel scheduleStartPanel = new HorizontalPanel();
+    scheduleStartPanel.getElement().setId( "schedule-start-panel" );
+    scheduleStartPanel.add( getStartTimePicker() );
 
-    startTimeGB.add( getStartTimePicker() );
+    configureTimeZonePicker();
+    scheduleStartPanel.add( getTimeZonePicker() );
+
+    startTimeGB.add( scheduleStartPanel );
+    populateTimeZonePicker();
 
     return startTimeGB;
   }

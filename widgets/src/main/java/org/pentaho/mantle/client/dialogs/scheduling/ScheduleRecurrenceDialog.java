@@ -469,6 +469,11 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     if ( useWorkerNodes != null && !useWorkerNodes.trim().isEmpty() ) {
       schedule.put( "useWorkerNodes", new JSONString( useWorkerNodes ) ); //$NON-NLS-1$
     }
+
+    if ( scheduleEditorWizardPanel.getTimeZone( ) != null ) {
+      schedule.put( "timeZone", new JSONString( scheduleEditorWizardPanel.getTimeZone( ) ) ); //$NON-NLS-1$
+    }
+
     return schedule;
   }
 
