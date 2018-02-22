@@ -170,15 +170,7 @@ public class NewScheduleDialog extends PromptDialogBox {
       @Override
       public void onClick( ClickEvent event ) {
         boolean checked = ( (CheckBox) event.getSource() ).getValue().booleanValue();
-        if ( checked ) {
-          previewCaptionPanel.setVisible( true );
-          timestampLB.setVisible( true );
-          overrideExistingChk.setText( Messages.getString( "overrideExistingFileAndTime" ) ); //$NON-NLS-1$
-        } else {
-          previewCaptionPanel.setVisible( false );
-          timestampLB.setVisible( false );
-          overrideExistingChk.setText( Messages.getString( "overrideExistingFile" ) ); //$NON-NLS-1$
-        }
+        refreshAppendedTimestamp( checked );
       }
     } );
     content.add( appendTimeChk );
@@ -248,13 +240,8 @@ public class NewScheduleDialog extends PromptDialogBox {
     locationPanel.add( browseButton );
 
     content.add( locationPanel );
-
-    if ( appendTimeChk.getValue().booleanValue() ) {
-      overrideExistingChk.setText( Messages.getString( "overrideExistingFileAndTime" ) ); //$NON-NLS-1$
-    } else {
-      overrideExistingChk.setText( Messages.getString( "overrideExistingFile" ) ); //$NON-NLS-1$
-    }
     content.add( overrideExistingChk );
+
     if ( jsJob != null ) {
       scheduleNameTextBox.setText( jsJob.getJobName() );
       scheduleLocationTextBox.setText( jsJob.getOutputPath() );
@@ -269,7 +256,6 @@ public class NewScheduleDialog extends PromptDialogBox {
       String appendDateFormat = jsJob.getJobParamValue( "appendDateFormat" );
       if ( appendDateFormat != null ) {
         appendTimeChk.setValue( true );
-        timestampLB.setVisible( true );
         for ( int i = 0; i < timestampLB.getItemCount(); i++ ) {
           if ( appendDateFormat.equals( timestampLB.getValue( i ) ) ) {
             timestampLB.setSelectedIndex( i );
@@ -278,6 +264,8 @@ public class NewScheduleDialog extends PromptDialogBox {
         }
       }
     }
+
+    refreshAppendedTimestamp( appendTimeChk.getValue().booleanValue() );
 
     runOptionsLabel = new Label( Messages.getString( "runOptions" ) );
     runOptionsLabel.setStyleName( ScheduleEditor.SECTION_DIVIDER_TITLE_LABEL );
@@ -470,4 +458,24 @@ public class NewScheduleDialog extends PromptDialogBox {
     OutputLocationUtils.validateOutputLocation( scheduleLocationTextBox.getText(), null, errorCallback );
   }
 
+  /**
+   * Refresh Appended Timestamp
+   *
+   * Refresh the New Schedule UI to update multiple components that change based on whether the timestamp is appended
+   * to the schedule name.
+   *
+   * @param value - true if the timestamp should be appended, otherwise false
+   */
+  private void refreshAppendedTimestamp( boolean value ) {
+    previewCaptionPanel.setVisible( value );
+    timestampLB.setVisible( value );
+    if ( value ) {
+      overrideExistingChk.setText( Messages.getString( "overrideExistingFileAndTime" ) ); //$NON-NLS-1$
+
+      //Update the preview text
+      scheduleNamePreviewLabel.setText( getPreviewName( timestampLB.getSelectedIndex() ) );
+    } else {
+      overrideExistingChk.setText( Messages.getString( "overrideExistingFile" ) ); //$NON-NLS-1$
+    }
+  }
 }
