@@ -41,9 +41,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NewFolderCommand extends AbstractCommand {
-
   private String solutionPath = null;
-  
   private String contextURL = ScheduleHelper.getFullyQualifiedURL();
 
   private RepositoryFile parentFolder;
@@ -66,7 +64,7 @@ public class NewFolderCommand extends AbstractCommand {
   }
 
   protected void performOperation() {
-      performOperation( true );
+    performOperation( true );
   }
 
   protected void performOperation( boolean feedback ) {
@@ -124,7 +122,7 @@ public class NewFolderCommand extends AbstractCommand {
 
             @Override
             public void onResponseReceived( Request createFolderRequest, Response createFolderResponse ) {
-              if ( createFolderResponse.getStatusText().equalsIgnoreCase( "OK" ) ) { //$NON-NLS-1$
+              if ( createFolderResponse.getStatusCode() == 200 ) {
                 NewFolderCommand.this.callback.onHandle( solutionPath );
                 //new RefreshRepositoryCommand().execute( false );
                 //event.setMessage( "Success" );
@@ -132,7 +130,6 @@ public class NewFolderCommand extends AbstractCommand {
                 setBrowseRepoDirty( Boolean.TRUE );
                 //EventBusUtil.EVENT_BUS.fireEvent( event );
               } else {
-                
                 String errorMessage = StringUtils.isEmpty( createFolderResponse.getText() )
                     || Messages.getString( createFolderResponse.getText() ) == null
                     ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ) //$NON-NLS-1$
@@ -171,7 +168,6 @@ public class NewFolderCommand extends AbstractCommand {
     String id = NameUtils.encodeRepositoryPath( path );
     return NameUtils.URLEncode( id );
   }
-  
   public ICallback<String> getCallback() {
     return callback;
   }
