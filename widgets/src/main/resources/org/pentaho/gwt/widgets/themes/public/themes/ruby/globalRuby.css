@@ -592,6 +592,7 @@ table#radio-buttons-panel {
   margin-bottom: 10px;
 }
 
+table#schedule-start-panel td,
 table#blockout-start-panel td {
   padding-top: 0 !important;
 }

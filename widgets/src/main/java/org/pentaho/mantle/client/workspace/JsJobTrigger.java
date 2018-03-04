@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.workspace;
@@ -23,6 +23,7 @@ import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.Window;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil.DayOfWeek;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil.MonthOfYear;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil.WeekOfMonth;
@@ -373,13 +374,13 @@ public class JsJobTrigger extends JavaScriptObject {
           String qualifier = getDayOfWeekQualifier();
           String dayOfWeek = getQualifiedDayOfWeek();
           trigDesc =
-              Messages.getString("the") + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
-                  + Messages.getString( DayOfWeek.valueOf(dayOfWeek).toString() ) + " " + Messages.getString("of") + " "
-                      + Messages.getString( MonthOfYear.get(monthsOfYear[0] - 1).toString() );
+              Messages.getString( "the" ) + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
+                  + Messages.getString( DayOfWeek.valueOf( dayOfWeek ).toString() ) + " " + Messages.getString( "of" ) + " "
+                      + Messages.getString( MonthOfYear.get( monthsOfYear[0] - 1 ).toString() );
         } else {
           // monthsOfYear, daysOfMonth
           trigDesc =
-              Messages.getString( "every" ) + " " + Messages.getString( MonthOfYear.get(monthsOfYear[0] - 1).toString() ) + " " + daysOfMonth[0];
+              Messages.getString( "every" ) + " " + Messages.getString( MonthOfYear.get( monthsOfYear[0] - 1 ).toString() ) + " " + daysOfMonth[0];
         }
       } else if ( daysOfMonth != null && daysOfMonth.length > 0 ) {
         // MONTHLY: Day N of every month
@@ -399,12 +400,21 @@ public class JsJobTrigger extends JavaScriptObject {
             && getDayOfWeekRecurrences()[4] == 6 ) {
           trigDesc = Messages.getString( "every" ) + " " + Messages.getString( "weekday" );
         } else {
+
+          int variance = 0;
+          if ( DateTimeFormat.getFormat( "yyyy-MM-dd'T'HH:mm:ssZZZ" ).parseStrict( getNativeStartTime() ) != null ) {
+            variance = TimeUtil.getDayVariance( getStartTime().getHours(), getNativeStartTime() );
+          }
+
+          int adjustedDayOfWeek =  TimeUtil.getDayOfWeek( DayOfWeek.get( getDayOfWeekRecurrences()[0] - 1 ), variance );
+
           trigDesc =
               Messages.getString( "every" ) + " "
-                  + Messages.getString( DayOfWeek.get( getDayOfWeekRecurrences()[0] - 1 )
+                  + Messages.getString( DayOfWeek.get( adjustedDayOfWeek )
                     .toString().trim() );
           for ( int i = 1; i < getDayOfWeekRecurrences().length; i++ ) {
-            trigDesc += ", " + Messages.getString( DayOfWeek.get( getDayOfWeekRecurrences()[i] - 1 )
+            adjustedDayOfWeek =  TimeUtil.getDayOfWeek( DayOfWeek.get( getDayOfWeekRecurrences()[i] - 1 ), variance );
+            trigDesc += ", " + Messages.getString( DayOfWeek.get( adjustedDayOfWeek )
               .toString().trim() );
           }
         }

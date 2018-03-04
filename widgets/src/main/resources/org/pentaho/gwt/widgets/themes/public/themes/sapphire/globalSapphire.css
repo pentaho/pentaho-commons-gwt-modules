@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2005 - 2017 Hitachi Vantara.  All rights reserved.
+* Copyright 2005 - 2018 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -578,6 +578,7 @@ table#radio-buttons-panel {
   margin-bottom: 10px;
 }
 
+table#schedule-start-panel td,
 table#blockout-start-panel td {
   padding-top: 0 !important;
 }

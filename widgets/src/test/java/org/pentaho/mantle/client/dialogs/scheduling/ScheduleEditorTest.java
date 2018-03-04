@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -31,10 +31,20 @@ import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class ScheduleEditorTest {
@@ -423,6 +433,37 @@ public class ScheduleEditorTest {
     scheduleEditor.setEndBy();
     verify( scheduleEditor.recurrenceEditor ).setEndBy();
     verify( scheduleEditor.cronEditor ).setEndBy();
+  }
+
+
+  @Test
+  public void testConfigureTimeZonePicker() {
+    doCallRealMethod().when( scheduleEditor ).configureTimeZonePicker();
+
+    scheduleEditor.timeZonePicker = mock( ListBox.class );
+    scheduleEditor.configureTimeZonePicker( );
+
+    assertNotNull( scheduleEditor.timeZonePicker );
+    verify( scheduleEditor.timeZonePicker ).setStyleName( "timeZonePicker" );
+    verify( scheduleEditor.timeZonePicker ).setVisibleItemCount( 1 );
+  }
+
+  @Test
+  public void testGetTargetTimezone() {
+
+    final String testTargetTimezone = "Eastern Daylight Time (UTC-0500)";
+
+    doCallRealMethod().when( scheduleEditor ).getTargetTimezone();
+
+    scheduleEditor.timeZonePicker = mock( ListBox.class );
+    when( scheduleEditor.getTimeZonePicker() ).thenReturn( scheduleEditor.timeZonePicker );
+    when( scheduleEditor.timeZonePicker.getSelectedIndex() ).thenReturn( 1 );
+    when( scheduleEditor.timeZonePicker.getItemText( anyInt() ) ).thenReturn( testTargetTimezone );
+
+    final String targetTimezone = scheduleEditor.getTargetTimezone();
+
+    assertNotNull( targetTimezone );
+    assertEquals( testTargetTimezone, targetTimezone );
   }
 
   private ListBox prepareLB( int itemText, String display ) {
