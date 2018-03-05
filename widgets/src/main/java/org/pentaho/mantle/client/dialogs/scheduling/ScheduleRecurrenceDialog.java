@@ -358,8 +358,16 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     if ( daysOfWeek != null ) {
       JSONArray jsonArray = new JSONArray();
       int index = 0;
+
+      String targetTimezone = scheduleEditor.getTargetTimezone();
+      int weekDayVariance = 0;
+
+      if ( targetTimezone != null ) {
+        weekDayVariance = TimeUtil.getDayVariance( startDate.getHours(), targetTimezone );
+      }
+
       for ( DayOfWeek dayOfWeek : daysOfWeek ) {
-        jsonArray.set( index++, new JSONString( Integer.toString( dayOfWeek.ordinal() ) ) );
+        jsonArray.set( index++, new JSONString( Integer.toString( TimeUtil.getDayOfWeek( dayOfWeek, weekDayVariance ) ) ) );
       }
       trigger.put( "daysOfWeek", jsonArray ); //$NON-NLS-1$
     }
@@ -469,6 +477,11 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     if ( useWorkerNodes != null && !useWorkerNodes.trim().isEmpty() ) {
       schedule.put( "useWorkerNodes", new JSONString( useWorkerNodes ) ); //$NON-NLS-1$
     }
+
+    if ( scheduleEditorWizardPanel.getTimeZone( ) != null ) {
+      schedule.put( "timeZone", new JSONString( scheduleEditorWizardPanel.getTimeZone( ) ) ); //$NON-NLS-1$
+    }
+
     return schedule;
   }
 

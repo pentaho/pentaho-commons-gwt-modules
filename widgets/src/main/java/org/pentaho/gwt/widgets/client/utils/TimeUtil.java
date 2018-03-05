@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils;
@@ -119,6 +119,14 @@ public class TimeUtil {
 
     public static int length() {
       return week.length;
+    }
+
+    public int getNext() {
+      return ( ordinal() + 1 ) % values().length;
+    }
+
+    public int getPrevious() {
+      return ( this == SUN ) ? SAT.ordinal() : ordinal() - 1;
     }
   } /* end enum */
 
@@ -528,4 +536,89 @@ public class TimeUtil {
 
     System.out.println( "done" ); //$NON-NLS-1$
   }
+
+  /**
+   * Calculates day variance based on target timezone information.
+   *
+   * There are two different types of target timezone information which should be handled:
+   * timezone id - e.g. "Eastern Daylight Time (UTC-0500)"
+   * dateTime format - e.g. "2018-02-27T07:30:00-05:00"
+   *
+   * @param selectedTime The time selected by the user which is compared against the timezone diff between client and target
+   * @param targetTimezoneInfo The target timezone information in the formats described above
+   * @return The calculated day variance
+   */
+  public static int getDayVariance( int selectedTime, String targetTimezoneInfo ) {
+
+    boolean isTimezoneId = targetTimezoneInfo.contains( "UTC" );
+
+    int targetOffset = targetTimezoneInfo.endsWith( "Z" ) ? 0 : getTargetOffset( targetTimezoneInfo, isTimezoneId );
+    int clientOffset = -getClientOffsetTimeZone() / 60;
+
+    // if client side has the timezone ahead of target's timezone, then we should compare against client's start of the day
+    // client2target -> -1 and target2client -> +1
+    if ( clientOffset > targetOffset ) {
+      int timezoneDiff = targetOffset - clientOffset;
+      if ( selectedTime + timezoneDiff < 0 ) {
+        return isTimezoneId ? -1 : 1;
+      }
+    // if client side has the timezone behind of target's timezone, then we should compare against client's end of the day
+    // client2target -> +1 and target2client -> -1
+    } else {
+      int timezoneDiff = clientOffset - targetOffset;
+      if ( selectedTime - timezoneDiff > 23 ) {
+        return isTimezoneId ? 1 : -1;
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Retrieves the target timezone offset based on the target's timezone information.
+   *
+   * Note: The following two types of timezone information are supported:
+   * timezone id - e.g. "Eastern Daylight Time (UTC-0500)"
+   * dateTime format - e.g. "2018-02-27T07:30:00-05:00"
+   *
+   * @param targetTimezoneInfo The target timezone information.
+   * @param isTimezoneId True if the format is timezone id, false if the format is dateTime.
+   * @return The target's timezone offset
+   */
+  private static int getTargetOffset( String targetTimezoneInfo, boolean isTimezoneId ) {
+    String targetTzOffset;
+    int targetOffset;
+
+    if ( isTimezoneId ) {
+      targetTzOffset = targetTimezoneInfo.substring( targetTimezoneInfo.indexOf( "(UTC" ) + 4, targetTimezoneInfo.length() - 3 );
+    } else {
+      int startingOffsetChar = Character.isDigit( targetTimezoneInfo.charAt( targetTimezoneInfo.length() - 6 ) ) ? 5 : 6;
+      targetTzOffset = targetTimezoneInfo.substring( targetTimezoneInfo.length() - startingOffsetChar, targetTimezoneInfo.length() - 3 );
+    }
+    targetOffset = Integer.valueOf( targetTzOffset.substring( 1 ) );
+
+    // Determine the signal separately, otherwise a NumberFormatException will occur if we try to convert directly the signal to integer.
+    if ( targetTzOffset.charAt( 0 ) == '-' ) {
+      targetOffset = -targetOffset;
+    }
+    return targetOffset;
+  }
+
+  /**
+   * Given the current day of week, calculate the new day of week based on the variance.
+   *
+   * @param currentDay the current day
+   * @param dayVariance the day variance which will be applied on the current day
+   * @return the calculated day of week
+   */
+  public static int getDayOfWeek( DayOfWeek currentDay, int dayVariance ) {
+
+    if ( dayVariance == 0 ) {
+      return currentDay.ordinal();
+    }
+    return ( dayVariance > 0 ) ? currentDay.getNext() : currentDay.getPrevious();
+  }
+
+  public static native int getClientOffsetTimeZone() /*-{
+      return new Date().getTimezoneOffset();
+  }-*/;
 }
