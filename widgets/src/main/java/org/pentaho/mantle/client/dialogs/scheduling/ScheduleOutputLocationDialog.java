@@ -17,10 +17,14 @@
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import java.util.Date;
+
+import com.google.gwt.core.client.JsArray;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.formatter.JSDateTextFormatter;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.folderchooser.SelectFolderDialog;
@@ -36,11 +40,13 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -50,6 +56,11 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   private TextBox scheduleNameTextBox = new TextBox();
   private Label scheduleNameLabel;
   private static TextBox scheduleLocationTextBox = new TextBox();
+  private CheckBox appendTimeChk = new CheckBox();
+  private ListBox timestampLB = new ListBox();
+  private CaptionPanel previewCaptionPanel;
+  private Label scheduleNamePreviewLabel;
+  private CheckBox overrideExistingChk = new CheckBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
   private Label runOptionsLabel;
@@ -64,9 +75,14 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
       return window.top.HOME_FOLDER;
   }-*/;
 
+  private static native void delete( JsArray<?> array, int index, int count )
+  /*-{
+      array.splice(index, count);
+  }-*/;
+
   public ScheduleOutputLocationDialog( final String filePath ) {
     super(
-        Messages.getString( "runInBackground" ), Messages.getString( "nextStep" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        Messages.getString( "runInBackground" ), Messages.getString( "next" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     this.filePath = filePath;
     createUI();
     setupCallbacks();
@@ -76,21 +92,63 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     VerticalPanel content = new VerticalPanel();
 
     HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
-    scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
+    scheduleNameLabel = new Label( Messages.getString( "generatedContentName" ) );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
 
-    Label scheduleNameInfoLabel = new Label( Messages.getString( "scheduleNameInfo" ) );
-    scheduleNameInfoLabel.setStyleName( "msg-Label" );
-
     scheduleNameLabelPanel.add( scheduleNameLabel );
-    scheduleNameLabelPanel.add( scheduleNameInfoLabel );
 
     String defaultName = filePath.substring( filePath.lastIndexOf( "/" ) + 1, filePath.lastIndexOf( "." ) );
     scheduleNameTextBox.getElement().setId( "schedule-name-input" );
     scheduleNameTextBox.setText( defaultName );
 
     content.add( scheduleNameLabelPanel );
-    content.add( scheduleNameTextBox );
+
+    timestampLB.addStyleName( "schedule-timestamp-listbox" );
+
+    timestampLB.addItem( "yyyy-MM-dd" );
+    timestampLB.addItem( "yyyyMMdd" );
+    timestampLB.addItem( "yyyyMMddHHmmss" );
+    timestampLB.addItem( "MM-dd-yyyy" );
+    timestampLB.addItem( "MM-dd-yy" );
+    timestampLB.addItem( "dd-MM-yyyy" );
+
+    timestampLB.addClickHandler( new ClickHandler() {
+      @Override
+      public void onClick( ClickEvent event ) {
+        int index = ( (ListBox) event.getSource() ).getSelectedIndex();
+        scheduleNamePreviewLabel.setText( getPreviewName( index ) );
+      }
+    } );
+
+    timestampLB.setVisible( false );
+
+    HorizontalPanel scheduleNamePanel = new HorizontalPanel();
+    scheduleNamePanel.add( scheduleNameTextBox );
+    scheduleNamePanel.setCellVerticalAlignment( scheduleNameTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
+    scheduleNamePanel.add( timestampLB );
+
+    content.add( scheduleNamePanel );
+
+    appendTimeChk.setText( Messages.getString( "appendTimeToName" ) ); //$NON-NLS-1$
+    appendTimeChk.addClickHandler( new ClickHandler() {
+      @Override
+      public void onClick( ClickEvent event ) {
+        boolean checked = ( (CheckBox) event.getSource() ).getValue().booleanValue();
+        refreshAppendedTimestamp( checked );
+      }
+    } );
+    content.add( appendTimeChk );
+
+    previewCaptionPanel = new CaptionPanel( Messages.getString( "preview" ) );
+    previewCaptionPanel.setStyleName( "schedule-caption-panel" );
+
+    scheduleNamePreviewLabel = new Label( getPreviewName( timestampLB.getSelectedIndex() ) );
+    scheduleNamePreviewLabel.addStyleName( "schedule-name-preview" );
+
+    previewCaptionPanel.add( scheduleNamePreviewLabel );
+    previewCaptionPanel.setVisible( false );
+
+    content.add( previewCaptionPanel );
 
     Label scheduleLocationLabel = new Label( Messages.getString( "generatedContentLocation" ) );
     scheduleLocationLabel.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
@@ -113,14 +171,17 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
       }
     } );
     browseButton.setStyleName( "pentaho-button" );
+    browseButton.getElement().setId( "schedule-dialog-select-button" );
 
     ChangeHandler ch = new ChangeHandler() {
       public void onChange( ChangeEvent event ) {
+        scheduleNamePreviewLabel.setText( getPreviewName( timestampLB.getSelectedIndex() ) );
         updateButtonState();
       }
     };
     KeyUpHandler kh = new KeyUpHandler() {
       public void onKeyUp( KeyUpEvent event ) {
+        scheduleNamePreviewLabel.setText( getPreviewName( timestampLB.getSelectedIndex() ) );
         updateButtonState();
       }
     };
@@ -143,6 +204,10 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     locationPanel.add( browseButton );
 
     content.add( locationPanel );
+
+    content.add( overrideExistingChk );
+
+    refreshAppendedTimestamp( appendTimeChk.getValue().booleanValue() );
 
     runOptionsLabel = new Label( Messages.getString( "runOptions" ) );
     runOptionsLabel.setStyleName( ScheduleEditor.SECTION_DIVIDER_TITLE_LABEL );
@@ -184,9 +249,21 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     setCallback( new IDialogCallback() {
       @Override
       public void okPressed() {
+        boolean overwriteFile = false;
+        if ( overrideExistingChk != null ) {
+          overwriteFile = overrideExistingChk.getValue();
+        }
+
+        String dateFormat = "";
+        if ( appendTimeChk != null ) {
+          if ( appendTimeChk.getValue().booleanValue() ) {
+            dateFormat = timestampLB.getValue( timestampLB.getSelectedIndex() );
+          }
+        }
+
         onSelect( scheduleNameTextBox.getText(), scheduleLocationTextBox.getText(),
                 ( useWorkerNodesChk != null && useWorkerNodesChk.isVisible()
-                        ? String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) : null ) );
+                        ? String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) : null ), overwriteFile, dateFormat );
       }
 
       @Override
@@ -201,6 +278,12 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     okButton.setEnabled( hasLocation && hasName );
   }
 
+  public String getPreviewName( int index ) {
+    JSDateTextFormatter formatter = new JSDateTextFormatter( timestampLB.getValue( index ) );
+    Date date = new Date();
+    return scheduleNameTextBox.getText() + formatter.format( String.valueOf( date.getTime() ) );
+  }
+
   private void validateScheduleLocationTextBox() {
     final Command errorCallback = new Command() {
       @Override
@@ -211,7 +294,28 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     OutputLocationUtils.validateOutputLocation( scheduleLocationTextBox.getText(), null, errorCallback );
   }
 
-  protected abstract void onSelect( String name, String outputLocationPath, String useWorkerNodes );
+  /**
+   * Refresh Appended Timestamp
+   *
+   * Refresh the New Schedule UI to update multiple components that change based on whether the timestamp is appended
+   * to the schedule name.
+   *
+   * @param value - true if the timestamp should be appended, otherwise false
+   */
+  private void refreshAppendedTimestamp( boolean value ) {
+    previewCaptionPanel.setVisible( value );
+    timestampLB.setVisible( value );
+    if ( value ) {
+      overrideExistingChk.setText( Messages.getString( "overrideExistingFileAndTime" ) ); //$NON-NLS-1$
+
+      //Update the preview text
+      scheduleNamePreviewLabel.setText( getPreviewName( timestampLB.getSelectedIndex() ) );
+    } else {
+      overrideExistingChk.setText( Messages.getString( "overrideExistingFile" ) ); //$NON-NLS-1$
+    }
+  }
+
+  protected abstract void onSelect( String name, String outputLocationPath, String useWorkerNodes, boolean overwriteFile, String dateFormat );
 
   public void setOkButtonText( String text ) {
     okButton.setText( text );

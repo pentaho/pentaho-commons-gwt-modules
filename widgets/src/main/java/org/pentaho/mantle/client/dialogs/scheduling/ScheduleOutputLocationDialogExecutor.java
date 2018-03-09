@@ -45,6 +45,8 @@ public class ScheduleOutputLocationDialogExecutor {
   private String outputName = null;
   private String reportFile;
   private String useWorkerNodes;
+  private String overwriteFile;
+  private String dateFormat;
 
   public ScheduleOutputLocationDialogExecutor( String reportFile ) {
     this.reportFile = reportFile;
@@ -90,6 +92,43 @@ public class ScheduleOutputLocationDialogExecutor {
     this.useWorkerNodes = useWorkerNodes;
   }
 
+  /**
+   * Get Date Format
+   *
+   * @return a string representation of a date format
+   */
+  public String getDateFormat() {
+    return dateFormat;
+  }
+
+  /**
+   * Set Date Format
+   *
+   * @param dateFormat a string representation of a date format
+   */
+  public void setDateFormat( String dateFormat ) {
+    this.dateFormat = dateFormat;
+  }
+
+  /**
+   * Get Overwrite File
+   *
+   * @return the string "true" if the file should be overwritten, otherwise "false"
+   */
+  public String getOverwriteFile() {
+    return overwriteFile;
+  }
+
+  /**
+   * Set Overwrite File
+   *
+   * @param overwriteFile the string "true" if the file should be overwritten, otherwise "false"
+   */
+  public void setOverwriteFile( String overwriteFile ) {
+    this.overwriteFile = overwriteFile;
+  }
+
+
   protected void performOperation() {
     showDialog();
   }
@@ -116,10 +155,12 @@ public class ScheduleOutputLocationDialogExecutor {
   protected void showDialog( ) {
     final ScheduleOutputLocationDialog outputLocationDialog = new ScheduleOutputLocationDialog( reportFile ) {
       @Override
-      protected void onSelect( final String name, final String outputLocationPath, String useWorkerNodes ) {
+      protected void onSelect( final String name, final String outputLocationPath, String useWorkerNodes, final boolean overwriteFile, final String dateFormat ) {
         setOutputName( name );
         setOutputLocationPath( outputLocationPath );
         setUseWorkerNodes( useWorkerNodes );
+        setOverwriteFile( String.valueOf( overwriteFile ) );
+        setDateFormat( dateFormat );
         performOperation( false );
       }
     };
@@ -215,6 +256,20 @@ public class ScheduleOutputLocationDialogExecutor {
           if ( response.getStatusCode() == Response.SC_OK ) {
             final JSONObject scheduleRequest = new JSONObject();
             scheduleRequest.put( "inputFile", new JSONString( filePath ) ); //$NON-NLS-1$
+
+            //Set date format to append to filename
+            if ( StringUtils.isEmpty( getDateFormat() ) ) {
+              scheduleRequest.put( "appendDateFormat", JSONNull.getInstance() ); //$NON-NLS-1$
+            } else {
+              scheduleRequest.put( "appendDateFormat", new JSONString( getDateFormat() ) ); //$NON-NLS-1$
+            }
+
+            //Set whether to overwrite the file
+            if ( StringUtils.isEmpty( getOverwriteFile() ) ) {
+              scheduleRequest.put( "overwriteFile", JSONNull.getInstance() ); //$NON-NLS-1$
+            } else {
+              scheduleRequest.put( "overwriteFile", new JSONString( getOverwriteFile() ) ); //$NON-NLS-1$
+            }
 
             // Set job name
             if ( StringUtils.isEmpty( getOutputName() ) ) {
