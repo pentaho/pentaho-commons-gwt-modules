@@ -6642,6 +6642,7 @@ div.dijitDateTextBox {
 div.dijitDateTextBox.dijitComboBox .dijitArrowButton {
   border: none;
   box-shadow: none;
+  border-radius: 0 3px 3px 0;
 }
 
 #date-picker-dlg-wrapper .dijitComboBox {
