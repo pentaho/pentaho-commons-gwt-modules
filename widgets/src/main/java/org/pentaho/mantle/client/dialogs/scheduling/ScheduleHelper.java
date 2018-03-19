@@ -63,6 +63,9 @@ public class ScheduleHelper {
   // If the system has been configured to leverage on worker nodes capability, the default setting is to use it
   public static boolean DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING = true;
 
+  // BACKLOG-22141 - Remove/Hide displayWorkerNodes checkbox support
+  public static boolean DISABLE_WORKER_NODES_CHECKBOX_FUNCTIONALITY = true;
+
   private static native void setupNativeHooks( ScheduleHelper scheduleHelper )
   /*-{
     $wnd.mantle_confirmBackgroundExecutionDialog = function(url) {
@@ -285,7 +288,7 @@ public class ScheduleHelper {
     useWorkerNodesCheckbox.setVisible( DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY );
     panelLabel.setVisible( useWorkerNodesCheckbox.isVisible() );
 
-    if ( useWorkerNodesCheckbox == null || StringUtils.isEmpty( filename ) ) {
+    if ( useWorkerNodesCheckbox == null || StringUtils.isEmpty( filename ) || DISABLE_WORKER_NODES_CHECKBOX_FUNCTIONALITY ) {
       return; // not much we can do
     }
 
