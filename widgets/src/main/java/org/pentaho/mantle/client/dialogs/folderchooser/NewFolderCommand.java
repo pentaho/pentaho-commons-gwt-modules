@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -34,7 +34,6 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
@@ -100,7 +99,7 @@ public class NewFolderCommand extends AbstractCommand {
           return;
         }
 
-        solutionPath = parentFolder.getPath() + "/" + URL.encodePathSegment( folderNameTextBox.getText() );
+        solutionPath = parentFolder.getPath() + "/" + folderNameTextBox.getText();
 
         String createDirUrl = contextURL + "api/repo/dirs/" + pathToId( solutionPath ); //$NON-NLS-1$
         RequestBuilder createDirRequestBuilder = new RequestBuilder( RequestBuilder.PUT, createDirUrl );
