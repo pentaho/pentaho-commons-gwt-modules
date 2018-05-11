@@ -234,7 +234,16 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     setValidatorCallback( new IDialogValidatorCallback() {
       @Override
       public boolean validate() {
-        String name = scheduleNameTextBox.getText();
+        String name;
+        if ( appendTimeChk.getValue().booleanValue() ) {
+          name = getPreviewName( timestampLB.getSelectedIndex() );
+        } else {
+          //trim the name if there is no timestamp appended
+          scheduleNameTextBox.setText( scheduleNameTextBox.getText().trim() );
+
+          name = scheduleNameTextBox.getText();
+        }
+
         boolean isValid = NameUtils.isValidFileName( name );
         if ( !isValid ) {
           MessageDialogBox errorDialog =

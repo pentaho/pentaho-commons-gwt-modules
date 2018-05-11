@@ -295,7 +295,16 @@ public class NewScheduleDialog extends PromptDialogBox {
   }
 
   protected void onOk() {
-    String name = scheduleNameTextBox.getText();
+    String name;
+    if ( appendTimeChk.getValue().booleanValue() ) {
+      name = getPreviewName( timestampLB.getSelectedIndex() );
+    } else {
+      //trim the name if there is no timestamp appended
+      scheduleNameTextBox.setText( scheduleNameTextBox.getText().trim() );
+
+      name = scheduleNameTextBox.getText();
+    }
+
     if ( !NameUtils.isValidFileName( name ) ) {
       MessageDialogBox errorDialog =
           new MessageDialogBox( Messages.getString( "error" ), Messages.getString( "prohibitedNameSymbols", name,
