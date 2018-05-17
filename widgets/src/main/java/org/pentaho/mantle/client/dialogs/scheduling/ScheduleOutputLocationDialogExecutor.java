@@ -44,7 +44,6 @@ public class ScheduleOutputLocationDialogExecutor {
   private String outputLocationPath = null;
   private String outputName = null;
   private String reportFile;
-  private String useWorkerNodes;
   private String overwriteFile;
   private String dateFormat;
 
@@ -82,14 +81,6 @@ public class ScheduleOutputLocationDialogExecutor {
 
   public void setOutputName( String outputName ) {
     this.outputName = outputName;
-  }
-
-  public String getUseWorkerNodes() {
-    return useWorkerNodes;
-  }
-
-  public void setUseWorkerNodes( String useWorkerNode ) {
-    this.useWorkerNodes = useWorkerNodes;
   }
 
   /**
@@ -155,10 +146,9 @@ public class ScheduleOutputLocationDialogExecutor {
   protected void showDialog( ) {
     final ScheduleOutputLocationDialog outputLocationDialog = new ScheduleOutputLocationDialog( reportFile ) {
       @Override
-      protected void onSelect( final String name, final String outputLocationPath, String useWorkerNodes, final boolean overwriteFile, final String dateFormat ) {
+      protected void onSelect( final String name, final String outputLocationPath, final boolean overwriteFile, final String dateFormat ) {
         setOutputName( name );
         setOutputLocationPath( outputLocationPath );
-        setUseWorkerNodes( useWorkerNodes );
         setOverwriteFile( String.valueOf( overwriteFile ) );
         setDateFormat( dateFormat );
         performOperation( false );
@@ -283,10 +273,6 @@ public class ScheduleOutputLocationDialogExecutor {
               scheduleRequest.put( "outputFile", JSONNull.getInstance() ); //$NON-NLS-1$
             } else {
               scheduleRequest.put( "outputFile", new JSONString( getOutputLocationPath() ) ); //$NON-NLS-1$
-            }
-
-            if ( !StringUtils.isEmpty( getUseWorkerNodes() ) ) {
-              scheduleRequest.put( "useWorkerNodes", new JSONString( getUseWorkerNodes() ) ); //$NON-NLS-1$
             }
 
             // BISERVER-9321

@@ -120,13 +120,6 @@ public class JsJob extends JavaScriptObject {
     return resource;
   }
 
-  public final String getUseWorkerNodes() {
-    String resource = getJobParamValue( "useWorkerNodes" );
-    if ( resource == null || "".equals( resource ) ) {
-      return "";
-    }
-    return resource;
-  }
 
   public final Date getLastRun() {
     return formatDate( getNativeLastRun() );
