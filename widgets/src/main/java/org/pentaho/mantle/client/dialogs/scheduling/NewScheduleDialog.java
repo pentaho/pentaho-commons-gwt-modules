@@ -78,8 +78,7 @@ public class NewScheduleDialog extends PromptDialogBox {
   private CheckBox overrideExistingChk = new CheckBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
-  private Label runOptionsLabel;
-  private CheckBox useWorkerNodesChk = new CheckBox();
+
 
   static {
     scheduleLocationTextBox.setText( getDefaultSaveLocation() );
@@ -267,13 +266,6 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     refreshAppendedTimestamp( appendTimeChk.getValue().booleanValue() );
 
-    runOptionsLabel = new Label( Messages.getString( "runOptions" ) );
-    runOptionsLabel.setStyleName( ScheduleEditor.SECTION_DIVIDER_TITLE_LABEL );
-    useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
-    useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
-    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( runOptionsLabel, useWorkerNodesChk, filePath );
-    content.add( runOptionsLabel );
-    content.add( useWorkerNodesChk );
 
     setContent( content );
     content.getElement().getParentElement().addClassName( "schedule-dialog-content" );
@@ -397,12 +389,6 @@ public class NewScheduleDialog extends PromptDialogBox {
                 jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
               }
 
-              if ( useWorkerNodesChk != null && useWorkerNodesChk.isVisible() ) {
-                JsJobParam jjp = (JsJobParam) JavaScriptObject.createObject().cast();
-                jjp.setName( "useWorkerNodes" );
-                jjp.setValue( String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) );
-                jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
-              }
 
               if ( recurrenceDialog == null ) {
                 recurrenceDialog =
@@ -411,12 +397,9 @@ public class NewScheduleDialog extends PromptDialogBox {
               }
             } else if ( recurrenceDialog == null ) {
 
-              String useWorkerNodes = useWorkerNodesChk != null && useWorkerNodesChk.isVisible()
-                      ? String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) : "";
-
               recurrenceDialog =
                   new ScheduleRecurrenceDialog( NewScheduleDialog.this, filePath, scheduleLocationTextBox.getText(),
-                      scheduleNameTextBox.getText(), dateFormat, overwriteFile, callback, hasParams, isEmailConfValid, useWorkerNodes );
+                      scheduleNameTextBox.getText(), dateFormat, overwriteFile, callback, hasParams, isEmailConfValid );
             } else {
               recurrenceDialog.scheduleName = scheduleNameTextBox.getText();
               recurrenceDialog.outputLocation = scheduleLocationTextBox.getText();

@@ -63,8 +63,6 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   private CheckBox overrideExistingChk = new CheckBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
-  private Label runOptionsLabel;
-  private CheckBox useWorkerNodesChk = new CheckBox();
 
   static {
     scheduleLocationTextBox.setText( getDefaultSaveLocation() );
@@ -209,14 +207,6 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
 
     refreshAppendedTimestamp( appendTimeChk.getValue().booleanValue() );
 
-    runOptionsLabel = new Label( Messages.getString( "runOptions" ) );
-    runOptionsLabel.setStyleName( ScheduleEditor.SECTION_DIVIDER_TITLE_LABEL );
-    useWorkerNodesChk.setText( Messages.getString( "useWorkerNodes" ) ); //$NON-NLS-1$
-    useWorkerNodesChk.setValue( ScheduleHelper.DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING );
-    ScheduleHelper.showOptionToDistributeLoadViaWorkerNodes( runOptionsLabel, useWorkerNodesChk, filePath );
-    content.add( runOptionsLabel );
-    content.add( useWorkerNodesChk );
-
     setContent( content );
     content.getElement().getStyle().clearHeight();
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
@@ -270,9 +260,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
           }
         }
 
-        onSelect( scheduleNameTextBox.getText(), scheduleLocationTextBox.getText(),
-                ( useWorkerNodesChk != null && useWorkerNodesChk.isVisible()
-                        ? String.valueOf( useWorkerNodesChk.getValue().booleanValue() ) : null ), overwriteFile, dateFormat );
+        onSelect( scheduleNameTextBox.getText(), scheduleLocationTextBox.getText(), overwriteFile, dateFormat );
       }
 
       @Override
@@ -324,7 +312,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     }
   }
 
-  protected abstract void onSelect( String name, String outputLocationPath, String useWorkerNodes, boolean overwriteFile, String dateFormat );
+  protected abstract void onSelect( String name, String outputLocationPath, boolean overwriteFile, String dateFormat );
 
   public void setOkButtonText( String text ) {
     okButton.setText( text );

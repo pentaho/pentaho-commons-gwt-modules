@@ -22,8 +22,6 @@ import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.gwt.widgets.client.utils.NameUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.events.EventBusUtil;
 import org.pentaho.mantle.client.events.SolutionFileActionEvent;
@@ -40,7 +38,6 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -53,18 +50,6 @@ public class ScheduleHelper {
   public static String JOB_SCHEDULER_URL = "api/scheduler/job";
   public static String UPDATE_JOB_SCHEDULER_URL = "api/scheduler/job/update";
 
-  // URL that allows to check is worker nodes support this file type
-  public static String IS_FILE_SUPPORTED_IN_WORKER_NODES_URL = "osgi/cxf/workernodes/configuration/displayWorkerNodesOption?filename=";
-
-  // Only what the system has been configured to leverage on worker nodes capability will the checkbox be displayed
-  // As the default system settings have worker nodes disabled, so shall the default checkbox visibility be 'false'
-  public static boolean DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY = false;
-
-  // If the system has been configured to leverage on worker nodes capability, the default setting is to use it
-  public static boolean DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_SETTING = true;
-
-  // BACKLOG-22141 - Remove/Hide displayWorkerNodes checkbox support
-  public static boolean DISABLE_WORKER_NODES_CHECKBOX_FUNCTIONALITY = true;
 
   private static native void setupNativeHooks( ScheduleHelper scheduleHelper )
   /*-{
@@ -281,43 +266,4 @@ public class ScheduleHelper {
     return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
   }-*/;
 
-  public static void showOptionToDistributeLoadViaWorkerNodes( final Label panelLabel, final CheckBox useWorkerNodesCheckbox,
-                                                               final String filename ) {
-
-    // default is false; only render checkbox if Worker Nodes capability is enabled in the system
-    useWorkerNodesCheckbox.setVisible( DEFAULT_DISTRIBUTE_LOAD_VIA_WORKER_NODES_VISIBILITY );
-    panelLabel.setVisible( useWorkerNodesCheckbox.isVisible() );
-
-    if ( useWorkerNodesCheckbox == null || StringUtils.isEmpty( filename ) || DISABLE_WORKER_NODES_CHECKBOX_FUNCTIONALITY ) {
-      return; // not much we can do
-    }
-
-    try {
-
-      final String url = ScheduleHelper.getFullyQualifiedURL() + IS_FILE_SUPPORTED_IN_WORKER_NODES_URL + NameUtils.URLEncode( filename );
-
-      RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
-      requestBuilder.setHeader( "accept", "text/plain" );
-      requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-      requestBuilder.sendRequest( null, new RequestCallback() {
-
-        public void onError( Request request, Throwable exception ) {
-          // Do nothing. Worker nodes capability may not be installed, and therefore this endpoint would not be available
-        }
-
-        public void onResponseReceived( Request request, Response response ) {
-
-          if ( response != null && response.getStatusCode() == Response.SC_OK ) {
-            useWorkerNodesCheckbox.setVisible( Boolean.TRUE.toString().equalsIgnoreCase( response.getText() ) );
-
-            // if the checkbox becomes visible, so should its panel label
-            panelLabel.setVisible( useWorkerNodesCheckbox.isVisible() );
-          }
-        }
-      } );
-
-    } catch ( Throwable t ) {
-      // Do nothing. Worker nodes capability may not be installed, and therefore this endpoint would not be available
-    }
-  }
 }
