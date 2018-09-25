@@ -1667,7 +1667,7 @@ input:focus {
 }
 
 .toolbar-toggle-button-down {
-  border: 1px solid #CC0000;	
+  border: 1px solid #CC0000;
   margin: 0px;
   width: 22px;
   height: 22px;
@@ -6287,7 +6287,7 @@ div.listbox .pentaho-listbox {
   background: #FDF296;
 }
 
-.IE .propPanel_gemBar.number .gem {
+.IE .gem[type="measure"] {
   background: #DDF4FC;
 }
 
@@ -6296,12 +6296,12 @@ div.listbox .pentaho-listbox {
   border: 0px;
 }
 
-.propPanel_gemBar.number .gem {
+.gem[type="measure"] {
   background: #DDF4FC;
   border: 1px solid #7EC9F2;
 }
 
-.propPanel_gemBar.number .gem.over {
+.gem.over[type="measure"] {
   background: #E6EFF6;
   border: 1px solid #8ac06e;
   -moz-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
@@ -7170,7 +7170,7 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 #DP_range1 #widget_DP_range1_lookup,
-#DP_range2 #widget_DP_range2_lookup, 
+#DP_range2 #widget_DP_range2_lookup,
 div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitArrowButton.dijitDownArrowButton.dijitArrowButtonContainer {
   background-color: #cc0000;
   color: #fff;

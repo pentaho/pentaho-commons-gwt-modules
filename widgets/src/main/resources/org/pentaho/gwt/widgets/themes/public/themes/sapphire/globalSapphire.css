@@ -3795,7 +3795,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file.selected .icon.kjb,
 .fileBrowserColumn .body .file.selected .kjb {
   background: url("images/kettle_job.png") no-repeat -15px;
-  margin-left: 7px;  
+  margin-left: 7px;
 }
 
 .fileBrowserColumn .body .file .icon.xaction,
@@ -6153,7 +6153,7 @@ div.listbox .pentaho-listbox {
   background: #FDF296;
 }
 
-.IE .propPanel_gemBar.number .gem {
+.IE .gem[type="measure"] {
   background: #DDF4FC;
 }
 
@@ -6162,12 +6162,12 @@ div.listbox .pentaho-listbox {
   border: 0px;
 }
 
-.propPanel_gemBar.number .gem {
+.gem[type="measure"] {
   background: #DDF4FC;
   border: 1px solid #7EC9F2;
 }
 
-.propPanel_gemBar.number .gem.over {
+.gem.over[type="measure"] {
   background: #E6EFF6;
   border: 1px solid #8ac06e;
   -moz-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
