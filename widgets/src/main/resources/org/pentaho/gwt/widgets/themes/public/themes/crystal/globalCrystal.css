@@ -4835,7 +4835,7 @@ div.listbox .pentaho-listbox {
   background:#FDF296;
 }
 
-.IE .propPanel_gemBar.number .gem{
+.IE .gem[type="measure"] {
   background: #DDF4FC;
 }
 
@@ -4844,12 +4844,12 @@ div.listbox .pentaho-listbox {
   border: 0px;
 }
 
-.propPanel_gemBar.number .gem {
+.gem[type="measure"] {
   background: #DDF4FC;
   border: 1px solid #7EC9F2;
 }
 
-.propPanel_gemBar.number .gem.over {
+.gem.over[type="measure"] {
   background: #d7e9cd;
   border: 1px solid #8ac06e;
   -moz-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
