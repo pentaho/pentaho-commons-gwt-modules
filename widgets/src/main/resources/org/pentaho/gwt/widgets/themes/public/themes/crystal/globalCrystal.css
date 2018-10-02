@@ -3951,7 +3951,7 @@ vertical-align: middle;
 .indicator{
   background-image: url("images/dropIndicator.png");
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: left -2px;
 }
 .indicator .indicatorLine{
   background-color: #1973bc;
