@@ -340,7 +340,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   public void center() {
     if ( scheduleParams != null ) {
       // we have saved params from back/next
-      String urlPath = NameUtils.encodeRepositoryPath( filePath );
+      String urlPath = URL.encodePathSegment( NameUtils.encodeRepositoryPath( filePath ) );
       String urlParams = "";
       for ( int i = 0; i < scheduleParams.size(); i++ ) {
         JSONObject o = scheduleParams.get( i ).isObject();
@@ -351,7 +351,8 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
         for ( int j = 0; j < stringValueArr.size(); j++ ) {
           urlParams += ( i == 0 && j == 0 ) ? "?" : "&";
           urlParams +=
-              name.stringValue().replace( "\"", "" ) + "=" + stringValueArr.get( j ).toString().replace( "\"", "" );
+              name.stringValue().replace( "\"", "" )
+                      + "=" +  URL.encodeQueryString( stringValueArr.get( j ).toString().replace( "\"", "" ) );
         }
       }
       setParametersUrl( ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
