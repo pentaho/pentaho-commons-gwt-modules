@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs;
@@ -53,7 +53,7 @@ public class WaitPopup extends SimplePanel {
 
   public static native void showBusyIndicator( String title, String message )
   /*-{
-      $wnd.pen.require([
+      $wnd.require([
               "common-ui/util/BusyIndicator"
           ],
 
@@ -64,7 +64,7 @@ public class WaitPopup extends SimplePanel {
 
   public static native void hideBusyIndicator()
   /*-{
-      $wnd.pen.require([
+      $wnd.require([
               "common-ui/util/BusyIndicator"
           ],
 
@@ -75,7 +75,7 @@ public class WaitPopup extends SimplePanel {
 
   public static native void showBusyIndicatorById( String title, String message, String id )
   /*-{
-      $wnd.pen.require([
+      $wnd.require([
               "common-ui/util/BusyIndicator"
           ],
 
@@ -86,7 +86,7 @@ public class WaitPopup extends SimplePanel {
 
   public static native void hideBusyIndicatorById( String id )
   /*-{
-      $wnd.pen.require([
+      $wnd.require([
               "common-ui/util/BusyIndicator"
           ],
 
