@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.filechooser;
@@ -215,22 +215,33 @@ public class FileChooser extends VerticalPanel {
     setFileSelected( false );
 
     String path = this.selectedPath;
+    selectedTreeItem = repositoryTree.getItem( 0 );
 
     // find the selected item from the list
     List<String> pathSegments = new ArrayList<String>();
     if ( path != null ) {
       int index = path.indexOf( "/", 0 ); //$NON-NLS-1$
+      int oldIndex;
+      String segment;
+      TreeItem childItem;
       while ( index >= 0 ) {
-        int oldIndex = index;
+        oldIndex = index;
         index = path.indexOf( "/", oldIndex + 1 ); //$NON-NLS-1$
         if ( index >= 0 ) {
-          pathSegments.add( path.substring( oldIndex + 1, index ) );
+          segment = path.substring( oldIndex + 1, index );
+        } else {
+          segment = path.substring( oldIndex + 1 );
+        }
+        childItem = getChildTreeItem( segment, selectedTreeItem );
+        if ( childItem != null ) {
+          pathSegments.add( segment );
+          selectedTreeItem = childItem;
+        } else {
+          break;
         }
       }
-      pathSegments.add( path.substring( path.lastIndexOf( "/" ) + 1 ) ); //$NON-NLS-1$
     }
 
-    selectedTreeItem = getTreeItem( pathSegments );
     navigationListBox = new ListBox();
     navigationListBox.getElement().setId( "navigationListBox" ); //$NON-NLS-1$
     navigationListBox.setWidth( "350px" ); //$NON-NLS-1$
@@ -567,15 +578,25 @@ public class FileChooser extends VerticalPanel {
     // find the tree node whose location matches the pathSegment paths
     TreeItem selectedItem = repositoryTree.getItem( 0 );
     for ( String segment : pathSegments ) {
-      for ( int i = 0; i < selectedItem.getChildCount(); i++ ) {
-        TreeItem item = selectedItem.getChild( i );
-        RepositoryFileTree tree = (RepositoryFileTree) item.getUserObject();
-        if ( segment.equals( tree.getFile().getName() ) ) {
-          selectedItem = item;
-        }
+      TreeItem childItem = getChildTreeItem( segment, selectedItem );
+      if ( childItem != null ) {
+        selectedItem = childItem;
+      } else {
+        break;
       }
     }
     return selectedItem;
+  }
+
+  private TreeItem getChildTreeItem( String itemName, TreeItem parentItem ) {
+    for ( int i = 0; i < parentItem.getChildCount(); i++ ) {
+      TreeItem item = parentItem.getChild( i );
+      RepositoryFileTree tree = (RepositoryFileTree) item.getUserObject();
+      if ( itemName.equals( tree.getFile().getName() ) ) {
+        return item;
+      }
+    }
+    return null;
   }
 
   public FileChooserMode getMode() {
