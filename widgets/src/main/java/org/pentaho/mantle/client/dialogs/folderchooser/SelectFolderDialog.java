@@ -37,8 +37,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import static org.pentaho.mantle.client.dialogs.folderchooser.FolderTree.getHomeFolder;
-
 public class SelectFolderDialog extends PromptDialogBox {
 
   private static class MySolutionTree extends FolderTree {
@@ -132,7 +130,7 @@ public class SelectFolderDialog extends PromptDialogBox {
 
   public String getSelectedPath() {
     final FolderTreeItem selectedItem = (FolderTreeItem) tree.getSelectedItem();
-    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : getHomeFolder();
+    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : FolderTree.getHomeFolder();
   }
 
   private void fetchRepository( final String selectedPath ) {
