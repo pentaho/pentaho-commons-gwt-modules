@@ -444,7 +444,13 @@ public class NewScheduleDialog extends PromptDialogBox {
     final Command errorCallback = new Command() {
       @Override
       public void execute() {
-        scheduleLocationTextBox.setText( getDefaultSaveLocation() ); // restore default location
+        String previousPath = OutputLocationUtils.getPreviousLocationPath( scheduleLocationTextBox.getText() );
+        if ( previousPath != null && !previousPath.isEmpty() ) {
+          scheduleLocationTextBox.setText( previousPath );
+          validateScheduleLocationTextBox();
+        } else {
+          scheduleLocationTextBox.setText( getDefaultSaveLocation() ); // restore default location
+        }
       }
     };
     OutputLocationUtils.validateOutputLocation( scheduleLocationTextBox.getText(), null, errorCallback );

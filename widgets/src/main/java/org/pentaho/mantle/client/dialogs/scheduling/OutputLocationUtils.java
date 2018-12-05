@@ -32,6 +32,8 @@ import com.google.gwt.user.client.Command;
  */
 public class OutputLocationUtils {
 
+  public static final String REPO_LOCATION_PATH_SEPARATOR = "/";
+
   public static void validateOutputLocation( final String outputLocation, final Command successCallback,
       final Command errorCallback ) {
 
@@ -69,5 +71,12 @@ public class OutputLocationUtils {
         errorCallback.execute();
       }
     }
+  }
+
+  public static String getPreviousLocationPath( String path ) {
+    if ( path.endsWith( REPO_LOCATION_PATH_SEPARATOR ) ) {
+      path = path.substring( 0, path.length() - 1 );
+    }
+    return path.substring( 0, path.lastIndexOf( REPO_LOCATION_PATH_SEPARATOR ) );
   }
 }
