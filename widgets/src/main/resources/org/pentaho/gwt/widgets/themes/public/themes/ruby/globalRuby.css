@@ -7418,6 +7418,12 @@ input#widthedit {
   padding: 2px 2px;
 }
 
+input#csvSeparator {
+  padding: 2px 10px 2px 10px;
+  width: 30px;
+  margin-left: 10px;
+}
+
 #marginFieldSet input {
   padding: 2px;
 }
