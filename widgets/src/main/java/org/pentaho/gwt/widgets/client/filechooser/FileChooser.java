@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.filechooser;
@@ -218,7 +218,10 @@ public class FileChooser extends VerticalPanel {
     selectedTreeItem = repositoryTree.getItem( 0 );
 
     // find the selected item from the list
-    List<String> pathSegments = new ArrayList<String>();
+    List<String> actualPathSegments = new ArrayList<String>();
+    // Getting a list of the Localized Path Segments as well, need to get the true Tree Items from the actual
+    // Path, but we need to display to the user the Localized Path instead.
+    List<String> localizedPathSegments = new ArrayList<String>();
     if ( path != null ) {
       int index = path.indexOf( "/", 0 ); //$NON-NLS-1$
       int oldIndex;
@@ -234,7 +237,8 @@ public class FileChooser extends VerticalPanel {
         }
         childItem = getChildTreeItem( segment, selectedTreeItem );
         if ( childItem != null ) {
-          pathSegments.add( segment );
+          actualPathSegments.add( segment );
+          localizedPathSegments.add( childItem.getTitle() );
           selectedTreeItem = childItem;
         } else {
           break;
@@ -247,25 +251,28 @@ public class FileChooser extends VerticalPanel {
     navigationListBox.setWidth( "350px" ); //$NON-NLS-1$
     // now we can find the tree nodes who match the path segments
     navigationListBox.addItem( "/", "/" ); //$NON-NLS-1$ //$NON-NLS-2$
-
-    for ( int i = 0; i < pathSegments.size(); i++ ) {
-      String segment = pathSegments.get( i );
-      String fullPath = ""; //$NON-NLS-1$
+    // Actual and Localized Path segments will be the same size based on how items get added to their lists.
+    for ( int i = 0; i < actualPathSegments.size(); i++ ) {
+      String actualFullPath = ""; //$NON-NLS-1$
+      String localizedFullPath = ""; //$NON-NLS-1$
       for ( int j = 0; j <= i; j++ ) {
-        String segmentPath = pathSegments.get( j );
-        if ( segmentPath != null && segmentPath.length() > 0 ) {
-          fullPath += "/" + segmentPath; //$NON-NLS-1$
+        String actualSegmentPath = actualPathSegments.get( j );
+        String localizedSegmentPath = localizedPathSegments.get( j );
+        if ( actualSegmentPath != null && localizedSegmentPath != null
+          && actualSegmentPath.length() > 0 && localizedSegmentPath.length() > 0 ) {
+          actualFullPath += "/" + actualSegmentPath; //$NON-NLS-1$
+          localizedFullPath += "/" + localizedSegmentPath; //$NON-NLS-1$
         }
       }
-      if ( !fullPath.equals( "/" ) ) { //$NON-NLS-1$
-        navigationListBox.addItem( fullPath, segment );
+      if ( !actualFullPath.equals( "/" ) && !localizedFullPath.equals( "/" ) ) { //$NON-NLS-1$
+        navigationListBox.addItem( localizedFullPath, actualFullPath );
       }
     }
 
     navigationListBox.setSelectedIndex( navigationListBox.getItemCount() - 1 );
     navigationListBox.addChangeListener( new ChangeListener() {
       public void onChange( Widget sender ) {
-        changeToPath( navigationListBox.getItemText( navigationListBox.getSelectedIndex() ) );
+        changeToPath( navigationListBox.getValue( navigationListBox.getSelectedIndex() ) );
       }
     } );
 
