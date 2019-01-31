@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
 
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
@@ -81,8 +82,8 @@ public class SelectFolderDialog extends PromptDialogBox {
     bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
     bar.add( Toolbar.GLUE );
 
-    Image image = new Image(ScheduleHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif");
-    image.addStyleName("icon-small");
+    Image image = new Image( ScheduleHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
+    image.addStyleName( "icon-small" );
     image.addStyleName( "pentaho-addbutton" );
     ToolbarButton add = new ToolbarButton( image ); //ImageUtil.getThemeableImage( "icon-small", "pentaho-addbutton" ) );
     add.setToolTip( Messages.getString( "createNewFolder" ) );
@@ -91,21 +92,21 @@ public class SelectFolderDialog extends PromptDialogBox {
         final NewFolderCommand nfc =
             new NewFolderCommand( ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile() );
         nfc.setCallback( new ICallback<String>() {
-          public void onHandle(final String path ) {
-            tree.fetchRepositoryFileTree(new AsyncCallback<RepositoryFileTree>() {
-              
+          public void onHandle( final String path ) {
+            tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
+
               @Override
               public void onSuccess( RepositoryFileTree result ) {
                 // TODO Auto-generated method stub
                 tree.select( path );
               }
-              
+
               @Override
               public void onFailure( Throwable caught ) {
                 // TODO Auto-generated method stub
-                
+
               }
-            } , null, null, false );
+            }, null, null, false );
 
           }
         } );
@@ -119,6 +120,8 @@ public class SelectFolderDialog extends PromptDialogBox {
     content.add( treeWrapper );
 
     setContent( content );
+    fetchRepository( getSelectedPath() );
+
     TreeItem selItem = tree.getSelectedItem();
     if ( selItem != null ) {
       DOM.scrollIntoView( selItem.getElement() );
@@ -126,8 +129,25 @@ public class SelectFolderDialog extends PromptDialogBox {
   }
 
   public String getSelectedPath() {
-    String selectedPath = ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile().getPath();
-    return selectedPath;
+    final FolderTreeItem selectedItem = (FolderTreeItem) tree.getSelectedItem();
+    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : FolderTree.getHomeFolder();
   }
 
+  private void fetchRepository( final String selectedPath ) {
+
+    tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
+
+      @Override
+      public void onSuccess( RepositoryFileTree result ) {
+        tree.select( selectedPath );
+      }
+
+      @Override
+      public void onFailure( Throwable caught ) {
+        MessageDialogBox dialogBox =
+                new MessageDialogBox( Messages.getString( "error" ), Messages.getString( "refreshRepository" ), false, false, true );
+        dialogBox.center();
+      }
+    }, null, null, false );
+  }
 }
