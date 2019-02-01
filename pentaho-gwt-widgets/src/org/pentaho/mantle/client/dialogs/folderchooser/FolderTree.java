@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import org.pentaho.gwt.widgets.client.filechooser.JsonToRepositoryFileTreeConverter;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
@@ -56,11 +57,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, UserSettingsLoadedEventHandler,
     IRepositoryFileProvider*/ {
-  
+
   private static final String SELECTED_STYLE_NAME = "selected";
-  
+
   private static final String HIDDEN_STYLE_NAME = "hidden";
-  
+
   private boolean showLocalizedFileNames = true;
   private boolean showHiddenFiles = false;
   private boolean createRootNode = false;
@@ -71,6 +72,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
 
   private TreeItem selectedItem = null;
   private String selectedPath = null;
+  private static String homeFolder = null;
 
   private FocusPanel focusable = new FocusPanel();
 
@@ -112,7 +114,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
                 ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
               } else {
                 selectedItem.addStyleName( HIDDEN_STYLE_NAME );
-                selectedItem.addStyleName( SELECTED_STYLE_NAME );                
+                selectedItem.addStyleName( SELECTED_STYLE_NAME );
               }
             } else {
               if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
@@ -148,11 +150,11 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
 
     getElement().setId( "solutionTree" ); //$NON-NLS-1$
     getElement().getStyle().setProperty( "margin", "29px 0px 10px 0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    
+
     beforeFetchRepositoryFileTree();
 
     fetchRepositoryFileTree( null, null, null, showHiddenFiles );
-    
+
    // onFetchRepositoryFileTree( repositoryFileTree, Collections.<RepositoryFile>emptyList() );
     //RepositoryFileTreeManager.getInstance().addRepositoryFileTreeListener( this, null, null, showHiddenFiles );
     /*EventBusUtil.EVENT_BUS.addHandler( UserSettingsLoadedEvent.TYPE, this );
@@ -166,7 +168,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
       }
     }, false );*/
   }
-  
+
   public void fetchRepositoryFileTree( final AsyncCallback<RepositoryFileTree> callback, Integer depth, String filter,
       Boolean showHidden ) {
     // notify listeners that we are about to talk to the server (in case there's anything they want to do
@@ -213,7 +215,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
             deletedFilesRequestBuilder.sendRequest( null, new RequestCallback() {
 
               public void onError( Request request, Throwable exception ) {
-                onFetchRepositoryFileTree(fileTree, Collections.<RepositoryFile>emptyList() );
+                onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
                 Window.alert( exception.toString() );
               }
 
@@ -224,25 +226,19 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
                   } catch ( Throwable t ) {
                     // apparently this happens when you have no trash
                   }
-                  onFetchRepositoryFileTree(fileTree, Collections.<RepositoryFile>emptyList() );
+                  onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
                 } else {
-                  onFetchRepositoryFileTree(fileTree, Collections.<RepositoryFile>emptyList() );
+                  onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
                 }
                 if ( callback != null ) {
                   callback.onSuccess( fileTree );
-                } 
+                }
               }
 
             } );
           } catch ( Exception e ) {
-            onFetchRepositoryFileTree(fileTree, Collections.<RepositoryFile>emptyList() );
+            onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
           }
-        } else {
-          /*fileTree = new RepositoryFileTree();
-          RepositoryFile errorFile = new RepositoryFile();
-          errorFile.setFolder( true );
-          errorFile.setName( "!ERROR!" );
-          repositoryFileTree.setFile( errorFile );*/
         }
       }
 
@@ -254,9 +250,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
       e.printStackTrace();
     }
   }
-  
-  
-  
+
 /*
   @Override
   public void onUserSettingsLoaded( UserSettingsLoadedEvent event ) {
@@ -497,6 +491,8 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
       }
       Collections.reverse( parents );
       selectFromList( parents );
+    } else if ( path != null &&  !path.equals( getHomeFolder() ) ) {
+      select( getHomeFolder() );
     }
   }
 
@@ -711,4 +707,41 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
     return values;
   }
 
+  /**
+   * Retrieves the default home folder.
+   * @return The home folder
+   */
+  static String getHomeFolder() {
+    return ( homeFolder != null ) ? homeFolder : refreshHomeFolder();
+  }
+
+  private static String refreshHomeFolder() {
+
+    final String userHomeDirUrl = GWT.getHostPageBaseURL() + "api/session/userWorkspaceDir";
+    final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, userHomeDirUrl );
+
+    try {
+      // Get user home folder string
+      RequestCallback rc = new RequestCallback() {
+
+        @Override
+        public void onResponseReceived( final Request request, final Response response ) {
+          if ( response.getStatusCode() == 200 ) {
+            // API returns /user/home_folder/workspace
+            homeFolder = response.getText().replaceAll( "/workspace", "" );
+          }
+        }
+
+        @Override
+        public void onError( Request request, Throwable exception ) {
+          Window.alert( exception.toString() );
+        }
+      };
+      builder.sendRequest( "", rc );
+
+    } catch ( RequestException e ) {
+      Window.alert( e.getMessage() );
+    }
+    return homeFolder;
+  }
 }
