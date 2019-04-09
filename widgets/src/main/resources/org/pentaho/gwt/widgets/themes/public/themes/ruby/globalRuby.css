@@ -6656,24 +6656,6 @@ div.listbox .pentaho-listbox {
   background: url("../images/cde_32.png") no-repeat;
 }
 
-/********** angular-directives **********/
-.bootstrap .accordion-wizard .accordion-title .accordion-heading-content {
-  color: #0088CC;
-}
-
-.bootstrap .accordion-wizard .summary-label {
-  color: #BBB;
-}
-
-.bootstrap .accordion-wizard .accordion-group {
-  background-color: #FFF;
-}
-
-.bootstrap .accordion-wizard .accordion-group.accordion-group-active {
-  background-color: #F8F8F8;
-}
-
-/********** /angular-directives **********/
 .dijitPopup.dijitCalendarPopup  .dijitCalendarContainer .dijitDownArrowButton .dijitArrowButtonInner {
   background: url("images/16x16_down.png") no-repeat scroll center;
   width: 16px;
