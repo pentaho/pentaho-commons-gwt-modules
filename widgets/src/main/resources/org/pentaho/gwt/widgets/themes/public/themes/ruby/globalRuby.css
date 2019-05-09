@@ -5028,8 +5028,7 @@ span.gwt-RadioButton label {
 #login-background-main {
   width: 100%;
   height: 100%;
-  background: url(images/login_background.jpg) no-repeat;
-  background-size: cover;
+  background: url(images/bg.svg) repeat;
 }
 
 #login-background-opacity {
