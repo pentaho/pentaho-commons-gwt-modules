@@ -5065,7 +5065,8 @@ span.gwt-RadioButton label {
 }
 
 #login-messages {
-  height: 32px;
+  height: auto;
+  min-height: 32px;
   padding: 10px;
 }
 
@@ -5084,8 +5085,8 @@ span.gwt-RadioButton label {
 
 .login-error-icon {
   background: url(images/Bad.sema4.S.svg) no-repeat center center;
-  width: 32px;
-  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
 }
 
 .login-error-text {
