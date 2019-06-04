@@ -4832,14 +4832,12 @@ span.gwt-RadioButton label {
 
 /* Login page styles */
 #login-background {
-  height: 560px;
   width: 250px;
   margin: auto;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  position: absolute;
 }
 
 #login-logo {
@@ -7851,4 +7849,38 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 #protocolPanel select {
   width: 220px;
+}
+
+/* Small changes to the layout so that the HTML structure changes done in https://jira.pentaho.com/browse/BACKLOG-28928
+for the rebranding on the Ruby theme cause a smaller impact on the other themes (Crystal & Sapphire) */
+#login #loginbtn {
+	margin-top: 50px;
+}
+
+.login-error-message {
+  display: none;
+}
+
+#login-footer-company,
+#login-header-app-name,
+#login-title {
+  display: none;
+}
+
+#loginError,
+#systemDown {
+  width: 260px;
+  position: absolute;
+  left: 10px;
+  right: 0;
+  top: 51%;
+  color: white;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+#login-header-logo {
+  background: url(images/pentaho-logo-white.png) no-repeat center;
+  height: 70px;
+  margin-top: 200px;
 }
