@@ -7870,13 +7870,11 @@ for the rebranding on the Ruby theme cause a smaller impact on the other themes 
 #loginError,
 #systemDown {
   width: 260px;
-  position: absolute;
   left: 10px;
   right: 0;
-  top: 51%;
+  top: 490px;
   color: white;
   margin: 0 auto;
-  padding-top: 10px;
 }
 
 #login-header-logo {
