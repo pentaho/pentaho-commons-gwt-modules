@@ -21,8 +21,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * This class exposes utilities for achieving CSRF protection.
- *
- * @author dcleao
  */
 public class CsrfUtil {
 

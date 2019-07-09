@@ -21,8 +21,6 @@ import com.google.gwt.core.client.JavaScriptObject;
 
 /**
  * This class exposes the information required to specify a CSRF token in an HTTP operation.
- *
- * @author dcleao
  */
 public class JsCsrfToken extends JavaScriptObject {
 
