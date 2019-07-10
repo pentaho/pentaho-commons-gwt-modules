@@ -17,9 +17,17 @@
   <properties>
     <!-- don't pass the jacoco args to failsafe, this will cause errors with gwt compilation -->
     <failsafeArgLine/>
+
+    <js.project.list>jquery</js.project.list>
+    <webjars.target.directory>${build.dependenciesDirectory}/META-INF/resources/webjars</webjars.target.directory>
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>jquery</artifactId>
+    </dependency>
     <!-- Compile Dependencies -->
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -67,6 +75,8 @@
     </dependency>
   </dependencies>
 
+
+
   <build>
     <plugins>
       <plugin>
@@ -88,6 +98,32 @@
             </property>
           </systemProperties>
         </configuration>
+      </plugin>
+
+      <!-- This plugin marks the file(s) as resources to be copied to the final jar -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-webjars-resources</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <targetPath>org/pentaho/gwt/widgets/themes/public/themes</targetPath>
+                  <directory>${webjars.target.directory}/jquery/${jquery.version}/dist</directory>
+                  <includes>
+                    <include>jquery.js</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
