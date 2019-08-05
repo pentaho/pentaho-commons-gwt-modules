@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2019 Hitachi Vantara.  All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.tabs;
@@ -21,6 +21,7 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -67,5 +68,18 @@ public class AlwaysVisibleDeckPanelTest {
     verify( widget ).setVisible( true );
     verify( style ).setProperty( anyString(), anyString() );
     verify( panel ).moveOffscreen( widget );
+  }
+
+  @Test
+  public void testRemove() throws Exception {
+    final AlwaysVisibleDeckPanel panel = mock( AlwaysVisibleDeckPanel.class );
+    doCallRealMethod().when( panel ).remove( any( Widget.class ) );
+    doCallRealMethod().when( panel ).getVisibleWidget( );
+
+    final Widget widget = mock( Widget.class );
+    final Element element = mock( Element.class );
+    when( widget.getElement() ).thenReturn( element );
+    panel.remove( widget );
+    Assert.assertEquals( -1, panel.getVisibleWidget() );
   }
 }
