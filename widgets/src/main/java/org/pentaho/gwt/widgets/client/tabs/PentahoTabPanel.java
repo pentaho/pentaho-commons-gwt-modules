@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.tabs;
@@ -58,11 +58,18 @@ public class PentahoTabPanel extends VerticalPanel {
     if ( tabBar.getWidgetIndex( selectedTab ) != -1 ) {
       return;
     }
-    if ( tabBar.getWidgetCount() > 0 && index < tabBar.getWidgetCount() ) {
-      selectTab( (PentahoTab) tabBar.getWidget( index ) );
-    } else if ( tabBar.getWidgetCount() > 0 && index >= tabBar.getWidgetCount() ) {
-      selectTab( (PentahoTab) tabBar.getWidget( tabBar.getWidgetCount() - 1 ) );
+
+    PentahoTab tabToSelect = null;
+    int count = tabBar.getWidgetCount();
+    if ( count > 0 ) {
+      if ( index < count ) {
+        tabToSelect = (PentahoTab) tabBar.getWidget( index );
+      } else {
+        tabToSelect = (PentahoTab) tabBar.getWidget( count - 1 );
+      }
     }
+
+    selectTab( tabToSelect );
   }
 
   public void closeOtherTabs( PentahoTab exceptThisTab ) {
@@ -85,6 +92,7 @@ public class PentahoTabPanel extends VerticalPanel {
 
   public void selectTab( PentahoTab selectedTab ) {
     this.selectedTab = selectedTab;
+
     for ( int i = 0; i < tabBar.getWidgetCount(); i++ ) {
       PentahoTab tab = (PentahoTab) tabBar.getWidget( i );
       if ( tab == selectedTab ) {
