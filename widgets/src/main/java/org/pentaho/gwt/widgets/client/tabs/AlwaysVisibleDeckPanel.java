@@ -79,7 +79,7 @@ public class AlwaysVisibleDeckPanel extends DeckPanel {
   }
 
   @Override
-  public boolean remove(Widget w) {
+  public boolean remove( Widget w ) {
 
     if ( curWidget == w ) {
       curWidget = null;
