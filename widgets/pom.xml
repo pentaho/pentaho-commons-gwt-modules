@@ -84,7 +84,7 @@
         <configuration>
           <additionalClasspathElements>
             <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-            <additionalClasspathElement>${integration-test.src}</additionalClasspathElement>
+            <additionalClasspathElement>src/it/java</additionalClasspathElement>
           </additionalClasspathElements>
           <useSystemClassLoader>false</useSystemClassLoader>
           <systemProperties>
