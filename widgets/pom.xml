@@ -17,7 +17,7 @@
   <properties>
     <!-- don't pass the jacoco args to failsafe, this will cause errors with gwt compilation -->
     <failsafeArgLine/>
-
+    <maven-failsafe-plugin.reuseForks>false</maven-failsafe-plugin.reuseForks>
     <js.project.list>jquery</js.project.list>
     <webjars.target.directory>${build.dependenciesDirectory}/META-INF/resources/webjars</webjars.target.directory>
   </properties>
