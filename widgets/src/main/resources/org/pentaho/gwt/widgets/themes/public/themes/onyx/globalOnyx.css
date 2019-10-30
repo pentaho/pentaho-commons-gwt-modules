@@ -651,8 +651,10 @@ div#data-controlproperties-spacer {
   position: relative;
 }
 
-.pentaho-tab-deck-panel > div {
-    height: auto !important;
+@media not screen and (-ms-high-contrast: active), not screen and (-ms-high-contrast: none) {
+    .pentaho-tab-deck-panel > div {
+        height: auto !important;
+    }
 }
 
 /* Webkit browsers only */
