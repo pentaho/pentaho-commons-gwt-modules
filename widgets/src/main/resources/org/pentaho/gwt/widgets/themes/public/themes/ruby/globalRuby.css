@@ -1290,6 +1290,9 @@ input#FT_rankCount {
 
 /* Webkit browsers only */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
+  .pentaho-tab-deck-panel > div {
+    height: auto !important;
+  }
   #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
     position: absolute;
     top: 0px;
@@ -1297,7 +1300,6 @@ input#FT_rankCount {
     bottom: 0px;
     right: 0px;
   }
-
 }
 
 /* properties dialog panels */

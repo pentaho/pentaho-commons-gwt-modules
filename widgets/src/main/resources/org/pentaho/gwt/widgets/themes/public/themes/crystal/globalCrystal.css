@@ -808,6 +808,9 @@ border-top: 4px solid transparent;
 
 /* Webkit browsers only */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
+  .pentaho-tab-deck-panel > div {
+    height: auto !important;
+  }
   #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
     position: absolute;
     top: 0px;

@@ -653,13 +653,16 @@ div#data-controlproperties-spacer {
 
 /* Webkit browsers only */
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-  #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-  }
+    .pentaho-tab-deck-panel > div {
+        height: auto !important;
+    }
+    #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+    }
 }
 
 .pucContentDeck .pentaho-tab-deck-panel {
