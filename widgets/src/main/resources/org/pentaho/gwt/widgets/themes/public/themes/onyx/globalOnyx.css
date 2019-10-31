@@ -651,21 +651,18 @@ div#data-controlproperties-spacer {
   position: relative;
 }
 
-@media not screen and (-ms-high-contrast: active), not screen and (-ms-high-contrast: none) {
+/* Webkit browsers only */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
     .pentaho-tab-deck-panel > div {
         height: auto !important;
     }
-}
-
-/* Webkit browsers only */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-  }
+    #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+    }
 }
 
 .pucContentDeck .pentaho-tab-deck-panel {

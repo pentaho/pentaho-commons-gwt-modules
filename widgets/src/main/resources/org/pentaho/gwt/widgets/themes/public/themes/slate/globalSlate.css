@@ -401,8 +401,12 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
     height: 100%;
 }
 
-.pentaho-tab-deck-panel > div {
-    height: auto !important;
+
+/* Webkit browsers only */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .pentaho-tab-deck-panel > div {
+        height: auto !important;
+    }
 }
 
 .pucContentDeck .pentaho-tab-deck-panel {
