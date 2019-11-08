@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.commands;
@@ -45,7 +45,7 @@ import org.pentaho.mantle.login.client.MantleLoginDialog;
  */
 public abstract class AbstractCommand implements Command {
 
-  private CommandCallback commandCallback;
+  private CommandResultCallback commandResultCallback;
 
   /**
    * Checks if the user is logged in, if the user is then it perform operation other wise user if ask to perform
@@ -55,25 +55,7 @@ public abstract class AbstractCommand implements Command {
    *          if the feedback needs to be sent back to the caller. Not used currently
    */
   public void execute( final boolean feedback ) {
-    try {
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
-      RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
-      requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-      requestBuilder.setHeader( "accept", "text/plain" );
-      requestBuilder.sendRequest( null, new RequestCallback() {
-
-        public void onError( Request request, Throwable caught ) {
-          doLogin( feedback );
-        }
-
-        public void onResponseReceived( Request request, Response response ) {
-          performOperation( feedback );
-        }
-
-      } );
-    } catch ( RequestException e ) {
-      Window.alert( e.getMessage() );
-    }
+    execute( (CommandResultCallback) null, feedback );
   }
 
   /**
@@ -94,14 +76,29 @@ public abstract class AbstractCommand implements Command {
    * the login operation again.
    * <p>
    * After the operation is executed, the CommandCallback object receives an afterExecute() notification.
-   * 
+   *
    * @param commandCallback
    *          CommandCallback object to receive execution notification.
    * @param feedback
    *          if the feedback needs to be sent back to the caller. Not used currently
    */
   public void execute( final CommandCallback commandCallback, final boolean feedback ) {
-    this.commandCallback = commandCallback;
+    execute( createResultCallback( commandCallback ), feedback );
+  }
+
+  /**
+   * Checks if the user is logged in, if the user is then it perform operation other wise user if ask to perform
+   * the login operation again.
+   * <p>
+   * After the operation is executed, the CommandResultCallback object receives an afterExecute() notification.
+   * 
+   * @param commandResultCallback
+   *          CommandResultCallback object to receive execution notification.
+   * @param feedback
+   *          if the feedback needs to be sent back to the caller. Not used currently
+   */
+  public void execute( final CommandResultCallback commandResultCallback, final boolean feedback ) {
+    this.commandResultCallback = commandResultCallback;
 
     try {
       final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
@@ -115,8 +112,7 @@ public abstract class AbstractCommand implements Command {
         }
 
         public void onResponseReceived( Request request, Response response ) {
-          performOperation( feedback );
-          commandCallback.afterExecute();
+          performOperationAsync( feedback, AbstractCommand.this.commandResultCallback );
         }
 
       } );
@@ -131,6 +127,7 @@ public abstract class AbstractCommand implements Command {
    * the login operation again
    */
   public void execute() {
+    this.commandResultCallback = null;
     try {
       final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
@@ -153,8 +150,8 @@ public abstract class AbstractCommand implements Command {
   }
 
   /**
-   * Display the login screen and and validate the credentials supplied by the user if the credentials are correct,
-   * the execute method is being invoked other wise error dialog is being display. On clicking ok button on the
+   * Display the login screen and validate the credentials supplied by the user if the credentials are correct,
+   * the execute method is being invoked otherwise error dialog is being display. On clicking ok button on the
    * dialog box, login screen is displayed again and process is repeated until the user click cancel or user is
    * successfully authenticated
    * 
@@ -173,7 +170,9 @@ public abstract class AbstractCommand implements Command {
 
         dialogBox.setCallback( new IDialogCallback() {
           public void cancelPressed() {
-            // do nothing
+            if ( AbstractCommand.this.commandResultCallback != null ) {
+              AbstractCommand.this.commandResultCallback.onCanceled();
+            }
           }
 
           public void okPressed() {
@@ -185,13 +184,9 @@ public abstract class AbstractCommand implements Command {
       }
 
       public void onSuccess( Boolean result ) {
-        if ( commandCallback != null ) {
-          execute( commandCallback, feedback );
-        } else {
-          execute( feedback );
-        }
+        // Preserve any existing command callback.
+        execute( commandResultCallback, feedback );
       }
-
     } );
   }
 
@@ -215,7 +210,6 @@ public abstract class AbstractCommand implements Command {
                     Messages.getString( "error" ), Messages.getString( "invalidLogin" ), false, false, true ); //$NON-NLS-1$ //$NON-NLS-2$
             dialogBox.setCallback( new IDialogCallback() {
               public void cancelPressed() {
-                // do nothing
               }
 
               public void okPressed() {
@@ -227,13 +221,9 @@ public abstract class AbstractCommand implements Command {
           }
 
           public void onSuccess( Boolean result ) {
-            if ( commandCallback != null ) {
-              execute( commandCallback );
-            } else {
-              execute();
-            }
+            // There's never a command callback, when this method version is called (doLogin with no arguments).
+            execute();
           }
-
         } );
       }
     };
@@ -256,4 +246,51 @@ public abstract class AbstractCommand implements Command {
    * 
    * */
   protected abstract void performOperation( final boolean feedback );
+
+  /**
+   * Performs the operation asynchronously.
+   *
+   * The default implementation calls the synchronous method, performOperation and then calls callback.onSuccess.
+   * It does not handle errors, to preserve full compatibility.
+   *
+   * Actual implementations should handle all states and, ideally, should not throw.
+   *
+   * @param feedback
+   *          if the feedback needs to be sent back to the caller. Not used currently
+   * @param callback
+   *         when not null, allows the result of the operation to be reported to the caller.
+   */
+  protected void performOperationAsync( final boolean feedback, CommandResultCallback callback ) {
+
+    performOperation(feedback);
+
+    if ( callback != null ) {
+      callback.onSuccess();
+    }
+  }
+
+  /**
+   * Creates a result callback from a legacy command callback.
+   */
+  private CommandResultCallback createResultCallback( final CommandCallback callback ) {
+
+    if ( callback == null ) {
+      return null;
+    }
+
+    return new CommandResultCallback() {
+      @Override
+      public void onSuccess() {
+        callback.afterExecute();
+      }
+
+      @Override
+      public void onCanceled() {
+      }
+
+      @Override
+      public void onError(Throwable error) {
+      }
+    };
+  }
 }

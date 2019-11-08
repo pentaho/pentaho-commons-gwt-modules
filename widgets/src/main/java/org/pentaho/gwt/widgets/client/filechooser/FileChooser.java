@@ -49,6 +49,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.string.CssUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 import java.util.ArrayList;
@@ -573,6 +574,16 @@ public class FileChooser extends VerticalPanel {
         fileImage.addStyleName( "icon-dashboard" );
       } else {
         fileImage.addStyleName( "icon-xaction" );
+
+        Integer extensionIndex = fileName.lastIndexOf( "." );
+        if ( extensionIndex >= 0 ) {
+          String extension = fileName.substring( extensionIndex + 1 );
+          if ( extension.length() > 0 && !extension.equalsIgnoreCase("xaction") ) {
+            fileImage.addStyleName( "icon-unknown" );
+
+            fileImage.addStyleName( "icon-" + CssUtils.escape( extension ) );
+          }
+        }
       }
     }
     fileNamePanel.add( fileImage );
