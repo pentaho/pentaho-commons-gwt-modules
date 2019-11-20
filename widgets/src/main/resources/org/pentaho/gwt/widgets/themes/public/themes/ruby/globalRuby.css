@@ -4964,6 +4964,7 @@ span.gwt-RadioButton label {
   width: 100%;
   padding: 11px 20px 15px;
   display: inline-flex;
+  box-shadow: 0 2px 12px rgba(25,25,25,0.12);
 }
 
 #login-header-logo {
@@ -4980,7 +4981,7 @@ span.gwt-RadioButton label {
 #login-header-separator {
   width: 10px;
   height: 20px;
-  border-right: 1px solid #bcbcbc;
+  border-right: 1px solid #414141;
 }
 
 #login-header-separator-padding {
@@ -5030,11 +5031,14 @@ span.gwt-RadioButton label {
 #login-background-main {
   width: 100%;
   height: 100%;
-  background: url(images/bg.svg) repeat;
+  background: url(images/bg.svg) no-repeat;
+  background-position: bottom;
+  background-color: #F5F5F5;
+  background-size: cover;
 }
 
 #login-background-opacity {
-  background-color: rgba(249, 249, 249, 0.9); /*to keep opacity only in this div and not inherit by its children*/
+  background-color: rgba(249, 249, 249);
   height: calc(100% - 90px);
   min-width: 500px;
   float: right;
