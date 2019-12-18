@@ -6168,6 +6168,19 @@ div.listbox .pentaho-listbox {
   border: 1px solid #7EC9F2;
 }
 
+/* BACKLOG-26222 Fixing IE bug. IE doesnt always clear de hover pseudo class */
+.IE11 .propPanelItem .gem:hover[type="measure"] {
+  background: #DDF4FC;
+  border: 1px solid #7EC9F2;
+}
+
+.IE11 .dojoDndContainerOver div.gem.over[type="measure"] {
+  background: #E6EFF6;
+  border: 1px solid #8ac06e;
+  -moz-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
+  -webkit-box-shadow: #F2FBE8 0px 0px 1px 1px inset;
+}
+
 .gem.over[type="measure"] {
   background: #E6EFF6;
   border: 1px solid #8ac06e;
