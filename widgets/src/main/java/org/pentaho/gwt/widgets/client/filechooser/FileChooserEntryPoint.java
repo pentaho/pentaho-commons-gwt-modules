@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.filechooser;
@@ -104,13 +104,28 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
   }
 
   public void saveFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
-    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true );
+    FileChooserDialog dialog = null;
+    if (selectedPath == null) {
+      // Loads whole repository from top level
+      dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true );
+    } else {
+      // Loads repository just at the selectedPath
+      dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, null, false, true );
+    }
     addFileChooserListener( dialog, callback );
   }
 
   public void saveAsFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
-    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true,
-        messages.getString( "SaveAs" ), messages.getString( "Save" ) );
+    FileChooserDialog dialog = null;
+    if (selectedPath == null) {
+      // Loads whole repository from top level
+      dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, false, true,
+          messages.getString( "SaveAs" ), messages.getString( "Save" ) );
+    } else {
+      // Loads repository just at the selectedPath
+      dialog = new FileChooserDialog( FileChooserMode.SAVE, selectedPath, null, false, true,
+          messages.getString( "SaveAs" ), messages.getString( "Save" ) );
+    }
     addFileChooserListener( dialog, callback );
   }
 
