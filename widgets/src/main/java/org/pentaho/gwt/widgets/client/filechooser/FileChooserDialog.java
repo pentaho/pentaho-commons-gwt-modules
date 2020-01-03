@@ -12,9 +12,8 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2020 Hitachi Vantara..  All rights reserved.
  */
-
 package org.pentaho.gwt.widgets.client.filechooser;
 
 import java.util.ArrayList;
@@ -35,9 +34,9 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 
 public class FileChooserDialog extends PromptDialogBox implements FileChooserListener {
 
-  //private static final String ILLEGAL_NAME_CHARS = "\\\'/?%*:|\"<>&"; //$NON-NLS-1$
   private static String OPEN = FileChooserEntryPoint.messages.getString( "Open" );
   private static String SAVE = FileChooserEntryPoint.messages.getString( "Save" );
+
   private static String lastOpenLocation = "";
   private static boolean isDirty = false;
 
@@ -49,20 +48,17 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   private boolean submitOnEnter = true;
 
   public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal ) {
-    this(
-        mode,
-        selectedPath,
-        autoHide,
-        modal,
-        mode == FileChooserMode.OPEN
-            ? FileChooserEntryPoint.messages.getString( "Open" ) : FileChooserEntryPoint.messages.getString( "Save" ), mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString( "Open" ) : FileChooserEntryPoint.messages.getString( "Save" ) ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    this( mode, selectedPath, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
+      mode == FileChooserMode.OPEN ? OPEN : SAVE );
   }
 
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal, String title,
-      String okText ) {
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal,
+                            String title, String okText ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
+
     showGlassPane();
     setupNativeHooks();
+
     fileChooser = new FileChooser( mode, selectedPath, new IDialogCallback() {
       public void cancelPressed() {
 
@@ -72,14 +68,16 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
         center();
       }
     } );
+
     this.setContent( fileChooser );
 
-    fileChooser.setWidth( "100%" ); //$NON-NLS-1$
+    fileChooser.setWidth( "100%" );
     setValidatorCallback( new IDialogValidatorCallback() {
       public boolean validate() {
         return isFileNameValid();
       }
     } );
+
     IDialogCallback callback = new IDialogCallback() {
 
       public void cancelPressed() {
@@ -93,6 +91,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       }
 
     };
+
     setCallback( callback );
     fileChooser.addFileChooserListener( this );
   }
@@ -134,6 +133,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       if ( file != null && file.getPath().equals( folderPath ) ) {
         return file;
       }
+
       if ( file != null ) {
         for ( RepositoryFileTree treeItem : tree.getChildren() ) {
           file = doesFolderExist( treeItem, folderPath );
@@ -143,17 +143,19 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
         }
       }
     } catch ( Exception e ) {
-      return null;
+      // does nothing
     }
+
     return null;
   }
 
   public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-      boolean modal, String title, String okText ) {
+                            boolean modal, String title, String okText ) {
     this( mode, selectedPath, fileTree, autoHide, modal, title, okText, false );
   }
 
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal, boolean showHiddenFiles ) {
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal,
+                            boolean showHiddenFiles ) {
     this( mode, selectedPath, null, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
       mode == FileChooserMode.OPEN ? OPEN : SAVE, showHiddenFiles, true );
   }
@@ -164,14 +166,18 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-      boolean modal, String title, String okText, boolean showHiddenFiles, boolean isLazy ) {
-    super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true ); //$NON-NLS-1$
+                            boolean modal, String title, String okText, boolean showHiddenFiles, boolean isLazy ) {
+    super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
     fileChooser = new FileChooser( showHiddenFiles );
+
     setContent( fileChooser );
-    fileChooser.setWidth( "100%" ); //$NON-NLS-1$
+
+    fileChooser.setWidth( "100%" );
     fileChooser.setMode( mode );
     fileChooser.setLazy( fileTree == null );
+
     setupNativeHooks();
+
     if ( mode.equals( FileChooserMode.OPEN ) ) {
       if ( getLastOpenLocation() == null ) {
         fileChooser.setSelectedPath( getHomeFolderLocation() );
@@ -182,12 +188,11 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
         }
       }
     }
+
     if ( mode.equals( FileChooserMode.SAVE ) ) {
-      if ( StringUtils.isEmpty( selectedPath ) ) {
-        fileChooser.setSelectedPath( getHomeFolderLocation() );
-      } else {
-        fileChooser.setSelectedPath( selectedPath );
-      }
+      final String path = StringUtils.isEmpty( selectedPath ) ? getHomeFolderLocation() : selectedPath;
+
+      fileChooser.setSelectedPath( path );
     }
 
     setValidatorCallback( new IDialogValidatorCallback() {
@@ -195,6 +200,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
         return isFileNameValid();
       }
     } );
+
     IDialogCallback callback = new IDialogCallback() {
 
       public void cancelPressed() {
@@ -208,10 +214,13 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       }
 
     };
+
     setCallback( callback );
+
     fileChooser.addFileChooserListener( this );
     fileChooser.setTreeListener( new FileChooserTreeListener() {
-      @Override public void loaded() {
+      @Override
+      public void loaded() {
         center();
       }
     } );
@@ -224,36 +233,11 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       }
     } else {
       fileChooser.fileTree = fileTree;
-      fileChooser.repositoryTree =
-        TreeBuilder.buildSolutionTree( fileTree, fileChooser.showHiddenFiles, fileChooser.showLocalizedFileNames,
-          filter );
+      fileChooser.repositoryTree = TreeBuilder.buildSolutionTree(
+        fileTree, fileChooser.showHiddenFiles, fileChooser.showLocalizedFileNames, filter );
       fileChooser.selectedTreeItem = fileChooser.repositoryTree.getItem( 0 );
       fileChooser.initUI();
     }
-  }
-
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-      boolean modal ) {
-    this(
-        mode,
-        selectedPath,
-        fileTree,
-        autoHide,
-        modal,
-        mode == FileChooserMode.OPEN
-            ? FileChooserEntryPoint.messages.getString( "Open" ) : FileChooserEntryPoint.messages.getString( "Save" ), mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString( "Open" ) : FileChooserEntryPoint.messages.getString( "Save" ) ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-  }
-
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-      boolean modal, boolean showHiddenFiles ) {
-    this(
-        mode,
-        selectedPath,
-        fileTree,
-        autoHide,
-        modal,
-        mode == FileChooserMode.OPEN
-            ? FileChooserEntryPoint.messages.getString( "Open" ) : FileChooserEntryPoint.messages.getString( "Save" ), mode == FileChooserMode.OPEN ? FileChooserEntryPoint.messages.getString( "Open" ) : FileChooserEntryPoint.messages.getString( "Save" ), showHiddenFiles ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   public void addFileChooserListener( FileChooserListener listener ) {
@@ -271,13 +255,11 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   public boolean doesSelectedFileExist( String ext ) {
-    boolean result = false;
     if ( StringUtils.isEmpty( ext ) ) {
-      result = fileChooser.doesSelectedFileExist();
-    } else {
-      result = fileChooser.doesSelectedFileExist( ext );
+      return fileChooser.doesSelectedFileExist();
     }
-    return result;
+
+    return fileChooser.doesSelectedFileExist( ext );
   }
 
   public List<String> getFilesInPath( final RepositoryFileTree fileTreeItem ) {
@@ -289,28 +271,27 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   public FileFilter getFileFilter() {
-
     return filter;
   }
 
   public void setFileFilter( FileFilter filter ) {
-
     this.filter = filter;
+
     fileChooser.setFileFilter( filter );
   }
 
   /**
    * This method get the actual file name of the selected file
-   * 
+   *
    * @return the actual file name
    */
   private String getActualFileName() {
     final String actualFileName = fileChooser.getActualFileName();
-    if ( actualFileName != null && !"".equals( actualFileName ) ) { //$NON-NLS-1$
+    if ( actualFileName != null && !"".equals( actualFileName ) ) {
       return actualFileName;
-    } else {
-      return "";
     }
+
+    return "";
   }
 
   /*
@@ -356,6 +337,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
           setLastOpenLocation( fileChooser.selectedPath );
         }
       }
+
       this.hide();
     }
   }
@@ -367,7 +349,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   public void dialogCanceled() {
-
     for ( FileChooserListener listener : listeners ) {
       listener.dialogCanceled();
     }
@@ -376,6 +357,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   @Override
   public void hide() {
     GlassPane.getInstance().hide();
+
     super.hide();
   }
 
@@ -387,6 +369,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
   private void showGlassPane() {
     GlassPane.getInstance().show();
+
     super.initializePageBackground();
     super.block();
   }
@@ -418,6 +401,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
         onCancel();
         break;
     }
+
     return true;
   }
 }
