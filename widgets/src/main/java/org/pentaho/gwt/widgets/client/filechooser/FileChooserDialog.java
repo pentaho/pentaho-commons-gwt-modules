@@ -149,24 +149,31 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     return null;
   }
 
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-                            boolean modal, String title, String okText ) {
+  public FileChooserDialog( FileChooserMode mode, String selectedPath,
+                            boolean autoHide, boolean modal, boolean showHiddenFiles ) {
+    this( mode, selectedPath, null, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
+      mode == FileChooserMode.OPEN ? OPEN : SAVE, showHiddenFiles );
+  }
+
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree,
+                            boolean autoHide, boolean modal ) {
+    this( mode, selectedPath, fileTree, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
+      mode == FileChooserMode.OPEN ? OPEN : SAVE );
+  }
+
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree,
+                            boolean autoHide, boolean modal, String title, String okText ) {
     this( mode, selectedPath, fileTree, autoHide, modal, title, okText, false );
   }
 
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal,
-                            boolean showHiddenFiles ) {
-    this( mode, selectedPath, null, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
-      mode == FileChooserMode.OPEN ? OPEN : SAVE, showHiddenFiles, true );
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree,
+                            boolean autoHide, boolean modal, boolean showHiddenFiles ) {
+    this( mode, selectedPath, fileTree, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
+      mode == FileChooserMode.OPEN ? OPEN : SAVE, showHiddenFiles );
   }
 
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-                            boolean modal, String title, String okText, boolean showHiddenFiles ) {
-    this( mode, selectedPath, fileTree, autoHide, modal, title, okText, showHiddenFiles, false );
-  }
-
-  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-                            boolean modal, String title, String okText, boolean showHiddenFiles, boolean isLazy ) {
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree,
+                            boolean autoHide, boolean modal, String title, String okText, boolean showHiddenFiles ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
     fileChooser = new FileChooser( showHiddenFiles );
 
@@ -174,7 +181,9 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
     fileChooser.setWidth( "100%" );
     fileChooser.setMode( mode );
-    fileChooser.setLazy( fileTree == null );
+
+    final boolean isLazy = fileTree == null;
+    fileChooser.setLazy( isLazy );
 
     setupNativeHooks();
 

@@ -241,18 +241,9 @@ public class FileChooser extends VerticalPanel {
    * @throws RequestException
    */
   public void fetchRepositoryDirectory( String folder, int depth, String filter ) throws RequestException {
-    String folderId = ":";
-    if ( folder != null ) {
-      folderId = folder.replace( "/", ":" );
-    }
+    final String url = getRepositoryRequestUrl( folder, depth, filter ) + "&ts=" + System.currentTimeMillis();
 
-    if ( filter == null ) {
-      filter = "*";
-    }
-
-    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, getFullyQualifiedURL()
-        + "api/repo/files/" + folderId + "/tree?showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter="
-        + filter );
+    final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, url );
     builder.setHeader( "accept", "application/json" );
 
     RequestCallback callback = new RequestCallback() {
@@ -280,8 +271,9 @@ public class FileChooser extends VerticalPanel {
   }
 
   public void fetchRepository( final IDialogCallback completedCallback ) throws RequestException {
-    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, getFullyQualifiedURL()
-        + "api/repo/files/:/tree?showHidden=" + showHiddenFiles + "&depth=-1&filter=*" );
+    final String url = getRepositoryRequestUrl( ":", -1, "*" );
+
+    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, url );
     builder.setHeader( "accept", "application/json" );
 
     RequestCallback callback = new RequestCallback() {
@@ -313,6 +305,17 @@ public class FileChooser extends VerticalPanel {
     };
 
     builder.sendRequest( null, callback );
+  }
+
+  private String getRepositoryRequestUrl( String folder, int depth, String filter ) {
+    final String folderId = folder == null ? ":" : folder.replace( "/", ":" );
+
+    if ( filter == null ) {
+      filter = "*";
+    }
+
+    return getFullyQualifiedURL() + "api/repo/files/" + folderId +"/tree?" +
+      "showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter=" + filter;
   }
 
   public void initUI() {
