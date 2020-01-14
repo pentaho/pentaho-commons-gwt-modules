@@ -69,6 +69,9 @@ public class FileChooser extends VerticalPanel {
   public static final String ETC_FOLDER = "etc";
   FileChooserMode mode = FileChooserMode.OPEN;
   String selectedPath;
+  private boolean isLazy = false;
+  private LazyTreeLoader lazyTreeLoader = new LazyTreeLoader();
+  private FileChooserTreeListener treeListener;
 
   ListBox navigationListBox;
   Tree repositoryTree;
@@ -144,7 +147,7 @@ public class FileChooser extends VerticalPanel {
   }
 
   public FileChooser( FileChooserMode mode, String selectedPath, boolean showLocalizedFileNames,
-      RepositoryFileTree fileTree ) {
+                      RepositoryFileTree fileTree ) {
     this();
     this.mode = mode;
     this.selectedPath = selectedPath;
@@ -169,15 +172,101 @@ public class FileChooser extends VerticalPanel {
   }
 
   private native String getFullyQualifiedURL()
-  /*-{
-    return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
-  }-*/;
+    /*-{
+      return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
+    }-*/;
+
+  /**
+   * Load a directory by path. If it's cached, use the cache, if not load it from the server
+   *
+   * @param path
+   */
+  private void loadDirectory( String path ) {
+    if ( lazyTreeLoader.isCached( path ) ) {
+      RepositoryFileTree loadedTree = lazyTreeLoader.getCached( path );
+      buildTree( loadedTree, false );
+    } else {
+      try {
+        fetchRepositoryDirectory( path, 1, null );
+      } catch ( RequestException e ) {
+        Window.alert( e.toString() );
+      }
+    }
+  }
+
+  /**
+   * Take the loaded RepositoryFileTree and insert it into the file structure RepositoryFileTree
+   *
+   * @param loadedTree
+   * @param cacheN
+   */
+  private void buildTree( RepositoryFileTree loadedTree, boolean cache ) {
+    if ( cache ) {
+      lazyTreeLoader.cache( loadedTree.getFile().getPath(), loadedTree );
+    }
+    if ( fileTree == null || loadedTree.getFile().getPath().equals( "/" ) ) {
+      fileTree = loadedTree;
+    } else {
+      lazyTreeLoader.insertTree( fileTree, loadedTree );
+    }
+    repositoryTree = TreeBuilder.buildSolutionTree( fileTree, showHiddenFiles, showLocalizedFileNames, fileFilter );
+    selectedTreeItem = repositoryTree.getItem( 0 );
+    initUI();
+    fireFileSelectionChanged();
+    if ( treeListener != null ) {
+      treeListener.loaded();
+    }
+  }
+
+  /**
+   * Load a directory from the server
+   *
+   * @param folder
+   * @param depth
+   * @param filter
+   * @throws RequestException
+   */
+  public void fetchRepositoryDirectory( String folder, int depth, String filter ) throws RequestException {
+    String folderId = ":";
+    if ( folder != null ) {
+      folderId = folder.replace( "/", ":" );
+    }
+    if ( filter == null ) {
+      filter = "*";
+    }
+    RequestBuilder builder = null;
+    builder =
+      new RequestBuilder( RequestBuilder.GET, getFullyQualifiedURL()
+        + "api/repo/files/" + folderId + "/tree?showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter="
+        + filter ); //$NON-NLS-1$
+    builder.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
+    RequestCallback callback = new RequestCallback() {
+
+      public void onError( Request request, Throwable exception ) {
+        Window.alert( exception.toString() );
+      }
+
+      public void onResponseReceived( Request request, Response response ) {
+        if ( response.getStatusCode() == Response.SC_OK ) {
+          String jsonData = response.getText();
+          if ( fileTree == null ) {
+            jsonData = lazyTreeLoader.buildTree( jsonData );
+          }
+          JsonToRepositoryFileTreeConverter converter = new JsonToRepositoryFileTreeConverter( jsonData );
+          buildTree( converter.getTree(), fileTree != null );
+        } else {
+          Window.alert( "Solution Repository not found." ); //$NON-NLS-1$
+        }
+      }
+    };
+    builder.sendRequest( null, callback );
+  }
 
   public void fetchRepository( final IDialogCallback completedCallback ) throws RequestException {
     RequestBuilder builder = null;
     builder =
-        new RequestBuilder( RequestBuilder.GET, getFullyQualifiedURL()
-            + "api/repo/files/:/tree?showHidden=" + showHiddenFiles + "&depth=-1&filter=*" ); //$NON-NLS-1$
+      new RequestBuilder( RequestBuilder.GET, getFullyQualifiedURL()
+        + "api/repo/files/:/tree?showHidden=" + showHiddenFiles + "&depth=-1&filter=*" ); //$NON-NLS-1$
     builder.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
     RequestCallback callback = new RequestCallback() {
 
@@ -190,7 +279,7 @@ public class FileChooser extends VerticalPanel {
           String jsonData = response.getText();
           JsonToRepositoryFileTreeConverter converter = new JsonToRepositoryFileTreeConverter( jsonData );
           repositoryTree =
-              TreeBuilder.buildSolutionTree( converter.getTree(), showHiddenFiles, showLocalizedFileNames, fileFilter );
+            TreeBuilder.buildSolutionTree( converter.getTree(), showHiddenFiles, showLocalizedFileNames, fileFilter );
           selectedTreeItem = repositoryTree.getItem( 0 );
           initUI();
           if ( completedCallback != null ) {
@@ -395,7 +484,7 @@ public class FileChooser extends VerticalPanel {
       RepositoryFileTree repositoryFileTree = (RepositoryFileTree) childItem.getUserObject();
       RepositoryFile repositoryFile = repositoryFileTree.getFile();
       if ( repositoryFile.isFolder()
-          && !( repositoryFile.getName() != null && repositoryFile.getName().equals( ETC_FOLDER ) ) ) {
+        && !( repositoryFile.getName() != null && repositoryFile.getName().equals( ETC_FOLDER ) ) ) {
         addFileToList( repositoryFileTree, childItem, filesListTable, row++ );
       }
     }
@@ -414,7 +503,7 @@ public class FileChooser extends VerticalPanel {
   }
 
   private void addFileToList( final RepositoryFileTree repositoryFileTree, final TreeItem item,
-      final FlexTable filesListTable, int row ) {
+                              final FlexTable filesListTable, int row ) {
     Label myDateLabel = null;
     RepositoryFile file = repositoryFileTree.getFile();
     Date lastModDate = file.getLastModifiedDate();
@@ -491,9 +580,10 @@ public class FileChooser extends VerticalPanel {
     DOM.setStyleAttribute( myNameLabel.getElement(), "cursor", "default" ); //$NON-NLS-1$ //$NON-NLS-2$
 
     Label typeLabel =
-        new Label(
-            isDir
-                ? FileChooserEntryPoint.messages.getString( "folder" ) : FileChooserEntryPoint.messages.getString( "file" ), false ); //$NON-NLS-1$ //$NON-NLS-2$
+      new Label(
+        isDir
+          ? FileChooserEntryPoint.messages.getString( "folder" ) : FileChooserEntryPoint.messages.getString( "file" ),
+        false ); //$NON-NLS-1$ //$NON-NLS-2$
 
     ElementUtils.preventTextSelection( myNameLabel.getElement() );
     ElementUtils.preventTextSelection( typeLabel.getElement() );
@@ -513,12 +603,11 @@ public class FileChooser extends VerticalPanel {
   }
 
   private void handleFileClicked( final TreeItem item, final boolean isDir, final Event event,
-      com.google.gwt.user.client.Element sourceElement ) {
+                                  com.google.gwt.user.client.Element sourceElement ) {
     boolean eventWeCareAbout = false;
     TreeItem tmpItem = null;
-    if ( ( DOM.eventGetType( event ) & Event.ONDBLCLICK ) == Event.ONDBLCLICK ) {
-      eventWeCareAbout = true;
-    } else if ( ( DOM.eventGetType( event ) & Event.ONCLICK ) == Event.ONCLICK ) {
+    if ( ( DOM.eventGetType( event ) & Event.ONDBLCLICK ) == Event.ONDBLCLICK
+      || ( DOM.eventGetType( event ) & Event.ONCLICK ) == Event.ONCLICK ) {
       eventWeCareAbout = true;
     }
     if ( eventWeCareAbout ) {
@@ -554,7 +643,11 @@ public class FileChooser extends VerticalPanel {
     // double click
     if ( ( DOM.eventGetType( event ) & Event.ONDBLCLICK ) == Event.ONDBLCLICK ) {
       if ( isDir ) {
-        initUI();
+        if ( !isLazy ) {
+          initUI();
+        } else {
+          loadDirectory( this.selectedPath );
+        }
       } else {
         fireFileSelected();
       }
@@ -564,10 +657,11 @@ public class FileChooser extends VerticalPanel {
       // highlight row
       if ( lastSelectedFileElement != null ) {
         com.google.gwt.dom.client.Element parentRow =
-            ElementUtils.findElementAboveByTagName( lastSelectedFileElement, "table" ); //$NON-NLS-1$
+          ElementUtils.findElementAboveByTagName( lastSelectedFileElement, "table" ); //$NON-NLS-1$
         parentRow.removeClassName( "pentaho-file-chooser-selection" );
       }
-      com.google.gwt.dom.client.Element parentRow = ElementUtils.findElementAboveByTagName( sourceElement, "table" ); //$NON-NLS-1$
+      com.google.gwt.dom.client.Element parentRow =
+        ElementUtils.findElementAboveByTagName( sourceElement, "table" ); //$NON-NLS-1$
       parentRow.addClassName( "pentaho-file-chooser-selection" ); //$NON-NLS-1$
       lastSelectedFileElement = sourceElement;
     }
@@ -625,15 +719,15 @@ public class FileChooser extends VerticalPanel {
   public void setFileChooserRepositoryFileTree( RepositoryFileTree fileChooserRepositoryFileTree ) {
     this.fileTree = fileChooserRepositoryFileTree;
     repositoryTree =
-        TreeBuilder.buildSolutionTree( fileChooserRepositoryFileTree, showHiddenFiles, showLocalizedFileNames,
-            fileFilter );
+      TreeBuilder.buildSolutionTree( fileChooserRepositoryFileTree, showHiddenFiles, showLocalizedFileNames,
+        fileFilter );
     initUI();
   }
 
   public void fireFileSelected( RepositoryFile file ) {
     for ( FileChooserListener listener : listeners ) {
       listener.fileSelected( file, file.getPath(), ( mode != null && mode.equals( FileChooserMode.SAVE )
-          ? actualFileName : file.getName() ), file.getTitle() );
+        ? actualFileName : file.getName() ), file.getTitle() );
     }
   }
 
@@ -642,7 +736,7 @@ public class FileChooser extends VerticalPanel {
       RepositoryFileTree tree = (RepositoryFileTree) selectedTreeItem.getUserObject();
       RepositoryFile file = tree.getFile();
       listener.fileSelected( file, file.getPath(), ( mode != null && mode.equals( FileChooserMode.SAVE )
-          ? actualFileName : file.getName() ), file.getTitle() );
+        ? actualFileName : file.getName() ), file.getTitle() );
     }
   }
 
@@ -651,7 +745,7 @@ public class FileChooser extends VerticalPanel {
       RepositoryFileTree tree = (RepositoryFileTree) selectedTreeItem.getUserObject();
       RepositoryFile file = tree.getFile();
       listener.fileSelectionChanged( file, file.getPath(), ( mode != null && mode.equals( FileChooserMode.SAVE )
-          ? actualFileName : file.getName() ), file.getTitle() );
+        ? actualFileName : file.getName() ), file.getTitle() );
     }
   }
 
@@ -665,9 +759,8 @@ public class FileChooser extends VerticalPanel {
 
   /**
    * Get the names of all files in the given path.
-   * 
-   * @param path
-   *          Path to query for files
+   *
+   * @param path Path to query for files
    * @return List of file names in the given path.
    */
   public List<String> getFilesInPath( final RepositoryFileTree fileTreeItem ) {
@@ -736,8 +829,12 @@ public class FileChooser extends VerticalPanel {
 
   public void changeToPath( String path ) {
     setSelectedPath( path );
-    initUI();
-    fireFileSelectionChanged();
+    if ( !isLazy ) {
+      initUI();
+      fireFileSelectionChanged();
+    } else {
+      loadDirectory( path );
+    }
   }
 
   public void setSubmitOnEnter( boolean submitOnEnter ) {
@@ -748,20 +845,36 @@ public class FileChooser extends VerticalPanel {
     return submitOnEnter;
   }
 
+  public boolean isLazy() {
+    return isLazy;
+  }
+
+  public void setLazy( boolean lazy ) {
+    isLazy = lazy;
+  }
+
+  public FileChooserTreeListener getTreeListener() {
+    return treeListener;
+  }
+
+  public void setTreeListener( FileChooserTreeListener treeListener ) {
+    this.treeListener = treeListener;
+  }
+
   /**
    * Safari Mobile behaves differently than browsers on a computer. These rules may extend to other mobile browsers.
-   * 
+   *
    * @return
    */
   public native boolean isMobileSafari()/*-{
-                                        return (window.orientation !== undefined);
-                                        }-*/;
+    return (window.orientation !== undefined);
+  }-*/;
 
   public native String getWebAppRoot()/*-{
-                                      if($wnd.CONTEXT_PATH){
-                                      return $wnd.CONTEXT_PATH;
-                                      }
-                                      return "";
-                                      }-*/;
+    if ($wnd.CONTEXT_PATH) {
+      return $wnd.CONTEXT_PATH;
+    }
+    return "";
+  }-*/;
 
 }

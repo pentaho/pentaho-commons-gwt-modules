@@ -34,7 +34,6 @@ public class JsonToRepositoryFileTreeConverter {
 
   public RepositoryFileTree getRepositoryFileTree( JSONObject serviceCallObject ) {
     RepositoryFileTree fileTree = new RepositoryFileTree();
-
     RepositoryFile rf = new RepositoryFile( serviceCallObject.get( "file" ).isObject() );
     fileTree.setFile( rf );
 
