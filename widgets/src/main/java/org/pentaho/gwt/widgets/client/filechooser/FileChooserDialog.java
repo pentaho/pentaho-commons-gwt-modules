@@ -20,6 +20,8 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.http.client.RequestException;
+import com.google.gwt.user.client.Window;
 import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
@@ -34,6 +36,8 @@ import com.google.gwt.user.client.ui.KeyboardListener;
 public class FileChooserDialog extends PromptDialogBox implements FileChooserListener {
 
   //private static final String ILLEGAL_NAME_CHARS = "\\\'/?%*:|\"<>&"; //$NON-NLS-1$
+  private static String OPEN = FileChooserEntryPoint.messages.getString( "Open" );
+  private static String SAVE = FileChooserEntryPoint.messages.getString( "Save" );
   private static String lastOpenLocation = "";
   private static boolean isDirty = false;
 
@@ -149,13 +153,24 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     this( mode, selectedPath, fileTree, autoHide, modal, title, okText, false );
   }
 
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, boolean autoHide, boolean modal, boolean showHiddenFiles ) {
+    this( mode, selectedPath, null, autoHide, modal, mode == FileChooserMode.OPEN ? OPEN : SAVE,
+      mode == FileChooserMode.OPEN ? OPEN : SAVE, showHiddenFiles, true );
+  }
+
   public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
-      boolean modal, String title, String okText, boolean showHiddenFiles ) {
+                            boolean modal, String title, String okText, boolean showHiddenFiles ) {
+    this( mode, selectedPath, fileTree, autoHide, modal, title, okText, showHiddenFiles, false );
+  }
+
+  public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
+      boolean modal, String title, String okText, boolean showHiddenFiles, boolean isLazy ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true ); //$NON-NLS-1$
     fileChooser = new FileChooser( showHiddenFiles );
     setContent( fileChooser );
     fileChooser.setWidth( "100%" ); //$NON-NLS-1$
     fileChooser.setMode( mode );
+    fileChooser.setLazy( fileTree == null );
     setupNativeHooks();
     if ( mode.equals( FileChooserMode.OPEN ) ) {
       if ( getLastOpenLocation() == null ) {
@@ -175,11 +190,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       }
     }
 
-    fileChooser.fileTree = fileTree;
-    fileChooser.repositoryTree =
-        TreeBuilder.buildSolutionTree( fileTree, fileChooser.showHiddenFiles, fileChooser.showLocalizedFileNames,
-            filter );
-    fileChooser.selectedTreeItem = fileChooser.repositoryTree.getItem( 0 );
     setValidatorCallback( new IDialogValidatorCallback() {
       public boolean validate() {
         return isFileNameValid();
@@ -200,7 +210,26 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     };
     setCallback( callback );
     fileChooser.addFileChooserListener( this );
-    fileChooser.initUI();
+    fileChooser.setTreeListener( new FileChooserTreeListener() {
+      @Override public void loaded() {
+        center();
+      }
+    } );
+
+    if (fileTree == null) {
+      try {
+        fileChooser.fetchRepositoryDirectory( fileChooser.getSelectedPath(), 1, null );
+      } catch ( RequestException e ) {
+        Window.alert( "Unabled to load " + fileChooser.getSelectedPath() );
+      }
+    } else {
+      fileChooser.fileTree = fileTree;
+      fileChooser.repositoryTree =
+        TreeBuilder.buildSolutionTree( fileTree, fileChooser.showHiddenFiles, fileChooser.showLocalizedFileNames,
+          filter );
+      fileChooser.selectedTreeItem = fileChooser.repositoryTree.getItem( 0 );
+      fileChooser.initUI();
+    }
   }
 
   public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree, boolean autoHide,
