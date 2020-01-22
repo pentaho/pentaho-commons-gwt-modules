@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2020 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.filechooser;
@@ -66,36 +66,14 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
 
   public void openFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
     FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.OPEN, selectedPath, false, true );
-    dialog.addFileChooserListener( new FileChooserListener() {
-      public void fileSelected( RepositoryFile file, String filePath, String fileName, String title ) {
-        notifyCallback( callback, file, filePath, fileName, title );
-      }
-
-      public void fileSelectionChanged( RepositoryFile file, String filePath, String fileName, String title ) {
-      }
-
-      public void dialogCanceled() {
-        notifyCallbackCanceled( callback );
-      }
-    } );
+    addFileChooserListener( dialog, callback );
   }
 
   public void openFolderChooserDialog( final JavaScriptObject callback, String selectedPath ) {
     FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.OPEN, selectedPath, false, true );
-    dialog.addFileChooserListener( new FileChooserListener() {
-      public void fileSelected( RepositoryFile file, String filePath, String fileName, String title ) {
-        notifyCallback( callback, file, filePath, fileName, title );
-      }
+    addFileChooserListener( dialog, callback );
 
-      public void fileSelectionChanged( RepositoryFile file, String filePath, String fileName, String title ) {
-      }
-
-      public void dialogCanceled() {
-        notifyCallbackCanceled( callback );
-      }
-    } );
     dialog.setFileFilter( new FileFilter() {
-
       @Override
       public boolean accept( String name, boolean isDirectory, boolean isVisible ) {
         return isDirectory;
