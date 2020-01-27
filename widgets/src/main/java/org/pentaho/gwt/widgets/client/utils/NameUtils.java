@@ -5,9 +5,8 @@ import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import com.google.gwt.regexp.shared.RegExp;
 
 public class NameUtils {
-
   private static final RegExp containsReservedCharsPattern = makePattern();
-  
+
   /**
    * Checks for presence of reserved chars as well as illegal permutations of legal chars.
    */
@@ -21,14 +20,29 @@ public class NameUtils {
     }
     return true;
   }
-  
-  public static boolean isValidFileName( final String name) {
+
+  public static boolean isValidFileName( final String name ) {
     if ( StringUtils.isEmpty( name ) || // not null, not empty, and not all whitespace
         !name.trim().equals( name ) || // no leading or trailing whitespace
         containsReservedCharsPattern.test( name ) ) { // no reserved characters
       return false;
     }
     return true;
+  }
+
+  /**
+   * Checks whether {@code path} contains any of Control Characters
+   *
+   * @param path to be validated
+   * @return {@code true} if any of {@code Control Characters} is contained in {@code path}
+   */
+
+  public static boolean containsControlCharacters( String path ) {
+    if ( !StringUtils.isEmpty( path ) ) {
+      RegExp pattern = RegExp.compile( "[\\x00-\\x1F\\x7F]" );
+      return pattern.test( path );
+    }
+    return false;
   }
 
   private static RegExp makePattern() {
@@ -42,7 +56,7 @@ public class NameUtils {
     buf.append( "]+.*" ); //$NON-NLS-1$
     return RegExp.compile( buf.toString() );
   }
-  
+
   /**
    * Returns human readable list of reserved characters with the separator string inserted between each
    * character started with the second character and ending after the n-1 character.
@@ -52,7 +66,7 @@ public class NameUtils {
    */
   public static String reservedCharListForDisplay( String separatorString ) {
     String reservedChars = getReservedCharsDisplay();
-    if( reservedChars != null && separatorString != null ) {
+    if ( reservedChars != null && separatorString != null ) {
       reservedChars = reservedChars.replaceAll( ", ", separatorString );
     }
     return reservedChars;
@@ -71,17 +85,17 @@ public class NameUtils {
   /*-{
     return $wnd.pho.Encoder.encode( "{0}", value );
   }-*/;
-  
+
   public static native String URLEncode( String template, String arg )
   /*-{
     return $wnd.pho.Encoder.encode( template, [ arg ] );
   }-*/;
-  
+
   public static native String URLEncode( String template, String[] args )
   /*-{
     return $wnd.pho.Encoder.encode( template, args );
   }-*/;
-  
+
   public static native String getReservedChars()
   /*-{
     return $wnd.RESERVED_CHARS; 
@@ -95,11 +109,11 @@ public class NameUtils {
   public static native String encodeRepositoryPath( String path )
   /*-{
     return $wnd.pho.Encoder.encodeRepositoryPath( path );
-  }-*/;    
-  
+  }-*/;
+
   public static native String decodeRepositoryPath( String path )
   /*-{
     return $wnd.pho.Encoder.decodeRepositoryPath( path );
-  }-*/;   
-  }
+  }-*/;
+}
 

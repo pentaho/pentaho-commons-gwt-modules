@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -88,7 +88,8 @@ public class NewFolderCommand extends AbstractCommand {
       }
 
       public void okPressed() {
-        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() ) ) {
+        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() )
+          || NameUtils.containsControlCharacters( folderNameTextBox.getText() ) ) {
           //event.setMessage( Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ) );
           //EventBusUtil.EVENT_BUS.fireEvent( event );
           MessageDialogBox dialogBox =
