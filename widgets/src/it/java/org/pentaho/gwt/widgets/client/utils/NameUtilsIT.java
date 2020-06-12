@@ -38,14 +38,24 @@ public class NameUtilsIT extends GWTTestCase {
   public void testIsValidFolderName() throws Exception {
     assertFalse( NameUtils.isValidFolderName( null ) );
     assertFalse( NameUtils.isValidFolderName( "" ) );
+    assertFalse( NameUtils.isValidFolderName( "\t" ) );
+    assertFalse( NameUtils.isValidFolderName( "\tabc" ) );
+    assertFalse( NameUtils.isValidFolderName( "abc\n" ) );
     assertFalse( NameUtils.isValidFolderName( " \n\t  " ) );
+    assertFalse( NameUtils.isValidFolderName( " \t\n  " ) );
     assertFalse( NameUtils.isValidFolderName( "  dhfjskh" ) );
     assertFalse( NameUtils.isValidFolderName( "dfsdf " ) );
+    assertFalse( NameUtils.isValidFolderName( "   aBc " ) );
     assertFalse( NameUtils.isValidFolderName( "." ) );
     assertFalse( NameUtils.isValidFolderName( ".." ) );
+    assertFalse( NameUtils.isValidFolderName( " ." ) );
+    assertFalse( NameUtils.isValidFolderName( ".. " ) );
+    assertFalse( NameUtils.isValidFolderName( " .. " ) );
     // can't test RESERVED_CHARS - Java Regex uses // for escape and JS - /
     // assertFalse( NameUtils.isValidFolderName( "sfdfs_1_fsdf" ) );
     assertTrue( NameUtils.isValidFolderName( "edwub_sdkj" ) );
+    assertTrue( NameUtils.isValidFolderName( "abc.def" ) );
+    assertTrue( NameUtils.isValidFolderName( "AbCdEf" ) );
   }
 
   public void testIsValidFileName() throws Exception {

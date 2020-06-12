@@ -88,13 +88,10 @@ public class NewFolderCommand extends AbstractCommand {
       }
 
       public void okPressed() {
-        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() )
-          || NameUtils.containsControlCharacters( folderNameTextBox.getText() ) ) {
-          //event.setMessage( Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ) );
-          //EventBusUtil.EVENT_BUS.fireEvent( event );
+        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() ) ) {
           MessageDialogBox dialogBox =
               new MessageDialogBox(
-                  Messages.getString( "error" ), Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ), //$NON-NLS-1$ //$NON-NLS-2$
+                  Messages.getString( "error" ), Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ),
                   false, false, true );
           dialogBox.center();
           return;
