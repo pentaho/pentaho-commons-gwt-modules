@@ -35,7 +35,7 @@ public class NameUtils {
     if ( StringUtils.isEmpty( name ) || // not null, not empty and not all whitespace
         !name.trim().equals( name ) || // no leading or trailing whitespace
         containsReservedCharsPattern.test( name ) || // no reserved characters
-        containsControlCharactersPattern.test(name) ) { // control characters
+        containsControlCharactersPattern.test( name ) ) { // control characters
       return false;
     }
     return true;
