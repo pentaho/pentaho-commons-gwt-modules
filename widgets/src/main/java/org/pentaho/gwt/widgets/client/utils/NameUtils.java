@@ -5,55 +5,50 @@ import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import com.google.gwt.regexp.shared.RegExp;
 
 public class NameUtils {
-  private static final RegExp containsReservedCharsPattern = makePattern();
+  private static final RegExp containsReservedCharsPattern = makeReservedCharsPattern();
+  private static final RegExp containsControlCharactersPattern = RegExp.compile( "[\\x00-\\x1F\\x7F]" );
 
   /**
    * Checks for presence of reserved chars as well as illegal permutations of legal chars.
    */
   public static boolean isValidFolderName( final String name ) {
-    if ( StringUtils.isEmpty( name ) || // not null, not empty, and not all whitespace
+    /*
+     * If a change is to be made on this method, please synchronize with the following method:
+     * [pentaho-platform] org.pentaho.platform.web.http.api.resources.services.FileService#isValidFolderName
+     */
+    if ( StringUtils.isEmpty( name ) || // not null, not empty and not all whitespace
         !name.trim().equals( name ) || // no leading or trailing whitespace
         containsReservedCharsPattern.test( name ) || // no reserved characters
-        ".".equals( name ) || // no . //$NON-NLS-1$
-        "..".equals( name ) ) { // no .. //$NON-NLS-1$
+        ".".equals( name ) || // no .
+        "..".equals( name ) || // no ..
+        containsControlCharactersPattern.test( name ) ) { // control characters
       return false;
     }
     return true;
   }
 
   public static boolean isValidFileName( final String name ) {
-    if ( StringUtils.isEmpty( name ) || // not null, not empty, and not all whitespace
+    /*
+     * If a change is to be made on this method, please synchronize with the following method:
+     * [pentaho-platform] org.pentaho.platform.web.http.api.resources.services.FileService#isValidFileName
+     */
+    if ( StringUtils.isEmpty( name ) || // not null, not empty and not all whitespace
         !name.trim().equals( name ) || // no leading or trailing whitespace
-        containsReservedCharsPattern.test( name ) ) { // no reserved characters
+        containsReservedCharsPattern.test( name ) || // no reserved characters
+        containsControlCharactersPattern.test( name ) ) { // control characters
       return false;
     }
     return true;
   }
 
-  /**
-   * Checks whether {@code path} contains any of Control Characters
-   *
-   * @param path to be validated
-   * @return {@code true} if any of {@code Control Characters} is contained in {@code path}
-   */
-
-  public static boolean containsControlCharacters( String path ) {
-    if ( !StringUtils.isEmpty( path ) ) {
-      RegExp pattern = RegExp.compile( "[\\x00-\\x1F\\x7F]" );
-      return pattern.test( path );
-    }
-    return false;
-  }
-
-  private static RegExp makePattern() {
+  private static RegExp makeReservedCharsPattern() {
     // escape all reserved characters as they may have special meaning to regex engine
     StringBuilder buf = new StringBuilder();
-    buf.append( ".*[" ); //$NON-NLS-1$
+    buf.append( ".*[" );
     for ( Character ch : getReservedChars().toCharArray() ) {
-      buf.append( "\\" ); //$NON-NLS-1$
-      buf.append( ch );
+      buf.append( '\\' ).append( ch );
     }
-    buf.append( "]+.*" ); //$NON-NLS-1$
+    buf.append( "]+.*" );
     return RegExp.compile( buf.toString() );
   }
 
@@ -67,7 +62,7 @@ public class NameUtils {
   public static String reservedCharListForDisplay( String separatorString ) {
     String reservedChars = getReservedCharsDisplay();
     if ( reservedChars != null && separatorString != null ) {
-      reservedChars = reservedChars.replaceAll( ", ", separatorString );
+      reservedChars = reservedChars.replace( ", ", separatorString );
     }
     return reservedChars;
   }

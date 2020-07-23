@@ -40,6 +40,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NewFolderCommand extends AbstractCommand {
+  private static final String ERROR = "error";
   private String solutionPath = null;
   private String contextURL = ScheduleHelper.getFullyQualifiedURL();
 
@@ -73,11 +74,11 @@ public class NewFolderCommand extends AbstractCommand {
     folderNameTextBox.setVisibleLength( 40 );
 
     VerticalPanel vp = new VerticalPanel();
-    vp.add( new Label( Messages.getString( "newFolderName" ) ) ); //$NON-NLS-1$
+    vp.add( new Label( Messages.getString( "newFolderName" ) ) );
     vp.add( folderNameTextBox );
     final PromptDialogBox newFolderDialog =
         new PromptDialogBox(
-            Messages.getString( "newFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ), false, true, vp ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            Messages.getString( "newFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ), false, true, vp );
     newFolderDialog.setFocusWidget( folderNameTextBox );
     folderNameTextBox.setFocus( true );
 
@@ -88,13 +89,10 @@ public class NewFolderCommand extends AbstractCommand {
       }
 
       public void okPressed() {
-        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() )
-          || NameUtils.containsControlCharacters( folderNameTextBox.getText() ) ) {
-          //event.setMessage( Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ) );
-          //EventBusUtil.EVENT_BUS.fireEvent( event );
+        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() ) ) {
           MessageDialogBox dialogBox =
               new MessageDialogBox(
-                  Messages.getString( "error" ), Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ), //$NON-NLS-1$ //$NON-NLS-2$
+                  Messages.getString( ERROR ), Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ),
                   false, false, true );
           dialogBox.center();
           return;
@@ -102,7 +100,7 @@ public class NewFolderCommand extends AbstractCommand {
 
         solutionPath = parentFolder.getPath() + "/" + folderNameTextBox.getText();
 
-        String createDirUrl = contextURL + "api/repo/dirs/" + pathToId( solutionPath ); //$NON-NLS-1$
+        String createDirUrl = contextURL + "api/repo/dirs/" + pathToId( solutionPath );
         RequestBuilder createDirRequestBuilder = new RequestBuilder( RequestBuilder.PUT, createDirUrl );
 
         try {
@@ -113,48 +111,32 @@ public class NewFolderCommand extends AbstractCommand {
             public void onError( Request createFolderRequest, Throwable exception ) {
               MessageDialogBox dialogBox =
                   new MessageDialogBox(
-                      Messages.getString( "error" ), Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ), //$NON-NLS-1$ //$NON-NLS-2$
+                      Messages.getString( ERROR ), Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ),
                       false, false, true );
               dialogBox.center();
-              //event.setMessage( Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ) );
-              //EventBusUtil.EVENT_BUS.fireEvent( event );
             }
 
             @Override
             public void onResponseReceived( Request createFolderRequest, Response createFolderResponse ) {
               if ( createFolderResponse.getStatusCode() == 200 ) {
                 NewFolderCommand.this.callback.onHandle( solutionPath );
-                //new RefreshRepositoryCommand().execute( false );
-                //event.setMessage( "Success" );
                 FileChooserDialog.setIsDirty( Boolean.TRUE );
                 setBrowseRepoDirty( Boolean.TRUE );
-                //EventBusUtil.EVENT_BUS.fireEvent( event );
               } else {
                 String errorMessage = StringUtils.isEmpty( createFolderResponse.getText() )
                     || Messages.getString( createFolderResponse.getText() ) == null
-                    ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ) //$NON-NLS-1$
+                    ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() )
                     : Messages.getString( createFolderResponse.getText(), folderNameTextBox.getText() );
                 MessageDialogBox dialogBox =
                     new MessageDialogBox(
-                        Messages.getString( "error" ), errorMessage, //$NON-NLS-1$ //$NON-NLS-2$
-                        false, false, true );
+                        Messages.getString( ERROR ), errorMessage, false, false, true );
                 dialogBox.center();
-                /*event.setMessage(
-                    StringUtils.isEmpty( createFolderResponse.getText() )
-                        || Messages.getString( createFolderResponse.getText() ) == null
-                        ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ) //$NON-NLS-1$
-                        : Messages.getString( createFolderResponse.getText(), folderNameTextBox.getText() )
-                );
-                EventBusUtil.EVENT_BUS.fireEvent( event );
-*/
               }
             }
 
           } );
         } catch ( RequestException e ) {
           Window.alert( e.getLocalizedMessage() );
-          /*event.setMessage( e.getLocalizedMessage() );
-          EventBusUtil.EVENT_BUS.fireEvent( event );*/
         }
 
       }
