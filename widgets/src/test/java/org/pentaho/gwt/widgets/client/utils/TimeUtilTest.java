@@ -29,30 +29,30 @@ public class TimeUtilTest {
   public void testGetDayVariance_timezoneIdFormat() {
     String timezoneIdFormat = "Eastern Daylight Time (UTC-0500)";
     int dayVariance = TimeUtil.getDayVariance( 3, 0, timezoneIdFormat );
-    assertEquals( dayVariance, -1 );
+    assertEquals( -1, dayVariance );
 
     timezoneIdFormat = "Japan Daylight Time (UTC+0900)";
     dayVariance = TimeUtil.getDayVariance( 20, 0, timezoneIdFormat );
-    assertEquals( dayVariance, 1 );
+    assertEquals( 1, dayVariance );
   }
 
   @Test
   public void testGetDayVariance_dateTimeFormat() {
     String dateTimeFormat = "2018-01-01T07:30:00-05:00";
     int dayVariance = TimeUtil.getDayVariance( 3, 0, dateTimeFormat );
-    assertEquals( dayVariance, 1 );
+    assertEquals( 1, dayVariance );
 
     dateTimeFormat = "2018-01-01T07:30:00+05:00";
     dayVariance = TimeUtil.getDayVariance( 20, 0, dateTimeFormat );
-    assertEquals( dayVariance, -1 );
+    assertEquals( -1, dayVariance );
 
     dateTimeFormat = "2020-11-05T05:30:00-05:30";
     dayVariance = TimeUtil.getDayVariance( 5, 29, dateTimeFormat );
-    assertEquals( dayVariance, 0 );
+    assertEquals( 0, dayVariance );
 
     dateTimeFormat = "2020-11-05T05:30:00-05:30";
     dayVariance = TimeUtil.getDayVariance( 0, 31, dateTimeFormat );
-    assertEquals( dayVariance, 1 );
+    assertEquals( 1, dayVariance );
   }
 
   @Test
