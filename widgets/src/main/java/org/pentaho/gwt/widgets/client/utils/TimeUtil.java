@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils;
@@ -544,29 +544,31 @@ public class TimeUtil {
    * timezone id - e.g. "Eastern Daylight Time (UTC-0500)"
    * dateTime format - e.g. "2018-02-27T07:30:00-05:00"
    *
-   * @param selectedTime The time selected by the user which is compared against the timezone diff between client and target
+   * @param selectedHour The hour selected by the user which is compared against the timezone diff between client and target
+   * @param selectedMinute The minute selected by the user which is compared against the timezone diff between client and target
    * @param targetTimezoneInfo The target timezone information in the formats described above
    * @return The calculated day variance
    */
-  public static int getDayVariance( int selectedTime, String targetTimezoneInfo ) {
+  public static int getDayVariance( int selectedHour, int selectedMinute, String targetTimezoneInfo ) {
 
     boolean isTimezoneId = targetTimezoneInfo.contains( "UTC" );
 
     int targetOffset = targetTimezoneInfo.endsWith( "Z" ) ? 0 : getTargetOffset( targetTimezoneInfo, isTimezoneId );
-    int clientOffset = -getClientOffsetTimeZone() / 60;
+    double clientOffset = -getClientOffsetTimeZone() / MINUTES_IN_HOUR;
+    double selectedTime = selectedHour + ( selectedMinute != 0 ? selectedMinute / (double) MINUTES_IN_HOUR : 0 );
 
     // if client side has the timezone ahead of target's timezone, then we should compare against client's start of the day
     // client2target -> -1 and target2client -> +1
     if ( clientOffset > targetOffset ) {
-      int timezoneDiff = targetOffset - clientOffset;
+      double timezoneDiff = targetOffset - clientOffset;
       if ( selectedTime + timezoneDiff < 0 ) {
         return isTimezoneId ? -1 : 1;
       }
     // if client side has the timezone behind of target's timezone, then we should compare against client's end of the day
     // client2target -> +1 and target2client -> -1
     } else {
-      int timezoneDiff = clientOffset - targetOffset;
-      if ( selectedTime - timezoneDiff > 23 ) {
+      double timezoneDiff = clientOffset - targetOffset;
+      if ( selectedTime - timezoneDiff >= HOURS_IN_DAY ) {
         return isTimezoneId ? 1 : -1;
       }
     }
@@ -618,7 +620,7 @@ public class TimeUtil {
     return ( dayVariance > 0 ) ? currentDay.getNext() : currentDay.getPrevious();
   }
 
-  public static native int getClientOffsetTimeZone() /*-{
+  public static native double getClientOffsetTimeZone() /*-{
       return new Date().getTimezoneOffset();
   }-*/;
 }
