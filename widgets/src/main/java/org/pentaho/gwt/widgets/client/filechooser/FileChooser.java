@@ -261,7 +261,7 @@ public class FileChooser extends VerticalPanel {
           JsonToRepositoryFileTreeConverter converter = new JsonToRepositoryFileTreeConverter( jsonData );
           buildTree( converter.getTree(), fileTree != null );
         } else {
-          Window.alert( "Solution Repository not found." );
+          Window.alert( "Unable to find or access contents within the selected folder" );
         }
       }
     };
@@ -297,7 +297,7 @@ public class FileChooser extends VerticalPanel {
             completedCallback.okPressed();
           }
         } else {
-          Window.alert( "Solution Repository not found." );
+          Window.alert( "Unable to find or access contents within the selected folder" );
         }
       }
 
@@ -313,8 +313,8 @@ public class FileChooser extends VerticalPanel {
       filter = "*";
     }
 
-    return getFullyQualifiedURL() + "api/repo/files/" + folderId +"/tree?" +
-      "showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter=" + filter;
+    return getFullyQualifiedURL() + "api/repo/files/" + folderId + "/tree?"
+        + "showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter=" + filter;
   }
 
   public void initUI() {
