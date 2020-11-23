@@ -96,6 +96,11 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     fileChooser.addFileChooserListener( this );
   }
 
+  private static native String getDefaultFolderLocation()
+    /*-{
+        return $wnd.top.DEFAULT_FOLDER;
+    }-*/;
+
   private static native String getHomeFolderLocation()
   /*-{
       return $wnd.top.HOME_FOLDER;
@@ -189,17 +194,17 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
     if ( mode.equals( FileChooserMode.OPEN ) ) {
       if ( getLastOpenLocation() == null ) {
-        fileChooser.setSelectedPath( getHomeFolderLocation() );
+        fileChooser.setSelectedPath( getDefaultFolderLocation() );
       } else {
         fileChooser.setSelectedPath( getLastOpenLocation() );
         if ( doesFolderExist( fileTree, fileChooser.selectedPath ) == null ) {
-          fileChooser.setSelectedPath( getHomeFolderLocation() );
+          fileChooser.setSelectedPath( getDefaultFolderLocation() );
         }
       }
     }
 
     if ( mode.equals( FileChooserMode.SAVE ) ) {
-      final String path = StringUtils.isEmpty( selectedPath ) ? getHomeFolderLocation() : selectedPath;
+      final String path = StringUtils.isEmpty( selectedPath ) ? getDefaultFolderLocation() : selectedPath;
 
       fileChooser.setSelectedPath( path );
     }
@@ -234,7 +239,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       }
     } );
 
-    if (fileTree == null) {
+    if ( fileTree == null ) {
       try {
         fileChooser.fetchRepositoryDirectory( fileChooser.getSelectedPath(), 1, null );
       } catch ( RequestException e ) {
