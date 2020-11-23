@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -353,7 +353,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       int weekDayVariance = 0;
 
       if ( targetTimezone != null ) {
-        weekDayVariance = TimeUtil.getDayVariance( startDate.getHours(), targetTimezone );
+        weekDayVariance = TimeUtil.getDayVariance( startDate.getHours(), startDate.getMinutes(), targetTimezone );
       }
 
       for ( DayOfWeek dayOfWeek : daysOfWeek ) {
