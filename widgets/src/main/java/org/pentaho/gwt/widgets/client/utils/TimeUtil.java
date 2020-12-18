@@ -622,10 +622,7 @@ public class TimeUtil {
    * @return The target's timezone offset
    */
   private static double getTargetOffset( String targetTimezoneInfo, boolean isTimezoneId ) {
-    if ( isTimezoneId ) {
-      return getTargetOffsetFromTimezoneString( targetTimezoneInfo );
-    }
-    return getTargetOffsetFromDatetimeString( targetTimezoneInfo );
+    return isTimezoneId ? getTargetOffsetFromTimezoneString( targetTimezoneInfo ) : getTargetOffsetFromDatetimeString( targetTimezoneInfo );
   }
 
   /**
