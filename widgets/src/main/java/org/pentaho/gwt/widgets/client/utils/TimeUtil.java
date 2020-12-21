@@ -17,6 +17,8 @@
 
 package org.pentaho.gwt.widgets.client.utils;
 
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 
@@ -553,7 +555,7 @@ public class TimeUtil {
 
     boolean isTimezoneId = targetTimezoneInfo.contains( "UTC" );
 
-    int targetOffset = targetTimezoneInfo.endsWith( "Z" ) ? 0 : getTargetOffset( targetTimezoneInfo, isTimezoneId );
+    double targetOffset = targetTimezoneInfo.endsWith( "Z" ) ? 0 : getTargetOffset( targetTimezoneInfo, isTimezoneId );
     double clientOffset = -getClientOffsetTimeZone() / MINUTES_IN_HOUR;
     double selectedTime = selectedHour + ( selectedMinute != 0 ? selectedMinute / (double) MINUTES_IN_HOUR : 0 );
 
@@ -577,6 +579,39 @@ public class TimeUtil {
 
   /**
    * Retrieves the target timezone offset based on the target's timezone information.
+   * targetTimezoneInfo should be in timezone id format - e.g. "Eastern Daylight Time (UTC-0500)"
+   * @param targetTimezoneInfo The target timezone information.
+   * @return The target's timezone offset
+   */
+  public static double getTargetOffsetFromTimezoneString( String targetTimezoneInfo ) {
+    return getTargetOffsetFromString( targetTimezoneInfo, "UTC([+-])(\\d{1,2})(\\d{2})", 1, 2, 3 );
+  }
+
+  /**
+   * Retrieves the target timezone offset based on the target's timezone information.
+   * targetTimezoneInfo should be in dateTime format - e.g. "2018-02-27T07:30:00-05:00"
+   * @param targetTimezoneInfo The target timezone information.
+   * @return The target's timezone offset
+   */
+  public static double getTargetOffsetFromDatetimeString( String targetTimezoneInfo ) {
+    return getTargetOffsetFromString( targetTimezoneInfo, "(\\d{4})-(\\d{2})-(\\d{2})[T ](\\d{2}):(\\d{2}):(\\d{2})([+-])(\\d{2}):(\\d{2})", 7, 8, 9 );
+  }
+
+  private static double getTargetOffsetFromString( String targetTimezoneInfo, String regex, int signGroup, int hoursGroup, int minutesGroup ) {
+    MatchResult match = RegExp.compile( regex ).exec( targetTimezoneInfo );
+    double timeOffset = 0.0;
+    if ( match != null ) {
+      String sign = match.getGroup( signGroup );
+      int hours = Integer.parseInt( match.getGroup( hoursGroup ) );
+      int minutes = Integer.parseInt( match.getGroup( minutesGroup ) );
+      timeOffset = hours + minutes / (double) MINUTES_IN_HOUR;
+      return sign.equals( "+" ) ? timeOffset : -timeOffset;
+    }
+    return timeOffset;
+  }
+
+  /**
+   * Retrieves the target timezone offset based on the target's timezone information.
    *
    * Note: The following two types of timezone information are supported:
    * timezone id - e.g. "Eastern Daylight Time (UTC-0500)"
@@ -586,23 +621,8 @@ public class TimeUtil {
    * @param isTimezoneId True if the format is timezone id, false if the format is dateTime.
    * @return The target's timezone offset
    */
-  private static int getTargetOffset( String targetTimezoneInfo, boolean isTimezoneId ) {
-    String targetTzOffset;
-    int targetOffset;
-
-    if ( isTimezoneId ) {
-      targetTzOffset = targetTimezoneInfo.substring( targetTimezoneInfo.indexOf( "(UTC" ) + 4, targetTimezoneInfo.length() - 3 );
-    } else {
-      int startingOffsetChar = Character.isDigit( targetTimezoneInfo.charAt( targetTimezoneInfo.length() - 6 ) ) ? 5 : 6;
-      targetTzOffset = targetTimezoneInfo.substring( targetTimezoneInfo.length() - startingOffsetChar, targetTimezoneInfo.length() - 3 );
-    }
-    targetOffset = Integer.valueOf( targetTzOffset.substring( 1 ) );
-
-    // Determine the signal separately, otherwise a NumberFormatException will occur if we try to convert directly the signal to integer.
-    if ( targetTzOffset.charAt( 0 ) == '-' ) {
-      targetOffset = -targetOffset;
-    }
-    return targetOffset;
+  private static double getTargetOffset( String targetTimezoneInfo, boolean isTimezoneId ) {
+    return isTimezoneId ? getTargetOffsetFromTimezoneString( targetTimezoneInfo ) : getTargetOffsetFromDatetimeString( targetTimezoneInfo );
   }
 
   /**
