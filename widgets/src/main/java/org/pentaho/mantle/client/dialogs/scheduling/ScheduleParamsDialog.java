@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -28,9 +28,7 @@ import org.pentaho.mantle.client.workspace.JsJobParam;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -45,6 +43,9 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wseyler
@@ -133,43 +134,13 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   }
 
   JSONArray getScheduleParams( boolean suppressAlerts ) {
-    JsArray<JsSchedulingParameter> schedulingParams = scheduleParamsWizardPanel.getParams( suppressAlerts );
-    JSONArray params = new JSONArray();
-    for ( int i = 0; i < schedulingParams.length(); i++ ) {
-      params.set( i, new JSONObject( schedulingParams.get( i ) ) );
+    JsArray<JsSchedulingParameter> jsSchedulingParams = scheduleParamsWizardPanel.getParams( suppressAlerts );
+    List<JSONObject> schedulingParams = new ArrayList<JSONObject>();
+    for ( int i = 0; i < jsSchedulingParams.length(); i++ ) {
+      schedulingParams.add( new JSONObject( jsSchedulingParams.get( i ) ) );
     }
 
-    if ( jobSchedule.get( "appendDateFormat" ) != null ) {
-      String dateFormat = jobSchedule.get( "appendDateFormat" ).toString();
-      dateFormat = dateFormat.substring( 1, dateFormat.length() - 1 ); // get rid of ""
-      JsArrayString appendDateFormat = (JsArrayString) JavaScriptObject.createArray().cast();
-      appendDateFormat.push( dateFormat );
-      JsSchedulingParameter jspDateFormat = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-      jspDateFormat.setName( "appendDateFormat" );
-      jspDateFormat.setStringValue( appendDateFormat );
-      jspDateFormat.setType( "string" );
-
-      params.set( params.size(), new JSONObject( jspDateFormat ) );
-    }
-
-    if ( jobSchedule.get( "overwriteFile" ) != null ) {
-      String overwriteFile = jobSchedule.get( "overwriteFile" ).toString();
-      overwriteFile = overwriteFile.substring( 1, overwriteFile.length() - 1 );
-      boolean overwrite = Boolean.valueOf( overwriteFile ).booleanValue();
-
-      if ( overwrite ) {
-        JsArrayString autoCreateUniqueFilenameValue = (JsArrayString) JavaScriptObject.createArray().cast();
-        autoCreateUniqueFilenameValue.push( String.valueOf( !overwrite ) );
-
-        JsSchedulingParameter jspOverwrite = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-        jspOverwrite.setName( "autoCreateUniqueFilename" );
-        jspOverwrite.setStringValue( autoCreateUniqueFilenameValue );
-        jspOverwrite.setType( "boolean" );
-        params.set( params.size(), new JSONObject( jspOverwrite ) );
-      }
-    }
-
-    return params;
+    return ScheduleParamsHelper.getScheduleParams( jobSchedule, schedulingParams );
   }
 
   /*
@@ -180,18 +151,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   @Override
   protected boolean onFinish() {
     scheduleParams = getScheduleParams( false );
-    if ( editJob != null ) {
-      String lineageId = editJob.getJobParamValue( "lineage-id" );
-//      JsArrayString jobIdValue = (JsArrayString) JavaScriptObject.createArray().cast();
-//      jobIdValue.push( editJob.getJobId() );
-      JsArrayString lineageIdValue = (JsArrayString) JavaScriptObject.createArray().cast();
-      lineageIdValue.push( lineageId );
-      JsSchedulingParameter p = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-      p.setName( "lineage-id" );
-      p.setType( "string" );
-      p.setStringValue( lineageIdValue );
-      scheduleParams.set( scheduleParams.size(), new JSONObject( p ) );
-    }
+    setLineageIdParam();
     if ( isEmailConfValid ) {
       showScheduleEmailDialog( scheduleParams );
     } else {
@@ -252,6 +212,13 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       setDone( true );
     }
     return false;
+  }
+
+  private void setLineageIdParam() {
+    if ( editJob != null ) {
+      String lineageId = editJob.getJobParamValue( "lineage-id" );
+      scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateLineageId( lineageId ) );
+    }
   }
 
   private void showScheduleEmailDialog( final JSONArray scheduleParams ) {
