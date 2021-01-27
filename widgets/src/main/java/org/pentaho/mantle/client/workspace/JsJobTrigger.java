@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.workspace;
@@ -403,7 +403,7 @@ public class JsJobTrigger extends JavaScriptObject {
 
           int variance = 0;
           if ( DateTimeFormat.getFormat( "yyyy-MM-dd'T'HH:mm:ssZZZ" ).parseStrict( getNativeStartTime() ) != null ) {
-            variance = TimeUtil.getDayVariance( getStartTime().getHours(), getNativeStartTime() );
+            variance = TimeUtil.getDayVariance( getStartTime().getHours(), getStartTime().getMinutes(), getNativeStartTime() );
           }
 
           int adjustedDayOfWeek =  TimeUtil.getDayOfWeek( DayOfWeek.get( getDayOfWeekRecurrences()[0] - 1 ), variance );
