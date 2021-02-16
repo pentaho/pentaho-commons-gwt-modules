@@ -27,8 +27,16 @@ import java.util.List;
 
 public class ScheduleParamsHelper {
 
+  public static final String AUTO_CREATE_UNIQUE_FILENAME_KEY = "autoCreateUniqueFilename";
+
+  private ScheduleParamsHelper() { }
+
+  private static final String APPEND_DATE_FORMAT_KEY = "appendDateFormat";
+  private static final String OVERWRITE_FILE_KEY = "overwriteFile";
+
   public static JSONArray getScheduleParams( JSONObject jobSchedule ) {
-    return getScheduleParams( jobSchedule, new ArrayList<JSONObject>() );
+    List<JSONObject> schedulingParams = new ArrayList<JSONObject>();
+    return getScheduleParams( jobSchedule, schedulingParams );
   }
 
   public static JSONArray getScheduleParams( JSONObject jobSchedule, List<JSONObject> schedulingParams ) {
@@ -38,30 +46,30 @@ public class ScheduleParamsHelper {
       params.set( i, schedulingParams.get( i ) );
     }
 
-    if ( jobSchedule.get( "appendDateFormat" ) != null ) {
-      String dateFormat = jobSchedule.get( "appendDateFormat" ).toString();
+    if ( jobSchedule.get( APPEND_DATE_FORMAT_KEY ) != null ) {
+      String dateFormat = jobSchedule.get( APPEND_DATE_FORMAT_KEY ).toString();
       dateFormat = dateFormat.substring( 1, dateFormat.length() - 1 ); // get rid of ""
       JsArrayString appendDateFormat = (JsArrayString) JavaScriptObject.createArray().cast();
       appendDateFormat.push( dateFormat );
       JsSchedulingParameter jspDateFormat = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-      jspDateFormat.setName( "appendDateFormat" );
+      jspDateFormat.setName( APPEND_DATE_FORMAT_KEY );
       jspDateFormat.setStringValue( appendDateFormat );
       jspDateFormat.setType( "string" );
 
       params.set( params.size(), new JSONObject( jspDateFormat ) );
     }
 
-    if ( jobSchedule.get( "overwriteFile" ) != null ) {
-      String overwriteFile = jobSchedule.get( "overwriteFile" ).toString();
+    if ( jobSchedule.get( OVERWRITE_FILE_KEY ) != null ) {
+      String overwriteFile = jobSchedule.get( OVERWRITE_FILE_KEY ).toString();
       overwriteFile = overwriteFile.substring( 1, overwriteFile.length() - 1 );
-      boolean overwrite = Boolean.valueOf( overwriteFile ).booleanValue();
+      boolean overwrite = Boolean.parseBoolean( overwriteFile );
 
       if ( overwrite ) {
         JsArrayString autoCreateUniqueFilenameValue = (JsArrayString) JavaScriptObject.createArray().cast();
         autoCreateUniqueFilenameValue.push( String.valueOf( !overwrite ) );
 
         JsSchedulingParameter jspOverwrite = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-        jspOverwrite.setName( "autoCreateUniqueFilename" );
+        jspOverwrite.setName( AUTO_CREATE_UNIQUE_FILENAME_KEY );
         jspOverwrite.setStringValue( autoCreateUniqueFilenameValue );
         jspOverwrite.setType( "boolean" );
         params.set( params.size(), new JSONObject( jspOverwrite ) );
