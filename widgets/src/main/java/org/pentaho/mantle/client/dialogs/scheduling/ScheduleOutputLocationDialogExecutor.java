@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
 import java.util.Date;
 
+import com.google.gwt.json.client.JSONArray;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -311,6 +312,10 @@ public class ScheduleOutputLocationDialogExecutor {
                           new ScheduleEmailDialog( null, filePath, scheduleRequest, null, null );
                       scheduleEmailDialog.center();
                     } else {
+                      // Handle Schedule Parameters
+                      JSONArray scheduleParams = ScheduleParamsHelper.getScheduleParams( scheduleRequest );
+                      scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$
+
                       // just run it
                       RequestBuilder scheduleFileRequestBuilder =
                           new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL()
