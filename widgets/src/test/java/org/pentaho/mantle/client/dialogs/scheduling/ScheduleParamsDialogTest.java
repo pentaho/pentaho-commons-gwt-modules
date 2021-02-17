@@ -12,30 +12,42 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwtmockito.GwtMockitoTestRunner;
+import com.google.gwtmockito.WithClassesToStub;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyChar;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.util.reflection.Whitebox.setInternalState;
 
 @RunWith( GwtMockitoTestRunner.class )
+@WithClassesToStub( JSONArray.class )
 public class ScheduleParamsDialogTest {
   private ScheduleParamsDialog scheduleParamsDialog;
+  private ScheduleParamsWizardPanel scheduleParamsWizardPanel;
 
   @Before
   public void setUp() throws Exception {
     scheduleParamsDialog = mock( ScheduleParamsDialog.class );
+    scheduleParamsWizardPanel = mock( ScheduleParamsWizardPanel.class );
   }
 
   @Test
@@ -61,4 +73,19 @@ public class ScheduleParamsDialogTest {
     verify( scheduleParamsDialog.parentDialog ).center();
     verify( scheduleParamsDialog ).hide();
   }
+
+  @Test
+  public void getScheduleParamsWithoutScheduleParams() {
+    JSONObject jobSchedule = mock( JSONObject.class );
+
+    when( scheduleParamsDialog.getScheduleParams( true ) ).thenCallRealMethod();
+    when( scheduleParamsWizardPanel.getParams( true ) ).thenReturn( mock( JsArray.class ) );
+
+    setInternalState( scheduleParamsDialog, "scheduleParamsWizardPanel", scheduleParamsWizardPanel );
+    setInternalState( scheduleParamsDialog, "jobSchedule", jobSchedule );
+
+    JSONArray params = scheduleParamsDialog.getScheduleParams( true );
+    assertEquals( 0, params.size() );
+  }
+
 }
