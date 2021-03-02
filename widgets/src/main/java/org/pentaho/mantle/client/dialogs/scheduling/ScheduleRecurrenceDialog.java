@@ -864,6 +864,10 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
       }
 
+      // Handle Schedule Parameters
+      JSONArray scheduleParams = ScheduleParamsHelper.getScheduleParams( scheduleRequest );
+      scheduleRequest.put( "jobParameters", scheduleParams );
+
       RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 
       try {
