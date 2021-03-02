@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2017-2019 Hitachi Vantara.  All rights reserved.
+* Copyright 2017-2021 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -1157,13 +1157,13 @@ button#schedule-dialog-select-button {
 
 input#FT_rankCount,
 input#FT_condOp1,
+input#FT_condOp2,
 select#FT_condOp,
 select#FT_condMetric,
 select#FT_rankMetric,
 select#FT_rankType,
 select#FT_attribute {
   height: 24px;
-  padding: 0 5px 2px 2px;
 }
 
 input#FT_rankCount {

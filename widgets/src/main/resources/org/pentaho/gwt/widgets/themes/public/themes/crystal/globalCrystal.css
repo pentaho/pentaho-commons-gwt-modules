@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2005 - 2019 Hitachi Vantara.  All rights reserved.
+* Copyright 2005 - 2021 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -5678,4 +5678,16 @@ for the rebranding on the Ruby theme cause a smaller impact on the other themes 
   left: 150px;
   top: 180px;
   position: absolute;
+}
+
+.pentaho-page-background#pageLoading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+}
+
+.pentaho-page-background#pageLoading .page-loading-icon {
+  margin-right: 10px;
 }
