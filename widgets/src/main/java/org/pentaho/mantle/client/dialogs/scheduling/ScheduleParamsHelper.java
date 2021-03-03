@@ -33,9 +33,15 @@ public class ScheduleParamsHelper {
 
   private static final String APPEND_DATE_FORMAT_KEY = "appendDateFormat";
   private static final String OVERWRITE_FILE_KEY = "overwriteFile";
+  private static final String JOB_PARAMETERS_KEY = "jobParameters";
 
   public static JSONArray getScheduleParams( JSONObject jobSchedule ) {
     List<JSONObject> schedulingParams = new ArrayList<JSONObject>();
+    JSONArray jobParameters = (JSONArray) jobSchedule.get( JOB_PARAMETERS_KEY );
+    for ( int i = 0; i < jobParameters.size(); i++ ) {
+      schedulingParams.add( (JSONObject) jobParameters.get( i ) );
+    }
+
     return getScheduleParams( jobSchedule, schedulingParams );
   }
 
