@@ -38,8 +38,10 @@ public class ScheduleParamsHelper {
   public static JSONArray getScheduleParams( JSONObject jobSchedule ) {
     List<JSONObject> schedulingParams = new ArrayList<JSONObject>();
     JSONArray jobParameters = (JSONArray) jobSchedule.get( JOB_PARAMETERS_KEY );
-    for ( int i = 0; i < jobParameters.size(); i++ ) {
-      schedulingParams.add( (JSONObject) jobParameters.get( i ) );
+    if ( jobParameters != null ) {
+      for ( int i = 0; i < jobParameters.size(); i++ ) {
+        schedulingParams.add( (JSONObject) jobParameters.get( i ) );
+      }
     }
 
     return getScheduleParams( jobSchedule, schedulingParams );
