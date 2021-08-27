@@ -29,11 +29,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.google.code.gwtx</groupId>
-      <artifactId>gwtx</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>javax.validation</groupId>
       <artifactId>validation-api</artifactId>
       <scope>provided</scope>
@@ -43,6 +38,11 @@
       <artifactId>validation-api</artifactId>
       <classifier>sources</classifier>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.jsinterop</groupId>
+      <artifactId>jsinterop-annotations</artifactId>
+      <version>2.0.0</version>
     </dependency>
   </dependencies>
 

@@ -38,23 +38,13 @@
       <artifactId>gwt-incubator</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.allen_sauer</groupId>
+      <groupId>com.allen-sauer.gwt.dnd</groupId>
       <artifactId>gwt-dnd</artifactId>
     </dependency>
-    <dependency>
-      <groupId>GWT-FX</groupId>
-      <artifactId>GWT-FX</artifactId>
-    </dependency>
-
     <!-- Test -->
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-dev</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.gwtx</groupId>
-      <artifactId>gwtx</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

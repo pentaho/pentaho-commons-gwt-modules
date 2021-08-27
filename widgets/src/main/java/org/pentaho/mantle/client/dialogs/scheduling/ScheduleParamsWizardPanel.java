@@ -27,8 +27,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
 import org.pentaho.mantle.client.messages.Messages;
 
-import java.util.StringTokenizer;
-
 /**
  * @author wseyler
  * 
@@ -134,13 +132,12 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
   public void setRadioParameterValue( String url ) {
     String params = url.substring( url.indexOf( "?" ) + 1 );
     params += "&null"; // support for back button
-    String token;
-    StringTokenizer str = new StringTokenizer( params, "&" );
+    String[] radioParams = params.split( "&" );
     try {
-      while ( str.hasMoreTokens() ) {
-        token = str.nextToken();
-        if ( token.startsWith( "REPORT_FORMAT_TYPE" ) ) {
-          setRadioButton( token.substring( token.indexOf( "=" ) + 1 ) );
+      for ( int i = 0; i < radioParams.length; i++ ) {
+        String param = radioParams[i];
+        if ( param.startsWith( "REPORT_FORMAT_TYPE" ) ) {
+          setRadioButton( param.substring( param.indexOf( "=" ) + 1 ) );
           break;
         }
       }
