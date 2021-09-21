@@ -30,7 +30,6 @@
 
   <properties>
     <license.licenseName>lgpl_v2_1</license.licenseName>
-    <gwt.version>2.5.1</gwt.version>
   </properties>
 
   <scm>
@@ -44,7 +43,6 @@
       <dependency>
         <groupId>com.google.gwt</groupId>
         <artifactId>gwt-user</artifactId>
-        <version>${gwt.version}</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
@@ -55,7 +53,6 @@
       <dependency>
         <groupId>com.google.gwt</groupId>
         <artifactId>gwt-incubator</artifactId>
-        <version>2.1.0</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
@@ -64,9 +61,8 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>com.allen_sauer</groupId>
+        <groupId>com.allen-sauer.gwt.dnd</groupId>
         <artifactId>gwt-dnd</artifactId>
-        <version>3.1.1</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
@@ -77,7 +73,6 @@
       <dependency>
         <groupId>GWT-FX</groupId>
         <artifactId>GWT-FX</artifactId>
-        <version>0.5.0</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
@@ -88,7 +83,6 @@
       <dependency>
         <groupId>com.google.code.gwtx</groupId>
         <artifactId>gwtx</artifactId>
-        <version>1.5.2</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
@@ -112,18 +106,17 @@
       <dependency>
         <groupId>com.google.gwt.gwtmockito</groupId>
         <artifactId>gwtmockito</artifactId>
-        <version>1.1.5</version>
         <exclusions>
           <exclusion>
             <groupId>com.google.gwt</groupId>
             <artifactId>*</artifactId>
           </exclusion>
         </exclusions>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>com.google.gwt</groupId>
         <artifactId>gwt-dev</artifactId>
-        <version>${gwt.version}</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>

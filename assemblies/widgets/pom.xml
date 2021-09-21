@@ -31,6 +31,7 @@
     <dependency>
       <groupId>com.google.code.gwtx</groupId>
       <artifactId>gwtx</artifactId>
+      <version>${gwtx.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -44,6 +45,10 @@
       <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.jsinterop</groupId>
+      <artifactId>jsinterop-annotations</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -51,6 +56,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
+        <version>${gwt.version}</version>
         <executions>
           <execution>
             <goals>
@@ -59,6 +65,7 @@
           </execution>
         </executions>
         <configuration>
+          <extraJvmArgs>-Xms512m -Xmx1024m</extraJvmArgs>
           <modules>
             <module>org.pentaho.gwt.widgets.Widgets</module>
             <module>org.pentaho.gwt.widgets.client.filechooser.FileChooser</module>

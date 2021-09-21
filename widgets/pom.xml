@@ -32,29 +32,35 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
+      <version>${gwt.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-incubator</artifactId>
+      <version>${gwt-incubator.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.allen_sauer</groupId>
+      <groupId>com.allen-sauer.gwt.dnd</groupId>
       <artifactId>gwt-dnd</artifactId>
+      <version>${gwt-dnd.version}</version>
     </dependency>
     <dependency>
       <groupId>GWT-FX</groupId>
       <artifactId>GWT-FX</artifactId>
+      <version>${GWT-FX.version}</version>
     </dependency>
 
     <!-- Test -->
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-dev</artifactId>
+      <version>${gwt.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.code.gwtx</groupId>
       <artifactId>gwtx</artifactId>
+      <version>${gwtx.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -71,6 +77,7 @@
     <dependency>
       <groupId>com.google.gwt.gwtmockito</groupId>
       <artifactId>gwtmockito</artifactId>
+      <version>${gwtmockito.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
