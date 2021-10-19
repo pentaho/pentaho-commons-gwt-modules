@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -26,7 +26,6 @@ import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.commands.AbstractCommand;
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.http.client.Request;
@@ -38,11 +37,12 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 public class NewFolderCommand extends AbstractCommand {
   private static final String ERROR = "error";
   private String solutionPath = null;
-  private String contextURL = ScheduleHelper.getFullyQualifiedURL();
+  private String contextURL = EnvironmentHelper.getFullyQualifiedURL();
 
   private RepositoryFile parentFolder;
 

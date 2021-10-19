@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002 - 2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2021 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
@@ -50,6 +50,7 @@ import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.CssUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -180,11 +181,6 @@ public class FileChooser extends VerticalPanel {
     }
   }
 
-  private native String getFullyQualifiedURL()
-    /*-{
-      return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
-    }-*/;
-
   /**
    * Load a directory by path. If it's cached, use the cache, if not load it from the server
    *
@@ -314,7 +310,7 @@ public class FileChooser extends VerticalPanel {
       filter = "*";
     }
 
-    return getFullyQualifiedURL() + "api/repo/files/" + folderId + "/tree?"
+    return EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/" + folderId + "/tree?"
         + "showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter=" + filter;
   }
 
@@ -923,12 +919,4 @@ public class FileChooser extends VerticalPanel {
   public native boolean isMobileSafari()/*-{
     return (window.orientation !== undefined);
   }-*/;
-
-  public native String getWebAppRoot()/*-{
-    if ($wnd.CONTEXT_PATH) {
-      return $wnd.CONTEXT_PATH;
-    }
-    return "";
-  }-*/;
-
 }

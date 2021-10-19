@@ -37,6 +37,7 @@ import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.YearlyRecur
 import org.pentaho.mantle.client.dialogs.scheduling.ScheduleEditor.DurationValues;
 import org.pentaho.mantle.client.dialogs.scheduling.ScheduleEditor.ScheduleType;
 import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.client.workspace.BlockoutPanel;
 import org.pentaho.mantle.client.workspace.JsBlockStatus;
 import org.pentaho.mantle.client.workspace.JsJob;
@@ -176,7 +177,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     this.overwriteFile = overwriteFile;
     scheduleEditorWizardPanel = new ScheduleEditorWizardPanel( getDialogType() );
     scheduleEditor = scheduleEditorWizardPanel.getScheduleEditor();
-    String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/hasblockouts?ts=" + System.currentTimeMillis(); //$NON-NLS-1$
+    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/scheduler/blockout/hasblockouts?ts=" + System.currentTimeMillis(); //$NON-NLS-1$
     RequestBuilder hasBlockoutsRequest = new RequestBuilder( RequestBuilder.GET, url );
     hasBlockoutsRequest.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
     hasBlockoutsRequest.setHeader( "accept", "text/plain" );
@@ -690,7 +691,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   }
 
   protected boolean addBlockoutPeriod( final JSONObject schedule, final JsJobTrigger trigger, String urlSuffix ) {
-    String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/" + urlSuffix; //$NON-NLS-1$
+    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/scheduler/blockout/" + urlSuffix; //$NON-NLS-1$
 
     RequestBuilder addBlockoutPeriodRequest = new RequestBuilder( RequestBuilder.POST, url );
     addBlockoutPeriodRequest.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -785,7 +786,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
    * @param trigger
    */
   protected void verifyBlockoutConflict( final JSONObject schedule, final JsJobTrigger trigger ) {
-    String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/blockout/blockstatus"; //$NON-NLS-1$
+    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/scheduler/blockout/blockstatus"; //$NON-NLS-1$
 
     RequestBuilder blockoutConflictRequest = new RequestBuilder( RequestBuilder.POST, url );
     blockoutConflictRequest.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -936,7 +937,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   private void showScheduleEmailDialog( final JSONObject schedule ) {
     try {
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -981,7 +982,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   private void showScheduleParamsDialog( final JsJobTrigger trigger, final JSONObject schedule ) {
     try {
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );

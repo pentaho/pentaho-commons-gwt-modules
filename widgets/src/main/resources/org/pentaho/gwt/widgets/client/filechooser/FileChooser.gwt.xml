@@ -6,7 +6,7 @@
   <inherits name="com.google.gwt.xml.XML"/>
 
   <inherits name="org.pentaho.gwt.widgets.Widgets"/>
-
+  <inherits name="org.pentaho.mantle.client.environment.Environment"/>
 
   <!-- Inherit the default GWT style sheet.  You can change       -->
   <!-- the theme of your GWT application by uncommenting          -->

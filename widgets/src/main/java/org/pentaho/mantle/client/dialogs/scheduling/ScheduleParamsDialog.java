@@ -23,6 +23,7 @@ import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
 import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
 import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.client.workspace.JsJob;
 import org.pentaho.mantle.client.workspace.JsJobParam;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
@@ -123,7 +124,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
         urlParams += jparams.get( i ).getName() + "=" + URL.encodeQueryString( jparams.get( i ).getValue().trim() );
       }
     }
-    setParametersUrl( ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
+    setParametersUrl( EnvironmentHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     wizardDeckPanel.setHeight( "100%" ); //$NON-NLS-1$
 
     wizardDeckPanel.getElement().getParentElement().addClassName( "schedule-dialog-content" );
@@ -224,7 +225,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   private void showScheduleEmailDialog( final JSONArray scheduleParams ) {
 
     try {
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -322,7 +323,7 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
                       + "=" +  URL.encodeQueryString( stringValueArr.get( j ).toString().replace( "\"", "" ) );
         }
       }
-      setParametersUrl( ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
+      setParametersUrl( EnvironmentHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     super.center();
   }

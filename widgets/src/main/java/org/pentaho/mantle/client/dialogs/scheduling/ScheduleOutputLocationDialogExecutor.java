@@ -38,6 +38,7 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 public class ScheduleOutputLocationDialogExecutor {
   private String solutionPath = null;
@@ -214,11 +215,11 @@ public class ScheduleOutputLocationDialogExecutor {
     RequestBuilder scheduleFileRequestBuilder = null;
     if ( ( urlPath != null ) && ( urlPath.endsWith( "xaction" ) ) ) {
       scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath
+          new RequestBuilder( RequestBuilder.GET, EnvironmentHelper.getFullyQualifiedURL() + "api/repos/" + urlPath
               + "/parameterUi" );
     } else {
       scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/" + urlPath
+          new RequestBuilder( RequestBuilder.GET, EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/" + urlPath
               + "/parameterizable" );
     }
     scheduleFileRequestBuilder.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -283,7 +284,7 @@ public class ScheduleOutputLocationDialogExecutor {
             final boolean hasParams = hasParameters( responseMessage, isXAction );
 
             RequestBuilder emailValidRequest =
-                new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL()
+                new RequestBuilder( RequestBuilder.GET, EnvironmentHelper.getFullyQualifiedURL()
                     + "api/emailconfig/isValid" ); //$NON-NLS-1$
             emailValidRequest.setHeader( "accept", "text/plain" ); //$NON-NLS-1$ //$NON-NLS-2$
             emailValidRequest.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -318,7 +319,7 @@ public class ScheduleOutputLocationDialogExecutor {
 
                       // just run it
                       RequestBuilder scheduleFileRequestBuilder =
-                          new RequestBuilder( RequestBuilder.POST, ScheduleHelper.getFullyQualifiedURL()
+                          new RequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL()
                               + "api/scheduler/job" ); //$NON-NLS-1$
                       scheduleFileRequestBuilder.setHeader( "Content-Type", "application/json" ); //$NON-NLS-1$//$NON-NLS-2$
                       scheduleFileRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );

@@ -12,17 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
-
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 /**
  * @author wseyler
@@ -36,7 +35,7 @@ public class LeafItemWidget extends Composite {
     HorizontalPanel widget = new HorizontalPanel();
     initWidget( widget );
 
-    leafImage = new Image( ScheduleHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" ); //ImageUtil.getThemeableImage( styleName );
+    leafImage = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" ); //ImageUtil.getThemeableImage( styleName );
     for ( String style : styleName ) {
       leafImage.addStyleName( style );
     }
