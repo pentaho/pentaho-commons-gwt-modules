@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -26,6 +26,7 @@ import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.events.EventBusUtil;
 import org.pentaho.mantle.client.events.SolutionFileActionEvent;
 import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.client.workspace.JsJob;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
@@ -64,7 +65,7 @@ public class ScheduleHelper {
     event.setAction( ScheduleHelper.class.getName() );
     try {
 
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "accept", "text/plain" );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -138,7 +139,7 @@ public class ScheduleHelper {
       protected void performOperation() {
 
         // hit the server and check: isScheduleAllowed
-        final String url = ScheduleHelper.getFullyQualifiedURL() + "api/scheduler/isScheduleAllowed?id=" + repositoryFile.getId(); //$NON-NLS-1$
+        final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/scheduler/isScheduleAllowed?id=" + repositoryFile.getId(); //$NON-NLS-1$
         RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
         requestBuilder.setHeader( "accept", "text/plain" );
         requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -246,10 +247,10 @@ public class ScheduleHelper {
 
     if ( editJob == null || editJob.getJobId() == null ) {
       scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + JOB_SCHEDULER_URL );
+          new RequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL() + JOB_SCHEDULER_URL );
     } else {
       scheduleFileRequestBuilder =
-        new RequestBuilder( RequestBuilder.POST, getFullyQualifiedURL() + UPDATE_JOB_SCHEDULER_URL );
+        new RequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL() + UPDATE_JOB_SCHEDULER_URL );
       if ( null != requestPayload ) {
         requestPayload.put( "jobId", new JSONString( editJob.getJobId() ) );
       }
@@ -261,6 +262,15 @@ public class ScheduleHelper {
     return scheduleFileRequestBuilder;
   }
 
+  /**
+   * Gets the fully qualified base URL of the Pentaho server environment.
+   *
+   * This version does not support embedding scenarios.
+   * Additionally, it is tied to the Pentaho scheduler.
+   *
+   * @deprecated Use {@link EnvironmentHelper#getFullyQualifiedURL()} instead.
+   */
+  @Deprecated
   public static native String getFullyQualifiedURL()
   /*-{
     return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH

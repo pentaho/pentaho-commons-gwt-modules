@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -26,6 +26,7 @@ import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Command;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 /**
  * @author Rowell Belen
@@ -42,7 +43,7 @@ public class OutputLocationUtils {
     }
 
     final String outputLocationPath = NameUtils.encodeRepositoryPath( outputLocation );
-    final String url = ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/" + outputLocationPath + "/tree?depth=1"; //$NON-NLS-1$
+    final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/" + outputLocationPath + "/tree?depth=1"; //$NON-NLS-1$
     RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, url );
     // This header is required to force Internet Explorer to not cache values from the GET response.
     builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );

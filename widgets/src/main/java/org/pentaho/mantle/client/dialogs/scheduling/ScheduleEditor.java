@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -68,6 +68,7 @@ import com.google.gwt.user.client.ui.UIObject;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 /**
  * @author Steven Barkdull
@@ -520,7 +521,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
   private void populateTimeZonePicker() {
 
-    String url = ScheduleHelper.getFullyQualifiedURL() + "api/system/timezones"; //$NON-NLS-1$
+    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/system/timezones"; //$NON-NLS-1$
     RequestBuilder timeZonesRequest = new RequestBuilder( RequestBuilder.GET, url );
     timeZonesRequest.setHeader( "accept", "application/json" ); //$NON-NLS-1$ //$NON-NLS-2$
     timeZonesRequest.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );

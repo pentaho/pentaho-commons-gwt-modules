@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import org.pentaho.gwt.widgets.client.filechooser.JsonToRepositoryFileTreeConverter;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
@@ -31,7 +30,6 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.WaitPopup;
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.dom.client.NativeEvent;
@@ -54,6 +52,7 @@ import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, UserSettingsLoadedEventHandler,
     IRepositoryFileProvider*/ {
@@ -175,7 +174,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
     // such as busy cursor or tree loading indicators)
     beforeFetchRepositoryFileTree();
     RequestBuilder builder = null;
-    String url = ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/:/tree?"; //$NON-NLS-1$
+    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/:/tree?"; //$NON-NLS-1$
     if ( depth == null ) {
       depth = -1;
     }
@@ -207,7 +206,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
               new JsonToRepositoryFileTreeConverter( response.getText() );
           final RepositoryFileTree fileTree = converter.getTree();
 
-          String deletedFilesUrl = ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/deleted?ts=" + System.currentTimeMillis();
+          String deletedFilesUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/deleted?ts=" + System.currentTimeMillis();
           RequestBuilder deletedFilesRequestBuilder = new RequestBuilder( RequestBuilder.GET, deletedFilesUrl );
           deletedFilesRequestBuilder.setHeader( "Accept", "application/json" );
           deletedFilesRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -422,7 +421,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
   }
 
   /**
-   * 
+   *
    */
   private void fixLeafNodes() {
     List<FolderTreeItem> allNodes = getAllNodes();
@@ -717,7 +716,7 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
 
   private static String refreshHomeFolder() {
 
-    final String userHomeDirUrl = GWT.getHostPageBaseURL() + "api/session/userWorkspaceDir";
+    final String userHomeDirUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/session/userWorkspaceDir";
     final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, userHomeDirUrl );
 
     try {

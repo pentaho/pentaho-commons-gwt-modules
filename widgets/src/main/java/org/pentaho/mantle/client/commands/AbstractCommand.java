@@ -17,7 +17,6 @@
 
 package org.pentaho.mantle.client.commands;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -27,11 +26,10 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
 /**
@@ -39,9 +37,8 @@ import org.pentaho.mantle.login.client.MantleLoginDialog;
  * method first check whether the user is authenticated or not and then if the user is authentication is performs
  * the command described in the performOperation method, otherwise the login screen will be displayed back to the
  * user
- * 
+ *
  * @author rmansoor
- * 
  */
 public abstract class AbstractCommand implements Command {
 
@@ -50,9 +47,8 @@ public abstract class AbstractCommand implements Command {
   /**
    * Checks if the user is logged in, if the user is then it perform operation other wise user if ask to perform
    * the login operation again
-   * 
-   * @param feedback
-   *          if the feedback needs to be sent back to the caller. Not used currently
+   *
+   * @param feedback if the feedback needs to be sent back to the caller. Not used currently
    */
   public void execute( final boolean feedback ) {
     execute( (CommandResultCallback) null, feedback );
@@ -63,9 +59,8 @@ public abstract class AbstractCommand implements Command {
    * the login operation again.
    * <p>
    * After the operation is executed, the CommandCallback object receives an afterExecute() notification.
-   * 
-   * @param commandCallback
-   *          CommandCallback object to receive execution notification.
+   *
+   * @param commandCallback CommandCallback object to receive execution notification.
    */
   public void execute( CommandCallback commandCallback ) {
     execute( commandCallback, false );
@@ -77,10 +72,8 @@ public abstract class AbstractCommand implements Command {
    * <p>
    * After the operation is executed, the CommandCallback object receives an afterExecute() notification.
    *
-   * @param commandCallback
-   *          CommandCallback object to receive execution notification.
-   * @param feedback
-   *          if the feedback needs to be sent back to the caller. Not used currently
+   * @param commandCallback CommandCallback object to receive execution notification.
+   * @param feedback        if the feedback needs to be sent back to the caller. Not used currently
    */
   public void execute( final CommandCallback commandCallback, final boolean feedback ) {
     execute( createResultCallback( commandCallback ), feedback );
@@ -91,17 +84,15 @@ public abstract class AbstractCommand implements Command {
    * the login operation again.
    * <p>
    * After the operation is executed, the CommandResultCallback object receives an afterExecute() notification.
-   * 
-   * @param commandResultCallback
-   *          CommandResultCallback object to receive execution notification.
-   * @param feedback
-   *          if the feedback needs to be sent back to the caller. Not used currently
+   *
+   * @param commandResultCallback CommandResultCallback object to receive execution notification.
+   * @param feedback              if the feedback needs to be sent back to the caller. Not used currently
    */
   public void execute( final CommandResultCallback commandResultCallback, final boolean feedback ) {
     this.commandResultCallback = commandResultCallback;
 
     try {
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
       requestBuilder.setHeader( "accept", "text/plain" );
@@ -129,7 +120,7 @@ public abstract class AbstractCommand implements Command {
   public void execute() {
     this.commandResultCallback = null;
     try {
-      final String url = ScheduleHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
+      final String url = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAuthenticated"; //$NON-NLS-1$
       RequestBuilder requestBuilder = new RequestBuilder( RequestBuilder.GET, url );
       requestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
       requestBuilder.setHeader( "accept", "text/plain" );
@@ -154,19 +145,18 @@ public abstract class AbstractCommand implements Command {
    * the execute method is being invoked otherwise error dialog is being display. On clicking ok button on the
    * dialog box, login screen is displayed again and process is repeated until the user click cancel or user is
    * successfully authenticated
-   * 
-   * @param feedback
-   *          if the feedback needs to be sent back to the caller. Not used currently
+   *
+   * @param feedback if the feedback needs to be sent back to the caller. Not used currently
    */
   private void doLogin( final boolean feedback ) {
     MantleLoginDialog.performLogin( new AsyncCallback<Boolean>() {
 
       public void onFailure( Throwable caught ) {
         MessageDialogBox dialogBox =
-            new MessageDialogBox( Messages.getString( "error" ), Messages.getString( "invalidLogin" ), false, false,
-                true ) {
+          new MessageDialogBox( Messages.getString( "error" ), Messages.getString( "invalidLogin" ), false, false,
+            true ) {
 
-            }; //$NON-NLS-1$ //$NON-NLS-2$
+          }; //$NON-NLS-1$ //$NON-NLS-2$
 
         dialogBox.setCallback( new IDialogCallback() {
           public void cancelPressed() {
@@ -195,7 +185,7 @@ public abstract class AbstractCommand implements Command {
    * the execute method is being invoked other wise error dialog is being display. On clicking ok button on the
    * dialog box, login screen is displayed again and process is repeated until the user click cancel or user is
    * successfully authenticated
-   * */
+   */
   private void doLogin() {
     Timer t = new Timer() {
 
@@ -206,8 +196,9 @@ public abstract class AbstractCommand implements Command {
 
           public void onFailure( Throwable caught ) {
             MessageDialogBox dialogBox =
-                new MessageDialogBox(
-                    Messages.getString( "error" ), Messages.getString( "invalidLogin" ), false, false, true ); //$NON-NLS-1$ //$NON-NLS-2$
+              new MessageDialogBox(
+                Messages.getString( "error" ), Messages.getString( "invalidLogin" ), false, false,
+                true ); //$NON-NLS-1$ //$NON-NLS-2$
             dialogBox.setCallback( new IDialogCallback() {
               public void cancelPressed() {
               }
@@ -233,36 +224,31 @@ public abstract class AbstractCommand implements Command {
   /**
    * This is an abstract method which the extending class with implement with logic of performing specific
    * operation
-   * 
-   * */
+   */
   protected abstract void performOperation();
 
   /**
    * This is an abstract method which the extending class with implement with logic of performing specific
    * operation
-   * 
-   * @param feedback
-   *          if the feedback needs to be sent back to the caller. Not used currently
-   * 
-   * */
+   *
+   * @param feedback if the feedback needs to be sent back to the caller. Not used currently
+   */
   protected abstract void performOperation( final boolean feedback );
 
   /**
    * Performs the operation asynchronously.
-   *
+   * <p>
    * The default implementation calls the synchronous method, performOperation and then calls callback.onSuccess.
    * It does not handle errors, to preserve full compatibility.
-   *
+   * <p>
    * Actual implementations should handle all states and, ideally, should not throw.
    *
-   * @param feedback
-   *          if the feedback needs to be sent back to the caller. Not used currently
-   * @param callback
-   *         when not null, allows the result of the operation to be reported to the caller.
+   * @param feedback if the feedback needs to be sent back to the caller. Not used currently
+   * @param callback when not null, allows the result of the operation to be reported to the caller.
    */
   protected void performOperationAsync( final boolean feedback, CommandResultCallback callback ) {
 
-    performOperation(feedback);
+    performOperation( feedback );
 
     if ( callback != null ) {
       callback.onSuccess();
@@ -289,7 +275,7 @@ public abstract class AbstractCommand implements Command {
       }
 
       @Override
-      public void onError(Throwable error) {
+      public void onError( Throwable error ) {
       }
     };
   }

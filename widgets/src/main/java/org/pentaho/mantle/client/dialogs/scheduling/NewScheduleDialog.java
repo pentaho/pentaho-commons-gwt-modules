@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -29,6 +29,7 @@ import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialo
 import org.pentaho.mantle.client.dialogs.WaitPopup;
 import org.pentaho.mantle.client.dialogs.folderchooser.SelectFolderDialog;
 import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.client.workspace.JsJob;
 import org.pentaho.mantle.client.workspace.JsJobParam;
 
@@ -314,11 +315,11 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     if ( ( urlPath != null ) && ( urlPath.endsWith( "xaction" ) ) ) {
       isXAction = true;
-      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL() + "api/repos/" + urlPath
+      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, EnvironmentHelper.getFullyQualifiedURL() + "api/repos/" + urlPath
           + "/parameterUi" );
     } else {
       isXAction = false;
-      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, ScheduleHelper.getFullyQualifiedURL() + "api/repo/files/" + urlPath
+      scheduleFileRequestBuilder = new RequestBuilder( RequestBuilder.GET, EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/" + urlPath
           + "/parameterizable" );
     }
 

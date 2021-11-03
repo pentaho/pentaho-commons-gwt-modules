@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -23,7 +23,6 @@ import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
 import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.mantle.client.dialogs.scheduling.ScheduleHelper;
 import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.dom.client.Style.Unit;
@@ -36,6 +35,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 public class SelectFolderDialog extends PromptDialogBox {
 
@@ -82,7 +82,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
     bar.add( Toolbar.GLUE );
 
-    Image image = new Image( ScheduleHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
+    Image image = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
     image.addStyleName( "icon-small" );
     image.addStyleName( "pentaho-addbutton" );
     ToolbarButton add = new ToolbarButton( image ); //ImageUtil.getThemeableImage( "icon-small", "pentaho-addbutton" ) );
