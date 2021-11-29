@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.utils;
@@ -22,35 +22,35 @@ import com.google.gwt.user.client.ui.Image;
 
 
 public class ButtonHelperIT extends GWTTestCase {
-  public void testCreateButtonLabel() throws Exception {
+  public void testCreateButtonLabel() {
     final String text = "text";
     final Image img = new Image();
     final String cssName = "cssName";
     assertEquals( text,
         ButtonHelper.createButtonLabel( img, text, ButtonHelper.ButtonLabelType.TEXT_ONLY, cssName ) );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody align=\"left\"><tr><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody><tr><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></td></tr></tbody></table>",
         ButtonHelper.createButtonLabel( img, text, ButtonHelper.ButtonLabelType.TEXT_ON_LEFT, cssName ) );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody align=\"left\"><tr><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody><tr><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
         ButtonHelper.createButtonLabel( img, text, ButtonHelper.ButtonLabelType.TEXT_ON_RIGHT, cssName ) );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody align=\"left\"><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></td></tr></tbody></table>",
         ButtonHelper.createButtonLabel( img, text, ButtonHelper.ButtonLabelType.TEXT_ON_TOP, cssName ) );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody align=\"left\"><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
         ButtonHelper.createButtonLabel( img, text, ButtonHelper.ButtonLabelType.TEXT_ON_BOTTOM, cssName ) );
   }
 
-  public void testCreateButtonElement() throws Exception {
+  public void testCreateButtonElement() {
     final Image image = new Image();
     final String text = "text";
     final String cssName = "cssName";
     assertEquals( "<div><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></div>",
         ButtonHelper.createButtonElement( image, text, ButtonHelper.ButtonLabelType.TEXT_ONLY, cssName ).toString() );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody align=\"left\"><tr><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody><tr><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></td></tr></tbody></table>",
         ButtonHelper.createButtonElement( image, text, ButtonHelper.ButtonLabelType.TEXT_ON_LEFT, cssName ).toString() );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody align=\"left\"><tr><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\" class=\"cssName\"><tbody><tr><td align=\"left\" style=\"vertical-align: middle;\"><img class=\"gwt-Image gwt-Image-cssName\"></td><td align=\"left\" style=\"vertical-align: top;\"><div class=\"gwt-HTML\"> </div></td><td align=\"left\" style=\"vertical-align: middle;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
         ButtonHelper.createButtonElement( image, text, ButtonHelper.ButtonLabelType.TEXT_ON_RIGHT, cssName ).toString() );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody align=\"left\"><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></td></tr></tbody></table>",
         ButtonHelper.createButtonElement( image, text, ButtonHelper.ButtonLabelType.TEXT_ON_TOP, cssName ).toString() );
-    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody align=\"left\"><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></img></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
+    assertEquals( "<table cellspacing=\"0\" cellpadding=\"0\"><tbody><tr><td align=\"center\" style=\"vertical-align: top;\"><img class=\"gwt-Image gwt-Image-cssName\"></td></tr><tr><td align=\"center\" style=\"vertical-align: top;\"><div class=\"gwt-HTML gwt-HTML-cssName\" style=\"white-space: nowrap;\">text</div></td></tr></tbody></table>",
         ButtonHelper.createButtonElement( image, text, ButtonHelper.ButtonLabelType.TEXT_ON_BOTTOM, cssName ).toString() );
   }
 
