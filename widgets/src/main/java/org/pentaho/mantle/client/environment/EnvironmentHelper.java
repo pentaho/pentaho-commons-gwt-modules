@@ -37,6 +37,6 @@ public class EnvironmentHelper {
    * @return The fully qualified base URL.
    */
   public static native String getFullyQualifiedURL()/*-{
-    return $wnd.FULL_QUALIFIED_URL || "";
+    return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH;
   }-*/;
 }
