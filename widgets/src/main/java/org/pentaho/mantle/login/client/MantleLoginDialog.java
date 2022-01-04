@@ -45,6 +45,7 @@ import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
+import org.pentaho.mantle.client.csrf.CsrfRequestBuilder;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.login.client.messages.Messages;
 
@@ -74,7 +75,7 @@ public class MantleLoginDialog extends PromptDialogBox {
         if ( !path.endsWith( "/" ) ) { //$NON-NLS-1$
           path = path.substring( 0, path.lastIndexOf( "/" ) + 1 ); //$NON-NLS-1$
         }
-        RequestBuilder builder = new RequestBuilder( RequestBuilder.POST, path + "j_spring_security_check" ); //$NON-NLS-1$
+        RequestBuilder builder = new CsrfRequestBuilder( RequestBuilder.POST, path + "j_spring_security_check" ); //$NON-NLS-1$
         builder.setHeader( "Content-Type", "application/x-www-form-urlencoded" ); //$NON-NLS-1$ //$NON-NLS-2$
         builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
         RequestCallback callback = new RequestCallback() {
