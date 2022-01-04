@@ -42,6 +42,7 @@ import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.utils.StringTokenizer;
 import org.pentaho.gwt.widgets.client.messages.Messages;
+import org.pentaho.mantle.client.csrf.CsrfRequestBuilder;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class LoginDialog extends PromptDialogBox {
     }
 
     public void okPressed() {
-      RequestBuilder builder = new RequestBuilder( RequestBuilder.POST, getWebAppPath() + "j_spring_security_check" ); //$NON-NLS-1$
+      RequestBuilder builder = new CsrfRequestBuilder( RequestBuilder.POST, getWebAppPath() + "j_spring_security_check" ); //$NON-NLS-1$
       String username = userTextBox.getText();
       String password = passwordTextBox.getText();
       String requestData =
