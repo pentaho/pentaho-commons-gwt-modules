@@ -23,6 +23,7 @@ import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 import org.pentaho.mantle.client.commands.AbstractCommand;
+import org.pentaho.mantle.client.csrf.CsrfRequestBuilder;
 import org.pentaho.mantle.client.events.EventBusUtil;
 import org.pentaho.mantle.client.events.SolutionFileActionEvent;
 import org.pentaho.mantle.client.messages.Messages;
@@ -247,10 +248,10 @@ public class ScheduleHelper {
 
     if ( editJob == null || editJob.getJobId() == null ) {
       scheduleFileRequestBuilder =
-          new RequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL() + JOB_SCHEDULER_URL );
+          new CsrfRequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL() + JOB_SCHEDULER_URL );
     } else {
       scheduleFileRequestBuilder =
-        new RequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL() + UPDATE_JOB_SCHEDULER_URL );
+        new CsrfRequestBuilder( RequestBuilder.POST, EnvironmentHelper.getFullyQualifiedURL() + UPDATE_JOB_SCHEDULER_URL );
       if ( null != requestPayload ) {
         requestPayload.put( "jobId", new JSONString( editJob.getJobId() ) );
       }
