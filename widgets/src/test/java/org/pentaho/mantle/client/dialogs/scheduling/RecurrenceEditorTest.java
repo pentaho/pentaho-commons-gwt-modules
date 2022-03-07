@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -215,10 +215,11 @@ public class RecurrenceEditorTest {
     recurrenceEditor.dailyEditor = mock( RecurrenceEditor.DailyRecurrenceEditor.class );
     recurrenceEditor.temporalPanelMap = mock( Map.class );
 
-    final int count = 2;
+    final int count = 1;
     recurrenceEditor.inititalizeWithRepeatInSecs( count * TimeUtil.HOURS_IN_DAY * TimeUtil.MINUTES_IN_HOUR
         * TimeUtil.SECONDS_IN_MINUTE );
-    verify( recurrenceEditor.dailyEditor ).setRepeatValue( String.valueOf( count ) );
+    recurrenceEditor.dailyEditor.setEveryNDays();
+    verify( recurrenceEditor.dailyEditor ).isEveryNDays();
     verify( recurrenceEditor ).setTemporalState( RecurrenceEditor.TemporalValue.DAILY );
 
     final RecurrenceEditor.SimpleRecurrencePanel recurrencePanel = mock( RecurrenceEditor.SimpleRecurrencePanel.class );
@@ -257,7 +258,9 @@ public class RecurrenceEditorTest {
     when( recurrenceEditor.hourlyEditor.getValue() ).thenReturn( hourlyEditorValue.toString() );
     recurrenceEditor.dailyEditor = mock( RecurrenceEditor.DailyRecurrenceEditor.class );
     final Long dailyEditorValue = 55555555l;
-    when( recurrenceEditor.dailyEditor.getRepeatValue() ).thenReturn( dailyEditorValue.toString() );
+    recurrenceEditor.dailyEditor.setEveryNDays();
+    when( recurrenceEditor.dailyEditor.isEveryNDays()).thenReturn(true);
+    when( recurrenceEditor.dailyEditor.getDailyRepeatValue() ).thenReturn( dailyEditorValue.toString() );
 
     recurrenceEditor.temporalState = RecurrenceEditor.TemporalValue.WEEKLY;
     assertNull( recurrenceEditor.getRepeatInSecs() );

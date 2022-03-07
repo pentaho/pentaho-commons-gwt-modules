@@ -12,11 +12,12 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class DailyRecurrenceEditorTest {
     doCallRealMethod().when( dailyRecurrenceEditor ).reset();
 
     dailyRecurrenceEditor.reset();
-    verify( dailyRecurrenceEditor ).setRepeatValue( "" );
+    verify( dailyRecurrenceEditor ).setDailyRepeatValue( "" );
     verify( dailyRecurrenceEditor ).setEveryNDays();
   }
 
@@ -52,6 +53,7 @@ public class DailyRecurrenceEditorTest {
 
     dailyRecurrenceEditor.everyNDaysRb = mock( RadioButton.class );
     dailyRecurrenceEditor.everyWeekdayRb = mock( RadioButton.class );
+    dailyRecurrenceEditor.ignoreDTSCb = mock( CheckBox.class );
 
     dailyRecurrenceEditor.setEveryNDays();
     verify( dailyRecurrenceEditor.everyNDaysRb ).setChecked( true );
@@ -65,7 +67,7 @@ public class DailyRecurrenceEditorTest {
 
     dailyRecurrenceEditor.everyNDaysRb = mock( RadioButton.class );
     dailyRecurrenceEditor.everyWeekdayRb = mock( RadioButton.class );
-
+    dailyRecurrenceEditor.ignoreDTSCb = mock( CheckBox.class );
     dailyRecurrenceEditor.setEveryWeekday();
     verify( dailyRecurrenceEditor.everyNDaysRb ).setChecked( false );
     verify( dailyRecurrenceEditor.everyWeekdayRb ).setChecked( true );

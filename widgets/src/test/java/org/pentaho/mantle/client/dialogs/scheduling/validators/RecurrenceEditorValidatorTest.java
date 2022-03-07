@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
@@ -76,20 +76,20 @@ public class RecurrenceEditorValidatorTest {
 
     when( validator.dateRangeEditorValidator.isValid() ).thenReturn( true );
     when( dailyRecurrenceEditor.isEveryNDays() ).thenReturn( true );
-    when( dailyRecurrenceEditor.getRepeatValue() ).thenReturn( "wrong_value" );
+    when( dailyRecurrenceEditor.getDailyRepeatValue() ).thenReturn( "wrong_value" );
     assertFalse( validator.isValid() );
 
-    when( dailyRecurrenceEditor.getRepeatValue() ).thenReturn( "-1" );
+    when( dailyRecurrenceEditor.getDailyRepeatValue() ).thenReturn( "-1" );
     assertFalse( validator.isValid() );
 
-    when( dailyRecurrenceEditor.getRepeatValue() ).thenReturn( "123" );
+    when( dailyRecurrenceEditor.getDailyRepeatValue() ).thenReturn( "123" );
     when( validator.dateRangeEditorValidator.isValid() ).thenReturn( false );
     assertFalse( validator.isValid() );
 
     when( validator.dateRangeEditorValidator.isValid() ).thenReturn( true );
     assertTrue( validator.isValid() );
 
-    when( dailyRecurrenceEditor.getRepeatValue() ).thenReturn( "-1" );
+    when( dailyRecurrenceEditor.getDailyRepeatValue() ).thenReturn( "-1" );
     when( dailyRecurrenceEditor.isEveryNDays() ).thenReturn( false );
     assertTrue( validator.isValid() );
   }

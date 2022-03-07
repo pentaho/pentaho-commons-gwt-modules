@@ -601,6 +601,10 @@ table#blockout-start-panel td {
   margin: 0 5px 0 0;
 }
 
+.ignoreDstCheckbox input[type="checkbox"] {
+  margin: 0 5px 0 0;
+  padding-bottom: 7px;
+}
 div.pentaho-dialog.schedule-recurrence-dialog span.recurrenceRadioButton {
   margin-left: 0;
 }
