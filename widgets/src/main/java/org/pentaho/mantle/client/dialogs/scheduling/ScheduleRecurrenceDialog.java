@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -244,11 +244,12 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
         if ( jsJobTrigger.getRepeatCount() == -1 ) {
           // Recurring simple Trigger
           int interval = jsJobTrigger.getRepeatInterval();
-
           scheduleEditor.setRepeatInSecs( interval );
           if ( scheduleType == ScheduleType.DAILY ) {
             DailyRecurrenceEditor dailyRecurrenceEditor = scheduleEditor.getRecurrenceEditor().getDailyEditor();
             dailyRecurrenceEditor.setEveryNDays();
+            dailyRecurrenceEditor.enableIgnoreDST();
+            dailyRecurrenceEditor.setIgnoreDST(true);
           }
         }
       } else if ( jsJobTrigger.getType().equals( "complexJobTrigger" ) ) { //$NON-NLS-1$
@@ -257,8 +258,14 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
           DailyRecurrenceEditor dailyRecurrenceEditor = scheduleEditor.getRecurrenceEditor().getDailyEditor();
           if ( jsJobTrigger.isWorkDaysInWeek() ) {
             dailyRecurrenceEditor.setEveryWeekday();
+            dailyRecurrenceEditor.setIgnoreDST(false);
+            dailyRecurrenceEditor.disableIgnoreDST();
           } else {
             dailyRecurrenceEditor.setEveryNDays();
+            int interval = jsJobTrigger.getRepeatInterval();
+            scheduleEditor.setRepeatInSecs( interval );
+            dailyRecurrenceEditor.enableIgnoreDST();
+            dailyRecurrenceEditor.setIgnoreDST(false);
           }
         } else if ( scheduleType == ScheduleType.WEEKLY ) {
           int[] daysOfWeek = jsJobTrigger.getDayOfWeekRecurrences();
@@ -321,6 +328,18 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     trigger.put( "repeatInterval", new JSONNumber( interval ) ); //$NON-NLS-1$
     trigger.put( "repeatCount", new JSONNumber( repeatCount ) ); //$NON-NLS-1$
     addJsonStartEnd( trigger, startDate, endDate );
+
+    return trigger;
+  }
+
+  protected JSONObject getJsonComplexTrigger( int repeatCount, int interval, Date startDate, Date endDate ) {
+    JSONObject trigger = new JSONObject();
+    trigger.put( "uiPassParam", new JSONString( scheduleEditorWizardPanel.getScheduleType().name() ) ); //$NON-NLS-1$
+    trigger.put( "repeatInterval", new JSONNumber( interval ) ); //$NON-NLS-1$
+    trigger.put( "repeatCount", new JSONNumber( repeatCount ) ); //$NON-NLS-1$
+    trigger.put( "cronString", new JSONString( "TO_BE_GENERATED" ) ); //$NON-NLS-1$
+    addJsonStartEnd( trigger, startDate, endDate );
+
     return trigger;
   }
 
@@ -432,18 +451,30 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       }
       schedule.put( "simpleJobTrigger", getJsonSimpleTrigger( -1, repeatInterval, startDateTime, endDate ) ); //$NON-NLS-1$
     } else if ( scheduleType == ScheduleType.DAILY ) {
-      if ( scheduleEditor.getRecurrenceEditor().isEveryNDays() ) {
+      if ( scheduleEditor.getRecurrenceEditor().isEveryNDays()
+              && !scheduleEditor.getRecurrenceEditor().shouldIgnoreDst()) {
         int repeatInterval = 0;
         try { // Simple Trigger Types
           repeatInterval = Integer.parseInt( scheduleEditorWizardPanel.getRepeatInterval() );
         } catch ( Exception e ) {
           // ignored
         }
-        schedule.put( "simpleJobTrigger", getJsonSimpleTrigger( -1, repeatInterval, startDateTime, endDate ) ); //$NON-NLS-1$
+        schedule.put( "complexJobTrigger", getJsonComplexTrigger( -1
+                , repeatInterval, startDateTime, endDate ) ); //$NON-NLS-1$
+      } else if( scheduleEditor.getRecurrenceEditor().isEveryNDays()
+              && scheduleEditor.getRecurrenceEditor().shouldIgnoreDst() ) {
+          int repeatInterval = 0;
+          try { // Simple Trigger Types
+            repeatInterval = Integer.parseInt( scheduleEditorWizardPanel.getRepeatInterval() );
+          } catch ( Exception e ) {
+            // ignored
+          }
+          schedule.put( "simpleJobTrigger", getJsonSimpleTrigger( -1, repeatInterval
+                  , startDateTime, endDate ) ); //$NON-NLS-1$
       } else {
-        schedule
-            .put(
-                "complexJobTrigger", getJsonComplexTrigger( scheduleType, null, null, scheduleEditor.getRecurrenceEditor().getSelectedDaysOfWeek(), startDateTime, endDate ) ); //$NON-NLS-1$
+        schedule.put("complexJobTrigger", getJsonComplexTrigger( scheduleType, null
+                , null, scheduleEditor.getRecurrenceEditor().getSelectedDaysOfWeek()
+                , startDateTime, endDate ) ); //$NON-NLS-1$
       }
     } else if ( scheduleType == ScheduleType.CRON ) { // Cron jobs
       schedule.put( "cronJobTrigger", getJsonCronTrigger( scheduleEditor.getCronString(), startDateTime, endDate ) ); //$NON-NLS-1$
@@ -566,7 +597,22 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
         jsJobTrigger.setNativeEndTime( DateTimeFormat.getFormat( PredefinedFormat.ISO_8601 ).format( endDate ) );
       }
     } else if ( scheduleType == ScheduleType.DAILY ) {
-      if ( scheduleEditor.getRecurrenceEditor().isEveryNDays() ) {
+      if ( scheduleEditor.getRecurrenceEditor().isEveryNDays() && !scheduleEditor.getRecurrenceEditor().shouldIgnoreDst()) {
+        int repeatInterval = 0;
+        try { // Simple Trigger Types
+          repeatInterval = Integer.parseInt( scheduleEditorWizardPanel.getRepeatInterval() );
+        } catch ( Exception e ) {
+          // ignored
+        }
+        jsJobTrigger.setType( "complexTrigger" ); //$NON-NLS-1$
+        jsJobTrigger.setCronString("TO_BE_GENERATED");
+        jsJobTrigger.setRepeatInterval( repeatInterval );
+        jsJobTrigger.setRepeatCount( -1 );
+        jsJobTrigger.setNativeStartTime( DateTimeFormat.getFormat( PredefinedFormat.ISO_8601 ).format( startDateTime ) );
+        if ( endDate != null ) {
+          jsJobTrigger.setNativeEndTime( DateTimeFormat.getFormat( PredefinedFormat.ISO_8601 ).format( endDate ) );
+        }
+      } else if( scheduleEditor.getRecurrenceEditor().isEveryNDays() && scheduleEditor.getRecurrenceEditor().shouldIgnoreDst()) {
         int repeatInterval = 0;
         try { // Simple Trigger Types
           repeatInterval = Integer.parseInt( scheduleEditorWizardPanel.getRepeatInterval() );

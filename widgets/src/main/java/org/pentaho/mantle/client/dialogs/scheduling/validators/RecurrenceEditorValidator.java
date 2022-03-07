@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
@@ -76,7 +76,7 @@ public class RecurrenceEditorValidator implements IUiValidator {
       case DAILY:
         DailyRecurrenceEditor dEd = recurrenceEditor.getDailyEditor();
         if ( dEd.isEveryNDays() ) {
-          String days = dEd.getRepeatValue();
+          String days = dEd.getDailyRepeatValue();
           if ( !StringUtils.isPositiveInteger( days ) || ( Integer.parseInt( days ) <= 0 ) ) {
             isValid = false;
           }

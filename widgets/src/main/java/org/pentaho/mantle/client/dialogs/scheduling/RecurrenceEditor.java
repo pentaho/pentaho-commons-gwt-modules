@@ -12,11 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -69,7 +71,9 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
   private static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
   private static final String DOW_CHECKBOX = "day-of-week-checkbox"; //$NON-NLS-1$
   private static final String EVERY_TXTBOX = "every-txtbox";
+  private static final String EVERY_24HR_TXTBOX = "every-24hr-txtbox";
   private static final String RECUR_PATTERN_HP = "recur-pattern-hp";
+  private static final String RECUR_24HR_PATTERN_HP = "recur-24hr-pattern-hp";
 
   protected TimePicker startTimePicker = null;
 
@@ -298,7 +302,9 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     if ( TimeUtil.isSecondsWholeDay( repeatInSecs ) ) {
       repeatTime = TimeUtil.secsToDays( repeatInSecs );
       currentVal = TemporalValue.DAILY;
-      dailyEditor.setRepeatValue( Long.toString( repeatTime ) );
+      if( dailyEditor.isEveryNDays() ) {
+        dailyEditor.setDailyRepeatValue( Long.toString( repeatTime ) );
+      }
     } else {
       SimpleRecurrencePanel p = null;
       if ( TimeUtil.isSecondsWholeHour( repeatInSecs ) ) {
@@ -455,14 +461,18 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   public class DailyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
-    private TextBox repeatValueTb = new TextBox();
+    private TextBox dailyRepeatValueTb = new TextBox();
     protected RadioButton everyNDaysRb = new RadioButton( DAILY_RB_GROUP, Messages.getString( "schedule.every" ) );
     protected RadioButton everyWeekdayRb = new RadioButton( DAILY_RB_GROUP,
       Messages.getString( "schedule.everyWeekDay" ) );
+    protected CheckBox ignoreDTSCb = new CheckBox();
     private ErrorLabel repeatLabel = null;
     private ICallback<IChangeHandler> onChangeHandler;
 
     public DailyRecurrenceEditor() {
+      everyWeekdayRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
+      add( everyWeekdayRb );
+
       HorizontalPanel hp = new HorizontalPanel();
       hp.setStyleName( RECUR_PATTERN_HP );
       hp.getElement().setId( "daily-recur-hp" );
@@ -470,9 +480,9 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       everyNDaysRb.setChecked( true );
       hp.add( everyNDaysRb );
 
-      repeatValueTb.setStyleName( EVERY_TXTBOX );
-      repeatValueTb.setTitle( Messages.getString( "schedule.numDaysToRepeat" ) );
-      hp.add( repeatValueTb );
+      dailyRepeatValueTb.setStyleName( EVERY_TXTBOX );
+      dailyRepeatValueTb.setTitle( Messages.getString( "schedule.numDaysToRepeat" ) );
+      hp.add( dailyRepeatValueTb );
 
       Label l = new Label( Messages.getString( "schedule.dayOrDays" ) );
       l.setStyleName( "endLabel" ); //$NON-NLS-1$
@@ -480,27 +490,37 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       repeatLabel = new ErrorLabel( hp );
       add( repeatLabel );
 
-      everyWeekdayRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
-      add( everyWeekdayRb );
+      ignoreDTSCb.setText( Messages.getString( "schedule.ignoreDst" ) ); //$NON-NLS-1$
+      ignoreDTSCb.setStyleName( "ignoreDstCheckbox" ); //$NON-NLS-1$
+      ignoreDTSCb.addClickHandler(new ClickHandler() {
+        @Override
+        public void onClick( ClickEvent event ) {
+          boolean checked = ( (CheckBox) event.getSource() ).getValue().booleanValue();
+          setIgnoreDST(checked);
+        }
+      } );
+      add(ignoreDTSCb);
       configureOnChangeHandler();
     }
 
     public void reset() {
-      setRepeatValue( "" ); //$NON-NLS-1$
+      setDailyRepeatValue( "" ); //$NON-NLS-1$
       setEveryNDays();
     }
 
-    public String getRepeatValue() {
-      return repeatValueTb.getText();
+    public String getDailyRepeatValue() {
+      return dailyRepeatValueTb.getText();
     }
 
-    public void setRepeatValue( String repeatValue ) {
-      repeatValueTb.setText( repeatValue );
+    public void setDailyRepeatValue( String repeatValue ) {
+      dailyRepeatValueTb.setText( repeatValue );
     }
+
 
     public void setEveryNDays() {
       everyNDaysRb.setChecked( true );
       everyWeekdayRb.setChecked( false );
+      ignoreDTSCb.setEnabled(true);
     }
 
     public boolean isEveryNDays() {
@@ -510,11 +530,26 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     public void setEveryWeekday() {
       everyWeekdayRb.setChecked( true );
       everyNDaysRb.setChecked( false );
+      ignoreDTSCb.setEnabled(false);
     }
 
     public boolean isEveryWeekday() {
       return everyWeekdayRb.isChecked();
     }
+
+    public void setIgnoreDST(boolean value) {
+      ignoreDTSCb.setChecked(value);
+    }
+
+    public void enableIgnoreDST() {
+      ignoreDTSCb.setEnabled(true);
+    }
+    public void disableIgnoreDST() {
+      ignoreDTSCb.setEnabled(false);
+    }
+    public boolean shouldIgnoreDst() {
+      return ignoreDTSCb.isChecked();
+    }    
 
     public void setRepeatError( String errorMsg ) {
       repeatLabel.setErrorMsg( errorMsg );
@@ -547,11 +582,19 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
       ClickListener clickListener = new ClickListener() {
         public void onClick( Widget sender ) {
+          if(everyNDaysRb.isChecked()) {
+            ignoreDTSCb.setEnabled(true);
+          } else if(everyWeekdayRb.isChecked()) {
+            ignoreDTSCb.setChecked(false);
+            ignoreDTSCb.setEnabled(false);
+          }
+
           localThis.changeHandler();
         }
+
       };
 
-      repeatValueTb.addKeyboardListener( keyboardListener );
+      dailyRepeatValueTb.addKeyboardListener( keyboardListener );
       everyNDaysRb.addClickListener( clickListener );
       everyNDaysRb.addKeyboardListener( keyboardListener );
       everyWeekdayRb.addClickListener( clickListener );
@@ -1080,7 +1123,9 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       case HOURS:
         return TimeUtil.hoursToSecs( Long.parseLong( hourlyEditor.getValue() ) );
       case DAILY:
-        return TimeUtil.daysToSecs( Long.parseLong( dailyEditor.getRepeatValue() ) );
+          if(dailyEditor.isEveryNDays()) {
+            return TimeUtil.daysToSecs( Long.parseLong( dailyEditor.getDailyRepeatValue() ) );
+          }
       default:
         throw new RuntimeException(
           Messages.getString( "schedule.invalidTemporalValueInGetRepeatInSecs", temporalState.toString() ) );
@@ -1117,6 +1162,10 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
 
   public boolean isEveryNDays() {
     return ( temporalState == TemporalValue.DAILY ) && dailyEditor.isEveryNDays();
+  }
+
+  public boolean shouldIgnoreDst() {
+    return ( temporalState == TemporalValue.DAILY ) && dailyEditor.shouldIgnoreDst();
   }
 
   public MonthOfYear getSelectedMonth() {

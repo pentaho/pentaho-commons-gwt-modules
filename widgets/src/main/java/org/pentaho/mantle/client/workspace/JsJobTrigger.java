@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.workspace;
@@ -286,6 +286,9 @@ public class JsJobTrigger extends JavaScriptObject {
     if (this.dayOfMonthRecurrences != null && ('recurrenceList' in this.dayOfMonthRecurrences)) {
       return this.dayOfMonthRecurrences.recurrenceList.values;
     } else {
+      if(this.dayOfMonthRecurrences != null && this.incrementalRecurrence != null && this.incrementalRecurrence.increment != null) {
+        return this.incrementalRecurrence.increment;
+      }
       return null;
     }
   }-*/;
@@ -351,6 +354,16 @@ public class JsJobTrigger extends JavaScriptObject {
     this.cronString = cronString;
   }-*/;
 
+  public final native String getCronDescription()
+  /*-{
+    return this.cronDescription;
+  }-*/;
+
+  public final native void setCronDescription( String cronDescription )
+  /*-{
+    this.cronDescription = cronDescription;
+  }-*/;
+
   public final String getDescription() {
     String trigDesc = "";
     ScheduleType scheduleType = ScheduleType.valueOf( getScheduleType() );
@@ -359,68 +372,78 @@ public class JsJobTrigger extends JavaScriptObject {
     }
     if ( "cronJobTrigger".equals( getType() ) || ( getUiPassParamRaw()
       != null && getUiPassParamRaw().equals( "CRON" ) ) ) {
-      trigDesc += "CRON: " + getCronString();
+      if(getCronDescription() != null && !getCronDescription().isEmpty()) {
+        trigDesc += getCronDescription();;
+      } else {
+        trigDesc += "CRON: " + getCronString();
+      }
     } else if ( "complexJobTrigger".equals( getType() ) ) {
-      // need to digest the recurrences
-      int[] monthsOfYear = getMonthlyRecurrences();
-      int[] daysOfMonth = getDayOfMonthRecurrences();
+      try {
+        // need to digest the recurrences
+        int[] monthsOfYear = getMonthlyRecurrences();
+        int[] daysOfMonth = getDayOfMonthRecurrences();
 
-      // we are "YEARLY" if
-      // monthsOfYear, daysOfMonth OR
-      // monthsOfYear, qualifiedDayOfWeek
-      if ( monthsOfYear != null && monthsOfYear.length > 0 ) {
-        if ( isQualifiedDayOfWeekRecurrence() ) {
-          // monthsOfYear, qualifiedDayOfWeek
+        // we are "YEARLY" if
+        // monthsOfYear, daysOfMonth OR
+        // monthsOfYear, qualifiedDayOfWeek
+        if (monthsOfYear != null && monthsOfYear.length > 0) {
+          if (isQualifiedDayOfWeekRecurrence()) {
+            // monthsOfYear, qualifiedDayOfWeek
+            String qualifier = getDayOfWeekQualifier();
+            String dayOfWeek = getQualifiedDayOfWeek();
+            trigDesc =
+                    Messages.getString("the") + " " + Messages.getString(WeekOfMonth.valueOf(qualifier).toString()) + " "
+                            + Messages.getString(DayOfWeek.valueOf(dayOfWeek).toString()) + " " + Messages.getString("of") + " "
+                            + Messages.getString(MonthOfYear.get(monthsOfYear[0] - 1).toString());
+          } else {
+            // monthsOfYear, daysOfMonth
+            trigDesc =
+                    Messages.getString("every") + " " + Messages.getString(MonthOfYear.get(monthsOfYear[0] - 1).toString()) + " " + daysOfMonth[0];
+          }
+        } else if (daysOfMonth != null && daysOfMonth.length > 0) {
+          // MONTHLY: Day N of every month
+          trigDesc = Messages.getString("day") + " " + daysOfMonth[0] + " " + Messages.getString("ofEveryMonth");
+        } else if (isQualifiedDayOfWeekRecurrence()) {
+          // MONTHLY: The <qualifier> <dayOfWeek> of every month at <time>
           String qualifier = getDayOfWeekQualifier();
           String dayOfWeek = getQualifiedDayOfWeek();
+
           trigDesc =
-              Messages.getString( "the" ) + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
-                  + Messages.getString( DayOfWeek.valueOf( dayOfWeek ).toString() ) + " " + Messages.getString( "of" ) + " "
-                      + Messages.getString( MonthOfYear.get( monthsOfYear[0] - 1 ).toString() );
-        } else {
-          // monthsOfYear, daysOfMonth
-          trigDesc =
-              Messages.getString( "every" ) + " " + Messages.getString( MonthOfYear.get( monthsOfYear[0] - 1 ).toString() ) + " " + daysOfMonth[0];
+                  Messages.getString("the") + " " + Messages.getString(WeekOfMonth.valueOf(qualifier).toString()) + " "
+                          + Messages.getString(DayOfWeek.valueOf(dayOfWeek).toString()) + " " + Messages.getString("ofEveryMonth");
+        } else if (getDayOfWeekRecurrences().length > 0) {
+          // WEEKLY: Every week on <day>..<day> at <time>
+          // check if weekdays first
+          if (getDayOfWeekRecurrences().length == 5 && getDayOfWeekRecurrences()[0] == 2
+                  && getDayOfWeekRecurrences()[4] == 6) {
+            trigDesc = Messages.getString("every") + " " + Messages.getString("weekday");
+          } else {
+
+            int variance = 0;
+            if (DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ssZZZ").parseStrict(getNativeStartTime()) != null) {
+              variance = TimeUtil.getDayVariance(getStartTime().getHours(), getStartTime().getMinutes(), getNativeStartTime());
+            }
+
+            int adjustedDayOfWeek = TimeUtil.getDayOfWeek(DayOfWeek.get(getDayOfWeekRecurrences()[0] - 1), variance);
+
+            trigDesc =
+                    Messages.getString("every") + " "
+                            + Messages.getString(DayOfWeek.get(adjustedDayOfWeek)
+                            .toString().trim());
+            for (int i = 1; i < getDayOfWeekRecurrences().length; i++) {
+              adjustedDayOfWeek = TimeUtil.getDayOfWeek(DayOfWeek.get(getDayOfWeekRecurrences()[i] - 1), variance);
+              trigDesc += ", " + Messages.getString(DayOfWeek.get(adjustedDayOfWeek)
+                      .toString().trim());
+            }
+          }
         }
-      } else if ( daysOfMonth != null && daysOfMonth.length > 0 ) {
-        // MONTHLY: Day N of every month
-        trigDesc = Messages.getString( "day" ) + " " + daysOfMonth[0] + " " + Messages.getString( "ofEveryMonth" );
-      } else if ( isQualifiedDayOfWeekRecurrence() ) {
-        // MONTHLY: The <qualifier> <dayOfWeek> of every month at <time>
-        String qualifier = getDayOfWeekQualifier();
-        String dayOfWeek = getQualifiedDayOfWeek();
-
-        trigDesc =
-            Messages.getString( "the" ) + " " + Messages.getString( WeekOfMonth.valueOf( qualifier ).toString() ) + " "
-              + Messages.getString( DayOfWeek.valueOf( dayOfWeek ).toString() ) + " " + Messages.getString( "ofEveryMonth" );
-      } else if ( getDayOfWeekRecurrences().length > 0 ) {
-        // WEEKLY: Every week on <day>..<day> at <time>
-        // check if weekdays first
-        if ( getDayOfWeekRecurrences().length == 5 && getDayOfWeekRecurrences()[0] == 2
-            && getDayOfWeekRecurrences()[4] == 6 ) {
-          trigDesc = Messages.getString( "every" ) + " " + Messages.getString( "weekday" );
-        } else {
-
-          int variance = 0;
-          if ( DateTimeFormat.getFormat( "yyyy-MM-dd'T'HH:mm:ssZZZ" ).parseStrict( getNativeStartTime() ) != null ) {
-            variance = TimeUtil.getDayVariance( getStartTime().getHours(), getStartTime().getMinutes(), getNativeStartTime() );
-          }
-
-          int adjustedDayOfWeek =  TimeUtil.getDayOfWeek( DayOfWeek.get( getDayOfWeekRecurrences()[0] - 1 ), variance );
-
-          trigDesc =
-              Messages.getString( "every" ) + " "
-                  + Messages.getString( DayOfWeek.get( adjustedDayOfWeek )
-                    .toString().trim() );
-          for ( int i = 1; i < getDayOfWeekRecurrences().length; i++ ) {
-            adjustedDayOfWeek =  TimeUtil.getDayOfWeek( DayOfWeek.get( getDayOfWeekRecurrences()[i] - 1 ), variance );
-            trigDesc += ", " + Messages.getString( DayOfWeek.get( adjustedDayOfWeek )
-              .toString().trim() );
-          }
+        DateTimeFormat timeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_MEDIUM);
+        trigDesc += " " + Messages.getString("at") + " " + timeFormat.format(getStartTime());
+      } catch(Throwable th) {
+        if(getUiPassParamRaw().equals("DAILY")) {
+          trigDesc += getCronDescription();
         }
       }
-      DateTimeFormat timeFormat = DateTimeFormat.getFormat( PredefinedFormat.TIME_MEDIUM );
-      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
     } else if ( "simpleJobTrigger".equals( getType() ) ) {
       // if (getRepeatInterval() > 0) {
       trigDesc = getSimpleDescription();
