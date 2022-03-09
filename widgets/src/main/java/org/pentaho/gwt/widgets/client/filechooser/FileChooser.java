@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002 - 2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2022 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
@@ -48,6 +48,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.CssUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
@@ -304,13 +305,14 @@ public class FileChooser extends VerticalPanel {
   }
 
   private String getRepositoryRequestUrl( String folder, int depth, String filter ) {
-    final String folderId = folder == null ? ":" : folder.replace( "/", ":" );
+    // Encode special chars for URL
+    String encodedFolder = NameUtils.URLEncode( folder == null ? ":" : folder.replace( "/", ":" ) );
 
     if ( filter == null ) {
       filter = "*";
     }
 
-    return EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/" + folderId + "/tree?"
+    return EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/" + encodedFolder + "/tree?"
         + "showHidden=" + showHiddenFiles + "&depth=" + depth + "&filter=" + filter;
   }
 
