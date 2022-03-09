@@ -601,6 +601,10 @@ table#blockout-start-panel td {
   margin: 0 5px 0 0;
 }
 
+.dailyRecurrenceRadioButton input[type="radio"] {
+  margin: 0 5px 15px 5px;
+}
+
 .ignoreDstCheckbox input[type="checkbox"] {
   margin: 0 5px 0 0;
   padding-bottom: 7px;
