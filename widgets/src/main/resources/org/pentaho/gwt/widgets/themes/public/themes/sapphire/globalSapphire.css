@@ -587,6 +587,10 @@ table#blockout-start-panel td {
   margin: 0 5px 0 0;
 }
 
+.dailyRecurrenceRadioButton input[type="radio"] {
+  margin: 0 5px 15px 5px;
+}
+
 div.pentaho-dialog.schedule-recurrence-dialog span.recurrenceRadioButton {
   margin-left: 0;
 }

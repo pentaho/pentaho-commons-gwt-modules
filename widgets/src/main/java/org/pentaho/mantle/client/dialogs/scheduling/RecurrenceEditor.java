@@ -470,13 +470,13 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     private ICallback<IChangeHandler> onChangeHandler;
 
     public DailyRecurrenceEditor() {
-      everyWeekdayRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
+      everyWeekdayRb.setStyleName( "dailyRecurrenceRadioButton" ); //$NON-NLS-1$
       add( everyWeekdayRb );
 
       HorizontalPanel hp = new HorizontalPanel();
       hp.setStyleName( RECUR_PATTERN_HP );
       hp.getElement().setId( "daily-recur-hp" );
-      everyNDaysRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
+      everyNDaysRb.setStyleName( "dailyRecurrenceRadioButton" ); //$NON-NLS-1$
       everyNDaysRb.setChecked( true );
       hp.add( everyNDaysRb );
 
