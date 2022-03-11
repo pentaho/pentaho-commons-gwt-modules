@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -30,9 +30,13 @@ import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialo
 import org.pentaho.mantle.client.dialogs.scheduling.RecurrenceEditor.TemporalValue;
 import org.pentaho.mantle.client.messages.Messages;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.dom.client.Element;
@@ -540,9 +544,9 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
           String serverTZId = serverTZIdString.stringValue();
           object = value.isObject();
           value = object.get( "entry" );
-          JSONArray timeZonesJSONArray = value.isArray();
-          for ( int i = 0; i < timeZonesJSONArray.size(); i++ ) {
-            JSONValue entryValue = timeZonesJSONArray.get( i );
+          List<JSONValue> timeZonesJSON = sortTimezones( value.isArray() );
+          for ( int i = 0; i < timeZonesJSON.size(); i++ ) {
+            JSONValue entryValue = timeZonesJSON.get( i );
             JSONObject entryObject = entryValue.isObject();
             JSONValue keyValue = entryObject.get( "key" );
             JSONValue theValue = entryObject.get( "value" );
@@ -569,6 +573,35 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  private List<JSONValue> sortTimezones( JSONArray jsonArray ) {
+
+    List<JSONValue> jsonList = new ArrayList<JSONValue>();
+
+    if ( jsonArray == null ) {
+      return jsonList;
+    }
+
+    for ( int i = 0; i < jsonArray.size(); i++ ) {
+      JSONValue element = jsonArray.get( i );
+      jsonList.add( element );
+    }
+
+    Collections.sort( jsonList, new Comparator<JSONValue>() {
+      @Override
+      public int compare( JSONValue a, JSONValue b ) {
+
+        // Extract timezone from JSONValue
+        String tzA = a.toString();
+        String tzB = b.toString();
+
+        // Compare String to sort alphabetically
+        return tzA.compareTo( tzB );
+      }
+    } );
+
+    return jsonList;
   }
 
   public ListBox getTimeZonePicker() {
