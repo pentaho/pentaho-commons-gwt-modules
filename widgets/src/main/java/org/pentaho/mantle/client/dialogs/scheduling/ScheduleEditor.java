@@ -544,7 +544,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
           String serverTZId = serverTZIdString.stringValue();
           object = value.isObject();
           value = object.get( "entry" );
-          List<JSONValue> timeZonesJSON = sortTimezones(value.isArray());
+          List<JSONValue> timeZonesJSON = sortTimezones( value.isArray() );
           for ( int i = 0; i < timeZonesJSON.size(); i++ ) {
             JSONValue entryValue = timeZonesJSON.get( i );
             JSONObject entryObject = entryValue.isObject();
@@ -579,17 +579,18 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
 
     List<JSONValue> jsonList = new ArrayList<JSONValue>();
 
-    if( jsonArray == null )
+    if ( jsonArray == null ) {
       return jsonList;
+    }
 
-    for (int i = 0; i < jsonArray.size(); i++) {
+    for ( int i = 0; i < jsonArray.size(); i++ ) {
       JSONValue element = jsonArray.get( i );
       jsonList.add( element );
     }
 
     Collections.sort( jsonList, new Comparator<JSONValue>() {
       @Override
-      public int compare(JSONValue a, JSONValue b) {
+      public int compare( JSONValue a, JSONValue b ) {
 
         // Extract timezone from JSONValue
         String tzA = a.toString();
@@ -598,7 +599,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
         // Compare String to sort alphabetically
         return tzA.compareTo( tzB );
       }
-    });
+    } );
 
     return jsonList;
   }
