@@ -372,8 +372,8 @@ public class JsJobTrigger extends JavaScriptObject {
     }
     if ( "cronJobTrigger".equals( getType() ) || ( getUiPassParamRaw()
       != null && getUiPassParamRaw().equals( "CRON" ) ) ) {
-      if(getCronDescription() != null && !getCronDescription().isEmpty()) {
-        trigDesc += getCronDescription();;
+      if( scheduleType == ScheduleType.DAILY && getCronDescription() != null && !getCronDescription().isEmpty()) {
+        trigDesc += getCronDesc();
       } else {
         trigDesc += "CRON: " + getCronString();
       }
@@ -441,6 +441,8 @@ public class JsJobTrigger extends JavaScriptObject {
         trigDesc += " " + Messages.getString("at") + " " + timeFormat.format(getStartTime());
       } catch(Throwable th) {
         if(getUiPassParamRaw().equals("DAILY")) {
+          trigDesc += getCronDesc();
+        } else {
           trigDesc += getCronDescription();
         }
       }
@@ -513,6 +515,34 @@ public class JsJobTrigger extends JavaScriptObject {
     // }
     return trigDesc;
   }
+
+
+  public final String getCronDesc() {
+    ScheduleType scheduleType = getSimpleScheduleType();
+    String trigDesc;
+    String intervalUnits = "";
+    int intervalSeconds = 1;
+    if ( scheduleType == ScheduleType.DAILY ) {
+      intervalSeconds = 86400;
+      intervalUnits = timeUnitText( intervalSeconds, "day" );
+      if ( getRepeatInterval() == intervalSeconds ) {
+        intervalUnits = Messages.getString( "dayAtLowercase" );
+      }
+    }
+    DateTimeFormat timeFormat = DateTimeFormat.getFormat( PredefinedFormat.TIME_MEDIUM );
+    if ( intervalSeconds != getRepeatInterval() ) {
+      trigDesc = Messages.getString( "every" ) + " " + intervalUnits;
+      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
+    } else {
+      trigDesc = Messages.getString( "every" ) + " " + intervalUnits;
+      trigDesc += " " + Messages.getString( "at" ) + " " + timeFormat.format( getStartTime() );
+    }
+    if ( getRepeatCount() > 0 ) {
+      trigDesc += "; " + Messages.getString( "run" ) + " " + getRepeatCount() + " " + Messages.getString( "times" );
+    }
+    return trigDesc;
+  }
+
 
   public final String timeUnitText( int intervalSeconds, String timeUnit ) {
     if ( getRepeatInterval() == intervalSeconds ) {
