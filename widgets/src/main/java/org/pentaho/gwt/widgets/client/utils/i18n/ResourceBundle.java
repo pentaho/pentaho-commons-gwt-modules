@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils.i18n;
@@ -441,6 +441,10 @@ public class ResourceBundle {
 
   public void setSupportedLanguages( Map<String, String> supportedLanguages ) {
     this.supportedLanguages = supportedLanguages;
+  }
+
+  public String getLanguage() {
+    return localeName;
   }
 
   // Run the values of a map through the decodeUTF8 function to un-escape unicode characters
