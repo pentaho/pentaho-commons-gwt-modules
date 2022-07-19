@@ -86,7 +86,7 @@ public class LazyTreeLoader {
     JSONObject currentParent = root;
     String currentPath = "";
     for ( int i = 1; i < parts.length - 1; i++ ) {
-      currentPath = DELIMITER + parts[ i ];
+      currentPath = currentPath + DELIMITER + parts[ i ];
       JSONObject child = findChildByPath( currentParent, currentPath );
       JSONArray children;
       if ( child == null ) {
