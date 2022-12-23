@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.workspace;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.table.BaseTable;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.ColumnComparatorTypes;
@@ -181,12 +181,13 @@ public class BlockoutPanel extends SimplePanel {
 
         final Set<JsJob> selectedSet = getSelectedSet();
 
-        final Label messageTextBox = new Label( Messages.getString( "deleteBlockoutWarning", ""
-            + selectedSet.size() ) );
-        final PromptDialogBox blockoutDeleteWarningDialogBox =
-            new PromptDialogBox( Messages.getString( "delete" ), Messages.getString( "yesDelete" ), Messages
-                .getString( "no" ), true, true );
-        blockoutDeleteWarningDialogBox.setContent( messageTextBox );
+        final MessageDialogBox blockoutDeleteWarningDialogBox = new MessageDialogBox(
+          Messages.getString( "delete" ),
+          Messages.getString( "deleteBlockoutWarning", "" + selectedSet.size() ),
+          false,
+          Messages.getString( "yesDelete" ),
+          Messages.getString( "no" ) );
+
         final IDialogCallback callback = new IDialogCallback() {
 
           public void cancelPressed() {
