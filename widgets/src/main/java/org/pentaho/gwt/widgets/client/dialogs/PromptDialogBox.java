@@ -17,11 +17,13 @@
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -42,6 +44,9 @@ public class PromptDialogBox extends DialogBox {
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText, boolean autoHide,
       boolean modal ) {
     super( autoHide, modal );
+    Roles.getDialogRole().set( getElement() );
+    Roles.getDialogRole().setAriaLabelProperty( getElement(), title );
+    this.getElement().setAttribute( "aria-hidden", "true" );
     setText( title );
     okButton = new Button( okText );
     okButton.setStylePrimaryName( "pentaho-button" );
@@ -105,7 +110,9 @@ public class PromptDialogBox extends DialogBox {
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText, boolean autoHide,
       boolean modal, Widget content ) {
     this( title, okText, notOkText, cancelText, autoHide, modal );
-    setContent( content );
+    FocusPanel focusPanel = new FocusPanel( content );
+    focusPanel.setStyleName( "dialogsFocusPanel" );
+    setContent( focusPanel );
   }
 
   public PromptDialogBox( String title, String okText, String cancelText, boolean autoHide, boolean modal ) {
@@ -116,7 +123,9 @@ public class PromptDialogBox extends DialogBox {
       Widget content ) {
 
     this( title, okText, cancelText, autoHide, modal );
-    setContent( content );
+    FocusPanel focusPanel = new FocusPanel( content );
+    focusPanel.setStyleName( "dialogsFocusPanel" );
+    setContent( focusPanel );
   }
 
   public boolean onKeyDownPreview( char key, int modifiers ) {
@@ -135,6 +144,12 @@ public class PromptDialogBox extends DialogBox {
 
   public IDialogCallback getCallback() {
     return callback;
+  }
+
+  @Override
+  public void center() {
+    super.center();
+    getContent().getElement().focus();
   }
 
   public void setContent( Widget content ) {

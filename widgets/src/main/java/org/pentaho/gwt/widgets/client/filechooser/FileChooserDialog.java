@@ -19,6 +19,7 @@ package org.pentaho.gwt.widgets.client.filechooser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.Window;
 import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
@@ -328,6 +329,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       MessageDialogBox dialogBox =
           new MessageDialogBox( FileChooserEntryPoint.messages.getString( "error" ), FileChooserEntryPoint.messages
               .getString( "noFilenameEntered" ), false, false, true );
+      Roles.getAlertdialogRole().set( dialogBox.getElement() );
       dialogBox.center();
       return false;
     } else if ( !NameUtils.isValidFileName( fileName ) ) {
@@ -337,6 +339,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
               "Invalid Filename",  // default value if key isn't found
               NameUtils.reservedCharListForDisplay() ),
             false, false, true );
+      Roles.getAlertdialogRole().set( dialogBox.getElement() );
       dialogBox.center();
       return false;
     }
@@ -405,15 +408,8 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   public boolean onKeyDownPreview( char key, int modifiers ) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
-    switch ( key ) {
-      case KeyboardListener.KEY_ENTER:
-        if ( isSubmitOnEnter() ) {
-          onOk();
-        }
-        break;
-      case KeyboardListener.KEY_ESCAPE:
-        onCancel();
-        break;
+    if ( key == (char) KeyboardListener.KEY_ESCAPE ) {
+      onCancel();
     }
 
     return true;

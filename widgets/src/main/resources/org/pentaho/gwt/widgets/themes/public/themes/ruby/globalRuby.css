@@ -127,7 +127,8 @@ textarea,
 }
 
 input[type='text']:focus,
-.bootstrap .pentaho-dialog input[type='text']:focus {
+.bootstrap .pentaho-dialog input[type='text']:focus,
+.pentaho-dialog input[type='text']:hover {
   border-color: #414141;
 }
 
@@ -8257,6 +8258,49 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 .hyperlink {
   color: #7C0B2B;
+}
+
+.dialogsFocusPanel:focus, .dialogsFocusPanel:hover {
+  border: 1px solid #CC0000;
+  border-radius: 4px;
+  padding: 4px 2px;
+}
+
+.gwt-ListBox:focus,.gwt-ListBox:hover {
+border: 1px solid #414141;
+}
+
+.pentaho-filechooseupbutton:focus,
+.pentaho-filechooseupbutton:hover{
+  border: 1px solid #CC0000;
+  border-radius: 4px;
+}
+
+.fileChooserCell:focus{
+  border: 1px solid #CC0000;
+  border-radius: 4px;
+}
+
+.fileChooser-scrollPanel:focus{
+  border:1px solid #CC0000;
+  border-radius: 4px;
+  padding: 4px 4px;
+}
+
+.custom-dropdown:focus,
+.custom-dropdown:hover{
+  background-color: #CC0000;
+  color: #FFFFFF;
+}
+
+.custom-dropdown:hover .custom-dropdown-label,
+.custom-dropdown:focus .custom-dropdown-label{
+    color: #FFFFFF;
+}
+
+.custom-dropdown-popup .gwt-MenuBar-vertical .gwt-MenuItem.gwt-MenuItem-selected{
+  background-color: #e0e0e0;
+  color: #000000;
 }
 
 div#eval-users-toggle:focus {
