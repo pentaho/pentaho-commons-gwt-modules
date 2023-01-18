@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -27,6 +28,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 
 @SuppressWarnings( "deprecation" )
 public class PromptDialogBox extends DialogBox {
@@ -43,6 +45,8 @@ public class PromptDialogBox extends DialogBox {
       boolean modal ) {
     super( autoHide, modal );
     setText( title );
+
+    final HorizontalPanel dialogButtonPanel = new HorizontalFlexPanel();
     okButton = new Button( okText );
     okButton.setStylePrimaryName( "pentaho-button" );
     okButton.getElement().setAttribute( "id", "okButton" ); //$NON-NLS-1$ //$NON-NLS-2$
@@ -51,9 +55,6 @@ public class PromptDialogBox extends DialogBox {
         onOk();
       }
     } );
-
-    final HorizontalPanel dialogButtonPanel = new HorizontalPanel();
-    dialogButtonPanel.setSpacing( 0 );
     dialogButtonPanel.add( okButton );
 
     if ( notOkText != null ) {
@@ -79,19 +80,24 @@ public class PromptDialogBox extends DialogBox {
       } );
       dialogButtonPanel.add( cancelButton );
     }
-    HorizontalPanel dialogButtonPanelWrapper = new HorizontalPanel();
+
+    HorizontalPanel dialogButtonPanelWrapper = new HorizontalFlexPanel();
+
     if ( okText != null && cancelText != null ) {
       dialogButtonPanelWrapper.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_RIGHT );
     } else {
       dialogButtonPanelWrapper.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_CENTER );
     }
-    dialogButtonPanelWrapper.setStyleName( "button-panel" ); //$NON-NLS-1$
-    dialogButtonPanelWrapper.setWidth( "100%" ); //$NON-NLS-1$
+    dialogButtonPanelWrapper.addStyleName( "button-panel" );
+    dialogButtonPanelWrapper.setWidth( "100%" );
     dialogButtonPanelWrapper.add( dialogButtonPanel );
 
     if ( content instanceof FocusWidget ) {
       setFocusWidget( (FocusWidget) content );
     }
+    
+    // Init `dialogContent`
+    Roles.getPresentationRole().set( dialogContent.getElement() );
     dialogContent.setCellPadding( 0 );
     dialogContent.setCellSpacing( 0 );
     // add button panel
@@ -102,6 +108,10 @@ public class PromptDialogBox extends DialogBox {
     setWidget( dialogContent );
   }
 
+  public PromptDialogBox( String title, String okText, String notOkText, String cancelText ) {
+    this( title, okText, notOkText, cancelText, false, true );
+  }
+  
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText, boolean autoHide,
       boolean modal, Widget content ) {
     this( title, okText, notOkText, cancelText, autoHide, modal );

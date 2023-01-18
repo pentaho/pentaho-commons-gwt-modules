@@ -12,11 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils;
 
+import com.google.gwt.aria.client.Id;
+import com.google.gwt.aria.client.Property;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
@@ -25,6 +27,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -285,4 +288,29 @@ public class ElementUtils {
     return "";
   }-*/;
 
+  /**
+   * Set's a widget's ARIA label.
+   * <p>If the provided label widget does not have an identifier, a unique one is assigned to it.</p>
+   * @param widget The widget.
+   * @param label The label.
+   */
+  public static void setAriaLabelledBy( Widget widget, Label label ) {
+    Property.LABELLEDBY.set( widget.getElement(), Id.of( ensureId( label ) ) );
+  }
+
+  /**
+   * Ensures that a given widget has an identifier, assigning it a unique one, if necessary.
+   * @param widget The widget.
+   * @return The widget's identifier.
+   */
+  public static String ensureId( Widget widget ) {
+    com.google.gwt.user.client.Element element = widget.getElement();
+    String id = element.getId();
+    if ( id == null || id.equals( "" ) ) {
+      id = DOM.createUniqueId();
+      element.setId( id );
+    }
+
+    return id;
+  }
 }
