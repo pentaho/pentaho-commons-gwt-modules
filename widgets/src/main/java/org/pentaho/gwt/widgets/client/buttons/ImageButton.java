@@ -78,7 +78,7 @@ public class ImageButton extends Image implements Focusable {
   public ImageButton() {
     super();
 
-    Roles.getButtonRole().set(getElement());
+    Roles.getButtonRole().set( getElement() );
     setTabIndex(0);
 
     setStyleName( imageStyle );
@@ -176,6 +176,9 @@ public class ImageButton extends Image implements Focusable {
 
   public ImageButton( String enabledUrl, String disabledUrl, String tooltip, int width, int height ) {
     super( enabledUrl );
+
+    Roles.getButtonRole().set( getElement() );
+    setTabIndex(0);
 
     setSize( width + "px", height + "px" ); //$NON-NLS-1$ //$NON-NLS-2$
 
