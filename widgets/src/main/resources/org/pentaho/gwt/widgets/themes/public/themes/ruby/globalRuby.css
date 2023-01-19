@@ -4591,16 +4591,6 @@ td.tab-spacer-wrapper {
   cursor: pointer;
 }
 
-.gwt-ScrollTable .dataTable tr:focus {
-  outline:3px solid #CC0000;
-}
-
-
-.gwt-ScrollTable .headerTable td:focus {
-  border: 2px solid #CC0000;
-  border-radius: 4px;
-}
-
 .gwt-ScrollTable .pagingOptions {
   background: #e8e8e8 none repeat scroll 0% 0%;
   border-right: 1px solid #848484;
@@ -6144,23 +6134,6 @@ span.gwt-RadioButton label {
   height: 32px;
   background: url('images/options.png') no-repeat center;
   cursor: pointer;
-}
-
-.pentaho-addbutton:focus,
-.pentaho-addbutton:hover,
-.pentaho-editbutton:focus,
-.pentaho-editbutton:hover,
-.pentaho-deletebutton:focus,
-.pentaho-deletebutton:hover,
-.pentaho-optionsdatasourcebutton:focus,
-.pentaho-optionsdatasourcebutton:hover{
-  border: 1px solid #CC0000;
-  border-radius: 4px;
-}
-
-#connectionList >table>tbody>tr>td>div:focus,
-#connectionList >table>tbody>tr>td>div:hover {
-  border: 2px solid #CC0000;
 }
 
 .dijitEditorIconParameters,

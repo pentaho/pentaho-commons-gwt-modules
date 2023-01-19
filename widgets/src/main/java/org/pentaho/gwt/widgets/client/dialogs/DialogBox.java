@@ -19,7 +19,15 @@ package org.pentaho.gwt.widgets.client.dialogs;
 
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.user.client.ui.PopupListener;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
 
@@ -100,6 +108,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     }
     centerCalled = true;
   }
+
   public Focusable getAutoFocusWidget() {
     if ( focusWidget != null ) {
       return focusWidget;
@@ -110,14 +119,14 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
   private void doAutoFocus() {
     Focusable autoFocusWidget = getAutoFocusWidget();
-    if (autoFocusWidget != null) {
-      autoFocusWidget.setFocus(true);
+    if ( autoFocusWidget != null ) {
+      autoFocusWidget.setFocus( true );
     }
   }
 
   private Focusable getDefaultFocusWidget() {
     Widget root = getWidget();
-    if( root != null ) {
+    if ( root != null ) {
       return ElementUtils.findFirstKeyboardFocusableDescendant( root );
     }
     return null;

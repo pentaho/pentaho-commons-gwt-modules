@@ -21,7 +21,13 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.HasWidgets;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalSplitPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class ElementUtils {
 
@@ -46,8 +52,12 @@ public class ElementUtils {
     }
   }-*/;
 
+  /**
+   * This method handles the click event using element
+   * @param e
+   */
   public static native void click( Element e )/*-{
-    if(e.click){
+    if ( e.click ) {
       e.click();
     }
   }-*/;
@@ -220,13 +230,21 @@ public class ElementUtils {
 
   }
 
+  /**
+   * This method sets the focus on the first interactive element of the dialog
+   * @param widget
+   * @return Focusable
+   */
   public static Focusable findFirstKeyboardFocusableDescendant(Widget widget) {
     if( widget instanceof Focusable ) {
+      //TODO: the present implementation does not (yet) account for the disabled attribute of elements and that it
+      // could be greatly optimized by not searching through parent elements hidden using display:none.
       Focusable focusable = ( Focusable ) widget;
       if( focusable.getTabIndex() >= 0 && ElementUtils.isVisible( widget.getElement()) ) {
         return focusable;
       }
     }
+
     if( widget instanceof HasWidgets ) {
       HasWidgets container = ( HasWidgets ) widget;
       for( Widget child: container ) {
@@ -236,6 +254,7 @@ public class ElementUtils {
         }
       }
     }
+
     return null;
   }
 

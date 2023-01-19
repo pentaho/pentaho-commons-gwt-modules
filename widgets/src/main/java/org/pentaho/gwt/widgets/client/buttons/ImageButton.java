@@ -18,10 +18,20 @@
 package org.pentaho.gwt.widgets.client.buttons;
 
 import com.google.gwt.aria.client.Roles;
-import com.google.gwt.event.dom.client.*;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.impl.FocusImpl;
@@ -122,30 +132,36 @@ public class ImageButton extends Image implements Focusable {
       }
     } );
 
+    // Based on https://www.w3.org/WAI/ARIA/apg/example-index/button/js/button.js. pattern
     this.addKeyDownHandler(event -> {
       switch ( event.getNativeKeyCode() ) {
+        // The action button is activated by space on the keyup event, but the
+        // default action for space is already triggered on keydown. It needs to be
+        // prevented to stop scrolling the page before activating the button.
         case KeyCodes.KEY_SPACE:
           event.preventDefault();
           break;
         case KeyCodes.KEY_ENTER:
           event.preventDefault();
-          ElementUtils.click(ImageButton.this.getElement());
+          ElementUtils.click( ImageButton.this.getElement() );
           break;
       }
     });
 
     this.addKeyUpHandler(event -> {
-      if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+      if ( event.getNativeKeyCode() == KeyCodes.KEY_SPACE ) {
         event.preventDefault();
-        ElementUtils.click(ImageButton.this.getElement());
+        ElementUtils.click( ImageButton.this.getElement() );
       }
     });
   }
-  protected HandlerRegistration addKeyDownHandler(KeyDownHandler handler) {
+
+  protected HandlerRegistration addKeyDownHandler( KeyDownHandler handler ) {
     return addDomHandler(handler, KeyDownEvent.getType());
   }
-  protected HandlerRegistration addKeyUpHandler(KeyUpHandler handler) {
-    return addDomHandler(handler, KeyUpEvent.getType());
+
+  protected HandlerRegistration addKeyUpHandler( KeyUpHandler handler ) {
+    return addDomHandler( handler, KeyUpEvent.getType() );
   }
 
   private void updateStyles() {
@@ -232,27 +248,26 @@ public class ImageButton extends Image implements Focusable {
 
   @Override
   public int getTabIndex() {
-    return focusImpl.getTabIndex(this.getElement());
+    return focusImpl.getTabIndex( this.getElement() );
   }
 
   @Override
-  public void setAccessKey(char key) {
-    this.getElement().setPropertyString("accessKey", "" + key);
+  public void setAccessKey( char key ) {
+    this.getElement().setPropertyString( "accessKey", "" + key );
   }
 
-  public void setFocus(boolean focus ) {
+  public void setFocus( boolean focus ) {
     if (focus) {
-      focusImpl.focus(this.getElement());
+      focusImpl.focus( this.getElement() );
     } else {
-      focusImpl.blur(this.getElement());
+      focusImpl.blur( this.getElement() );
     }
   }
 
   @Override
-  public void setTabIndex(int index) {
-    focusImpl.setTabIndex(this.getElement(), index);
+  public void setTabIndex( int index ) {
+    focusImpl.setTabIndex( this.getElement(), index );
   }
-
 
   public void removeStyleNames( String... names ) {
     for ( String name : names ) {

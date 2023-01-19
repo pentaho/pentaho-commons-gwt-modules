@@ -192,10 +192,20 @@ public class BaseTable extends Composite {
       System.err.println( MSGS.tableHeaderInputError() );
     }
   }
+
+  /**
+   * This validates whether auto selection is enabled when focused
+   * @return boolean
+   */
   public boolean isAutoSelectionOnFocus() {
     return autoSelectionOnFocus;
   }
-  public void setAutoSelectionOnFocus(boolean autoSelectionOnFocus) {
+
+  /** enables the selection on focus
+   *
+   * @param autoSelectionOnFocus
+   */
+  public void setAutoSelectionOnFocus( boolean autoSelectionOnFocus ) {
     this.autoSelectionOnFocus = autoSelectionOnFocus;
   }
 
@@ -287,7 +297,6 @@ public class BaseTable extends Composite {
 
     int nextColumn = isRight ? focusedColumn + 1 : focusedColumn - 1;
     setFocusedColumn(nextColumn);
-
   }
 
   private void setFocusedColumn( int nextColumn ) {
@@ -334,6 +343,7 @@ public class BaseTable extends Composite {
           }
           case Event.ONKEYDOWN:
             onDataGridKeyDown( event );
+            break;
         }
 
         super.onBrowserEvent( event );
@@ -363,6 +373,7 @@ public class BaseTable extends Composite {
     }
 
   }
+
   private void onDataGridKeyDown( Event event ) {
     switch (event.getKeyCode()) {
       case KeyCodes.KEY_DOWN: {
@@ -402,12 +413,11 @@ public class BaseTable extends Composite {
     if( nextRow >= 0 && nextRow < dataGrid.getRowCount() ) {
       setFocusableRow( nextRow, true );
 
-      if (isAutoSelectionOnFocus()
-              && SelectionGrid.SelectionPolicy.ONE_ROW.equals(dataGrid.getSelectionPolicy())) {
+      if ( isAutoSelectionOnFocus()
+           && SelectionGrid.SelectionPolicy.ONE_ROW.equals(dataGrid.getSelectionPolicy()) ) {
         dataGrid.selectRow( nextRow, true );
       }
     }
-
   }
 
   private int getFocusedRow() {
@@ -421,11 +431,19 @@ public class BaseTable extends Composite {
     return -1;
   }
 
-
+  /**
+   * Sets the keyboard navigation on the selected row
+   * @param row
+   */
   public void setFocusableRow( int row ) {
     setFocusableRow( row, false );
   }
 
+  /**
+   * Sets the keyboard navigation and focus on the selected row
+   * @param row
+   * @param focus
+   */
   public void setFocusableRow( int row, boolean focus ) {
     int rowCount = dataGrid.getRowCount();
     if( row >= 0 && row < rowCount ) {
