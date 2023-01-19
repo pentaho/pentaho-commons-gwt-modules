@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.dialogs;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.KeyboardListener;
@@ -27,6 +28,7 @@ import com.google.gwt.user.client.ui.PopupListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
 
 @SuppressWarnings( "deprecation" )
@@ -52,7 +54,6 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
     switch ( key ) {
-      case KeyboardListener.KEY_ENTER:
       case KeyboardListener.KEY_ESCAPE:
         hide();
         break;
@@ -96,9 +97,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
       block();
       dialogDepthCount++;
     }
-    if ( focusWidget != null ) {
-      focusWidget.setFocus( true );
-    }
+    doAutoFocus();
     // hide <embeds>
     // TODO: migrate to GlassPane Listener
     FrameUtils.toggleEmbedVisibility( false );
@@ -110,18 +109,37 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     centerCalled = true;
   }
 
+  public Focusable getAutoFocusWidget() {
+    if ( focusWidget != null ) {
+      return focusWidget;
+    }
+
+    return getDefaultFocusWidget();
+  }
+
+  private void doAutoFocus() {
+    Focusable autoFocusWidget = getAutoFocusWidget();
+    if ( autoFocusWidget != null ) {
+      autoFocusWidget.setFocus( true );
+    }
+  }
+
+  private Focusable getDefaultFocusWidget() {
+    Widget root = getWidget();
+    if ( root != null ) {
+      return ElementUtils.findFirstKeyboardFocusableDescendant( root );
+    }
+    return null;
+  }
+
   public void show() {
     super.show();
-    if ( focusWidget != null ) {
-      focusWidget.setFocus( true );
-    }
+    doAutoFocus();
   }
 
   public void setFocusWidget( FocusWidget widget ) {
     focusWidget = widget;
-    if ( focusWidget != null ) {
-      focusWidget.setFocus( true );
-    }
+    doAutoFocus();
   }
 
   public void onPopupClosed( PopupPanel sender, boolean autoClosed ) {
