@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002 - 2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2023 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
@@ -402,20 +402,13 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   @Override
+  @Deprecated
   public boolean onKeyDownPreview( char key, int modifiers ) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
-    switch ( key ) {
-      case KeyboardListener.KEY_ENTER:
-        if ( isSubmitOnEnter() ) {
-          onOk();
-        }
-        break;
-      case KeyboardListener.KEY_ESCAPE:
-        onCancel();
-        break;
+    if ( key == (char) KeyboardListener.KEY_ESCAPE ) {
+      onCancel();
     }
-
     return true;
   }
 }
