@@ -12,14 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002 - 2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2023 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gwt.aria.client.Roles;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.Window;
 import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
@@ -329,7 +328,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
       MessageDialogBox dialogBox =
           new MessageDialogBox( FileChooserEntryPoint.messages.getString( "error" ), FileChooserEntryPoint.messages
               .getString( "noFilenameEntered" ), false, false, true );
-      Roles.getAlertdialogRole().set( dialogBox.getElement() );
       dialogBox.center();
       return false;
     } else if ( !NameUtils.isValidFileName( fileName ) ) {
@@ -339,7 +337,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
               "Invalid Filename",  // default value if key isn't found
               NameUtils.reservedCharListForDisplay() ),
             false, false, true );
-      Roles.getAlertdialogRole().set( dialogBox.getElement() );
       dialogBox.center();
       return false;
     }
@@ -411,7 +408,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     if ( key == (char) KeyboardListener.KEY_ESCAPE ) {
       onCancel();
     }
-
     return true;
   }
 }

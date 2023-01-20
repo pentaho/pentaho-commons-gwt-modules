@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002 - 2022 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2023 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
@@ -39,6 +39,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Tree;
@@ -46,6 +47,7 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.CssUtils;
@@ -96,7 +98,6 @@ public class FileChooser extends VerticalPanel {
     super();
 
     fileNameTextBox.getElement().setId( "fileNameTextBox" );
-    Roles.getTextboxRole().setAriaLabelProperty( fileNameTextBox.getElement(), FileChooserEntryPoint.messages.getString( "filename" ) );
 
     // workaround webkit browsers quirk of not being able to set focus in a widget by clicking on it
     fileNameTextBox.addClickHandler( new ClickHandler() {
@@ -114,6 +115,7 @@ public class FileChooser extends VerticalPanel {
           } else {
             fireFileSelected();
           }
+          event.preventDefault();
         }
       }
     } );
@@ -358,11 +360,14 @@ public class FileChooser extends VerticalPanel {
       }
     }
 
+    VerticalPanel locationBar = new VerticalPanel();
+    Label locationLabel = new Label( FileChooserEntryPoint.messages.getString( "location" ) );
+
     navigationListBox = new ListBox();
     navigationListBox.getElement().setId( "navigationListBox" );
     navigationListBox.setWidth( "350px" );
     Roles.getListboxRole().set( navigationListBox.getElement() );
-    Roles.getListboxRole().setAriaLabelProperty( navigationListBox.getElement(), FileChooserEntryPoint.messages.getString( "location" ) );
+    Roles.getListboxRole().setAriaLabelProperty( navigationListBox.getElement(), locationLabel.getText() );
     // now we can find the tree nodes who match the path segments
     navigationListBox.addItem( "/", "/" );
     // Actual and Localized Path segments will be the same size based on how items get added to their lists.
@@ -392,8 +397,7 @@ public class FileChooser extends VerticalPanel {
 
     clear();
 
-    VerticalPanel locationBar = new VerticalPanel();
-    locationBar.add( new Label( FileChooserEntryPoint.messages.getString( "location" ) ) );
+    locationBar.add( locationLabel );
 
     HorizontalPanel navigationBar = new HorizontalPanel();
 
@@ -402,8 +406,13 @@ public class FileChooser extends VerticalPanel {
       public void onBrowserEvent( Event event ) {
         switch ( event.getTypeInt() ) {
           case Event.ONCLICK:
+            handleUpDirectory();
+            break;
           case Event.ONKEYDOWN:
-            handleUpDirectory( event );
+            if ( event.getKeyCode() == KeyCodes.KEY_ENTER
+                    || event.getKeyCode() == KeyCodes.KEY_SPACE ) {
+              handleUpDirectory();
+            }
             break;
         }
       }
@@ -413,8 +422,25 @@ public class FileChooser extends VerticalPanel {
     upDirImage.setTitle( FileChooserEntryPoint.messages.getString( "upOneLevel" ) );
     Roles.getButtonRole().set( upDirImage.getElement() );
     Roles.getButtonRole().setTabindexExtraAttribute( upDirImage.getElement(), 0 );
-
     upDirImage.sinkEvents( Event.ONCLICK | Event.ONKEYDOWN );
+    upDirImage.addMouseListener( new MouseListener() {
+
+      public void onMouseDown( Widget sender, int x, int y ) {
+      }
+
+      public void onMouseEnter( Widget sender ) {
+      }
+
+      public void onMouseLeave( Widget sender ) {
+      }
+
+      public void onMouseMove( Widget sender, int x, int y ) {
+      }
+
+      public void onMouseUp( Widget sender, int x, int y ) {
+      }
+
+    } );
 
     navigationBar.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
     navigationBar.add( navigationListBox );
@@ -428,6 +454,7 @@ public class FileChooser extends VerticalPanel {
     locationBar.setWidth( "100%" );
 
     Label filenameLabel = new Label( FileChooserEntryPoint.messages.getString( "filename" ) );
+    Roles.getTextboxRole().setAriaLabelProperty( fileNameTextBox.getElement(), filenameLabel.getText() );
     filenameLabel.setWidth( "550px" );
     add( filenameLabel );
     fileNameTextBox.setWidth( "300px" );
@@ -436,9 +463,7 @@ public class FileChooser extends VerticalPanel {
     add( buildFilesList( selectedTreeItem ) );
   }
 
-  private void handleUpDirectory( Event event ) {
-    if ( ( DOM.eventGetType( event ) & Event.ONCLICK ) == Event.ONCLICK
-            || event.getKeyCode() == KeyCodes.KEY_ENTER ) {
+  private void handleUpDirectory() {
       // go up a dir
       TreeItem tmpItem = selectedTreeItem;
       List<String> parentSegments = new ArrayList<String>();
@@ -471,7 +496,6 @@ public class FileChooser extends VerticalPanel {
       }
 
       changeToPath( myPath );
-    }
   }
 
   public Widget buildFilesList( TreeItem parentTreeItem ) {
@@ -479,10 +503,8 @@ public class FileChooser extends VerticalPanel {
     filesListPanel.setWidth( "100%" );
 
     ScrollPanel filesScroller = new ScrollPanel();
-//    TODO: Check if this is required or not....
     Roles.getListboxRole().set( filesScroller.getElement() );
     Roles.getListboxRole().setTabindexExtraAttribute( filesScroller.getElement(), 0 );
-    Roles.getListboxRole().setAriaLabelProperty( filesScroller.getElement(), "List of Files" );
 
     filesScroller.setStyleName( "fileChooser-scrollPanel" );
 
@@ -823,6 +845,12 @@ public class FileChooser extends VerticalPanel {
   }
 
   public void fireFileSelected( RepositoryFile file ) {
+    if ( file == null ) {
+      MessageDialogBox dialogBox = new MessageDialogBox( FileChooserEntryPoint.messages.getString( "error" ), FileChooserEntryPoint.messages
+                      .getString( "noFilenameEntered" ), false, false, true );
+      dialogBox.center();
+      return;
+    }
     for ( FileChooserListener listener : listeners ) {
       listener.fileSelected( file, file.getPath(), ( mode != null && mode.equals( FileChooserMode.SAVE )
         ? actualFileName : file.getName() ), file.getTitle() );

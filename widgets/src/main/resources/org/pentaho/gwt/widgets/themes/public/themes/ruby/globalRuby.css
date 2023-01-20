@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2017-2021 Hitachi Vantara.  All rights reserved.
+* Copyright 2017-2023 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -84,7 +84,7 @@ div.pentaho-dialog.schedule-recurrence-dialog label {
 }
 
 legend {
-  color: #777;
+  color: #333;
 }
 
 fieldset,
@@ -127,8 +127,7 @@ textarea,
 }
 
 input[type='text']:focus,
-.bootstrap .pentaho-dialog input[type='text']:focus,
-.pentaho-dialog input[type='text']:hover {
+.bootstrap .pentaho-dialog input[type='text']:focus {
   border-color: #414141;
 }
 
@@ -235,7 +234,7 @@ select option:focus, select option:hover {
 }
 
 .gwt-Label {
-  color: #666666;
+  color: #414141;
 }
 
 *:focus {
@@ -4209,7 +4208,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileChooserHeader {
-  background-color: #999;
+  background-color: #666;
   border: 0 none;
   padding-left: 5px;
   padding-right: 5px;
@@ -4385,7 +4384,7 @@ button.adminButton {
   border-spacing: 0;
   padding: 11px 8px 12px 8px;
   font-weight: normal;
-  background-color: #999999;
+  background-color: #cc0000;
   color: #FFF;
   border: 1px solid #cccccc;
   border-right: 0 none;
@@ -4514,7 +4513,7 @@ input#limit.xul-textbox {
   border-spacing: 0;
   padding: 12px 10px;
   font-weight: normal;
-  background-color: #999999;
+  background-color: #666666;
   color: #FFFFFF;
   border: 1px solid #CCCCCC;
   border-right: 0 none;
@@ -4659,7 +4658,7 @@ td.tab-spacer-wrapper {
   border-spacing: 0;
   padding: 8px 10px 10px 10px;
   font-weight: normal;
-  background: #999999;
+  background: #cc0000;
   color: #FFFFFF;
   border: 1px solid #CCCCCC;
   border-right: 1px solid #CCCCCC;
@@ -5414,7 +5413,6 @@ span.gwt-RadioButton label {
   -ms-transform: rotate(-180deg);
   -o-transform: rotate(-180deg);
   transform: rotate(-180deg);
-  border:transparent
 }
 
 #eval-arrow.closed {
@@ -8260,10 +8258,8 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   color: #7C0B2B;
 }
 
-.dialogsFocusPanel:focus, .dialogsFocusPanel:hover {
-  border: 1px solid #CC0000;
-  border-radius: 4px;
-  padding: 4px 2px;
+.xul-label-disabled {
+  color: #666 !important;
 }
 
 .gwt-ListBox:focus,.gwt-ListBox:hover {
@@ -8272,19 +8268,15 @@ border: 1px solid #414141;
 
 .pentaho-filechooseupbutton:focus,
 .pentaho-filechooseupbutton:hover{
-  border: 1px solid #CC0000;
-  border-radius: 4px;
+  outline: 1px solid #CC0000;
 }
 
 .fileChooserCell:focus{
-  border: 1px solid #CC0000;
-  border-radius: 4px;
+  outline: 1px solid #CC0000;
 }
 
 .fileChooser-scrollPanel:focus{
-  border:1px solid #CC0000;
-  border-radius: 4px;
-  padding: 4px 4px;
+  outline:1px solid #CC0000;
 }
 
 .custom-dropdown:focus,
@@ -8308,6 +8300,5 @@ div#eval-users-toggle:focus {
 }
 
 #evaluationPanel button.btn:focus {
-    border: 1.5px solid black;
-    border-radius: 4px;
+    outline: 1.5px solid black;
 }

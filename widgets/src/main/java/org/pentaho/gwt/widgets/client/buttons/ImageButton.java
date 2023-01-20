@@ -17,17 +17,25 @@
 
 package org.pentaho.gwt.widgets.client.buttons;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.impl.FocusImpl;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 /**
  * Clickable image with enable/disable functionality built in.
@@ -35,13 +43,15 @@ import com.google.gwt.user.client.ui.Image;
  * @deprecated use {@link ThemeableImageButton}
  */
 @Deprecated
-public class ImageButton extends Image {
+public class ImageButton extends Image implements Focusable {
 
   private boolean isEnabled = true;
 
   private String enabledUrl;
 
   private String disabledUrl;
+
+  private static final FocusImpl focusImpl = FocusImpl.getFocusImplForWidget();
 
   String imagePressedStyle = "image-button-pressed"; //$NON-NLS-1$
 
@@ -67,6 +77,10 @@ public class ImageButton extends Image {
 
   public ImageButton() {
     super();
+
+    Roles.getButtonRole().set( getElement() );
+    setTabIndex(0);
+
     setStyleName( imageStyle );
 
     this.addMouseDownHandler( new MouseDownHandler() {
@@ -78,12 +92,18 @@ public class ImageButton extends Image {
         } else {
           addStyleNames( disabeldImagePressedStyle );
         }
+
+        // This is required to prevent a drag & drop of the Image in the edit text.
+        event.preventDefault();
       }
     } );
     this.addMouseUpHandler( new MouseUpHandler() {
       public void onMouseUp( MouseUpEvent event ) {
         removeStyleNames( imagePressedStyle, disabeldImagePressedStyle, themeImageDownStyle );
         updateStyles();
+
+        // This is required to prevent a drag & drop of the Image in the edit text.
+        event.preventDefault();
       }
     } );
 
@@ -97,6 +117,8 @@ public class ImageButton extends Image {
           addStyleName( disabledImageHoverStyle );
         }
 
+        // This is required to prevent a drag & drop of the Image in the edit text.
+        event.preventDefault();
       }
     } );
 
@@ -104,9 +126,42 @@ public class ImageButton extends Image {
       public void onMouseOut( MouseOutEvent event ) {
         removeStyleNames( imageHoverStyle, disabledImageHoverStyle, themeImageHoverStyle );
         updateStyles();
+
+        // This is required to prevent a drag & drop of the Image in the edit text.
+        event.preventDefault();
       }
     } );
 
+    // Based on https://www.w3.org/WAI/ARIA/apg/example-index/button/js/button.js. pattern
+    this.addKeyDownHandler(event -> {
+      switch ( event.getNativeKeyCode() ) {
+        // The action button is activated by space on the keyup event, but the
+        // default action for space is already triggered on keydown. It needs to be
+        // prevented to stop scrolling the page before activating the button.
+        case KeyCodes.KEY_SPACE:
+          event.preventDefault();
+          break;
+        case KeyCodes.KEY_ENTER:
+          event.preventDefault();
+          ElementUtils.click( ImageButton.this.getElement() );
+          break;
+      }
+    });
+
+    this.addKeyUpHandler(event -> {
+      if ( event.getNativeKeyCode() == KeyCodes.KEY_SPACE ) {
+        event.preventDefault();
+        ElementUtils.click( ImageButton.this.getElement() );
+      }
+    });
+  }
+
+  protected HandlerRegistration addKeyDownHandler( KeyDownHandler handler ) {
+    return addDomHandler(handler, KeyDownEvent.getType());
+  }
+
+  protected HandlerRegistration addKeyUpHandler( KeyUpHandler handler ) {
+    return addDomHandler( handler, KeyUpEvent.getType() );
   }
 
   private void updateStyles() {
@@ -121,6 +176,9 @@ public class ImageButton extends Image {
 
   public ImageButton( String enabledUrl, String disabledUrl, String tooltip, int width, int height ) {
     super( enabledUrl );
+
+    Roles.getButtonRole().set( getElement() );
+    setTabIndex(0);
 
     setSize( width + "px", height + "px" ); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -162,13 +220,6 @@ public class ImageButton extends Image {
     }
   }
 
-  public void onBrowserEvent( Event event ) {
-    super.onBrowserEvent( event );
-
-    // This is required to prevent a drag & drop of the Image in the edit text.
-    DOM.eventPreventDefault( event );
-  }
-
   public boolean isEnabled() {
     return isEnabled;
   }
@@ -198,8 +249,27 @@ public class ImageButton extends Image {
     this.getElement().setAttribute( "src", src ); //$NON-NLS-1$
   }
 
+  @Override
+  public int getTabIndex() {
+    return focusImpl.getTabIndex( this.getElement() );
+  }
+
+  @Override
+  public void setAccessKey( char key ) {
+    this.getElement().setPropertyString( "accessKey", "" + key );
+  }
+
   public void setFocus( boolean focus ) {
-    this.setFocus( focus );
+    if (focus) {
+      focusImpl.focus( this.getElement() );
+    } else {
+      focusImpl.blur( this.getElement() );
+    }
+  }
+
+  @Override
+  public void setTabIndex( int index ) {
+    focusImpl.setTabIndex( this.getElement(), index );
   }
 
   public void removeStyleNames( String... names ) {
