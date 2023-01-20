@@ -12,25 +12,27 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.tabs;
 
-import org.pentaho.gwt.widgets.client.utils.ImageUtil;
-
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.utils.ImageUtil;
+
+import com.google.gwt.user.client.Event;
 
 public class PentahoTab extends SimplePanel {
 
@@ -44,7 +46,9 @@ public class PentahoTab extends SimplePanel {
     this.content = content;
     this.tabPanel = tabPanel;
     setStylePrimaryName( "pentaho-tabWidget" );
-    sinkEvents( Event.ONDBLCLICK | Event.ONMOUSEUP );
+    getElement().addClassName( "focus-visible" );
+    Roles.getButtonRole().set( getElement() );
+    sinkEvents( Event.ONDBLCLICK | Event.ONMOUSEUP | Event.ONKEYDOWN );
 
     if ( closeable ) {
       final Image closeTabImage =
@@ -106,14 +110,34 @@ public class PentahoTab extends SimplePanel {
   public void onBrowserEvent( Event event ) {
     if ( ( event.getTypeInt() & Event.ONDBLCLICK ) == Event.ONDBLCLICK ) {
       onDoubleClick( event );
-    } else if ( event.getButton() == Event.BUTTON_RIGHT ) {
-      onRightClick( event );
-    } else if ( event.getButton() == Event.BUTTON_LEFT ) {
-      if ( event.getEventTarget().toString().toLowerCase().indexOf( "image" ) == -1 ) {
+    } else if ( ( event.getTypeInt() & Event.ONMOUSEUP ) == Event.ONMOUSEUP ) {
+      if ( event.getButton() == Event.BUTTON_LEFT  && ( event.getEventTarget().toString().toLowerCase().indexOf( "image" ) == -1 ) ) {
         fireTabSelected();
+      } else if ( event.getButton() == Event.BUTTON_RIGHT ) {
+        onRightClick(event);
+      }
+    } else if ( ( event.getTypeInt() & Event.ONKEYDOWN ) == Event.ONKEYDOWN  ) {
+      if ( KeyCodes.KEY_LEFT == (char) event.getKeyCode() ) {
+        moveFocusToPreviousTab();
+      } else if ( KeyCodes.KEY_RIGHT == (char) event.getKeyCode() ) {
+        moveFocusToNextTab();
       }
     }
     super.onBrowserEvent( event );
+  }
+
+  private void moveFocusToNextTab() {
+    PentahoTab tab = getTabPanel().getTab( getTabPanel().getSelectedTabIndex()  + 1 );
+    if ( null != tab ) {
+      tabPanel.selectTab( tab, true );
+    }
+  }
+
+  private void moveFocusToPreviousTab() {
+    PentahoTab tab = getTabPanel().getTab( getTabPanel().getSelectedTabIndex()  - 1 );
+    if ( null != tab ) {
+      tabPanel.selectTab( tab, true );
+    }
   }
 
   public void onDoubleClick( Event event ) {
@@ -151,7 +175,7 @@ public class PentahoTab extends SimplePanel {
   }
 
   protected void fireTabSelected() {
-    tabPanel.selectTab( this );
+    tabPanel.selectTab( this, true );
   }
 
   public boolean isSolutionBrowserShowing() {

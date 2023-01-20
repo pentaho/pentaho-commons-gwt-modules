@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2019 Hitachi Vantara.  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara.  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.tabs;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -32,6 +33,7 @@ public class PentahoTabPanel extends VerticalPanel {
     setStylePrimaryName( "pentaho-tab-panel" );
     tabBar.setStylePrimaryName( "pentaho-tab-bar" );
     add( tabBar );
+    Roles.getTablistRole().set( tabBar.getElement() );
     add( tabDeck );
     tabDeck.getElement().getParentElement().setClassName( "pentaho-tab-deck-panel" );
     tabDeck.setHeight( "100%" );
@@ -91,6 +93,10 @@ public class PentahoTabPanel extends VerticalPanel {
   }
 
   public void selectTab( PentahoTab selectedTab ) {
+    selectTab( selectedTab, false );
+  }
+
+  public void selectTab( PentahoTab selectedTab, boolean setFocus ) {
     this.selectedTab = selectedTab;
 
     for ( int i = 0; i < tabBar.getWidgetCount(); i++ ) {
@@ -98,8 +104,15 @@ public class PentahoTabPanel extends VerticalPanel {
       if ( tab == selectedTab ) {
         tab.setSelected( true );
         tabDeck.showWidget( tabDeck.getWidgetIndex( tab.getContent() ) );
+        tabDeck.getWidget( tabDeck.getWidgetIndex( tab.getContent() ) ).removeStyleName( "is-hidden" );
+        tab.getElement().setTabIndex( 0 );
+        if ( setFocus ) {
+          tab.getElement().focus();
+        }
       } else {
         tab.setSelected( false );
+        tabDeck.getWidget( tabDeck.getWidgetIndex( tab.getContent() ) ).addStyleName( "is-hidden" );
+        tab.getElement().setTabIndex( -1 );
       }
     }
   }

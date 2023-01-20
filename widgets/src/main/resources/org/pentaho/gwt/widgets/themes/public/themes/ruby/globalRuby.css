@@ -8261,3 +8261,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .xul-label-disabled{
 	color: #666 !important;
 }
+
+.is-hidden {
+  display: none;
+}
