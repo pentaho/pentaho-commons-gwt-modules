@@ -22,8 +22,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class HorizontalFlexPanel extends HorizontalPanel {
   public HorizontalFlexPanel() {
-    super();
-
     addStyleName( "gwt-h-panel" );
 
     Roles.getPresentationRole().set( getElement() );

@@ -32,6 +32,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import static org.pentaho.gwt.widgets.client.utils.string.StringUtils.isEmpty;
+
 public class ElementUtils {
 
   public static final int LEFT = 0;
@@ -306,7 +308,7 @@ public class ElementUtils {
   public static String ensureId( Widget widget ) {
     com.google.gwt.user.client.Element element = widget.getElement();
     String id = element.getId();
-    if ( id == null || id.equals( "" ) ) {
+    if ( isEmpty( id ) ) {
       id = DOM.createUniqueId();
       element.setId( id );
     }

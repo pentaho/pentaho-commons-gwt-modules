@@ -22,8 +22,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class VerticalFlexPanel extends VerticalPanel {
   public VerticalFlexPanel() {
-    super();
-
     addStyleName( "gwt-v-panel" );
 
     Roles.getPresentationRole().set( getElement() );
