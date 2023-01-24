@@ -12,11 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.aria.client.Id;
+import com.google.gwt.aria.client.Role;
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -30,6 +33,9 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
+import static org.pentaho.gwt.widgets.client.utils.ElementUtils.ensureId;
 
 @SuppressWarnings( "deprecation" )
 public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implements PopupListener {
@@ -48,7 +54,105 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     this.modal = modal;
     addPopupListener( this );
     setStylePrimaryName( "pentaho-dialog" );
+
+    // ARIA
+    setAriaRole( (Role) null );
+
+    setDomModal( this.isModal() );
+
+    // aria-labelledby
+    Widget labelWidget = getCaption().asWidget();
+    Roles.getHeadingRole().set( labelWidget.getElement() );
+    Roles.getHeadingRole().setAriaLevelProperty( labelWidget.getElement(), 2 );
+
+    Roles.getDialogRole().setAriaLabelledbyProperty( getElement(), Id.of( ensureId( labelWidget ) ) );
+
+    // Layout
+    // This should be the contained decorator panel's layout table.
+    // div > div > tab
+    Roles.getPresentationRole().set( getElement().getFirstChildElement().getFirstChildElement() );
   }
+
+  // region aria role property
+  /**
+   * Gets the ARIA role of the dialog.
+   */
+  public String getAriaRole() {
+    return getElement().getAttribute( "role" );
+  }
+
+  /**
+   * Sets the ARIA role of the dialog given as a string.
+   *
+   * @param ariaRole The new ARIA <code>role</code> attribute.
+   *                 When <code>null</code> or empty, it is set to the default value of <code>dialog</code>.
+   */
+  public void setAriaRole( String ariaRole ) {
+    if ( StringUtils.isEmpty( ariaRole ) ) {
+      ariaRole = "dialog";
+    }
+
+    getElement().setAttribute( "role", ariaRole );
+  }
+
+  /**
+   * Sets the ARIA role of the dialog given as a {@link Role} instance.
+   *
+   * @param ariaRole The new ARIA <code>role</code> attribute.
+   *                 When <code>null</code>, it is set to the default value of {@link Roles#getDialogRole()}.
+   */
+  protected void setAriaRole( Role ariaRole ) {
+    if ( ariaRole == null ) {
+      ariaRole = Roles.getDialogRole();
+    }
+
+    ariaRole.set( getElement() );
+  }
+  // endregion
+
+  // region ariaDescribedBy property
+  /**
+   * Gets the identifier of the ARIA description element.
+   * @return The value of the <code>aria-describedby</code> attribute.
+   */
+  public String getAriaDescribedBy() {
+    return Roles.getDialogRole().getAriaDescribedbyProperty( getElement() );
+  }
+
+  /**
+   * Sets the identifier of the ARIA description element.
+   * <p>
+   * Sets the value of the <code>aria-describedby</code> attribute.
+   * </p>
+   *
+   * @param describedById The description element identifier.
+   */
+  public void setAriaDescribedBy( String describedById ) {
+    if ( StringUtils.isEmpty( describedById ) ) {
+      Roles.getDialogRole().removeAriaDescribedbyProperty( getElement() );
+    } else {
+      Roles.getDialogRole().setAriaDescribedbyProperty( getElement(), Id.of( describedById ) );
+    }
+  }
+  // endregion
+
+  // region modal property
+  @Override
+  public void setModal( boolean modal ) {
+    super.setModal( modal );
+    setDomModal( modal );
+  }
+
+  private void setDomModal( boolean modal ) {
+    if ( modal ) {
+      addStyleName( "modal" );
+    } else {
+      removeStyleName( "modal" );
+    }
+
+    getElement().setAttribute( "aria-modal", Boolean.toString( modal ) );
+  }
+  // endregion
 
   public boolean onKeyDownPreview( char key, int modifiers ) {
     // Use the popup's key preview hooks to close the dialog when either
