@@ -14,6 +14,12 @@
 *
 * Copyright 2017-2023 Hitachi Vantara.  All rights reserved.
 */
+
+:root {
+  --focus-visible-ring: 3px solid #0075ff;
+  --focus-visible-ring-gap: 2px;
+}
+
 @font-face {
   font-family: 'OpenSansRegular';
   src: url('opensans-regular.eot');
@@ -47,6 +53,19 @@ html.bootstrap body {
   font-size: 14px;
   background: transparent;
   color: #333;
+}
+
+input.focus-visible:focus-visible,
+select.focus-visible:focus-visible,
+button.focus-visible:focus-visible,
+td.focus-visible:focus-visible,
+a.focus-visible:focus-visible,
+i.focus-visible:focus-visible,
+div.focus-visible:focus-visible,
+span.focus-visible:focus-visible,
+textarea.focus-visible:focus-visible {
+  outline: var(--focus-visible-ring);
+  outline-offset: var(--focus-visible-ring-gap);
 }
 
 a, a:link {
