@@ -101,17 +101,19 @@ public class PentahoTabPanel extends VerticalPanel {
 
     for ( int i = 0; i < tabBar.getWidgetCount(); i++ ) {
       PentahoTab tab = (PentahoTab) tabBar.getWidget( i );
+      Widget tabContent = tab.getContent();
+      int tabContentIndex = tabDeck.getWidgetIndex( tabContent );
       if ( tab == selectedTab ) {
         tab.setSelected( true );
-        tabDeck.showWidget( tabDeck.getWidgetIndex( tab.getContent() ) );
-        tabDeck.getWidget( tabDeck.getWidgetIndex( tab.getContent() ) ).removeStyleName( "is-hidden" );
+        tabDeck.showWidget( tabContentIndex );
+        tabContent.removeStyleName( "is-hidden" );
         tab.getElement().setTabIndex( 0 );
         if ( setFocus ) {
           tab.getElement().focus();
         }
       } else {
         tab.setSelected( false );
-        tabDeck.getWidget( tabDeck.getWidgetIndex( tab.getContent() ) ).addStyleName( "is-hidden" );
+        tabContent.addStyleName( "is-hidden" );
         tab.getElement().setTabIndex( -1 );
       }
     }

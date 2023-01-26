@@ -221,7 +221,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     return getDefaultFocusWidget();
   }
 
-  private void doAutoFocus() {
+  protected void doAutoFocus() {
     Focusable autoFocusWidget = getAutoFocusWidget();
     if ( autoFocusWidget != null ) {
       autoFocusWidget.setFocus( true );
