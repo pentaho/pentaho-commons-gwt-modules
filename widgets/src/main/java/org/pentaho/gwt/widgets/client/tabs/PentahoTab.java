@@ -114,26 +114,26 @@ public class PentahoTab extends SimplePanel {
       if ( event.getButton() == Event.BUTTON_LEFT  && ( event.getEventTarget().toString().toLowerCase().indexOf( "image" ) == -1 ) ) {
         fireTabSelected();
       } else if ( event.getButton() == Event.BUTTON_RIGHT ) {
-        onRightClick(event);
+        onRightClick( event );
       }
     } else if ( ( event.getTypeInt() & Event.ONKEYDOWN ) == Event.ONKEYDOWN  ) {
-      if ( KeyCodes.KEY_LEFT == (char) event.getKeyCode() ) {
+      if ( KeyCodes.KEY_LEFT == event.getKeyCode() ) {
         moveFocusToPreviousTab();
-      } else if ( KeyCodes.KEY_RIGHT == (char) event.getKeyCode() ) {
+      } else if ( KeyCodes.KEY_RIGHT == event.getKeyCode() ) {
         moveFocusToNextTab();
       }
     }
     super.onBrowserEvent( event );
   }
 
-  private void moveFocusToNextTab() {
+  protected void moveFocusToNextTab() {
     PentahoTab tab = getTabPanel().getTab( getTabPanel().getSelectedTabIndex()  + 1 );
     if ( null != tab ) {
       tabPanel.selectTab( tab, true );
     }
   }
 
-  private void moveFocusToPreviousTab() {
+  protected void moveFocusToPreviousTab() {
     PentahoTab tab = getTabPanel().getTab( getTabPanel().getSelectedTabIndex()  - 1 );
     if ( null != tab ) {
       tabPanel.selectTab( tab, true );

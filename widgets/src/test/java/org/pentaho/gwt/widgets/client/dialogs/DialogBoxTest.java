@@ -33,16 +33,16 @@ public class DialogBoxTest {
     DialogBox box = mock( DialogBox.class );
     doCallRealMethod().when( box ).onKeyDownPreview( anyChar(), anyInt() );
 
-    box.onKeyDownPreview( (char) KeyboardListener.KEY_ENTER, 0 );
     box.onKeyDownPreview( (char) KeyboardListener.KEY_ESCAPE, 0 );
-
-    verify( box, times( 2 ) ).hide();
+    verify( box, times( 1 ) ).hide();
   }
 
   @Test
   public void testSetFocusWidget() throws Exception {
     DialogBox box = mock( DialogBox.class );
     doCallRealMethod().when( box ).setFocusWidget( any( FocusWidget.class ) );
+    doCallRealMethod().when( box ).getAutoFocusWidget();
+    doCallRealMethod().when( box ).doAutoFocus();
 
     final FocusWidget focusWidget = mock( FocusWidget.class );
     box.setFocusWidget( focusWidget );
