@@ -53,6 +53,8 @@ public class ToolbarButton {
 
   protected boolean visible = true;
 
+  protected boolean DO_NOT_MERGE = false; // TESTING DO NOT MERGE
+
   protected String text;
 
   protected Image image;
