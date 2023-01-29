@@ -102,6 +102,11 @@ input[type='radio'] {
   border: none;
 }
 
+input[type='radio']:focus-visible,
+input[type='radio']:hover {
+  outline: var(--focus-outline-radio-button);
+}
+
 .groupOption {
   padding-left: 0;
 }
@@ -648,6 +653,15 @@ input#cron-tb {
   margin-bottom: 15px;
 }
 
+:root {
+  --focus-border-radius-table-header: 5px;
+  --focus-outline-table-header: 2px solid #0075ff;
+  --focus-outline-table-row: 2px solid #0075ff;
+  --focus-outline-button: 2px solid #0075ff;
+  --focus-outline-radio-button: 2px solid #0075ff;
+  --focus-outline-dropdown: 2px solid #0075ff;
+}
+
 /* Standard button style. Should be applied to a <button> element to get full pseudo-styles. */
 button.pentaho-button,
 button.pentaho-button:link,
@@ -710,6 +724,15 @@ button.pentaho-button[disabled]:focus {
   text-decoration: none !important;
   cursor: default;
   border: 1px solid #E4E4E4 !important;
+}
+
+.image-button {
+  border-radius: 4px;
+}
+
+.image-button:focus-visible,
+.image-button:hover {
+  outline: var(--focus-outline-button);
 }
 
 div#FilterPanel div.povdiv {
@@ -2284,6 +2307,11 @@ body.IE>table {
   cursor: pointer;
 }
 
+.pentaho-editbutton:focus-visible,
+.pentaho-editbutton:hover {
+  outline: var(--focus-outline-button);
+}
+
 #mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button-pressed,
 #mqlFilterGroupbox #mqlFilterEditButton img.disabled-image-button-over,
 #sqlFilterGroupbox #editQueryButton img.disabled-image-button-pressed,
@@ -2302,6 +2330,11 @@ body.IE>table {
   height: 22px;
   background: url('images/add.png') no-repeat center;
   cursor: pointer;
+}
+
+.pentaho-addbutton:focus-visible,
+.pentaho-addbutton:hover {
+  outline: var(--focus-outline-button);
 }
 
 .pentaho-addbutton.pentaho-imagebutton-disabled {
@@ -2347,6 +2380,11 @@ body.IE>table {
   background: url('images/remove.png') no-repeat center;
   cursor: pointer;
   top: 0px;
+}
+
+.pentaho-deletebutton:focus,
+.pentaho-deletebutton:hover {
+  outline: var(--focus-outline-button);
 }
 
 .clearSearchField.pentaho-deletebutton.pentaho-imagebutton-disabled,
@@ -4077,6 +4115,11 @@ div.dijitDateTextBox.dijitComboBox {
   background: #999999;
 }
 
+.gwt-ScrollTable .headerTable td:focus-visible {
+  outline: var(--focus-outline-table-header);
+  border-radius: var(--focus-border-radius-table-header);
+}
+
 .objectTree {
   border: 1px solid #CCC;
 }
@@ -4553,6 +4596,10 @@ td.tab-spacer-wrapper {
   background: white;
 }
 
+.gwt-ScrollTable .dataTable tr:focus-visible {
+  outline: var(--focus-outline-table-row);
+}
+
 .gwt-ScrollTable .dataTable-disabled tr {
   background: white;
 }
@@ -4702,6 +4749,21 @@ td.tab-spacer-wrapper {
 .custom-list {
   border: 1px solid #CCC;
 }
+
+@supports(selector(:has(div))) {
+  .custom-list:has(:focus-visible),
+  .custom-list:has(:hover) {
+    outline: var(--focus-outline-dropdown);
+  }
+}
+
+@supports not (selector(:has(div))) {
+  .custom-list:focus-within,
+  .custom-list:hover {
+    outline: var(--focus-outline-dropdown);
+  }
+}
+
 
 .custom-list-item .gwt-Label.gwt-Label {
   padding: 0 10px;
@@ -6134,6 +6196,11 @@ span.gwt-RadioButton label {
   height: 32px;
   background: url('images/options.png') no-repeat center;
   cursor: pointer;
+}
+
+.pentaho-optionsdatasourcebutton:focus-visible,
+.pentaho-optionsdatasourcebutton:hover {
+  outline: var(--focus-outline-button);
 }
 
 .dijitEditorIconParameters,

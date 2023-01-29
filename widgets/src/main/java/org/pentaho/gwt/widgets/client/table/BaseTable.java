@@ -194,7 +194,12 @@ public class BaseTable extends Composite {
   }
 
   /**
-   * This validates whether auto selection is enabled when focused
+   * Gets a value that indicates whether a row that receives keyboard focus should be automatically
+   * selected.
+   * <p>
+   *     This only applies when the table's {@link SelectionGrid.SelectionPolicy} is
+   *     {@link SelectionGrid.SelectionPolicy#ONE_ROW}.
+   * </p>
    * @return boolean
    */
   public boolean isAutoSelectionOnFocus() {
@@ -338,7 +343,7 @@ public class BaseTable extends Composite {
             Element body = DOM.getParent( tr );
             int row = DOM.getChildIndex( body, tr ) - 1;
             int column = DOM.getChildIndex( tr, td );
-            internalDoubleClickListener.onCellClicked(dataGrid, row, column);
+            internalDoubleClickListener.onCellClicked( this, row, column );
             break;
           }
           case Event.ONKEYDOWN:
@@ -347,6 +352,17 @@ public class BaseTable extends Composite {
         }
 
         super.onBrowserEvent( event );
+
+        switch ( DOM.eventGetType( event ) ) {
+          case Event.ONCLICK: {
+            Element targetRow = this.getEventTargetRow( event );
+            Element eventTarget = DOM.eventGetTarget( event );
+            if ( targetRow != null && !ElementUtils.isActiveElement( eventTarget ) ) {
+             setFocusableRow( this.getRowIndex( targetRow ), true );
+            }
+            break;
+          }
+        }
       }
     };
 
@@ -451,7 +467,7 @@ public class BaseTable extends Composite {
         dataGrid.getRowFormatter().getElement(i).setTabIndex(i == row ? 0 : -1);
       }
 
-      if (focus) {
+      if ( focus ) {
         dataGrid.getRowFormatter().getElement(row).focus();
       }
     }
