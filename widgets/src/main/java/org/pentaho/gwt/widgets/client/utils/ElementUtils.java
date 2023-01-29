@@ -285,4 +285,8 @@ public class ElementUtils {
     return "";
   }-*/;
 
+  public static native boolean isActiveElement( Element e )/*-{
+    return $doc.activeElement === e;
+  }-*/;
+
 }
