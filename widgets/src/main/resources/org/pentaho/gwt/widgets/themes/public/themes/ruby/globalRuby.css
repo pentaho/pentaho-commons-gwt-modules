@@ -898,6 +898,90 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   color: inherit;
 }
 
+/* GWT HorizontalFlexPanel
+   responsive class for opt-in flex behavior.
+
+   Real structure is .gwt-h-panel > tbody > tr > td
+   Yet using * to not increase specificity.
+   */
+.responsive .gwt-h-panel,
+.responsive .gwt-h-panel > *,
+.responsive .gwt-h-panel > * > *,
+.responsive .gwt-h-panel > * > * > * {
+  display: flex;
+  flex-direction: row;
+}
+
+.responsive .gwt-h-panel > *,
+.responsive .gwt-h-panel > * > *,
+.responsive .gwt-h-panel > * > * > * {
+  flex: auto;
+}
+
+.responsive .gwt-h-panel > * > * > * > * {
+  flex: none;
+}
+
+.responsive .gwt-h-panel > * > * > * > .gwt-h-panel {
+  flex: auto;
+}
+
+.responsive .gwt-h-panel > * > * > *[align="left"] {
+  justify-content: start;
+}
+
+.responsive .gwt-h-panel > * > * > *[align="center"] {
+  justify-content: center;
+}
+
+.responsive .gwt-h-panel > * > * > *[align="right"] {
+  justify-content: end;
+}
+
+.responsive .gwt-h-panel > * > * > *[style*="vertical-align: top"] {
+  align-items: start;
+}
+
+.responsive .gwt-h-panel > * > * > *[style*="vertical-align: middle"] {
+  align-items: center;
+}
+
+.responsive .gwt-h-panel > * > * > *[style*="vertical-align: bottom"] {
+  align-items: end;
+}
+
+/* GWT VerticalFlexPanel
+   Real structure is .gwt-v-panel > tbody > tr > td.
+   Yet, using * to not increase specificity.
+   Also, .gwt-v-panel > colgroup > col, is selected, but not really an issue.
+   */
+.responsive .gwt-v-panel,
+.responsive .gwt-v-panel > *,
+.responsive .gwt-v-panel > * > *,
+.responsive .gwt-v-panel > * > * > * {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.responsive .gwt-v-panel > *,
+.responsive .gwt-v-panel > * > *,
+.responsive .gwt-v-panel > * > * > * {
+  flex: auto;
+}
+
+.responsive .gwt-v-panel > * > * > * > * {
+  flex: none;
+}
+
+.responsive .gwt-v-panel > * > * > * > .gwt-v-panel {
+  flex: auto;
+}
+
+/* Unlike for .gwt-h-panel, no compatibility alignment rules for .gwt-v-panel. Seemed to harm more than helped. */
+
+/* DIALOG */
+
 /* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
 has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
 .pentaho-dialog,
