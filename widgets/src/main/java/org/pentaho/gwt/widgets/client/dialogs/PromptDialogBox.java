@@ -104,10 +104,6 @@ public class PromptDialogBox extends DialogBox {
     Roles.getPresentationRole().set( dialogContent.getElement() );
     dialogContent.setStyleName( "prompt-dialog-body-table" );
 
-    // `dialogContent` is a FlexTable which is being used like a single column panel.
-    // it is compatible with the `.gwt-v-panel` CSS class, and this saves a lot of duplicate rules.
-    dialogContent.addStyleName( "gwt-v-panel" );
-
     dialogContent.setCellPadding( 0 );
     dialogContent.setCellSpacing( 0 );
     // add button panel
