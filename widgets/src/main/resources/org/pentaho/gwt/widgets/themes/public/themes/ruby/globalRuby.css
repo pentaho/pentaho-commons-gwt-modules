@@ -77,6 +77,9 @@
   --dialog-ds-min-margin-v: 80px;
 
   --text-block-max-width: 75ch;
+
+  --typ-body-font-size: 14px;
+  --typ-body-line-height: 17px;
 }
 
 @media (max-height: 720px) {
@@ -191,15 +194,19 @@ input[type='text'],
 textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #CCC;
-  padding: 0 10px;
-  font-size: 14px;
-  line-height: 17px;
+  padding: 0.5em 10px;
+  font-size: var(--typ-body-font-size);
+  line-height: var(--typ-body-line-height);
+  /* height resizes with text zoom, as it is based on font size and line height
+     height = 33
+        = line-height + 2 x border + 2 x vertical-padding
+        = 17 + 2 + 14
+     */
   border-radius: 4px;
   font-family: opensansregular;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: 33px;
   color: #333333;
 }
 
@@ -257,7 +264,7 @@ SELECT,
 .gwt-ListBox {
   border: 1px solid #CCC;
   padding: 0;
-  font-size: 14px;
+  font-size: var(--typ-body-font-size);
   overflow: auto;
   border-radius: 4px;
   background-color: #fff;
@@ -271,8 +278,13 @@ SELECT[size="1"],
 SELECT:not([size]),
 .gwt-ListBox[size="1"],
 .gwt-ListBox:not([size]) {
-  height: 33px;
-  padding: 0 30px 0 10px;
+  line-height: var(--typ-body-line-height);
+  padding: 0.5em 30px 0.5em 10px;
+  /* height resizes with text zoom, as it is based on font size and line height
+     height = 33
+        = line-height + 2 x border + 2 x vertical-padding
+        = 17 + 2 + 14
+     */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
