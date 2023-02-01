@@ -315,4 +315,13 @@ public class ElementUtils {
 
     return id;
   }
+
+  /**
+   * This method validates whether provided element is active element in the browser
+   * @param e
+   * @return boolean
+   */
+  public static native boolean isActiveElement( Element e )/*-{
+    return $doc.activeElement === e;
+  }-*/;
 }
