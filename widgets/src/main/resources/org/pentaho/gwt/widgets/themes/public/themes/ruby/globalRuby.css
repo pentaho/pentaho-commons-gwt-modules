@@ -38,6 +38,17 @@
   src: url('opensans-bold.eot') format('embedded-opentype'), url('opensans-bold.woff') format('woff'), url('opensans-bold.ttf') format('truetype'), url('opensans-bold.svg#OpenSansBold') format('svg');
 }
 
+:root {
+
+  --focus-ring: 3px solid #0075ff;
+
+  /* The default `outline-offset` should cause the outline to hide the border of most elements,
+     and, at the same time, not cause the outline to overflow the parent and be clipped.
+     If needed, adjust the `outline-offset` for specific elements or element types.
+   */
+  --focus-ring-offset: 2px;
+}
+
 html,
 body,
 html.bootstrap body {
@@ -49,6 +60,44 @@ html.bootstrap body {
   color: #333;
 }
 
+
+/* BASE FOCUS-VISIBLE RULES  */
+
+:focus-visible,
+
+  /* Increase specificity to override Widgets.css focus rule */
+input:focus-visible:focus-visible:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Use the `focus-visible-disabled` class on an element, to disable displaying the focus ring in its subtree.
+   When in CSS, simply set --focus-ring to none in the desired scope.
+ */
+.focus-visible-disabled {
+  --focus-ring: none;
+}
+
+/* FOCUS CONTAINER */
+
+.focus-container {
+  outline-offset: var(--focus-ring-offset);
+}
+@supports (selector:has(div)) {
+  .focus-container:has(:focus-visible) {
+    outline: var(--focus-ring);
+  }
+}
+@supports not (selector:has(div)) {
+  .focus-container:focus-within {
+    outline: var(--focus-ring);
+  }
+}
+/* Hide default focus ring on the element with the focus */
+.focus-container :focus-visible {
+  --focus-ring: none;
+}
+
 a, a:link {
   color: #7C0B2B;
   text-decoration: none;
@@ -56,17 +105,6 @@ a, a:link {
 
 a:active, a:hover {
   text-decoration: underline;
-}
-
-div {
-  outline: 0;
-  hideFocus: true;
-}
-
-img {
-  outline: 0;
-  -moz-user-focus: none;
-  user-focus: none;
 }
 
 strong,
@@ -220,7 +258,7 @@ select option,
   font-family: opensansregular;
 }
 
-select option:focus, select option:hover {
+select option:hover {
   color: #414141;
   background-color: #CCCCCC;
 }
@@ -235,10 +273,6 @@ select option:focus, select option:hover {
 
 .gwt-Label {
   color: #414141;
-}
-
-*:focus {
-  outline: none;
 }
 
 .adminField {
@@ -673,7 +707,6 @@ span.button-add-condition {
   white-space: nowrap;
   cursor: pointer;
   margin: 0;
-  outline: 0 none;
   border: 1px solid #cc0000;
 }
 
@@ -1636,16 +1669,11 @@ table.toolbar {
   width: 22px;
   height: 22px;
   -webkit-user-select: none;
-  outline: none;
   margin-left: 5px !important;
 }
 
 .IE .toolbar-button {
   border: 1px solid transparent;
-}
-
-input:focus {
-  outline: none;
 }
 
 .toolbar-button.toolbar-button-hovering {
@@ -1656,7 +1684,6 @@ input:focus {
   width: 22px;
   height: 22px;
   -webkit-user-select: none;
-  outline: none;
 }
 
 .IE .toolbar-button.toolbar-button-hovering {
@@ -2161,7 +2188,6 @@ body.IE>table {
 .pentaho-listitem-selected {
   background-color: rgba(204, 0, 0, 0.2);
   cursor: default;
-  outline: none;
 }
 
 .pentaho-listitem-disabled {
@@ -4137,6 +4163,8 @@ div.dijitDateTextBox.dijitComboBox {
 
 #fileBrowserButtons .body {
   top: 51px;
+  /* Ensure enough space for the focus-visible outline. */
+  padding: 8px;
 }
 
 .fileBrowserColumn .body .folder .icon {
@@ -4229,8 +4257,7 @@ div.dijitDateTextBox.dijitComboBox {
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
-  padding: 4px 0;
-  outline: 0 none;
+  padding: 4px;
   background: none;
   color: #7C0B2B;
 }
@@ -7513,7 +7540,6 @@ html.bootstrap .popover.bottom .arrow:after {
   box-shadow: none;
   white-space: nowrap;
   cursor: pointer;
-  outline: 0 none;
 }
 
 .bootstrap .btn.btn-large:hover,
@@ -7648,6 +7674,12 @@ select#datasources {
   border-bottom: 1px solid #FFF;
   border-top: 4px solid #cc0000;
   color: #cc0000;
+}
+
+/* Increase specificity to override bootstrap-namespaced.css focus rule*/
+.bootstrap.bootstrap a:focus-visible {
+  outline:var(--focus-ring);
+  outline-offset:var(--focus-ring-offset);
 }
 
 /* reporting */
@@ -7786,7 +7818,8 @@ button#preview[disabled]:active {
 
 .bootstrap #recentsContianer .nav-tabs > li,
 .bootstrap #favoritesContianer .nav-tabs > li {
-  margin-bottom: 0;
+/* Ensure enough space for the focus-visible outline. */
+  margin: 4px;
 }
 
 .bootstrap #recentsContianer .nav-tabs.nav-stacked > li > a,
