@@ -65,8 +65,11 @@ html.bootstrap body {
 
 :focus-visible,
 
-  /* Increase specificity to override Widgets.css focus rule */
-input:focus-visible:focus-visible:focus-visible {
+  /* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
+input:focus-visible:focus-visible:focus-visible,
+
+ /* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
+.bootstrap input:focus-visible:focus-visible:focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
