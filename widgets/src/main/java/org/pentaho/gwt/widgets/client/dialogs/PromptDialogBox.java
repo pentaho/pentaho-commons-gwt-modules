@@ -37,17 +37,22 @@ public class PromptDialogBox extends DialogBox {
   IDialogValidatorCallback validatorCallback;
   Widget content;
   final FlexTable dialogContent = new FlexTable();
-  protected Button okButton = null;
+
+  protected Button okButton;
   protected Button notOkButton = null;
   protected Button cancelButton = null;
 
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText, boolean autoHide,
-      boolean modal ) {
+                          boolean modal ) {
+
     super( autoHide, modal );
     setText( title );
 
     final HorizontalPanel dialogButtonPanel = new HorizontalFlexPanel();
+    dialogButtonPanel.addStyleName( "inner-button-panel" );
+
     okButton = new Button( okText );
+    okButton.setTitle( okText );
     okButton.setStylePrimaryName( "pentaho-button" );
     okButton.getElement().setAttribute( "id", "okButton" ); //$NON-NLS-1$ //$NON-NLS-2$
     okButton.addClickListener( new ClickListener() {
@@ -59,6 +64,7 @@ public class PromptDialogBox extends DialogBox {
 
     if ( notOkText != null ) {
       notOkButton = new Button( notOkText );
+      notOkButton.setTitle( notOkText );
       notOkButton.setStylePrimaryName( "pentaho-button" );
       notOkButton.getElement().setAttribute( "id", "notOkButton" ); //$NON-NLS-1$ //$NON-NLS-2$
       notOkButton.addClickListener( new ClickListener() {
@@ -71,6 +77,7 @@ public class PromptDialogBox extends DialogBox {
 
     if ( cancelText != null ) {
       cancelButton = new Button( cancelText );
+      cancelButton.setTitle( cancelText );
       cancelButton.setStylePrimaryName( "pentaho-button" );
       cancelButton.getElement().setAttribute( "id", "cancelButton" ); //$NON-NLS-1$ //$NON-NLS-2$
       cancelButton.addClickListener( new ClickListener() {
@@ -92,26 +99,44 @@ public class PromptDialogBox extends DialogBox {
     dialogButtonPanelWrapper.setWidth( "100%" );
     dialogButtonPanelWrapper.add( dialogButtonPanel );
 
-    if ( content instanceof FocusWidget ) {
-      setFocusWidget( (FocusWidget) content );
-    }
-    
+
     // Init `dialogContent`
     Roles.getPresentationRole().set( dialogContent.getElement() );
+    dialogContent.setStyleName( "prompt-dialog-body-table" );
+
+    // `dialogContent` is a FlexTable which is being used like a single column panel.
+    // it is compatible with the `.gwt-v-panel` CSS class, and this saves a lot of duplicate rules.
+    dialogContent.addStyleName( "gwt-v-panel" );
+
     dialogContent.setCellPadding( 0 );
     dialogContent.setCellSpacing( 0 );
     // add button panel
     dialogContent.setWidget( 1, 0, dialogButtonPanelWrapper );
+
+    dialogContent.getRowFormatter().setStyleName( 0, "prompt-dialog-content-row" );
+    dialogContent.getRowFormatter().setStyleName( 1, "prompt-dialog-buttons-row" );
+
+    // Content Cell 0 - 0
+    dialogContent.getCellFormatter().setStyleName( 0, 0, "dialog-content" );
+    dialogContent.getFlexCellFormatter().setVerticalAlignment( 0, 0, HasVerticalAlignment.ALIGN_MIDDLE );
+    dialogContent.getFlexCellFormatter().setHorizontalAlignment( 0, 0, HasHorizontalAlignment.ALIGN_CENTER );
+    DOM.setStyleAttribute(
+      dialogContent.getCellFormatter().getElement( 0, 0 ),
+      "padding",
+      "5px 10px 10px 10px" );
+
+    // Actions Cell 1 - 0
+    dialogContent.getCellFormatter().setStyleName( 1, 0, "prompt-dialog-buttons-cell" );
     dialogContent.getCellFormatter().setVerticalAlignment( 1, 0, HasVerticalAlignment.ALIGN_BOTTOM );
-    // dialogContent.getFlexCellFormatter().setColSpan(2, 0, 2);
-    dialogContent.setWidth( "100%" ); //$NON-NLS-1$
+
+    dialogContent.setWidth( "100%" );
     setWidget( dialogContent );
   }
 
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText ) {
     this( title, okText, notOkText, cancelText, false, true );
   }
-  
+
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText, boolean autoHide,
       boolean modal, Widget content ) {
     this( title, okText, notOkText, cancelText, autoHide, modal );
@@ -123,7 +148,7 @@ public class PromptDialogBox extends DialogBox {
   }
 
   public PromptDialogBox( String title, String okText, String cancelText, boolean autoHide, boolean modal,
-      Widget content ) {
+                          Widget content ) {
 
     this( title, okText, cancelText, autoHide, modal );
     setContent( content );
@@ -146,14 +171,16 @@ public class PromptDialogBox extends DialogBox {
 
   public void setContent( Widget content ) {
     this.content = content;
+
     if ( content != null ) {
-      dialogContent.getFlexCellFormatter().setVerticalAlignment( 0, 0, HasVerticalAlignment.ALIGN_MIDDLE );
-      dialogContent.getFlexCellFormatter().setHorizontalAlignment( 0, 0, HasHorizontalAlignment.ALIGN_CENTER );
-      dialogContent.setWidget( 0, 0, content );
-      dialogContent.getCellFormatter().setStyleName( 0, 0, "dialog-content" );
-      DOM.setStyleAttribute( dialogContent.getCellFormatter().getElement( 0, 0 ), "padding", "5px 10px 10px 10px" ); //$NON-NLS-1$ //$NON-NLS-2$
-      content.setHeight( "100%" ); //$NON-NLS-1$
-      content.setWidth( "100%" ); //$NON-NLS-1$
+      content.setHeight( "100%" );
+      content.setWidth( "100%" );
+    }
+
+    dialogContent.setWidget( 0, 0, content );
+
+    if ( content instanceof FocusWidget ) {
+      setFocusWidget( (FocusWidget) content );
     }
   }
 

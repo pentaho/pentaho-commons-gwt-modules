@@ -39,7 +39,7 @@
 }
 
 :root {
-
+  /* FOCUS RING */
   --focus-ring-width: 3px;
   --focus-ring: var(--focus-ring-width) solid #0075ff;
 
@@ -52,6 +52,37 @@
   /* How much space the focus ring takes beyond an element's border-box to be fully visible (focus-ring-width + focus-ring-offset).
   To be used to ensure enough padding for focus outlines on containers having an overflow of hidden or auto. */
   --focus-ring-padding: 5px;
+
+  /* ACCESSIBILITY */
+  /* Minimum width for a WCAG accessible vertical scrolling layout. */
+  --a11y-min-width: 320px;
+
+  /* Minimum height for a WCAG accessible horizontal scrolling layout. */
+  --a11y-min-height: 256px;
+
+  /* DIALOG GLOBAL variables */
+  --dialog-border-width: 1px;
+
+  /* Padding, on each side */
+  --dialog-padding: 20px;
+
+  /* V space between layout rows */
+  --dialog-vertical-gap: 6px;
+
+  /* H (and V, when wrapped) space between buttons */
+  --dialog-buttons-gap: 10px;
+
+  /* Design System min/safe margin, on each side */
+  --dialog-ds-min-margin-h: calc(100% / 12);
+  --dialog-ds-min-margin-v: 80px;
+
+  --text-block-max-width: 75ch;
+}
+
+@media (max-height: 720px) {
+  :root {
+    --dialog-ds-min-margin-v: 40px;
+  }
 }
 
 html,
@@ -910,6 +941,7 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 .responsive .gwt-h-panel > * > * > * {
   display: flex;
   flex-direction: row;
+  min-width: 0;
 }
 
 .responsive .gwt-h-panel > *,
@@ -981,12 +1013,9 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 /* Unlike for .gwt-h-panel, no compatibility alignment rules for .gwt-v-panel. Seemed to harm more than helped. */
 
 /* DIALOG */
-
-/* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
-has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
 .pentaho-dialog,
 .bootstrap .modal.pentaho-dialog {
-  border: 1px solid #CCC;
+  border: var(--dialog-border-width) solid #CCC;
   z-index: 1050;
   position: absolute;
   background: #FFF;
@@ -1156,8 +1185,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialog-content {
   padding: 0 !important;
-  /* font-size: 14px; */
- /* line-height: 20px;*/
   color: #333;
 }
 
@@ -1244,6 +1271,251 @@ button#schedule-dialog-select-button {
 .error-login-dialog {
   z-index: 2100;
 }
+
+/* region DIALOG RESPONSIVE - BEGIN */
+/*
+  Prompt Dialog      [overflow-y, max-width, max-height]
+    Inner [min-width, min-height]
+      Header/Caption   [v-flex: none, ellipsis]
+      Content          [v-flex: auto, overflow]
+        Inner...       [min-height]
+      Buttons          [v-flex: none, ellipsis, wrap, align-end]
+
+   See also JavaDocs for Pentaho GWT's DialogBox.DialogSizingMode (ds-), DialogBox.DialogWidthCategory (dw-)
+   and DialogBox.DialogMinimumHeightCategory (dmh-).
+*/
+.pentaho-dialog.responsive {
+  /* DIALOG LOCAL variables - override on specific dialogs */
+
+  /* Desired maximum OUTER width/height.
+     Subject to design-system margins and viewport.
+     Default to unconstrained.
+   */
+
+  /* Override or use one of the predefined dw- classes. */
+  --dialog-max-width: 100vw;
+
+  --dialog-max-height: 100vh;
+
+  /* Desired min-width/height. Defaults are A11Y mins. */
+  --dialog-min-width: var(--a11y-min-width);
+  /* See also reference "Sync with --dialog-min-height" */
+  --dialog-min-height: var(--a11y-min-height);
+
+  --priv-dialog-borders-paddings: calc( 2 * var(--dialog-padding) + 2 * var(--dialog-border-width));
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Body and buttons' sections' H scrollbars shown when their content exceeds min-width. */
+  overflow-x: hidden;
+
+  /* Last resort V scrollbar, shown on very short viewports.
+     Body V scrollbar appears first, when shorter than its children's total min-height.
+   */
+  overflow-y: auto;
+
+  /* Use Grid System (GS) max width/height, unless it would violate defined dialog min/max settings.
+
+     E.g. for FILL_VIEWPORT_WIDTH mode. The dialog would be as wide as the viewport minus the GS margins,
+     yet no wider than the desired --dialog-max-width.
+     By reducing the viewport width, eventually, the dialog width could become < min-width, to meet the GS margins.
+     Instead, its min-width is respected, causing GS margins to eventually reach 0.
+   */
+  max-width: clamp(
+      var(--dialog-min-width),
+      calc(100vw - 2 * var(--dialog-ds-min-margin-h)),
+      var(--dialog-max-width));
+
+  /* Dialog cannot grow taller than the viewport. Show outer V scrollbar, instead. */
+  max-height: min(
+      clamp(
+          var(--dialog-min-height),
+          calc(100vh - 2 * var(--dialog-ds-min-margin-v)),
+          var(--dialog-max-height)),
+      100vh);
+
+  padding: 0;
+}
+
+.pentaho-dialog.responsive > * {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+
+  min-width: calc(var(--dialog-min-width) - 2 * var(--dialog-border-width));
+  min-height: calc(var(--dialog-min-height) - 2 * var(--dialog-border-width));
+}
+
+.pentaho-dialog.responsive.dmh-content > * {
+  /* Disables body V scrollbar.
+     Displays the outer V scrollbar when dialog H cannot accommodate the body's min-height.
+   */
+  min-height: auto;
+}
+/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
+   when reaching min height. */
+@media (max-height: 256px) {
+  .pentaho-dialog.responsive > * {
+    min-height: auto;
+  }
+}
+
+.pentaho-dialog.responsive.ds-fill-viewport-width,
+.pentaho-dialog.responsive.ds-fill-viewport,
+.pentaho-dialog.responsive.ds-full-viewport {
+  /* Expand as much as allowed by max-width */
+  width: 100%;
+}
+
+.pentaho-dialog.responsive.ds-fill-viewport,
+.pentaho-dialog.responsive.ds-full-viewport {
+  /* Expand as much as allowed by max-height */
+  height: 100%;
+}
+
+.pentaho-dialog.responsive.ds-full-viewport {
+  /* Ignore grid system max width/height */
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.pentaho-dialog.responsive.dw-min {
+  --dialog-max-width: var(--a11y-min-width);
+}
+
+.pentaho-dialog.responsive.dw-text {
+  --dialog-max-width: calc(var(--text-block-max-width) + var(--priv-dialog-borders-paddings));
+}
+
+.pentaho-dialog.responsive.dw-xs {
+  --dialog-max-width: 448px;
+}
+
+.pentaho-dialog.responsive.dw-sm {
+  --dialog-max-width: 672px;
+}
+
+.pentaho-dialog.responsive.dw-md {
+  --dialog-max-width: 880px;
+}
+
+.pentaho-dialog.responsive.dw-lg {
+  --dialog-max-width: 1096px;
+}
+
+.pentaho-dialog.responsive.dw-xl {
+  --dialog-max-width: 1300px;
+}
+
+.pentaho-dialog.responsive .Caption {
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: var(--dialog-padding);
+}
+
+.pentaho-dialog.responsive .dialog-content {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 0 var(--dialog-padding) var(--dialog-padding) !important;
+  gap: var(--dialog-vertical-gap);
+}
+
+.pentaho-dialog.responsive .button-panel {
+  flex: none;
+  overflow: hidden;
+  margin: 0;
+  padding: var(--dialog-padding);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: end;
+  gap: var(--dialog-buttons-gap);
+}
+
+.pentaho-dialog.responsive .button-panel .pentaho-button {
+  flex: 0 1 auto;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* endregion DIALOG RESPONSIVE - END */
+
+/* region GWT DialogBox, PromptDialogBox RESPONSIVE */
+.pentaho-dialog.pentaho-gwt.responsive {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.pentaho-dialog.pentaho-gwt.responsive > * > table,
+.pentaho-dialog.pentaho-gwt.responsive > * > table > tbody,
+
+/* Body row (contains Content and Buttons section) */
+.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle,
+.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter,
+/* a.k.a. .dialogContent */
+.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter > *,
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table,
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table > tbody {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table {
+  flex: auto;
+}
+
+/* Dialog header */
+.pentaho-dialog.pentaho-gwt.responsive .dialogTop,
+.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter,
+.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter > div {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dialog content */
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table .prompt-dialog-content-row {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Dialog buttons */
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-row,
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-cell {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+
+.pentaho-dialog.responsive.pentaho-gwt .button-panel {
+  width: auto !important;
+}
+
+.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr {
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: var(--dialog-buttons-gap);
+}
+
+.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr > td {
+    flex: 0 1 auto;
+}
+/* endregion GWT DialogBox, PromptDialogBox RESPONSIVE */
 
 /**/
 .glasspane {
