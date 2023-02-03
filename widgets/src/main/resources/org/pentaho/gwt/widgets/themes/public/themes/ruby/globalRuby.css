@@ -6680,6 +6680,10 @@ div.listbox .pentaho-listbox {
   padding-top: 14px;
 }
 
+#getting-started .card:focus-visible {
+  margin: 3px;
+}
+
 #launch-widget .card {
   border-bottom: 0px solid transparent;
   border-left: 1px solid transparent;
@@ -6834,6 +6838,11 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started .pentaho-button:hover {
+  background-color: #7C0B2B;
+  border-color: #7C0B2B;
+}
+
+#getting-started .pentaho-button:focus-visible {
   background-color: #7C0B2B;
   border-color: #7C0B2B;
 }
@@ -7776,7 +7785,8 @@ input#csvSeparator {
   background-image: url(images/gettingStarted_welcome_graphic.png);
 }
 
-.welcome-img.welcome-img:hover {
+.welcome-img.welcome-img:hover,
+.welcome-img:focus-visible {
   background-image: url(images/gettingStarted_welcome_graphic_over.png);
 }
 
