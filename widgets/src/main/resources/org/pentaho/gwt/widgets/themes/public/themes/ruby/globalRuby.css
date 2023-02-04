@@ -74,10 +74,10 @@ input:focus-visible:focus-visible:focus-visible,
   outline-offset: var(--focus-ring-offset);
 }
 
-/* Use the `focus-visible-disabled` class on an element, to disable displaying the focus ring in its subtree.
+/* Use the `focus-ring-disabled` class on an element, to disable displaying the focus ring in its subtree.
    When in CSS, simply set --focus-ring to none in the desired scope.
  */
-.focus-visible-disabled {
+.focus-ring-disabled {
   --focus-ring: none;
 }
 
@@ -86,12 +86,12 @@ input:focus-visible:focus-visible:focus-visible,
 .focus-container {
   outline-offset: var(--focus-ring-offset);
 }
-@supports (selector:has(div)) {
+@supports (selector(:has(div))) {
   .focus-container:has(:focus-visible) {
     outline: var(--focus-ring);
   }
 }
-@supports not (selector:has(div)) {
+@supports not (selector(:has(div))) {
   .focus-container:focus-within {
     outline: var(--focus-ring);
   }
