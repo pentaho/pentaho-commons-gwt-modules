@@ -912,10 +912,16 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     if ( isEnabled() == false ) {
       return;
     }
+    if ( visible == 1 ) { // drop-down mode
+      this.togglePopup();
+    }
     // fPanel.setFocus(true);
   }
 
   public void onLostFocus( Widget widget ) {
+    if( visible == 1 ){
+      popup.hide();
+    }
   }
 
   private int shiftOriginIdx = -1;

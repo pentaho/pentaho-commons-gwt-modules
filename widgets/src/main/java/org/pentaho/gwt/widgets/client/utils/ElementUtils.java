@@ -245,7 +245,7 @@ public class ElementUtils {
       //TODO: the present implementation does not (yet) account for the disabled attribute of elements and that it
       // could be greatly optimized by not searching through parent elements hidden using display:none.
       Focusable focusable = ( Focusable ) widget;
-      if( focusable.getTabIndex() >= 0 && ElementUtils.isVisible( widget.getElement()) ) {
+      if( focusable.getTabIndex() >= 0 && ElementUtils.isVisible( widget.getElement()) && !widget.getElement().getPropertyBoolean("disabled")) {
         return focusable;
       }
     }

@@ -25,16 +25,18 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.impl.FocusImpl;
 import org.pentaho.gwt.widgets.client.utils.ImageUtil;
 
 import com.google.gwt.user.client.Event;
 
-public class PentahoTab extends SimplePanel {
+public class PentahoTab extends SimplePanel implements Focusable {
 
   public static final String SELECTED = "selected";
   private PentahoTabPanel tabPanel;
@@ -42,6 +44,7 @@ public class PentahoTab extends SimplePanel {
   protected Label label = new Label();
   private boolean solutionBrowserShowing;
 
+  private static final FocusImpl focusImpl = FocusImpl.getFocusImplForWidget();
   public PentahoTab( String text, String tooltip, PentahoTabPanel tabPanel, Widget content, boolean closeable ) {
     this.content = content;
     this.tabPanel = tabPanel;
@@ -52,8 +55,8 @@ public class PentahoTab extends SimplePanel {
 
     if ( closeable ) {
       final Image closeTabImage =
-          ImageUtil
-              .getThemeableImage( "pentaho-tabWidget-close", "pentaho-closebutton", "pentaho-imagebutton-disabled" );
+              ImageUtil
+                      .getThemeableImage( "pentaho-tabWidget-close", "pentaho-closebutton", "pentaho-imagebutton-disabled" );
       closeTabImage.addClickHandler( new ClickHandler() {
         public void onClick( ClickEvent event ) {
           event.getNativeEvent().stopPropagation();
@@ -185,4 +188,23 @@ public class PentahoTab extends SimplePanel {
   public void setSolutionBrowserShowing( boolean solutionBrowserShowing ) {
     this.solutionBrowserShowing = solutionBrowserShowing;
   }
+  @Override
+  public int getTabIndex() {
+    return focusImpl.getTabIndex(this.getElement());
+  }
+  @Override
+  public void setAccessKey(char key) {
+    this.getElement().setPropertyString("accessKey", "" + key);
+  }
+  @Override
+  public void setFocus(boolean focus ) {
+    if (focus) {
+      focusImpl.focus(this.getElement());
+    }
+  }
+  @Override
+  public void setTabIndex(int index) {
+    focusImpl.setTabIndex(this.getElement(), index);
+  }
+
 }
