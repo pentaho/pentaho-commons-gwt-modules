@@ -47,6 +47,10 @@
      If needed, adjust the `outline-offset` for specific elements or element types.
    */
   --focus-ring-offset: 2px;
+
+  /* How much space the focus ring takes beyond an element's border-box to be fully visible (focus-ring-width + focus-ring-offset).
+  To be used to ensure enough padding for focus outlines on containers having an overflow of hidden or auto. */
+  --focus-ring-padding: 5px;
 }
 
 html,
@@ -8310,4 +8314,15 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 .is-hidden {
   display: none;
+}
+
+.users-roles-list,
+.users-roles-selection-list {
+  width: calc(200px - 2 * var(--focus-ring-padding)) !important;
+  margin: var(--focus-ring-padding);
+}
+
+.tree-scroll-panel > * > :focus-visible {
+  z-index: 0 !important;
+  outline: var(--focus-ring) !important;
 }
