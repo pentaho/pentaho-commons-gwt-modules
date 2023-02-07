@@ -41,16 +41,21 @@ public class PentahoTab extends SimplePanel {
   private Widget content;
   protected Label label = new Label();
   private boolean solutionBrowserShowing;
+  private boolean closeable;
+
+  public boolean isCloseable() {
+    return closeable;
+  }
 
   public PentahoTab( String text, String tooltip, PentahoTabPanel tabPanel, Widget content, boolean closeable ) {
     this.content = content;
     this.tabPanel = tabPanel;
     setStylePrimaryName( "pentaho-tabWidget" );
-    getElement().addClassName( "focus-visible" );
     Roles.getButtonRole().set( getElement() );
     sinkEvents( Event.ONDBLCLICK | Event.ONMOUSEUP | Event.ONKEYDOWN );
 
     if ( closeable ) {
+      this.closeable = true;
       final Image closeTabImage =
           ImageUtil
               .getThemeableImage( "pentaho-tabWidget-close", "pentaho-closebutton", "pentaho-imagebutton-disabled" );
@@ -121,6 +126,10 @@ public class PentahoTab extends SimplePanel {
         moveFocusToPreviousTab();
       } else if ( KeyCodes.KEY_RIGHT == event.getKeyCode() ) {
         moveFocusToNextTab();
+      } else if ( isCloseable() && KeyCodes.KEY_DELETE == (char) event.getKeyCode() ) {
+        closeTab();
+      } else if ( KeyCodes.KEY_F10 == (char) event.getKeyCode() && event.getShiftKey() ) {
+        onRightClick( event );
       }
     }
     super.onBrowserEvent( event );

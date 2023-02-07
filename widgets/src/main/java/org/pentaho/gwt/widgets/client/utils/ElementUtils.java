@@ -23,6 +23,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
@@ -97,6 +98,23 @@ public class ElementUtils {
       ele.getStyle().setProperty( "overflowY", "visible" ); //$NON-NLS-1$ //$NON-NLS-2$
       ele = ele.getParentElement();
     }
+  }
+
+  /**
+   * Gets the widget which is listening to events on the given root element.
+   * <p>
+   *   Widgets are associated with their root element on attachment (see <code>Widget#onAttach()</code>).
+   * </p>
+   * <p>
+   *   Based on https://stackoverflow.com/a/17863305/178749.
+   * </p>
+   * @param element The widget's root element.
+   * @return The widget, if one is associated with the <code>element</code>;
+   *         <code>null</code>, otherwise.
+   */
+  public static Widget getWidgetOfRootElement( Element element ) {
+    EventListener listener = DOM.getEventListener( element );
+    return ( listener instanceof Widget ) ?  (Widget) listener : null;
   }
 
   public static void killAutoScrolling( Element ele ) {

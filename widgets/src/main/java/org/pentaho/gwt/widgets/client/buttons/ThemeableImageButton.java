@@ -101,8 +101,6 @@ public class ThemeableImageButton extends Image {
 
     enabledStyles.add( BASE_CLASS );
     disabledStyles.add( DISABLED_CLASS );
-
-    enabledStyles.add( "focus-visible" );
   }
 
   private void setUpHandlers() {
