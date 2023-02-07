@@ -45,6 +45,7 @@ public class PentahoTab extends SimplePanel implements Focusable {
   private boolean solutionBrowserShowing;
 
   private static final FocusImpl focusImpl = FocusImpl.getFocusImplForWidget();
+
   public PentahoTab( String text, String tooltip, PentahoTabPanel tabPanel, Widget content, boolean closeable ) {
     this.content = content;
     this.tabPanel = tabPanel;
@@ -188,23 +189,28 @@ public class PentahoTab extends SimplePanel implements Focusable {
   public void setSolutionBrowserShowing( boolean solutionBrowserShowing ) {
     this.solutionBrowserShowing = solutionBrowserShowing;
   }
+
   @Override
   public int getTabIndex() {
-    return focusImpl.getTabIndex(this.getElement());
-  }
-  @Override
-  public void setAccessKey(char key) {
-    this.getElement().setPropertyString("accessKey", "" + key);
-  }
-  @Override
-  public void setFocus(boolean focus ) {
-    if (focus) {
-      focusImpl.focus(this.getElement());
-    }
-  }
-  @Override
-  public void setTabIndex(int index) {
-    focusImpl.setTabIndex(this.getElement(), index);
+    return focusImpl.getTabIndex( this.getElement() );
   }
 
+  @Override
+  public void setAccessKey( char key ) {
+    this.getElement().setPropertyString( "accessKey", "" + key );
+  }
+
+  @Override
+  public void setFocus( boolean focus ) {
+    if ( focus ) {
+      focusImpl.focus( this.getElement() );
+    } else {
+      focusImpl.blur( this.getElement() );
+    }
+  }
+
+  @Override
+  public void setTabIndex( int index ) {
+    focusImpl.setTabIndex( this.getElement(), index );
+  }
 }

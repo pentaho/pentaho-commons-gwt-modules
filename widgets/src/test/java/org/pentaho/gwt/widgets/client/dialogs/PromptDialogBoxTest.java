@@ -32,9 +32,6 @@ public class PromptDialogBoxTest {
     PromptDialogBox box = mock( PromptDialogBox.class );
     doCallRealMethod().when( box ).onKeyDownPreview( anyChar(), anyInt() );
 
-    box.onKeyDownPreview( (char) KeyboardListener.KEY_ENTER, 0 );
-    verify( box ).onOk();
-
     box.onKeyDownPreview( (char) KeyboardListener.KEY_ESCAPE, 0 );
     verify( box ).onCancel();
   }

@@ -241,20 +241,20 @@ public class ElementUtils {
    * @return Focusable
    */
   public static Focusable findFirstKeyboardFocusableDescendant(Widget widget) {
-    if( widget instanceof Focusable ) {
+    if ( widget instanceof Focusable ) {
       //TODO: the present implementation does not (yet) account for the disabled attribute of elements and that it
       // could be greatly optimized by not searching through parent elements hidden using display:none.
       Focusable focusable = ( Focusable ) widget;
-      if( focusable.getTabIndex() >= 0 && ElementUtils.isVisible( widget.getElement()) && !widget.getElement().getPropertyBoolean("disabled")) {
+      if ( focusable.getTabIndex() >= 0 && ElementUtils.isVisible( widget.getElement() ) && !widget.getElement().getPropertyBoolean( "disabled" ) ) {
         return focusable;
       }
     }
 
-    if( widget instanceof HasWidgets ) {
-      HasWidgets container = ( HasWidgets ) widget;
-      for( Widget child: container ) {
+    if ( widget instanceof HasWidgets ) {
+      HasWidgets container = (HasWidgets) widget;
+      for ( Widget child: container ) {
         Focusable focusable = findFirstKeyboardFocusableDescendant( child );
-        if( focusable != null ) {
+        if ( focusable != null ) {
           return focusable;
         }
       }
