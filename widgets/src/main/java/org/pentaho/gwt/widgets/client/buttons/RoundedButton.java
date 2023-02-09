@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.buttons;
@@ -27,6 +27,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings( "deprecation" )
-public class RoundedButton extends Widget implements HasClickHandlers {
+public class RoundedButton extends Widget implements HasClickHandlers, HasEnabled {
 
   private String text = ""; //$NON-NLS-1$
   private String baseStyleName = "roundedbutton"; //$NON-NLS-1$

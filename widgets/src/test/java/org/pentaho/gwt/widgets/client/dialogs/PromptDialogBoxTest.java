@@ -17,18 +17,62 @@
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.HasEnabled;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.*;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class PromptDialogBoxTest {
+  // region Helpers
+  private static Widget mockContainerWidget() {
+    Widget widgetMock = mock(
+      Widget.class,
+      withSettings().extraInterfaces( HasWidgets.class ) );
+
+    Iterator<Widget> iteratorMock = (Iterator<Widget>) mock( Iterator.class );
+    when( ( (HasWidgets) widgetMock ).iterator() ).thenReturn( iteratorMock );
+    when( widgetMock.isVisible() ).thenReturn( true );
+
+    return widgetMock;
+  }
+
+  private static Widget mockFocusableWidget() {
+    Widget widgetMock = mock(
+      Widget.class,
+      withSettings().extraInterfaces( Focusable.class, HasEnabled.class ) );
+
+    when( ( (Focusable) widgetMock ).getTabIndex() ).thenReturn( 0 );
+    when( ( (HasEnabled) widgetMock ).isEnabled() ).thenReturn( true );
+    when( widgetMock.isVisible() ).thenReturn( true );
+
+    return widgetMock;
+  }
+
+  private static Widget mockFocusableChildInContainer( HasWidgets widgetMock ) {
+    Iterator<Widget> iteratorMock = widgetMock.iterator();
+    when( iteratorMock.hasNext() ).thenReturn( true );
+
+    Widget childMock = mockFocusableWidget();
+    when( iteratorMock.next() ).thenReturn( mock( Widget.class ), childMock );
+    return childMock;
+  }
+  // endregion
+
   @Test
   @SuppressWarnings( "deprecation" )
-  public void testOnKeyDownPreview() throws Exception {
+  public void testOnKeyDownPreview() {
     PromptDialogBox box = mock( PromptDialogBox.class );
     doCallRealMethod().when( box ).onKeyDownPreview( anyChar(), anyInt() );
 
@@ -80,4 +124,131 @@ public class PromptDialogBoxTest {
 
     verify( callback ).cancelPressed();
   }
+
+  // region getDefaultAutoFocusContentWidget()
+  @Test
+  public void testGetDefaultAutoFocusContentWidgetReturnsNullIfNoContent() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", "not-ok", "cancel" ) );
+
+    doReturn( null ).when( box ).getContent();
+
+    assertEquals( null, box.getDefaultAutoFocusContentWidget() );
+  }
+
+  @Test
+  public void testGetDefaultAutoFocusContentWidgetReturnsFirstFocusableOfContentIfAny() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", "not-ok", "cancel" ) );
+
+    Widget contentMock = mockContainerWidget();
+    Widget childMock = mockFocusableChildInContainer( (HasWidgets) contentMock );
+
+    doReturn( contentMock ).when( box ).getContent();
+
+    assertEquals( childMock, box.getDefaultAutoFocusContentWidget() );
+  }
+  // endregion
+
+  // region getDefaultAutoFocusButton()
+  private static Button mockButton( boolean visible, boolean enabled ) {
+    Button buttonMock = mock( Button.class );
+    doReturn( visible ).when( buttonMock ).isVisible();
+    doReturn( enabled ).when( buttonMock ).isEnabled();
+
+    return buttonMock;
+  }
+  @Test
+  public void testGetDefaultAutoFocusButtonReturnsNullIfAllButtonsAreDisabled() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", "not-ok", "cancel" ) );
+    Button cancelButtonMock = mockButton( true, false );
+    Button notOkButtonMock = mockButton( true, false );
+    Button okButtonMock = mockButton( true, false );
+
+    doReturn( cancelButtonMock ).when( box ).getCancelButton();
+    doReturn( notOkButtonMock ).when( box ).getNotOkButton();
+    doReturn( okButtonMock ).when( box ).getOkButton();
+
+    assertEquals( null, box.getDefaultAutoFocusButton() );
+  }
+
+  @Test
+  public void testGetDefaultAutoFocusButtonReturnsNullIfAllButtonsAreHidden() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", "not-ok", "cancel" ) );
+
+    Button cancelButtonMock = mockButton( false, true );
+    Button notOkButtonMock = mockButton( false, true );
+    Button okButtonMock = mockButton( false, true );
+
+    doReturn( cancelButtonMock ).when( box ).getCancelButton();
+    doReturn( notOkButtonMock ).when( box ).getNotOkButton();
+    doReturn( okButtonMock ).when( box ).getOkButton();
+
+    assertEquals( null, box.getDefaultAutoFocusButton() );
+  }
+
+  @Test
+  public void testGetDefaultAutoFocusButtonReturnsOkButtonIfOnlyButton() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", null, null ) );
+
+    Button okButtonMock = mockButton( true, true );
+
+    doReturn( null ).when( box ).getCancelButton();
+    doReturn( null ).when( box ).getNotOkButton();
+    doReturn( okButtonMock ).when( box ).getOkButton();
+
+    assertEquals( okButtonMock, box.getDefaultAutoFocusButton() );
+  }
+
+  @Test
+  public void testGetDefaultAutoFocusButtonReturnsCancelButtonIfAvailable() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", null, null ) );
+
+    Button cancelButtonMock = mockButton( true, true );
+    Button notOkButtonMock = mockButton( true, true );
+    Button okButtonMock = mockButton( true, true );
+
+    doReturn( cancelButtonMock ).when( box ).getCancelButton();
+    doReturn( notOkButtonMock ).when( box ).getNotOkButton();
+    doReturn( okButtonMock ).when( box ).getOkButton();
+
+    assertEquals( cancelButtonMock, box.getDefaultAutoFocusButton() );
+  }
+
+  @Test
+  public void testGetDefaultAutoFocusButtonReturnsNotOkButtonIfAvailableAndCancelIsNot() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", null, null ) );
+
+    Button notOkButtonMock = mockButton( true, true );
+    Button okButtonMock = mockButton( true, true );
+
+    doReturn( null ).when( box ).getCancelButton();
+    doReturn( notOkButtonMock ).when( box ).getNotOkButton();
+    doReturn( okButtonMock ).when( box ).getOkButton();
+
+    assertEquals( notOkButtonMock, box.getDefaultAutoFocusButton() );
+  }
+
+  // endregion
+
+  // region getDefaultAutoFocusWidget()
+  @Test
+  public void testGetDefaultAutoFocusWidgetDelegatesToGetDefaultAutoFocusContentWidget() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", "not-ok", "cancel" ) );
+
+    Focusable focusableMock = mock( Focusable.class );
+    doReturn( focusableMock ).when( box ).getDefaultAutoFocusContentWidget();
+
+    assertEquals( focusableMock, box.getDefaultAutoFocusWidget() );
+  }
+
+  @Test
+  public void testGetDefaultAutoFocusWidgetDelegatesToGetDefaultAutoFocusButtonIfNoContentFocusable() {
+    PromptDialogBox box = spy( new PromptDialogBox( "title", "ok", "not-ok", "cancel" ) );
+
+    Button buttonMock = mock( Button.class );
+    doReturn( null ).when( box ).getDefaultAutoFocusContentWidget();
+    doReturn( buttonMock ).when( box ).getDefaultAutoFocusButton();
+
+    assertEquals( buttonMock, box.getDefaultAutoFocusWidget() );
+  }
+  // endregion
 }

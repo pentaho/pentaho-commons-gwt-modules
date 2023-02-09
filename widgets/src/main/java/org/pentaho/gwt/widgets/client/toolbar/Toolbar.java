@@ -12,12 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.toolbar;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -35,7 +36,7 @@ import java.util.List;
  * 
  * @author nbaker
  */
-public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, ToolbarPopupSource {
+public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, ToolbarPopupSource, HasEnabled {
 
   public static final int SEPARATOR = 1;
 
@@ -51,6 +52,8 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   protected List<ToolbarGroup> groups = new ArrayList<ToolbarGroup>();
 
   protected List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
+
+  private boolean enabled = true;
 
   public Toolbar() {
     this.setStylePrimaryName( "toolbar" ); //$NON-NLS-1$
@@ -181,6 +184,7 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
    *          boolean flag
    */
   public void setEnabled( boolean enabled ) {
+    this.enabled = enabled;
     try {
       for ( ToolbarButton button : this.buttons ) {
         button.setEnabled( enabled );
@@ -196,6 +200,10 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
       System.out.println( "Error with Disable: " + e ); //$NON-NLS-1$
       e.printStackTrace( System.out );
     }
+  }
+
+  public boolean isEnabled() {
+    return enabled;
   }
 
   public void addPopupPanelListener( ToolbarPopupListener listener ) {

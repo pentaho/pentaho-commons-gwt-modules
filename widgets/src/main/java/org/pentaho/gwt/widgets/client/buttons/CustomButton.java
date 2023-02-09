@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.buttons;
@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.buttons;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings( "deprecation" )
-public class CustomButton extends Widget {
+public class CustomButton extends Widget implements HasEnabled {
 
   private String baseStyleName = "customButton"; //$NON-NLS-1$
   private Command command;

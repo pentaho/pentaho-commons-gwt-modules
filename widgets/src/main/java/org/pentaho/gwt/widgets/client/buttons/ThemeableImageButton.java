@@ -36,13 +36,14 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.Image;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 /**
  * Clickable image with enable/disable functionality built in. Makes use of css styles to provide the image and sizing.
  */
-public class ThemeableImageButton extends Image {
+public class ThemeableImageButton extends Image implements HasEnabled {
 
   private boolean isEnabled = true;
   private Set<String> enabledStyles = new HashSet<String>();

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.buttons;
@@ -33,6 +33,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.impl.FocusImpl;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
@@ -43,7 +44,7 @@ import org.pentaho.gwt.widgets.client.utils.ElementUtils;
  * @deprecated use {@link ThemeableImageButton}
  */
 @Deprecated
-public class ImageButton extends Image implements Focusable {
+public class ImageButton extends Image implements Focusable, HasEnabled {
 
   private boolean isEnabled = true;
 

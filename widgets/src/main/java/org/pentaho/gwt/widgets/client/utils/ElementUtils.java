@@ -19,19 +19,24 @@ package org.pentaho.gwt.widgets.client.utils;
 
 import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Property;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.HasEnabled;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
+
+import java.util.Iterator;
 
 import static org.pentaho.gwt.widgets.client.utils.string.StringUtils.isEmpty;
 
@@ -44,12 +49,15 @@ public class ElementUtils {
   private static AbsolutePanel sandbox = new AbsolutePanel(); // Used to find the size of elements
 
   static {
-    sandbox.getElement().getStyle().setProperty( "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "overflow", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "width", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "height", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    RootPanel.get().add( sandbox );
-
+    // RootPanel.get().add( . ) fails when running Java unit tests.
+    // GWT.isClient() is false when GWT is running in Java.
+    if ( GWT.isClient() ) {
+      sandbox.getElement().getStyle().setProperty( "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "overflow", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "width", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "height", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+      RootPanel.get().add( sandbox );
+    }
   }
 
   public static native void blur( Element e )/*-{
@@ -236,42 +244,43 @@ public class ElementUtils {
     return r;
   }
 
-  public static boolean isVisible(Element ele) {
+  public static boolean isVisible(Element ele ) {
     if ( ele.getStyle().getProperty( "display" ).equals( "none" ) ) { //$NON-NLS-1$ //$NON-NLS-2$
       return false;
     }
     if ( ele.getStyle().getProperty( "visibility" ).equals( "hidden" ) ) { //$NON-NLS-1$ //$NON-NLS-2$
       return false;
     }
-    Element parentElement = ele.getParentElement();
-    if( parentElement != null
-            && !parentElement.equals(parentElement.getOwnerDocument().getDocumentElement())) {
-      return isVisible( parentElement );
-    }
+
     // TODO: add scrollpanel checking here
     return true;
-
   }
 
   /**
-   * This method sets the focus on the first interactive element of the dialog
-   * @param widget
-   * @return Focusable
+   * Determines the first keyboard focusable widget within a given root widget,
+   * in depth-first order (document order).
+   * @param widget The root widget.
+   * @return The first keyboard focusable widget, if any; <code>null</code>, otherwise.
    */
-  public static Focusable findFirstKeyboardFocusableDescendant(Widget widget) {
-    if ( widget instanceof Focusable ) {
-      //TODO: the present implementation does not (yet) account for the disabled attribute of elements and that it
-      // could be greatly optimized by not searching through parent elements hidden using display:none.
-      Focusable focusable = ( Focusable ) widget;
-      if ( focusable.getTabIndex() >= 0 && ElementUtils.isVisible( widget.getElement() ) && !widget.getElement().getPropertyBoolean( "disabled" ) ) {
-        return focusable;
-      }
+  public static Focusable findFirstKeyboardFocusableDescendant( Widget widget ) {
+
+    if ( !widget.isVisible() ) {
+      return null;
+    }
+
+    // When a widget such as FocusPanel, which is both Focusable and HasWidgets,
+    // is not currently keyboard focusable, due to being tabIndex -1,
+    // its children are still searched for.
+    // On the contrary, Composite widgets can be Focusable but are not HasWidgets.
+    // Their child widgets are hidden from the outside world.
+    if ( isKeyboardFocusableLocal( widget ) ) {
+      return (Focusable) widget;
     }
 
     if ( widget instanceof HasWidgets ) {
-      HasWidgets container = (HasWidgets) widget;
-      for ( Widget child: container ) {
-        Focusable focusable = findFirstKeyboardFocusableDescendant( child );
+      Iterator<Widget> widgetIterator = getDocumentOrderWidgetIterator( (HasWidgets) widget );
+      while ( widgetIterator.hasNext() ) {
+        Focusable focusable = findFirstKeyboardFocusableDescendant( widgetIterator.next() );
         if ( focusable != null ) {
           return focusable;
         }
@@ -279,6 +288,51 @@ public class ElementUtils {
     }
 
     return null;
+  }
+
+  /**
+   * Determines if a widget is a {@link Focusable} instance and can currently locally receive keyboard focus.
+   * <p>
+   *   Beyond the scope of this method, to be actually keyboard focusable,
+   *   all of the widget's ancestors must be (layout-) visible.
+   * </p>
+   * @param widget The widget.
+   * @return <code>true</code> if the widget is currently locally keyboard focusable; <code>false</code>, otherwise.
+   */
+  public static boolean isKeyboardFocusableLocal( Widget widget ) {
+    return ( widget instanceof Focusable )
+      && ( (Focusable) widget ).getTabIndex() >= 0
+      && isEnabled( widget )
+      && widget.isVisible();
+  }
+
+  /**
+   * Some {@link HasWidgets} implementations provide a widget iterator, {@link HasWidgets#iterator()},
+   * which iterates widgets in insertion order, and not document order, making these not adequate for,
+   * for example, focus order determination.
+   *
+   * @return A widget iterator that follows document order.
+   * @see FlexTableDocumentOrderIterator
+   */
+  private static Iterator<Widget> getDocumentOrderWidgetIterator( HasWidgets container ) {
+    if ( container instanceof FlexTable ) {
+      return new FlexTableDocumentOrderIterator( (FlexTable) container );
+    }
+
+    return container.iterator();
+  }
+
+  /**
+   * Determines if a widget is enabled.
+   * @param widget The widget.
+   * @return <code>true</code> if it is enabled; <code>false</code>, otherwise.
+   */
+  public static boolean isEnabled( Widget widget ) {
+    if ( widget instanceof HasEnabled ) {
+      return ( (HasEnabled) widget ).isEnabled();
+    }
+
+    return !widget.getElement().getPropertyBoolean( "disabled" );
   }
 
   public static void setupButtonHoverEffect() {

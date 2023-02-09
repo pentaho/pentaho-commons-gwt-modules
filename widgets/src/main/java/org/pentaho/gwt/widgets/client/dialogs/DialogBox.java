@@ -43,7 +43,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   private static FocusPanel pageBackground = null;
   private static int clickCount = 0;
   private static int dialogDepthCount = 0;
-  private FocusWidget focusWidget = null;
+  private Focusable focusWidget = null;
   boolean autoHide = false;
   boolean modal = true;
   boolean centerCalled = false;
@@ -165,7 +165,6 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     return true;
   }
 
-
   protected void initializePageBackground() {
     // IE6 has problems with 100% height so is better a huge size
     // pageBackground.setSize("100%", "100%");
@@ -213,36 +212,104 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     centerCalled = true;
   }
 
+  // region Focus
+  /**
+   * Gets the widget explicitly set to receive the focus when the dialog is shown.
+   * @return The widget to receive focus, if any; <code>null</code>, otherwise.
+   * @see #getAutoFocusWidget()
+   */
+  public Focusable getFocusWidget() {
+    return focusWidget;
+  }
+
+  /**
+   * Explicitly sets the focus widget that should receive keyboard focus when the dialog is shown.
+   * @param widget The focus widget.
+   * @see #doAutoFocus()
+   * @see #getAutoFocusWidget()
+   * @deprecated Use {@link #setFocusWidget(Focusable)} instead.
+   */
+  public void setFocusWidget( FocusWidget widget ) {
+    setFocusWidget( (Focusable) widget );
+  }
+
+  /**
+   * Explicitly sets the focusable widget that should receive keyboard focus when the dialog is shown.
+   * @param widget A focusable widget or <code>null</code>.
+   * @see #doAutoFocus()
+   * @see #getAutoFocusWidget()
+   */
+  public void setFocusWidget( Focusable widget ) {
+    focusWidget = widget;
+    doAutoFocus();
+  }
+
+  /**
+   * Gets the widget to automatically receive the keyboard focus when the dialog is shown,
+   * or when explicitly calling {@link #doAutoFocus()}.
+   * <p>
+   *   If a fixed {@link #setFocusWidget(FocusWidget)} has been set, then that is returned.
+   *   Otherwise, the default automatic focus widget is the first <i>currently</i> focusable
+   *   descendant of the dialog's {@link #getWidget()} widget, possibly itself,
+   *   as determined by {@link ElementUtils#findFirstKeyboardFocusableDescendant(Widget)}.
+   * </p>
+   * @return The automatic focus widget, if any; <code>null</code>, otherwise.
+   */
   public Focusable getAutoFocusWidget() {
     if ( focusWidget != null ) {
       return focusWidget;
     }
 
-    return getDefaultFocusWidget();
+    return getDefaultAutoFocusWidget();
   }
 
-  protected void doAutoFocus() {
-    Focusable autoFocusWidget = getAutoFocusWidget();
-    if ( autoFocusWidget != null ) {
-      autoFocusWidget.setFocus( true );
+  /**
+   * Explicitly sets the focus to the automatic focus widget, if any.
+   * <p>
+   *   The automatic focus widget is determined by {@link #getAutoFocusWidget()}.
+   * </p>
+   * <p>
+   *   This is automatically called as part of showing a dialog, either via {@link #show()}, {@link #center()} or
+   *   {@link #setPopupPositionAndShow(PositionCallback)}.
+   *   It is useful in cases where the dialog content is not finalized at this time,
+   *   allowing it to be called afterwards.
+   * </p>
+   * <p>
+   *   This method has no effect if the dialog is not showing, as per {@link #isShowing()},
+   *   or is not currently {@link #isVisible()}.
+   *   When the methods {@link #center()} and {@link #setPopupPositionAndShow(PositionCallback)} are used to
+   *   show the dialog, the dialog is only made visible <i>after</i> the internal call to {@link #show()} has ended.
+   * </p>
+   */
+  public void doAutoFocus() {
+    if ( isShowing() && isVisible() ) {
+      Focusable autoFocusable = getAutoFocusWidget();
+      if ( autoFocusable != null ) {
+        autoFocusable.setFocus( true );
+      }
     }
   }
 
-  private Focusable getDefaultFocusWidget() {
+  /**
+   * Gets the default automatic focus widget.
+   * <p>
+   *   Override when the rules for determining the default automatic focus widget don't
+   *   strictly follow document order.
+   * </p>
+   * @return The default automatic focus widget, if any; <code>null</code>, otherwise.
+   */
+  protected Focusable getDefaultAutoFocusWidget() {
     Widget root = getWidget();
     if ( root != null ) {
       return ElementUtils.findFirstKeyboardFocusableDescendant( root );
     }
+
     return null;
   }
+  // endregion
 
   public void show() {
     super.show();
-    doAutoFocus();
-  }
-
-  public void setFocusWidget( FocusWidget widget ) {
-    focusWidget = widget;
     doAutoFocus();
   }
 

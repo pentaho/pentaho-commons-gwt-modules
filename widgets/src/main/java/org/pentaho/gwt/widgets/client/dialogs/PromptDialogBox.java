@@ -23,12 +23,14 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 @SuppressWarnings( "deprecation" )
 public class PromptDialogBox extends DialogBox {
@@ -37,6 +39,7 @@ public class PromptDialogBox extends DialogBox {
   IDialogValidatorCallback validatorCallback;
   Widget content;
   final FlexTable dialogContent = new FlexTable();
+
   protected Button okButton = null;
   protected Button notOkButton = null;
   protected Button cancelButton = null;
@@ -129,6 +132,30 @@ public class PromptDialogBox extends DialogBox {
     setContent( content );
   }
 
+  /**
+   * Gets the "OK" button.
+   * @return The "OK" button.
+   */
+  public Button getOkButton() {
+    return okButton;
+  }
+
+  /**
+   * Gets the "Not OK" button, if any.
+   * @return The "Not OK" button, if any; <code>null</code>, otherwise.
+   */
+  public Button getNotOkButton() {
+    return notOkButton;
+  }
+
+  /**
+   * Gets the "Cancel" button, if any.
+   * @return The "Cancel" button, if any; <code>null</code>, otherwise.
+   */
+  public Button getCancelButton() {
+    return cancelButton;
+  }
+
   public boolean onKeyDownPreview( char key, int modifiers ) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
@@ -171,6 +198,65 @@ public class PromptDialogBox extends DialogBox {
 
   public void setValidatorCallback( IDialogValidatorCallback validatorCallback ) {
     this.validatorCallback = validatorCallback;
+  }
+
+  /**
+   * Gets the default automatic focus widget by first delegating to
+   * {@link #getDefaultAutoFocusContentWidget()}, and, none being found,
+   * delegating to {@link #getDefaultAutoFocusButton()}.
+   *
+   * @return The default automatic focus widget.
+   */
+  @Override
+  protected Focusable getDefaultAutoFocusWidget() {
+    Focusable focusable = getDefaultAutoFocusContentWidget();
+    return focusable != null ? focusable : getDefaultAutoFocusButton();
+  }
+
+  /**
+   * Gets the default automatic focus content widget.
+   * <p>
+   *   The default implementation returns the first descendant of {@link #getContent()}
+   *   which is currently keyboard focusable, if any.
+   * </p>
+   * @return The default automatic focus content widget, if any; <code>null</code>, otherwise.
+   * @see ElementUtils#findFirstKeyboardFocusableDescendant(Widget)
+   */
+  protected Focusable getDefaultAutoFocusContentWidget() {
+    Widget content = getContent();
+    if ( content != null ) {
+      Focusable focusable = ElementUtils.findFirstKeyboardFocusableDescendant( content );
+      if ( focusable != null ) {
+        return focusable;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Gets the default automatic focus button.
+   * <p>
+   *   The default implementation returns the first keyboard focusable button
+   *   in order of less to greater dangerous/irreversible impact, i.e.,
+   *   from Cancel, Not Ok to Ok.
+   * </p>
+   * @return The default automatic focus button, if any; <code>null</code>, otherwise.
+   */
+  protected Button getDefaultAutoFocusButton() {
+    if ( ElementUtils.isKeyboardFocusableLocal( getCancelButton() ) ) {
+      return getCancelButton();
+    }
+
+    if ( ElementUtils.isKeyboardFocusableLocal( getNotOkButton() )  ) {
+      return getNotOkButton();
+    }
+
+    if ( ElementUtils.isKeyboardFocusableLocal( getOkButton() )  ) {
+      return getOkButton();
+    }
+
+    return null;
   }
 
   protected void onOk() {

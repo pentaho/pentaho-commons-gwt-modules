@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.listbox;
@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.listbox;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.ui.HasEnabled;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -80,7 +81,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @SuppressWarnings( "deprecation" )
 public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener,
-    FocusListener, KeyboardListener, ListItemListener {
+    FocusListener, KeyboardListener, ListItemListener, HasEnabled {
   protected List<ListItem> items = new ArrayList<ListItem>();
   protected int selectedIndex = -1;
   protected DropDownArrow arrow = new DropDownArrow();

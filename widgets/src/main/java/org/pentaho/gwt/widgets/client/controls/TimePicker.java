@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.controls;
 
+import com.google.gwt.user.client.ui.HasEnabled;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
@@ -39,7 +40,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings( "deprecation" )
-public class TimePicker extends HorizontalPanel implements IChangeHandler {
+public class TimePicker extends HorizontalPanel implements IChangeHandler, HasEnabled {
   protected ListBox hourLB = new ListBox();
   protected ListBox minuteLB = new ListBox();
   protected ListBox timeOfDayLB = new ListBox();
@@ -220,4 +221,7 @@ public class TimePicker extends HorizontalPanel implements IChangeHandler {
     timeOfDayLB.setEnabled( enabled );
   }
 
+  public boolean isEnabled() {
+    return hourLB.isEnabled();
+  }
 }
