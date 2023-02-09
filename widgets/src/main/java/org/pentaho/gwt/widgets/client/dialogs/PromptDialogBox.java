@@ -133,9 +133,6 @@ public class PromptDialogBox extends DialogBox {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
     switch ( key ) {
-      case KeyboardListener.KEY_ENTER:
-        onOk();
-        break;
       case KeyboardListener.KEY_ESCAPE:
         onCancel();
         break;

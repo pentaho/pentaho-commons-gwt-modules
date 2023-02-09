@@ -916,6 +916,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   }
 
   public void onLostFocus( Widget widget ) {
+    if ( visible == 1 ) {
+      popup.hide();
+    }
   }
 
   private int shiftOriginIdx = -1;
@@ -1025,11 +1028,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
           }
         }
         break;
-      case 27: // ESC
       case 13: // Enter
-        if ( popupShowing ) {
-          togglePopup();
-        }
+      case 32: // Space
+        this.togglePopup();
         break;
       case 65: // A
         if ( Event.getCurrentEvent().getCtrlKey() ) {
@@ -1090,6 +1091,16 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         return true;
       }
       return super.onEventPreview( event );
+    }
+
+    @Override
+    public boolean onKeyDownPreview( char key, int modifiers ) {
+      switch ( key ) {
+        case KeyboardListener.KEY_ESCAPE:
+          popup.hide();
+          break;
+      }
+      return true;
     }
   }
 
@@ -1158,7 +1169,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
    */
   public String getValue() {
     if ( !editable ) {
-      if( getSelectedItem() != null ) {
+      if ( getSelectedItem() != null ) {
         return getSelectedItem().getText();
       } else {
         return null;
@@ -1175,8 +1186,8 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       selectedIndex = -1;
       this.onChange( editableTextBox );
     } else {
-      for( int i = 0; i < items.size(); i++ ) {
-        if( items.get( i ).getText().equals( text ) ) {
+      for ( int i = 0; i < items.size(); i++ ) {
+        if ( items.get( i ).getText().equals( text ) ) {
           setSelectedIndex( i );
           return;
         }
