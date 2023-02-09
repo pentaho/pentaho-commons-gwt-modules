@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.toolbar;
@@ -36,6 +36,7 @@ import org.pentaho.gwt.widgets.client.text.ToolTip;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doCallRealMethod;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class ToolbarButtonTest {
@@ -133,7 +134,10 @@ public class ToolbarButtonTest {
   @Test
   public void testSetVisible() throws Exception {
     doCallRealMethod().when( button ).setVisible( anyBoolean() );
-
+    button.eventWrapper = mock( FocusPanel.class );
+    final Element eventWrapperElement = mock( Element.class );
+    when( button.eventWrapper.getElement() ).thenReturn( eventWrapperElement );
+    doNothing().when( button.eventWrapper ).setTabIndex( anyInt() );
     final boolean visible = true;
     button.setVisible( visible );
     verify( button.button ).setVisible( visible );

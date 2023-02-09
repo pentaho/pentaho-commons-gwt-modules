@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.toolbar;
@@ -202,6 +202,8 @@ public class ToolbarToggleButton extends ToolbarButton {
       public void onMouseMove( Widget arg0, int arg1, int arg2 ) {
       }
     } );
+
+    addKeyboardListener();
   }
 
   /**

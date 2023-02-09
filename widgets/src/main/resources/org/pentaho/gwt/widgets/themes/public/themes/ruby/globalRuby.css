@@ -40,7 +40,8 @@
 
 :root {
 
-  --focus-ring: 3px solid #0075ff;
+  --focus-ring-width: 3px;
+  --focus-ring: var(--focus-ring-width) solid #0075ff;
 
   /* The default `outline-offset` should cause the outline to hide the border of most elements,
      and, at the same time, not cause the outline to overflow the parent and be clipped.
@@ -1191,6 +1192,10 @@ button#schedule-dialog-select-button {
   border-top: solid 1px transparent;
   border-left: solid 1px transparent;
   border-right: solid 1px transparent;
+}
+
+.pentaho-tabWidget:focus-visible {
+  --focus-ring-offset: calc(-1 * var(--focus-ring-width));
 }
 
 .IE .pentaho-tabWidget {
