@@ -59,9 +59,9 @@ public class FlexTableDocumentOrderIterator implements Iterator<Widget> {
       // When initializing, row is -1.
       if ( row >= 0 ) {
         // Exhaust current row's cells.
-        Cell nextCell = findNextCellOfRow( row, column );
-        if ( nextCell != null ) {
-          return nextCell;
+        Cell nextCellOfRow = findNextCellOfRow( row, column );
+        if ( nextCellOfRow != null ) {
+          return nextCellOfRow;
         }
       }
 

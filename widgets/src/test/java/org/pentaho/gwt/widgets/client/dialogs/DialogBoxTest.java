@@ -152,6 +152,8 @@ public class DialogBoxTest {
     doReturn( null ).when( box ).getAutoFocusWidget();
 
     box.doAutoFocus();
+
+    // Nothing can be asserted. Provides assurance it does not throw and coverage.
   }
   // endregion
 

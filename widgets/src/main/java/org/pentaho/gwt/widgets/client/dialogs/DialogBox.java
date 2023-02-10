@@ -229,6 +229,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
    * @see #getAutoFocusWidget()
    * @deprecated Use {@link #setFocusWidget(Focusable)} instead.
    */
+  @Deprecated
   public void setFocusWidget( FocusWidget widget ) {
     setFocusWidget( (Focusable) widget );
   }

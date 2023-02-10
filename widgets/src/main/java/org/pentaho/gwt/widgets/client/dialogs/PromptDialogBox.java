@@ -223,9 +223,8 @@ public class PromptDialogBox extends DialogBox {
    * @see ElementUtils#findFirstKeyboardFocusableDescendant(Widget)
    */
   protected Focusable getDefaultAutoFocusContentWidget() {
-    Widget content = getContent();
-    if ( content != null ) {
-      Focusable focusable = ElementUtils.findFirstKeyboardFocusableDescendant( content );
+    if ( getContent() != null ) {
+      Focusable focusable = ElementUtils.findFirstKeyboardFocusableDescendant( getContent() );
       if ( focusable != null ) {
         return focusable;
       }
