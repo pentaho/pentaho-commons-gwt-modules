@@ -50,6 +50,8 @@ import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.buttons.ThemeableImageButton;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.CssUtils;
@@ -65,7 +67,7 @@ import java.util.List;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 @SuppressWarnings( "deprecation" )
-public class FileChooser extends VerticalPanel {
+public class FileChooser extends VerticalFlexPanel {
 
   public enum FileChooserMode {
     OPEN, OPEN_READ_ONLY, SAVE
@@ -99,7 +101,10 @@ public class FileChooser extends VerticalPanel {
   public FileChooser() {
     super();
 
+    addStyleName( "fileChooser" );
+
     fileNameTextBox.getElement().setId( "fileNameTextBox" );
+    fileNameTextBox.addStyleName( "fileNameTextBox" );
 
     // workaround webkit browsers quirk of not being able to set focus in a widget by clicking on it
     fileNameTextBox.addClickHandler( new ClickHandler() {
@@ -362,14 +367,18 @@ public class FileChooser extends VerticalPanel {
       }
     }
 
-    VerticalPanel locationBar = new VerticalPanel();
+    VerticalPanel locationBar = new VerticalFlexPanel();
+    locationBar.addStyleName( "locationFieldGroup" );
+
     Label locationLabel = new Label( FileChooserEntryPoint.messages.getString( "location" ) );
 
     navigationListBox = new ListBox();
     navigationListBox.getElement().setId( "navigationListBox" );
+    navigationListBox.addStyleName( "navigationListBox" );
     navigationListBox.setWidth( "350px" );
     Roles.getListboxRole().set( navigationListBox.getElement() );
-    Roles.getListboxRole().setAriaLabelProperty( navigationListBox.getElement(), locationLabel.getText() );
+    ElementUtils.setAriaLabelledBy( navigationListBox, locationLabel );
+
     // now we can find the tree nodes who match the path segments
     navigationListBox.addItem( "/", "/" );
     // Actual and Localized Path segments will be the same size based on how items get added to their lists.
@@ -401,7 +410,8 @@ public class FileChooser extends VerticalPanel {
 
     locationBar.add( locationLabel );
 
-    HorizontalPanel navigationBar = new HorizontalPanel();
+    HorizontalPanel navigationBar = new HorizontalFlexPanel();
+    navigationBar.addStyleName( "locationFieldAndUpDirGroup" );
 
     final Image upDirImage = new ThemeableImageButton( "pentaho-filechooseupbutton", null, FileChooserEntryPoint.messages.getString( "upOneLevel" ) );
     upDirImage.addMouseListener( new MouseListener() {
@@ -472,7 +482,9 @@ public class FileChooser extends VerticalPanel {
     locationBar.setWidth( "100%" );
 
     Label filenameLabel = new Label( FileChooserEntryPoint.messages.getString( "filename" ) );
-    Roles.getTextboxRole().setAriaLabelProperty( fileNameTextBox.getElement(), filenameLabel.getText() );
+    filenameLabel.addStyleName( "fileNameLabel" );
+    ElementUtils.setAriaLabelledBy( fileNameTextBox, filenameLabel );
+
     filenameLabel.setWidth( "550px" );
     add( filenameLabel );
     fileNameTextBox.setWidth( "300px" );
@@ -482,7 +494,7 @@ public class FileChooser extends VerticalPanel {
   }
 
   public Widget buildFilesList( TreeItem parentTreeItem ) {
-    VerticalPanel filesListPanel = new VerticalPanel();
+    VerticalPanel filesListPanel = new VerticalFlexPanel();
     filesListPanel.setWidth( "100%" );
 
     ScrollPanel filesScroller = new ScrollPanel();
@@ -492,21 +504,31 @@ public class FileChooser extends VerticalPanel {
     filesScroller.setStyleName( "fileChooser-scrollPanel" );
 
     FlexTable filesListTable = new FlexTable();
+    filesListTable.addStyleName( "fileChooserFilesList" );
     filesListTable.setWidth( "100%" );
     filesListTable.setCellSpacing( 0 );
 
+    // Table column header labels
+    // Ellipsis is shown on overflow, so set title with original text as fallback.
     Label nameLabel = new Label( FileChooserEntryPoint.messages.getString( "name" ), false );
+    nameLabel.setTitle( nameLabel.getText() );
     nameLabel.setStyleName( "fileChooserHeader" );
 
     Label typeLabel = new Label( FileChooserEntryPoint.messages.getString( "type" ), false );
     typeLabel.setStyleName( "fileChooserHeader" );
 
     Label dateLabel = new Label( FileChooserEntryPoint.messages.getString( "dateModified" ), false );
+    dateLabel.setTitle( dateLabel.getText() );
     dateLabel.setStyleName( "fileChooserHeader" );
 
     ElementUtils.preventTextSelection( nameLabel.getElement() );
     ElementUtils.preventTextSelection( typeLabel.getElement() );
     ElementUtils.preventTextSelection( dateLabel.getElement() );
+
+    // Ensure colgroup columns exist and can be styled via CSS.
+    filesListTable.getColumnFormatter().addStyleName( 0, "fileNameColumn" );
+    filesListTable.getColumnFormatter().addStyleName( 1, "fileOrFolderColumn" );
+    filesListTable.getColumnFormatter().addStyleName( 2, "fileDateModifiedColumn" );
 
     filesListTable.setWidget( 0, 0, nameLabel );
     filesListTable.getCellFormatter().setWidth( 0, 0, "100%" );
@@ -553,7 +575,9 @@ public class FileChooser extends VerticalPanel {
 
     final Boolean isDir = file.isFolder();
     if ( lastModDate != null ) {
-      myDateLabel = new Label( dateFormat.format( lastModDate ), false );
+      String lastModifiedDateText = dateFormat.format( lastModDate );
+      myDateLabel = new Label( lastModifiedDateText, false );
+      myDateLabel.setTitle( lastModifiedDateText );
     }
 
     String finalFileName;
@@ -587,7 +611,7 @@ public class FileChooser extends VerticalPanel {
     myNameLabel.setTitle( file.getTitle() );
     myNameLabel.setStyleName( "fileChooserCellLabel" );
 
-    HorizontalPanel fileNamePanel = new HorizontalPanel() {
+    HorizontalPanel fileNamePanel = new HorizontalFlexPanel() {
       @Override
       public void onBrowserEvent( Event event ) {
         switch ( event.getKeyCode() ) {
@@ -642,7 +666,11 @@ public class FileChooser extends VerticalPanel {
 
     if ( isDir ) {
       fileImage.addStyleName( "icon-folder" );
+      // Show title on image with the contents of `typeLabel` (see below),
+      // to maintain some accessibility when the Type column is hidden via CSS.
+      fileImage.setTitle( FileChooserEntryPoint.messages.getString( "folder" ) );
     } else {
+      fileImage.setTitle( FileChooserEntryPoint.messages.getString( "file" ) );
 
       if ( fileName.endsWith( "waqr.xaction" ) ) {
         fileImage.addStyleName( "icon-waqr-report" );
@@ -688,11 +716,17 @@ public class FileChooser extends VerticalPanel {
     if ( myDateLabel != null ) {
       ElementUtils.preventTextSelection( myDateLabel.getElement() );
     }
-    fileNamePanel.setStyleName( "fileChooserCell" );
+    fileNamePanel.addStyleName( "fileChooserCell" );
+    fileNamePanel.addStyleName( "fileChooserCellFileName" );
+
     typeLabel.setStyleName( "fileChooserCell" );
+    typeLabel.addStyleName( "fileChooserCellFileOrFolder" );
+
     if ( myDateLabel != null ) {
       myDateLabel.setStyleName( "fileChooserCell" );
+      myDateLabel.addStyleName( "fileChooserCellFileDateModified" );
     }
+
     filesListTable.setWidget( row + 1, 0, fileNamePanel );
     filesListTable.setWidget( row + 1, 1, typeLabel );
     if ( myDateLabel != null ) {

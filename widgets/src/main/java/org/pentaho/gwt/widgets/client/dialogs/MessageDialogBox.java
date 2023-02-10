@@ -35,6 +35,11 @@ import static org.pentaho.gwt.widgets.client.utils.ElementUtils.ensureId;
  *   A different element can be used, by calling {@link #setAriaDescribedBy(String)},
  *   when the content is more complex than a single text message.
  * </p>
+ * <p>
+ *   By default, the dialog is in responsive mode, {@link #isResponsive()} and has
+ *   a sizing mode, {@link #getSizingMode()}, of {@link DialogSizingMode#SIZE_TO_CONTENT},
+ *   and a width category, {@link #getWidthCategory()}, of {@link DialogWidthCategory#TEXT}.
+ * </p>
  */
 public class MessageDialogBox extends PromptDialogBox {
 
@@ -81,13 +86,18 @@ public class MessageDialogBox extends PromptDialogBox {
   }
 
   public MessageDialogBox( String title, String message, boolean isHTML, boolean autoHide, boolean modal,
-      String okText, String notOkText, String cancelText ) {
+                           String okText, String notOkText, String cancelText ) {
     this(title, isHTML ? new HTML( message ) : new Label( message ), autoHide, modal, okText, notOkText, cancelText );
   }
 
   public MessageDialogBox( String title, Widget messageContent, boolean autoHide, boolean modal,
                            String okText, String notOkText, String cancelText ) {
     super( title, okText, notOkText, cancelText, autoHide, modal, messageContent );
+
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.SIZE_TO_CONTENT );
+    setWidthCategory( DialogWidthCategory.TEXT );
+    setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
 
     // ARIA
     // Override role from "dialog" to "alertdialog".

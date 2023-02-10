@@ -39,7 +39,7 @@
 }
 
 :root {
-
+  /* FOCUS RING */
   --focus-ring-width: 3px;
   --focus-ring: var(--focus-ring-width) solid #0075ff;
 
@@ -52,6 +52,40 @@
   /* How much space the focus ring takes beyond an element's border-box to be fully visible (focus-ring-width + focus-ring-offset).
   To be used to ensure enough padding for focus outlines on containers having an overflow of hidden or auto. */
   --focus-ring-padding: 5px;
+
+  /* ACCESSIBILITY */
+  /* Minimum width for a WCAG accessible vertical scrolling layout. */
+  --a11y-min-width: 320px;
+
+  /* Minimum height for a WCAG accessible horizontal scrolling layout. */
+  --a11y-min-height: 256px;
+
+  /* DIALOG GLOBAL variables */
+  --dialog-border-width: 1px;
+
+  /* Padding, on each side */
+  --dialog-padding: 20px;
+
+  /* V space between layout rows */
+  --dialog-vertical-gap: 6px;
+
+  /* H (and V, when wrapped) space between buttons */
+  --dialog-buttons-gap: 10px;
+
+  /* Design System min/safe margin, on each side */
+  --dialog-ds-min-margin-h: calc(100% / 12);
+  --dialog-ds-min-margin-v: 80px;
+
+  --text-block-max-width: 75ch;
+
+  --typ-body-font-size: 14px;
+  --typ-body-line-height: 17px;
+}
+
+@media (max-height: 720px) {
+  :root {
+    --dialog-ds-min-margin-v: 40px;
+  }
 }
 
 html,
@@ -160,15 +194,19 @@ input[type='text'],
 textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
   border: 1px solid #CCC;
-  padding: 0 10px;
-  font-size: 14px;
-  line-height: 17px;
+  padding: 0.5em 10px;
+  font-size: var(--typ-body-font-size);
+  line-height: var(--typ-body-line-height);
+  /* height resizes with text zoom, as it is based on font size and line height
+     height = 33
+        = line-height + 2 x border + 2 x vertical-padding
+        = 17 + 2 + 14
+     */
   border-radius: 4px;
   font-family: opensansregular;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: 33px;
   color: #333333;
 }
 
@@ -226,7 +264,7 @@ SELECT,
 .gwt-ListBox {
   border: 1px solid #CCC;
   padding: 0;
-  font-size: 14px;
+  font-size: var(--typ-body-font-size);
   overflow: auto;
   border-radius: 4px;
   background-color: #fff;
@@ -240,8 +278,13 @@ SELECT[size="1"],
 SELECT:not([size]),
 .gwt-ListBox[size="1"],
 .gwt-ListBox:not([size]) {
-  height: 33px;
-  padding: 0 30px 0 10px;
+  line-height: var(--typ-body-line-height);
+  padding: 0.5em 30px 0.5em 10px;
+  /* height resizes with text zoom, as it is based on font size and line height
+     height = 33
+        = line-height + 2 x border + 2 x vertical-padding
+        = 17 + 2 + 14
+     */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -898,11 +941,93 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   color: inherit;
 }
 
-/* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
-has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
+/* GWT HorizontalFlexPanel
+   responsive class for opt-in flex behavior.
+
+   Real structure is .gwt-h-panel > tbody > tr > td
+   Yet using * to not increase specificity.
+   */
+.responsive .gwt-h-panel,
+.responsive .gwt-h-panel > *,
+.responsive .gwt-h-panel > * > *,
+.responsive .gwt-h-panel > * > * > * {
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+}
+
+.responsive .gwt-h-panel > *,
+.responsive .gwt-h-panel > * > *,
+.responsive .gwt-h-panel > * > * > * {
+  flex: auto;
+}
+
+.responsive .gwt-h-panel > * > * > * > * {
+  flex: none;
+}
+
+.responsive .gwt-h-panel > * > * > * > .gwt-h-panel {
+  flex: auto;
+}
+
+.responsive .gwt-h-panel > * > * > *[align="left"] {
+  justify-content: start;
+}
+
+.responsive .gwt-h-panel > * > * > *[align="center"] {
+  justify-content: center;
+}
+
+.responsive .gwt-h-panel > * > * > *[align="right"] {
+  justify-content: end;
+}
+
+.responsive .gwt-h-panel > * > * > *[style*="vertical-align: top"] {
+  align-items: start;
+}
+
+.responsive .gwt-h-panel > * > * > *[style*="vertical-align: middle"] {
+  align-items: center;
+}
+
+.responsive .gwt-h-panel > * > * > *[style*="vertical-align: bottom"] {
+  align-items: end;
+}
+
+/* GWT VerticalFlexPanel
+   Real structure is .gwt-v-panel > tbody > tr > td.
+   Yet, using * to not increase specificity.
+   Also, .gwt-v-panel > colgroup > col, is selected, but not really an issue.
+   */
+.responsive .gwt-v-panel,
+.responsive .gwt-v-panel > *,
+.responsive .gwt-v-panel > * > *,
+.responsive .gwt-v-panel > * > * > * {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.responsive .gwt-v-panel > *,
+.responsive .gwt-v-panel > * > *,
+.responsive .gwt-v-panel > * > * > * {
+  flex: auto;
+}
+
+.responsive .gwt-v-panel > * > * > * > * {
+  flex: none;
+}
+
+.responsive .gwt-v-panel > * > * > * > .gwt-v-panel {
+  flex: auto;
+}
+
+/* Unlike for .gwt-h-panel, no compatibility alignment rules for .gwt-v-panel. Seemed to harm more than helped. */
+
+/* DIALOG */
 .pentaho-dialog,
 .bootstrap .modal.pentaho-dialog {
-  border: 1px solid #CCC;
+  border: var(--dialog-border-width) solid #CCC;
   z-index: 1050;
   position: absolute;
   background: #FFF;
@@ -1072,8 +1197,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialog-content {
   padding: 0 !important;
-  /* font-size: 14px; */
- /* line-height: 20px;*/
   color: #333;
 }
 
@@ -1160,6 +1283,251 @@ button#schedule-dialog-select-button {
 .error-login-dialog {
   z-index: 2100;
 }
+
+/* region DIALOG RESPONSIVE - BEGIN */
+/*
+  Prompt Dialog      [overflow-y, max-width, max-height]
+    Inner [min-width, min-height]
+      Header/Caption   [v-flex: none, ellipsis]
+      Content          [v-flex: auto, overflow]
+        Inner...       [min-height]
+      Buttons          [v-flex: none, ellipsis, wrap, align-end]
+
+   See also JavaDocs for Pentaho GWT's DialogBox.DialogSizingMode (ds-), DialogBox.DialogWidthCategory (dw-)
+   and DialogBox.DialogMinimumHeightCategory (dmh-).
+*/
+.pentaho-dialog.responsive {
+  /* DIALOG LOCAL variables - override on specific dialogs */
+
+  /* Desired maximum OUTER width/height.
+     Subject to design-system margins and viewport.
+     Default to unconstrained.
+   */
+
+  /* Override or use one of the predefined dw- classes. */
+  --dialog-max-width: 100vw;
+
+  --dialog-max-height: 100vh;
+
+  /* Desired min-width/height. Defaults are A11Y mins. */
+  --dialog-min-width: var(--a11y-min-width);
+  /* See also reference "Sync with --dialog-min-height" */
+  --dialog-min-height: var(--a11y-min-height);
+
+  --priv-dialog-borders-paddings: calc( 2 * var(--dialog-padding) + 2 * var(--dialog-border-width));
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Body and buttons' sections' H scrollbars shown when their content exceeds min-width. */
+  overflow-x: hidden;
+
+  /* Last resort V scrollbar, shown on very short viewports.
+     Body V scrollbar appears first, when shorter than its children's total min-height.
+   */
+  overflow-y: auto;
+
+  /* Use Grid System (GS) max width/height, unless it would violate defined dialog min/max settings.
+
+     E.g. for FILL_VIEWPORT_WIDTH mode. The dialog would be as wide as the viewport minus the GS margins,
+     yet no wider than the desired --dialog-max-width.
+     By reducing the viewport width, eventually, the dialog width could become < min-width, to meet the GS margins.
+     Instead, its min-width is respected, causing GS margins to eventually reach 0.
+   */
+  max-width: clamp(
+      var(--dialog-min-width),
+      calc(100vw - 2 * var(--dialog-ds-min-margin-h)),
+      var(--dialog-max-width));
+
+  /* Dialog cannot grow taller than the viewport. Show outer V scrollbar, instead. */
+  max-height: min(
+      clamp(
+          var(--dialog-min-height),
+          calc(100vh - 2 * var(--dialog-ds-min-margin-v)),
+          var(--dialog-max-height)),
+      100vh);
+
+  padding: 0;
+}
+
+.pentaho-dialog.responsive > * {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+
+  min-width: calc(var(--dialog-min-width) - 2 * var(--dialog-border-width));
+  min-height: calc(var(--dialog-min-height) - 2 * var(--dialog-border-width));
+}
+
+.pentaho-dialog.responsive.dmh-content > * {
+  /* Disables body V scrollbar.
+     Displays the outer V scrollbar when dialog H cannot accommodate the body's min-height.
+   */
+  min-height: auto;
+}
+/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
+   when reaching min height. */
+@media (max-height: 256px) {
+  .pentaho-dialog.responsive > * {
+    min-height: auto;
+  }
+}
+
+.pentaho-dialog.responsive.ds-fill-viewport-width,
+.pentaho-dialog.responsive.ds-fill-viewport,
+.pentaho-dialog.responsive.ds-full-viewport {
+  /* Expand as much as allowed by max-width */
+  width: 100%;
+}
+
+.pentaho-dialog.responsive.ds-fill-viewport,
+.pentaho-dialog.responsive.ds-full-viewport {
+  /* Expand as much as allowed by max-height */
+  height: 100%;
+}
+
+.pentaho-dialog.responsive.ds-full-viewport {
+  /* Ignore grid system max width/height */
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.pentaho-dialog.responsive.dw-min {
+  --dialog-max-width: var(--a11y-min-width);
+}
+
+.pentaho-dialog.responsive.dw-text {
+  --dialog-max-width: calc(var(--text-block-max-width) + var(--priv-dialog-borders-paddings));
+}
+
+.pentaho-dialog.responsive.dw-xs {
+  --dialog-max-width: 448px;
+}
+
+.pentaho-dialog.responsive.dw-sm {
+  --dialog-max-width: 672px;
+}
+
+.pentaho-dialog.responsive.dw-md {
+  --dialog-max-width: 880px;
+}
+
+.pentaho-dialog.responsive.dw-lg {
+  --dialog-max-width: 1096px;
+}
+
+.pentaho-dialog.responsive.dw-xl {
+  --dialog-max-width: 1300px;
+}
+
+.pentaho-dialog.responsive .Caption {
+  flex: none;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: var(--dialog-padding);
+}
+
+.pentaho-dialog.responsive .dialog-content {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: 0 var(--dialog-padding) var(--dialog-padding) !important;
+  gap: var(--dialog-vertical-gap);
+}
+
+.pentaho-dialog.responsive .button-panel {
+  flex: none;
+  overflow: hidden;
+  margin: 0;
+  padding: var(--dialog-padding);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: end;
+  gap: var(--dialog-buttons-gap);
+}
+
+.pentaho-dialog.responsive .button-panel .pentaho-button {
+  flex: 0 1 auto;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* endregion DIALOG RESPONSIVE - END */
+
+/* region GWT DialogBox, PromptDialogBox RESPONSIVE */
+.pentaho-dialog.pentaho-gwt.responsive {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.pentaho-dialog.pentaho-gwt.responsive > * > table,
+.pentaho-dialog.pentaho-gwt.responsive > * > table > tbody,
+
+/* Body row (contains Content and Buttons section) */
+.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle,
+.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter,
+/* a.k.a. .dialogContent */
+.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter > *,
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table,
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table > tbody {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table {
+  flex: auto;
+}
+
+/* Dialog header */
+.pentaho-dialog.pentaho-gwt.responsive .dialogTop,
+.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter,
+.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter > div {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dialog content */
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table .prompt-dialog-content-row {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Dialog buttons */
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-row,
+.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-cell {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+
+.pentaho-dialog.responsive.pentaho-gwt .button-panel {
+  width: auto !important;
+}
+
+.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr {
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: var(--dialog-buttons-gap);
+}
+
+.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr > td {
+    flex: 0 1 auto;
+}
+/* endregion GWT DialogBox, PromptDialogBox RESPONSIVE */
 
 /**/
 .glasspane {
@@ -3595,10 +3963,13 @@ div.dijitDateTextBox.dijitComboBox {
   width: 22px;
 }
 
+.fileChooser {
+  --file-chooser-line-height: 26px;
+}
 .fileChooserCellLabel,
 .fileChooserCell.fileChooserCell {
   padding: 0 5px;
-  line-height: 26px;
+  line-height: var(--file-chooser-line-height);
 }
 
 .fileChooserCell:hover:not(.pentaho-file-chooser-selection) {
@@ -3716,6 +4087,12 @@ div.dijitDateTextBox.dijitComboBox {
 
 .icon-medium.icon-edit.disabled {
   background: url('../images/editContent_32_disabled.png');
+}
+
+.fileChooser .icon-small {
+  width: calc(1em * 22/14);
+  height: auto;
+  background-size: 100%;
 }
 
 /* added by brett to override anlyzer styles */
@@ -4229,14 +4606,15 @@ div.dijitDateTextBox.dijitComboBox {
   border-left: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr > td:last-child {
-  /*border-right: 1px solid #e0e0e0;*/
-}
-
 .fileChooser-scrollPanel > div > table > tbody > tr:first-child > td {
   border: 1px solid #cccccc;
   border-right: 0 none;
   border-top: 0 none;
+}
+
+.fileChooser-scrollPanel > div > table > tbody > tr:first-child {
+  position: sticky;
+  top: 0;
 }
 
 .fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:last-child {
@@ -4253,7 +4631,7 @@ div.dijitDateTextBox.dijitComboBox {
   padding-left: 5px;
   padding-right: 5px;
   font-size: 14px;
-  line-height: 26px;
+  line-height: var(--file-chooser-line-height);
   color: #FFF;
   cursor: default;
 }
@@ -4291,11 +4669,143 @@ div.dijitDateTextBox.dijitComboBox {
   text-decoration: none;
 }
 
-.fileChooser-scrollPanel {
+/* FileChooserDialog BEGIN */
+.fileChooserDialog .dialog-content > table,
+.fileChooserDialog .dialog-content > table > tbody,
+.fileChooserDialog .dialog-content > table > tbody > tr,
+.fileChooserDialog .dialog-content > table > tbody > tr > td {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileChooserDialog .fileChooser > tbody,
+.fileChooserDialog .locationFieldGroup > tbody {
+  gap: var(--dialog-vertical-gap);
+}
+
+.fileChooserDialog .dialog-content > table,
+.fileChooserDialog .dialog-content > table > tbody {
+  flex: auto;
+}
+
+/* File name and Location rows are not allowed to resize vertically. */
+.fileChooserDialog .dialog-content > table > tbody > tr,
+.fileChooserDialog .dialog-content > table > tbody > tr > td {
+  flex: none;
+}
+
+/* File/Folder table row is allowed to resize vertically. */
+.fileChooserDialog .dialog-content > table > tbody > tr:last-child,
+.fileChooserDialog .dialog-content > table > tbody > tr:last-child > td,
+.fileChooserDialog .dialog-content > table > tbody > tr:last-child > td > * {
+  flex: auto;
+}
+
+.fileChooserDialog .fileNameLabel {
+  width: auto !important;
+}
+
+.fileChooserDialog .fileNameTextBox {
+  width: auto !important;
+  max-width: 100ch;
+}
+
+/* Clear width on td holding the UpDir image. */
+.fileChooserDialog .locationFieldAndUpDirGroup > tbody > tr > td:last-child {
+  flex: none;
+  width: auto;
+}
+
+/* Artificially increasing specificity to beat gwt-h-panel's flex */
+.fileChooserDialog .navigationListBox.navigationListBox {
+  width: 100% !important;
+  flex: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
+/* Artificially increasing specificity... */
+.fileChooserDialog .fileChooser-scrollPanel.fileChooser-scrollPanel {
   background-color: white;
   border: 1px solid #CCC;
-  height: 220px;
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  height: calc(9 * var(--file-chooser-line-height));
+  min-height: calc(3 * var(--file-chooser-line-height));
 }
+
+.fileChooserDialog .fileChooser-scrollPanel > div {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+}
+
+.fileChooserFilesList {
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+/* FileName column header cell */
+.fileChooserFilesList > colgroup > .fileNameColumn {
+  width: 55%;
+}
+.fileChooserFilesList > tbody > tr:first-child > td:first-child {
+  width: auto !important;
+}
+
+/* Type - File or Folder column */
+.fileChooserFilesList > colgroup > .fileOrFolderColumn {
+  width: 10ch;
+}
+
+.fileChooserHeader,
+.fileChooserCellLabel,
+.fileChooserCell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fileChooserCellFileName {
+  width: 100%;
+}
+
+/* file icon td */
+.fileChooserCellFileName > tbody > tr > td:first-child {
+  flex: none;
+}
+
+/* file name td */
+.fileChooserCellFileName,
+.fileChooserCellFileName > tbody,
+.fileChooserCellFileName > tbody > tr,
+.fileChooserCellFileName > tbody > tr > td:last-child {
+  flex: auto;
+  min-width: 0;
+}
+
+/* file name div */
+.fileChooserCellFileName > tbody > tr > td:last-child > * {
+  flex: auto;
+}
+
+@media all and (max-width: 600px) {
+  .fileChooserFilesList > colgroup > .fileOrFolderColumn,
+  .fileChooserFilesList > tbody > tr > td:nth-child(2) {
+    display: none;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .fileChooserFilesList > colgroup > .fileDateModifiedColumn,
+  .fileChooserFilesList > tbody > tr > td:nth-child(3) {
+    display: none;
+  }
+}
+/* FileChooserDialog END */
 
 /*  end browser styles */
 #reportPageOutline {
@@ -5767,12 +6277,15 @@ span.gwt-RadioButton label {
 
 .pentaho-filechooseupbutton {
   background-image: url("images/up.png");
-  width: 22px;
-  height: 22px;
+  /* 22px on 14px font */
+  width: calc(1em * 22/14);
+  height: auto;
   cursor: pointer;
   padding: 4px;
   background-repeat: no-repeat;
   background-position: 2px 4px;
+  background-size: 75%;
+  align-self: center;
 }
 
 .IE #browse-properties-dialog {

@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.Window;
-import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
@@ -56,7 +55,12 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
                             String title, String okText ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
 
-    showGlassPane();
+    addStyleName( "fileChooserDialog" );
+
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
+    setWidthCategory( DialogWidthCategory.SMALL );
+
     setupNativeHooks();
 
     fileChooser = new FileChooser( mode, selectedPath, new IDialogCallback() {
@@ -180,11 +184,17 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree,
                             boolean autoHide, boolean modal, String title, String okText, boolean showHiddenFiles ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
+
+    addStyleName( "fileChooserDialog" );
+
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
+    setWidthCategory( DialogWidthCategory.SMALL );
+
     fileChooser = new FileChooser( showHiddenFiles );
 
     setContent( fileChooser );
 
-    fileChooser.setWidth( "100%" );
     fileChooser.setMode( mode );
 
     final boolean isLazy = fileTree == null;
@@ -366,30 +376,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     for ( FileChooserListener listener : listeners ) {
       listener.dialogCanceled();
     }
-  }
-
-  @Override
-  public void hide() {
-    GlassPane.getInstance().hide();
-
-    super.hide();
-  }
-
-  @Override
-  public void center() {
-    super.center();
-    setFocus();
-  }
-
-  private void showGlassPane() {
-    GlassPane.getInstance().show();
-
-    super.initializePageBackground();
-    super.block();
-  }
-
-  private void setFocus() {
-    fileChooser.fileNameTextBox.setFocus( true );
   }
 
   public boolean isSubmitOnEnter() {

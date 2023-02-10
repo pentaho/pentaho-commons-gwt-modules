@@ -19,6 +19,7 @@ package org.pentaho.gwt.widgets.client.utils;
 
 import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Property;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
@@ -44,12 +45,16 @@ public class ElementUtils {
   private static AbsolutePanel sandbox = new AbsolutePanel(); // Used to find the size of elements
 
   static {
-    sandbox.getElement().getStyle().setProperty( "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "overflow", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "width", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "height", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    RootPanel.get().add( sandbox );
+    // RootPanel.get().add( . ) fails when running Java unit tests.
+    // GWT.isClient() is false when GWT is running in Java.
+    if ( GWT.isClient() ) {
+      sandbox.getElement().getStyle().setProperty( "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "overflow", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "width", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "height", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
 
+      RootPanel.get().add( sandbox );
+    }
   }
 
   public static native void blur( Element e )/*-{
