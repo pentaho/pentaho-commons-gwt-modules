@@ -17,7 +17,9 @@
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
@@ -26,16 +28,33 @@ import org.pentaho.gwt.widgets.client.dialogs.DialogBox.DialogMinimumHeightCateg
 import org.pentaho.gwt.widgets.client.dialogs.DialogBox.DialogSizingMode;
 import org.pentaho.gwt.widgets.client.dialogs.DialogBox.DialogWidthCategory;
 
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith( GwtMockitoTestRunner.class )
 @SuppressWarnings( "deprecation" )
 public class DialogBoxTest {
+
+  private DialogBox createDialogBoxSpyForShowHide() {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    doNothing().when( boxSpy ).initializePageBackground();
+    doNothing().when( boxSpy ).blockPageBackground();
+    doNothing().when( boxSpy ).toggleEmbedVisibility( anyBoolean() );
+    doReturn( mock( GlassPane.class ) ).when( boxSpy ).getGlassPane();
+
+    return boxSpy;
+  }
+
   @Test
   public void testOnKeyDownPreview() {
     DialogBox boxMock = mock( DialogBox.class );
@@ -45,20 +64,130 @@ public class DialogBoxTest {
     verify( boxMock, times( 1 ) ).hide();
   }
 
+  // region focus
   @Test
-  public void testSetFocusWidget() throws Exception {
-    DialogBox box = mock( DialogBox.class );
-    doCallRealMethod().when( box ).setFocusWidget( any( FocusWidget.class ) );
-    doCallRealMethod().when( box ).getAutoFocusWidget();
-    doCallRealMethod().when( box ).doAutoFocus();
+  public void testSetFocusWidgetRespectsGivenValue() throws Exception {
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    doReturn( true ).when( box ).isShowing();
-    doReturn( true ).when( box ).isVisible();
+    // Non-null
+    FocusWidget focusWidgetMock = mock( FocusWidget.class );
+    when( focusWidgetMock.getElement() ).thenReturn( mock( Element.class ) );
 
-    final FocusWidget focusWidget = mock( FocusWidget.class );
-    box.setFocusWidget( focusWidget );
-    verify( focusWidget ).setFocus( true );
+    boxSpy.setFocusWidget( focusWidgetMock );
+
+    assertSame( focusWidgetMock, boxSpy.getFocusWidget() );
+
+    // Null
+    boxSpy.setFocusWidget( null );
+
+    assertNull( boxSpy.getFocusWidget() );
   }
+
+  @Test
+  public void testSetFocusWidgetCallsDoAutoFocusWhenGivenNonNull() throws Exception {
+    DialogBox boxSpy = spy( new DialogBox() );
+    doReturn( true ).when( boxSpy ).isShowing();
+    doReturn( true ).when( boxSpy ).isVisible();
+
+    FocusWidget focusWidgetMock = mock( FocusWidget.class );
+    when( focusWidgetMock.getElement() ).thenReturn( mock( Element.class ) );
+
+    boxSpy.setFocusWidget( focusWidgetMock );
+
+    verify( boxSpy, times( 1 ) ).doAutoFocus();
+
+    assertSame( focusWidgetMock, boxSpy.getFocusWidget() );
+  }
+
+  @Test
+  public void testSetFocusWidgetDoesNotCallAutoFocusWhenGivenNull() throws Exception {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    boxSpy.setFocusWidget( null );
+
+    verify( boxSpy, never() ).doAutoFocus();
+  }
+
+  @Test
+  public void testSetFocusWidgetRemovesAutoFocusAttributeFromPreviousElement() throws Exception {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    FocusWidget previousFocusWidgetMock = mock( FocusWidget.class );
+    when( previousFocusWidgetMock.getElement() ).thenReturn( mock( Element.class ) );
+
+    boxSpy.setFocusWidget( previousFocusWidgetMock );
+
+    boxSpy.setFocusWidget( null );
+
+    verify( previousFocusWidgetMock.getElement(), times( 1 ) ).removeAttribute( "autofocus" );
+  }
+
+  @Test
+  public void testSetFocusWidgetSetsAutoFocusAttributeOnNewElement() throws Exception {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    FocusWidget focusWidgetMock = mock( FocusWidget.class );
+    when( focusWidgetMock.getElement() ).thenReturn( mock( Element.class ) );
+
+    boxSpy.setFocusWidget( focusWidgetMock );
+
+    verify( focusWidgetMock.getElement(), times( 1 ) ).setAttribute( "autofocus", "" );
+  }
+
+  @Test
+  public void testDoAutoFocus() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    doReturn( true ).when( boxSpy ).isShowing();
+    doReturn( true ).when( boxSpy ).isVisible();
+
+    boxSpy.doAutoFocus();
+
+    verify( boxSpy ).autoFocusOpenJsDialog();
+  }
+
+  @Test
+  public void testSetRestoreFocus() {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    boxSpy.setRestoreFocus( true );
+
+    verify( boxSpy ).syncOpenJsDialogRestoreFocus();
+
+    assertTrue( boxSpy.isRestoreFocus() );
+
+    // ---
+
+    boxSpy.setRestoreFocus( false );
+
+    assertFalse( boxSpy.isRestoreFocus() );
+  }
+
+  @Test
+  public void testSetRestoreFocusWidget() {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    final Focusable focusableMock = mock( Focusable.class );
+    boxSpy.setRestoreFocusWidget( focusableMock );
+
+    verify( boxSpy ).syncOpenJsDialogRestoreFocus();
+
+    assertSame( focusableMock, boxSpy.getRestoreFocusWidget() );
+  }
+
+  @Test
+  public void testSetFocusButtons() {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    @SuppressWarnings( "unchecked" )
+    List<Focusable> focusButtonsMock = (List<Focusable>) mock( List.class );
+
+    boxSpy.setFocusButtons( focusButtonsMock );
+
+    verify( boxSpy ).syncOpenJsDialogButtons();
+
+    assertThat( boxSpy.getFocusButtons(), is( focusButtonsMock ) );
+  }
+  // endregion
 
   // region responsive property
   @Test
@@ -317,5 +446,65 @@ public class DialogBoxTest {
 
     verify( boxSpy, never() ).addStyleName( DialogMinimumHeightCategory.MINIMUM.getStyleName() );
   }
+  // endregion
+
+  // region hide()
+  @Test
+  public void testHideUnregistersResizeHandler() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.hide( false );
+
+    verify( boxSpy ).unregisterResizeHandler();
+  }
+
+  @Test
+  public void testHideClosesOpenJsDialog() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.hide( false );
+
+    verify( boxSpy ).closeOpenJsDialog();
+  }
+  // endregion
+
+  // region show()
+  @Test
+  public void testShowWhenShowingReturnsImmediately() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+    doReturn( true ).when( boxSpy ).isShowing();
+
+    boxSpy.show();
+
+    verify( boxSpy, never() ).initializeResizeHandler();
+  }
+
+  @Test
+  public void testShowInitializesResizeHandler() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.show();
+
+    verify( boxSpy, times(   1 ) ).initializeResizeHandler();
+  }
+
+  @Test
+  public void testShowHidesEmbeds() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.show();
+
+    verify( boxSpy, times(   1 ) ).toggleEmbedVisibility( false );
+  }
+
+  @Test
+  public void testShowOpensJsDialog() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.show();
+
+    verify( boxSpy, times(   1 ) ).openJsDialog();
+  }
+
   // endregion
 }

@@ -12,20 +12,38 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class PromptDialogBoxTest {
+
+  public static class PromptDialogBoxForTesting extends PromptDialogBox {
+    public PromptDialogBoxForTesting( String title, String okText, String notOkText, String cancelText ) {
+      super( title, okText, notOkText, cancelText );
+    }
+
+    @Override
+    void initializeDialogContent( HorizontalPanel dialogButtonPanelWrapper ) {
+      // Does not behave well with testing.
+    }
+  }
+
   @Test
   @SuppressWarnings( "deprecation" )
   public void testOnKeyDownPreview() throws Exception {
@@ -80,4 +98,43 @@ public class PromptDialogBoxTest {
 
     verify( callback ).cancelPressed();
   }
+
+  // region Focus Buttons
+  @Test
+  public void testSetFocusButtonsOrderIsCancelThenNotOkThenOk() {
+    PromptDialogBox boxSpy = new PromptDialogBoxForTesting( "title", "ok", "not ok", "cancel" );
+
+    List<Focusable> focusButtons = boxSpy.getFocusButtons();
+    assertEquals( 3, focusButtons.size() );
+    assertSame( boxSpy.cancelButton, focusButtons.get( 0 ) );
+    assertSame( boxSpy.notOkButton, focusButtons.get( 1 ) );
+    assertSame( boxSpy.okButton, focusButtons.get( 2 ) );
+  }
+
+  @Test
+  public void testSetFocusButtonsOnlyContainsDefinedButtons() {
+    // Cancel, Ok
+    PromptDialogBox box = new PromptDialogBoxForTesting( "title", "ok", null, "cancel" );
+
+    List<Focusable> focusButtons = box.getFocusButtons();
+    assertEquals( 2, focusButtons.size() );
+    assertSame( box.cancelButton, focusButtons.get( 0 ) );
+    assertSame( box.okButton, focusButtons.get( 1 ) );
+
+    // NotOk, Ok
+    box = new PromptDialogBoxForTesting( "title", "ok", "not ok", null );
+
+    focusButtons = box.getFocusButtons();
+    assertEquals( 2, focusButtons.size() );
+    assertSame( box.notOkButton, focusButtons.get( 0 ) );
+    assertSame( box.okButton, focusButtons.get( 1 ) );
+
+    // Ok
+    box = new PromptDialogBoxForTesting( "title", "ok", null, null );
+
+    focusButtons = box.getFocusButtons();
+    assertEquals( 1, focusButtons.size() );
+    assertSame( box.okButton, focusButtons.get( 0 ) );
+  }
+  // endregion
 }

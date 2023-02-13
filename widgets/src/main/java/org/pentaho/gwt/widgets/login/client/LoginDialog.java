@@ -268,11 +268,6 @@ public class LoginDialog extends PromptDialogBox {
       loginPanel.add( newWindowChk );
     }
 
-    userTextBox.setTabIndex( 1 );
-    passwordTextBox.setTabIndex( 2 );
-    if ( reallyShowNewWindowOption ) {
-      newWindowChk.setTabIndex( 3 );
-    }
     passwordTextBox.setText( "" ); //$NON-NLS-1$
     setFocusWidget( userTextBox );
 

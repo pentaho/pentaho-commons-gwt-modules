@@ -20,21 +20,23 @@ package org.pentaho.gwt.widgets.client.dialogs;
 import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Role;
 import com.google.gwt.aria.client.Roles;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.PopupListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
+import java.util.List;
 
 import static org.pentaho.gwt.widgets.client.utils.ElementUtils.ensureId;
 
@@ -250,6 +252,9 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   private static int clickCount = 0;
   private static int dialogDepthCount = 0;
   private FocusWidget focusWidget = null;
+  private List<Focusable> focusButtons = null;
+  private boolean restoreFocus = true;
+  private Focusable restoreFocusWidget = null;
   private boolean responsive;
   private DialogSizingMode sizingMode = DialogSizingMode.SIZE_TO_CONTENT;
   private DialogWidthCategory widthCategory = DialogWidthCategory.MAXIMUM;
@@ -584,29 +589,10 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     doAutoFocus();
   }
 
-  public Focusable getAutoFocusWidget() {
-    if ( focusWidget != null ) {
-      return focusWidget;
-    }
-
-    return getDefaultFocusWidget();
-  }
-
-  protected void doAutoFocus() {
+  public void doAutoFocus() {
     if ( isShowing() && isVisible() ) {
-      Focusable autoFocusWidget = getAutoFocusWidget();
-      if ( autoFocusWidget != null ) {
-        autoFocusWidget.setFocus( true );
-      }
+      autoFocusOpenJsDialog();
     }
-  }
-
-  private Focusable getDefaultFocusWidget() {
-    Widget root = getWidget();
-    if ( root != null ) {
-      return ElementUtils.findFirstKeyboardFocusableDescendant( root );
-    }
-    return null;
   }
 
   public void show() {
@@ -623,12 +609,12 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
       dialogDepthCount++;
     }
 
-    doAutoFocus();
-
     toggleEmbedVisibility( false );
 
     // Notify listeners that we're showing a dialog (hide PDFs, flash).
     getGlassPane().show();
+
+    openJsDialog();
   }
 
   GlassPane getGlassPane() {
@@ -636,9 +622,9 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   }
 
   void toggleEmbedVisibility( boolean visible ) {
-    // show oe hide <embeds>
+    // show or hide <embeds>
     // TODO: migrate to GlassPane Listener
-    FrameUtils.toggleEmbedVisibility( false );
+    FrameUtils.toggleEmbedVisibility( visible );
   }
 
   void initializeResizeHandler() {
@@ -658,14 +644,137 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     center();
   }
 
+  // region Focus
+  /**
+   * Gets the widget explicitly set to receive the focus when the dialog is shown.
+   * @return The widget to receive focus, if any; <code>null</code>, otherwise.
+   */
+  public FocusWidget getFocusWidget() {
+    return focusWidget;
+  }
+
+  /**
+   * Explicitly sets the focus widget that should receive keyboard focus when the dialog is shown.
+   * <p>
+   *   If set to a non-null value when the dialog is currently showing,
+   *   immediately sets the focus to the specified widget.
+   * </p>
+   * @param widget The focus widget.
+   * @see #doAutoFocus()
+   */
   public void setFocusWidget( FocusWidget widget ) {
+    if ( focusWidget != null ) {
+      setAutoFocus( focusWidget.getElement(), false );
+    }
+
     focusWidget = widget;
+
+    if ( focusWidget != null ) {
+      setAutoFocus( focusWidget.getElement(), true );
+
+      doAutoFocus();
+    }
+  }
+
+  /**
+   * Configures an element to automatically receive focus in a dialog.
+   * @param element The element.
+   * @param isAutoFocus <code>true</code> if the element receives the focus automatically;
+   *                    <code>false</code>, otherwise.
+   */
+  public static void setAutoFocus( Element element, boolean isAutoFocus ) {
+    if ( isAutoFocus ) {
+      element.setAttribute( "autofocus", "" );
+    } else {
+      element.removeAttribute( "autofocus" );
+    }
+  }
+
+  /**
+   * Gets the widgets of the buttons section on which focus can be placed, in order of priority.
+   * @return The list of focus buttons, if any, or <code>null</code>.
+   */
+  public List<Focusable> getFocusButtons() {
+    return focusButtons;
+  }
+
+  /**
+   * Sets the widgets of the buttons section on which focus can be placed, in order of priority.
+   * <p>
+   *   If the dialog is already showing and visible, also performs autofocus.
+   * </p>
+   * @param focusButtons The button widgets. Defaults to all buttons of the panel with the `.button-panel` class,
+   *                     in document order.
+   */
+  public void setFocusButtons( List<Focusable> focusButtons ) {
+    this.focusButtons = focusButtons;
+
+    syncOpenJsDialogButtons();
+
     doAutoFocus();
   }
+
+  /**
+   * Gets whether focus is restored when the dialog is hidden.
+   * <p>
+   *   Enabled by default.
+   * </p>
+   */
+  protected boolean isRestoreFocus() {
+    return restoreFocus;
+  }
+
+  /**
+   * Sets whether focus is restored when the dialog is hidden.
+   * <p>
+   *   When enabled, focus is restored to either the element which had the focus when
+   *   the dialog was shown or to the element of the fixed widget set with {@link #setRestoreFocusWidget(Focusable)}.
+   * </p>
+   * @param restoreFocus <code>true</code> to restore focus; <code>false</code> to not restore focus.
+   */
+  protected void setRestoreFocus( boolean restoreFocus ) {
+    this.restoreFocus = restoreFocus;
+
+    syncOpenJsDialogRestoreFocus();
+  }
+
+  /**
+   * Gets the fixed widget to which focus should be restored when the dialog is hidden.
+   * <p>
+   *   This property is only applicable when focus restoration is enabled via {@link #setRestoreFocus(boolean)}.
+   * </p>
+   * @return The widget to restore focus to.
+   */
+  protected Focusable getRestoreFocusWidget() {
+    return restoreFocusWidget;
+  }
+
+  /**
+   * Sets a fixed widget to which focus should be restored when the dialog is hidden.
+   * <p>
+   *   This property is only applicable when focus restoration is enabled via {@link #setRestoreFocus(boolean)}.
+   * </p>
+   *
+   * @param restoreFocusWidget The fixed widget to restore focus to.
+   *                           When <code>null</code>, the default, focus is restored to the element which had
+   *                           the focus when the dialog was shown.
+   */
+  protected void setRestoreFocusWidget( Focusable restoreFocusWidget ) {
+    this.restoreFocusWidget = restoreFocusWidget;
+
+    syncOpenJsDialogRestoreFocus();
+  }
+  // endregion
 
   @Override
   public void hide( boolean autoClosed ) {
     unregisterResizeHandler();
+
+    // Should be called before super.hide( . ), which removes the dialog element from the DOM.
+    // In this way, focus may still be within the dialog when focus restoration happens.
+    // Note that focus may have left the dialog already, if, for example, the ok or cancel handlers,
+    // opened another dialog before calling this method, in which case focus restoration does not happen.
+    closeOpenJsDialog();
 
     super.hide( autoClosed );
   }
@@ -702,5 +811,104 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     if ( newStyleName != null ) {
       addStyleName( newStyleName );
     }
+  }
+
+  // region JS Dialog bridge
+  protected void openJsDialog() {
+    // One modeless dialogs was found in PUC (opened by UrlCommand)!
+    // And JsDialog would likely need additional "care" if modeless dialogs were fully supported.
+    // For now, only focus trapping is disabled for modeless dialogs.
+    boolean trapFocus = isModal();
+
+    JsDialogContext.open(
+      getElement(),
+      getElementsOf( getFocusButtons() ),
+      trapFocus,
+      true,
+      getElementOf( getRestoreFocusWidget() ) );
+  }
+
+  protected boolean isJsDialogOpen() {
+    return JsDialogContext.isOpen( getElement() );
+  }
+
+  protected void autoFocusOpenJsDialog() {
+    if ( isJsDialogOpen() ) {
+      JsDialogContext.autoFocus( getElement() );
+    }
+  }
+
+  protected void syncOpenJsDialogButtons() {
+    if ( isJsDialogOpen() ) {
+      JsDialogContext.setButtons( getElement(), getElementsOf( getFocusButtons() ) );
+    }
+  }
+
+  protected void syncOpenJsDialogRestoreFocus() {
+    if ( isJsDialogOpen() ) {
+      JsDialogContext.setRestoreFocus( getElement(), isRestoreFocus(), getElementOf( getRestoreFocusWidget() ) );
+    }
+  }
+
+  protected void closeOpenJsDialog() {
+    if ( isJsDialogOpen() ) {
+      JsDialogContext.close( getElement() );
+    }
+  }
+
+  protected static class JsDialogContext {
+    private JsDialogContext() {
+    }
+
+    public static native void open(
+      Element dialog,
+      Element[] buttonElems,
+      boolean trapFocus,
+      boolean restoreFocus,
+      Element restoreFocusElem )/*-{
+
+      $wnd.pho.util._dialog
+          .create(dialog)
+          .setButtons(buttonElems)
+          .setAutoFocus(true)
+          .setTrapFocus(trapFocus)
+          .setRestoreFocus(restoreFocus ? (restoreFocusElem || true) : false)
+          .open();
+    }-*/;
+
+    public static native boolean isOpen( Element dialog )/*-{
+      return $wnd.pho.util._dialog.getOpen(dialog) != null;
+    }-*/;
+
+    public static native void setAutoFocus( Element dialog, boolean autoFocus )/*-{
+      $wnd.pho.util._dialog.getOpen(dialog).setAutoFocus(autoFocus);
+    }-*/;
+
+    public static native void setRestoreFocus( Element dialog, boolean restoreFocus, Element restoreFocusElem )/*-{
+      $wnd.pho.util._dialog.getOpen(dialog).setRestoreFocus(restoreFocus ? (restoreFocusElem || true) : false);
+    }-*/;
+
+    public static native void setButtons( Element dialog, Element[] buttonElems )/*-{
+      $wnd.pho.util._dialog.getOpen(dialog).setButtons(buttonElems);
+    }-*/;
+
+    public static native void autoFocus( Element dialog )/*-{
+      $wnd.pho.util._dialog.getOpen(dialog).autoFocus();
+    }-*/;
+
+    public static native void close( Element dialog )/*-{
+      $wnd.pho.util._dialog.getOpen(dialog).close();
+    }-*/;
+  }
+  // endregion
+
+  private static Element getElementOf( Focusable focusable ) {
+    return focusable != null ? ( (Widget) focusable ).getElement() : null;
+  }
+
+  private static Element[] getElementsOf( List<Focusable> focusables ) {
+    return focusables != null
+      ? focusables.stream().map( DialogBox::getElementOf ).toArray( Element[]::new )
+      : null;
   }
 }
