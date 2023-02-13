@@ -37,12 +37,12 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings( "deprecation" )
 public class DialogBoxTest {
   @Test
-  public void testOnKeyDownPreview() throws Exception {
-    DialogBox box = mock( DialogBox.class );
-    doCallRealMethod().when( box ).onKeyDownPreview( anyChar(), anyInt() );
+  public void testOnKeyDownPreview() {
+    DialogBox boxMock = mock( DialogBox.class );
+    doCallRealMethod().when( boxMock ).onKeyDownPreview( anyChar(), anyInt() );
 
-    box.onKeyDownPreview( (char) KeyboardListener.KEY_ESCAPE, 0 );
-    verify( box, times( 1 ) ).hide();
+    boxMock.onKeyDownPreview( (char) KeyboardListener.KEY_ESCAPE, 0 );
+    verify( boxMock, times( 1 ) ).hide();
   }
 
   @Test
@@ -70,44 +70,44 @@ public class DialogBoxTest {
 
   @Test
   public void testSetAndGetResponsive() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    box.setResponsive( true );
-    assertTrue( box.isResponsive() );
-    verify( box ).addStyleName( "responsive" );
+    boxSpy.setResponsive( true );
+    assertTrue( boxSpy.isResponsive() );
+    verify( boxSpy ).addStyleName( "responsive" );
 
-    box.setResponsive( false );
-    assertFalse( box.isResponsive() );
-    verify( box ).removeStyleName( "responsive" );
+    boxSpy.setResponsive( false );
+    assertFalse( boxSpy.isResponsive() );
+    verify( boxSpy ).removeStyleName( "responsive" );
   }
 
   @Test
   public void testSetResponsiveRespectsTheSpecifiedValue() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    box.setResponsive( true );
-    assertTrue( box.isResponsive() );
+    boxSpy.setResponsive( true );
+    assertTrue( boxSpy.isResponsive() );
 
-    box.setResponsive( false );
-    assertFalse( box.isResponsive() );
+    boxSpy.setResponsive( false );
+    assertFalse( boxSpy.isResponsive() );
   }
 
   @Test
   public void testSetResponsiveAddsResponsiveStyleNameWhenTrue() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    box.setResponsive( true );
-    verify( box ).addStyleName( "responsive" );
+    boxSpy.setResponsive( true );
+    verify( boxSpy ).addStyleName( "responsive" );
   }
 
   @Test
   public void testSetResponsiveRemovesResponsiveStyleNameWhenFalse() {
-    DialogBox box = spy( new DialogBox() );
-    box.setResponsive( true );
+    DialogBox boxSpy = spy( new DialogBox() );
+    boxSpy.setResponsive( true );
 
-    box.setResponsive( false );
+    boxSpy.setResponsive( false );
 
-    verify( box ).removeStyleName( "responsive" );
+    verify( boxSpy ).removeStyleName( "responsive" );
   }
   // endregion
 
@@ -276,46 +276,46 @@ public class DialogBoxTest {
 
   @Test
   public void testSetMinimumHeightCategoryRemovesCssClassOfPreviousCategory() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
 
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.MINIMUM );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.MINIMUM );
 
-    verify( box ).removeStyleName( DialogMinimumHeightCategory.CONTENT.getStyleName() );
+    verify( boxSpy ).removeStyleName( DialogMinimumHeightCategory.CONTENT.getStyleName() );
   }
 
   @Test
   public void testSetMinimumHeightCategoryDoesNotRemovePreviousCssClassWhenItIsNull() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
     assertNull( DialogMinimumHeightCategory.MINIMUM.getStyleName() );
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.MINIMUM );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.MINIMUM );
 
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
 
-    verify( box, never() ).removeStyleName( any() );
+    verify( boxSpy, never() ).removeStyleName( any() );
   }
 
   @Test
   public void testSetMinimumHeightCategoryAddsCssClassOfNewCategoryWhenItIsNotNull() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
 
-    verify( box ).addStyleName( DialogMinimumHeightCategory.CONTENT.getStyleName() );
+    verify( boxSpy ).addStyleName( DialogMinimumHeightCategory.CONTENT.getStyleName() );
   }
 
   @Test
   public void testSetMinimumHeightCategoryDoesNotAddCssClassOfNewCategoryWhenItIsNull() {
-    DialogBox box = spy( new DialogBox() );
+    DialogBox boxSpy = spy( new DialogBox() );
 
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.CONTENT );
 
-    box.setMinimumHeightCategory( DialogMinimumHeightCategory.MINIMUM );
+    boxSpy.setMinimumHeightCategory( DialogMinimumHeightCategory.MINIMUM );
     assertNull( DialogMinimumHeightCategory.MINIMUM.getStyleName() );
 
-    verify( box, never() ).addStyleName( DialogMinimumHeightCategory.MINIMUM.getStyleName() );
+    verify( boxSpy, never() ).addStyleName( DialogMinimumHeightCategory.MINIMUM.getStyleName() );
   }
   // endregion
 }

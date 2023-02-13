@@ -558,7 +558,10 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
   protected void block() {
     initializePageBackground();
+    blockPageBackground();
+  }
 
+  void blockPageBackground() {
     pageBackground.setSize( "100%", "100%" );
     pageBackground.setVisible( true );
     pageBackground.getElement().getStyle().setDisplay( Display.BLOCK );
@@ -622,22 +625,33 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
     doAutoFocus();
 
-    // hide <embeds>
-    // TODO: migrate to GlassPane Listener
-    FrameUtils.toggleEmbedVisibility( false );
+    toggleEmbedVisibility( false );
 
     // Notify listeners that we're showing a dialog (hide PDFs, flash).
-    GlassPane.getInstance().show();
+    getGlassPane().show();
   }
 
-  private void initializeResizeHandler() {
+  GlassPane getGlassPane() {
+    return GlassPane.getInstance();
+  }
+
+  void toggleEmbedVisibility( boolean visible ) {
+    // show oe hide <embeds>
+    // TODO: migrate to GlassPane Listener
+    FrameUtils.toggleEmbedVisibility( false );
+  }
+
+  void initializeResizeHandler() {
     if ( resizeRegistration == null ) {
-      resizeRegistration = registerResizeHandler();
+      resizeRegistration = Window.addResizeHandler( DialogBox.this::onResize );
     }
   }
 
-  HandlerRegistration registerResizeHandler() {
-    return Window.addResizeHandler( DialogBox.this::onResize );
+  void unregisterResizeHandler() {
+    if ( resizeRegistration != null ) {
+      resizeRegistration.removeHandler();
+      resizeRegistration = null;
+    }
   }
 
   protected void onResize( ResizeEvent event ) {
@@ -651,10 +665,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
   @Override
   public void hide( boolean autoClosed ) {
-    if ( resizeRegistration != null ) {
-      resizeRegistration.removeHandler();
-      resizeRegistration = null;
-    }
+    unregisterResizeHandler();
 
     super.hide( autoClosed );
   }
@@ -667,8 +678,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
         // reshow <embeds>
         if ( this.isVisible() ) {
-          // TODO: migrate to glasspane listener
-          FrameUtils.toggleEmbedVisibility( true );
+          toggleEmbedVisibility( true );
         }
 
         // just make sure it is zero
@@ -677,7 +687,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     }
 
     // Notify listeners that we're hiding a dialog (re-show PDFs, flash).
-    GlassPane.getInstance().hide();
+    getGlassPane().hide();
   }
 
   protected static FocusPanel getPageBackground() {

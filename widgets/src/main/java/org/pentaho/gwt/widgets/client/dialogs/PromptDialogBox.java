@@ -46,8 +46,15 @@ public class PromptDialogBox extends DialogBox {
                           boolean modal ) {
 
     super( autoHide, modal );
+
     setText( title );
 
+    HorizontalPanel dialogButtonPanelWrapper = createButtonPanelWrapper( okText, notOkText, cancelText );
+
+    initializeDialogContent( dialogButtonPanelWrapper );
+  }
+
+  private HorizontalPanel createButtonPanelWrapper( String okText, String notOkText, String cancelText ) {
     final HorizontalPanel dialogButtonPanel = new HorizontalFlexPanel();
     dialogButtonPanel.addStyleName( "inner-button-panel" );
 
@@ -98,8 +105,10 @@ public class PromptDialogBox extends DialogBox {
     dialogButtonPanelWrapper.addStyleName( "button-panel" );
     dialogButtonPanelWrapper.setWidth( "100%" );
     dialogButtonPanelWrapper.add( dialogButtonPanel );
+    return dialogButtonPanelWrapper;
+  }
 
-
+  void initializeDialogContent( HorizontalPanel dialogButtonPanelWrapper ) {
     // Init `dialogContent`
     Roles.getPresentationRole().set( dialogContent.getElement() );
     dialogContent.setStyleName( "prompt-dialog-body-table" );
