@@ -1530,6 +1530,24 @@ button#schedule-dialog-select-button {
 /* endregion GWT DialogBox, PromptDialogBox RESPONSIVE */
 
 /**/
+
+/* region BootstrapJS Dialog Responsive - Start */
+.bootstrap .modal.pentaho-dialog.responsive .body,
+.bootstrap .modal.pentaho-dialog.responsive .footer{
+  display: flex;
+  flex-direction: column;
+}
+
+.bootstrap .modal.pentaho-dialog.responsive {
+  padding: 0;
+}
+
+.bootstrap .modal.pentaho-dialog.responsive .button-panel {
+  width: auto;
+}
+
+/* endregion BootstrapJS Dialog Responsive - End */
+
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
