@@ -8852,3 +8852,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   z-index: 0 !important;
   outline: var(--focus-ring) !important;
 }
+
+#refreshBrowserIcon:focus-visible {
+  margin: var(--focus-ring-padding);
+}
