@@ -338,6 +338,14 @@ public class ToolbarButton {
   }
 
   /**
+   * Returns the alternative image text.
+   * @return null if image is null
+   */
+  public String getImageAltText() {
+    return ( this.image != null ) ? this.image.getAltText() : null;
+  }
+
+  /**
    * Returns the image displayed on this button.
    * 
    * @return GWT Image
@@ -359,6 +367,16 @@ public class ToolbarButton {
     button.add( curImage, DockPanel.CENTER );
     button.setCellHorizontalAlignment( curImage, DockPanel.ALIGN_CENTER );
     button.setCellVerticalAlignment( curImage, DockPanel.ALIGN_MIDDLE );
+  }
+
+  /**
+   * Set image alternative text.
+   * @param altText alternative text
+   */
+  public void setImageAltText( String altText ) {
+    if ( this.image != null ) {
+      this.image.setAltText( altText );
+    }
   }
 
   /**
