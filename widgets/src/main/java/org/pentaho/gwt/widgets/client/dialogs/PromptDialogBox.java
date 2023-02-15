@@ -23,12 +23,16 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings( "deprecation" )
 public class PromptDialogBox extends DialogBox {
@@ -46,8 +50,17 @@ public class PromptDialogBox extends DialogBox {
                           boolean modal ) {
 
     super( autoHide, modal );
+
     setText( title );
 
+    HorizontalPanel dialogButtonPanelWrapper = createButtonPanelWrapper( okText, notOkText, cancelText );
+
+    initializeDialogContent( dialogButtonPanelWrapper );
+
+    setFocusButtons( buildFocusButtons() );
+  }
+
+  private HorizontalPanel createButtonPanelWrapper( String okText, String notOkText, String cancelText ) {
     final HorizontalPanel dialogButtonPanel = new HorizontalFlexPanel();
     dialogButtonPanel.addStyleName( "inner-button-panel" );
 
@@ -98,8 +111,10 @@ public class PromptDialogBox extends DialogBox {
     dialogButtonPanelWrapper.addStyleName( "button-panel" );
     dialogButtonPanelWrapper.setWidth( "100%" );
     dialogButtonPanelWrapper.add( dialogButtonPanel );
+    return dialogButtonPanelWrapper;
+  }
 
-
+  void initializeDialogContent( HorizontalPanel dialogButtonPanelWrapper ) {
     // Init `dialogContent`
     Roles.getPresentationRole().set( dialogContent.getElement() );
     dialogContent.setStyleName( "prompt-dialog-body-table" );
@@ -127,6 +142,21 @@ public class PromptDialogBox extends DialogBox {
 
     dialogContent.setWidth( "100%" );
     setWidget( dialogContent );
+  }
+
+  List<Focusable> buildFocusButtons() {
+    ArrayList<Focusable> focusButtons = new ArrayList<>();
+    if ( cancelButton != null ) {
+      focusButtons.add( cancelButton );
+    }
+
+    if ( notOkButton != null ) {
+      focusButtons.add( notOkButton );
+    }
+
+    focusButtons.add( okButton );
+
+    return focusButtons;
   }
 
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText ) {

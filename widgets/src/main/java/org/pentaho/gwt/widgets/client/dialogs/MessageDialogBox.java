@@ -87,7 +87,7 @@ public class MessageDialogBox extends PromptDialogBox {
 
   public MessageDialogBox( String title, String message, boolean isHTML, boolean autoHide, boolean modal,
                            String okText, String notOkText, String cancelText ) {
-    this(title, isHTML ? new HTML( message ) : new Label( message ), autoHide, modal, okText, notOkText, cancelText );
+    this( title, isHTML ? new HTML( message ) : new Label( message ), autoHide, modal, okText, notOkText, cancelText );
   }
 
   public MessageDialogBox( String title, Widget messageContent, boolean autoHide, boolean modal,

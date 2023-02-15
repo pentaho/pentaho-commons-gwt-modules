@@ -150,7 +150,6 @@ public class MantleLoginDialog extends PromptDialogBox {
 
     };
     setCallback( myCallback );
-    super.setStylePrimaryName( "pentaho-dialog" );
   }
 
   public MantleLoginDialog( AsyncCallback<Boolean> callback, boolean showNewWindowOption ) {
@@ -263,14 +262,7 @@ public class MantleLoginDialog extends PromptDialogBox {
       credentialsPanel.add( newWindowChk );
     }
 
-    userTextBox.setTabIndex( 1 );
-    passwordTextBox.setTabIndex( 2 );
-    if ( reallyShowNewWindowOption ) {
-      newWindowChk.setTabIndex( 3 );
-    }
     passwordTextBox.setText( "" ); //$NON-NLS-1$
-
-    setFocusWidget( userTextBox );
 
     Image lockImage = new Image( GWT.getModuleBaseURL() + "images/icon_login_lock.png" );
     HorizontalPanel loginPanel = new HorizontalPanel();
