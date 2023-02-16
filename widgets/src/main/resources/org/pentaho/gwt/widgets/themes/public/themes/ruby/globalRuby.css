@@ -994,6 +994,10 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   align-items: end;
 }
 
+.responsive .gwt-h-panel > colgroup {
+  display: none;
+}
+
 /* GWT VerticalFlexPanel
    Real structure is .gwt-v-panel > tbody > tr > td.
    Yet, using * to not increase specificity.
@@ -1020,6 +1024,10 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 
 .responsive .gwt-v-panel > * > * > * > .gwt-v-panel {
   flex: auto;
+}
+
+.responsive .gwt-v-panel > colgroup {
+  display: none;
 }
 
 /* Unlike for .gwt-h-panel, no compatibility alignment rules for .gwt-v-panel. Seemed to harm more than helped. */
@@ -5278,11 +5286,36 @@ td.tab-spacer-wrapper {
   border: 1px solid #CCC;
 }
 
+/* CustomListBox */
+:is(.custom-list, .custom-list-disabled) :is(.custom-list-focus-panel, .custom-list-selected-item-wrapper) {
+  flex: auto;
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+}
+
+:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
+  flex: auto;
+  width: 0 !important;
+}
+
+:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:last-child {
+  flex: none;
+}
+
+:is(.custom-list, .custom-list-disabled) .custom-list-item > tbody > tr > td > * {
+  flex: auto;
+}
+
 .custom-list-item .gwt-Label.gwt-Label {
   padding: 0 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.custom-list-item .gwt-Label {
+  white-space: break-spaces;
 }
 
 #datasourceInfoBox .custom-list-item {
@@ -8873,4 +8906,13 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 #refreshBrowserIcon:focus-visible {
   margin: var(--focus-ring-padding);
+}
+
+.fileUploadPanel-responsive > tbody > tr > td:nth-child(1) input {
+  flex: auto;
+}
+
+.fileUploadPanel-responsive > tbody > tr > td:nth-child(2),
+.fileUploadPanel-responsive > tbody > tr > td:nth-child(3)  {
+  flex: none;
 }
