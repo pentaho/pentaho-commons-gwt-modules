@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.listbox;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -79,7 +80,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings( "deprecation" )
-public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener,
+public class CustomListBox extends HorizontalFlexPanel implements ChangeListener, PopupListener, MouseListener,
     FocusListener, KeyboardListener, ListItemListener {
   protected List<ListItem> items = new ArrayList<ListItem>();
   protected int selectedIndex = -1;
@@ -115,6 +116,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
 
   public CustomListBox() {
 
+    selectedItemWrapper.addStyleName( "custom-list-selected-item-wrapper" );
+    dropGrid.addStyleName( "custom-list-drop-grid gwt-h-panel" );
+
     dropGrid.getColumnFormatter().setWidth( 0, "100%" ); //$NON-NLS-1$
     dropGrid.setWidget( 0, 1, arrow );
     dropGrid.getElement().getStyle().setProperty( "tableLayout", "fixed" );
@@ -145,7 +149,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     fPanel.addMouseListener( this );
     fPanel.addFocusListener( this );
     fPanel.addKeyboardListener( this );
-
+    fPanel.addStyleName( "custom-list-focus-panel" );
     this.setStylePrimaryName( "custom-list" ); //$NON-NLS-1$
 
     setTdStyles( this.getElement() );
@@ -838,6 +842,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   @Override
   public void setStylePrimaryName( String s ) {
     super.setStylePrimaryName( s );
+    addStyleName( "gwt-h-panel" );
     this.primaryStyleName = s;
 
     // This may have came in late. Update ListItems
