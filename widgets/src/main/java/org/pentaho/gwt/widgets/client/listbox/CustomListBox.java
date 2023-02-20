@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.listbox;
@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.listbox;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
@@ -929,8 +930,12 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   private int shiftOriginIdx = -1;
 
   public void onKeyDown( Widget widget, char c, int i ) {
+    Event event = Event.getCurrentEvent();
     if ( c == 16 ) { // shift
       shiftOriginIdx = selectedIndex;
+    }
+    if ( (char) event.getKeyCode() == KeyCodes.KEY_UP || (char) event.getKeyCode() == KeyCodes.KEY_DOWN ) {
+      event.preventDefault();
     }
   }
 
