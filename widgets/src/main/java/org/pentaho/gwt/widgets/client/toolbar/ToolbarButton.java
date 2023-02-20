@@ -271,7 +271,7 @@ public class ToolbarButton {
     this.enabled = enabled;
     if ( enabled ) {
       button.removeStyleName( stylePrimaryName + "-disabled" ); //$NON-NLS-1$
-
+      this.eventWrapper.setTabIndex( 0 );
       if ( prevState == false && disabledImage != null ) {
         // was disabled, remove old image and put in the enabled one
         button.remove( currentImage );
@@ -282,7 +282,7 @@ public class ToolbarButton {
 
     } else {
       button.addStyleName( stylePrimaryName + "-disabled" ); //$NON-NLS-1$
-
+      this.eventWrapper.setTabIndex( -1 );
       if ( prevState == true && disabledImage != null ) {
         // was enabled, remove old image and put in the disabled one
         button.remove( currentImage );

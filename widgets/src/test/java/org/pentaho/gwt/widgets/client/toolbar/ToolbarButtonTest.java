@@ -107,6 +107,9 @@ public class ToolbarButtonTest {
     button.currentImage = currentImage;
     final Image image = mock( Image.class );
     button.image = image;
+    button.eventWrapper = mock( FocusPanel.class );
+    final Element eventWrapperElement = mock( Element.class );
+    when( button.eventWrapper.getElement() ).thenReturn( eventWrapperElement );
 
     button.setEnabled( true );
     verify( button.button ).removeStyleName( contains( "disabled" ) );
