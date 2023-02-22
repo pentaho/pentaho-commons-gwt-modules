@@ -1556,6 +1556,21 @@ button#schedule-dialog-select-button {
 
 /* endregion BootstrapJS Dialog Responsive - End */
 
+/* region Responsive File Properties dialog - Start */
+.file-properties-dialog .pentaho-tab-deck-panel > div > * {
+  height: auto !important;
+}
+
+.file-properties-dialog > div > table {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.file-properties-dialog #filePropertiesGeneralTab .gwt-Label {
+  word-break: break-all;
+}
+/* endregion Responsive File Properties dialog - End */
+
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
@@ -1686,19 +1701,21 @@ input#FT_rankCount {
   padding: 4px 8px;
 }
 
-.pentaho-tab-panel {
-  background: url('images/bg_admin_tab_panel.png') repeat-x 0 0px;
-  height: 35px;
-}
-
+/* region - Replacing existing image border with CSS border for Tabs - Start */
 .pentaho-tab-bar {
-  background: url('images/bg_admin_tab_panel.png') repeat-x 0 0px;
-  min-height: 35px;
+  position: relative;
+  border-bottom: solid 1px #CCC;
 }
 
-.dialog-content  .pentaho-tab-bar {
-  height: 32px;
+.pentaho-tabWidget {
+  position: relative;
+  bottom: -1px;
 }
+
+.pentaho-tabWidget-selected {
+  z-index: 1;
+}
+/* endregion - Replacing existing image border with CSS border for Tabs - End */
 
 .pentaho-tabBar {
   background: url('images/bg_admin_tab_panel.png') repeat-x top left;
