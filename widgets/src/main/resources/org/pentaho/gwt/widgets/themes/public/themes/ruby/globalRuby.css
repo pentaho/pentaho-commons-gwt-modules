@@ -966,7 +966,7 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   flex: none;
 }
 
-.responsive .gwt-h-panel > * > * > * > .gwt-h-panel {
+.responsive .gwt-h-panel > * > * > * > :is(.gwt-h-panel, .gwt-v-panel) {
   flex: auto;
 }
 
@@ -1022,7 +1022,7 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   flex: none;
 }
 
-.responsive .gwt-v-panel > * > * > * > .gwt-v-panel {
+.responsive .gwt-v-panel > * > * > * > :is(.gwt-v-panel, .gwt-h-panel)  {
   flex: auto;
 }
 
@@ -5301,6 +5301,7 @@ td.tab-spacer-wrapper {
 
 :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:last-child {
   flex: none;
+  width: auto !important;
 }
 
 :is(.custom-list, .custom-list-disabled) .custom-list-item > tbody > tr > td > * {
@@ -5323,11 +5324,12 @@ td.tab-spacer-wrapper {
 }
 
 .combo-arrow {
-  padding: 4px;
+  padding: calc(1em * 4/14);
   background: none;
   border: 0 none;
   cursor: pointer;
-  font-size: 0px;
+  font-size: inherit;
+  width: auto !important;
 }
 
 .combo-arrow div {
@@ -5335,9 +5337,9 @@ td.tab-spacer-wrapper {
   background-position: right center;
   background-repeat: no-repeat;
   cursor: pointer;
-  height: 8px;
-  width: 12px;
-  font-size: 0px;
+  height: calc(1em * 8/14);
+  width: calc(1em * 12/14);
+  font-size: inherit;
 }
 
 .custom-list-disabled {
@@ -5348,10 +5350,11 @@ td.tab-spacer-wrapper {
 }
 
 .combo-arrow-disabled {
-  padding: 4px;
+  padding: calc(1em * 4/14);
   background: none;
   border: 0 none;
-  font-size: 0px;
+  font-size: inherit;
+  width: auto !important;
 }
 
 .combo-arrow-disabled div {
@@ -5359,9 +5362,9 @@ td.tab-spacer-wrapper {
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
-  height: 8px;
-  width: 10px;
-  font-size: 0px;
+  height: calc(1em * 8/14);
+  width: calc(1em * 12/14);
+  font-size: inherit;
 }
 
 .drop-popup {
@@ -8910,9 +8913,22 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 .file-upload-panel > tbody > tr > td:nth-child(1) input {
   flex: auto;
+  min-width:0;
 }
 
 .file-upload-panel > tbody > tr > td:nth-child(2),
 .file-upload-panel > tbody > tr > td:nth-child(3)  {
+  flex: none;
+}
+
+.import-dialog-disclosure-panel > tbody > tr:nth-child(2) > td > * {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: visible !important;
+}
+
+.import-dialog-disclosure-panel .content > tbody > tr > td:nth-child(1) {
   flex: none;
 }
