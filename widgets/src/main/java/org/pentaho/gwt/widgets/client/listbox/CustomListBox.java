@@ -922,9 +922,6 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   }
 
   public void onLostFocus( Widget widget ) {
-    if ( visible == 1 ) {
-      popup.hide();
-    }
   }
 
   private int shiftOriginIdx = -1;
@@ -934,8 +931,19 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     if ( c == 16 ) { // shift
       shiftOriginIdx = selectedIndex;
     }
-    if ( (char) event.getKeyCode() == KeyCodes.KEY_UP || (char) event.getKeyCode() == KeyCodes.KEY_DOWN ) {
-      event.preventDefault();
+    switch( event.getKeyCode() ){
+      case KeyCodes.KEY_UP:
+      case KeyCodes.KEY_DOWN:
+        event.preventDefault();
+        break;
+      case KeyCodes.KEY_TAB:
+      case KeyCodes.KEY_ESCAPE:
+        if( popupShowing ){
+          popup.hide();
+        }
+        break;
+      default:
+        break;
     }
   }
 
