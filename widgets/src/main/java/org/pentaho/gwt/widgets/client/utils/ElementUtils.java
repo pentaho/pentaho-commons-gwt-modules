@@ -262,7 +262,7 @@ public class ElementUtils {
    * @return The first keyboard-focusable descendant, if any; <code>null</code>, otherwise.
    */
   public static native Element findFirstKeyboardFocusableDescendant( Element root )/*-{
-    return $wnd.$( root ).find( ":pen-tabbable" )[0] || null;
+    return $wnd.pho.util._dialog.jQuery( root ).find( ":pen-tabbable" )[0] || null;
   }-*/;
 
   public static void setupButtonHoverEffect() {
