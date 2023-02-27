@@ -262,7 +262,25 @@ public class ElementUtils {
    * @return The first keyboard-focusable descendant, if any; <code>null</code>, otherwise.
    */
   public static native Element findFirstKeyboardFocusableDescendant( Element root )/*-{
-    return $wnd.pho.util._dialog.jQuery( root ).find( ":pen-tabbable" )[0] || null;
+    return $wnd.pho.util._focus.tabbables(root)[0] || null;
+  }-*/;
+
+  /**
+   * Gets the element after the given one which can currently receive keyboard focus.
+   * @param elem The initial element.
+   * @return The next keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findNextKeyboardFocusableElement( Element elem )/*-{
+    return $wnd.pho.util._focus.nextTabbable(elem);
+  }-*/;
+
+  /**
+   * Gets the element before the given one which can currently receive keyboard focus.
+   * @param elem The initial element.
+   * @return The previous keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findPreviousKeyboardFocusableElement( Element elem )/*-{
+    return $wnd.pho.util._focus.previousTabbable(elem);
   }-*/;
 
   public static void setupButtonHoverEffect() {
