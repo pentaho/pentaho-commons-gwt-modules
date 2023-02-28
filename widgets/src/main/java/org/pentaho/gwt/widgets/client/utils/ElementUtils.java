@@ -283,6 +283,20 @@ public class ElementUtils {
     return $wnd.pho.util._focus.previousTabbable(elem);
   }-*/;
 
+  public static void tabNext( Element rootElem ) {
+    Element elem = ElementUtils.findNextKeyboardFocusableElement( rootElem );
+    if ( elem != null ) {
+      elem.focus();
+    }
+  }
+
+  public static void tabPrevious( Element rootElem ) {
+    Element elem = ElementUtils.findPreviousKeyboardFocusableElement( rootElem );
+    if ( elem != null ) {
+      elem.focus();
+    }
+  }
+
   public static void setupButtonHoverEffect() {
     setupHoverEffectJS();
   }
