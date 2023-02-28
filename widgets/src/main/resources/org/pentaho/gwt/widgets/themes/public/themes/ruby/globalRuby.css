@@ -1492,6 +1492,10 @@ button#schedule-dialog-select-button {
   min-height: 0;
 }
 
+.pentaho-dialog.pentaho-gwt.responsive > * > table {
+  width: auto !important;
+}
+
 .pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table {
   flex: auto;
 }
@@ -1570,7 +1574,11 @@ button#schedule-dialog-select-button {
   word-break: break-all;
 }
 /* endregion Responsive File Properties dialog - End */
-
+/* region Select User or Role dialog - Start */
+.select-user-or-role-dialog .gwt-ListBox {
+  width: 100% !important;
+}
+/* endregion Select User or Role dialog - End */
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
