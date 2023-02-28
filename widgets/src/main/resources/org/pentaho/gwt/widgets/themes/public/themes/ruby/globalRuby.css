@@ -5299,6 +5299,14 @@ td.tab-spacer-wrapper {
   width: 0 !important;
 }
 
+:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr {
+  display:flex;
+}
+
+:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:first-child {
+  flex:auto;
+}
+
 :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:last-child {
   flex: none;
   width: auto !important;
