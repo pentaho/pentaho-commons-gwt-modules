@@ -1432,8 +1432,6 @@ button#schedule-dialog-select-button {
 
 .pentaho-dialog.responsive .Caption {
   flex: none;
-  display: flex;
-  flex-direction: row;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1541,8 +1539,6 @@ button#schedule-dialog-select-button {
 }
 /* endregion GWT DialogBox, PromptDialogBox RESPONSIVE */
 
-/**/
-
 /* region BootstrapJS Dialog Responsive - Start */
 .bootstrap .modal.pentaho-dialog.responsive .body,
 .bootstrap .modal.pentaho-dialog.responsive .footer{
@@ -1552,6 +1548,12 @@ button#schedule-dialog-select-button {
 
 .bootstrap .modal.pentaho-dialog.responsive {
   padding: 0;
+}
+
+.bootstrap .modal.pentaho-dialog.responsive .Caption .header-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bootstrap .modal.pentaho-dialog.responsive .button-panel {
