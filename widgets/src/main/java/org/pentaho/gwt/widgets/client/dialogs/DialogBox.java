@@ -249,7 +249,6 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   }
 
   private static FocusPanel pageBackground = null;
-  private static int clickCount = 0;
   private static int dialogDepthCount = 0;
   private FocusWidget focusWidget = null;
   private List<Focusable> focusButtons = null;
@@ -313,7 +312,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
    */
   public void setAriaRole( String ariaRole ) {
     if ( StringUtils.isEmpty( ariaRole ) ) {
-      ariaRole = "dialog";
+      ariaRole = Roles.getDialogRole().getName();
     }
 
     getElement().setAttribute( "role", ariaRole );
@@ -548,17 +547,39 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
   protected void initializePageBackground() {
     if ( pageBackground == null ) {
-      pageBackground = new FocusPanel();
-      pageBackground.setStyleName( "glasspane" );
-      pageBackground.addClickListener( sender -> {
-        clickCount++;
-        if ( clickCount > 2 ) {
-          clickCount = 0;
-          pageBackground.setVisible( false );
-        }
-      } );
+      pageBackground = createPageBackground();
       RootPanel.get().add( pageBackground, 0, 0 );
     }
+  }
+
+  /**
+   * Creates a new page background panel.
+   * <p>
+   * Page background is only shown for modal dialogs. And for these, one of the dialog's ancestor classes,
+   * {@link PopupPanel}, intercepts and swallows any clicks made outside of it. Including page background clicks.
+   * As such, the below implemented behavior of hiding the page background on a triple-click is only really functional
+   * and useful in a case where the page background is not hidden when the dialog is closed (due to some bug),
+   * offering the user a last resort means to hide it.
+   * It is assumed that such situations exist or existed in the past, justifying this behavior.
+   * </p>
+   * @return A page background panel.
+   */
+  FocusPanel createPageBackground() {
+    return new FocusPanel() {
+      int clickCount = 0;
+
+      {
+        setStyleName( "glasspane" );
+
+        addClickListener( sender -> {
+          clickCount++;
+          if ( clickCount > 2 ) {
+            clickCount = 0;
+            setVisible( false );
+          }
+        } );
+      }
+    };
   }
 
   protected void block() {
@@ -567,9 +588,10 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   }
 
   void blockPageBackground() {
-    pageBackground.setSize( "100%", "100%" );
-    pageBackground.setVisible( true );
-    pageBackground.getElement().getStyle().setDisplay( Display.BLOCK );
+    FocusPanel pageBgPanel = getPageBackgroundInternal();
+    pageBgPanel.setSize( "100%", "100%" );
+    pageBgPanel.setVisible( true );
+    pageBgPanel.getElement().getStyle().setDisplay( Display.BLOCK );
   }
 
   public void center() {
@@ -783,7 +805,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     if ( isModal() ) {
       dialogDepthCount--;
       if ( dialogDepthCount <= 0 ) {
-        pageBackground.setVisible( false );
+        getPageBackgroundInternal().setVisible( false );
 
         // reshow <embeds>
         if ( this.isVisible() ) {
@@ -803,6 +825,19 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
     return pageBackground;
   }
 
+  /**
+   * Gets the current page background panel, if any.
+   * <p>
+   * This method is preferably used internally, instead of {@link #getPageBackground()},
+   * for testability reasons (inability to mock static members).
+   * </p>
+   *
+   * @return The current page background panel, if any; <code>null</code>, otherwise.
+   */
+  FocusPanel getPageBackgroundInternal() {
+    return pageBackground;
+  }
+
   private void replaceDomStyleName( String newStyleName, String oldStyleName ) {
     if ( oldStyleName != null ) {
       removeStyleName( oldStyleName );
@@ -817,7 +852,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   protected void openJsDialog() {
     // One modeless dialogs was found in PUC (opened by UrlCommand)!
     // And JsDialog would likely need additional "care" if modeless dialogs were fully supported.
-    // For now, only focus trapping is disabled for modeless dialogs.
+    // For now, the only care taken is to disable focus trapping for modeless dialogs.
     boolean trapFocus = isModal();
 
     JsDialogContext.open(
