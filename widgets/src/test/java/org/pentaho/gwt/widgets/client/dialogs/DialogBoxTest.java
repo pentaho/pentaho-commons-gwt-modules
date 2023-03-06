@@ -17,10 +17,15 @@
 
 package org.pentaho.gwt.widgets.client.dialogs;
 
+import com.google.gwt.aria.client.Role;
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.KeyboardListener;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,10 +51,19 @@ public class DialogBoxTest {
 
   private DialogBox createDialogBoxSpyForShowHide() {
     DialogBox boxSpy = spy( new DialogBox() );
-
+    doReturn( true ).when( boxSpy ).isModal();
     doNothing().when( boxSpy ).initializePageBackground();
-    doNothing().when( boxSpy ).blockPageBackground();
+
+    Element pageBgElemMock = mock( Element.class );
+    doReturn( mock( Style.class ) ).when( pageBgElemMock ).getStyle();
+
+    FocusPanel pageBgPanelSpy = spy( boxSpy.createPageBackground() );
+    doReturn( pageBgElemMock ).when( pageBgPanelSpy ).getElement();
+
+    doReturn( pageBgPanelSpy ).when( boxSpy ).getPageBackgroundInternal();
+
     doNothing().when( boxSpy ).toggleEmbedVisibility( anyBoolean() );
+
     doReturn( mock( GlassPane.class ) ).when( boxSpy ).getGlassPane();
 
     return boxSpy;
@@ -135,7 +149,7 @@ public class DialogBoxTest {
   }
 
   @Test
-  public void testDoAutoFocus() {
+  public void testDoAutoFocusOpensJsDialogWhenShowingAndVisible() {
     DialogBox boxSpy = spy( new DialogBox() );
     doReturn( true ).when( boxSpy ).isShowing();
     doReturn( true ).when( boxSpy ).isVisible();
@@ -143,6 +157,33 @@ public class DialogBoxTest {
     boxSpy.doAutoFocus();
 
     verify( boxSpy ).autoFocusOpenJsDialog();
+  }
+
+  @Test
+  public void testDoAutoFocusDoesNotOpensJsDialogWhenNotShowingOrNotVisible() {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    // Case 1
+    doReturn( false ).when( boxSpy ).isShowing();
+    doReturn( true ).when( boxSpy ).isVisible();
+
+    boxSpy.doAutoFocus();
+
+    verify( boxSpy, never() ).autoFocusOpenJsDialog();
+
+    // Case 2
+    doReturn( true ).when( boxSpy ).isShowing();
+    doReturn( false ).when( boxSpy ).isVisible();
+
+    boxSpy.doAutoFocus();
+
+    // Case 3
+    doReturn( false ).when( boxSpy ).isShowing();
+    doReturn( false ).when( boxSpy ).isVisible();
+
+    boxSpy.doAutoFocus();
+
+    verify( boxSpy, never() ).autoFocusOpenJsDialog();
   }
 
   @Test
@@ -448,6 +489,172 @@ public class DialogBoxTest {
   }
   // endregion
 
+  // region ariaRole property
+  @Test
+  public void testSetAriaRoleStringDefaultsToDialogWhenGivenNull() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setAriaRole( (String) null );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "role", "dialog" );
+  }
+
+  @Test
+  public void testSetAriaRoleStringDefaultsToDialogWhenGivenEmpty() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setAriaRole( "" );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "role", "dialog" );
+  }
+
+  @Test
+  public void testSetAriaRoleStringRespectsTheGivenValue() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    Role role = Roles.getAlertdialogRole();
+    boxSpy.setAriaRole( role.getName() );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "role", "alertdialog" );
+  }
+
+  @Test
+  public void testSetAriaRoleObjectRespectsTheGivenValue() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    Role role = Roles.getAlertdialogRole();
+    boxSpy.setAriaRole( role );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "role", "alertdialog" );
+  }
+
+  @Test
+  public void testSetAriaRoleObjectDefaultsToDialogWhenGivenNull() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setAriaRole( (Role) null );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "role", "dialog" );
+  }
+
+  @Test
+  public void testGetAriaRoleReturnsTheRoleAttributeValue() {
+    DialogBox boxSpy = spy( new DialogBox() );
+
+    Element elementMock = mock( Element.class );
+    Role role = Roles.getAlertdialogRole();
+    doReturn( role.getName() ).when( elementMock ).getAttribute( "role" );
+
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    assertEquals( "alertdialog", boxSpy.getAriaRole() );
+  }
+  // endregion
+
+  // region ariaDescribedBy property
+  @Test
+  public void testSetAriaDescribedByRemovesTheAttributeWhenGivenNull() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setAriaDescribedBy( null );
+
+    verify( elementMock, times( 1 ) ).removeAttribute( "aria-describedby" );
+  }
+
+  @Test
+  public void testSetAriaDescribedByRemovesTheAttributeWhenGivenEmpty() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setAriaDescribedBy( "" );
+
+    verify( elementMock, times( 1 ) ).removeAttribute( "aria-describedby" );
+  }
+
+  @Test
+  public void testSetAriaDescribedBySetsTheAttributeWhenGivenNonEmpty() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    String describedById = "description-id";
+    boxSpy.setAriaDescribedBy( describedById );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "aria-describedby", describedById );
+  }
+
+  @Test
+  public void testGetAriaDescribedByGetsTheAttribute() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    String describedById = "description-id";
+    doReturn( describedById ).when( elementMock ).getAttribute( "aria-describedby" );
+
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    assertEquals( describedById, boxSpy.getAriaDescribedBy() );
+  }
+  // endregion
+
+  // region modal property
+  @Test
+  public void testSetModalToTrueAddsTheCssClassModal() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setModal( true );
+
+    verify( boxSpy, times( 1 ) ).addStyleName( "modal" );
+  }
+
+  @Test
+  public void testSetModalToTrueSetsAriaModalAttributeToTrue() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setModal( true );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "aria-modal", "true" );
+  }
+
+  @Test
+  public void testSetModalToFalseRemovesTheCssClassModal() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setModal( false );
+
+    verify( boxSpy, times( 1 ) ).removeStyleName( "modal" );
+  }
+
+  @Test
+  public void testSetModalToFalseSetsAriaModalAttributeToFalse() {
+    DialogBox boxSpy = spy( new DialogBox() );
+    Element elementMock = mock( Element.class );
+    doReturn( elementMock ).when( boxSpy ).getElement();
+
+    boxSpy.setModal( false );
+
+    verify( elementMock, times( 1 ) ).setAttribute( "aria-modal", "false" );
+  }
+  // endregion
+
   // region hide()
   @Test
   public void testHideUnregistersResizeHandler() {
@@ -485,7 +692,33 @@ public class DialogBoxTest {
 
     boxSpy.show();
 
-    verify( boxSpy, times(   1 ) ).initializeResizeHandler();
+    verify( boxSpy, times( 1 ) ).initializeResizeHandler();
+  }
+
+  @Test
+  public void testShowWhenModalBlocksBackground() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.show();
+
+    verify( boxSpy, times( 1 ) ).initializePageBackground();
+    verify( boxSpy, times( 1 ) ).blockPageBackground();
+
+    FocusPanel pageBgPanelSpy = boxSpy.getPageBackgroundInternal();
+    verify( pageBgPanelSpy, times( 1 ) ).setSize( any(), any() );
+    verify( pageBgPanelSpy, times( 1 ) ).setVisible( true );
+    verify( pageBgPanelSpy.getElement().getStyle(), times( 1 ) ).setDisplay( Style.Display.BLOCK );
+  }
+
+  @Test
+  public void testShowWhenNotModalDoesNotBlockBackground() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+    doReturn( false ).when( boxSpy ).isModal();
+
+    boxSpy.show();
+
+    verify( boxSpy, never() ).initializePageBackground();
+    verify( boxSpy, never() ).blockPageBackground();
   }
 
   @Test
@@ -494,7 +727,16 @@ public class DialogBoxTest {
 
     boxSpy.show();
 
-    verify( boxSpy, times(   1 ) ).toggleEmbedVisibility( false );
+    verify( boxSpy, times( 1 ) ).toggleEmbedVisibility( false );
+  }
+
+  @Test
+  public void testShowCallsShowOnGlassPane() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.show();
+
+    verify( boxSpy.getGlassPane(), times( 1 ) ).show();
   }
 
   @Test
@@ -503,8 +745,34 @@ public class DialogBoxTest {
 
     boxSpy.show();
 
-    verify( boxSpy, times(   1 ) ).openJsDialog();
+    verify( boxSpy, times( 1 ) ).openJsDialog();
   }
+  // endregion
 
+  // region center()
+  @Test
+  public void testCenterDoesAutoFocus() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.center();
+
+    verify( boxSpy, times( 1 ) ).doAutoFocus();
+  }
+  // endregion
+
+  // region setPopupPositionAndShow(.)
+  @Test
+  public void testSetPopupPositionAndShowDoesAutoFocus() {
+    DialogBox boxSpy = createDialogBoxSpyForShowHide();
+
+    boxSpy.setPopupPositionAndShow( new PopupPanel.PositionCallback() {
+      @Override
+      public void setPosition( int offsetWidth, int offsetHeight ) {
+
+      }
+    } );
+
+    verify( boxSpy, times( 1 ) ).doAutoFocus();
+  }
   // endregion
 }
