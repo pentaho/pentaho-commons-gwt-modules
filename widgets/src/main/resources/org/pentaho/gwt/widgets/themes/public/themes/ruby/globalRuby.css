@@ -104,10 +104,10 @@ html.bootstrap body {
 
 :focus-visible,
 
-/* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
+  /* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
 input:focus-visible:focus-visible:focus-visible,
 
-/* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
+  /* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
 .bootstrap input:focus-visible:focus-visible:focus-visible  {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
@@ -309,6 +309,11 @@ select option,
   font-family: opensansregular;
 }
 
+select option {
+  width: fit-content;
+  min-width: 100%;
+}
+
 select option:hover {
   color: #414141;
   background-color: #CCCCCC;
@@ -335,8 +340,8 @@ table#contentCleanerPanel > tbody > tr > td > table {
 }
 
 #filterControlsGroupbox {
- margin-left: -6px;
- width: 101.6% !important;
+  margin-left: -6px;
+  width: 101.6% !important;
 }
 
 #ldapTestMsgDialog {
@@ -911,7 +916,7 @@ div#FilterPanel .pentaho-toggle-button-horizontal {
 .pentaho-toggle-button-down + .pentaho-toggle-button-up:hover,
 .pentaho-toggle-button-down-disabled + .pentaho-toggle-button-up:hover,
 .pentaho-toggle-button-down-hovering + .pentaho-toggle-button-up:hover {
-    border-left: 1px solid white;
+  border-left: 1px solid white;
 }
 
 .IE .pentaho-toggle-button-down,
@@ -1046,7 +1051,7 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   -moz-user-select: moz-none;
   -ms-user-select: none;
   user-select: none;
-/*  overflow: auto !important;*/
+  /*  overflow: auto !important;*/
   max-height: 90%;
 }
 
@@ -4282,131 +4287,58 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/trash.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file .icon {
-  background: url("images/file_generic.png") no-repeat;
-  margin: 0 5px;
+.fileBrowserColumn .body .file.icon::before {
+  background-image: url("images/file_generic.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon,
-.fileBrowserColumn .body .file.selected .icon {
-  background: url("images/file_generic.png") no-repeat;
-  margin: 0 5px;
+.fileBrowserColumn .body .file.icon.url::before {
+  background-image: url("images/file_url.png");
 }
 
-.fileBrowserColumn .body .file .icon.url {
-  background: url("images/file_url.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xanalyzer::before {
+  background-image: url("images/file_analysis.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.url,
-.fileBrowserColumn .body .file.selected .icon.url {
-  background: url("images/file_url.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xdash::before {
+  background-image: url("images/file_dashboard.png");
 }
 
-.fileBrowserColumn .body .file .icon.xanalyzer {
-  background: url("images/file_analysis.png") no-repeat;
+.fileBrowserColumn .body .file.icon.ktr::before {
+  background-image: url("images/kettle_transformation.png");
+  background-position: 4px center;
 }
 
-.fileBrowserColumn .body .file:hover .icon.xanalyzer,
-.fileBrowserColumn .body .file.selected .icon.xanalyzer {
-  background: url("images/file_analysis.png") no-repeat;
+.fileBrowserColumn .body .file.icon.kjb::before {
+  background-image: url("images/kettle_job.png");
+  background-position: 4px center;
 }
 
-.fileBrowserColumn .body .file .icon.xdash,
-.fileBrowserColumn .body .file .xdash {
-  background: url("images/file_dashboard.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xaction::before {
+  background-image: url("images/file_action.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.xdash,
-.fileBrowserColumn .body .file:hover .xdash,
-.fileBrowserColumn .body .file:hover .icon.xdash,
-.fileBrowserColumn .body .file:hover .xdash {
-  background: url("images/file_dashboard.png") no-repeat;
+.fileBrowserColumn .body .file.icon.prpt::before {
+  background-image: url("images/prptFile.png");
 }
 
-.fileBrowserColumn .body .file .icon.ktr,
-.fileBrowserColumn .body .file .ktr {
-  background: url("images/kettle_transformation.png") no-repeat 4px;
+.fileBrowserColumn .body .file.icon.prpti::before {
+  background-image: url("images/prptiFile.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.ktr,
-.fileBrowserColumn .body .file:hover .ktr,
-.fileBrowserColumn .body .file.selected .icon.ktr,
-.fileBrowserColumn .body .file.selected .ktr {
-  background: url("images/kettle_transformation.png") no-repeat 4px;
+.fileBrowserColumn .body .file.trashFolder::before {
+  background-image: url("images/folder_closed.png");
 }
 
-.fileBrowserColumn .body .file .icon.kjb,
-.fileBrowserColumn .body .file .kjb {
-  background: url("images/kettle_job.png") no-repeat 4px;
+.fileBrowserColumn .body .file.icon.cda::before {
+  background-image: url("images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.kjb,
-.fileBrowserColumn .body .file:hover .kjb,
-.fileBrowserColumn .body .file.selected .icon.kjb,
-.fileBrowserColumn .body .file.selected .kjb {
-  background: url("images/kettle_job.png") no-repeat 4px;
+.fileBrowserColumn .body .file.icon.wcdf::before {
+  background-image: url("images/cde_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.xaction,
-.fileBrowserColumn .body .file .xaction {
-  background: url("images/file_action.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.xaction,
-.fileBrowserColumn .body .file:hover .xaction,
-.fileBrowserColumn .body .file.selected .icon.xaction,
-.fileBrowserColumn .body .file.selected .xaction {
-  background: url("images/file_action.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.prpt,
-.fileBrowserColumn .body .file .prpt {
-  background: url("images/prptFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.prpt,
-.fileBrowserColumn .body .file:hover .prpt,
-.fileBrowserColumn .body .file.selected .icon.prpt,
-.fileBrowserColumn .body .file.selected .prpt {
-  background: url("images/prptFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.prpti,
-.fileBrowserColumn .body .file .prpti {
-  background: url("images/prptiFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.prpti,
-.fileBrowserColumn .body .file:hover .prpti,
-.fileBrowserColumn .body .file.selected .icon.prpti,
-.fileBrowserColumn .body .file.selected .prpti {
-  background: url("images/prptiFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.trashFolder {
-  background: url("images/folder_closed.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.cda.cda,
-.fileBrowserColumn .body .file .cda.cda {
-  background: url("images/cda_20.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.wcdf.wcdf,
-.fileBrowserColumn .body .file .wcdf.wcdf {
-  background: url("images/cde_20.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file .xcdf.xcdf {
-  background: url("images/cdf_20.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file:hover .xcdf.xcdf,
-.fileBrowserColumn .body .file.selected .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file.selected .xcdf.xcdf {
-  background: url("images/cdf_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xcdf::before {
+  background-image: url("images/cdf_20.png");
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.expandCollapse {
@@ -4578,6 +4510,11 @@ div.dijitDateTextBox.dijitComboBox {
   top: 51px;
 }
 
+#fileBrowserFiles.fileBrowserColumn .body:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
 .fileBrowserColumn .body .folder {
   margin-left: 30px;
   margin-top: 0;
@@ -4614,7 +4551,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .file {
-  padding: 8px 0;
+  padding: 8px;
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
 }
@@ -4632,7 +4569,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .file.selected {
-  background: rgba(204, 0, 0, 0.2);
+  background-color: rgba(204, 0, 0, 0.2);
 }
 
 #fileBrowserButtons {
@@ -7557,14 +7494,12 @@ div.listbox .pentaho-listbox {
   background: url("images/table_fact.png");
 }
 
-.fileBrowserColumn .body .file .icon.cda,
-.fileBrowserColumn .body .file .cda {
-  background: url("../images/cda_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.cda::before {
+  background-image: url("../images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.wcdf,
-.fileBrowserColumn .body .file .wcdf {
-  background: url("../images/cde_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.wcdf::before {
+  background-image: url("../images/cde_20.png");
 }
 
 .file-cda {
