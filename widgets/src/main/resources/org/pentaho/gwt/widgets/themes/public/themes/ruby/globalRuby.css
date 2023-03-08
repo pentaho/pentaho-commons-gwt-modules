@@ -5022,6 +5022,10 @@ button.adminButton {
   background: #f8f8f8;
 }
 
+.gwt-ScrollTable .dataWrapper:focus-visible {
+  outline-offset: -2px;
+}
+
 .gwt-ScrollTable .headerTable.headerTable td {
   padding-top: 2px;
   padding-bottom: 2px;

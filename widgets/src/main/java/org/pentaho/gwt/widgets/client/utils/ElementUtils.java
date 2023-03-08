@@ -358,4 +358,12 @@ public class ElementUtils {
   public static native boolean isActiveElement( Element e )/*-{
     return $doc.activeElement === e;
   }-*/;
+
+  /**
+   * This method sets the focus on the provided element
+   * @param elem
+   */
+  public static native void focusSync( Element elem )/*-{
+    elem.focus();
+  }-*/;
 }
