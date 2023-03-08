@@ -5308,7 +5308,7 @@ td.tab-spacer-wrapper {
   border-right: 1px solid #e0e0e0;
 }
 
-#dojox_grid__View_1 .dojoxGridCell:focus-visible {
+#licensesGrid .dojoxGridView .dojoxGridCell:focus-visible {
   outline-offset : -2px;
 }
 
@@ -5487,6 +5487,12 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   height: 20px;
   margin: 0;
   padding: 0 0 4px 0;
+}
+
+#file-input-form {
+  display: flex;
+  position: absolute;
+  right: 24%;
 }
 
 /* Data Source Wizard styles */
