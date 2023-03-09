@@ -4483,7 +4483,7 @@ div.dijitDateTextBox.dijitComboBox {
 /* added by brett to override browser styles */
 .main-container {
   margin: 0 auto;
-  width: 1230px;
+  max-width: 1230px;
 }
 
 /* Browse Files */
@@ -8901,3 +8901,76 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .import-dialog-disclosure-panel .content > tbody > tr > td:nth-child(1) {
   flex: none;
 }
+
+/* Start region Browse Files responsive - BEGIN */
+#fileBrowser {
+  display: grid;
+  width: 100%;
+  grid-template-areas:
+    "folder file actions";
+  grid-template-columns: 1fr 1fr auto;
+  grid-template-rows: 1fr;
+}
+
+@media (max-width: 880px) {
+  #fileBrowser {
+    display: grid;
+    width: 100%;
+    grid-template-areas:
+			"folder actions"
+			"file actions";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+@media (max-width: 550px) {
+  #fileBrowser {
+    display: grid;
+    width: 100%;
+    grid-template-areas:
+			"folder"
+			"file"
+			"actions";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+}
+
+#fileBrowserFolders {
+  grid-area: folder;
+  width: 100%;
+  min-height: 256px;
+}
+
+#fileBrowserFiles {
+  grid-area: file;
+  width: 100%;
+  margin-left: 0px;
+  min-height: 256px;
+}
+
+#fileBrowserButtons {
+  grid-area: actions;
+  margin-left: 0px;
+}
+
+#fileBrowserButtons {
+  height: auto !important;
+}
+
+#fileBrowserFiles .body {
+  overflow-x: hidden !important;
+  width:auto !important;
+}
+
+#fileBrowserButtons .body {
+  overflow: visible !important;
+}
+
+#fileBrowserFiles .body .file {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* End region Browse Files responsive - End */
