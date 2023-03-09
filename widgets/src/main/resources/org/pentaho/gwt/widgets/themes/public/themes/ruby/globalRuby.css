@@ -5487,8 +5487,6 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   height: 20px;
   margin: 0;
   padding: 0 0 4px 0;
-  display: flex;
-  justify-content: end;
 }
 
 /* Data Source Wizard styles */
