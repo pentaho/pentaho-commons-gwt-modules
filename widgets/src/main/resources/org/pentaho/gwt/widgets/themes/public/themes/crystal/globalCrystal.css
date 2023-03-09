@@ -123,11 +123,6 @@ SELECT,
   font-size: 13px;
 }
 
-select option {
-  width: fit-content;
-  min-width: 100%;
-}
-
 .IE .scheduleEditor SELECT {
   margin: 2px;
 }
