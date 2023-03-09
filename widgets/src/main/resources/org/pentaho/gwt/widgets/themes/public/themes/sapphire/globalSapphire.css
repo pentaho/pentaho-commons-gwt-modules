@@ -219,11 +219,6 @@ select option,
   font-family: opensansregular;
 }
 
-select option {
-  width: fit-content;
-  min-width: 100%;
-}
-
 .IE .scheduleEditor SELECT {
   margin: 2px;
 }

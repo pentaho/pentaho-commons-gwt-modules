@@ -309,11 +309,6 @@ select option,
   font-family: opensansregular;
 }
 
-select option {
-  width: fit-content;
-  min-width: 100%;
-}
-
 select option:hover {
   color: #414141;
   background-color: #CCCCCC;
