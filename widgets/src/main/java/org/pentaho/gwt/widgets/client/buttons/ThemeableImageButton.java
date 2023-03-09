@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.gwt.aria.client.Roles;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -38,6 +37,7 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Image;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 /**
  * Clickable image with enable/disable functionality built in. Makes use of css styles to provide the image and sizing.
@@ -48,7 +48,7 @@ public class ThemeableImageButton extends Image {
   private Set<String> enabledStyles = new HashSet<String>();
   private Set<String> disabledStyles = new HashSet<String>();
 
-  private static final String BLANK_IMAGE = GWT.getHostPageBaseURL()
+  private static final String BLANK_IMAGE = EnvironmentHelper.getFullyQualifiedURL()
       + "content/common-ui/resources/themes/images/spacer.gif";
   private static final String BASE_CLASS = "image-button";
   private static final String DISABLED_CLASS = "disabled-image-button";
