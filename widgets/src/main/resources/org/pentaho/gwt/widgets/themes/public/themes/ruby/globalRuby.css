@@ -5309,7 +5309,7 @@ td.tab-spacer-wrapper {
 }
 
 #licensesGrid .dojoxGridView .dojoxGridCell:focus-visible {
-  outline-offset : -2px;
+  outline-offset : -3px;
 }
 
 /* ======================= custom drop down control =========================== */
@@ -5487,12 +5487,8 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   height: 20px;
   margin: 0;
   padding: 0 0 4px 0;
-}
-
-#file-input-form {
   display: flex;
-  position: absolute;
-  right: 24%;
+  justify-content: end;
 }
 
 /* Data Source Wizard styles */
