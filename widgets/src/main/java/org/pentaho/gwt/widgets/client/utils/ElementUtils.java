@@ -31,6 +31,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.impl.FocusImpl;
 
 import static org.pentaho.gwt.widgets.client.utils.string.StringUtils.isEmpty;
 
@@ -283,17 +284,35 @@ public class ElementUtils {
     return $wnd.pho.util._focus.previousTabbable(elem);
   }-*/;
 
+  /**
+   * Sets focus on a given element.
+   * <p>
+   *   On some user agents, e.g. <code>safari</code>,
+   *   focus is set asynchronously (see <code>FocusImplSafari</code>).
+   * </p>
+   * <p>
+   *   The focus implementation obtained by {@link FocusImpl#getFocusImplForPanel()} is used.
+   *   This is the focus implementation used, for example, by MenuBar.
+   *   While other GWT classes use {@link FocusImpl#getFocusImplForWidget()}, instead,
+   *   by using the former, there's no danger of being overtaken by other GWT code executed before this call.
+   * </p>
+   * @param elem The element to focus.
+   */
+  public static void focus( Element elem ) {
+    FocusImpl.getFocusImplForPanel().focus( elem );
+  }
+
   public static void tabNext( Element rootElem ) {
     Element elem = ElementUtils.findNextKeyboardFocusableElement( rootElem );
     if ( elem != null ) {
-      elem.focus();
+      focus( elem );
     }
   }
 
   public static void tabPrevious( Element rootElem ) {
     Element elem = ElementUtils.findPreviousKeyboardFocusableElement( rootElem );
     if ( elem != null ) {
-      elem.focus();
+      focus( elem );
     }
   }
 
