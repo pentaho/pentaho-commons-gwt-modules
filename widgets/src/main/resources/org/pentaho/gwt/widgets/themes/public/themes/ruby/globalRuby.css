@@ -5244,6 +5244,10 @@ td.tab-spacer-wrapper {
   border-right: 1px solid #e0e0e0;
 }
 
+#licensesGrid .dojoxGridView .dojoxGridCell:focus-visible {
+  outline-offset : -3px;
+}
+
 /* ======================= custom drop down control =========================== */
 .custom-list {
   border: 1px solid #CCC;
