@@ -80,6 +80,21 @@
 
   --typ-body-font-size: 14px;
   --typ-body-line-height: 17px;
+
+  /* Input height resizes with text zoom, as it is based on font size and line height.
+     --input-outer-height = 33
+        = 2 x border + 2 x vertical-padding + line-height
+        = 17 + 2 + 14
+
+     Use these classes directly on the rare cases where sibling content needs to be sized
+     along with text and the resulting input's height, and no other means exists.
+   */
+  --input-border-width: 1px;
+  --input-vertical-padding: 0.5em;
+  --input-outer-height: calc(
+      2 * var(--input-border-width) +
+      2 * var(--input-vertical-padding) +
+      var(--typ-body-line-height));
 }
 
 @media (max-height: 720px) {
@@ -193,20 +208,16 @@ input[type='radio'] {
 input[type='text'],
 textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
-  border: 1px solid #CCC;
-  padding: 0.5em 10px;
+  border: var(--input-border-width) solid #CCC;
+  padding: 0 10px;
   font-size: var(--typ-body-font-size);
   line-height: var(--typ-body-line-height);
-  /* height resizes with text zoom, as it is based on font size and line height
-     height = 33
-        = line-height + 2 x border + 2 x vertical-padding
-        = 17 + 2 + 14
-     */
   border-radius: 4px;
   font-family: opensansregular;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  height: var(--input-outer-height);
   color: #333333;
 }
 
@@ -262,7 +273,7 @@ input#dijit_form_NumberTextBox_0 {
 
 SELECT,
 .gwt-ListBox {
-  border: 1px solid #CCC;
+  border: var(--input-border-width) solid #CCC;
   padding: 0;
   font-size: var(--typ-body-font-size);
   overflow: auto;
@@ -278,13 +289,8 @@ SELECT[size="1"],
 SELECT:not([size]),
 .gwt-ListBox[size="1"],
 .gwt-ListBox:not([size]) {
-  line-height: var(--typ-body-line-height);
-  padding: 0.5em 30px 0.5em 10px;
-  /* height resizes with text zoom, as it is based on font size and line height
-     height = 33
-        = line-height + 2 x border + 2 x vertical-padding
-        = 17 + 2 + 14
-     */
+  height: var(--input-outer-height);
+  padding: 0 30px 0 10px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
