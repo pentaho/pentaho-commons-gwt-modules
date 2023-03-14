@@ -4515,10 +4515,27 @@ div.dijitDateTextBox.dijitComboBox {
   outline-offset: var(--focus-ring-offset);
 }
 
+.fileBrowserColumn > .body {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+.fileBrowserColumn > .body > .folder {
+  width: max-content;
+  min-width: 100%;
+}
 .fileBrowserColumn .body .folder {
   margin-left: 30px;
   margin-top: 0;
   margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+.fileBrowserColumn .body .folders {
+  display: flex;
+  flex-direction: column;
+  flex: none;
 }
 
 .fileBrowserColumn .body .folder .element {
@@ -4526,6 +4543,14 @@ div.dijitDateTextBox.dijitComboBox {
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
+  display: flex;
+  flex-direction: row;
+}
+.fileBrowserColumn .body .folder .element > * {
+  flex: none;
+}
+.fileBrowserColumn .body .folder .element > .title {
+  flex: 1 0 auto;
 }
 
 .fileBrowserColumn .body .folder .element:hover {
@@ -8966,6 +8991,12 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 #fileBrowserFiles .body {
   overflow-x: hidden !important;
   width:auto !important;
+}
+
+@supports (-moz-appearance:none) {
+  #fileBrowserFiles .body {
+    width:-moz-available !important;
+  }
 }
 
 #fileBrowserButtons .body {
