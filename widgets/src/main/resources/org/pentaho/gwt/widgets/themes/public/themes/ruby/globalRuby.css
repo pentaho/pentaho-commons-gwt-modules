@@ -2108,7 +2108,11 @@ table.toolbar {
   width: 22px;
   height: 22px;
   -webkit-user-select: none;
-  margin-left: 5px !important;
+}
+
+.toolbar-button-focus-panel {
+  margin-left: 5px;
+  --focus-ring-offset: 0px;
 }
 
 .IE .toolbar-button {
