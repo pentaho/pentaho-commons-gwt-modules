@@ -23,6 +23,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -124,6 +126,13 @@ public class FileChooser extends VerticalFlexPanel {
           }
           event.preventDefault();
         }
+      }
+    } );
+
+    fileNameTextBox.addValueChangeHandler( new ValueChangeHandler<String>() {
+      @Override
+      public void onValueChange( ValueChangeEvent<String> valueChangeEvent ) {
+       actualFileName = fileNameTextBox.getText();
       }
     } );
 
