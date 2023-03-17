@@ -4494,6 +4494,7 @@ div.dijitDateTextBox.dijitComboBox {
 .main-container {
   margin: 0 auto;
   max-width: 1230px;
+  width: auto;
 }
 
 /* Browse Files */
@@ -7248,17 +7249,20 @@ div.listbox .pentaho-listbox {
   font-family: opensanslight;
   line-height: 30px;
   padding-bottom: 10px;
-  width: 300px;
 }
 
 #getting-started-message-content #message {
   font-size: 14px;
   line-height: 20px;
-  width: 300px;
 }
 
 #getting-started-message-content #sub-messages {
   left: 15px;
+}
+
+.bootstrap #getting-started div.tab-content {
+  height: auto;
+  min-height: 320px;
 }
 
 .welcome-img {
@@ -7266,7 +7270,10 @@ div.listbox .pentaho-listbox {
 }
 
 #video-container {
-  padding: 4px 4px 0 0;
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 #getting-started .card {
@@ -7277,6 +7284,10 @@ div.listbox .pentaho-listbox {
   border-right: 1px solid transparent;
   padding: 10px;
   padding-top: 14px;
+  max-width: 150px;
+  flex: none;
+  width: 20vw;
+  min-width: 0;
 }
 
 #getting-started .card:focus-visible {
@@ -7324,6 +7335,13 @@ div.listbox .pentaho-listbox {
   height: 100px;
 }
 
+#getting-started .card-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 150/100;
+  background-size: contain;
+}
+
 #getting-started .selector-column {
   position: absolute;
   top: 0px;
@@ -7359,21 +7377,33 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started #tab2 .details-img {
-  width: 644px;
-  height: 299px;
-  position: absolute;
+  width: 100%;
+  height: auto;
   bottom: 4px;
+  aspect-ratio: 644/299;
+  background-size: contain;
+  background-origin: content-box;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #getting-started #tab3 .details-img {
-  width: 644px;
-  height: 299px;
-  position: absolute;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 644/299;
   bottom: 8px;
+  background-size: contain;
+  background-origin: content-box;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #getting-started .details-content {
-  width: 400px;
+  width: 35%;
 }
 
 .details-content {
@@ -7408,7 +7438,7 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started .button-container {
-  position: absolute;
+  position: unset;
   z-index: 1;
   top: 200px;
   left: 250px;
@@ -7418,22 +7448,31 @@ div.listbox .pentaho-listbox {
   position: absolute;
   top: 0;
   right: 0;
+  width: 60%;
+  height: 100%;
 }
 
 #getting-started .pentaho-button {
   font-size: 14px;
-  padding-right: 35px;
+  padding-right: calc(0.5ch + (1em * 16/14) + 14px);
   padding-top: 9px;
   padding-bottom: 9px;
-  background: #CC0000 url("images/open_new_window.png") no-repeat right 15px center;
+  background: #CC0000 url("images/open_new_window.png") no-repeat right 14px center;
   border-radius: 4px;
   width: 220px;
   color: #FFF;
+  background-size: auto calc(1em * 16/14);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #getting-started #tab2 .pentaho-button {
-  width: 140px;
-  margin-left: 35px;
+  width: auto;
+}
+
+#getting-started #tab2 #sample-details #sample-details-content,
+#getting-started #tab3 #tutorial-details #tutorial-details-content {
+  width: 70%;
 }
 
 #getting-started .pentaho-button:hover {
@@ -7473,7 +7512,13 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started #welcome-video {
-  padding: 31px 0 0 0;
+  width: 100%;
+}
+
+#getting-started #welcome-video > iframe {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 551/310;
 }
 
 #launch-widget #welcome-video {
@@ -8380,6 +8425,13 @@ input#csvSeparator {
 
 .welcome-img.welcome-img {
   background-image: url(images/gettingStarted_welcome_graphic.png);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 540/372;
+  flex: none;
+  background-origin: content-box;
+  background-size: contain;
+  background-position: center;
 }
 
 .welcome-img.welcome-img:hover,
@@ -8565,6 +8617,20 @@ button#preview[disabled]:active {
 .bootstrap #favoritesContianer .nav-tabs.nav-stacked > li > a:hover .favorite-on {
   background: url("images/favorite-on_hover_selected_white.png") no-repeat;
 }
+:is(#recents-content-panel, #favorites-content-panel) .nav-tabs.nav-stacked li > a
+:is(.row-fluid, .row-fluid > div) {
+  display: flex;
+  align-items: center;
+}
+
+:is(#recents-content-panel, #favorites-content-panel) .nav-tabs.nav-stacked li > a .row-fluid > div > i {
+  flex: none;
+}
+
+:is(#recents-content-panel, #favorites-content-panel) .nav-tabs.nav-stacked li > a .row-fluid > div span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
 .pentaho-page-background#pageLoading {
   display: flex;
@@ -8649,6 +8715,10 @@ button#preview[disabled]:active {
   line-height: 20px;
   padding: 9px 15px;
   border: 1px solid #cc0000;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #buttonWrapper button:hover,
@@ -9021,3 +9091,129 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   text-overflow: ellipsis;
 }
 /* End region Browse Files responsive - End */
+
+/* responsive content for home page above 810px and below 930px */
+@media (max-width:930px) {
+
+  #getting-started #tab2 #sample-details #sample-details-content,
+  #getting-started #tab3 #tutorial-details #tutorial-details-content {
+    width: 60%;
+  }
+}
+
+/* responsive content for home page below 810px */
+@media (max-width: 810px) {
+
+  /* targets the button wrapper in home page */
+  #buttonWrapper {
+    width: 100%;
+  }
+
+  /* targets the getting started column */
+  .main-container > .row-fluid > div.span9 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* targets the welcome tab in the getting started */
+  div#getting-started-media-content {
+    position: unset;
+    width: 100%;
+  }
+
+  #getting-started div.details-content {
+    width: auto;
+  }
+
+  #getting-started div.details-content p {
+    text-align: center;
+    padding-right: 20px;
+  }
+
+  #getting-started div.details-content > div > p br {
+    content: "";
+  }
+
+  #getting-started div.details-content > div > p br:after {
+    content: " ";
+  }
+
+  #getting-started-message-content div#sub-messages {
+    left: 0;
+  }
+
+  #video-container {
+    padding: 15px;
+  }
+
+  /* targets the samples tab and tutorials tab in the getting started */
+  #getting-started div.selector-column {
+    flex: auto;
+    position: unset;
+    width: auto;
+    height: auto;
+  }
+
+  #getting-started div.vertical-selector {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  #getting-started .detail-title {
+    text-align: center;
+  }
+
+  #getting-started #tab2 #sample-details #sample-details-content,
+  #getting-started #tab3 #tutorial-details #tutorial-details-content {
+    width: auto;
+    padding: 20px 20px 0;
+  }
+
+  #getting-started #tab2 div.details-img,
+  #getting-started #tab3 div.details-img {
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    padding-bottom: calc(1em * 10/14);
+  }
+
+  #getting-started div.card.selected {
+    border-bottom: 4px solid #CC0000;
+    border-top: 1px solid #CCC;
+  }
+
+  #getting-started #tab3 .pentaho-button,
+  #getting-started #tab3 .pentaho-button {
+    width: auto;
+    font-size: small;
+  }
+}
+
+/* responsive content for home page below 550px */
+@media (max-width: 550px) {
+
+  /* targets the recents and favorites columns */
+  .main-container > .row-fluid > .span9 > .row-fluid:last-child .span6 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* targets the tabs in the getting started */
+  .bootstrap .widget-panel#getting-started ul.nav-tabs > li > a:link {
+    padding: calc(1em * 6 / 14);
+  }
+
+  /* targets the samples and tutorials tab in the getting started */
+  #getting-started #tab2 .pentaho-button,
+  #getting-started #tab3 .pentaho-button {
+    font-size: xx-small;
+    line-height: 0;
+  }
+
+  #getting-started .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
