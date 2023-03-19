@@ -66,9 +66,6 @@
   /* Padding, on each side */
   --dialog-padding: 20px;
 
-  /* H (and V, when wrapped) space between buttons */
-  --dialog-buttons-gap: 10px;
-
   /* Design System min/safe margin, on each side */
   --dialog-ds-min-margin-h: calc(100% / 12);
   --dialog-ds-min-margin-v: 80px;
@@ -1418,7 +1415,7 @@ button#schedule-dialog-select-button {
    See also JavaDocs for Pentaho GWT's DialogBox.DialogSizingMode (ds-), DialogBox.DialogWidthCategory (dw-)
    and DialogBox.DialogMinimumHeightCategory (dmh-).
 */
-.pentaho-dialog.responsive {
+:where(.responsive).pentaho-dialog {
   /* DIALOG LOCAL variables - override on specific dialogs */
 
   /* Desired maximum OUTER width/height.
@@ -1474,7 +1471,7 @@ button#schedule-dialog-select-button {
   padding: 0;
 }
 
-.pentaho-dialog.responsive > * {
+:where(.responsive).pentaho-dialog > * {
   flex: auto;
   display: flex;
   flex-direction: column;
@@ -1483,68 +1480,69 @@ button#schedule-dialog-select-button {
   min-height: calc(var(--dialog-min-height) - 2 * var(--dialog-border-width));
 }
 
-.pentaho-dialog.responsive.dmh-content > * {
+/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
+   when reaching min height. */
+@media (max-height: 256px) {
+  :where(.responsive).pentaho-dialog > * {
+    min-height: auto;
+  }
+}
+
+:where(.responsive).pentaho-dialog:where(.dmh-content) > * {
   /* Disables body V scrollbar.
      Displays the outer V scrollbar when dialog H cannot accommodate the body's min-height.
    */
   min-height: auto;
 }
-/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
-   when reaching min height. */
-@media (max-height: 256px) {
-  .pentaho-dialog.responsive > * {
-    min-height: auto;
-  }
-}
 
-.pentaho-dialog.responsive.ds-fill-viewport-width,
-.pentaho-dialog.responsive.ds-fill-viewport,
-.pentaho-dialog.responsive.ds-full-viewport {
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport-width),
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport),
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
   /* Expand as much as allowed by max-width */
   width: 100%;
 }
 
-.pentaho-dialog.responsive.ds-fill-viewport,
-.pentaho-dialog.responsive.ds-full-viewport {
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport),
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
   /* Expand as much as allowed by max-height */
   height: 100%;
 }
 
-.pentaho-dialog.responsive.ds-full-viewport {
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
   /* Ignore grid system max width/height */
   max-width: 100%;
   max-height: 100%;
 }
 
-.pentaho-dialog.responsive.dw-min {
+:where(.responsive).pentaho-dialog:where(.dw-min) {
   --dialog-max-width: var(--a11y-min-width);
 }
 
-.pentaho-dialog.responsive.dw-text {
+:where(.responsive).pentaho-dialog:where(.dw-text) {
   --dialog-max-width: calc(var(--text-block-max-width) + var(--priv-dialog-borders-paddings));
 }
 
-.pentaho-dialog.responsive.dw-xs {
+:where(.responsive).pentaho-dialog:where(.dw-xs) {
   --dialog-max-width: 448px;
 }
 
-.pentaho-dialog.responsive.dw-sm {
+:where(.responsive).pentaho-dialog:where(.dw-sm) {
   --dialog-max-width: 672px;
 }
 
-.pentaho-dialog.responsive.dw-md {
+:where(.responsive).pentaho-dialog:where(.dw-md) {
   --dialog-max-width: 880px;
 }
 
-.pentaho-dialog.responsive.dw-lg {
+:where(.responsive).pentaho-dialog:where(.dw-lg) {
   --dialog-max-width: 1096px;
 }
 
-.pentaho-dialog.responsive.dw-xl {
+:where(.responsive).pentaho-dialog:where(.dw-xl) {
   --dialog-max-width: 1300px;
 }
 
-.pentaho-dialog.responsive .Caption {
+:where(.responsive).pentaho-dialog .Caption {
   flex: none;
   white-space: nowrap;
   overflow: hidden;
@@ -1552,28 +1550,29 @@ button#schedule-dialog-select-button {
   padding: var(--dialog-padding);
 }
 
-.pentaho-dialog.responsive .dialog-content {
+:where(.responsive).pentaho-dialog .dialog-content {
   flex: auto;
   display: flex;
   flex-direction: column;
   overflow: auto;
   padding: 0 var(--dialog-padding) var(--dialog-padding) !important;
-  gap: var(--dialog-vertical-gap);
+  gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
-.pentaho-dialog.responsive .button-panel {
+:where(.responsive).pentaho-dialog .button-panel {
   flex: none;
   overflow: hidden;
+  width: unset;
   margin: 0;
   padding: var(--dialog-padding);
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: end;
-  gap: var(--dialog-buttons-gap);
+  gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
-.pentaho-dialog.responsive .button-panel .pentaho-button {
+:where(.responsive).pentaho-dialog .button-panel .pentaho-button {
   flex: 0 1 auto;
   margin: 0;
   white-space: nowrap;
@@ -1583,100 +1582,88 @@ button#schedule-dialog-select-button {
 /* endregion DIALOG RESPONSIVE - END */
 
 /* region GWT DialogBox, PromptDialogBox RESPONSIVE */
-.pentaho-dialog.pentaho-gwt.responsive {
+:where(.responsive) .gwt-Label {
+  width: auto !important;
+}
+
+:where(.responsive).pentaho-dialog.pentaho-gwt {
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
 
-.pentaho-dialog.pentaho-gwt.responsive > * > table,
-.pentaho-dialog.pentaho-gwt.responsive > * > table > tbody,
-
-/* Body row (contains Content and Buttons section) */
-.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle,
-.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter,
-/* a.k.a. .dialogContent */
-.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter > *,
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table,
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table > tbody {
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+:where(.responsive).pentaho-dialog.pentaho-gwt > * > table,
+:where(.responsive).pentaho-dialog.pentaho-gwt > * > table > tbody,
+:where(.responsive).pentaho-dialog.pentaho-gwt :is(
+  .dialogTop,
+  .dialogTopCenter,
+  .dialogTopCenterInner,
+  .dialogMiddle,
+  .dialogMiddleCenter,
+  .dialogContent, /* a.k.a. .dialogMiddleCenterInner */
+  .dialogContent > table,
+  .dialogContent > table > tbody,
+  .dialogContent > table > tbody > tr,
+  .dialogContent > table > tbody > tr:last-child > td, /* buttons row */
+  .inner-button-wrapper) {
+  display: contents;
+  flex: inherit;
 }
 
-.pentaho-dialog.pentaho-gwt.responsive > * > table {
-  width: auto !important;
+:where(.responsive).pentaho-dialog.pentaho-gwt :is(
+  .dialogContent > table > colgroup,
+  .dialogBottom) {
+  display: none;
 }
 
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table {
-  flex: auto;
+:where(.responsive).pentaho-dialog.pentaho-gwt .button-panel {
+  width: unset !important;
+}
+/* endregion */
+
+/* region XUL/GWT GenericDialog, GwtDialog, ... RESPONSIVE */
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) .dialog {
+  display: contents;
+  flex: inherit;
 }
 
-/* Dialog header */
-.pentaho-dialog.pentaho-gwt.responsive .dialogTop,
-.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter,
-.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter > div {
-  flex: none;
-  display: flex;
-  flex-direction: column;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) .buttonTable {
+  flex: 1;
+  min-width: auto;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
-/* Dialog content */
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table .prompt-dialog-content-row {
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow: hidden;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="left"]) .buttonTable {
+  justify-content: start;
 }
 
-/* Dialog buttons */
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-row,
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-cell {
-  display: flex;
-  flex-direction: column;
-  flex: none;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="center"]) .buttonTable {
+  justify-content: center;
 }
 
-.pentaho-dialog.responsive.pentaho-gwt .button-panel {
-  width: auto !important;
-}
-
-.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr {
-  flex-wrap: wrap;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="right"]) .buttonTable {
   justify-content: end;
-  gap: var(--dialog-buttons-gap);
 }
+/* endregion */
 
-.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr > td {
-    flex: 0 1 auto;
-}
-/* endregion GWT DialogBox, PromptDialogBox RESPONSIVE */
-
-/* region BootstrapJS Dialog Responsive - Start */
-.bootstrap .modal.pentaho-dialog.responsive .body,
-.bootstrap .modal.pentaho-dialog.responsive .footer{
+/* region BootstrapJS Dialog Responsive */
+.bootstrap :where(.responsive).modal.pentaho-dialog .body,
+.bootstrap :where(.responsive).modal.pentaho-dialog .footer {
   display: flex;
   flex-direction: column;
 }
 
-.bootstrap .modal.pentaho-dialog.responsive {
+.bootstrap :where(.responsive).modal.pentaho-dialog {
   padding: 0;
 }
 
-.bootstrap .modal.pentaho-dialog.responsive .Caption .header-content {
+.bootstrap :where(.responsive).modal.pentaho-dialog .Caption .header-content {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* endregion */
 
-.bootstrap .modal.pentaho-dialog.responsive .button-panel {
-  width: auto;
-}
-
-/* endregion BootstrapJS Dialog Responsive - End */
-
-/* region Responsive File Properties dialog - Start */
+/* region File Properties dialog */
 .file-properties-dialog .pentaho-tab-deck-panel > div > * {
   height: auto !important;
 }
