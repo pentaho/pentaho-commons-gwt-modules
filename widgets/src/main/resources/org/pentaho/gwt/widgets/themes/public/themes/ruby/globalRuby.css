@@ -9054,16 +9054,29 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   margin: var(--focus-ring-padding);
 }
 
-.file-upload-panel > tbody > tr > td:nth-child(1) input {
+/* Dialog uses empty rows for V-spacing. */
+.import-dialog .dialog-content {
+  --layout-gap-v: 0;
+}
+
+.file-upload-panel {
+  align-items: center;
+}
+
+.file-upload-panel input {
   flex: auto;
   min-width:0;
 }
 
-.file-upload-panel > tbody > tr > td:nth-child(2),
-.file-upload-panel > tbody > tr > td:nth-child(3)  {
+.file-upload-panel .gwt-HTML {
+  display: none;
+}
+
+.file-upload-panel button  {
   flex: none;
 }
 
+/* Content wrapper */
 .import-dialog-disclosure-panel > tbody > tr:nth-child(2) > td > * {
   flex: auto;
   display: flex;
@@ -9072,8 +9085,8 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   overflow: visible !important;
 }
 
-.import-dialog-disclosure-panel .content > tbody > tr > td:nth-child(1) {
-  flex: none;
+.import-dialog-disclosure-content-panel {
+  flex: auto;
 }
 
 /* Start region Browse Files responsive - BEGIN */
