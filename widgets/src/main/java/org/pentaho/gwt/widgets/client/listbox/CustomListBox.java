@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
@@ -35,7 +36,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;
@@ -96,7 +96,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   protected boolean popupShowing = false;
   private DropPopupPanel popup;
   private PopupList popupVbox = new PopupList();
-  protected FocusPanel fPanel = new FocusPanel();
+  protected PentahoFocusPanel fPanel = new PentahoFocusPanel();
   private ScrollPanel popupScrollPanel = new ScrollPanel();
 
   protected List<ChangeListener> listeners = new ArrayList<ChangeListener>();
@@ -116,7 +116,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
 
   public CustomListBox() {
 
-    selectedItemWrapper.addStyleName( "custom-list-selected-item-wrapper" );
+    selectedItemWrapper.addStyleName( "flex-row" );
     dropGrid.addStyleName( "custom-list-drop-grid" );
     dropGrid.addStyleName( HorizontalFlexPanel.STYLE_NAME );
 
@@ -150,7 +150,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     fPanel.addMouseListener( this );
     fPanel.addFocusListener( this );
     fPanel.addKeyboardListener( this );
-    fPanel.addStyleName( "custom-list-focus-panel" );
+    fPanel.addStyleName( "flex-row" );
 
     // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
     // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.

@@ -5379,41 +5379,48 @@ td.tab-spacer-wrapper {
   outline-offset : -3px;
 }
 
-/* ======================= custom drop down control =========================== */
+/* region Pentaho GWT FocusPanel */
+
+/* Prevent overflow on responsive dialogs.
+   Visually hidden input created by FocusImplStandard to capture access keys on FocusPanel. */
+.pentaho-gwt-FocusPanel > input {
+  outline: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+/* endregion*/
+
+/* region Pentaho GWT CustomListBox control */
 .custom-list {
   border: 1px solid #CCC;
+  --custom-list-boder-radius: 4px;
+  border-radius: var(--custom-list-boder-radius);
 }
 
-/* CustomListBox */
-:is(.custom-list, .custom-list-disabled) :is(.custom-list-focus-panel, .custom-list-selected-item-wrapper) {
-  flex: auto;
-  display: flex;
-  flex-direction: row;
-  min-width: 0;
+.custom-list-disabled {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #CCC;
+  background-color: #ebebe4;
 }
 
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
-  flex: auto;
+:is(.custom-list, .custom-list-disabled) .pentaho-gwt-FocusPanel {
+  border-radius: var(--custom-list-boder-radius);
+}
+
+/* .custom-list-drop-grid */
+:where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
   width: 0 !important;
+  /* H-space between label and combo-arrow */
+  --layout-gap-h: 1px;
+  /* V-align center */
+  align-items: center;
 }
 
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr {
-  display:flex;
-}
-
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:first-child {
-  flex:auto;
-}
-
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:last-child {
-  flex: none;
-  width: auto !important;
-}
-
-:is(.custom-list, .custom-list-disabled) .custom-list-item > tbody > tr > td > * {
-  flex: auto;
-}
-
+/* .custom-list-item */
 .custom-list-item .gwt-Label.gwt-Label {
   padding: 0 10px;
   -webkit-box-sizing: border-box;
@@ -5421,7 +5428,7 @@ td.tab-spacer-wrapper {
   box-sizing: border-box;
 }
 
-.custom-list-item .gwt-Label {
+:where(.responsive) .custom-list-item .gwt-Label {
   white-space: break-spaces;
 }
 
@@ -5429,38 +5436,34 @@ td.tab-spacer-wrapper {
   background-color: transparent;
 }
 
+/* .combo-arrow */
 .combo-arrow {
-  padding: calc(1em * 4/14);
+  cursor: pointer;
+}
+
+:is(.combo-arrow, .combo-arrow-disabled) {
+  padding: 4px;
   background: none;
   border: 0 none;
-  cursor: pointer;
+  font-size: 0;
+}
+
+:where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) {
+  padding: calc(1em * 4/14);
   font-size: inherit;
+  flex: none;
   width: auto !important;
 }
 
+/* .combo-arrow div */
 .combo-arrow div {
   background-image: url('images/arrow_down.png');
   background-position: right center;
   background-repeat: no-repeat;
   cursor: pointer;
-  height: calc(1em * 8/14);
-  width: calc(1em * 12/14);
-  font-size: inherit;
-}
-
-.custom-list-disabled {
-  padding: 0px;
-  margin: 0px;
-  border: 1px solid #CCC;
-  background-color: #ebebe4;
-}
-
-.combo-arrow-disabled {
-  padding: calc(1em * 4/14);
-  background: none;
-  border: 0 none;
-  font-size: inherit;
-  width: auto !important;
+  height: 8px;
+  width: 12px;
+  font-size: 0;
 }
 
 .combo-arrow-disabled div {
@@ -5468,15 +5471,23 @@ td.tab-spacer-wrapper {
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
+  height: 8px;
+  width: 10px;
+  font-size: 0;
+}
+
+:where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) div {
   height: calc(1em * 8/14);
   width: calc(1em * 12/14);
   font-size: inherit;
 }
 
+/* .drop-popup */
 .drop-popup {
   border: 1px solid #CCC;
   margin-top: -2px;
 }
+/* endregion*/
 
 #controller_panel {
   border: 0;
@@ -9053,10 +9064,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .datePickerDays .datePickerDayIsHighlighted {
   background-color: #CC0000;
   color: #FFFFFF;
-}
-
-#datasourceInfoBox .custom-list {
-  border-radius: 4px;
 }
 
 .hyperlink {
