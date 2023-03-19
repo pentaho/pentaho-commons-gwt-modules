@@ -312,6 +312,17 @@ SELECT:not([size])::-ms-expand,
   display: none; /*hides dropdown arrow in IE*/
 }
 
+:is(select, .gwt-ListBox):is(:not([size]), [size="1"]):where(.height-auto) {
+  /* Allow growing in height when text wraps.
+     Browsers may defer slightly on the auto height depending on line-height
+     and font-size. min-height provides some consistent at default font size.
+   */
+  min-height: var(--input-outer-height);
+  height: auto;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
 form SELECT {
   padding: 0 5px;
 }
@@ -4702,42 +4713,42 @@ div.dijitDateTextBox.dijitComboBox {
   width: 250px;
 }
 
-.fileChooser-scrollPanel > div > table > * {
+.fileChooserFilesList > * {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr > td {
+.fileChooserFilesList > tbody > tr > td {
   border: 1px solid #ffffff;
   border-right: 0 none;
   border-top: 0 none;
   padding: 0;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:last-child > td {
+.fileChooserFilesList > tbody > tr:last-child > td {
   border-bottom: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr > td:first-child {
+.fileChooserFilesList > tbody > tr > td:first-child {
   border-left: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td {
+.fileChooserFilesList > tbody > tr:first-child > td {
   border: 1px solid #cccccc;
   border-right: 0 none;
   border-top: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child {
+.fileChooserFilesList > tbody > tr:first-child {
   position: sticky;
   top: 0;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:last-child {
+.fileChooserFilesList > tbody > tr:first-child > td:last-child {
   border-right: 1px solid #cccccc;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:first-child {
+.fileChooserFilesList > tbody > tr:first-child > td:first-child {
   border-left: 0 none;
 }
 
@@ -4786,77 +4797,28 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 /* FileChooserDialog BEGIN */
-.fileChooserDialog .dialog-content > table,
-.fileChooserDialog .dialog-content > table > tbody,
-.fileChooserDialog .dialog-content > table > tbody > tr,
-.fileChooserDialog .dialog-content > table > tbody > tr > td {
-  display: flex;
-  flex-direction: column;
+.fileChooser .fileChooserFilesListContainer {
+  display: contents;
+  flex: inherit;
 }
 
-.fileChooserDialog .fileChooser > tbody,
-.fileChooserDialog .locationFieldGroup > tbody {
-  gap: var(--dialog-vertical-gap);
-}
-
-.fileChooserDialog .dialog-content > table,
-.fileChooserDialog .dialog-content > table > tbody {
-  flex: auto;
-}
-
-/* File name and Location rows are not allowed to resize vertically. */
-.fileChooserDialog .dialog-content > table > tbody > tr,
-.fileChooserDialog .dialog-content > table > tbody > tr > td {
-  flex: none;
-}
-
-/* File/Folder table row is allowed to resize vertically. */
-.fileChooserDialog .dialog-content > table > tbody > tr:last-child,
-.fileChooserDialog .dialog-content > table > tbody > tr:last-child > td,
-.fileChooserDialog .dialog-content > table > tbody > tr:last-child > td > * {
-  flex: auto;
-}
-
-.fileChooserDialog .fileNameLabel {
-  width: auto !important;
-}
-
-.fileChooserDialog .fileNameTextBox {
+.fileChooser .fileNameTextBox {
   width: auto !important;
   max-width: 100ch;
 }
 
-/* Clear width on td holding the UpDir image. */
-.fileChooserDialog .locationFieldAndUpDirGroup > tbody > tr > td:last-child {
-  flex: none;
-  width: auto;
-}
-
-/* Artificially increasing specificity to beat gwt-h-panel's flex */
-.fileChooserDialog .navigationListBox.navigationListBox {
-  width: 100% !important;
+.fileChooser .navigationListBox {
+  min-width: 0;
   flex: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: break-spaces;
   word-break: break-all;
 }
 
-/* Artificially increasing specificity... */
-.fileChooserDialog .fileChooser-scrollPanel.fileChooser-scrollPanel {
+.fileChooser .fileChooser-scrollPanel {
   background-color: white;
   border: 1px solid #CCC;
-  display: flex;
-  flex-direction: column;
-  flex: auto;
+  min-height: calc(4 * var(--file-chooser-line-height));
   height: calc(9 * var(--file-chooser-line-height));
-  min-height: calc(3 * var(--file-chooser-line-height));
-}
-
-.fileChooserDialog .fileChooser-scrollPanel > div {
-  display: flex;
-  flex-direction: column;
-  flex: auto;
 }
 
 .fileChooserFilesList {
@@ -6450,14 +6412,13 @@ span.gwt-RadioButton label {
 
 .pentaho-filechooseupbutton {
   background-image: url("images/up.png");
+  margin: 0 !important;
   /* 22px on 14px font */
   width: calc(1em * 22/14);
   height: auto;
   cursor: pointer;
-  padding: 4px;
   background-repeat: no-repeat;
-  background-position: 2px 4px;
-  background-size: 75%;
+  background-size: contain;
   align-self: center;
 }
 
