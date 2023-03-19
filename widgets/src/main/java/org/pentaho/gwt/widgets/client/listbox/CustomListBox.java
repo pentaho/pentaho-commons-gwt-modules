@@ -36,7 +36,6 @@ import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusListener;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;
@@ -118,7 +117,8 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   public CustomListBox() {
 
     selectedItemWrapper.addStyleName( "custom-list-selected-item-wrapper" );
-    dropGrid.addStyleName( "custom-list-drop-grid gwt-h-panel" );
+    dropGrid.addStyleName( "custom-list-drop-grid" );
+    dropGrid.addStyleName( HorizontalFlexPanel.STYLE_NAME );
 
     dropGrid.getColumnFormatter().setWidth( 0, "100%" ); //$NON-NLS-1$
     dropGrid.setWidget( 0, 1, arrow );
@@ -151,7 +151,11 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     fPanel.addFocusListener( this );
     fPanel.addKeyboardListener( this );
     fPanel.addStyleName( "custom-list-focus-panel" );
-    this.setStylePrimaryName( "custom-list" ); //$NON-NLS-1$
+
+    // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
+    // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.
+    this.setStyleName( "" );
+    this.setStylePrimaryName( "custom-list" );
 
     setTdStyles( this.getElement() );
     setTdStyles( listPanel.getElement() );
@@ -843,7 +847,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   @Override
   public void setStylePrimaryName( String s ) {
     super.setStylePrimaryName( s );
-    addStyleName( "gwt-h-panel" );
+    addStyleName( HorizontalFlexPanel.STYLE_NAME );
     this.primaryStyleName = s;
 
     // This may have came in late. Update ListItems

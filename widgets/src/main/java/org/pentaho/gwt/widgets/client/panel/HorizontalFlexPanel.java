@@ -34,8 +34,11 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
  * </p>
  */
 public class HorizontalFlexPanel extends HorizontalPanel {
+
+  public static final String STYLE_NAME = "flex-row gwt-h-v-panel gwt-h-panel";
+
   public HorizontalFlexPanel() {
-    addStyleName( "gwt-h-panel" );
+    addStyleName( STYLE_NAME );
 
     Roles.getPresentationRole().set( getElement() );
   }

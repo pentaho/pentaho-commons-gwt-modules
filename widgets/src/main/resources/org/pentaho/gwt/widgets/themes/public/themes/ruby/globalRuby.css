@@ -66,9 +66,6 @@
   /* Padding, on each side */
   --dialog-padding: 20px;
 
-  /* V space between layout rows */
-  --dialog-vertical-gap: 6px;
-
   /* H (and V, when wrapped) space between buttons */
   --dialog-buttons-gap: 10px;
 
@@ -76,10 +73,23 @@
   --dialog-ds-min-margin-h: calc(100% / 12);
   --dialog-ds-min-margin-v: 80px;
 
+  /* LAYOUT GLOBAL */
   --text-block-max-width: 75ch;
 
   --typ-body-font-size: 14px;
   --typ-body-line-height: 17px;
+
+  /* Set H and V space between layout cols and rows.
+     Or, use the helper classes: .with-layout-gap-... for predefined values.
+     Use current values on CSS properties using .gap-...
+     Root variables should only be changed at root.
+     The other two variables can be changed at any element and will be inherited by all descendants.
+   */
+  --layout-gap-h-root: 8px;
+  --layout-gap-v-root: 6px;
+
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
 
   /* Input height resizes with text zoom, as it is based on font size and line height.
      --input-outer-height = 33
@@ -90,10 +100,10 @@
      along with text and the resulting input's height, and no other means exists.
    */
   --input-border-width: 1px;
-  --input-vertical-padding: 0.5em;
+  --input-padding-v: 0.5em;
   --input-outer-height: calc(
       2 * var(--input-border-width) +
-      2 * var(--input-vertical-padding) +
+      2 * var(--input-padding-v) +
       var(--typ-body-line-height));
 }
 
@@ -947,96 +957,194 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   color: inherit;
 }
 
-/* GWT HorizontalFlexPanel
-   responsive class for opt-in flex behavior.
+/* region Responsive Primitives */
 
-   Real structure is .gwt-h-panel > tbody > tr > td
-   Yet using * to not increase specificity.
-   */
-.responsive .gwt-h-panel,
-.responsive .gwt-h-panel > *,
-.responsive .gwt-h-panel > * > *,
-.responsive .gwt-h-panel > * > * > * {
+/* In below selectors, using * and/or :where(.) where possible to keep specificity as low as possible. */
+
+/* region .with-layout-gap- ... */
+/* Classes for setting the value of the --layout-gap-h and --layout-gap-v variables to predefined values
+   for an element's sub-tree. For _later_ use on the CSS gap, column-gap and row-gap properties, on other rules.
+*/
+.with-layout-gap-none {
+  --layout-gap-h: 0;
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-h-none {
+  --layout-gap-h: 0;
+}
+
+.with-layout-gap-v-none {
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+
+.with-layout-gap-h-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+}
+
+.with-layout-gap-v-normal {
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+/* endregion */
+
+/* region flex-row / flex-column */
+:where(.responsive):is(.flex-column, .flex-row),
+:where(.responsive) :is(.flex-column, .flex-row) {
+  flex: auto;
   display: flex;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+:where(.responsive).flex-row,
+:where(.responsive) .flex-row {
   flex-direction: row;
+}
+
+/* Add to the flex row element when it has a flex item with a H-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive).flex-row:where(.with-scroll-child),
+:where(.responsive) .flex-row:where(.with-scroll-child) {
   min-width: 0;
 }
 
-.responsive .gwt-h-panel > *,
-.responsive .gwt-h-panel > * > *,
-.responsive .gwt-h-panel > * > * > * {
-  flex: auto;
-}
-
-.responsive .gwt-h-panel > * > * > * > * {
-  flex: none;
-}
-
-.responsive .gwt-h-panel > * > * > * > :is(.gwt-h-panel, .gwt-v-panel) {
-  flex: auto;
-}
-
-.responsive .gwt-h-panel > * > * > *[align="left"] {
-  justify-content: start;
-}
-
-.responsive .gwt-h-panel > * > * > *[align="center"] {
-  justify-content: center;
-}
-
-.responsive .gwt-h-panel > * > * > *[align="right"] {
-  justify-content: end;
-}
-
-.responsive .gwt-h-panel > * > * > *[style*="vertical-align: top"] {
-  align-items: start;
-}
-
-.responsive .gwt-h-panel > * > * > *[style*="vertical-align: middle"] {
-  align-items: center;
-}
-
-.responsive .gwt-h-panel > * > * > *[style*="vertical-align: bottom"] {
-  align-items: end;
-}
-
-.responsive .gwt-h-panel > colgroup {
-  display: none;
-}
-
-/* GWT VerticalFlexPanel
-   Real structure is .gwt-v-panel > tbody > tr > td.
-   Yet, using * to not increase specificity.
-   Also, .gwt-v-panel > colgroup > col, is selected, but not really an issue.
-   */
-.responsive .gwt-v-panel,
-.responsive .gwt-v-panel > *,
-.responsive .gwt-v-panel > * > *,
-.responsive .gwt-v-panel > * > * > * {
-  display: flex;
+:where(.responsive).flex-column,
+:where(.responsive) .flex-column {
   flex-direction: column;
+}
+
+/* Add to the flex column element when it has a flex item with a V-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive).flex-column:where(.with-scroll-child),
+:where(.responsive) .flex-column:where(.with-scroll-child) {
   min-height: 0;
 }
 
-.responsive .gwt-v-panel > *,
-.responsive .gwt-v-panel > * > *,
-.responsive .gwt-v-panel > * > * > * {
-  flex: auto;
+/* Items having same direction of the container inherit its flex by default.
+   When changing direction, the container's default flex of auto is used by default.
+ */
+:where(.responsive).flex-row > :where(.flex-row),
+:where(.responsive) .flex-row > :where(.flex-row),
+:where(.responsive).flex-column > :where(.flex-column),
+:where(.responsive) .flex-column > :where(.flex-column) {
+  flex: inherit;
+}
+/* endregion */
+
+/* region GWT HorizontalFlexPanel, VerticalFlexPanel */
+:where(.responsive) .gwt-h-v-panel {
+  /* Panel structure:
+
+     table.flex-row.gwt-h-v-panel.gwt-h-panel
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr            ; display: contents
+           td...       ; display: contents
+             item
+
+     table.flex-column.gwt-h-v-panel.gwt-v-panel
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr...         ; display: contents
+           td          ; display: contents
+             item
+   */
+
+  /* Set to override the flex item's default flex.
+     Or use one of the preset classes: flex-items-none, flex-items-auto */
+  --flex-items: initial;
 }
 
-.responsive .gwt-v-panel > * > * > * > * {
-  flex: none;
+:where(.responsive) .gwt-h-v-panel:where(.flex-items-none) {
+  --flex-items: none;
 }
 
-.responsive .gwt-v-panel > * > * > * > :is(.gwt-v-panel, .gwt-h-panel)  {
-  flex: auto;
+:where(.responsive) .gwt-h-v-panel:where(.flex-items-auto) {
+  --flex-items: auto;
 }
 
-.responsive .gwt-v-panel > colgroup {
+:where(.responsive) .gwt-h-v-panel > tbody {
+  /* Backup and free --flex-items for use on a flex item itself, in case it's also a gwt-h-v-panel. */
+  --priv-flex-items: var(--flex-items);
+}
+
+:where(.responsive) .gwt-h-v-panel > colgroup {
   display: none;
 }
 
-/* Unlike for .gwt-h-panel, no compatibility alignment rules for .gwt-v-panel. Seemed to harm more than helped. */
+:where(.responsive) :is(
+  .gwt-h-v-panel > tbody,
+  .gwt-h-v-panel > tbody > tr,
+  .gwt-h-v-panel > tbody > tr > td) {
+  display: contents;
+  flex: inherit;
+}
+
+/* Regular items (not flex containers) don't flex by default. */
+:where(.responsive) .gwt-h-v-panel > * > * > * > :where(:not(.flex-row, .flex-column)) {
+  flex: var(--priv-flex-items, none);
+}
+
+/* Container items having same direction of the panel inherit its flex by default.
+   When changing direction, the child container's default flex of auto is used by default.
+  */
+:where(.responsive) .gwt-h-panel > * > * > * > :where(.flex-row),
+:where(.responsive) .gwt-v-panel > * > * > * > :where(.flex-column) {
+  flex: var(--priv-flex-items, inherit);
+}
+
+/* endregion */
+
+/* region Modifiers: gap-, flex-, ... */
+/* Placed after other primitives, to override them. */
+
+/* Classes for setting the CSS properties gap, column-gap and/or row-gap
+   with predefined values on the current element.
+ */
+.gap-none {
+  gap: 0;
+}
+
+.gap-h-none {
+  column-gap: 0;
+}
+
+.gap-v-none {
+  row-gap: 0;
+}
+
+.gap-layout {
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+.gap-h-layout {
+  column-gap: var(--layout-gap-h);
+}
+
+.gap-v-layout {
+  row-gap: var(--layout-gap-v);
+}
+
+.flex-none {
+  flex: none;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+/* endregion */
+
+/* endregion */
 
 /* DIALOG */
 .pentaho-dialog,

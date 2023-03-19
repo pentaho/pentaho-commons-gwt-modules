@@ -34,8 +34,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  * </p>
  */
 public class VerticalFlexPanel extends VerticalPanel {
+
+  public static final String STYLE_NAME = "flex-column gwt-h-v-panel gwt-v-panel";
+
   public VerticalFlexPanel() {
-    addStyleName( "gwt-v-panel" );
+    addStyleName( STYLE_NAME );
 
     Roles.getPresentationRole().set( getElement() );
   }
