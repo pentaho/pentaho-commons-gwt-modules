@@ -43,7 +43,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MouseListener;
-import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -53,6 +52,7 @@ import org.pentaho.gwt.widgets.client.buttons.ThemeableImageButton;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.ScrollFlexPanel;
 import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
@@ -104,6 +104,7 @@ public class FileChooser extends VerticalFlexPanel {
     super();
 
     addStyleName( "fileChooser" );
+    addStyleName( "with-scroll-child" );
 
     fileNameTextBox.getElement().setId( "fileNameTextBox" );
     fileNameTextBox.addStyleName( "fileNameTextBox" );
@@ -384,6 +385,8 @@ public class FileChooser extends VerticalFlexPanel {
     navigationListBox = new ListBox();
     navigationListBox.getElement().setId( "navigationListBox" );
     navigationListBox.addStyleName( "navigationListBox" );
+    navigationListBox.addStyleName( "height-auto" );
+
     navigationListBox.setWidth( "350px" );
     Roles.getListboxRole().set( navigationListBox.getElement() );
     ElementUtils.setAriaLabelledBy( navigationListBox, locationLabel );
@@ -491,7 +494,6 @@ public class FileChooser extends VerticalFlexPanel {
     locationBar.setWidth( "100%" );
 
     Label filenameLabel = new Label( FileChooserEntryPoint.messages.getString( "filename" ) );
-    filenameLabel.addStyleName( "fileNameLabel" );
     ElementUtils.setAriaLabelledBy( fileNameTextBox, filenameLabel );
 
     filenameLabel.setWidth( "550px" );
@@ -503,14 +505,15 @@ public class FileChooser extends VerticalFlexPanel {
   }
 
   public Widget buildFilesList( TreeItem parentTreeItem ) {
-    VerticalPanel filesListPanel = new VerticalFlexPanel();
+    VerticalFlexPanel filesListPanel = new VerticalFlexPanel();
+    filesListPanel.addStyleName( "fileChooserFilesListContainer" );
     filesListPanel.setWidth( "100%" );
 
-    ScrollPanel filesScroller = new ScrollPanel();
+    ScrollFlexPanel filesScroller = new ScrollFlexPanel();
     Roles.getListboxRole().set( filesScroller.getElement() );
     Roles.getListboxRole().setTabindexExtraAttribute( filesScroller.getElement(), 0 );
 
-    filesScroller.setStyleName( "fileChooser-scrollPanel" );
+    filesScroller.addStyleName( "fileChooser-scrollPanel" );
 
     FlexTable filesListTable = new FlexTable();
     filesListTable.addStyleName( "fileChooserFilesList" );

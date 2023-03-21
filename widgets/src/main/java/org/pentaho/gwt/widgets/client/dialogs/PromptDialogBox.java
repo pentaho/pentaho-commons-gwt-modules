@@ -61,8 +61,8 @@ public class PromptDialogBox extends DialogBox {
   }
 
   private HorizontalPanel createButtonPanelWrapper( String okText, String notOkText, String cancelText ) {
-    final HorizontalPanel dialogButtonPanel = new HorizontalFlexPanel();
-    dialogButtonPanel.addStyleName( "inner-button-panel" );
+    final HorizontalFlexPanel dialogButtonPanel = new HorizontalFlexPanel();
+    dialogButtonPanel.addStyleName( "inner-button-wrapper" );
 
     okButton = new Button( okText );
     okButton.setTitle( okText );
@@ -117,15 +117,10 @@ public class PromptDialogBox extends DialogBox {
   void initializeDialogContent( HorizontalPanel dialogButtonPanelWrapper ) {
     // Init `dialogContent`
     Roles.getPresentationRole().set( dialogContent.getElement() );
-    dialogContent.setStyleName( "prompt-dialog-body-table" );
-
     dialogContent.setCellPadding( 0 );
     dialogContent.setCellSpacing( 0 );
     // add button panel
     dialogContent.setWidget( 1, 0, dialogButtonPanelWrapper );
-
-    dialogContent.getRowFormatter().setStyleName( 0, "prompt-dialog-content-row" );
-    dialogContent.getRowFormatter().setStyleName( 1, "prompt-dialog-buttons-row" );
 
     // Content Cell 0 - 0
     dialogContent.getCellFormatter().setStyleName( 0, 0, "dialog-content" );
@@ -137,7 +132,6 @@ public class PromptDialogBox extends DialogBox {
       "5px 10px 10px 10px" );
 
     // Actions Cell 1 - 0
-    dialogContent.getCellFormatter().setStyleName( 1, 0, "prompt-dialog-buttons-cell" );
     dialogContent.getCellFormatter().setVerticalAlignment( 1, 0, HasVerticalAlignment.ALIGN_BOTTOM );
 
     dialogContent.setWidth( "100%" );

@@ -66,20 +66,27 @@
   /* Padding, on each side */
   --dialog-padding: 20px;
 
-  /* V space between layout rows */
-  --dialog-vertical-gap: 6px;
-
-  /* H (and V, when wrapped) space between buttons */
-  --dialog-buttons-gap: 10px;
-
   /* Design System min/safe margin, on each side */
   --dialog-ds-min-margin-h: calc(100% / 12);
   --dialog-ds-min-margin-v: 80px;
 
+  /* LAYOUT GLOBAL */
   --text-block-max-width: 75ch;
 
   --typ-body-font-size: 14px;
   --typ-body-line-height: 17px;
+
+  /* Set H and V space between layout cols and rows.
+     Or, use the helper classes: .with-layout-gap-... for predefined values.
+     Use current values on CSS properties using .gap-...
+     Root variables should only be changed at root.
+     The other two variables can be changed at any element and will be inherited by all descendants.
+   */
+  --layout-gap-h-root: 8px;
+  --layout-gap-v-root: 6px;
+
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
 
   /* Input height resizes with text zoom, as it is based on font size and line height.
      --input-outer-height = 33
@@ -90,10 +97,10 @@
      along with text and the resulting input's height, and no other means exists.
    */
   --input-border-width: 1px;
-  --input-vertical-padding: 0.5em;
+  --input-padding-v: 0.5em;
   --input-outer-height: calc(
       2 * var(--input-border-width) +
-      2 * var(--input-vertical-padding) +
+      2 * var(--input-padding-v) +
       var(--typ-body-line-height));
 }
 
@@ -303,6 +310,17 @@ SELECT:not([size])::-ms-expand,
 .gwt-ListBox[size="1"]::-ms-expand,
 .gwt-ListBox:not([size])::-ms-expand {
   display: none; /*hides dropdown arrow in IE*/
+}
+
+:is(select, .gwt-ListBox):is(:not([size]), [size="1"]):where(.height-auto) {
+  /* Allow growing in height when text wraps.
+     Browsers may defer slightly on the auto height depending on line-height
+     and font-size. min-height provides some consistent at default font size.
+   */
+  min-height: var(--input-outer-height);
+  height: auto;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 form SELECT {
@@ -947,96 +965,194 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   color: inherit;
 }
 
-/* GWT HorizontalFlexPanel
-   responsive class for opt-in flex behavior.
+/* region Responsive Primitives */
 
-   Real structure is .gwt-h-panel > tbody > tr > td
-   Yet using * to not increase specificity.
-   */
-.responsive .gwt-h-panel,
-.responsive .gwt-h-panel > *,
-.responsive .gwt-h-panel > * > *,
-.responsive .gwt-h-panel > * > * > * {
+/* In below selectors, using * and/or :where(.) where possible to keep specificity as low as possible. */
+
+/* region .with-layout-gap- ... */
+/* Classes for setting the value of the --layout-gap-h and --layout-gap-v variables to predefined values
+   for an element's sub-tree. For _later_ use on the CSS gap, column-gap and row-gap properties, on other rules.
+*/
+.with-layout-gap-none {
+  --layout-gap-h: 0;
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-h-none {
+  --layout-gap-h: 0;
+}
+
+.with-layout-gap-v-none {
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+
+.with-layout-gap-h-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+}
+
+.with-layout-gap-v-normal {
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+/* endregion */
+
+/* region flex-row / flex-column */
+:where(.responsive):is(.flex-column, .flex-row),
+:where(.responsive) :is(.flex-column, .flex-row) {
+  flex: auto;
   display: flex;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+:where(.responsive).flex-row,
+:where(.responsive) .flex-row {
   flex-direction: row;
+}
+
+/* Add to the flex row element when it has a flex item with a H-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive).flex-row:where(.with-scroll-child),
+:where(.responsive) .flex-row:where(.with-scroll-child) {
   min-width: 0;
 }
 
-.responsive .gwt-h-panel > *,
-.responsive .gwt-h-panel > * > *,
-.responsive .gwt-h-panel > * > * > * {
-  flex: auto;
-}
-
-.responsive .gwt-h-panel > * > * > * > * {
-  flex: none;
-}
-
-.responsive .gwt-h-panel > * > * > * > :is(.gwt-h-panel, .gwt-v-panel) {
-  flex: auto;
-}
-
-.responsive .gwt-h-panel > * > * > *[align="left"] {
-  justify-content: start;
-}
-
-.responsive .gwt-h-panel > * > * > *[align="center"] {
-  justify-content: center;
-}
-
-.responsive .gwt-h-panel > * > * > *[align="right"] {
-  justify-content: end;
-}
-
-.responsive .gwt-h-panel > * > * > *[style*="vertical-align: top"] {
-  align-items: start;
-}
-
-.responsive .gwt-h-panel > * > * > *[style*="vertical-align: middle"] {
-  align-items: center;
-}
-
-.responsive .gwt-h-panel > * > * > *[style*="vertical-align: bottom"] {
-  align-items: end;
-}
-
-.responsive .gwt-h-panel > colgroup {
-  display: none;
-}
-
-/* GWT VerticalFlexPanel
-   Real structure is .gwt-v-panel > tbody > tr > td.
-   Yet, using * to not increase specificity.
-   Also, .gwt-v-panel > colgroup > col, is selected, but not really an issue.
-   */
-.responsive .gwt-v-panel,
-.responsive .gwt-v-panel > *,
-.responsive .gwt-v-panel > * > *,
-.responsive .gwt-v-panel > * > * > * {
-  display: flex;
+:where(.responsive).flex-column,
+:where(.responsive) .flex-column {
   flex-direction: column;
+}
+
+/* Add to the flex column element when it has a flex item with a V-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive).flex-column:where(.with-scroll-child),
+:where(.responsive) .flex-column:where(.with-scroll-child) {
   min-height: 0;
 }
 
-.responsive .gwt-v-panel > *,
-.responsive .gwt-v-panel > * > *,
-.responsive .gwt-v-panel > * > * > * {
-  flex: auto;
+/* Items having same direction of the container inherit its flex by default.
+   When changing direction, the container's default flex of auto is used by default.
+ */
+:where(.responsive).flex-row > :where(.flex-row),
+:where(.responsive) .flex-row > :where(.flex-row),
+:where(.responsive).flex-column > :where(.flex-column),
+:where(.responsive) .flex-column > :where(.flex-column) {
+  flex: inherit;
+}
+/* endregion */
+
+/* region GWT HorizontalFlexPanel, VerticalFlexPanel */
+:where(.responsive) .gwt-h-v-panel {
+  /* Panel structure:
+
+     table.flex-row.gwt-h-v-panel.gwt-h-panel
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr            ; display: contents
+           td...       ; display: contents
+             item
+
+     table.flex-column.gwt-h-v-panel.gwt-v-panel
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr...         ; display: contents
+           td          ; display: contents
+             item
+   */
+
+  /* Set to override the flex item's default flex.
+     Or use one of the preset classes: flex-items-none, flex-items-auto */
+  --flex-items: initial;
 }
 
-.responsive .gwt-v-panel > * > * > * > * {
-  flex: none;
+:where(.responsive) .gwt-h-v-panel:where(.flex-items-none) {
+  --flex-items: none;
 }
 
-.responsive .gwt-v-panel > * > * > * > :is(.gwt-v-panel, .gwt-h-panel)  {
-  flex: auto;
+:where(.responsive) .gwt-h-v-panel:where(.flex-items-auto) {
+  --flex-items: auto;
 }
 
-.responsive .gwt-v-panel > colgroup {
+:where(.responsive) .gwt-h-v-panel > tbody {
+  /* Backup and free --flex-items for use on a flex item itself, in case it's also a gwt-h-v-panel. */
+  --priv-flex-items: var(--flex-items);
+}
+
+:where(.responsive) .gwt-h-v-panel > colgroup {
   display: none;
 }
 
-/* Unlike for .gwt-h-panel, no compatibility alignment rules for .gwt-v-panel. Seemed to harm more than helped. */
+:where(.responsive) :is(
+  .gwt-h-v-panel > tbody,
+  .gwt-h-v-panel > tbody > tr,
+  .gwt-h-v-panel > tbody > tr > td) {
+  display: contents;
+  flex: inherit;
+}
+
+/* Regular items (not flex containers) don't flex by default. */
+:where(.responsive) .gwt-h-v-panel > * > * > * > :where(:not(.flex-row, .flex-column)) {
+  flex: var(--priv-flex-items, none);
+}
+
+/* Container items having same direction of the panel inherit its flex by default.
+   When changing direction, the child container's default flex of auto is used by default.
+  */
+:where(.responsive) .gwt-h-panel > * > * > * > :where(.flex-row),
+:where(.responsive) .gwt-v-panel > * > * > * > :where(.flex-column) {
+  flex: var(--priv-flex-items, inherit);
+}
+
+/* endregion */
+
+/* region Modifiers: gap-, flex-, ... */
+/* Placed after other primitives, to override them. */
+
+/* Classes for setting the CSS properties gap, column-gap and/or row-gap
+   with predefined values on the current element.
+ */
+.gap-none {
+  gap: 0;
+}
+
+.gap-h-none {
+  column-gap: 0;
+}
+
+.gap-v-none {
+  row-gap: 0;
+}
+
+.gap-layout {
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+.gap-h-layout {
+  column-gap: var(--layout-gap-h);
+}
+
+.gap-v-layout {
+  row-gap: var(--layout-gap-v);
+}
+
+.flex-none {
+  flex: none;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+/* endregion */
+
+/* endregion */
 
 /* DIALOG */
 .pentaho-dialog,
@@ -1310,7 +1426,7 @@ button#schedule-dialog-select-button {
    See also JavaDocs for Pentaho GWT's DialogBox.DialogSizingMode (ds-), DialogBox.DialogWidthCategory (dw-)
    and DialogBox.DialogMinimumHeightCategory (dmh-).
 */
-.pentaho-dialog.responsive {
+:where(.responsive).pentaho-dialog {
   /* DIALOG LOCAL variables - override on specific dialogs */
 
   /* Desired maximum OUTER width/height.
@@ -1366,7 +1482,7 @@ button#schedule-dialog-select-button {
   padding: 0;
 }
 
-.pentaho-dialog.responsive > * {
+:where(.responsive).pentaho-dialog > * {
   flex: auto;
   display: flex;
   flex-direction: column;
@@ -1375,68 +1491,69 @@ button#schedule-dialog-select-button {
   min-height: calc(var(--dialog-min-height) - 2 * var(--dialog-border-width));
 }
 
-.pentaho-dialog.responsive.dmh-content > * {
+/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
+   when reaching min height. */
+@media (max-height: 256px) {
+  :where(.responsive).pentaho-dialog > * {
+    min-height: auto;
+  }
+}
+
+:where(.responsive).pentaho-dialog:where(.dmh-content) > * {
   /* Disables body V scrollbar.
      Displays the outer V scrollbar when dialog H cannot accommodate the body's min-height.
    */
   min-height: auto;
 }
-/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
-   when reaching min height. */
-@media (max-height: 256px) {
-  .pentaho-dialog.responsive > * {
-    min-height: auto;
-  }
-}
 
-.pentaho-dialog.responsive.ds-fill-viewport-width,
-.pentaho-dialog.responsive.ds-fill-viewport,
-.pentaho-dialog.responsive.ds-full-viewport {
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport-width),
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport),
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
   /* Expand as much as allowed by max-width */
   width: 100%;
 }
 
-.pentaho-dialog.responsive.ds-fill-viewport,
-.pentaho-dialog.responsive.ds-full-viewport {
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport),
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
   /* Expand as much as allowed by max-height */
   height: 100%;
 }
 
-.pentaho-dialog.responsive.ds-full-viewport {
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
   /* Ignore grid system max width/height */
   max-width: 100%;
   max-height: 100%;
 }
 
-.pentaho-dialog.responsive.dw-min {
+:where(.responsive).pentaho-dialog:where(.dw-min) {
   --dialog-max-width: var(--a11y-min-width);
 }
 
-.pentaho-dialog.responsive.dw-text {
+:where(.responsive).pentaho-dialog:where(.dw-text) {
   --dialog-max-width: calc(var(--text-block-max-width) + var(--priv-dialog-borders-paddings));
 }
 
-.pentaho-dialog.responsive.dw-xs {
+:where(.responsive).pentaho-dialog:where(.dw-xs) {
   --dialog-max-width: 448px;
 }
 
-.pentaho-dialog.responsive.dw-sm {
+:where(.responsive).pentaho-dialog:where(.dw-sm) {
   --dialog-max-width: 672px;
 }
 
-.pentaho-dialog.responsive.dw-md {
+:where(.responsive).pentaho-dialog:where(.dw-md) {
   --dialog-max-width: 880px;
 }
 
-.pentaho-dialog.responsive.dw-lg {
+:where(.responsive).pentaho-dialog:where(.dw-lg) {
   --dialog-max-width: 1096px;
 }
 
-.pentaho-dialog.responsive.dw-xl {
+:where(.responsive).pentaho-dialog:where(.dw-xl) {
   --dialog-max-width: 1300px;
 }
 
-.pentaho-dialog.responsive .Caption {
+:where(.responsive).pentaho-dialog .Caption {
   flex: none;
   white-space: nowrap;
   overflow: hidden;
@@ -1444,28 +1561,29 @@ button#schedule-dialog-select-button {
   padding: var(--dialog-padding);
 }
 
-.pentaho-dialog.responsive .dialog-content {
+:where(.responsive).pentaho-dialog .dialog-content {
   flex: auto;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  padding: 0 var(--dialog-padding) var(--dialog-padding) !important;
-  gap: var(--dialog-vertical-gap);
+  padding: var(--focus-ring-padding) var(--dialog-padding) var(--dialog-padding) !important;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
-.pentaho-dialog.responsive .button-panel {
+:where(.responsive).pentaho-dialog .button-panel {
   flex: none;
   overflow: hidden;
+  width: unset;
   margin: 0;
   padding: var(--dialog-padding);
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: end;
-  gap: var(--dialog-buttons-gap);
+  gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
-.pentaho-dialog.responsive .button-panel .pentaho-button {
+:where(.responsive).pentaho-dialog .button-panel .pentaho-button {
   flex: 0 1 auto;
   margin: 0;
   white-space: nowrap;
@@ -1475,100 +1593,88 @@ button#schedule-dialog-select-button {
 /* endregion DIALOG RESPONSIVE - END */
 
 /* region GWT DialogBox, PromptDialogBox RESPONSIVE */
-.pentaho-dialog.pentaho-gwt.responsive {
+:where(.responsive) .gwt-Label {
+  width: auto !important;
+}
+
+:where(.responsive).pentaho-dialog.pentaho-gwt {
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
 
-.pentaho-dialog.pentaho-gwt.responsive > * > table,
-.pentaho-dialog.pentaho-gwt.responsive > * > table > tbody,
-
-/* Body row (contains Content and Buttons section) */
-.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle,
-.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter,
-/* a.k.a. .dialogContent */
-.pentaho-dialog.pentaho-gwt.responsive .dialogMiddle > .dialogMiddleCenter > *,
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table,
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table > tbody {
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+:where(.responsive).pentaho-dialog.pentaho-gwt > * > table,
+:where(.responsive).pentaho-dialog.pentaho-gwt > * > table > tbody,
+:where(.responsive).pentaho-dialog.pentaho-gwt :is(
+  .dialogTop,
+  .dialogTopCenter,
+  .dialogTopCenterInner,
+  .dialogMiddle,
+  .dialogMiddleCenter,
+  .dialogContent, /* a.k.a. .dialogMiddleCenterInner */
+  .dialogContent > table,
+  .dialogContent > table > tbody,
+  .dialogContent > table > tbody > tr,
+  .dialogContent > table > tbody > tr:last-child > td, /* buttons row */
+  .inner-button-wrapper) {
+  display: contents;
+  flex: inherit;
 }
 
-.pentaho-dialog.pentaho-gwt.responsive > * > table {
-  width: auto !important;
+:where(.responsive).pentaho-dialog.pentaho-gwt :is(
+  .dialogContent > table > colgroup,
+  .dialogBottom) {
+  display: none;
 }
 
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table {
-  flex: auto;
+:where(.responsive).pentaho-dialog.pentaho-gwt .button-panel {
+  width: unset !important;
+}
+/* endregion */
+
+/* region XUL/GWT GenericDialog, GwtDialog, ... RESPONSIVE */
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) .dialog {
+  display: contents;
+  flex: inherit;
 }
 
-/* Dialog header */
-.pentaho-dialog.pentaho-gwt.responsive .dialogTop,
-.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter,
-.pentaho-dialog.pentaho-gwt.responsive .dialogTop > .dialogTopCenter > div {
-  flex: none;
-  display: flex;
-  flex-direction: column;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) .buttonTable {
+  flex: 1;
+  min-width: auto;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
-/* Dialog content */
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-body-table .prompt-dialog-content-row {
-  flex: auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow: hidden;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="left"]) .buttonTable {
+  justify-content: start;
 }
 
-/* Dialog buttons */
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-row,
-.pentaho-dialog.pentaho-gwt.responsive .prompt-dialog-buttons-cell {
-  display: flex;
-  flex-direction: column;
-  flex: none;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="center"]) .buttonTable {
+  justify-content: center;
 }
 
-.pentaho-dialog.responsive.pentaho-gwt .button-panel {
-  width: auto !important;
-}
-
-.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr {
-  flex-wrap: wrap;
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="right"]) .buttonTable {
   justify-content: end;
-  gap: var(--dialog-buttons-gap);
 }
+/* endregion */
 
-.pentaho-dialog.responsive.pentaho-gwt .inner-button-panel > tbody > tr > td {
-    flex: 0 1 auto;
-}
-/* endregion GWT DialogBox, PromptDialogBox RESPONSIVE */
-
-/* region BootstrapJS Dialog Responsive - Start */
-.bootstrap .modal.pentaho-dialog.responsive .body,
-.bootstrap .modal.pentaho-dialog.responsive .footer{
+/* region BootstrapJS Dialog Responsive */
+.bootstrap :where(.responsive).modal.pentaho-dialog .body,
+.bootstrap :where(.responsive).modal.pentaho-dialog .footer {
   display: flex;
   flex-direction: column;
 }
 
-.bootstrap .modal.pentaho-dialog.responsive {
+.bootstrap :where(.responsive).modal.pentaho-dialog {
   padding: 0;
 }
 
-.bootstrap .modal.pentaho-dialog.responsive .Caption .header-content {
+.bootstrap :where(.responsive).modal.pentaho-dialog .Caption .header-content {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* endregion */
 
-.bootstrap .modal.pentaho-dialog.responsive .button-panel {
-  width: auto;
-}
-
-/* endregion BootstrapJS Dialog Responsive - End */
-
-/* region Responsive File Properties dialog - Start */
+/* region File Properties dialog */
 .file-properties-dialog .pentaho-tab-deck-panel > div > * {
   height: auto !important;
 }
@@ -1581,12 +1687,25 @@ button#schedule-dialog-select-button {
 .file-properties-dialog #filePropertiesGeneralTab .gwt-Label {
   word-break: break-all;
 }
-/* endregion Responsive File Properties dialog - End */
-/* region Select User or Role dialog - Start */
+/* endregion */
+
+/* region Select User or Role dialog */
 .select-user-or-role-dialog .gwt-ListBox {
   width: 100% !important;
 }
-/* endregion Select User or Role dialog - End */
+/* endregion */
+
+/* region XUL / GWT - ChangePasswordByUserDialog, ChangePasswordDialog, UserDialog, RoleDialog */
+:is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content {
+  /* Dialogs use empty rows for V-spacing. */
+  --layout-gap-v: 0;
+}
+
+:is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content input {
+  width: unset !important;
+}
+/* endregion */
+
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
@@ -4607,42 +4726,42 @@ div.dijitDateTextBox.dijitComboBox {
   width: 250px;
 }
 
-.fileChooser-scrollPanel > div > table > * {
+.fileChooserFilesList > * {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr > td {
+.fileChooserFilesList > tbody > tr > td {
   border: 1px solid #ffffff;
   border-right: 0 none;
   border-top: 0 none;
   padding: 0;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:last-child > td {
+.fileChooserFilesList > tbody > tr:last-child > td {
   border-bottom: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr > td:first-child {
+.fileChooserFilesList > tbody > tr > td:first-child {
   border-left: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td {
+.fileChooserFilesList > tbody > tr:first-child > td {
   border: 1px solid #cccccc;
   border-right: 0 none;
   border-top: 0 none;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child {
+.fileChooserFilesList > tbody > tr:first-child {
   position: sticky;
   top: 0;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:last-child {
+.fileChooserFilesList > tbody > tr:first-child > td:last-child {
   border-right: 1px solid #cccccc;
 }
 
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:first-child {
+.fileChooserFilesList > tbody > tr:first-child > td:first-child {
   border-left: 0 none;
 }
 
@@ -4691,77 +4810,28 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 /* FileChooserDialog BEGIN */
-.fileChooserDialog .dialog-content > table,
-.fileChooserDialog .dialog-content > table > tbody,
-.fileChooserDialog .dialog-content > table > tbody > tr,
-.fileChooserDialog .dialog-content > table > tbody > tr > td {
-  display: flex;
-  flex-direction: column;
+.fileChooser .fileChooserFilesListContainer {
+  display: contents;
+  flex: inherit;
 }
 
-.fileChooserDialog .fileChooser > tbody,
-.fileChooserDialog .locationFieldGroup > tbody {
-  gap: var(--dialog-vertical-gap);
-}
-
-.fileChooserDialog .dialog-content > table,
-.fileChooserDialog .dialog-content > table > tbody {
-  flex: auto;
-}
-
-/* File name and Location rows are not allowed to resize vertically. */
-.fileChooserDialog .dialog-content > table > tbody > tr,
-.fileChooserDialog .dialog-content > table > tbody > tr > td {
-  flex: none;
-}
-
-/* File/Folder table row is allowed to resize vertically. */
-.fileChooserDialog .dialog-content > table > tbody > tr:last-child,
-.fileChooserDialog .dialog-content > table > tbody > tr:last-child > td,
-.fileChooserDialog .dialog-content > table > tbody > tr:last-child > td > * {
-  flex: auto;
-}
-
-.fileChooserDialog .fileNameLabel {
-  width: auto !important;
-}
-
-.fileChooserDialog .fileNameTextBox {
+.fileChooser .fileNameTextBox {
   width: auto !important;
   max-width: 100ch;
 }
 
-/* Clear width on td holding the UpDir image. */
-.fileChooserDialog .locationFieldAndUpDirGroup > tbody > tr > td:last-child {
-  flex: none;
-  width: auto;
-}
-
-/* Artificially increasing specificity to beat gwt-h-panel's flex */
-.fileChooserDialog .navigationListBox.navigationListBox {
-  width: 100% !important;
+.fileChooser .navigationListBox {
+  min-width: 0;
   flex: auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: break-spaces;
   word-break: break-all;
 }
 
-/* Artificially increasing specificity... */
-.fileChooserDialog .fileChooser-scrollPanel.fileChooser-scrollPanel {
+.fileChooser .fileChooser-scrollPanel {
   background-color: white;
   border: 1px solid #CCC;
-  display: flex;
-  flex-direction: column;
-  flex: auto;
+  min-height: calc(4 * var(--file-chooser-line-height));
   height: calc(9 * var(--file-chooser-line-height));
-  min-height: calc(3 * var(--file-chooser-line-height));
-}
-
-.fileChooserDialog .fileChooser-scrollPanel > div {
-  display: flex;
-  flex-direction: column;
-  flex: auto;
 }
 
 .fileChooserFilesList {
@@ -5284,41 +5354,48 @@ td.tab-spacer-wrapper {
   outline-offset : -3px;
 }
 
-/* ======================= custom drop down control =========================== */
+/* region Pentaho GWT FocusPanel */
+
+/* Prevent overflow on responsive dialogs.
+   Visually hidden input created by FocusImplStandard to capture access keys on FocusPanel. */
+.pentaho-gwt-FocusPanel > input {
+  outline: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+/* endregion*/
+
+/* region Pentaho GWT CustomListBox control */
 .custom-list {
   border: 1px solid #CCC;
+  --custom-list-boder-radius: 4px;
+  border-radius: var(--custom-list-boder-radius);
 }
 
-/* CustomListBox */
-:is(.custom-list, .custom-list-disabled) :is(.custom-list-focus-panel, .custom-list-selected-item-wrapper) {
-  flex: auto;
-  display: flex;
-  flex-direction: row;
-  min-width: 0;
+.custom-list-disabled {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #CCC;
+  background-color: #ebebe4;
 }
 
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
-  flex: auto;
+:is(.custom-list, .custom-list-disabled) .pentaho-gwt-FocusPanel {
+  border-radius: var(--custom-list-boder-radius);
+}
+
+/* .custom-list-drop-grid */
+:where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
   width: 0 !important;
+  /* H-space between label and combo-arrow */
+  --layout-gap-h: 1px;
+  /* V-align center */
+  align-items: center;
 }
 
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr {
-  display:flex;
-}
-
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:first-child {
-  flex:auto;
-}
-
-:is(.custom-list, .custom-list-disabled) .custom-list-drop-grid > tbody > tr > td:last-child {
-  flex: none;
-  width: auto !important;
-}
-
-:is(.custom-list, .custom-list-disabled) .custom-list-item > tbody > tr > td > * {
-  flex: auto;
-}
-
+/* .custom-list-item */
 .custom-list-item .gwt-Label.gwt-Label {
   padding: 0 10px;
   -webkit-box-sizing: border-box;
@@ -5326,7 +5403,7 @@ td.tab-spacer-wrapper {
   box-sizing: border-box;
 }
 
-.custom-list-item .gwt-Label {
+:where(.responsive) .custom-list-item .gwt-Label {
   white-space: break-spaces;
 }
 
@@ -5334,38 +5411,34 @@ td.tab-spacer-wrapper {
   background-color: transparent;
 }
 
+/* .combo-arrow */
 .combo-arrow {
-  padding: calc(1em * 4/14);
+  cursor: pointer;
+}
+
+:is(.combo-arrow, .combo-arrow-disabled) {
+  padding: 4px;
   background: none;
   border: 0 none;
-  cursor: pointer;
+  font-size: 0;
+}
+
+:where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) {
+  padding: calc(1em * 4/14);
   font-size: inherit;
+  flex: none;
   width: auto !important;
 }
 
+/* .combo-arrow div */
 .combo-arrow div {
   background-image: url('images/arrow_down.png');
   background-position: right center;
   background-repeat: no-repeat;
   cursor: pointer;
-  height: calc(1em * 8/14);
-  width: calc(1em * 12/14);
-  font-size: inherit;
-}
-
-.custom-list-disabled {
-  padding: 0px;
-  margin: 0px;
-  border: 1px solid #CCC;
-  background-color: #ebebe4;
-}
-
-.combo-arrow-disabled {
-  padding: calc(1em * 4/14);
-  background: none;
-  border: 0 none;
-  font-size: inherit;
-  width: auto !important;
+  height: 8px;
+  width: 12px;
+  font-size: 0;
 }
 
 .combo-arrow-disabled div {
@@ -5373,15 +5446,23 @@ td.tab-spacer-wrapper {
   background-position: center center;
   background-repeat: no-repeat;
   cursor: pointer;
+  height: 8px;
+  width: 10px;
+  font-size: 0;
+}
+
+:where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) div {
   height: calc(1em * 8/14);
   width: calc(1em * 12/14);
   font-size: inherit;
 }
 
+/* .drop-popup */
 .drop-popup {
   border: 1px solid #CCC;
   margin-top: -2px;
 }
+/* endregion*/
 
 #controller_panel {
   border: 0;
@@ -6344,14 +6425,13 @@ span.gwt-RadioButton label {
 
 .pentaho-filechooseupbutton {
   background-image: url("images/up.png");
+  margin: 0 !important;
   /* 22px on 14px font */
   width: calc(1em * 22/14);
   height: auto;
   cursor: pointer;
-  padding: 4px;
   background-repeat: no-repeat;
-  background-position: 2px 4px;
-  background-size: 75%;
+  background-size: contain;
   align-self: center;
 }
 
@@ -8960,10 +9040,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   color: #FFFFFF;
 }
 
-#datasourceInfoBox .custom-list {
-  border-radius: 4px;
-}
-
 .hyperlink {
   color: #7C0B2B;
 }
@@ -8991,16 +9067,29 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   margin: var(--focus-ring-padding);
 }
 
-.file-upload-panel > tbody > tr > td:nth-child(1) input {
+/* Dialog uses empty rows for V-spacing. */
+.import-dialog .dialog-content {
+  --layout-gap-v: 0;
+}
+
+.file-upload-panel {
+  align-items: center;
+}
+
+.file-upload-panel input {
   flex: auto;
   min-width:0;
 }
 
-.file-upload-panel > tbody > tr > td:nth-child(2),
-.file-upload-panel > tbody > tr > td:nth-child(3)  {
+.file-upload-panel .gwt-HTML {
+  display: none;
+}
+
+.file-upload-panel button  {
   flex: none;
 }
 
+/* Content wrapper */
 .import-dialog-disclosure-panel > tbody > tr:nth-child(2) > td > * {
   flex: auto;
   display: flex;
@@ -9009,8 +9098,8 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   overflow: visible !important;
 }
 
-.import-dialog-disclosure-panel .content > tbody > tr > td:nth-child(1) {
-  flex: none;
+.import-dialog-disclosure-content-panel {
+  flex: auto;
 }
 
 /* Start region Browse Files responsive - BEGIN */

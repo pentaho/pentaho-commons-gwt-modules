@@ -79,6 +79,10 @@ public class DefaultListItem extends HorizontalFlexPanel implements ListItem<Obj
   private void init() {
     createWidgets();
     this.sinkEvents( Event.MOUSEEVENTS );
+
+    // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
+    // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.
+    this.setStyleName( "" );
     this.setStylePrimaryName( styleName );
   }
 
@@ -95,6 +99,7 @@ public class DefaultListItem extends HorizontalFlexPanel implements ListItem<Obj
     this.value = this.text;
     this.img = img;
     createWidgets();
+    this.setStyleName( "" );
     this.setStylePrimaryName( styleName );
   }
 
@@ -102,15 +107,16 @@ public class DefaultListItem extends HorizontalFlexPanel implements ListItem<Obj
     this.text = str;
     this.extraWidget = widget;
     createWidgets();
+    this.setStyleName( "" );
     this.setStylePrimaryName( styleName );
   }
 
   public void setStylePrimaryName( String style ) {
     baseStyleName = style;
     dropWidget.setStylePrimaryName( style + "-item" );
-    dropWidget.addStyleName( "gwt-h-panel" );//$NON-NLS-1$
+    dropWidget.addStyleName( HorizontalFlexPanel.STYLE_NAME );//$NON-NLS-1$
     super.setStylePrimaryName( style + "-item" ); //$NON-NLS-1$
-    super.addStyleName( "gwt-h-panel" );
+    super.addStyleName( HorizontalFlexPanel.STYLE_NAME );
   }
 
   /**
@@ -150,6 +156,7 @@ public class DefaultListItem extends HorizontalFlexPanel implements ListItem<Obj
     label.setWidth( "100%" ); //$NON-NLS-1$
     SimplePanel sp = new SimplePanel();
     sp.getElement().getStyle().setProperty( "overflowX", "auto" ); //$NON-NLS-1$ //$NON-NLS-2$
+    sp.addStyleName( "flex-row" );
     sp.add( label );
 
     panel.add( sp );
