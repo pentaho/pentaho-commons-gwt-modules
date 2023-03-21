@@ -1607,6 +1607,11 @@ button#schedule-dialog-select-button {
   padding: 0px;
   display: none;
 }
+/* Uncomment the below style to validate whether frame is covered or uncovered */
+/* .pen-frame-cover {
+  background-color: #000 !important;
+  opacity: 0.6 !important;
+} */
 
 .pentaho-tabWidget {
   display: inline-table;
