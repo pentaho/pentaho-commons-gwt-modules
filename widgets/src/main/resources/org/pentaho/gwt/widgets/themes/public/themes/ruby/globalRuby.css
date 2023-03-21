@@ -1687,12 +1687,25 @@ button#schedule-dialog-select-button {
 .file-properties-dialog #filePropertiesGeneralTab .gwt-Label {
   word-break: break-all;
 }
-/* endregion Responsive File Properties dialog - End */
-/* region Select User or Role dialog - Start */
+/* endregion */
+
+/* region Select User or Role dialog */
 .select-user-or-role-dialog .gwt-ListBox {
   width: 100% !important;
 }
-/* endregion Select User or Role dialog - End */
+/* endregion */
+
+/* region XUL / GWT - ChangePasswordByUserDialog, ChangePasswordDialog, UserDialog, RoleDialog */
+:is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content {
+  /* Dialogs use empty rows for V-spacing. */
+  --layout-gap-v: 0;
+}
+
+:is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content input {
+  width: unset !important;
+}
+/* endregion */
+
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
