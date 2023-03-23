@@ -9063,7 +9063,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   outline: var(--focus-ring) !important;
 }
 
-#refreshBrowserIcon:focus-visible {
+#refreshBrowserIcon {
   margin: var(--focus-ring-padding);
 }
 
