@@ -4360,27 +4360,23 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body div.folder.open > div.element > div.icon {
   background: url("images/folder_open.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder.open.selected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.secondarySelected > div.element > div.icon {
   background: url("images/folder_open.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element:hover > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder.selected > div.element > div.icon,
@@ -4390,7 +4386,6 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.folder.empty.secondarySelected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty.secondarySelected > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.trash.trash > div.element > div.icon,
@@ -4429,12 +4424,16 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file.icon.ktr::before {
   background-image: url("images/kettle_transformation.png");
-  background-position: 4px center;
+  background-position: calc(1em * 2/ 14) center;
+  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
+  width: calc(1em * 18/ 14);
 }
 
 .fileBrowserColumn .body .file.icon.kjb::before {
   background-image: url("images/kettle_job.png");
-  background-position: 4px center;
+  background-position: calc(1em * 2/ 14) center;
+  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
+  width: calc(1em * 18/ 14);
 }
 
 .fileBrowserColumn .body .file.icon.xaction::before {
@@ -4451,6 +4450,9 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file.trashFolder::before {
   background-image: url("images/folder_closed.png");
+  background-position: 0 calc(1em * 2/14);
+  background-size: calc(1em * 36/14) calc(1em * 14/14);
+  width: calc(1em * 18/ 14);
 }
 
 .fileBrowserColumn .body .file.icon.cda::before {
@@ -4731,8 +4733,16 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .folder .element > * {
   flex: none;
 }
+
+#fileBrowserFolders .body .folder .element > .expandCollapse {
+  width: calc(1em * 20/14);
+  height: calc(1em * 20/14);
+  background-size: calc(1em * 40/14) calc(1em * 40/14);
+}
+
 .fileBrowserColumn .body .folder .element > .title {
   flex: 1 0 auto;
+  height: unset;
 }
 
 .fileBrowserColumn .body .folder .element:hover {
@@ -4747,8 +4757,11 @@ div.dijitDateTextBox.dijitComboBox {
   background: rgba(204, 0, 0, 0.2);
 }
 
-.fileBrowserColumn .body .folder .icon {
+#fileBrowserFolders .body .folder .icon {
   margin: 0 4px;
+  width: calc(1em * 22/14);
+  height: auto;
+  background-size: contain;
 }
 /* endregion .folder, .folders ... */
 
