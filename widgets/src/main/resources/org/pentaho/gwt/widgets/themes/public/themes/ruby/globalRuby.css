@@ -4609,14 +4609,49 @@ div.dijitDateTextBox.dijitComboBox {
   color: #333;
 }
 
-/* added by brett to override browser styles */
+/* region override browser styles */
+
+/* Home and Browser Files perspective */
 .main-container {
   margin: 0 auto;
   max-width: 1230px;
   width: auto;
 }
 
-/* Browse Files */
+/* region Browse Files perspective */
+#fileBrowser {
+  display: grid;
+  width: 100%;
+  grid-template-areas: "folder file actions";
+  grid-template-columns: 1fr 1fr auto;
+  grid-template-rows: 1fr;
+}
+
+}
+
+/* region .fileBrowserColumn elements  */
+#fileBrowserFolders {
+  grid-area: folder;
+  width: 100%;
+  min-height: 256px;
+}
+
+#fileBrowserFiles {
+  grid-area: file;
+  width: 100%;
+  margin-left: 0;
+  min-height: 256px;
+}
+
+#fileBrowserButtons {
+  grid-area: actions;
+  width: 250px;
+  height: auto !important;
+  margin-left: 0;
+}
+/* endregion .fileBrowserColumn elements  */
+
+/* region .fileBrowserColumn's .header and .body  */
 .fileBrowserColumn .header {
   height: auto;
   border: 0;
@@ -4627,6 +4662,12 @@ div.dijitDateTextBox.dijitComboBox {
   margin-bottom: 10px;
   cursor: default;
   font-family: OpenSansLight, Helvetica, Arial, Sans serif;
+}
+
+.fileBrowserColumn > .body {
+  display: flex;
+  flex-direction: column;
+  flex: none;
 }
 
 #fileBrowserFiles.fileBrowserColumn .body,
@@ -4640,11 +4681,26 @@ div.dijitDateTextBox.dijitComboBox {
   outline-offset: var(--focus-ring-offset);
 }
 
-.fileBrowserColumn > .body {
-  display: flex;
-  flex-direction: column;
-  flex: none;
+#fileBrowserButtons > .body {
+  overflow: visible !important;
+  top: 51px;
+  /* Ensure enough space for the focus-visible outline. */
+  padding: 8px;
 }
+
+#fileBrowserFiles > .body {
+  overflow-x: hidden !important;
+  width: auto !important;
+}
+
+@supports (-moz-appearance:none) {
+  #fileBrowserFiles > .body {
+    width: -moz-available !important;
+  }
+}
+/* endregion .fileBrowserColumn's .header and .body  */
+
+/* region .folder, .folders ... */
 .fileBrowserColumn > .body > .folder {
   width: max-content;
   min-width: 100%;
@@ -4671,6 +4727,7 @@ div.dijitDateTextBox.dijitComboBox {
   display: flex;
   flex-direction: row;
 }
+
 .fileBrowserColumn .body .folder .element > * {
   flex: none;
 }
@@ -4682,24 +4739,20 @@ div.dijitDateTextBox.dijitComboBox {
   background-color: #E0E0E0;
 }
 
-/*.fileBrowserColumn .body .folder .element:hover .icon {
-  background: url(images/folder_closed_white.png) no-repeat !important;
+.fileBrowserColumn .body .folder.selected > .element {
+  background: rgba(204, 0, 0, 0.2);
 }
 
-.fileBrowserColumn .body .folder .element:hover .expandCollapse {
-  background: url(images/folders-arrows.png) no-repeat bottom right !important;
-}*/
-
-#fileBrowserButtons .body {
-  top: 51px;
-  /* Ensure enough space for the focus-visible outline. */
-  padding: 8px;
+.fileBrowserColumn .body .folder.secondarySelected > .element {
+  background: rgba(204, 0, 0, 0.2);
 }
 
 .fileBrowserColumn .body .folder .icon {
   margin: 0 4px;
 }
+/* endregion .folder, .folders ... */
 
+/* region .file ... */
 .fileBrowserColumn .body .file {
   padding: 8px;
   font-size: 14px;
@@ -4710,22 +4763,83 @@ div.dijitDateTextBox.dijitComboBox {
   background-color: #E0E0E0;
 }
 
-.fileBrowserColumn .body .folder.selected > .element {
-  background: rgba(204, 0, 0, 0.2);
-}
-
-.fileBrowserColumn .body .folder.secondarySelected > .element {
-  background: rgba(204, 0, 0, 0.2);
-}
-
 .fileBrowserColumn .body .file.selected {
   background-color: rgba(204, 0, 0, 0.2);
 }
 
-#fileBrowserButtons {
-  width: 250px;
+#fileBrowserFiles > .body > .file {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* endregion .file ... */
+
+/* region buttons */
+.fileBrowserColumn .body .separator {
+  margin: 10px 0;
+  border-top: solid 1px #CCC;
 }
 
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:link,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:visited,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
+  padding: 4px;
+  background: none;
+  color: #7C0B2B;
+}
+
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
+  color: #7C0B2B;
+  text-decoration: underline;
+}
+
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled],
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:link,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:visited,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:hover,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:active,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:focus {
+  color: #AAAAAA;
+  text-decoration: none;
+}
+/* endregion buttons */
+
+/* region breakpoint overrides */
+@media (max-width: 880px) {
+  #fileBrowser {
+    grid-template-areas:
+			"folder actions"
+			"file actions";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+  #fileBrowser {
+    grid-template-areas:
+			"folder"
+			"file"
+			"actions";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .fileBrowserButtons > .body {
+    flex: 1 0 auto;
+  }
+}
+/* endregion breakpoint overrides */
+
+/* endregion Browse Files perspective */
+
+/* region FileChooserDialog */
 .fileChooserFilesList > * {
   border-spacing: 0;
   border-collapse: collapse;
@@ -4776,40 +4890,6 @@ div.dijitDateTextBox.dijitComboBox {
   cursor: default;
 }
 
-.fileBrowserColumn .body .separator {
-  margin: 10px 0px;
-  border-top: solid 1px #CCC;
-}
-
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:link,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:visited,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
-  padding: 4px;
-  background: none;
-  color: #7C0B2B;
-}
-
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
-  color: #7C0B2B;
-  text-decoration: underline;
-}
-
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled],
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:link,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:visited,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:hover,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:active,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:focus {
-  color: #AAAAAA;
-  text-decoration: none;
-}
-
-/* FileChooserDialog BEGIN */
 .fileChooser .fileChooserFilesListContainer {
   display: contents;
   flex: inherit;
@@ -4896,9 +4976,10 @@ div.dijitDateTextBox.dijitComboBox {
     display: none;
   }
 }
-/* FileChooserDialog END */
+/* endregion FileChooserDialog */
 
-/*  end browser styles */
+/* endregion override browser styles */
+
 #reportPageOutline {
   -webkit-box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, .3);
   box-shadow: 0px 1px 6px 1px rgba(58, 58, 58, .1);
@@ -9101,85 +9182,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .import-dialog-disclosure-content-panel {
   flex: auto;
 }
-
-/* Start region Browse Files responsive - BEGIN */
-#fileBrowser {
-  display: grid;
-  width: 100%;
-  grid-template-areas:
-    "folder file actions";
-  grid-template-columns: 1fr 1fr auto;
-  grid-template-rows: 1fr;
-}
-
-@media (max-width: 880px) {
-  #fileBrowser {
-    display: grid;
-    width: 100%;
-    grid-template-areas:
-			"folder actions"
-			"file actions";
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr 1fr;
-  }
-}
-@media (max-width: 550px) {
-  #fileBrowser {
-    display: grid;
-    width: 100%;
-    grid-template-areas:
-			"folder"
-			"file"
-			"actions";
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-  }
-}
-
-#fileBrowserFolders {
-  grid-area: folder;
-  width: 100%;
-  min-height: 256px;
-}
-
-#fileBrowserFiles {
-  grid-area: file;
-  width: 100%;
-  margin-left: 0px;
-  min-height: 256px;
-}
-
-#fileBrowserButtons {
-  grid-area: actions;
-  margin-left: 0px;
-}
-
-#fileBrowserButtons {
-  height: auto !important;
-}
-
-#fileBrowserFiles .body {
-  overflow-x: hidden !important;
-  width:auto !important;
-}
-
-@supports (-moz-appearance:none) {
-  #fileBrowserFiles .body {
-    width:-moz-available !important;
-  }
-}
-
-#fileBrowserButtons .body {
-  overflow: visible !important;
-}
-
-#fileBrowserFiles .body .file {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* End region Browse Files responsive - End */
 
 /* responsive content for home page above 810px and below 930px */
 @media (max-width:930px) {
