@@ -1714,8 +1714,15 @@ button#schedule-dialog-select-button {
   border-right: solid 1px transparent;
 }
 
+/* Due to relative positioning and use of z-index, focus-ring would not appear in Firefox.
+   Placing it on the direct child instead solves it. */
 .pentaho-tabWidget:focus-visible {
-  --focus-ring-offset: calc(-1 * var(--focus-ring-width));
+  outline: none;
+}
+
+.pentaho-tabWidget:focus-visible > * {
+  outline: var(--focus-ring);
+  outline-offset: 5px;
 }
 
 .IE .pentaho-tabWidget {
