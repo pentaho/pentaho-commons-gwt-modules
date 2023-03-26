@@ -344,6 +344,20 @@ public class ElementUtils {
   }-*/;
 
   /**
+   * Sets a style property using the CSS style property name.
+   * <p>
+   *   GWT's {@link com.google.gwt.dom.client.Style#setProperty(String, String)} only
+   *   allows setting properties with its camel-case name.
+   * </p>
+   * @param elem The element.
+   * @param cssPropertyName The name of the CSS style property.
+   * @param value The value of the property.
+   */
+  public static native void setStyleProperty( Element elem, String cssPropertyName, String value ) /*-{
+    elem.style.setProperty(name, value);
+  }-*/;
+
+  /**
    * Set's a widget's ARIA label.
    * <p>If the provided label widget does not have an identifier, a unique one is assigned to it.</p>
    * @param widget The widget.
