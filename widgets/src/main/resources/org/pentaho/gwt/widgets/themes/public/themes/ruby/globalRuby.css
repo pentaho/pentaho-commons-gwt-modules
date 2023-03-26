@@ -126,10 +126,13 @@ html.bootstrap body {
 
 :focus-visible,
 
-  /* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
+/* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
 input:focus-visible:focus-visible:focus-visible,
 
-  /* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
+/* Increase specif. to override bootstrap-namespaced.css (> 0-2-1) */
+.bootstrap select:focus-visible:focus-visible,
+
+/* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
 .bootstrap input:focus-visible:focus-visible:focus-visible  {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
@@ -4621,17 +4624,34 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 /* region Browse Files perspective */
+.browse-files-perspective body {
+  height: 100vh;
+}
+
+.browse-files-perspective.browse-files-perspective :is(.main-container, .main-container > *) {
+  position: unset;
+  padding: 0;
+  height: 100%;
+}
+
 #fileBrowser {
   display: grid;
   width: 100%;
+  min-height: 100%;
+
   grid-template-areas: "folder file actions";
   grid-template-columns: 1fr 1fr auto;
   grid-template-rows: 1fr;
 }
 
+/* region .fileBrowserColumn elements  */
+.fileBrowserColumn.fileBrowserColumn.fileBrowserColumn.fileBrowserColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
-/* region .fileBrowserColumn elements  */
 #fileBrowserFolders {
   grid-area: folder;
   width: 100%;
@@ -4655,50 +4675,53 @@ div.dijitDateTextBox.dijitComboBox {
 
 /* region .fileBrowserColumn's .header and .body  */
 .fileBrowserColumn .header {
+  flex: none;
   height: auto;
   border: 0;
   font-size: 16px;
   line-height: 22px;
+  min-height: calc(1em * 22/16);
   color: #333333;
   padding: 0;
   margin-bottom: 10px;
   cursor: default;
   font-family: OpenSansLight, Helvetica, Arial, Sans serif;
+  overflow: visible;
 }
 
 .fileBrowserColumn > .body {
+  flex: auto;
+  position: unset;
   display: flex;
   flex-direction: column;
-  flex: none;
 }
 
-#fileBrowserFiles.fileBrowserColumn .body,
-#fileBrowserFolders.fileBrowserColumn .body {
+:is(.fileBrowserFiles, .fileBrowserFolders) > .body {
   border: 1px solid #CCC;
-  top: 51px;
 }
 
-#fileBrowserFiles.fileBrowserColumn .body:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
+.fileBrowserFolders > .body {
+  /* Place focus ring inside tree nodes */
+  --focus-ring-offset: calc(-1 * var(--focus-ring-width));
 }
 
-#fileBrowserButtons > .body {
-  overflow: visible !important;
-  top: 51px;
-  /* Ensure enough space for the focus-visible outline. */
-  padding: 8px;
+.fileBrowserFiles > .body {
+  padding: 0;
 }
 
-#fileBrowserFiles > .body {
-  overflow-x: hidden !important;
-  width: auto !important;
+.fileBrowserFiles.fileBrowserFiles > .body {
+  overflow-x: hidden;
 }
 
 @supports (-moz-appearance:none) {
-  #fileBrowserFiles > .body {
+  .fileBrowserFiles > .body {
     width: -moz-available !important;
   }
+}
+
+.fileBrowserButtons > .body {
+  /* Ensure enough space for the focus-visible outline. */
+  padding: var(--focus-ring-padding);
 }
 /* endregion .fileBrowserColumn's .header and .body  */
 
@@ -4722,7 +4745,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .folder .element {
-  padding: 8px 0;
+  padding: 8px 8px 8px 0;
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
@@ -4766,10 +4789,22 @@ div.dijitDateTextBox.dijitComboBox {
 /* endregion .folder, .folders ... */
 
 /* region .file ... */
-.fileBrowserColumn .body .file {
+.fileBrowserFiles > .body > .file {
+  width: calc(100% - 2 * 8px);
   padding: 8px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
+}
+
+@supports (-moz-appearance:none) {
+  /* FF would otherwise replace the whole text with an ellipsis... */
+  .fileBrowserFiles > .body > .file {
+    text-overflow: clip;
+  }
 }
 
 .fileBrowserColumn .body .file:hover {
@@ -4778,13 +4813,6 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file.selected {
   background-color: rgba(204, 0, 0, 0.2);
-}
-
-#fileBrowserFiles > .body > .file {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 /* endregion .file ... */
 
@@ -4832,6 +4860,10 @@ div.dijitDateTextBox.dijitComboBox {
     grid-template-columns: 1fr auto;
     grid-template-rows: 1fr 1fr;
   }
+
+  .fileBrowserButtons > .body {
+    flex: 1 0 auto;
+  }
 }
 
 @media (max-width: 550px) {
@@ -4842,10 +4874,6 @@ div.dijitDateTextBox.dijitComboBox {
 			"actions";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-  }
-
-  .fileBrowserButtons > .body {
-    flex: 1 0 auto;
   }
 }
 /* endregion breakpoint overrides */
@@ -9155,10 +9183,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .tree-scroll-panel > * > :focus-visible {
   z-index: 0 !important;
   outline: var(--focus-ring) !important;
-}
-
-#refreshBrowserIcon {
-  margin: var(--focus-ring-padding);
 }
 
 /* Dialog uses empty rows for V-spacing. */
