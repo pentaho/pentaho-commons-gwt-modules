@@ -39,7 +39,7 @@ public class RunOnceEditorValidator implements IUiValidator {
       final String date = format.format( editor.getStartDate() );
       final String dateTime = date + " " + editor.getStartTime(); //$NON-NLS-1$
 
-      if ( DateTimeFormat.getFormat( "MM-dd-yyyy hh:mm:ss a" ).parse( dateTime ).before( new Date() ) ) { //$NON-NLS-1$
+      if ( DateTimeFormat.getFormat( "MM-dd-yyyy HH:mm:ss a" ).parse( normalizeDateEn( dateTime ) ).before( new Date() ) ) { //$NON-NLS-1$
         isValid = false;
       }
     }
@@ -47,5 +47,13 @@ public class RunOnceEditorValidator implements IUiValidator {
   }
 
   public void clear() {
+  }
+
+  private String normalizeDateEn (String dateString){
+    if(dateString != null && !dateString.isEmpty()){
+      return dateString.replaceAll( "vorm." , "am").replaceAll( "nachm." , "pm") ;
+    }else {
+      return dateString;
+    }
   }
 }
