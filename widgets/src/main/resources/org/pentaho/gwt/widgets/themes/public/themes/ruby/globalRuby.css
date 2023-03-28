@@ -126,10 +126,13 @@ html.bootstrap body {
 
 :focus-visible,
 
-  /* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
+/* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
 input:focus-visible:focus-visible:focus-visible,
 
-  /* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
+/* Increase specif. to override bootstrap-namespaced.css (> 0-2-1) */
+.bootstrap select:focus-visible:focus-visible,
+
+/* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
 .bootstrap input:focus-visible:focus-visible:focus-visible  {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
@@ -4360,27 +4363,23 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body div.folder.open > div.element > div.icon {
   background: url("images/folder_open.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder.open.selected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.secondarySelected > div.element > div.icon {
   background: url("images/folder_open.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element:hover > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder.selected > div.element > div.icon,
@@ -4390,7 +4389,6 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.folder.empty.secondarySelected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty.secondarySelected > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.trash.trash > div.element > div.icon,
@@ -4429,12 +4427,16 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file.icon.ktr::before {
   background-image: url("images/kettle_transformation.png");
-  background-position: 4px center;
+  background-position: calc(1em * 2/ 14) center;
+  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
+  width: calc(1em * 18/ 14);
 }
 
 .fileBrowserColumn .body .file.icon.kjb::before {
   background-image: url("images/kettle_job.png");
-  background-position: 4px center;
+  background-position: calc(1em * 2/ 14) center;
+  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
+  width: calc(1em * 18/ 14);
 }
 
 .fileBrowserColumn .body .file.icon.xaction::before {
@@ -4451,6 +4453,9 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file.trashFolder::before {
   background-image: url("images/folder_closed.png");
+  background-position: 0 calc(1em * 2/14);
+  background-size: calc(1em * 36/14) calc(1em * 14/14);
+  width: calc(1em * 18/ 14);
 }
 
 .fileBrowserColumn .body .file.icon.cda::before {
@@ -4609,42 +4614,118 @@ div.dijitDateTextBox.dijitComboBox {
   color: #333;
 }
 
-/* added by brett to override browser styles */
+/* region override browser styles */
+
+/* Home and Browser Files perspective */
 .main-container {
   margin: 0 auto;
   max-width: 1230px;
   width: auto;
 }
 
-/* Browse Files */
+/* region Browse Files perspective */
+.browse-files-perspective body {
+  height: 100vh;
+}
+
+.browse-files-perspective.browse-files-perspective :is(.main-container, .main-container > *) {
+  position: unset;
+  padding: 0;
+  height: 100%;
+}
+
+#fileBrowser {
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+
+  grid-template-areas: "folder file actions";
+  grid-template-columns: 1fr 1fr auto;
+  grid-template-rows: 1fr;
+}
+
+/* region .fileBrowserColumn elements  */
+.fileBrowserColumn.fileBrowserColumn.fileBrowserColumn.fileBrowserColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#fileBrowserFolders {
+  grid-area: folder;
+  width: 100%;
+  min-height: 256px;
+}
+
+#fileBrowserFiles {
+  grid-area: file;
+  width: 100%;
+  margin-left: 0;
+  min-height: 256px;
+}
+
+#fileBrowserButtons {
+  grid-area: actions;
+  width: 250px;
+  height: auto !important;
+  margin-left: 0;
+}
+/* endregion .fileBrowserColumn elements  */
+
+/* region .fileBrowserColumn's .header and .body  */
 .fileBrowserColumn .header {
+  flex: none;
   height: auto;
   border: 0;
   font-size: 16px;
   line-height: 22px;
+  min-height: calc(1em * 22/16);
   color: #333333;
   padding: 0;
   margin-bottom: 10px;
   cursor: default;
   font-family: OpenSansLight, Helvetica, Arial, Sans serif;
-}
-
-#fileBrowserFiles.fileBrowserColumn .body,
-#fileBrowserFolders.fileBrowserColumn .body {
-  border: 1px solid #CCC;
-  top: 51px;
-}
-
-#fileBrowserFiles.fileBrowserColumn .body:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
+  overflow: visible;
 }
 
 .fileBrowserColumn > .body {
+  flex: auto;
+  position: unset;
   display: flex;
   flex-direction: column;
-  flex: none;
 }
+
+:is(.fileBrowserFiles, .fileBrowserFolders) > .body {
+  border: 1px solid #CCC;
+}
+
+.fileBrowserFolders > .body {
+  /* Place focus ring inside tree nodes */
+  --focus-ring-offset: calc(-1 * var(--focus-ring-width));
+}
+
+.fileBrowserFiles > .body {
+  padding: 0;
+}
+
+.fileBrowserFiles.fileBrowserFiles > .body {
+  overflow-x: hidden;
+}
+
+@supports (-moz-appearance:none) {
+  .fileBrowserFiles > .body {
+    width: -moz-available !important;
+  }
+}
+
+.fileBrowserButtons > .body {
+  /* Ensure enough space for the focus-visible outline. */
+  padding: var(--focus-ring-padding);
+}
+/* endregion .fileBrowserColumn's .header and .body  */
+
+/* region .folder, .folders ... */
 .fileBrowserColumn > .body > .folder {
   width: max-content;
   min-width: 100%;
@@ -4664,49 +4745,30 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .folder .element {
-  padding: 8px 0;
+  padding: 8px 8px 8px 0;
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
   display: flex;
   flex-direction: row;
 }
+
 .fileBrowserColumn .body .folder .element > * {
   flex: none;
 }
+
+#fileBrowserFolders .body .folder .element > .expandCollapse {
+  width: calc(1em * 20/14);
+  height: calc(1em * 20/14);
+  background-size: calc(1em * 40/14) calc(1em * 40/14);
+}
+
 .fileBrowserColumn .body .folder .element > .title {
   flex: 1 0 auto;
+  height: unset;
 }
 
 .fileBrowserColumn .body .folder .element:hover {
-  background-color: #E0E0E0;
-}
-
-/*.fileBrowserColumn .body .folder .element:hover .icon {
-  background: url(images/folder_closed_white.png) no-repeat !important;
-}
-
-.fileBrowserColumn .body .folder .element:hover .expandCollapse {
-  background: url(images/folders-arrows.png) no-repeat bottom right !important;
-}*/
-
-#fileBrowserButtons .body {
-  top: 51px;
-  /* Ensure enough space for the focus-visible outline. */
-  padding: 8px;
-}
-
-.fileBrowserColumn .body .folder .icon {
-  margin: 0 4px;
-}
-
-.fileBrowserColumn .body .file {
-  padding: 8px;
-  font-size: 14px;
-  font-family: opensansregular, Helvetica, Arial, Sans serif;
-}
-
-.fileBrowserColumn .body .file:hover {
   background-color: #E0E0E0;
 }
 
@@ -4718,14 +4780,107 @@ div.dijitDateTextBox.dijitComboBox {
   background: rgba(204, 0, 0, 0.2);
 }
 
+#fileBrowserFolders .body .folder .icon {
+  margin: 0 4px;
+  width: calc(1em * 22/14);
+  height: auto;
+  background-size: contain;
+}
+/* endregion .folder, .folders ... */
+
+/* region .file ... */
+.fileBrowserFiles > .body > .file {
+  width: calc(100% - 2 * 8px);
+  padding: 8px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: opensansregular, Helvetica, Arial, Sans serif;
+}
+
+@supports (-moz-appearance:none) {
+  /* FF would otherwise replace the whole text with an ellipsis... */
+  .fileBrowserFiles > .body > .file {
+    text-overflow: clip;
+  }
+}
+
+.fileBrowserColumn .body .file:hover {
+  background-color: #E0E0E0;
+}
+
 .fileBrowserColumn .body .file.selected {
   background-color: rgba(204, 0, 0, 0.2);
 }
+/* endregion .file ... */
 
-#fileBrowserButtons {
-  width: 250px;
+/* region buttons */
+.fileBrowserColumn .body .separator {
+  margin: 10px 0;
+  border-top: solid 1px #CCC;
 }
 
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:link,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:visited,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
+  padding: 4px;
+  background: none;
+  color: #7C0B2B;
+}
+
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
+  color: #7C0B2B;
+  text-decoration: underline;
+}
+
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled],
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:link,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:visited,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:hover,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:active,
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:focus {
+  color: #AAAAAA;
+  text-decoration: none;
+}
+/* endregion buttons */
+
+/* region breakpoint overrides */
+@media (max-width: 880px) {
+  #fileBrowser {
+    grid-template-areas:
+			"folder actions"
+			"file actions";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .fileBrowserButtons > .body {
+    flex: 1 0 auto;
+  }
+}
+
+@media (max-width: 550px) {
+  #fileBrowser {
+    grid-template-areas:
+			"folder"
+			"file"
+			"actions";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+}
+/* endregion breakpoint overrides */
+
+/* endregion Browse Files perspective */
+
+/* region FileChooserDialog */
 .fileChooserFilesList > * {
   border-spacing: 0;
   border-collapse: collapse;
@@ -4776,40 +4931,6 @@ div.dijitDateTextBox.dijitComboBox {
   cursor: default;
 }
 
-.fileBrowserColumn .body .separator {
-  margin: 10px 0px;
-  border-top: solid 1px #CCC;
-}
-
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:link,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:visited,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
-  padding: 4px;
-  background: none;
-  color: #7C0B2B;
-}
-
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
-  color: #7C0B2B;
-  text-decoration: underline;
-}
-
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled],
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:link,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:visited,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:hover,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:active,
-.bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:focus {
-  color: #AAAAAA;
-  text-decoration: none;
-}
-
-/* FileChooserDialog BEGIN */
 .fileChooser .fileChooserFilesListContainer {
   display: contents;
   flex: inherit;
@@ -4896,9 +5017,10 @@ div.dijitDateTextBox.dijitComboBox {
     display: none;
   }
 }
-/* FileChooserDialog END */
+/* endregion FileChooserDialog */
 
-/*  end browser styles */
+/* endregion override browser styles */
+
 #reportPageOutline {
   -webkit-box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, .3);
   box-shadow: 0px 1px 6px 1px rgba(58, 58, 58, .1);
@@ -9063,10 +9185,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   outline: var(--focus-ring) !important;
 }
 
-#refreshBrowserIcon {
-  margin: var(--focus-ring-padding);
-}
-
 /* Dialog uses empty rows for V-spacing. */
 .import-dialog .dialog-content {
   --layout-gap-v: 0;
@@ -9101,85 +9219,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .import-dialog-disclosure-content-panel {
   flex: auto;
 }
-
-/* Start region Browse Files responsive - BEGIN */
-#fileBrowser {
-  display: grid;
-  width: 100%;
-  grid-template-areas:
-    "folder file actions";
-  grid-template-columns: 1fr 1fr auto;
-  grid-template-rows: 1fr;
-}
-
-@media (max-width: 880px) {
-  #fileBrowser {
-    display: grid;
-    width: 100%;
-    grid-template-areas:
-			"folder actions"
-			"file actions";
-    grid-template-columns: 1fr auto;
-    grid-template-rows: 1fr 1fr;
-  }
-}
-@media (max-width: 550px) {
-  #fileBrowser {
-    display: grid;
-    width: 100%;
-    grid-template-areas:
-			"folder"
-			"file"
-			"actions";
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-  }
-}
-
-#fileBrowserFolders {
-  grid-area: folder;
-  width: 100%;
-  min-height: 256px;
-}
-
-#fileBrowserFiles {
-  grid-area: file;
-  width: 100%;
-  margin-left: 0px;
-  min-height: 256px;
-}
-
-#fileBrowserButtons {
-  grid-area: actions;
-  margin-left: 0px;
-}
-
-#fileBrowserButtons {
-  height: auto !important;
-}
-
-#fileBrowserFiles .body {
-  overflow-x: hidden !important;
-  width:auto !important;
-}
-
-@supports (-moz-appearance:none) {
-  #fileBrowserFiles .body {
-    width:-moz-available !important;
-  }
-}
-
-#fileBrowserButtons .body {
-  overflow: visible !important;
-}
-
-#fileBrowserFiles .body .file {
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* End region Browse Files responsive - End */
 
 /* responsive content for home page above 810px and below 930px */
 @media (max-width:930px) {
