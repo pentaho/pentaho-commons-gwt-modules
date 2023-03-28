@@ -425,33 +425,6 @@ input[type="password"]:focus {
   background-color: #FFF;
 }
 
-#pucHeader {
-  display: block;
-  height: 50px;
-  /*background: #005DA6; value from sapphire theme */
-  background: #f8f8f6;
-  filter: none;
-  -webkit-box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
-  padding: 30px 0 0;
-  position: relative;
-  border-top: 4px solid #cc0000;
-}
-
-#mainMenubar > table {
-  border: 0 none;
-  border-spacing: 0;
-}
-
-#pucHeader #pucPerspectives {
-  padding: 3px;
-}
-
-#pucHeader #pucPerspectives .mantle-perspective-switcher {
-  height: auto;
-}
-
 .gwt-MenuBarPopup + .gwt-MenuBarPopup {
   margin-top: -1px;
 }
@@ -1741,8 +1714,15 @@ button#schedule-dialog-select-button {
   border-right: solid 1px transparent;
 }
 
+/* Due to relative positioning and use of z-index, focus-ring would not appear in Firefox.
+   Placing it on the direct child instead solves it. */
 .pentaho-tabWidget:focus-visible {
-  --focus-ring-offset: calc(-1 * var(--focus-ring-width));
+  outline: none;
+}
+
+.pentaho-tabWidget:focus-visible > * {
+  outline: var(--focus-ring);
+  outline-offset: 5px;
 }
 
 .IE .pentaho-tabWidget {
