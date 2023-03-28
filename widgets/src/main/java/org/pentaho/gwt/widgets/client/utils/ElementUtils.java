@@ -263,7 +263,7 @@ public class ElementUtils {
    * @return The first keyboard-focusable descendant, if any; <code>null</code>, otherwise.
    */
   public static native Element findFirstKeyboardFocusableDescendant( Element root )/*-{
-    return $wnd.pho.util._focus.tabbables(root)[0] || null;
+    return $wnd.pho.util._focus.firstTabbable(root);
   }-*/;
 
   /**
