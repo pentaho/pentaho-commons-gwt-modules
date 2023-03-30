@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2017-2021 Hitachi Vantara.  All rights reserved.
+* Copyright 2017-2023 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -38,6 +38,78 @@
   src: url('opensans-bold.eot') format('embedded-opentype'), url('opensans-bold.woff') format('woff'), url('opensans-bold.ttf') format('truetype'), url('opensans-bold.svg#OpenSansBold') format('svg');
 }
 
+:root {
+  /* FOCUS RING */
+  --focus-ring-width: 3px;
+  --focus-ring: var(--focus-ring-width) solid #0075ff;
+
+  /* The default `outline-offset` should cause the outline to hide the border of most elements,
+     and, at the same time, not cause the outline to overflow the parent and be clipped.
+     If needed, adjust the `outline-offset` for specific elements or element types.
+   */
+  --focus-ring-offset: 2px;
+
+  /* How much space the focus ring takes beyond an element's border-box to be fully visible (focus-ring-width + focus-ring-offset).
+  To be used to ensure enough padding for focus outlines on containers having an overflow of hidden or auto. */
+  --focus-ring-padding: 5px;
+
+  /* ACCESSIBILITY */
+  /* Minimum width for a WCAG accessible vertical scrolling layout. */
+  --a11y-min-width: 320px;
+
+  /* Minimum height for a WCAG accessible horizontal scrolling layout. */
+  --a11y-min-height: 256px;
+
+  /* DIALOG GLOBAL variables */
+  --dialog-border-width: 1px;
+
+  /* Padding, on each side */
+  --dialog-padding: 20px;
+
+  /* Design System min/safe margin, on each side */
+  --dialog-ds-min-margin-h: calc(100% / 12);
+  --dialog-ds-min-margin-v: 80px;
+
+  /* LAYOUT GLOBAL */
+  --text-block-max-width: 75ch;
+
+  --typ-body-font-size: 14px;
+  --typ-body-line-height: 17px;
+
+  /* Set H and V space between layout cols and rows.
+     Or, use the helper classes: .with-layout-gap-... for predefined values.
+     Use current values on CSS properties using .gap-...
+     Root variables should only be changed at root.
+     The other two variables can be changed at any element and will be inherited by all descendants.
+   */
+  --layout-gap-h-root: 8px;
+  --layout-gap-v-root: 6px;
+
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
+
+  /* Input height resizes with text zoom, as it is based on font size and line height.
+     --input-outer-height = 33
+        = 2 x border + 2 x vertical-padding + line-height
+        = 17 + 2 + 14
+
+     Use these classes directly on the rare cases where sibling content needs to be sized
+     along with text and the resulting input's height, and no other means exists.
+   */
+  --input-border-width: 1px;
+  --input-padding-v: 0.5em;
+  --input-outer-height: calc(
+      2 * var(--input-border-width) +
+      2 * var(--input-padding-v) +
+      var(--typ-body-line-height));
+}
+
+@media (max-height: 720px) {
+  :root {
+    --dialog-ds-min-margin-v: 40px;
+  }
+}
+
 html,
 body,
 html.bootstrap body {
@@ -49,6 +121,50 @@ html.bootstrap body {
   color: #333;
 }
 
+
+/* BASE FOCUS-VISIBLE RULES  */
+
+:focus-visible,
+
+/* Increase specificity to override Widgets.css focus rule (> 0-2-1) */
+input:focus-visible:focus-visible:focus-visible,
+
+/* Increase specif. to override bootstrap-namespaced.css (> 0-2-1) */
+.bootstrap select:focus-visible:focus-visible,
+
+/* Increase specif. to override bootstrap-namespaced.css (> 0-3-1) */
+.bootstrap input:focus-visible:focus-visible:focus-visible  {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Use the `focus-ring-disabled` class on an element, to disable displaying the focus ring in its subtree.
+   When in CSS, simply set --focus-ring to none in the desired scope.
+ */
+.focus-ring-disabled {
+  --focus-ring: none;
+}
+
+/* FOCUS CONTAINER */
+
+.focus-container {
+  outline-offset: var(--focus-ring-offset);
+}
+@supports (selector(:has(div))) {
+  .focus-container:has(:focus-visible) {
+    outline: var(--focus-ring);
+  }
+}
+@supports not (selector(:has(div))) {
+  .focus-container:focus-within {
+    outline: var(--focus-ring);
+  }
+}
+/* Hide default focus ring on the element with the focus */
+.focus-container :focus-visible {
+  --focus-ring: none;
+}
+
 a, a:link {
   color: #7C0B2B;
   text-decoration: none;
@@ -56,17 +172,6 @@ a, a:link {
 
 a:active, a:hover {
   text-decoration: underline;
-}
-
-div {
-  outline: 0;
-  hideFocus: true;
-}
-
-img {
-  outline: 0;
-  -moz-user-focus: none;
-  user-focus: none;
 }
 
 strong,
@@ -84,7 +189,7 @@ div.pentaho-dialog.schedule-recurrence-dialog label {
 }
 
 legend {
-  color: #777;
+  color: #333;
 }
 
 fieldset,
@@ -113,16 +218,16 @@ input[type='radio'] {
 input[type='text'],
 textarea,
 .bootstrap .pentaho-dialog input[type='text'] {
-  border: 1px solid #CCC;
+  border: var(--input-border-width) solid #CCC;
   padding: 0 10px;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: var(--typ-body-font-size);
+  line-height: var(--typ-body-line-height);
   border-radius: 4px;
   font-family: opensansregular;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  height: 33px;
+  height: var(--input-outer-height);
   color: #333333;
 }
 
@@ -178,9 +283,9 @@ input#dijit_form_NumberTextBox_0 {
 
 SELECT,
 .gwt-ListBox {
-  border: 1px solid #CCC;
+  border: var(--input-border-width) solid #CCC;
   padding: 0;
-  font-size: 14px;
+  font-size: var(--typ-body-font-size);
   overflow: auto;
   border-radius: 4px;
   background-color: #fff;
@@ -194,7 +299,7 @@ SELECT[size="1"],
 SELECT:not([size]),
 .gwt-ListBox[size="1"],
 .gwt-ListBox:not([size]) {
-  height: 33px;
+  height: var(--input-outer-height);
   padding: 0 30px 0 10px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -210,6 +315,17 @@ SELECT:not([size])::-ms-expand,
   display: none; /*hides dropdown arrow in IE*/
 }
 
+:is(select, .gwt-ListBox):is(:not([size]), [size="1"]):where(.height-auto) {
+  /* Allow growing in height when text wraps.
+     Browsers may defer slightly on the auto height depending on line-height
+     and font-size. min-height provides some consistent at default font size.
+   */
+  min-height: var(--input-outer-height);
+  height: auto;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
 form SELECT {
   padding: 0 5px;
 }
@@ -220,7 +336,7 @@ select option,
   font-family: opensansregular;
 }
 
-select option:focus, select option:hover {
+select option:hover {
   color: #414141;
   background-color: #CCCCCC;
 }
@@ -234,11 +350,7 @@ select option:focus, select option:hover {
 }
 
 .gwt-Label {
-  color: #666666;
-}
-
-*:focus {
-  outline: none;
+  color: #414141;
 }
 
 .adminField {
@@ -250,8 +362,8 @@ table#contentCleanerPanel > tbody > tr > td > table {
 }
 
 #filterControlsGroupbox {
- margin-left: -6px;
- width: 101.6% !important;
+  margin-left: -6px;
+  width: 101.6% !important;
 }
 
 #ldapTestMsgDialog {
@@ -311,33 +423,6 @@ input[type="password"]:focus {
 .pentaho-page-background {
   background: url('images/bg_page.png') repeat-x top left;
   background-color: #FFF;
-}
-
-#pucHeader {
-  display: block;
-  height: 50px;
-  /*background: #005DA6; value from sapphire theme */
-  background: #f8f8f6;
-  filter: none;
-  -webkit-box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0 5px rgba(0, 0, 0, 0.5);
-  padding: 30px 0 0;
-  position: relative;
-  border-top: 4px solid #cc0000;
-}
-
-#mainMenubar > table {
-  border: 0 none;
-  border-spacing: 0;
-}
-
-#pucHeader #pucPerspectives {
-  padding: 3px;
-}
-
-#pucHeader #pucPerspectives .mantle-perspective-switcher {
-  height: auto;
 }
 
 .gwt-MenuBarPopup + .gwt-MenuBarPopup {
@@ -673,7 +758,6 @@ span.button-add-condition {
   white-space: nowrap;
   cursor: pointer;
   margin: 0;
-  outline: 0 none;
   border: 1px solid #cc0000;
 }
 
@@ -827,7 +911,7 @@ div#FilterPanel .pentaho-toggle-button-horizontal {
 .pentaho-toggle-button-down + .pentaho-toggle-button-up:hover,
 .pentaho-toggle-button-down-disabled + .pentaho-toggle-button-up:hover,
 .pentaho-toggle-button-down-hovering + .pentaho-toggle-button-up:hover {
-    border-left: 1px solid white;
+  border-left: 1px solid white;
 }
 
 .IE .pentaho-toggle-button-down,
@@ -857,11 +941,199 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   color: inherit;
 }
 
-/* Note: By default there is no padding on the bottom as the button area supplies the necessary amount. If your dialog
-has no buttons add an addition class to your element, pentaho-dialog-buttonless, to have full padding around the contents*/
+/* region Responsive Primitives */
+
+/* In below selectors, using * and/or :where(.) where possible to keep specificity as low as possible. */
+
+/* region .with-layout-gap- ... */
+/* Classes for setting the value of the --layout-gap-h and --layout-gap-v variables to predefined values
+   for an element's sub-tree. For _later_ use on the CSS gap, column-gap and row-gap properties, on other rules.
+*/
+.with-layout-gap-none {
+  --layout-gap-h: 0;
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-h-none {
+  --layout-gap-h: 0;
+}
+
+.with-layout-gap-v-none {
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+
+.with-layout-gap-h-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+}
+
+.with-layout-gap-v-normal {
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+/* endregion */
+
+/* region flex-row / flex-column */
+:where(.responsive):is(.flex-column, .flex-row),
+:where(.responsive) :is(.flex-column, .flex-row) {
+  flex: auto;
+  display: flex;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+:where(.responsive).flex-row,
+:where(.responsive) .flex-row {
+  flex-direction: row;
+}
+
+/* Add to the flex row element when it has a flex item with a H-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive).flex-row:where(.with-scroll-child),
+:where(.responsive) .flex-row:where(.with-scroll-child) {
+  min-width: 0;
+}
+
+:where(.responsive).flex-column,
+:where(.responsive) .flex-column {
+  flex-direction: column;
+}
+
+/* Add to the flex column element when it has a flex item with a V-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive).flex-column:where(.with-scroll-child),
+:where(.responsive) .flex-column:where(.with-scroll-child) {
+  min-height: 0;
+}
+
+/* Items having same direction of the container inherit its flex by default.
+   When changing direction, the container's default flex of auto is used by default.
+ */
+:where(.responsive).flex-row > :where(.flex-row),
+:where(.responsive) .flex-row > :where(.flex-row),
+:where(.responsive).flex-column > :where(.flex-column),
+:where(.responsive) .flex-column > :where(.flex-column) {
+  flex: inherit;
+}
+/* endregion */
+
+/* region GWT HorizontalFlexPanel, VerticalFlexPanel */
+:where(.responsive) .gwt-h-v-panel {
+  /* Panel structure:
+
+     table.flex-row.gwt-h-v-panel.gwt-h-panel
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr            ; display: contents
+           td...       ; display: contents
+             item
+
+     table.flex-column.gwt-h-v-panel.gwt-v-panel
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr...         ; display: contents
+           td          ; display: contents
+             item
+   */
+
+  /* Set to override the flex item's default flex.
+     Or use one of the preset classes: flex-items-none, flex-items-auto */
+  --flex-items: initial;
+}
+
+:where(.responsive) .gwt-h-v-panel:where(.flex-items-none) {
+  --flex-items: none;
+}
+
+:where(.responsive) .gwt-h-v-panel:where(.flex-items-auto) {
+  --flex-items: auto;
+}
+
+:where(.responsive) .gwt-h-v-panel > tbody {
+  /* Backup and free --flex-items for use on a flex item itself, in case it's also a gwt-h-v-panel. */
+  --priv-flex-items: var(--flex-items);
+}
+
+:where(.responsive) .gwt-h-v-panel > colgroup {
+  display: none;
+}
+
+:where(.responsive) :is(
+  .gwt-h-v-panel > tbody,
+  .gwt-h-v-panel > tbody > tr,
+  .gwt-h-v-panel > tbody > tr > td) {
+  display: contents;
+  flex: inherit;
+}
+
+/* Regular items (not flex containers) don't flex by default. */
+:where(.responsive) .gwt-h-v-panel > * > * > * > :where(:not(.flex-row, .flex-column)) {
+  flex: var(--priv-flex-items, none);
+}
+
+/* Container items having same direction of the panel inherit its flex by default.
+   When changing direction, the child container's default flex of auto is used by default.
+  */
+:where(.responsive) .gwt-h-panel > * > * > * > :where(.flex-row),
+:where(.responsive) .gwt-v-panel > * > * > * > :where(.flex-column) {
+  flex: var(--priv-flex-items, inherit);
+}
+
+/* endregion */
+
+/* region Modifiers: gap-, flex-, ... */
+/* Placed after other primitives, to override them. */
+
+/* Classes for setting the CSS properties gap, column-gap and/or row-gap
+   with predefined values on the current element.
+ */
+.gap-none {
+  gap: 0;
+}
+
+.gap-h-none {
+  column-gap: 0;
+}
+
+.gap-v-none {
+  row-gap: 0;
+}
+
+.gap-layout {
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+.gap-h-layout {
+  column-gap: var(--layout-gap-h);
+}
+
+.gap-v-layout {
+  row-gap: var(--layout-gap-v);
+}
+
+.flex-none {
+  flex: none;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+/* endregion */
+
+/* endregion */
+
+/* DIALOG */
 .pentaho-dialog,
 .bootstrap .modal.pentaho-dialog {
-  border: 1px solid #CCC;
+  border: var(--dialog-border-width) solid #CCC;
   z-index: 1050;
   position: absolute;
   background: #FFF;
@@ -872,7 +1144,7 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
   -moz-user-select: moz-none;
   -ms-user-select: none;
   user-select: none;
-/*  overflow: auto !important;*/
+  /*  overflow: auto !important;*/
   max-height: 90%;
 }
 
@@ -1031,8 +1303,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialog-content {
   padding: 0 !important;
-  /* font-size: 14px; */
- /* line-height: 20px;*/
   color: #333;
 }
 
@@ -1120,7 +1390,298 @@ button#schedule-dialog-select-button {
   z-index: 2100;
 }
 
-/**/
+/* region DIALOG RESPONSIVE - BEGIN */
+/*
+  Prompt Dialog      [overflow-y, max-width, max-height]
+    Inner [min-width, min-height]
+      Header/Caption   [v-flex: none, ellipsis]
+      Content          [v-flex: auto, overflow]
+        Inner...       [min-height]
+      Buttons          [v-flex: none, ellipsis, wrap, align-end]
+
+   See also JavaDocs for Pentaho GWT's DialogBox.DialogSizingMode (ds-), DialogBox.DialogWidthCategory (dw-)
+   and DialogBox.DialogMinimumHeightCategory (dmh-).
+*/
+:where(.responsive).pentaho-dialog {
+  /* DIALOG LOCAL variables - override on specific dialogs */
+
+  /* Desired maximum OUTER width/height.
+     Subject to design-system margins and viewport.
+     Default to unconstrained.
+   */
+
+  /* Override or use one of the predefined dw- classes. */
+  --dialog-max-width: 100vw;
+
+  --dialog-max-height: 100vh;
+
+  /* Desired min-width/height. Defaults are A11Y mins. */
+  --dialog-min-width: var(--a11y-min-width);
+  /* See also reference "Sync with --dialog-min-height" */
+  --dialog-min-height: var(--a11y-min-height);
+
+  --priv-dialog-borders-paddings: calc( 2 * var(--dialog-padding) + 2 * var(--dialog-border-width));
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Body and buttons' sections' H scrollbars shown when their content exceeds min-width. */
+  overflow-x: hidden;
+
+  /* Last resort V scrollbar, shown on very short viewports.
+     Body V scrollbar appears first, when shorter than its children's total min-height.
+   */
+  overflow-y: auto;
+
+  /* Use Grid System (GS) max width/height, unless it would violate defined dialog min/max settings.
+
+     E.g. for FILL_VIEWPORT_WIDTH mode. The dialog would be as wide as the viewport minus the GS margins,
+     yet no wider than the desired --dialog-max-width.
+     By reducing the viewport width, eventually, the dialog width could become < min-width, to meet the GS margins.
+     Instead, its min-width is respected, causing GS margins to eventually reach 0.
+   */
+  max-width: clamp(
+      var(--dialog-min-width),
+      calc(100vw - 2 * var(--dialog-ds-min-margin-h)),
+      var(--dialog-max-width));
+
+  /* Dialog cannot grow taller than the viewport. Show outer V scrollbar, instead. */
+  max-height: min(
+      clamp(
+          var(--dialog-min-height),
+          calc(100vh - 2 * var(--dialog-ds-min-margin-v)),
+          var(--dialog-max-height)),
+      100vh);
+
+  padding: 0;
+}
+
+:where(.responsive).pentaho-dialog > * {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+
+  min-width: calc(var(--dialog-min-width) - 2 * var(--dialog-border-width));
+  min-height: calc(var(--dialog-min-height) - 2 * var(--dialog-border-width));
+}
+
+/* Sync with --dialog-min-height to _switch_ from body to outer V scrollbar
+   when reaching min height. */
+@media (max-height: 256px) {
+  :where(.responsive).pentaho-dialog > * {
+    min-height: auto;
+  }
+}
+
+:where(.responsive).pentaho-dialog:where(.dmh-content) > * {
+  /* Disables body V scrollbar.
+     Displays the outer V scrollbar when dialog H cannot accommodate the body's min-height.
+   */
+  min-height: auto;
+}
+
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport-width),
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport),
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
+  /* Expand as much as allowed by max-width */
+  width: 100%;
+}
+
+:where(.responsive).pentaho-dialog:where(.ds-fill-viewport),
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
+  /* Expand as much as allowed by max-height */
+  height: 100%;
+}
+
+:where(.responsive).pentaho-dialog:where(.ds-full-viewport) {
+  /* Ignore grid system max width/height */
+  max-width: 100%;
+  max-height: 100%;
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-min) {
+  --dialog-max-width: var(--a11y-min-width);
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-text) {
+  --dialog-max-width: calc(var(--text-block-max-width) + var(--priv-dialog-borders-paddings));
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-xs) {
+  --dialog-max-width: 448px;
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-sm) {
+  --dialog-max-width: 672px;
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-md) {
+  --dialog-max-width: 880px;
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-lg) {
+  --dialog-max-width: 1096px;
+}
+
+:where(.responsive).pentaho-dialog:where(.dw-xl) {
+  --dialog-max-width: 1300px;
+}
+
+:where(.responsive).pentaho-dialog .Caption {
+  flex: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: var(--dialog-padding);
+}
+
+:where(.responsive).pentaho-dialog .dialog-content {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding: var(--focus-ring-padding) var(--dialog-padding) var(--dialog-padding) !important;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+:where(.responsive).pentaho-dialog .button-panel {
+  flex: none;
+  overflow: hidden;
+  width: unset;
+  margin: 0;
+  padding: var(--dialog-padding);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: end;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+:where(.responsive).pentaho-dialog .button-panel .pentaho-button {
+  flex: 0 1 auto;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* endregion DIALOG RESPONSIVE - END */
+
+/* region GWT DialogBox, PromptDialogBox RESPONSIVE */
+:where(.responsive) .gwt-Label {
+  width: auto !important;
+}
+
+:where(.responsive).pentaho-dialog.pentaho-gwt {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+:where(.responsive).pentaho-dialog.pentaho-gwt > * > table,
+:where(.responsive).pentaho-dialog.pentaho-gwt > * > table > tbody,
+:where(.responsive).pentaho-dialog.pentaho-gwt :is(
+  .dialogTop,
+  .dialogTopCenter,
+  .dialogTopCenterInner,
+  .dialogMiddle,
+  .dialogMiddleCenter,
+  .dialogContent, /* a.k.a. .dialogMiddleCenterInner */
+  .dialogContent > table,
+  .dialogContent > table > tbody,
+  .dialogContent > table > tbody > tr,
+  .dialogContent > table > tbody > tr:last-child > td, /* buttons row */
+  .inner-button-wrapper) {
+  display: contents;
+  flex: inherit;
+}
+
+:where(.responsive).pentaho-dialog.pentaho-gwt :is(
+  .dialogContent > table > colgroup,
+  .dialogBottom) {
+  display: none;
+}
+
+:where(.responsive).pentaho-dialog.pentaho-gwt .button-panel {
+  width: unset !important;
+}
+/* endregion */
+
+/* region XUL/GWT GenericDialog, GwtDialog, ... RESPONSIVE */
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) .dialog {
+  display: contents;
+  flex: inherit;
+}
+
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) .buttonTable {
+  flex: 1;
+  min-width: auto;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="left"]) .buttonTable {
+  justify-content: start;
+}
+
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="center"]) .buttonTable {
+  justify-content: center;
+}
+
+:where(.responsive).pentaho-dialog:where(.pentaho-xul-gwt) :where(td[align="right"]) .buttonTable {
+  justify-content: end;
+}
+/* endregion */
+
+/* region BootstrapJS Dialog Responsive */
+.bootstrap :where(.responsive).modal.pentaho-dialog .body,
+.bootstrap :where(.responsive).modal.pentaho-dialog .footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.bootstrap :where(.responsive).modal.pentaho-dialog {
+  padding: 0;
+}
+
+.bootstrap :where(.responsive).modal.pentaho-dialog .Caption .header-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* endregion */
+
+/* region File Properties dialog */
+.file-properties-dialog .pentaho-tab-deck-panel > div > * {
+  height: auto !important;
+}
+
+.file-properties-dialog > div > table {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.file-properties-dialog #filePropertiesGeneralTab .gwt-Label {
+  word-break: break-all;
+}
+/* endregion */
+
+/* region Select User or Role dialog */
+.select-user-or-role-dialog .gwt-ListBox {
+  width: 100% !important;
+}
+/* endregion */
+
+/* region XUL / GWT - ChangePasswordByUserDialog, ChangePasswordDialog, UserDialog, RoleDialog */
+:is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content {
+  /* Dialogs use empty rows for V-spacing. */
+  --layout-gap-v: 0;
+}
+
+:is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content input {
+  width: unset !important;
+}
+/* endregion */
+
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
@@ -1151,6 +1712,17 @@ button#schedule-dialog-select-button {
   border-top: solid 1px transparent;
   border-left: solid 1px transparent;
   border-right: solid 1px transparent;
+}
+
+/* Due to relative positioning and use of z-index, focus-ring would not appear in Firefox.
+   Placing it on the direct child instead solves it. */
+.pentaho-tabWidget:focus-visible {
+  outline: none;
+}
+
+.pentaho-tabWidget:focus-visible > * {
+  outline: var(--focus-ring);
+  outline-offset: 5px;
 }
 
 .IE .pentaho-tabWidget {
@@ -1247,19 +1819,21 @@ input#FT_rankCount {
   padding: 4px 8px;
 }
 
-.pentaho-tab-panel {
-  background: url('images/bg_admin_tab_panel.png') repeat-x 0 0px;
-  height: 35px;
-}
-
+/* region - Replacing existing image border with CSS border for Tabs - Start */
 .pentaho-tab-bar {
-  background: url('images/bg_admin_tab_panel.png') repeat-x 0 0px;
-  min-height: 35px;
+  position: relative;
+  border-bottom: solid 1px #CCC;
 }
 
-.dialog-content  .pentaho-tab-bar {
-  height: 32px;
+.pentaho-tabWidget {
+  position: relative;
+  bottom: -1px;
 }
+
+.pentaho-tabWidget-selected {
+  z-index: 1;
+}
+/* endregion - Replacing existing image border with CSS border for Tabs - End */
 
 .pentaho-tabBar {
   background: url('images/bg_admin_tab_panel.png') repeat-x top left;
@@ -1636,16 +2210,15 @@ table.toolbar {
   width: 22px;
   height: 22px;
   -webkit-user-select: none;
-  outline: none;
-  margin-left: 5px !important;
+}
+
+.toolbar-button-focus-panel {
+  margin-left: 5px;
+  --focus-ring-offset: 0px;
 }
 
 .IE .toolbar-button {
   border: 1px solid transparent;
-}
-
-input:focus {
-  outline: none;
 }
 
 .toolbar-button.toolbar-button-hovering {
@@ -1656,7 +2229,6 @@ input:focus {
   width: 22px;
   height: 22px;
   -webkit-user-select: none;
-  outline: none;
 }
 
 .IE .toolbar-button.toolbar-button-hovering {
@@ -2161,7 +2733,6 @@ body.IE>table {
 .pentaho-listitem-selected {
   background-color: rgba(204, 0, 0, 0.2);
   cursor: default;
-  outline: none;
 }
 
 .pentaho-listitem-disabled {
@@ -3557,10 +4128,13 @@ div.dijitDateTextBox.dijitComboBox {
   width: 22px;
 }
 
+.fileChooser {
+  --file-chooser-line-height: 26px;
+}
 .fileChooserCellLabel,
 .fileChooserCell.fileChooserCell {
   padding: 0 5px;
-  line-height: 26px;
+  line-height: var(--file-chooser-line-height);
 }
 
 .fileChooserCell:hover:not(.pentaho-file-chooser-selection) {
@@ -3680,6 +4254,12 @@ div.dijitDateTextBox.dijitComboBox {
   background: url('../images/editContent_32_disabled.png');
 }
 
+.fileChooser .icon-small {
+  width: calc(1em * 22/14);
+  height: auto;
+  background-size: 100%;
+}
+
 /* added by brett to override anlyzer styles */
 .dijitTitlePane {
   background-color: #F8F8F8;
@@ -3763,27 +4343,23 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body div.folder.open > div.element > div.icon {
   background: url("images/folder_open.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder.open.selected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.secondarySelected > div.element > div.icon {
   background: url("images/folder_open.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.empty > div.element:hover > div.icon,
 .fileBrowserColumn .body div.folder.open.empty > div.element:hover > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.folder.selected > div.element > div.icon,
@@ -3793,7 +4369,6 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body div.folder.empty.secondarySelected > div.element > div.icon,
 .fileBrowserColumn .body div.folder.open.empty.secondarySelected > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
-  width: 22px;
 }
 
 .fileBrowserColumn .body div.trash.trash > div.element > div.icon,
@@ -3814,131 +4389,65 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/trash.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file .icon {
-  background: url("images/file_generic.png") no-repeat;
-  margin: 0 5px;
+.fileBrowserColumn .body .file.icon::before {
+  background-image: url("images/file_generic.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon,
-.fileBrowserColumn .body .file.selected .icon {
-  background: url("images/file_generic.png") no-repeat;
-  margin: 0 5px;
+.fileBrowserColumn .body .file.icon.url::before {
+  background-image: url("images/file_url.png");
 }
 
-.fileBrowserColumn .body .file .icon.url {
-  background: url("images/file_url.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xanalyzer::before {
+  background-image: url("images/file_analysis.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.url,
-.fileBrowserColumn .body .file.selected .icon.url {
-  background: url("images/file_url.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xdash::before {
+  background-image: url("images/file_dashboard.png");
 }
 
-.fileBrowserColumn .body .file .icon.xanalyzer {
-  background: url("images/file_analysis.png") no-repeat;
+.fileBrowserColumn .body .file.icon.ktr::before {
+  background-image: url("images/kettle_transformation.png");
+  background-position: calc(1em * 2/ 14) center;
+  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
+  width: calc(1em * 18/ 14);
 }
 
-.fileBrowserColumn .body .file:hover .icon.xanalyzer,
-.fileBrowserColumn .body .file.selected .icon.xanalyzer {
-  background: url("images/file_analysis.png") no-repeat;
+.fileBrowserColumn .body .file.icon.kjb::before {
+  background-image: url("images/kettle_job.png");
+  background-position: calc(1em * 2/ 14) center;
+  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
+  width: calc(1em * 18/ 14);
 }
 
-.fileBrowserColumn .body .file .icon.xdash,
-.fileBrowserColumn .body .file .xdash {
-  background: url("images/file_dashboard.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xaction::before {
+  background-image: url("images/file_action.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.xdash,
-.fileBrowserColumn .body .file:hover .xdash,
-.fileBrowserColumn .body .file:hover .icon.xdash,
-.fileBrowserColumn .body .file:hover .xdash {
-  background: url("images/file_dashboard.png") no-repeat;
+.fileBrowserColumn .body .file.icon.prpt::before {
+  background-image: url("images/prptFile.png");
 }
 
-.fileBrowserColumn .body .file .icon.ktr,
-.fileBrowserColumn .body .file .ktr {
-  background: url("images/kettle_transformation.png") no-repeat 4px;
+.fileBrowserColumn .body .file.icon.prpti::before {
+  background-image: url("images/prptiFile.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.ktr,
-.fileBrowserColumn .body .file:hover .ktr,
-.fileBrowserColumn .body .file.selected .icon.ktr,
-.fileBrowserColumn .body .file.selected .ktr {
-  background: url("images/kettle_transformation.png") no-repeat 4px;
+.fileBrowserColumn .body .file.trashFolder::before {
+  background-image: url("images/folder_closed.png");
+  background-position: 0 calc(1em * 2/14);
+  background-size: calc(1em * 36/14) calc(1em * 14/14);
+  width: calc(1em * 18/ 14);
 }
 
-.fileBrowserColumn .body .file .icon.kjb,
-.fileBrowserColumn .body .file .kjb {
-  background: url("images/kettle_job.png") no-repeat 4px;
+.fileBrowserColumn .body .file.icon.cda::before {
+  background-image: url("images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file:hover .icon.kjb,
-.fileBrowserColumn .body .file:hover .kjb,
-.fileBrowserColumn .body .file.selected .icon.kjb,
-.fileBrowserColumn .body .file.selected .kjb {
-  background: url("images/kettle_job.png") no-repeat 4px;
+.fileBrowserColumn .body .file.icon.wcdf::before {
+  background-image: url("images/cde_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.xaction,
-.fileBrowserColumn .body .file .xaction {
-  background: url("images/file_action.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.xaction,
-.fileBrowserColumn .body .file:hover .xaction,
-.fileBrowserColumn .body .file.selected .icon.xaction,
-.fileBrowserColumn .body .file.selected .xaction {
-  background: url("images/file_action.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.prpt,
-.fileBrowserColumn .body .file .prpt {
-  background: url("images/prptFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.prpt,
-.fileBrowserColumn .body .file:hover .prpt,
-.fileBrowserColumn .body .file.selected .icon.prpt,
-.fileBrowserColumn .body .file.selected .prpt {
-  background: url("images/prptFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.prpti,
-.fileBrowserColumn .body .file .prpti {
-  background: url("images/prptiFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.prpti,
-.fileBrowserColumn .body .file:hover .prpti,
-.fileBrowserColumn .body .file.selected .icon.prpti,
-.fileBrowserColumn .body .file.selected .prpti {
-  background: url("images/prptiFile.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.trashFolder {
-  background: url("images/folder_closed.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.cda.cda,
-.fileBrowserColumn .body .file .cda.cda {
-  background: url("images/cda_20.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.wcdf.wcdf,
-.fileBrowserColumn .body .file .wcdf.wcdf {
-  background: url("images/cde_20.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file .xcdf.xcdf {
-  background: url("images/cdf_20.png") no-repeat;
-}
-
-.fileBrowserColumn .body .file:hover .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file:hover .xcdf.xcdf,
-.fileBrowserColumn .body .file.selected .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file.selected .xcdf.xcdf {
-  background: url("images/cdf_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xcdf::before {
+  background-image: url("images/cdf_20.png");
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.expandCollapse {
@@ -4085,71 +4594,161 @@ div.dijitDateTextBox.dijitComboBox {
   color: #333;
 }
 
-/* added by brett to override browser styles */
+/* region override browser styles */
+
+/* Home and Browser Files perspective */
 .main-container {
   margin: 0 auto;
-  width: 1230px;
+  max-width: 1230px;
+  width: auto;
 }
 
-/* Browse Files */
+/* region Browse Files perspective */
+.browse-files-perspective body {
+  height: 100vh;
+}
+
+.browse-files-perspective.browse-files-perspective :is(.main-container, .main-container > *) {
+  position: unset;
+  padding: 0;
+  height: 100%;
+}
+
+#fileBrowser {
+  display: grid;
+  width: 100%;
+  min-height: 100%;
+
+  grid-template-areas: "folder file actions";
+  grid-template-columns: 1fr 1fr auto;
+  grid-template-rows: 1fr;
+}
+
+/* region .fileBrowserColumn elements  */
+.fileBrowserColumn.fileBrowserColumn.fileBrowserColumn.fileBrowserColumn {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#fileBrowserFolders {
+  grid-area: folder;
+  width: 100%;
+  min-height: 256px;
+}
+
+#fileBrowserFiles {
+  grid-area: file;
+  width: 100%;
+  margin-left: 0;
+  min-height: 256px;
+}
+
+#fileBrowserButtons {
+  grid-area: actions;
+  width: 250px;
+  height: auto !important;
+  margin-left: 0;
+}
+/* endregion .fileBrowserColumn elements  */
+
+/* region .fileBrowserColumn's .header and .body  */
 .fileBrowserColumn .header {
+  flex: none;
   height: auto;
   border: 0;
   font-size: 16px;
   line-height: 22px;
+  min-height: calc(1em * 22/16);
   color: #333333;
   padding: 0;
   margin-bottom: 10px;
   cursor: default;
   font-family: OpenSansLight, Helvetica, Arial, Sans serif;
+  overflow: visible;
 }
 
-#fileBrowserFiles.fileBrowserColumn .body,
-#fileBrowserFolders.fileBrowserColumn .body {
+.fileBrowserColumn > .body {
+  flex: auto;
+  position: unset;
+  display: flex;
+  flex-direction: column;
+}
+
+:is(.fileBrowserFiles, .fileBrowserFolders) > .body {
   border: 1px solid #CCC;
-  top: 51px;
 }
 
+.fileBrowserFolders > .body {
+  /* Place focus ring inside tree nodes */
+  --focus-ring-offset: calc(-1 * var(--focus-ring-width));
+}
+
+.fileBrowserFiles > .body {
+  padding: 0;
+}
+
+.fileBrowserFiles.fileBrowserFiles > .body {
+  overflow-x: hidden;
+}
+
+@supports (-moz-appearance:none) {
+  .fileBrowserFiles > .body {
+    width: -moz-available !important;
+  }
+}
+
+.fileBrowserButtons > .body {
+  /* Ensure enough space for the focus-visible outline. */
+  padding: var(--focus-ring-padding);
+}
+/* endregion .fileBrowserColumn's .header and .body  */
+
+/* region .folder, .folders ... */
+.fileBrowserColumn > .body > .folder {
+  width: max-content;
+  min-width: 100%;
+}
 .fileBrowserColumn .body .folder {
   margin-left: 30px;
   margin-top: 0;
   margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  flex: none;
+}
+.fileBrowserColumn .body .folders {
+  display: flex;
+  flex-direction: column;
+  flex: none;
 }
 
 .fileBrowserColumn .body .folder .element {
-  padding: 8px 0;
+  padding: 8px 8px 8px 0;
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.fileBrowserColumn .body .folder .element > * {
+  flex: none;
+}
+
+#fileBrowserFolders .body .folder .element > .expandCollapse {
+  width: calc(1em * 20/14);
+  height: calc(1em * 20/14);
+  background-size: calc(1em * 40/14) calc(1em * 40/14);
+}
+
+.fileBrowserColumn .body .folder .element > .title {
+  flex: 1 0 auto;
+  height: unset;
 }
 
 .fileBrowserColumn .body .folder .element:hover {
-  background-color: #E0E0E0;
-}
-
-/*.fileBrowserColumn .body .folder .element:hover .icon {
-  background: url(images/folder_closed_white.png) no-repeat !important;
-}
-
-.fileBrowserColumn .body .folder .element:hover .expandCollapse {
-  background: url(images/folders-arrows.png) no-repeat bottom right !important;
-}*/
-
-#fileBrowserButtons .body {
-  top: 51px;
-}
-
-.fileBrowserColumn .body .folder .icon {
-  margin: 0 4px;
-}
-
-.fileBrowserColumn .body .file {
-  padding: 8px 0;
-  font-size: 14px;
-  font-family: opensansregular, Helvetica, Arial, Sans serif;
-}
-
-.fileBrowserColumn .body .file:hover {
   background-color: #E0E0E0;
 }
 
@@ -4161,65 +4760,45 @@ div.dijitDateTextBox.dijitComboBox {
   background: rgba(204, 0, 0, 0.2);
 }
 
-.fileBrowserColumn .body .file.selected {
-  background: rgba(204, 0, 0, 0.2);
+#fileBrowserFolders .body .folder .icon {
+  margin: 0 4px;
+  width: calc(1em * 22/14);
+  height: auto;
+  background-size: contain;
 }
+/* endregion .folder, .folders ... */
 
-#fileBrowserButtons {
-  width: 250px;
-}
+/* region .file ... */
+.fileBrowserFiles > .body > .file {
+  width: calc(100% - 2 * 8px);
+  padding: 8px;
 
-.fileChooser-scrollPanel > div > table > * {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr > td {
-  border: 1px solid #ffffff;
-  border-right: 0 none;
-  border-top: 0 none;
-  padding: 0;
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr:last-child > td {
-  border-bottom: 0 none;
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr > td:first-child {
-  border-left: 0 none;
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr > td:last-child {
-  /*border-right: 1px solid #e0e0e0;*/
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td {
-  border: 1px solid #cccccc;
-  border-right: 0 none;
-  border-top: 0 none;
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:last-child {
-  border-right: 1px solid #cccccc;
-}
-
-.fileChooser-scrollPanel > div > table > tbody > tr:first-child > td:first-child {
-  border-left: 0 none;
-}
-
-.fileChooserHeader {
-  background-color: #999;
-  border: 0 none;
-  padding-left: 5px;
-  padding-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 14px;
-  line-height: 26px;
-  color: #FFF;
-  cursor: default;
+  font-family: opensansregular, Helvetica, Arial, Sans serif;
 }
 
+@supports (-moz-appearance:none) {
+  /* FF would otherwise replace the whole text with an ellipsis... */
+  .fileBrowserFiles > .body > .file {
+    text-overflow: clip;
+  }
+}
+
+.fileBrowserColumn .body .file:hover {
+  background-color: #E0E0E0;
+}
+
+.fileBrowserColumn .body .file.selected {
+  background-color: rgba(204, 0, 0, 0.2);
+}
+/* endregion .file ... */
+
+/* region buttons */
 .fileBrowserColumn .body .separator {
-  margin: 10px 0px;
+  margin: 10px 0;
   border-top: solid 1px #CCC;
 }
 
@@ -4229,8 +4808,7 @@ div.dijitDateTextBox.dijitComboBox {
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:hover,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:active,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus {
-  padding: 4px 0;
-  outline: 0 none;
+  padding: 4px;
   background: none;
   color: #7C0B2B;
 }
@@ -4251,14 +4829,178 @@ div.dijitDateTextBox.dijitComboBox {
   color: #AAAAAA;
   text-decoration: none;
 }
+/* endregion buttons */
 
-.fileChooser-scrollPanel {
-  background-color: white;
-  border: 1px solid #CCC;
-  height: 220px;
+/* region breakpoint overrides */
+@media (max-width: 880px) {
+  #fileBrowser {
+    grid-template-areas:
+			"folder actions"
+			"file actions";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .fileBrowserButtons > .body {
+    flex: 1 0 auto;
+  }
 }
 
-/*  end browser styles */
+@media (max-width: 550px) {
+  #fileBrowser {
+    grid-template-areas:
+			"folder"
+			"file"
+			"actions";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+}
+/* endregion breakpoint overrides */
+
+/* endregion Browse Files perspective */
+
+/* region FileChooserDialog */
+.fileChooserFilesList > * {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.fileChooserFilesList > tbody > tr > td {
+  border: 1px solid #ffffff;
+  border-right: 0 none;
+  border-top: 0 none;
+  padding: 0;
+}
+
+.fileChooserFilesList > tbody > tr:last-child > td {
+  border-bottom: 0 none;
+}
+
+.fileChooserFilesList > tbody > tr > td:first-child {
+  border-left: 0 none;
+}
+
+.fileChooserFilesList > tbody > tr:first-child > td {
+  border: 1px solid #cccccc;
+  border-right: 0 none;
+  border-top: 0 none;
+}
+
+.fileChooserFilesList > tbody > tr:first-child {
+  position: sticky;
+  top: 0;
+}
+
+.fileChooserFilesList > tbody > tr:first-child > td:last-child {
+  border-right: 1px solid #cccccc;
+}
+
+.fileChooserFilesList > tbody > tr:first-child > td:first-child {
+  border-left: 0 none;
+}
+
+.fileChooserHeader {
+  background-color: #666;
+  border: 0 none;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 14px;
+  line-height: var(--file-chooser-line-height);
+  color: #FFF;
+  cursor: default;
+}
+
+.fileChooser .fileChooserFilesListContainer {
+  display: contents;
+  flex: inherit;
+}
+
+.fileChooser .fileNameTextBox {
+  width: auto !important;
+  max-width: 100ch;
+}
+
+.fileChooser .navigationListBox {
+  min-width: 0;
+  flex: auto;
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
+.fileChooser .fileChooser-scrollPanel {
+  background-color: white;
+  border: 1px solid #CCC;
+  min-height: calc(4 * var(--file-chooser-line-height));
+  height: calc(9 * var(--file-chooser-line-height));
+}
+
+.fileChooserFilesList {
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+/* FileName column header cell */
+.fileChooserFilesList > colgroup > .fileNameColumn {
+  width: 55%;
+}
+.fileChooserFilesList > tbody > tr:first-child > td:first-child {
+  width: auto !important;
+}
+
+/* Type - File or Folder column */
+.fileChooserFilesList > colgroup > .fileOrFolderColumn {
+  width: 10ch;
+}
+
+.fileChooserHeader,
+.fileChooserCellLabel,
+.fileChooserCell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fileChooserCellFileName {
+  width: 100%;
+}
+
+/* file icon td */
+.fileChooserCellFileName > tbody > tr > td:first-child {
+  flex: none;
+}
+
+/* file name td */
+.fileChooserCellFileName,
+.fileChooserCellFileName > tbody,
+.fileChooserCellFileName > tbody > tr,
+.fileChooserCellFileName > tbody > tr > td:last-child {
+  flex: auto;
+  min-width: 0;
+}
+
+/* file name div */
+.fileChooserCellFileName > tbody > tr > td:last-child > * {
+  flex: auto;
+}
+
+@media all and (max-width: 600px) {
+  .fileChooserFilesList > colgroup > .fileOrFolderColumn,
+  .fileChooserFilesList > tbody > tr > td:nth-child(2) {
+    display: none;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .fileChooserFilesList > colgroup > .fileDateModifiedColumn,
+  .fileChooserFilesList > tbody > tr > td:nth-child(3) {
+    display: none;
+  }
+}
+/* endregion FileChooserDialog */
+
+/* endregion override browser styles */
+
 #reportPageOutline {
   -webkit-box-shadow: 0px 2px 3px 3px rgba(0, 0, 0, .3);
   box-shadow: 0px 1px 6px 1px rgba(58, 58, 58, .1);
@@ -4384,7 +5126,7 @@ button.adminButton {
   border-spacing: 0;
   padding: 11px 8px 12px 8px;
   font-weight: normal;
-  background-color: #999999;
+  background-color: #cc0000;
   color: #FFF;
   border: 1px solid #cccccc;
   border-right: 0 none;
@@ -4483,6 +5225,10 @@ button.adminButton {
   background: #f8f8f8;
 }
 
+.gwt-ScrollTable .dataWrapper:focus-visible {
+  outline-offset: -2px;
+}
+
 .gwt-ScrollTable .headerTable.headerTable td {
   padding-top: 2px;
   padding-bottom: 2px;
@@ -4513,10 +5259,14 @@ input#limit.xul-textbox {
   border-spacing: 0;
   padding: 12px 10px;
   font-weight: normal;
-  background-color: #999999;
+  background-color: #666666;
   color: #FFFFFF;
   border: 1px solid #CCCCCC;
   border-right: 0 none;
+}
+
+.gwt-ScrollTable .headerTable td:focus-visible {
+  outline-offset: -2px;
 }
 
 #contentLinkingAssignmentTable .gwt-ScrollTable .headerTable td,
@@ -4555,6 +5305,10 @@ td.tab-spacer-wrapper {
 
 .gwt-ScrollTable .dataTable-disabled tr {
   background: white;
+}
+
+.gwt-ScrollTable .dataTable tr:focus-visible {
+  outline-offset: -2px;
 }
 
 .gwt-ScrollTable .dataTable td {
@@ -4658,7 +5412,7 @@ td.tab-spacer-wrapper {
   border-spacing: 0;
   padding: 8px 10px 10px 10px;
   font-weight: normal;
-  background: #999999;
+  background: #cc0000;
   color: #FFFFFF;
   border: 1px solid #CCCCCC;
   border-right: 1px solid #CCCCCC;
@@ -4698,11 +5452,52 @@ td.tab-spacer-wrapper {
   border-right: 1px solid #e0e0e0;
 }
 
-/* ======================= custom drop down control =========================== */
-.custom-list {
-  border: 1px solid #CCC;
+#licensesGrid .dojoxGridView .dojoxGridCell:focus-visible {
+  outline-offset : -3px;
 }
 
+/* region Pentaho GWT FocusPanel */
+
+/* Prevent overflow on responsive dialogs.
+   Visually hidden input created by FocusImplStandard to capture access keys on FocusPanel. */
+.pentaho-gwt-FocusPanel > input {
+  outline: 0;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+/* endregion*/
+
+/* region Pentaho GWT CustomListBox control */
+.custom-list {
+  border: 1px solid #CCC;
+  --custom-list-boder-radius: 4px;
+  border-radius: var(--custom-list-boder-radius);
+}
+
+.custom-list-disabled {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #CCC;
+  background-color: #ebebe4;
+}
+
+:is(.custom-list, .custom-list-disabled) .pentaho-gwt-FocusPanel {
+  border-radius: var(--custom-list-boder-radius);
+}
+
+/* .custom-list-drop-grid */
+:where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
+  width: 0 !important;
+  /* H-space between label and combo-arrow */
+  --layout-gap-h: 1px;
+  /* V-align center */
+  align-items: center;
+}
+
+/* .custom-list-item */
 .custom-list-item .gwt-Label.gwt-Label {
   padding: 0 10px;
   -webkit-box-sizing: border-box;
@@ -4710,18 +5505,34 @@ td.tab-spacer-wrapper {
   box-sizing: border-box;
 }
 
+:where(.responsive) .custom-list-item .gwt-Label {
+  white-space: break-spaces;
+}
+
 #datasourceInfoBox .custom-list-item {
   background-color: transparent;
 }
 
+/* .combo-arrow */
 .combo-arrow {
+  cursor: pointer;
+}
+
+:is(.combo-arrow, .combo-arrow-disabled) {
   padding: 4px;
   background: none;
   border: 0 none;
-  cursor: pointer;
-  font-size: 0px;
+  font-size: 0;
 }
 
+:where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) {
+  padding: calc(1em * 4/14);
+  font-size: inherit;
+  flex: none;
+  width: auto !important;
+}
+
+/* .combo-arrow div */
 .combo-arrow div {
   background-image: url('images/arrow_down.png');
   background-position: right center;
@@ -4729,21 +5540,7 @@ td.tab-spacer-wrapper {
   cursor: pointer;
   height: 8px;
   width: 12px;
-  font-size: 0px;
-}
-
-.custom-list-disabled {
-  padding: 0px;
-  margin: 0px;
-  border: 1px solid #CCC;
-  background-color: #ebebe4;
-}
-
-.combo-arrow-disabled {
-  padding: 4px;
-  background: none;
-  border: 0 none;
-  font-size: 0px;
+  font-size: 0;
 }
 
 .combo-arrow-disabled div {
@@ -4753,13 +5550,21 @@ td.tab-spacer-wrapper {
   cursor: pointer;
   height: 8px;
   width: 10px;
-  font-size: 0px;
+  font-size: 0;
 }
 
+:where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) div {
+  height: calc(1em * 8/14);
+  width: calc(1em * 12/14);
+  font-size: inherit;
+}
+
+/* .drop-popup */
 .drop-popup {
   border: 1px solid #CCC;
   margin-top: -2px;
 }
+/* endregion*/
 
 #controller_panel {
   border: 0;
@@ -4837,6 +5642,8 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   height: 20px;
   margin: 0;
   padding: 0 0 4px 0;
+  display: flex;
+  justify-content: end;
 }
 
 /* Data Source Wizard styles */
@@ -5720,12 +6527,14 @@ span.gwt-RadioButton label {
 
 .pentaho-filechooseupbutton {
   background-image: url("images/up.png");
-  width: 22px;
-  height: 22px;
+  margin: 0 !important;
+  /* 22px on 14px font */
+  width: calc(1em * 22/14);
+  height: auto;
   cursor: pointer;
-  padding: 4px;
   background-repeat: no-repeat;
-  background-position: 2px 4px;
+  background-size: contain;
+  align-self: center;
 }
 
 .IE #browse-properties-dialog {
@@ -6622,17 +7431,20 @@ div.listbox .pentaho-listbox {
   font-family: opensanslight;
   line-height: 30px;
   padding-bottom: 10px;
-  width: 300px;
 }
 
 #getting-started-message-content #message {
   font-size: 14px;
   line-height: 20px;
-  width: 300px;
 }
 
 #getting-started-message-content #sub-messages {
   left: 15px;
+}
+
+.bootstrap #getting-started div.tab-content {
+  height: auto;
+  min-height: 320px;
 }
 
 .welcome-img {
@@ -6640,7 +7452,10 @@ div.listbox .pentaho-listbox {
 }
 
 #video-container {
-  padding: 4px 4px 0 0;
+  padding-right: 15px;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 #getting-started .card {
@@ -6651,6 +7466,14 @@ div.listbox .pentaho-listbox {
   border-right: 1px solid transparent;
   padding: 10px;
   padding-top: 14px;
+  max-width: 150px;
+  flex: none;
+  width: 20vw;
+  min-width: 0;
+}
+
+#getting-started .card:focus-visible {
+  margin: 3px;
 }
 
 #launch-widget .card {
@@ -6694,6 +7517,13 @@ div.listbox .pentaho-listbox {
   height: 100px;
 }
 
+#getting-started .card-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 150/100;
+  background-size: contain;
+}
+
 #getting-started .selector-column {
   position: absolute;
   top: 0px;
@@ -6729,21 +7559,33 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started #tab2 .details-img {
-  width: 644px;
-  height: 299px;
-  position: absolute;
+  width: 100%;
+  height: auto;
   bottom: 4px;
+  aspect-ratio: 644/299;
+  background-size: contain;
+  background-origin: content-box;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #getting-started #tab3 .details-img {
-  width: 644px;
-  height: 299px;
-  position: absolute;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 644/299;
   bottom: 8px;
+  background-size: contain;
+  background-origin: content-box;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #getting-started .details-content {
-  width: 400px;
+  width: 35%;
 }
 
 .details-content {
@@ -6778,7 +7620,7 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started .button-container {
-  position: absolute;
+  position: unset;
   z-index: 1;
   top: 200px;
   left: 250px;
@@ -6788,25 +7630,39 @@ div.listbox .pentaho-listbox {
   position: absolute;
   top: 0;
   right: 0;
+  width: 60%;
+  height: 100%;
 }
 
 #getting-started .pentaho-button {
   font-size: 14px;
-  padding-right: 35px;
+  padding-right: calc(0.5ch + (1em * 16/14) + 14px);
   padding-top: 9px;
   padding-bottom: 9px;
-  background: #CC0000 url("images/open_new_window.png") no-repeat right 15px center;
+  background: #CC0000 url("images/open_new_window.png") no-repeat right 14px center;
   border-radius: 4px;
   width: 220px;
   color: #FFF;
+  background-size: auto calc(1em * 16/14);
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #getting-started #tab2 .pentaho-button {
-  width: 140px;
-  margin-left: 35px;
+  width: auto;
+}
+
+#getting-started #tab2 #sample-details #sample-details-content,
+#getting-started #tab3 #tutorial-details #tutorial-details-content {
+  width: 70%;
 }
 
 #getting-started .pentaho-button:hover {
+  background-color: #7C0B2B;
+  border-color: #7C0B2B;
+}
+
+#getting-started .pentaho-button:focus-visible {
   background-color: #7C0B2B;
   border-color: #7C0B2B;
 }
@@ -6838,7 +7694,13 @@ div.listbox .pentaho-listbox {
 }
 
 #getting-started #welcome-video {
-  padding: 31px 0 0 0;
+  width: 100%;
+}
+
+#getting-started #welcome-video > iframe {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 551/310;
 }
 
 #launch-widget #welcome-video {
@@ -6899,14 +7761,12 @@ div.listbox .pentaho-listbox {
   background: url("images/table_fact.png");
 }
 
-.fileBrowserColumn .body .file .icon.cda,
-.fileBrowserColumn .body .file .cda {
-  background: url("../images/cda_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.cda::before {
+  background-image: url("../images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.wcdf,
-.fileBrowserColumn .body .file .wcdf {
-  background: url("../images/cde_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.wcdf::before {
+  background-image: url("../images/cde_20.png");
 }
 
 .file-cda {
@@ -7513,7 +8373,6 @@ html.bootstrap .popover.bottom .arrow:after {
   box-shadow: none;
   white-space: nowrap;
   cursor: pointer;
-  outline: 0 none;
 }
 
 .bootstrap .btn.btn-large:hover,
@@ -7650,6 +8509,12 @@ select#datasources {
   color: #cc0000;
 }
 
+/* Increase specificity to override bootstrap-namespaced.css focus rule*/
+.bootstrap.bootstrap a:focus-visible {
+  outline:var(--focus-ring);
+  outline-offset:var(--focus-ring-offset);
+}
+
 /* reporting */
 .tundra .dijitInputContainer input {
   padding: 1px !important;
@@ -7742,9 +8607,17 @@ input#csvSeparator {
 
 .welcome-img.welcome-img {
   background-image: url(images/gettingStarted_welcome_graphic.png);
+  width: 100%;
+  height: auto;
+  aspect-ratio: 540/372;
+  flex: none;
+  background-origin: content-box;
+  background-size: contain;
+  background-position: center;
 }
 
-.welcome-img.welcome-img:hover {
+.welcome-img.welcome-img:hover,
+.welcome-img:focus-visible {
   background-image: url(images/gettingStarted_welcome_graphic_over.png);
 }
 
@@ -7786,7 +8659,8 @@ button#preview[disabled]:active {
 
 .bootstrap #recentsContianer .nav-tabs > li,
 .bootstrap #favoritesContianer .nav-tabs > li {
-  margin-bottom: 0;
+/* Ensure enough space for the focus-visible outline. */
+  margin: 4px;
 }
 
 .bootstrap #recentsContianer .nav-tabs.nav-stacked > li > a,
@@ -7925,6 +8799,20 @@ button#preview[disabled]:active {
 .bootstrap #favoritesContianer .nav-tabs.nav-stacked > li > a:hover .favorite-on {
   background: url("images/favorite-on_hover_selected_white.png") no-repeat;
 }
+:is(#recents-content-panel, #favorites-content-panel) .nav-tabs.nav-stacked li > a
+:is(.row-fluid, .row-fluid > div) {
+  display: flex;
+  align-items: center;
+}
+
+:is(#recents-content-panel, #favorites-content-panel) .nav-tabs.nav-stacked li > a .row-fluid > div > i {
+  flex: none;
+}
+
+:is(#recents-content-panel, #favorites-content-panel) .nav-tabs.nav-stacked li > a .row-fluid > div span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 
 .pentaho-page-background#pageLoading {
   display: flex;
@@ -8009,6 +8897,10 @@ button#preview[disabled]:active {
   line-height: 20px;
   padding: 9px 15px;
   border: 1px solid #cc0000;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #buttonWrapper button:hover,
@@ -8250,10 +9142,186 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
   color: #FFFFFF;
 }
 
-#datasourceInfoBox .custom-list {
-  border-radius: 4px;
-}
-
 .hyperlink {
   color: #7C0B2B;
+}
+
+.xul-label-disabled{
+	color: #666 !important;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.users-roles-list,
+.users-roles-selection-list {
+  width: calc(200px - 2 * var(--focus-ring-padding)) !important;
+  margin: var(--focus-ring-padding);
+}
+
+.tree-scroll-panel > * > :focus-visible {
+  z-index: 0 !important;
+  outline: var(--focus-ring) !important;
+}
+
+/* Dialog uses empty rows for V-spacing. */
+.import-dialog .dialog-content {
+  --layout-gap-v: 0;
+}
+
+.file-upload-panel {
+  align-items: center;
+}
+
+.file-upload-panel input {
+  flex: auto;
+  min-width:0;
+}
+
+.file-upload-panel .gwt-HTML {
+  display: none;
+}
+
+.file-upload-panel button  {
+  flex: none;
+}
+
+/* Content wrapper */
+.import-dialog-disclosure-panel > tbody > tr:nth-child(2) > td > * {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: visible !important;
+}
+
+.import-dialog-disclosure-content-panel {
+  flex: auto;
+}
+
+/* responsive content for home page above 810px and below 930px */
+@media (max-width:930px) {
+
+  #getting-started #tab2 #sample-details #sample-details-content,
+  #getting-started #tab3 #tutorial-details #tutorial-details-content {
+    width: 60%;
+  }
+}
+
+/* responsive content for home page below 810px */
+@media (max-width: 810px) {
+
+  /* targets the button wrapper in home page */
+  #buttonWrapper {
+    width: 100%;
+  }
+
+  /* targets the getting started column */
+  .main-container > .row-fluid > div.span9 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* targets the welcome tab in the getting started */
+  div#getting-started-media-content {
+    position: unset;
+    width: 100%;
+  }
+
+  #getting-started div.details-content {
+    width: auto;
+  }
+
+  #getting-started div.details-content p {
+    text-align: center;
+    padding-right: 20px;
+  }
+
+  #getting-started div.details-content > div > p br {
+    content: "";
+  }
+
+  #getting-started div.details-content > div > p br:after {
+    content: " ";
+  }
+
+  #getting-started-message-content div#sub-messages {
+    left: 0;
+  }
+
+  #video-container {
+    padding: 15px;
+  }
+
+  /* targets the samples tab and tutorials tab in the getting started */
+  #getting-started div.selector-column {
+    flex: auto;
+    position: unset;
+    width: auto;
+    height: auto;
+  }
+
+  #getting-started div.vertical-selector {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  #getting-started .detail-title {
+    text-align: center;
+  }
+
+  #getting-started #tab2 #sample-details #sample-details-content,
+  #getting-started #tab3 #tutorial-details #tutorial-details-content {
+    width: auto;
+    padding: 20px 20px 0;
+  }
+
+  #getting-started #tab2 div.details-img,
+  #getting-started #tab3 div.details-img {
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    padding-bottom: calc(1em * 10/14);
+  }
+
+  #getting-started div.card.selected {
+    border-bottom: 4px solid #CC0000;
+    border-top: 1px solid #CCC;
+  }
+
+  #getting-started #tab3 .pentaho-button,
+  #getting-started #tab3 .pentaho-button {
+    width: auto;
+    font-size: small;
+  }
+}
+
+/* responsive content for home page below 550px */
+@media (max-width: 550px) {
+
+  /* targets the recents and favorites columns */
+  .main-container > .row-fluid > .span9 > .row-fluid:last-child .span6 {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* targets the tabs in the getting started */
+  .bootstrap .widget-panel#getting-started ul.nav-tabs > li > a:link {
+    padding: calc(1em * 6 / 14);
+  }
+
+  /* targets the samples and tutorials tab in the getting started */
+  #getting-started #tab2 .pentaho-button,
+  #getting-started #tab3 .pentaho-button {
+    font-size: xx-small;
+    line-height: 0;
+  }
+
+  #getting-started .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

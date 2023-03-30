@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.table;
@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.gwt.event.dom.client.KeyCodes;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
@@ -104,6 +105,8 @@ public class BaseTable extends Composite {
   private Map<Element, Object> objectElementMap;
 
   private BaseTableColumnSorter baseTableColumnSorter;
+
+  private boolean autoSelectionOnFocus = true;
 
   private final TableListener internalDoubleClickListener = new TableListener() {
     public void onCellClicked( SourcesTableEvents sender, int row, int cell ) {
@@ -191,6 +194,27 @@ public class BaseTable extends Composite {
   }
 
   /**
+   * Gets a value that indicates whether a row that receives keyboard focus should be automatically
+   * selected.
+   * <p>
+   *     This only applies when the table's {@link SelectionGrid.SelectionPolicy} is
+   *     {@link SelectionGrid.SelectionPolicy#ONE_ROW}.
+   * </p>
+   * @return boolean
+   */
+  public boolean isAutoSelectionOnFocus() {
+    return autoSelectionOnFocus;
+  }
+
+  /** enables the selection on focus
+   *
+   * @param autoSelectionOnFocus
+   */
+  public void setAutoSelectionOnFocus( boolean autoSelectionOnFocus ) {
+    this.autoSelectionOnFocus = autoSelectionOnFocus;
+  }
+
+  /**
    * Creates a table with the given headers, column widths, and row/column values using the default resize policy of
    * RESIZE_POLICY_FIXED_WIDTH.
    */
@@ -216,12 +240,25 @@ public class BaseTable extends Composite {
    */
   private void createTableHeader( String[] tableHeaderNames, final int[] columnWidths ) {
 
-    tableHeader = new FixedWidthFlexTable();
+    tableHeader = new FixedWidthFlexTable() {
+      @Override
+      public void onBrowserEvent( Event event ) {
+        switch ( DOM.eventGetType( event )) {
+          case Event.ONKEYDOWN:
+            onKeyDownForTableHeader( event );
+            break;
+        }
+        super.onBrowserEvent( event );
+      }
+    };
 
     // Set header values and disable text selection
     final FlexTable.FlexCellFormatter cellFormatter = tableHeader.getFlexCellFormatter();
     for ( int i = 0; i < tableHeaderNames.length; i++ ) {
       tableHeader.setHTML( 0, i, tableHeaderNames[i] );
+
+      tableHeader.getCellFormatter().getElement(0, i ).setTabIndex( i == 0 ? 0 : -1 );
+
       cellFormatter.setHorizontalAlignment( 0, i, HasHorizontalAlignment.ALIGN_LEFT );
       cellFormatter.setWordWrap( 0, i, false );
       cellFormatter.setStylePrimaryName( 0, i, "overflowHide" );
@@ -230,6 +267,62 @@ public class BaseTable extends Composite {
     if ( this.selectionPolicy == null ) {
       tableHeader.setStylePrimaryName( "disabled" ); //$NON-NLS-1$
     }
+    tableHeader.sinkEvents( Event.ONKEYDOWN );
+  }
+
+  private void onKeyDownForTableHeader( Event event ) {
+    switch (event.getKeyCode()) {
+      case KeyCodes.KEY_RIGHT: {
+        event.preventDefault();
+        moveFocusedColumn( true );
+        break;
+      }
+      case KeyCodes.KEY_LEFT: {
+        event.preventDefault();
+        moveFocusedColumn( false );
+        break;
+      }
+      case KeyCodes.KEY_SPACE: {
+        event.preventDefault();
+        int focusedColumn = getFocusedColumn();
+        if ( isColumnSortable( focusedColumn )) {
+          sortColumn(focusedColumn);
+        }
+        break;
+      }
+
+    }
+  }
+
+  private void moveFocusedColumn( boolean isRight ) {
+    int focusedColumn = getFocusedColumn();
+    if ( focusedColumn < 0 && !isRight ) {
+      focusedColumn = tableHeader.getColumnCount();
+    }
+
+    int nextColumn = isRight ? focusedColumn + 1 : focusedColumn - 1;
+    setFocusedColumn(nextColumn);
+  }
+
+  private void setFocusedColumn( int nextColumn ) {
+    int columnCount = tableHeader.getColumnCount();
+    if (nextColumn >= 0 && nextColumn < columnCount) {
+      for (int i = 0; i < columnCount; i++) {
+        tableHeader.getCellFormatter().getElement(0,i ).setTabIndex(i == nextColumn ? 0 : -1);
+      }
+      tableHeader.getCellFormatter().getElement(0, nextColumn ).focus();
+    }
+  }
+
+  private int getFocusedColumn() {
+    int columnCount = tableHeader.getColumnCount();
+    for (int i = 0; i < columnCount; i++) {
+      if( tableHeader.getCellFormatter().getElement( 0, i ).getTabIndex() == 0){
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   /**
@@ -240,25 +333,33 @@ public class BaseTable extends Composite {
     dataGrid = new FixedWidthGrid( 0, numOfColumns ) {
       @Override
       public void onBrowserEvent( Event event ) {
-        Element td = this.getEventTargetCell( event );
-        if ( td == null ) {
-          return;
-        }
-        Element tr = DOM.getParent( td );
-        Element body = DOM.getParent( tr );
-        int row = DOM.getChildIndex( body, tr ) - 1;
-        int column = DOM.getChildIndex( tr, td );
-
         switch ( DOM.eventGetType( event ) ) {
           case Event.ONDBLCLICK: {
-            internalDoubleClickListener.onCellClicked( dataGrid, row, column );
-          }
-          default: {
+            Element td = this.getEventTargetCell( event );
+            if ( td == null ) {
+              return;
+            }
+            Element tr = DOM.getParent( td );
+            Element body = DOM.getParent( tr );
+            int row = DOM.getChildIndex( body, tr ) - 1;
+            int column = DOM.getChildIndex( tr, td );
+            internalDoubleClickListener.onCellClicked( this, row, column );
             break;
           }
+          case Event.ONKEYDOWN:
+            onDataGridKeyDown( event );
+            break;
         }
 
         super.onBrowserEvent( event );
+
+        if ( DOM.eventGetType( event ) == Event.ONCLICK ) {
+          Element targetRow = this.getEventTargetRow( event );
+          Element eventTarget = DOM.eventGetTarget( event );
+          if ( targetRow != null && !ElementUtils.isActiveElement( eventTarget )) {
+            setFocusableRow( this.getRowIndex( targetRow ), true );
+          }
+        }
       }
     };
 
@@ -276,7 +377,7 @@ public class BaseTable extends Composite {
     dataGrid.addTableListener( internalTableListener );
 
     // Add table selection listeners
-    dataGrid.sinkEvents( Event.ONDBLCLICK );
+    dataGrid.sinkEvents( Event.ONDBLCLICK | Event.ONKEYDOWN );
     baseTableColumnSorter = new BaseTableColumnSorter();
     dataGrid.setColumnSorter( baseTableColumnSorter );
 
@@ -284,6 +385,89 @@ public class BaseTable extends Composite {
       dataGrid.setStylePrimaryName( "disabled" ); //$NON-NLS-1$
     }
 
+  }
+
+  private void onDataGridKeyDown( Event event ) {
+    switch (event.getKeyCode()) {
+      case KeyCodes.KEY_DOWN: {
+        event.preventDefault();
+        moveFocusedRow( true );
+        break;
+      }
+      case KeyCodes.KEY_UP: {
+        event.preventDefault();
+        moveFocusedRow( false );
+        break;
+      }
+      case KeyCodes.KEY_SPACE: {
+        event.preventDefault();
+        int focusedRow = getFocusedRow();
+        if (selectionPolicy == SelectionGrid.SelectionPolicy.MULTI_ROW) {
+          boolean shiftKey = DOM.eventGetShiftKey(event);
+          boolean ctrlKey = DOM.eventGetCtrlKey(event)
+                  || DOM.eventGetMetaKey(event);
+          // Select the rows
+          dataGrid.selectRow(focusedRow, ctrlKey, shiftKey);
+        } else if ( selectionPolicy == SelectionGrid.SelectionPolicy.ONE_ROW ) {
+          dataGrid.selectRow( focusedRow, true );
+        }
+        break;
+      }
+
+    }
+  }
+  private void moveFocusedRow( boolean isDown ) {
+    int focusedRow = getFocusedRow();
+    if( focusedRow < 0 && !isDown ){
+      focusedRow = dataGrid.getRowCount();
+    }
+
+    int nextRow = isDown ? focusedRow + 1 : focusedRow - 1;
+    if( nextRow >= 0 && nextRow < dataGrid.getRowCount() ) {
+      setFocusableRow( nextRow, true );
+
+      if ( isAutoSelectionOnFocus()
+           && SelectionGrid.SelectionPolicy.ONE_ROW.equals(dataGrid.getSelectionPolicy()) ) {
+        dataGrid.selectRow( nextRow, true );
+      }
+    }
+  }
+
+  private int getFocusedRow() {
+    int rowCount = dataGrid.getRowCount();
+    for (int i = 0; i < rowCount; i++) {
+      if( dataGrid.getRowFormatter().getElement(i).getTabIndex() == 0){
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  /**
+   * Sets the keyboard navigation on the selected row
+   * @param row
+   */
+  public void setFocusableRow( int row ) {
+    setFocusableRow( row, false );
+  }
+
+  /**
+   * Sets the keyboard navigation and focus on the selected row
+   * @param row
+   * @param focus
+   */
+  public void setFocusableRow( int row, boolean focus ) {
+    int rowCount = dataGrid.getRowCount();
+    if( row >= 0 && row < rowCount ) {
+      for (int i = 0; i < rowCount; i++) {
+        dataGrid.getRowFormatter().getElement(i).setTabIndex(i == row ? 0 : -1);
+      }
+
+      if ( focus ) {
+        dataGrid.getRowFormatter().getElement(row).focus();
+      }
+    }
   }
 
   /**
@@ -361,6 +545,9 @@ public class BaseTable extends Composite {
       if ( i % 2 != 0 ) {
         dataGrid.getRowFormatter().setStyleName( i, "cellTableOddRow" );
       }
+
+      dataGrid.getRowFormatter().getElement(i).setTabIndex( i == 0 ? 0 : -1 );
+
       for ( int j = 0; j < rowAndColumnValues[i].length; j++ ) {
         Object value = rowAndColumnValues[i][j];
 
@@ -376,6 +563,10 @@ public class BaseTable extends Composite {
           }
         }
       }
+    }
+
+    for ( int j = 0; j < tableHeader.getColumnCount(); j++ ) {
+      tableHeader.getCellFormatter().getElement(0, j ).setTabIndex( j == 0 ? 0 : -1 );
     }
 
     // Set column widths
@@ -694,10 +885,12 @@ public class BaseTable extends Composite {
 
   public void sortColumn( int column, boolean ascending ) {
     dataGrid.sortColumn( column, ascending );
+    setFocusableRow( 0 );
   }
 
   public void sortColumn( int column ) {
     dataGrid.sortColumn( column );
+    setFocusableRow( 0 );
   }
 
 }

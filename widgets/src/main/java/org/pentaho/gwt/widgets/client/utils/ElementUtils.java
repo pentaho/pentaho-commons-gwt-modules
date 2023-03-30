@@ -12,20 +12,28 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils;
 
+import com.google.gwt.aria.client.Id;
+import com.google.gwt.aria.client.Property;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HorizontalSplitPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalSplitPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.impl.FocusImpl;
+
+import static org.pentaho.gwt.widgets.client.utils.string.StringUtils.isEmpty;
 
 public class ElementUtils {
 
@@ -36,17 +44,31 @@ public class ElementUtils {
   private static AbsolutePanel sandbox = new AbsolutePanel(); // Used to find the size of elements
 
   static {
-    sandbox.getElement().getStyle().setProperty( "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "overflow", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "width", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    sandbox.getElement().getStyle().setProperty( "height", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    RootPanel.get().add( sandbox );
+    // RootPanel.get().add( . ) fails when running Java unit tests.
+    // GWT.isClient() is false when GWT is running in Java.
+    if ( GWT.isClient() ) {
+      sandbox.getElement().getStyle().setProperty( "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "overflow", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "width", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+      sandbox.getElement().getStyle().setProperty( "height", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
 
+      RootPanel.get().add( sandbox );
+    }
   }
 
   public static native void blur( Element e )/*-{
     if(e.blur){
       e.blur();
+    }
+  }-*/;
+
+  /**
+   * This method handles the click event using element
+   * @param e
+   */
+  public static native void click( Element e )/*-{
+    if ( e.click ) {
+      e.click();
     }
   }-*/;
 
@@ -80,6 +102,23 @@ public class ElementUtils {
       ele.getStyle().setProperty( "overflowY", "visible" ); //$NON-NLS-1$ //$NON-NLS-2$
       ele = ele.getParentElement();
     }
+  }
+
+  /**
+   * Gets the widget which is listening to events on the given root element.
+   * <p>
+   *   Widgets are associated with their root element on attachment (see <code>Widget#onAttach()</code>).
+   * </p>
+   * <p>
+   *   Based on https://stackoverflow.com/a/17863305/178749.
+   * </p>
+   * @param element The widget's root element.
+   * @return The widget, if one is associated with the <code>element</code>;
+   *         <code>null</code>, otherwise.
+   */
+  public static Widget getWidgetOfRootElement( Element element ) {
+    EventListener listener = DOM.getEventListener( element );
+    return ( listener instanceof Widget ) ?  (Widget) listener : null;
   }
 
   public static void killAutoScrolling( Element ele ) {
@@ -201,17 +240,80 @@ public class ElementUtils {
     return r;
   }
 
-  public boolean isVisible( com.google.gwt.user.client.Element ele ) {
+  public static boolean isVisible(Element ele) {
     if ( ele.getStyle().getProperty( "display" ).equals( "none" ) ) { //$NON-NLS-1$ //$NON-NLS-2$
       return false;
     }
     if ( ele.getStyle().getProperty( "visibility" ).equals( "hidden" ) ) { //$NON-NLS-1$ //$NON-NLS-2$
       return false;
     }
-
+    Element parentElement = ele.getParentElement();
+    if( parentElement != null
+            && !parentElement.equals(parentElement.getOwnerDocument().getDocumentElement())) {
+      return isVisible( parentElement );
+    }
     // TODO: add scrollpanel checking here
     return true;
 
+  }
+
+  /**
+   * Gets the first descendant element of the given element which can currently receive keyboard focus.
+   * @param root The root element.
+   * @return The first keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findFirstKeyboardFocusableDescendant( Element root )/*-{
+    return $wnd.pho.util._focus.tabbables(root)[0] || null;
+  }-*/;
+
+  /**
+   * Gets the element after the given one which can currently receive keyboard focus.
+   * @param elem The initial element.
+   * @return The next keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findNextKeyboardFocusableElement( Element elem )/*-{
+    return $wnd.pho.util._focus.nextTabbable(elem);
+  }-*/;
+
+  /**
+   * Gets the element before the given one which can currently receive keyboard focus.
+   * @param elem The initial element.
+   * @return The previous keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findPreviousKeyboardFocusableElement( Element elem )/*-{
+    return $wnd.pho.util._focus.previousTabbable(elem);
+  }-*/;
+
+  /**
+   * Sets focus on a given element.
+   * <p>
+   *   On some user agents, e.g. <code>safari</code>,
+   *   focus is set asynchronously (see <code>FocusImplSafari</code>).
+   * </p>
+   * <p>
+   *   The focus implementation obtained by {@link FocusImpl#getFocusImplForPanel()} is used.
+   *   This is the focus implementation used, for example, by MenuBar.
+   *   While other GWT classes use {@link FocusImpl#getFocusImplForWidget()}, instead,
+   *   by using the former, there's no danger of being overtaken by other GWT code executed before this call.
+   * </p>
+   * @param elem The element to focus.
+   */
+  public static void focus( Element elem ) {
+    FocusImpl.getFocusImplForPanel().focus( elem );
+  }
+
+  public static void tabNext( Element rootElem ) {
+    Element elem = ElementUtils.findNextKeyboardFocusableElement( rootElem );
+    if ( elem != null ) {
+      focus( elem );
+    }
+  }
+
+  public static void tabPrevious( Element rootElem ) {
+    Element elem = ElementUtils.findPreviousKeyboardFocusableElement( rootElem );
+    if ( elem != null ) {
+      focus( elem );
+    }
   }
 
   public static void setupButtonHoverEffect() {
@@ -241,4 +343,60 @@ public class ElementUtils {
     return "";
   }-*/;
 
+  /**
+   * Sets a style property using the CSS style property name.
+   * <p>
+   *   GWT's {@link com.google.gwt.dom.client.Style#setProperty(String, String)} only
+   *   allows setting properties with its camel-case name.
+   * </p>
+   * @param elem The element.
+   * @param cssPropertyName The name of the CSS style property.
+   * @param value The value of the property.
+   */
+  public static native void setStyleProperty( Element elem, String cssPropertyName, String value ) /*-{
+    elem.style.setProperty(name, value);
+  }-*/;
+
+  /**
+   * Set's a widget's ARIA label.
+   * <p>If the provided label widget does not have an identifier, a unique one is assigned to it.</p>
+   * @param widget The widget.
+   * @param label The label.
+   */
+  public static void setAriaLabelledBy( Widget widget, Label label ) {
+    Property.LABELLEDBY.set( widget.getElement(), Id.of( ensureId( label ) ) );
+  }
+
+  /**
+   * Ensures that a given widget has an identifier, assigning it a unique one, if necessary.
+   * @param widget The widget.
+   * @return The widget's identifier.
+   */
+  public static String ensureId( Widget widget ) {
+    com.google.gwt.user.client.Element element = widget.getElement();
+    String id = element.getId();
+    if ( isEmpty( id ) ) {
+      id = DOM.createUniqueId();
+      element.setId( id );
+    }
+
+    return id;
+  }
+
+  /**
+   * This method validates whether provided element is active element in the browser
+   * @param e
+   * @return boolean
+   */
+  public static native boolean isActiveElement( Element e )/*-{
+    return $doc.activeElement === e;
+  }-*/;
+
+  /**
+   * This method sets the focus on the provided element
+   * @param elem
+   */
+  public static native void focusSync( Element elem )/*-{
+    elem.focus();
+  }-*/;
 }

@@ -12,12 +12,15 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils;
 
+import com.google.gwt.dom.client.BodyElement;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Frame;
 
@@ -126,6 +129,7 @@ public class FrameUtils {
       // ignore class cast exceptions in here, they are happening in hosted mode for Elements
       //ignore
     }
+
     for ( Element ele : frames ) {
       Frame f = null;
 
@@ -140,11 +144,47 @@ public class FrameUtils {
         }
       }
 
+
       if ( f == null ) {
+        /* When in Super Dev Mode, `Frame.wrap( . )`, below, constantly fails due to an assertion error,
+           causing this frame, and all following it, to not be handled.
+
+           Additionally, this causes a mandatory stop in the debugger,
+           given assert statements are transpiled into a JS `debugger;` statement.
+
+           And, assertions cannot be disabled in Super Dev Mode...
+
+           When in production mode, assertions are disabled and the `Frame.wrap( . )` operation (apparently) succeeds.
+         */
+        if ( GWTUtils.isSuperDevMode() && isElementChildOfWidget( ele ) ) {
+          continue;
+        }
+
         f = Frame.wrap( ele );
       }
+
       setEmbedVisibility( f, visible );
     }
+  }
+
+  // Copied from com.google.gwt.user.client.ui.RootPanel.isElementChildOfWidget( . )
+  private static boolean isElementChildOfWidget( Element element ) {
+    // Walk up the DOM hierarchy, looking for any widget with an event listener
+    // set. Though it is not dependable in the general case that a widget will
+    // have set its element's event listener at all times, it *is* dependable
+    // if the widget is attached. Which it will be in this case.
+    element = element.getParentElement();
+    BodyElement body = Document.get().getBody();
+
+    while ( element != null && body != element ) {
+      if ( Event.getEventListener( element ) != null ) {
+        return true;
+      }
+
+      element = element.getParentElement().cast();
+    }
+
+    return false;
   }
 
   /**

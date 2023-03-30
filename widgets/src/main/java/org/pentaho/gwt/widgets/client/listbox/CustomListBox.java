@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.listbox;
@@ -20,6 +20,9 @@ package org.pentaho.gwt.widgets.client.listbox;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.event.dom.client.KeyCodes;
+import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -33,8 +36,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusListener;
-import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;
@@ -79,7 +80,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings( "deprecation" )
-public class CustomListBox extends HorizontalPanel implements ChangeListener, PopupListener, MouseListener,
+public class CustomListBox extends HorizontalFlexPanel implements ChangeListener, PopupListener, MouseListener,
     FocusListener, KeyboardListener, ListItemListener {
   protected List<ListItem> items = new ArrayList<ListItem>();
   protected int selectedIndex = -1;
@@ -95,7 +96,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   protected boolean popupShowing = false;
   private DropPopupPanel popup;
   private PopupList popupVbox = new PopupList();
-  protected FocusPanel fPanel = new FocusPanel();
+  protected PentahoFocusPanel fPanel = new PentahoFocusPanel();
   private ScrollPanel popupScrollPanel = new ScrollPanel();
 
   protected List<ChangeListener> listeners = new ArrayList<ChangeListener>();
@@ -114,6 +115,10 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   protected boolean multiSelect;
 
   public CustomListBox() {
+
+    selectedItemWrapper.addStyleName( "flex-row" );
+    dropGrid.addStyleName( "custom-list-drop-grid" );
+    dropGrid.addStyleName( HorizontalFlexPanel.STYLE_NAME );
 
     dropGrid.getColumnFormatter().setWidth( 0, "100%" ); //$NON-NLS-1$
     dropGrid.setWidget( 0, 1, arrow );
@@ -145,8 +150,12 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
     fPanel.addMouseListener( this );
     fPanel.addFocusListener( this );
     fPanel.addKeyboardListener( this );
+    fPanel.addStyleName( "flex-row" );
 
-    this.setStylePrimaryName( "custom-list" ); //$NON-NLS-1$
+    // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
+    // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.
+    this.setStyleName( "" );
+    this.setStylePrimaryName( "custom-list" );
 
     setTdStyles( this.getElement() );
     setTdStyles( listPanel.getElement() );
@@ -838,6 +847,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   @Override
   public void setStylePrimaryName( String s ) {
     super.setStylePrimaryName( s );
+    addStyleName( HorizontalFlexPanel.STYLE_NAME );
     this.primaryStyleName = s;
 
     // This may have came in late. Update ListItems
@@ -921,8 +931,23 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
   private int shiftOriginIdx = -1;
 
   public void onKeyDown( Widget widget, char c, int i ) {
+    Event event = Event.getCurrentEvent();
     if ( c == 16 ) { // shift
       shiftOriginIdx = selectedIndex;
+    }
+    switch( event.getKeyCode() ){
+      case KeyCodes.KEY_UP:
+      case KeyCodes.KEY_DOWN:
+        event.preventDefault();
+        break;
+      case KeyCodes.KEY_TAB:
+      case KeyCodes.KEY_ESCAPE:
+        if( popupShowing ){
+          popup.hide();
+        }
+        break;
+      default:
+        break;
     }
   }
 
@@ -1025,11 +1050,9 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
           }
         }
         break;
-      case 27: // ESC
       case 13: // Enter
-        if ( popupShowing ) {
-          togglePopup();
-        }
+      case 32: // Space
+        this.togglePopup();
         break;
       case 65: // A
         if ( Event.getCurrentEvent().getCtrlKey() ) {
@@ -1090,6 +1113,16 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
         return true;
       }
       return super.onEventPreview( event );
+    }
+
+    @Override
+    public boolean onKeyDownPreview( char key, int modifiers ) {
+      switch ( key ) {
+        case KeyboardListener.KEY_ESCAPE:
+          popup.hide();
+          break;
+      }
+      return true;
     }
   }
 
@@ -1158,7 +1191,7 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
    */
   public String getValue() {
     if ( !editable ) {
-      if( getSelectedItem() != null ) {
+      if ( getSelectedItem() != null ) {
         return getSelectedItem().getText();
       } else {
         return null;
@@ -1175,8 +1208,8 @@ public class CustomListBox extends HorizontalPanel implements ChangeListener, Po
       selectedIndex = -1;
       this.onChange( editableTextBox );
     } else {
-      for( int i = 0; i < items.size(); i++ ) {
-        if( items.get( i ).getText().equals( text ) ) {
+      for ( int i = 0; i < items.size(); i++ ) {
+        if ( items.get( i ).getText().equals( text ) ) {
           setSelectedIndex( i );
           return;
         }

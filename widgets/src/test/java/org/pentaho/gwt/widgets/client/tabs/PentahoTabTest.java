@@ -12,12 +12,13 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.tabs;
 
 import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwtmockito.GwtMockitoTestRunner;
@@ -51,15 +52,22 @@ public class PentahoTabTest {
   }
 
   @Test
-  public void testOnBrowserEvent() throws Exception {
+  public void testOnBrowserEventDoubleClick() {
     doCallRealMethod().when( pentahoTab ).onBrowserEvent( any( Event.class ) );
 
     final Event event = mock( Event.class );
     when( event.getTypeInt() ).thenReturn( Event.ONDBLCLICK );
     pentahoTab.onBrowserEvent( event );
     verify( pentahoTab ).onDoubleClick( event );
+  }
 
-    when( event.getTypeInt() ).thenReturn( 0 );
+  @Test
+  public void testOnBrowserEventMouseUp() {
+    doCallRealMethod().when( pentahoTab ).onBrowserEvent( any( Event.class ) );
+
+    final Event event = mock( Event.class );
+    when( event.getTypeInt() ).thenReturn( Event.ONMOUSEUP );
+
     when( event.getButton() ).thenReturn( Event.BUTTON_RIGHT );
     pentahoTab.onBrowserEvent( event );
     verify( pentahoTab ).onRightClick( event );
@@ -74,6 +82,22 @@ public class PentahoTabTest {
     when( eventTarget.toString() ).thenReturn( "" );
     pentahoTab.onBrowserEvent( event );
     verify( pentahoTab ).fireTabSelected();
+  }
+
+  @Test
+  public void testOnBrowserEventKeyDown() {
+    doCallRealMethod().when( pentahoTab ).onBrowserEvent( any( Event.class ) );
+
+    final Event event = mock( Event.class );
+    when( event.getTypeInt() ).thenReturn( Event.ONKEYDOWN );
+
+    when( event.getKeyCode() ).thenReturn( KeyCodes.KEY_LEFT );
+    pentahoTab.onBrowserEvent( event );
+    verify( pentahoTab ).moveFocusToPreviousTab();
+
+    when( event.getKeyCode() ).thenReturn( KeyCodes.KEY_RIGHT );
+    pentahoTab.onBrowserEvent( event );
+    verify( pentahoTab ).moveFocusToNextTab();
   }
 
   @Test

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002 - 2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002 - 2023 Hitachi Vantara..  All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.filechooser;
 
@@ -21,7 +21,6 @@ import java.util.List;
 
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.user.client.Window;
-import org.pentaho.gwt.widgets.client.dialogs.GlassPane;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
@@ -56,7 +55,12 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
                             String title, String okText ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
 
-    showGlassPane();
+    addStyleName( "fileChooserDialog" );
+
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
+    setWidthCategory( DialogWidthCategory.SMALL );
+
     setupNativeHooks();
 
     fileChooser = new FileChooser( mode, selectedPath, new IDialogCallback() {
@@ -180,11 +184,17 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   public FileChooserDialog( FileChooserMode mode, String selectedPath, RepositoryFileTree fileTree,
                             boolean autoHide, boolean modal, String title, String okText, boolean showHiddenFiles ) {
     super( title, okText, FileChooserEntryPoint.messages.getString( "Cancel" ), false, true );
+
+    addStyleName( "fileChooserDialog" );
+
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
+    setWidthCategory( DialogWidthCategory.SMALL );
+
     fileChooser = new FileChooser( showHiddenFiles );
 
     setContent( fileChooser );
 
-    fileChooser.setWidth( "100%" );
     fileChooser.setMode( mode );
 
     final boolean isLazy = fileTree == null;
@@ -368,30 +378,6 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
     }
   }
 
-  @Override
-  public void hide() {
-    GlassPane.getInstance().hide();
-
-    super.hide();
-  }
-
-  @Override
-  public void center() {
-    super.center();
-    setFocus();
-  }
-
-  private void showGlassPane() {
-    GlassPane.getInstance().show();
-
-    super.initializePageBackground();
-    super.block();
-  }
-
-  private void setFocus() {
-    fileChooser.fileNameTextBox.setFocus( true );
-  }
-
   public boolean isSubmitOnEnter() {
     return submitOnEnter;
   }
@@ -402,20 +388,13 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
   }
 
   @Override
+  @Deprecated
   public boolean onKeyDownPreview( char key, int modifiers ) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
-    switch ( key ) {
-      case KeyboardListener.KEY_ENTER:
-        if ( isSubmitOnEnter() ) {
-          onOk();
-        }
-        break;
-      case KeyboardListener.KEY_ESCAPE:
-        onCancel();
-        break;
+    if ( key == (char) KeyboardListener.KEY_ESCAPE ) {
+      onCancel();
     }
-
     return true;
   }
 }
