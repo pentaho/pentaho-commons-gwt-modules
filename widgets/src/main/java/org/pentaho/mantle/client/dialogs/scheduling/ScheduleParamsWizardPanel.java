@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardPanel;
 import org.pentaho.mantle.client.messages.Messages;
 
@@ -36,6 +37,8 @@ import java.util.StringTokenizer;
 public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
 
   private static final String PENTAHO_SCHEDULE = "pentaho-schedule-create"; //$NON-NLS-1$
+
+  private static final String SCHEDULE_PARAMS_WIZARD_PANEL = "schedule-params-wizard-panel";
 
   boolean parametersComplete = true;
   SimplePanel scheduleParameterPanel = new SimplePanel();
@@ -125,7 +128,8 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
 
   public native void schedulerParamsLoadedCallback( String filePath ) /*-{
     //CHECKSTYLE IGNORE LineLength FOR NEXT 1 LINES
-    $doc.getElementById('schedulerParamsFrame').contentWindow.initSchedulingParams(filePath, $wnd.schedulerParamsCompleteCallback);
+    $doc.getElementById('schedulerParamsFrame').contentWindow.initSchedulingParams(filePath, $wnd.schedulerParamsCompleteCallback, $wnd.schedulerParamsContentResizeCallback);
+    $wnd.schedulerParamsContentResizeCallback();
   }-*/;
 
   /**
@@ -170,11 +174,30 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     setRadioParameterValue( parametersFrame.getUrl() );
   }
 
+  public native void schedulerParamsContentResizeCallback() /*-{
+    var frame = $doc.getElementById('schedulerParamsFrame');
+    var body = frame.contentWindow.document.body;
+    if(body.classList.contains("responsive")) {
+      var jQueryDoc = $wnd.$(body);
+      frame.style.setProperty("--frame-content-width", jQueryDoc.outerWidth(true) + "px");
+      frame.style.setProperty("--frame-content-height", jQueryDoc.outerHeight(true) + "px");
+    }
+  }-*/;
+
   private native void registerSchedulingCallbacks( ScheduleParamsWizardPanel thisInstance )/*-{
-    //CHECKSTYLE IGNORE LineLength FOR NEXT 1 LINES
-    $wnd.schedulerParamsLoadedCallback = function(filePath) {thisInstance.@org.pentaho.mantle.client.dialogs.scheduling.ScheduleParamsWizardPanel::schedulerParamsLoadedCallback(Ljava/lang/String;)(filePath)};
-    //CHECKSTYLE IGNORE LineLength FOR NEXT 1 LINES
-    $wnd.schedulerParamsCompleteCallback = function(flag) {thisInstance.@org.pentaho.mantle.client.dialogs.scheduling.ScheduleParamsWizardPanel::schedulerParamsCompleteCallback(Z)(flag)};
+    //CHECKSTYLE IGNORE LineLength FOR NEXT 2 LINES
+    $wnd.schedulerParamsLoadedCallback = function(filePath) {
+      thisInstance.@org.pentaho.mantle.client.dialogs.scheduling.ScheduleParamsWizardPanel::schedulerParamsLoadedCallback(Ljava/lang/String;)(filePath);
+    };
+
+    //CHECKSTYLE IGNORE LineLength FOR NEXT 2 LINES
+    $wnd.schedulerParamsCompleteCallback = function(flag) {
+      thisInstance.@org.pentaho.mantle.client.dialogs.scheduling.ScheduleParamsWizardPanel::schedulerParamsCompleteCallback(Z)(flag);
+    };
+
+    $wnd.schedulerParamsContentResizeCallback = function() {
+      thisInstance.@org.pentaho.mantle.client.dialogs.scheduling.ScheduleParamsWizardPanel::schedulerParamsContentResizeCallback()();
+    };
   }-*/;
 
   private native void addOnLoad( Element ele, String scheduledFilePath )
@@ -197,8 +220,17 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
    */
   private void layout() {
     this.addStyleName( PENTAHO_SCHEDULE );
+    this.addStyleName( SCHEDULE_PARAMS_WIZARD_PANEL );
+
+    // Ideally, there would be a flex version of DockPanel.
+    // The following relies on the local current use of DockPanel being restricted to a single column.
+    this.addStyleName( VerticalFlexPanel.STYLE_NAME );
+    this.addStyleName( "with-scroll-child" );
+
     this.add( scheduleDescription, NORTH );
+
     scheduleParameterPanel.setStyleName( "schedule-parameter-panel" );
+    scheduleParameterPanel.addStyleName( "flex-column with-scroll-child" );
     this.add( scheduleParameterPanel, CENTER );
     this.setCellHeight( scheduleParameterPanel, "100%" );
     scheduleParameterPanel.setHeight( "100%" );
@@ -223,10 +255,11 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
     } else {
       if ( parametersFrame == null ) {
         parametersFrame = new Frame();
+        parametersFrame.getElement().setTabIndex( 0 );
+        parametersFrame.addStyleName( "schedule-parameter-frame" );
         scheduleParameterPanel.add( parametersFrame );
         parametersFrame.setHeight( "100%" ); //$NON-NLS-1$
 
-        //DOM.setElementAttribute(parametersFrame.getElement(), "onload", "schedulerParamsLoadedCallback('" + scheduledFilePath + "')"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         addOnLoad( parametersFrame.getElement(), scheduledFilePath );
         DOM.setElementAttribute( parametersFrame.getElement(), "id", "schedulerParamsFrame" ); //$NON-NLS-1$ //$NON-NLS-2$
         parametersFrame.setUrl( url );
@@ -235,5 +268,13 @@ public class ScheduleParamsWizardPanel extends AbstractWizardPanel {
       }
       setRadioParameterValue( parametersFrame.getUrl() );
     }
+  }
+
+  @Override
+  public void onResize() {
+    super.onResize();
+    
+    // E.g. width is 100%, but then text reflows and should read new iframe content's height.
+    schedulerParamsContentResizeCallback();
   }
 }

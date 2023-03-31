@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2005 - 2021 Hitachi Vantara.  All rights reserved.
+* Copyright 2005 - 2023 Hitachi Vantara. All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -174,10 +174,6 @@ input, input[type="password"]{
 .pentaho-page-background {
   background: url('images/bg_page.png') repeat-x top left;
   background-color: #FFF;
-}
-
-.schedule-dialog-content-crystal {
-  padding: 5px 10px 10px 10px;
 }
 
 #pucHeader {
@@ -505,37 +501,16 @@ div#data-controlproperties-spacer {
   background: url('../images/wt_transparent.png') repeat;*/
 }
 
-
-.IE8 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 425px !important;
-}
-
 .IE9 #browse-properties-dialog.new-schedule-dialog{
   height: 500px !important;
-}
-
-.IE9 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 415px !important;
 }
 
 .IE9 .schedule-recurrence-dialog{
   height: 500px !important;
 }
 
-.IE9 .schedule-recurrence-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
 .IE9 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE9 .schedule-params-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
-.IE9 .schedule-email-dialog .schedule-dialog-content{
-  height: 430px !important;
 }
 
 .IE10 #browse-properties-dialog.new-schedule-dialog{
@@ -546,20 +521,8 @@ div#data-controlproperties-spacer {
   height: 500px !important;
 }
 
-.IE10 .schedule-recurrence-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
 .IE10 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE10 .schedule-params-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
-.IE10 .schedule-email-dialog .schedule-dialog-content{
-  height: 430px !important;
 }
 
 .IE .schedule-recurrence-dialog {
@@ -677,7 +640,19 @@ div#data-controlproperties-spacer {
   z-index: 2100;
 }
 
-  /**/
+/* region Schedule Wizard Dialogs */
+.schedule-params-dialog .dialog-content {
+  height: 100% !important;
+}
+
+:is(
+  .schedule-recurrence-dialog,
+  .schedule-params-dialog,
+  .schedule-email-dialog) .dialog-content {
+  padding: 0 !important;
+  width: auto !important;
+}
+/* endregion */
 
 .glasspane {
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */

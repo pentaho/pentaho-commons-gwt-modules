@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.wizards;
 
+import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DeckPanel;
@@ -26,12 +27,14 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.RequiresResize;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import org.pentaho.gwt.widgets.client.dialogs.DialogBox;
 import org.pentaho.gwt.widgets.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 
 /**
  * @author wseyler
@@ -43,11 +46,21 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
 
   private static final int STEPS_COUNT = 15; // Defines the height of the steps ListBox
 
+  private static final String WIZARD_DIALOG = "pentaho-wizard-dialog";
+
   private static final String WIZARD_DECK_PANEL = "pentaho-wizard-deck-panel"; //$NON-NLS-1$
 
   private static final String WIZARD_BUTTON_PANEL = "pentaho-wizard-button-panel"; //$NON-NLS-1$
 
+  private static final String BUTTON_PANEL = "button-panel";
+
+  private static final String INNER_BUTTON_WRAPPER = "inner-button-wrapper";
+
   public static final String PENTAHO_BUTTON = "pentaho-button";
+
+  private static final String DIALOG_CONTENT = "dialog-content";
+
+  private static final String WIZARD_STEPS_LIST = "pentaho-wizard-steps-list";
 
   public enum ScheduleDialogType {
     SCHEDULER, BLOCKOUT
@@ -93,6 +106,8 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
    * provided new/additional functionality but should NEVER be called more than once during the lifecycle of the object
    */
   protected void init() {
+
+    addStyleName( WIZARD_DIALOG );
 
     backButton.getElement().setId( "wizard-back-button" );
     nextButton.getElement().setId( "wizard-next-button" );
@@ -244,12 +259,13 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     SimplePanel deckWrapper = new SimplePanel();
     deckWrapper.setHeight( "100%" );
     deckWrapper.setWidth( "100%" );
-    deckWrapper.setStyleName( "dialog-content" );
+    deckWrapper.setStyleName( DIALOG_CONTENT );
 
     DockPanel content = new DockPanel();
 
     // Create the Steps and add it to the content
     stepsList = new VerticalPanel();
+    stepsList.addStyleName( WIZARD_STEPS_LIST );
     stepsList.add( new Label( Messages.getString( "dialog.steps" ) ) );
     steps.setVisibleItemCount( STEPS_COUNT );
     stepsList.add( steps );
@@ -263,16 +279,19 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     wizardDeckPanel.addStyleName( WIZARD_DECK_PANEL );
 
     // Add the control buttons
-    HorizontalPanel wizardButtonPanel = new HorizontalPanel();
+    HorizontalPanel wizardButtonPanel = new HorizontalFlexPanel();
     wizardButtonPanel.setSpacing( 2 );
-    // If we have only one button then we dont need to show the back and next button.
+    // If we have only one button then we don't need to show the back and next button.
     wizardButtonPanel.add( backButton );
     wizardButtonPanel.add( nextButton );
     wizardButtonPanel.add( finishButton );
     wizardButtonPanel.add( cancelButton );
+    wizardButtonPanel.addStyleName( INNER_BUTTON_WRAPPER );
     wizardButtonPanel.addStyleName( WIZARD_BUTTON_PANEL );
 
-    HorizontalPanel wizardButtonPanelWrapper = new HorizontalPanel();
+    HorizontalPanel wizardButtonPanelWrapper = new HorizontalFlexPanel();
+    wizardButtonPanelWrapper.addStyleName( BUTTON_PANEL );
+
     wizardButtonPanelWrapper.setWidth( "100%" ); //$NON-NLS-1$
     wizardButtonPanelWrapper.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_RIGHT );
     wizardButtonPanelWrapper.setVerticalAlignment( HasVerticalAlignment.ALIGN_BOTTOM );
@@ -335,6 +354,19 @@ public abstract class AbstractWizardDialog extends DialogBox implements IWizardP
     int index = getIndex();
     nextButton.setEnabled( enableNext( index ) );
     finishButton.setEnabled( enableFinish( index ) );
+  }
+
+  @Override
+  protected void onResize( ResizeEvent event ) {
+    if ( wizardPanels != null ) {
+      for ( IWizardPanel panel : wizardPanels ) {
+        if( panel instanceof RequiresResize ) {
+          ( (RequiresResize) panel).onResize();
+        }
+      }
+    }
+
+    super.onResize( event );
   }
 
   public boolean wasCancelled() {

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -25,6 +25,8 @@ import org.pentaho.gwt.widgets.client.dialogs.IDialogValidatorCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.formatter.JSDateTextFormatter;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.folderchooser.SelectFolderDialog;
@@ -44,11 +46,9 @@ import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   private String filePath;
@@ -65,7 +65,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   private static HandlerRegistration keyHandlerReg = null;
 
   static {
-    scheduleLocationTextBox.setText( getDefaultSaveLocation() );
+    setScheduleLocation( getDefaultSaveLocation() );
   }
 
   private static native String getDefaultSaveLocation()
@@ -84,12 +84,16 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     this.filePath = filePath;
     createUI();
     setupCallbacks();
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   private void createUI() {
-    VerticalPanel content = new VerticalPanel();
+    addStyleName( "schedule-output-location-dialog" );
+    VerticalFlexPanel content = new VerticalFlexPanel();
 
-    HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
+    HorizontalFlexPanel scheduleNameLabelPanel = new HorizontalFlexPanel();
     scheduleNameLabel = new Label( Messages.getString( "generatedContentName" ) );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
 
@@ -120,7 +124,8 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
 
     timestampLB.setVisible( false );
 
-    HorizontalPanel scheduleNamePanel = new HorizontalPanel();
+    HorizontalFlexPanel scheduleNamePanel = new HorizontalFlexPanel();
+    scheduleNamePanel.addStyleName( "schedule-name-panel" );
     scheduleNamePanel.add( scheduleNameTextBox );
     scheduleNamePanel.setCellVerticalAlignment( scheduleNameTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
     scheduleNamePanel.add( timestampLB );
@@ -159,7 +164,7 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
         final SelectFolderDialog selectFolder = new SelectFolderDialog();
         selectFolder.setCallback( new IDialogCallback() {
           public void okPressed() {
-            scheduleLocationTextBox.setText( selectFolder.getSelectedPath() );
+            setScheduleLocation( selectFolder.getSelectedPath() );
           }
 
           public void cancelPressed() {
@@ -195,7 +200,9 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     scheduleNameTextBox.addChangeHandler( ch );
 
     scheduleLocationTextBox.getElement().setId( "generated-content-location" );
-    HorizontalPanel locationPanel = new HorizontalPanel();
+    HorizontalFlexPanel locationPanel = new HorizontalFlexPanel();
+    locationPanel.addStyleName( "schedule-dialog-location-panel" );
+
     scheduleLocationTextBox.setEnabled( false );
     locationPanel.add( scheduleLocationTextBox );
     locationPanel.setCellVerticalAlignment( scheduleLocationTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
@@ -211,8 +218,6 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
     content.getElement().getStyle().clearHeight();
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
     content.getParent().setHeight( "100%" );
-
-    okButton.getParent().getParent().setStyleName( "button-panel" );
 
     updateButtonState();
     setSize( "650px", "450px" );
@@ -287,14 +292,19 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
       public void execute() {
         String previousPath = OutputLocationUtils.getPreviousLocationPath( scheduleLocationTextBox.getText() );
         if ( previousPath != null && !previousPath.isEmpty() ) {
-          scheduleLocationTextBox.setText( previousPath );
+          setScheduleLocation( previousPath );
           validateScheduleLocationTextBox();
         } else {
-          scheduleLocationTextBox.setText( getDefaultSaveLocation() ); // restore default location
+          setScheduleLocation( getDefaultSaveLocation() ); // restore default location
         }
       }
     };
     OutputLocationUtils.validateOutputLocation( scheduleLocationTextBox.getText(), null, errorCallback );
+  }
+
+  private static void setScheduleLocation( String location ) {
+    scheduleLocationTextBox.setText( location );
+    scheduleLocationTextBox.setTitle( location );
   }
 
   /**
@@ -327,4 +337,5 @@ public abstract class ScheduleOutputLocationDialog extends PromptDialogBox {
   public void setScheduleNameText( String text ) {
     scheduleNameLabel.setText( text );
   }
+
 }
