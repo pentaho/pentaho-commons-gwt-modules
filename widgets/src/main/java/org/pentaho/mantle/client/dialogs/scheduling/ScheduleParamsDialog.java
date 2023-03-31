@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -109,6 +109,10 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   }
 
   public void initDialog() {
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
+
     scheduleParamsWizardPanel = new ScheduleParamsWizardPanel( filePath );
     IWizardPanel[] wizardPanels = { scheduleParamsWizardPanel };
     setWizardPanels( wizardPanels );
@@ -126,9 +130,6 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     }
     setParametersUrl( EnvironmentHelper.getFullyQualifiedURL() + "api/repos/" + urlPath + "/parameterUi" + urlParams ); //$NON-NLS-1$ //$NON-NLS-2$
     wizardDeckPanel.setHeight( "100%" ); //$NON-NLS-1$
-
-    wizardDeckPanel.getElement().getParentElement().addClassName( "schedule-dialog-content" );
-    wizardDeckPanel.getElement().getParentElement().removeClassName( "dialog-content" );
 
     setSize( "650px", "450px" );
     addStyleName( "schedule-params-dialog" );

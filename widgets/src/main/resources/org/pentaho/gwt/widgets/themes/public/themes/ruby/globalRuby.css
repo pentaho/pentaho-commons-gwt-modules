@@ -73,8 +73,10 @@
   /* LAYOUT GLOBAL */
   --text-block-max-width: 75ch;
 
-  --typ-body-font-size: 14px;
-  --typ-body-line-height: 17px;
+  --typ-body-font-size-px: 14;
+  --typ-body-line-height-px: 17;
+  --typ-body-font-size: calc(1px * var(--typ-body-font-size-px));
+  --typ-body-line-height: calc(1px * var(--typ-body-line-height-px));
 
   /* Set H and V space between layout cols and rows.
      Or, use the helper classes: .with-layout-gap-... for predefined values.
@@ -101,7 +103,7 @@
   --input-outer-height: calc(
       2 * var(--input-border-width) +
       2 * var(--input-padding-v) +
-      var(--typ-body-line-height));
+      1em * var(--typ-body-font-size-px) / var(--typ-body-font-size-px));
 }
 
 @media (max-height: 720px) {
@@ -274,11 +276,11 @@ input[type='text']#displayNameText {
 
 input#rowsNumberInput,
 div#widget_dijit_form_NumberTextBox_0 {
-    margin-top: 3px;
+  margin-top: 3px;
 }
 
 input#dijit_form_NumberTextBox_0 {
-    height: inherit;
+  height: inherit;
 }
 
 SELECT,
@@ -375,7 +377,7 @@ table#contentCleanerPanel > tbody > tr > td > table {
 }
 
 input.ldapPasswordInput.authValue.adminField {
-    height: auto;
+  height: auto;
 }
 
 .soria .dijitTreeRowSelected {
@@ -410,7 +412,7 @@ input[type="password"] {
 .gwt-PasswordTextBox,
 input,
 input[type="password"]:focus {
-	border: 1px solid #414141;
+  border: 1px solid #414141;
 }
 
 .scroll-panel {
@@ -541,10 +543,6 @@ div#reportControlPanel select {
 div#reportControlPanel select[style*="overflow-y: scroll"] {
   height: auto;
   background: none;
-}
-
-form#REPORT_FORMAT_TYPE {
-  margin-left: -15px;
 }
 
 form#REPORT_FORMAT_TYPE p {
@@ -1198,36 +1196,16 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   background: url('../images/wt_transparent.png') repeat;*/
 }
 
-.IE8 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content {
-  height: 425px !important;
-}
-
 .IE9 #browse-properties-dialog.new-schedule-dialog {
   height: 500px !important;
-}
-
-.IE9 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content {
-  height: 415px !important;
 }
 
 .IE9 .schedule-recurrence-dialog {
   height: 500px !important;
 }
 
-.IE9 .schedule-recurrence-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
 .IE9 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE9 .schedule-params-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
-.IE9 .schedule-email-dialog .schedule-dialog-content {
-  height: 430px !important;
 }
 
 .IE10 #browse-properties-dialog.new-schedule-dialog {
@@ -1238,20 +1216,8 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   height: 500px !important;
 }
 
-.IE10 .schedule-recurrence-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
 .IE10 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE10 .schedule-params-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
-.IE10 .schedule-email-dialog .schedule-dialog-content {
-  height: 430px !important;
 }
 
 .IE .schedule-recurrence-dialog {
@@ -1373,12 +1339,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 
 .pentaho-dialog .dialogBottomRight {
   display: none;
-}
-
-button#schedule-dialog-select-button {
-  border-radius: 0 4px 4px 0;
-  padding: 0 20px;
-  height: 33px;
 }
 
 /* Find a home for these */
@@ -1543,6 +1503,8 @@ button#schedule-dialog-select-button {
   flex-direction: column;
   overflow: auto;
   padding: var(--focus-ring-padding) var(--dialog-padding) var(--dialog-padding) !important;
+  height: auto !important;
+  width: auto !important;
   gap: var(--layout-gap-v) var(--layout-gap-h);
 }
 
@@ -1650,6 +1612,35 @@ button#schedule-dialog-select-button {
 }
 /* endregion */
 
+/* region AbstractWizardDialog */
+
+/* content row */
+.pentaho-wizard-dialog .dialogContent > table > tbody > tr:first-child > td {
+  display: contents;
+  flex: inherit;
+}
+
+.pentaho-wizard-steps-list {
+  /* Steps list is not used/supported in the responsive mode. */
+  display: none !important;
+}
+
+.pentaho-wizard-deck-panel,
+.pentaho-wizard-deck-panel > * {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+/* endregion */
+
+/* region Parameter UI */
+:where(.responsive).parameter-ui {
+  height: auto;
+  padding: var(--focus-ring-padding) !important;
+}
+/* endregion */
+
 /* region File Properties dialog */
 .file-properties-dialog .pentaho-tab-deck-panel > div > * {
   height: auto !important;
@@ -1680,6 +1671,117 @@ button#schedule-dialog-select-button {
 :is(.pentaho-dialog-change-password, .pentaho-dialog-new-user, .pentaho-dialog-new-role) .dialog-content input {
   width: unset !important;
 }
+/* endregion */
+
+/* region Schedule Wizard Dialogs */
+
+.schedule-label {
+  margin-top: unset;
+  margin-bottom: unset;
+  color: #666666;
+}
+
+#schedule-name-input {
+  width: unset;
+  margin-bottom: unset;
+  flex: 4 1 0;
+}
+
+.schedule-timestamp-listbox {
+  margin-left: unset;
+  margin-bottom: unset;
+  min-width: 200px;
+  width: unset;
+}
+
+.schedule-name-panel {
+  flex-wrap: wrap;
+  --flex-items: 1 1 0;
+}
+
+.schedule-caption-panel {
+  margin-top: unset;
+}
+
+.schedule-dialog-button-panel {
+  padding-right: 3px;
+  padding-bottom: 2px;
+  width: 100%;
+}
+
+.schedule-output-location-dialog,
+.new-schedule-dialog,
+.schedule-recurrence-dialog,
+.schedule-params-dialog,
+.schedule-email-dialog {
+  --dialog-max-height: 450px;
+}
+
+button#schedule-dialog-select-button {
+  flex: 0 1 auto;
+
+  font-size: var(--typ-body-font-size);
+  line-height: var(--typ-body-line-height);
+
+  margin: 0;
+  height: var(--input-outer-height);
+  border-width: var(--input-border-width);
+  border-radius: 4px;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Output Location Dialog / Panel */
+.schedule-dialog-location-panel {
+  flex-wrap: wrap;
+}
+
+#generated-content-location {
+  flex: auto;
+  margin-bottom: unset;
+  border-radius: 4px;
+}
+
+/* NOTE: --flex-items is not working for contained Flex Panels */
+.schedule-output-location-dialog .dialog-content > table > tbody > tr > td > * {
+  flex: none;
+}
+
+/* Parameters Dialog / Panel */
+.schedule-params-wizard-panel {
+  row-gap: 1em;
+}
+
+.schedule-params-wizard-panel .schedule-parameter-frame {
+
+  flex: 1 0 auto;
+  box-sizing: border-box;
+
+  /* Updated by JS code with the frame's content width and height */
+  --frame-content-width: initial;
+  --frame-content-height: initial;
+
+  /* Parameter ui html should use a body padding of the same + amount.
+     This allows the focus outline to "appear" to overflow the iframe,
+     while still aligning with the rest of the content of the dialog.
+     (see rule for .responsive.parameter-ui)
+   */
+  margin: calc(-1 * var(--focus-ring-padding));
+  border: 0;
+  padding: 0;
+
+  height: auto !important;
+
+  /* This will fail when --frame-content-height is not set,
+     falling back to previous declaration with auto.
+   */
+  height: calc(var(--frame-content-height, auto) - 2 * var(--focus-ring-padding)) !important;
+}
+
 /* endregion */
 
 .glasspane {
@@ -5686,7 +5788,7 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   background: #FFFFFF;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false); /* IE6-9 */
   color: #7C0B2B;
-   border: none;
+  border: none;
 }
 
 .IE #deleteJoinButton,
@@ -7979,13 +8081,13 @@ div#widget_pentaho_common_DateTextBox_0 {
 }
 
 div#widget_dijit_form_TextBox_1 {
-    border-radius: 4px;
-    margin-left: 5px;
-    background-image: none;
+  border-radius: 4px;
+  margin-left: 5px;
+  background-image: none;
 }
 
 span#filterContextMenu {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 /*Angular Tree control directive*/
@@ -8659,7 +8761,7 @@ button#preview[disabled]:active {
 
 .bootstrap #recentsContianer .nav-tabs > li,
 .bootstrap #favoritesContianer .nav-tabs > li {
-/* Ensure enough space for the focus-visible outline. */
+  /* Ensure enough space for the focus-visible outline. */
   margin: 4px;
 }
 
@@ -9031,7 +9133,7 @@ body.bootstrap .modal.confirmationDialog {
 }
 
 .bootstrap .filteredPluginsContainer ul > li:hover {
-    background: #CCCCCC;
+  background: #CCCCCC;
 }
 
 .bootstrap.admin-perspective .pentaho-tab-deck-panel {
@@ -9077,12 +9179,12 @@ body.bootstrap .modal.pluginDetailDialog .pluginDetail .pluginDetailTop .pluginD
 .bootstrap .filterBar .filterContainer .multiselect .dropdown-menu > li > a:focus,
 .bootstrap .filterBar .filterContainer .multiselect .dropdown-submenu:hover > a,
 .bootstrap .filterBar .filterContainer .multiselect .dropdown-submenu:focus > a {
-    background: #E6EFF6;
+  background: #E6EFF6;
 }
 
 .bootstrap .filterBar .filterContainer .multiselect .dropdown-menu .divider {
-    margin: 9px 0;
-    background-color: #CCC;
+  margin: 9px 0;
+  background-color: #CCC;
 }
 
 .bootstrap .filteredPluginsContainer ul > li .pluginAuthor,
@@ -9147,7 +9249,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 }
 
 .xul-label-disabled{
-	color: #666 !important;
+  color: #666 !important;
 }
 
 .is-hidden {
