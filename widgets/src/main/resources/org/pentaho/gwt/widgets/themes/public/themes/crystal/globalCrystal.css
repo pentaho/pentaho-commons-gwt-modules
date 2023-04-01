@@ -4545,7 +4545,9 @@ background: url("images/connector_top.png") no-repeat top left;
 .pentaho-addcombobutton{
   background: url('images/add_combo.png') no-repeat;
 }
-
+#standardDialog .filterConditionEdit {
+  background-image: url('images/edit_16.png');
+}
 #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button,
 #editPovContainerPanel #povTableEditSelected img.disabled-image-button-pressed, #editPovContainerPanel #povTableEditSelected img.disabled-image-button-over, #editPovContainerPanel #povTableEditSelected img.disabled-image-button {
   background: url('images/edit_16_disabled.png') no-repeat;
@@ -4558,7 +4560,9 @@ background: url("images/connector_top.png") no-repeat top left;
 #editPovContainerPanel #povTableAdd img.image-button-pressed, #editPovContainerPanel #povTableAdd img.image-button-over, #editPovContainerPanel #povTableAdd img.image-button{
   background: url('images/add_16.png') no-repeat;
 }
-#standardDialog .filterConditionDelete,
+#standardDialog .filterConditionDelete {
+  background-image: url('images/remove_16.png');
+}
 #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-pressed, #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-over, #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button,
 #editPovContainerPanel #povTableRemoveSelected img.image-button-pressed, #editPovContainerPanel #povTableRemoveSelected img.image-button-over, #editPovContainerPanel #povTableRemoveSelected img.image-button {
   background: url('images/remove_16.png') no-repeat;

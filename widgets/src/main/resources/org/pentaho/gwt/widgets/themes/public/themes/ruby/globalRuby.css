@@ -99,11 +99,12 @@
      along with text and the resulting input's height, and no other means exists.
    */
   --input-border-width: 1px;
-  --input-padding-v: 0.5em;
+  /* V-padding should be 11px. With a line-height of 17px, height equals 30px, like the normal input */
+  --input-padding-v: calc(1em * 5.5/14);
   --input-outer-height: calc(
       2 * var(--input-border-width) +
       2 * var(--input-padding-v) +
-      1em * var(--typ-body-font-size-px) / var(--typ-body-font-size-px));
+      1em * var(--typ-body-line-height-px) / var(--typ-body-font-size-px));
 }
 
 @media (max-height: 720px) {
@@ -302,6 +303,7 @@ SELECT:not([size]),
 .gwt-ListBox[size="1"],
 .gwt-ListBox:not([size]) {
   height: var(--input-outer-height);
+  line-height: var(--typ-body-line-height);
   padding: 0 30px 0 10px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -324,8 +326,8 @@ SELECT:not([size])::-ms-expand,
    */
   min-height: var(--input-outer-height);
   height: auto;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-top: var(--input-padding-v);
+  padding-bottom: var(--input-padding-v);
 }
 
 form SELECT {
@@ -480,18 +482,6 @@ div#staticSelectionTable {
 
 div#filterTypeDeck>div>table>tbody>tr>td>div {
   width: 250px !important;
-}
-
-div.sectionBar {
-  background-color: #F8F8F8 !important;
-}
-
-div.filterCondition table {
-  background-color: #ffffff; !important;
-}
-
-div.filterConditionAdd {
-  margin-top: 14px !important;
 }
 
 #editFilterDateRestriction, #editFilterPropDateFormat {
@@ -738,7 +728,12 @@ button.pentaho-button:visited,
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
-span.button-add-condition {
+.pentaho-button-like,
+.pentaho-button-like:link,
+.pentaho-button-like:visited,
+.pentaho-button-like:hover,
+.pentaho-button-like:active,
+.pentaho-button-like:focus {
   background: white;
   filter: none;
   font-size: 14px;
@@ -766,9 +761,9 @@ button.pentaho-button#uploadMetaButton {
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
-span.button-add-condition:hover,
-span.button-add-condition:active,
-span.button-add-condition:focus {
+.pentaho-button-like:hover,
+.pentaho-button-like:active,
+.pentaho-button-like:focus {
   background: #CC0000;
   border-color: #CC0000;
   color: #FFF
@@ -786,7 +781,13 @@ button.pentaho-button[disabled]:link,
 button.pentaho-button[disabled]:visited,
 button.pentaho-button[disabled]:hover,
 button.pentaho-button[disabled]:active,
-button.pentaho-button[disabled]:focus {
+button.pentaho-button[disabled]:focus,
+.pentaho-button-like.disabled,
+.pentaho-button-like.disabled:link,
+.pentaho-button-like.disabled:visited,
+.pentaho-button-like.disabled:hover,
+.pentaho-button-like.disabled:active,
+.pentaho-button-like.disabled:focus {
   background: #E4E4E4 !important;
   color: #999 !important;
   text-decoration: none !important;
@@ -1835,21 +1836,6 @@ button#schedule-dialog-select-button {
 .pentaho-tabWidget .pentaho-closebutton {
   position: relative;
   top: 3px;
-}
-
-input#FT_rankCount,
-input#FT_condOp1,
-input#FT_condOp2,
-select#FT_condOp,
-select#FT_condMetric,
-select#FT_rankMetric,
-select#FT_rankType,
-select#FT_attribute {
-  height: 24px;
-}
-
-input#FT_rankCount {
-  width: 40px;
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -7166,9 +7152,12 @@ span.gwt-RadioButton label {
   background: url('images/remove_16.png') no-repeat;
 }
 
-#standardDialog .filterConditionDelete {
-  background: url('images/remove_16.png') no-repeat;
-  background-position: center;
+.metric-filter-dialog .filterConditionDelete {
+  background-image: url('images/remove_16.png');
+}
+
+.metric-filter-dialog .filterConditionEdit {
+  background-image: url('images/edit_16.png');
 }
 
 #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed,
@@ -8228,6 +8217,7 @@ treecontrol.tree-classic li .tree-selected {
 
 #standardDialog .dialogMessageBar {
   margin-bottom: 10px;
+  flex: none;
 }
 
 #standardDialog #dialogMessageBar2 {
