@@ -106,9 +106,7 @@
       2 * var(--input-padding-v) +
       1em * var(--typ-body-line-height-px) / var(--typ-body-font-size-px));
 
-  /*
-
-  */
+  /* Icon size to resize with text zoom  */
   --icon-height-root: 22;
   --icon-width-root: 22;
 
@@ -1538,13 +1536,6 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-:where(.responsive).pentaho-dialog .icon-zoomable {
-  height: calc(1em * var(--icon-height)/14);
-  width: calc(1em * var(--icon-width)/14);
-
-  background-size: contain;
-}
 /* endregion DIALOG RESPONSIVE - END */
 
 /* region GWT DialogBox, PromptDialogBox RESPONSIVE */
@@ -2972,15 +2963,24 @@ body.IE>table {
   cursor: default;
 }
 
+.pentaho-addbutton, .pentaho-addbutton.icon-zoomable {
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
+}
 .pentaho-addbutton {
-  width: 22px;
-  height: 22px;
-  background: url('images/add.png') no-repeat center;
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/add.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
 }
 
 .pentaho-addbutton.pentaho-imagebutton-disabled {
-  background: url('images/add_disabled.png') no-repeat center;
+  background-image: url('images/add_disabled.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: default;
 }
 
@@ -4128,25 +4128,30 @@ div.dijitDateTextBox.dijitComboBox {
 .icon-small {
   --icon-height: 16;
   --icon-width: 16;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
 }
 
 .icon-medium {
   --icon-height: 32;
   --icon-width: 32;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
 }
 
 .icon-large {
   --icon-height: 48;
   --icon-width: 48;
+}
 
+.icon-small, .icon-medium, .icon-large {
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
+}
+
+.icon-zoomable {
+  height: calc(1em * var(--icon-height)/14);
+  width: calc(1em * var(--icon-width)/14);
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .refresh-browse-perspective,
@@ -4416,43 +4421,50 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-tree-node {
+  --icon-height: 16;
+  --icon-width: var(--icon-width-root);
+}
+
+.icon-tree-node:where(:not(.icon-zoomable)) {
   --icon-height: 14;
-  --icon-width: 22;
 
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
 }
 
 .icon-tree-node.icon-recycle-bin {
-  background: url('images/remove_16.png') no-repeat;
-  height: 16px;
+  --icon-height: 16;
+
+  background-image: url('images/remove_16.png');
+  background-repeat: no-repeat;
 }
 
 .icon-tree-node.icon-folder {
-  background: url('images/folder_16.png') no-repeat;
-  background-size: contain;
+  background-image: url('images/folder_16.png');
+  background-repeat: no-repeat;
 }
 
 .dijitFolderOpened,
 .dijitIconFolderOpen,
 .open > table .icon-tree-node.icon-folder {
-  background: url('images/folder_16-open.png') no-repeat;
-  background-size: contain;
+  background-image: url('images/folder_16-open.png');
+  background-repeat: no-repeat;
 }
 
 :is(
   .tree-item-collapsed,
   .leaf-widget.parent-widget
 ) > table > tbody > tr > td > img {
-  background: url('images/arrow_closed.png') no-repeat !important;
+  background-image: url('images/arrow_closed.png') !important;
+  background-repeat: no-repeat !important;
 }
 
 :is(
   .tree-item-expanded,
   .leaf-widget.parent-widget.open
 ) > table > tbody > tr > td > img {
-  background: url('images/arrow_open.png') no-repeat !important;
-  background-size: contain;
+  background-image: url('images/arrow_open.png') !important;
+  background-repeat: no-repeat !important;
 }
 
 .sidePanelIconOpen {
@@ -8300,29 +8312,21 @@ treecontrol.tree-classic li .tree-selected {
   background-color: #dbdbdb;
 }
 
-.gwt-TreeItem:hover .icon-folder {
-  background: url(images/folder_16.png) no-repeat;
-  background-size: contain;
+:is(
+  .gwt-TreeItem:hover,
+  .gwt-TreeItem-selected,
+  .gwt-TreeItem-selected:hover
+) .icon-folder {
+  background-image: url(images/folder_16.png);
+  background-repeat: no-repeat;
 }
 
-.gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16.png) no-repeat;
-  background-size: contain;
-}
-
-.gwt-TreeItem-selected .icon-folder {
-  background: url(images/folder_16.png) no-repeat;
-  background-size: contain;
-}
-
-.open > table .gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16-open.png) no-repeat;
-  background-size: contain;
-}
-
-.open > table .gwt-TreeItem-selected .icon-folder {
-  background: url(images/folder_16-open.png) no-repeat;
-  background-size: contain;
+.open > table :is(
+  .gwt-TreeItem-selected,
+  .gwt-TreeItem-selected:hover
+) .icon-folder {
+  background-image: url(images/folder_16-open.png);
+  background-repeat: no-repeat;
 }
 
 .gwt-TreeItem > table > tbody > tr > td:first-child {
