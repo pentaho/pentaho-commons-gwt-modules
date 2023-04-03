@@ -426,16 +426,20 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
   private void fixLeafNodes() {
     List<FolderTreeItem> allNodes = getAllNodes();
     for ( FolderTreeItem treeItem : allNodes ) {
+      LeafItemWidget leafWidget;
+      String itemText = treeItem.getText();
       RepositoryFileTree userObject = (RepositoryFileTree) treeItem.getUserObject();
-      if ( userObject != null && userObject.getChildren().size() == 0 ) { // This is a leaf node so change the
-                                                                          // widget
-        treeItem
-            .setWidget( new LeafItemWidget( treeItem.getText(), "icon-tree-node", "icon-tree-leaf", "icon-folder" ) ); //$NON-NLS-1$
+
+      if (userObject != null && userObject.getChildren().isEmpty()) {
+        leafWidget = new LeafItemWidget(
+          itemText,"icon-tree-node", "icon-tree-leaf", "icon-folder", "icon-zoomable" );
       } else {
-        treeItem.setWidget( new LeafItemWidget( treeItem.getText(), "icon-tree-node", "icon-folder" ) ); //$NON-NLS-1$
+        leafWidget = new LeafItemWidget( itemText, "icon-tree-node", "icon-folder", "icon-zoomable" );
       }
 
-      DOM.setStyleAttribute( treeItem.getElement(), "paddingLeft", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+      treeItem.setWidget( leafWidget );
+
+      DOM.setStyleAttribute( treeItem.getElement(), "paddingLeft", "0px" );
     }
   }
 

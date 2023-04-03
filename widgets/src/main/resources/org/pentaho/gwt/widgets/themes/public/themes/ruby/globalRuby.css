@@ -105,6 +105,15 @@
       2 * var(--input-border-width) +
       2 * var(--input-padding-v) +
       1em * var(--typ-body-line-height-px) / var(--typ-body-font-size-px));
+
+  /*
+
+  */
+  --icon-height-root: 22;
+  --icon-width-root: 22;
+
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
 }
 
 @media (max-height: 720px) {
@@ -1528,6 +1537,13 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+:where(.responsive).pentaho-dialog .icon-zoomable {
+  height: calc(1em * var(--icon-height)/14);
+  width: calc(1em * var(--icon-width)/14);
+
+  background-size: contain;
 }
 /* endregion DIALOG RESPONSIVE - END */
 
@@ -2964,8 +2980,6 @@ body.IE>table {
 }
 
 .pentaho-addbutton.pentaho-imagebutton-disabled {
-  width: 22px;
-  height: 22px;
   background: url('images/add_disabled.png') no-repeat center;
   cursor: default;
 }
@@ -4112,18 +4126,27 @@ div.dijitDateTextBox.dijitComboBox {
 
 /* == == == == */
 .icon-small {
-  height: 16px;
-  width: 16px;
+  --icon-height: 16;
+  --icon-width: 16;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
 }
 
 .icon-medium {
-  height: 32px;
-  width: 32px;
+  --icon-height: 32;
+  --icon-width: 32;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
 }
 
 .icon-large {
-  height: 48px;
-  width: 48px;
+  --icon-height: 48;
+  --icon-width: 48;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
 }
 
 .refresh-browse-perspective,
@@ -4211,9 +4234,10 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-small.icon-folder {
+  --icon-height: 22;
+  --icon-width: 22;
+
   background: url('images/folder_closed.png') no-repeat;
-  height: 22px;
-  width: 22px;
 }
 
 .fileChooser {
@@ -4392,8 +4416,11 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-tree-node {
-  height: 14px;
-  width: 22px;
+  --icon-height: 14;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
 }
 
 .icon-tree-node.icon-recycle-bin {
@@ -4403,22 +4430,29 @@ div.dijitDateTextBox.dijitComboBox {
 
 .icon-tree-node.icon-folder {
   background: url('images/folder_16.png') no-repeat;
+  background-size: contain;
 }
 
 .dijitFolderOpened,
 .dijitIconFolderOpen,
 .open > table .icon-tree-node.icon-folder {
   background: url('images/folder_16-open.png') no-repeat;
+  background-size: contain;
 }
 
-.tree-item-collapsed>table>tbody>tr>td>img,
-.leaf-widget.parent-widget>table>tbody>tr>td>img {
+:is(
+  .tree-item-collapsed,
+  .leaf-widget.parent-widget
+) > table > tbody > tr > td > img {
   background: url('images/arrow_closed.png') no-repeat !important;
 }
 
-.tree-item-expanded>table>tbody>tr>td>img,
-.leaf-widget.parent-widget.open>table>tbody>tr>td>img {
+:is(
+  .tree-item-expanded,
+  .leaf-widget.parent-widget.open
+) > table > tbody > tr > td > img {
   background: url('images/arrow_open.png') no-repeat !important;
+  background-size: contain;
 }
 
 .sidePanelIconOpen {
@@ -8268,38 +8302,58 @@ treecontrol.tree-classic li .tree-selected {
 
 .gwt-TreeItem:hover .icon-folder {
   background: url(images/folder_16.png) no-repeat;
+  background-size: contain;
 }
 
 .gwt-TreeItem-selected:hover .icon-folder {
   background: url(images/folder_16.png) no-repeat;
+  background-size: contain;
 }
 
 .gwt-TreeItem-selected .icon-folder {
   background: url(images/folder_16.png) no-repeat;
+  background-size: contain;
 }
 
 .open > table .gwt-TreeItem-selected:hover .icon-folder {
   background: url(images/folder_16-open.png) no-repeat;
+  background-size: contain;
 }
 
 .open > table .gwt-TreeItem-selected .icon-folder {
   background: url(images/folder_16-open.png) no-repeat;
-}
-
-.open > table .gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16-open.png) no-repeat;
+  background-size: contain;
 }
 
 .gwt-TreeItem > table > tbody > tr > td:first-child {
   padding-left: 5px;
 }
 
+.select-folder-toolbar .toolbar-button-focus-panel {
+  align-self: center;
+}
+
 .select-folder-tree {
-  height: 360px;
-  overflow: auto;
-  width: 380px;
+  --select-folder-line-height: 20px;
+
+  min-height: calc(8 * var(--select-folder-line-height));
+  height: calc(18 * var(--select-folder-line-height));
+  overflow: hidden auto;
+
   border: 1px solid #CCC;
+  border-top: none;
   background-color: white;
+}
+
+.select-folder-tree :is(
+  .tree-item-expanded,
+  .tree-item-collapsed,
+  .leaf-widget.parent-widget
+) > table > tbody > tr > td > img {
+  height: calc(1em * 16/14) !important;
+  width: calc(1em * 16/14) !important;
+
+  background-size: contain !important;
 }
 
 #sidepanel #sidepaneltabset > div > span {
