@@ -150,13 +150,14 @@ public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener
   public void add( int key ) {
     switch ( key ) {
       case Toolbar.SEPARATOR:
-
         Image img = new Image( GWT.getModuleBaseURL() + "images/toolbarDivider.png" );
         bar.add( img );
         bar.setCellVerticalAlignment( img, ALIGN_MIDDLE );
         break;
       case Toolbar.GLUE:
         SimplePanel panel = new SimplePanel();
+        panel.setStyleName( "flex-auto" );
+
         bar.add( panel );
         bar.setCellWidth( panel, "100%" ); //$NON-NLS-1$
         break;

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -426,16 +426,20 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
   private void fixLeafNodes() {
     List<FolderTreeItem> allNodes = getAllNodes();
     for ( FolderTreeItem treeItem : allNodes ) {
+      LeafItemWidget leafWidget;
+      String itemText = treeItem.getText();
       RepositoryFileTree userObject = (RepositoryFileTree) treeItem.getUserObject();
-      if ( userObject != null && userObject.getChildren().size() == 0 ) { // This is a leaf node so change the
-                                                                          // widget
-        treeItem
-            .setWidget( new LeafItemWidget( treeItem.getText(), "icon-tree-node", "icon-tree-leaf", "icon-folder" ) ); //$NON-NLS-1$
+
+      if (userObject != null && userObject.getChildren().isEmpty()) {
+        leafWidget = new LeafItemWidget(
+          itemText,"icon-tree-node", "icon-tree-leaf", "icon-folder", "icon-zoomable" );
       } else {
-        treeItem.setWidget( new LeafItemWidget( treeItem.getText(), "icon-tree-node", "icon-folder" ) ); //$NON-NLS-1$
+        leafWidget = new LeafItemWidget( itemText, "icon-tree-node", "icon-folder", "icon-zoomable" );
       }
 
-      DOM.setStyleAttribute( treeItem.getElement(), "paddingLeft", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+      treeItem.setWidget( leafWidget );
+
+      DOM.setStyleAttribute( treeItem.getElement(), "paddingLeft", "0px" );
     }
   }
 

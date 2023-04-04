@@ -105,6 +105,13 @@
       2 * var(--input-border-width) +
       2 * var(--input-padding-v) +
       1em * var(--typ-body-line-height-px) / var(--typ-body-font-size-px));
+
+  /* Icon size to resize with text zoom  */
+  --icon-height-root: 22;
+  --icon-width-root: 22;
+
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
 }
 
 @media (max-height: 720px) {
@@ -2956,17 +2963,24 @@ body.IE>table {
   cursor: default;
 }
 
+.pentaho-addbutton, .pentaho-addbutton.icon-zoomable {
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
+}
 .pentaho-addbutton {
-  width: 22px;
-  height: 22px;
-  background: url('images/add.png') no-repeat center;
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/add.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
 }
 
 .pentaho-addbutton.pentaho-imagebutton-disabled {
-  width: 22px;
-  height: 22px;
-  background: url('images/add_disabled.png') no-repeat center;
+  background-image: url('images/add_disabled.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: default;
 }
 
@@ -4112,18 +4126,32 @@ div.dijitDateTextBox.dijitComboBox {
 
 /* == == == == */
 .icon-small {
-  height: 16px;
-  width: 16px;
+  --icon-height: 16;
+  --icon-width: 16;
 }
 
 .icon-medium {
-  height: 32px;
-  width: 32px;
+  --icon-height: 32;
+  --icon-width: 32;
 }
 
 .icon-large {
-  height: 48px;
-  width: 48px;
+  --icon-height: 48;
+  --icon-width: 48;
+}
+
+.icon-small, .icon-medium, .icon-large {
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+}
+
+.icon-zoomable {
+  height: calc(1em * var(--icon-height)/14);
+  width: calc(1em * var(--icon-width)/14);
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .refresh-browse-perspective,
@@ -4211,9 +4239,10 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-small.icon-folder {
+  --icon-height: 22;
+  --icon-width: 22;
+
   background: url('images/folder_closed.png') no-repeat;
-  height: 22px;
-  width: 22px;
 }
 
 .fileChooser {
@@ -4392,33 +4421,50 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-tree-node {
-  height: 14px;
-  width: 22px;
+  --icon-height: 16;
+  --icon-width: var(--icon-width-root);
+}
+
+.icon-tree-node:where(:not(.icon-zoomable)) {
+  --icon-height: 14;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
 }
 
 .icon-tree-node.icon-recycle-bin {
-  background: url('images/remove_16.png') no-repeat;
-  height: 16px;
+  --icon-height: 16;
+
+  background-image: url('images/remove_16.png');
+  background-repeat: no-repeat;
 }
 
 .icon-tree-node.icon-folder {
-  background: url('images/folder_16.png') no-repeat;
+  background-image: url('images/folder_16.png');
+  background-repeat: no-repeat;
 }
 
 .dijitFolderOpened,
 .dijitIconFolderOpen,
 .open > table .icon-tree-node.icon-folder {
-  background: url('images/folder_16-open.png') no-repeat;
+  background-image: url('images/folder_16-open.png');
+  background-repeat: no-repeat;
 }
 
-.tree-item-collapsed>table>tbody>tr>td>img,
-.leaf-widget.parent-widget>table>tbody>tr>td>img {
-  background: url('images/arrow_closed.png') no-repeat !important;
+:is(
+  .tree-item-collapsed,
+  .leaf-widget.parent-widget
+) > table > tbody > tr > td > img {
+  background-image: url('images/arrow_closed.png') !important;
+  background-repeat: no-repeat !important;
 }
 
-.tree-item-expanded>table>tbody>tr>td>img,
-.leaf-widget.parent-widget.open>table>tbody>tr>td>img {
-  background: url('images/arrow_open.png') no-repeat !important;
+:is(
+  .tree-item-expanded,
+  .leaf-widget.parent-widget.open
+) > table > tbody > tr > td > img {
+  background-image: url('images/arrow_open.png') !important;
+  background-repeat: no-repeat !important;
 }
 
 .sidePanelIconOpen {
@@ -8266,40 +8312,52 @@ treecontrol.tree-classic li .tree-selected {
   background-color: #dbdbdb;
 }
 
-.gwt-TreeItem:hover .icon-folder {
-  background: url(images/folder_16.png) no-repeat;
+:is(
+  .gwt-TreeItem:hover,
+  .gwt-TreeItem-selected,
+  .gwt-TreeItem-selected:hover
+) .icon-folder {
+  background-image: url(images/folder_16.png);
+  background-repeat: no-repeat;
 }
 
-.gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16.png) no-repeat;
-}
-
-.gwt-TreeItem-selected .icon-folder {
-  background: url(images/folder_16.png) no-repeat;
-}
-
-.open > table .gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16-open.png) no-repeat;
-}
-
-.open > table .gwt-TreeItem-selected .icon-folder {
-  background: url(images/folder_16-open.png) no-repeat;
-}
-
-.open > table .gwt-TreeItem-selected:hover .icon-folder {
-  background: url(images/folder_16-open.png) no-repeat;
+.open > table :is(
+  .gwt-TreeItem-selected,
+  .gwt-TreeItem-selected:hover
+) .icon-folder {
+  background-image: url(images/folder_16-open.png);
+  background-repeat: no-repeat;
 }
 
 .gwt-TreeItem > table > tbody > tr > td:first-child {
   padding-left: 5px;
 }
 
+.select-folder-toolbar .toolbar-button-focus-panel {
+  align-self: center;
+}
+
 .select-folder-tree {
-  height: 360px;
-  overflow: auto;
-  width: 380px;
+  --select-folder-line-height: 20px;
+
+  min-height: calc(8 * var(--select-folder-line-height));
+  height: calc(18 * var(--select-folder-line-height));
+  overflow: hidden auto;
+
   border: 1px solid #CCC;
+  border-top: none;
   background-color: white;
+}
+
+.select-folder-tree :is(
+  .tree-item-expanded,
+  .tree-item-collapsed,
+  .leaf-widget.parent-widget
+) > table > tbody > tr > td > img {
+  height: calc(1em * 16/14) !important;
+  width: calc(1em * 16/14) !important;
+
+  background-size: contain !important;
 }
 
 #sidepanel #sidepaneltabset > div > span {
