@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -20,7 +20,6 @@ package org.pentaho.mantle.client.dialogs.scheduling;
 import com.google.gwt.json.client.JSONObject;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.events.EventBusUtil;
@@ -39,8 +38,6 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ScheduleHelper {
 
@@ -220,13 +217,13 @@ public class ScheduleHelper {
   }
 
   public static void confirmBackgroundExecutionDialog( final String url ) {
-    final String title = Messages.getString( "confirm" ); //$NON-NLS-1$
-    final String message = Messages.getString( "userParamBackgroundWarning" ); //$NON-NLS-1$
-    VerticalPanel vp = new VerticalPanel();
-    vp.add( new Label( Messages.getString( message ) ) );
 
-    final PromptDialogBox scheduleInBackground =
-        new PromptDialogBox( title, Messages.getString( "yes" ), Messages.getString( "no" ), false, true, vp ); //$NON-NLS-1$ //$NON-NLS-2$
+    final MessageDialogBox scheduleInBackground = new MessageDialogBox(
+      Messages.getString( "confirm" ),
+      Messages.getString( "userParamBackgroundWarning" ),
+      false,
+      Messages.getString( "yes" ),
+      Messages.getString( "no" ) );
 
     final IDialogCallback callback = new IDialogCallback() {
       public void cancelPressed() {
