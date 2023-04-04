@@ -389,10 +389,6 @@ div.filterCondition table {
   background-color: #CCDFED !important;
 }
 
-div.filterConditionAdd {
-  margin-top: 14px !important;
-}
-
 #editFilterDateRestriction, #editFilterPropDateFormat {
   margin-bottom: 5px !important;
 }
@@ -635,7 +631,12 @@ button.pentaho-button:visited,
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
-span.button-add-condition {
+.pentaho-button-like,
+.pentaho-button-like:link,
+.pentaho-button-like:visited,
+.pentaho-button-like:hover,
+.pentaho-button-like:active,
+.pentaho-button-like:focus {
   background: #005DA6;
   filter: none;
   font-size: 14px;
@@ -659,9 +660,9 @@ span.button-add-condition {
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
-span.button-add-condition:hover,
-span.button-add-condition:active,
-span.button-add-condition:focus {
+.pentaho-button-like:hover,
+.pentaho-button-like:active,
+.pentaho-button-like:focus {
   background: #0F2B5B;
 }
 
@@ -677,7 +678,13 @@ button.pentaho-button[disabled]:link,
 button.pentaho-button[disabled]:visited,
 button.pentaho-button[disabled]:hover,
 button.pentaho-button[disabled]:active,
-button.pentaho-button[disabled]:focus {
+button.pentaho-button[disabled]:focus,
+.pentaho-button-like.disabled,
+.pentaho-button-like.disabled:link,
+.pentaho-button-like.disabled:visited,
+.pentaho-button-like.disabled:hover,
+.pentaho-button-like.disabled:active,
+.pentaho-button-like.disabled:focus {
   background: #E4E4E4 !important;
   color: #999 !important;
   text-decoration: none !important;
@@ -1082,21 +1089,6 @@ button#schedule-dialog-select-button {
 .pentaho-tabWidget .pentaho-closebutton {
   position: relative;
   top: 3px;
-}
-
-input#FT_rankCount,
-input#FT_condOp1,
-input#FT_condOp2,
-select#FT_condOp,
-select#FT_condMetric,
-select#FT_rankMetric,
-select#FT_rankType,
-select#FT_attribute {
-  height: 24px;
-}
-
-input#FT_rankCount {
-  width: 40px;
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -5815,8 +5807,11 @@ span.gwt-RadioButton label {
 }
 
 #standardDialog .filterConditionDelete {
-  background: url('images/remove_16.png') no-repeat;
-  background-position: center;
+  background-image: url('images/remove_16.png');
+}
+
+#standardDialog .filterConditionEdit {
+  background-image: url('images/edit_16.png');
 }
 
 #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed,
