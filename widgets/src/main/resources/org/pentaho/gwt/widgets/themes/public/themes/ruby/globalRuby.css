@@ -4477,64 +4477,61 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/trash.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon::before {
+.fileBrowserColumn .body .file .icon {
   background-image: url("images/file_generic.png");
 }
 
-.fileBrowserColumn .body .file.icon.url::before {
+.fileBrowserColumn .body .file .icon.url {
   background-image: url("images/file_url.png");
 }
 
-.fileBrowserColumn .body .file.icon.xanalyzer::before {
+.fileBrowserColumn .body .file .icon.xanalyzer {
   background-image: url("images/file_analysis.png");
 }
 
-.fileBrowserColumn .body .file.icon.xdash::before {
+.fileBrowserColumn .body .file .icon.xdash {
   background-image: url("images/file_dashboard.png");
 }
 
-.fileBrowserColumn .body .file.icon.ktr::before {
+.fileBrowserColumn .body .file .icon.ktr {
   background-image: url("images/kettle_transformation.png");
   background-position: calc(1em * 2/ 14) center;
   background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
   width: calc(1em * 18/ 14);
 }
 
-.fileBrowserColumn .body .file.icon.kjb::before {
+.fileBrowserColumn .body .file .icon.kjb {
   background-image: url("images/kettle_job.png");
   background-position: calc(1em * 2/ 14) center;
   background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
   width: calc(1em * 18/ 14);
 }
 
-.fileBrowserColumn .body .file.icon.xaction::before {
+.fileBrowserColumn .body .file .icon.xaction {
   background-image: url("images/file_action.png");
 }
 
-.fileBrowserColumn .body .file.icon.prpt::before {
+.fileBrowserColumn .body .file .icon.prpt {
   background-image: url("images/prptFile.png");
 }
 
-.fileBrowserColumn .body .file.icon.prpti::before {
+.fileBrowserColumn .body .file .icon.prpti {
   background-image: url("images/prptiFile.png");
 }
 
-.fileBrowserColumn .body .file.trashFolder::before {
-  background-image: url("images/folder_closed.png");
-  background-position: 0 calc(1em * 2/14);
-  background-size: calc(1em * 36/14) calc(1em * 14/14);
-  width: calc(1em * 18/ 14);
+.fileBrowserColumn .body .file .icon.trashFolder {
+  background: url("images/folder_closed.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.cda::before {
+.fileBrowserColumn .body .file .icon.cda {
   background-image: url("images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file.icon.wcdf::before {
+.fileBrowserColumn .body .file .icon.wcdf {
   background-image: url("images/cde_20.png");
 }
 
-.fileBrowserColumn .body .file.icon.xcdf::before {
+.fileBrowserColumn .body .file .icon.xcdf {
   background-image: url("images/cdf_20.png");
 }
 
@@ -4760,7 +4757,6 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn > .body {
   flex: auto;
   position: unset;
-  display: flex;
   flex-direction: column;
 }
 
@@ -4875,7 +4871,8 @@ div.dijitDateTextBox.dijitComboBox {
   }
 }
 
-.fileBrowserColumn .body .file:hover {
+.fileBrowserColumn .body .file:hover,
+.fileBrowserColumn .body .file.navigatebykey {
   background-color: #E0E0E0;
 }
 
