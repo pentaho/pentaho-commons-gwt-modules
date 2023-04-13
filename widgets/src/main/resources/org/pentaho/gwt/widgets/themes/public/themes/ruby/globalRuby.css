@@ -4859,8 +4859,7 @@ div.dijitDateTextBox.dijitComboBox {
 /* region .file ... */
 .fileBrowserFiles > .body > .file {
   width: calc(100% - 2 * 8px);
-  padding: 8px;
-
+  padding: 8px 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -4875,8 +4874,7 @@ div.dijitDateTextBox.dijitComboBox {
   }
 }
 
-.fileBrowserColumn .body .file:hover,
-.fileBrowserColumn .body .file.navigatebykey {
+.fileBrowserColumn .body .file:hover {
   background-color: #E0E0E0;
 }
 
