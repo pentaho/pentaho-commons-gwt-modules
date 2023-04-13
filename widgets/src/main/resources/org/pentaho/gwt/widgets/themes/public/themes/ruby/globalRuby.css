@@ -175,6 +175,10 @@ input:focus-visible:focus-visible:focus-visible,
   --focus-ring: none;
 }
 
+:focus-visible .active-descendant {
+  border: var(--focus-ring);
+}
+
 a, a:link {
   color: #7C0B2B;
   text-decoration: none;
