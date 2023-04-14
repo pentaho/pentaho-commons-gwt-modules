@@ -12,11 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.toolbar;
 
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -25,6 +30,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -34,6 +40,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.text.ToolTip;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 /**
  * Manages a PushButton in the common toolbar {@link Toolbar}.
@@ -138,7 +145,7 @@ public class ToolbarButton {
 
     button.setStyleName( stylePrimaryName );
     eventWrapper.add( button );
-
+    eventWrapper.addStyleName( stylePrimaryName + "-focus-panel" );
     addStyleMouseListener();
   }
 
@@ -211,6 +218,37 @@ public class ToolbarButton {
       public void onMouseMove( Widget arg0, int arg1, int arg2 ) {
       }
     } );
+
+    addKeyboardListener();
+  }
+
+  protected void addKeyboardListener() {
+    eventWrapper.addKeyDownHandler( keyDownEvent -> {
+      switch ( keyDownEvent.getNativeKeyCode() ) {
+        case KeyCodes.KEY_SPACE:
+          keyDownEvent.preventDefault();
+          break;
+        case KeyCodes.KEY_ENTER:
+          keyDownEvent.preventDefault();
+          ElementUtils.click( ToolbarButton.this.button.getElement() );
+          break;
+      }
+    } );
+
+    eventWrapper.addKeyUpHandler( keyUpEvent -> {
+      if ( KeyCodes.KEY_SPACE == keyUpEvent.getNativeKeyCode() ) {
+        keyUpEvent.preventDefault();
+        ElementUtils.click( ToolbarButton.this.button.getElement() );
+      }
+    } );
+  }
+
+  public HandlerRegistration addKeyDownHandler( KeyDownHandler handler ) {
+    return this.button.addDomHandler( handler, KeyDownEvent.getType() );
+  }
+
+  public HandlerRegistration addKeyUpHandler( KeyUpHandler handler ) {
+    return this.button.addDomHandler( handler, KeyUpEvent.getType() );
   }
 
   /**
@@ -233,7 +271,7 @@ public class ToolbarButton {
     this.enabled = enabled;
     if ( enabled ) {
       button.removeStyleName( stylePrimaryName + "-disabled" ); //$NON-NLS-1$
-
+      this.eventWrapper.setTabIndex( 0 );
       if ( prevState == false && disabledImage != null ) {
         // was disabled, remove old image and put in the enabled one
         button.remove( currentImage );
@@ -244,7 +282,7 @@ public class ToolbarButton {
 
     } else {
       button.addStyleName( stylePrimaryName + "-disabled" ); //$NON-NLS-1$
-
+      this.eventWrapper.setTabIndex( -1 );
       if ( prevState == true && disabledImage != null ) {
         // was enabled, remove old image and put in the disabled one
         button.remove( currentImage );
@@ -278,6 +316,7 @@ public class ToolbarButton {
   public void setVisible( boolean visible ) {
     this.visible = visible;
     button.setVisible( visible );
+    eventWrapper.getElement().setTabIndex( visible ? 0 : -1 );
   }
 
   /**
@@ -296,6 +335,14 @@ public class ToolbarButton {
    */
   public Image getImage() {
     return image;
+  }
+
+  /**
+   * Returns the alternative image text.
+   * @return null if image is null
+   */
+  public String getImageAltText() {
+    return ( this.image != null ) ? this.image.getAltText() : null;
   }
 
   /**
@@ -320,6 +367,16 @@ public class ToolbarButton {
     button.add( curImage, DockPanel.CENTER );
     button.setCellHorizontalAlignment( curImage, DockPanel.ALIGN_CENTER );
     button.setCellVerticalAlignment( curImage, DockPanel.ALIGN_MIDDLE );
+  }
+
+  /**
+   * Set image alternative text.
+   * @param altText alternative text
+   */
+  public void setImageAltText( String altText ) {
+    if ( this.image != null ) {
+      this.image.setAltText( altText );
+    }
   }
 
   /**

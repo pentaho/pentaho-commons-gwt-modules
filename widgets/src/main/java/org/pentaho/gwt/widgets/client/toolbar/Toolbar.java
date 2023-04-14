@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.toolbar;
@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 import java.util.ArrayList;
@@ -35,14 +36,14 @@ import java.util.List;
  * 
  * @author nbaker
  */
-public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, ToolbarPopupSource {
+public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener, ToolbarPopupSource {
 
   public static final int SEPARATOR = 1;
 
   public static final int GLUE = 2;
 
   // table holding the buttons
-  protected HorizontalPanel bar = new HorizontalPanel();
+  protected HorizontalPanel bar = new HorizontalFlexPanel();
 
   // Collection of buttons
   protected List<ToolbarButton> buttons = new ArrayList<ToolbarButton>();
@@ -53,7 +54,12 @@ public class Toolbar extends HorizontalPanel implements ToolbarPopupListener, To
   protected List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
 
   public Toolbar() {
+    // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
+    // because it is composed of multiple classes... Base style is added back right after.
+    this.setStyleName( "" );
     this.setStylePrimaryName( "toolbar" ); //$NON-NLS-1$
+    this.addStyleName( HorizontalFlexPanel.STYLE_NAME );
+
     this.setVerticalAlignment( ALIGN_MIDDLE );
 
     bar.setVerticalAlignment( ALIGN_MIDDLE );

@@ -3743,120 +3743,100 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/trash_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file .icon {
-  background: url("images/file_generic.png") no-repeat;
-  margin: 0 5px;
+.fileBrowserColumn .body .file.icon::before {
+  background-image: url("images/file_generic.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon {
-  background: url("images/file_generic_white.png") no-repeat;
-  margin: 0 5px;
+.fileBrowserColumn .body .file.icon.selected::before {
+  background-image: url("images/file_generic_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.url {
-  background: url("images/file_url.png") no-repeat;
+.fileBrowserColumn .body .file.icon.url::before {
+  background-image: url("images/file_url.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.url {
-  background: url("images/file_url_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.url::before {
+  background-image: url("images/file_url_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.xanalyzer {
-  background: url("images/file_analysis.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xanalyzer::before {
+  background-image: url("images/file_analysis.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.xanalyzer {
-  background: url("images/file_analysis_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.xanalyzer::before {
+  background-image: url("images/file_analysis_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.xdash,
-.fileBrowserColumn .body .file .xdash {
-  background: url("images/file_dashboard.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xdash::before {
+  background-image: url("images/file_dashboard.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.xdash,
-.fileBrowserColumn .body .file.selected .xdash {
-  background: url("images/file_dashboard_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.xdash::before {
+  background-image: url("images/file_dashboard_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.ktr,
-.fileBrowserColumn .body .file .ktr,
-.fileBrowserColumn .body .file:hover .icon.ktr,
-.fileBrowserColumn .body .file:hover .ktr {
-  background: url("images/kettle_transformation.png") no-repeat 3px;
+.fileBrowserColumn .body .file.icon.ktr::before {
+  background-image: url("images/kettle_transformation.png");
+  background-position: 4px center;
 }
 
-.fileBrowserColumn .body .file.selected .icon.ktr,
-.fileBrowserColumn .body .file.selected .ktr {
-  background: url("images/kettle_transformation.png") no-repeat -15px;
-  margin-left: 7px;
+.fileBrowserColumn .body .file.icon.selected.ktr::before {
+  background-image: url("images/kettle_transformation.png");
+  background-position: 4px center;
 }
 
-.fileBrowserColumn .body .file .icon.kjb,
-.fileBrowserColumn .body .file .kjb,
-.fileBrowserColumn .body .file:hover .icon.kjb,
-.fileBrowserColumn .body .file:hover .kjb {
-  background: url("images/kettle_job.png") no-repeat 3px;
+.fileBrowserColumn .body .file.icon.kjb::before {
+  background-image: url("images/kettle_job.png");
+  background-position: 4px center;
 }
 
-.fileBrowserColumn .body .file.selected .icon.kjb,
-.fileBrowserColumn .body .file.selected .kjb {
-  background: url("images/kettle_job.png") no-repeat -15px;
-  margin-left: 7px;
+.fileBrowserColumn .body .file.icon.selected.kjb::before {
+  background-image: url("images/kettle_job.png");
+  background-position: 4px center;
 }
 
-.fileBrowserColumn .body .file .icon.xaction,
-.fileBrowserColumn .body .file .xaction {
-  background: url("images/file_action.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xaction::before {
+  background-image: url("images/file_action.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.xaction,
-.fileBrowserColumn .body .file.selected .xaction {
-  background: url("images/file_action_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.xaction::before {
+  background-image: url("images/file_action_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.prpt,
-.fileBrowserColumn .body .file .prpt {
-  background: url("images/prptFile.png") no-repeat;
+.fileBrowserColumn .body .file.icon.prpt::before {
+  background-image: url("images/prptFile.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.prpt,
-.fileBrowserColumn .body .file.selected .prpt {
-  background: url("images/prptFile_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.prpt::before {
+  background-image: url("images/prptFile_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.prpti,
-.fileBrowserColumn .body .file .prpti {
-  background: url("images/prptiFile.png") no-repeat;
+.fileBrowserColumn .body .file.icon.prpti::before {
+  background-image: url("images/prptiFile.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.prpti,
-.fileBrowserColumn .body .file.selected .prpti {
-  background: url("images/prptiFile_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.prpti::before {
+  background-image: url("images/prptiFile_white.png");
 }
 
-.fileBrowserColumn .body .file .icon.trashFolder {
-  background: url("images/folder_closed.png") no-repeat;
+.fileBrowserColumn .body .file.icon.trashFolder::before {
+  background-image: url("images/folder_closed.png");
 }
 
-.fileBrowserColumn .body .file .icon.cda.cda,
-.fileBrowserColumn .body .file .cda.cda {
-  background: url("images/cda_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.cda.cda::before {
+  background-image: url("images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.wcdf.wcdf,
-.fileBrowserColumn .body .file .wcdf.wcdf {
-  background: url("images/cde_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.wcdf.wcdf::before {
+  background-image: url("images/cde_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file .xcdf.xcdf {
-  background: url("images/cdf_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.xcdf.xcdf::before {
+  background-image: url("images/cdf_20.png");
 }
 
-.fileBrowserColumn .body .file.selected .icon.xcdf.xcdf,
-.fileBrowserColumn .body .file.selected .xcdf.xcdf {
-  background: url("images/cdf_20_white.png") no-repeat;
+.fileBrowserColumn .body .file.icon.selected.xcdf.xcdf::before {
+  background-image: url("images/cdf_20_white.png");
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.expandCollapse {
@@ -4044,7 +4024,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .file.selected {
-  background: #0F2B5B;
+  background-color: #0F2B5B;
   color: #FFF;
 }
 
@@ -6506,14 +6486,12 @@ div.listbox .pentaho-listbox {
   background: url("images/table_fact.png");
 }
 
-.fileBrowserColumn .body .file .icon.cda,
-.fileBrowserColumn .body .file .cda {
-  background: url("../images/cda_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.cda::before {
+  background-image: url("../images/cda_20.png");
 }
 
-.fileBrowserColumn .body .file .icon.wcdf,
-.fileBrowserColumn .body .file .wcdf {
-  background: url("../images/cde_20.png") no-repeat;
+.fileBrowserColumn .body .file.icon.wcdf::before {
+  background-image: url("../images/cde_20.png");
 }
 
 .file-cda {

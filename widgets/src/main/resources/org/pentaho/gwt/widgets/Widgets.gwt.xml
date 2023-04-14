@@ -29,5 +29,11 @@
 
     <public path="public"/>
     <public path="client/filechooser/public"/>
+
+    <!-- Supports org.pentaho.gwt.widgets.client.utils.GWTUtils.isSuperDevMode() -->
+    <replace-with class="org.pentaho.gwt.widgets.client.utils.GWTUtils.SuperDevModeIndicatorInSuperDevMode">
+      <when-type-is class="org.pentaho.gwt.widgets.client.utils.GWTUtils.SuperDevModeIndicator"/>
+      <when-property-is name="superdevmode" value="on" />
+    </replace-with>
       
 </module>

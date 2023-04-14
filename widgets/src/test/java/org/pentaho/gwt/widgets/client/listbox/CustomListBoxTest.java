@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.listbox;
@@ -23,7 +23,6 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -32,6 +31,7 @@ import com.google.gwtmockito.WithClassesToStub;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -173,7 +173,7 @@ public class CustomListBoxTest {
   public void testSetVisibleRowCount() throws Exception {
     doCallRealMethod().when( customListBox ).setVisibleRowCount( anyInt() );
 
-    customListBox.fPanel = mock( FocusPanel.class );
+    customListBox.fPanel = mock( PentahoFocusPanel.class );
     customListBox.dropGrid = mock( FlexTable.class );
     customListBox.listScrollPanel = mock( ScrollPanel.class );
 
@@ -367,7 +367,7 @@ public class CustomListBoxTest {
   public void testSetHeight() throws Exception {
     doCallRealMethod().when( customListBox ).setHeight( anyString() );
 
-    customListBox.fPanel = mock( FocusPanel.class );
+    customListBox.fPanel = mock( PentahoFocusPanel.class );
     customListBox.listScrollPanel = mock( ScrollPanel.class );
     customListBox.visible = 1;
     final String height = "100px";
@@ -383,7 +383,7 @@ public class CustomListBoxTest {
   public void testSetWidth() throws Exception {
     doCallRealMethod().when( customListBox ).setWidth( anyString() );
 
-    customListBox.fPanel = mock( FocusPanel.class );
+    customListBox.fPanel = mock( PentahoFocusPanel.class );
     customListBox.listScrollPanel = mock( ScrollPanel.class );
     customListBox.dropGrid = mock( FlexTable.class );
     customListBox.visible = 1;
@@ -420,7 +420,7 @@ public class CustomListBoxTest {
   public void testItemSelected() throws Exception {
     doCallRealMethod().when( customListBox ).itemSelected( any( ListItem.class ), any( Event.class ) );
 
-    customListBox.fPanel = mock( FocusPanel.class );
+    customListBox.fPanel = mock( PentahoFocusPanel.class );
     final ListItem listItem = mock( ListItem.class );
     final Event event = mock( Event.class );
 

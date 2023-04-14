@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.buttons;
@@ -20,7 +20,12 @@ package org.pentaho.gwt.widgets.client.buttons;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.aria.client.Roles;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -29,9 +34,10 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Image;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 /**
  * Clickable image with enable/disable functionality built in. Makes use of css styles to provide the image and sizing.
@@ -42,7 +48,7 @@ public class ThemeableImageButton extends Image {
   private Set<String> enabledStyles = new HashSet<String>();
   private Set<String> disabledStyles = new HashSet<String>();
 
-  private static final String BLANK_IMAGE = GWT.getHostPageBaseURL()
+  private static final String BLANK_IMAGE = EnvironmentHelper.getFullyQualifiedURL()
       + "content/common-ui/resources/themes/images/spacer.gif";
   private static final String BASE_CLASS = "image-button";
   private static final String DISABLED_CLASS = "disabled-image-button";
@@ -62,6 +68,8 @@ public class ThemeableImageButton extends Image {
   public ThemeableImageButton( String[] enabledStyles, String[] disabledStyles, String tooltip ) {
     super( BLANK_IMAGE );
     initStyles();
+    Roles.getButtonRole().set( getElement() );
+    getElement().setTabIndex( 0 );
     if ( enabledStyles != null && enabledStyles.length > 0 ) {
       addEnabledStyle( enabledStyles );
     }
@@ -105,11 +113,13 @@ public class ThemeableImageButton extends Image {
           removeStyleName( PRESSED_CLASS ); //$NON-NLS-1$
           addStyleName( PRESSED_DISABLED_CLASS );
         }
+        event.preventDefault();
       }
     } );
     this.addMouseUpHandler( new MouseUpHandler() {
       public void onMouseUp( MouseUpEvent event ) {
         updateStyles();
+        event.preventDefault();
       }
     } );
 
@@ -122,14 +132,48 @@ public class ThemeableImageButton extends Image {
           removeStyleName( MOUSEOVER_CLASS );
           addStyleName( MOUSEOVER_DISABLED_CLASS );
         }
+        event.preventDefault();
       }
     } );
+
+    this.addKeyDownHandler ( new KeyDownHandler() {
+      @Override
+      public void onKeyDown( KeyDownEvent keyDownEvent ) {
+        switch ( keyDownEvent.getNativeKeyCode() ) {
+          case KeyCodes.KEY_SPACE:
+            keyDownEvent.preventDefault();
+            break;
+          case KeyCodes.KEY_ENTER:
+            keyDownEvent.preventDefault();
+            ElementUtils.click( ThemeableImageButton.this.getElement() );
+            break;
+        }
+      }
+    });
+
+    this.addKeyUpHandler( new KeyUpHandler() {
+      @Override
+      public void onKeyUp( KeyUpEvent keyUpEvent ) {
+        if ( KeyCodes.KEY_SPACE == keyUpEvent.getNativeKeyCode() ) {
+          keyUpEvent.preventDefault();
+          ElementUtils.click( ThemeableImageButton.this.getElement() );
+        }
+      }
+    });
 
     this.addMouseOutHandler( new MouseOutHandler() {
       public void onMouseOut( MouseOutEvent event ) {
         updateStyles();
       }
     } );
+  }
+
+  public HandlerRegistration addKeyDownHandler(KeyDownHandler handler) {
+    return this.addDomHandler(handler, KeyDownEvent.getType());
+  }
+
+  public HandlerRegistration addKeyUpHandler(KeyUpHandler handler) {
+    return this.addDomHandler(handler, KeyUpEvent.getType());
   }
 
   private void updateStyles() {
@@ -152,13 +196,6 @@ public class ThemeableImageButton extends Image {
     for ( String style : disabledStyles ) {
       addStyleName( style );
     }
-  }
-
-  public void onBrowserEvent( Event event ) {
-    super.onBrowserEvent( event );
-
-    // This is required to prevent a drag & drop of the Image in the edit text.
-    DOM.eventPreventDefault( event );
   }
 
   public boolean isEnabled() {

@@ -70,7 +70,6 @@ public class NewFolderCommand extends AbstractCommand {
   protected void performOperation( boolean feedback ) {
 
     final TextBox folderNameTextBox = new TextBox();
-    folderNameTextBox.setTabIndex( 1 );
     folderNameTextBox.setVisibleLength( 40 );
 
     VerticalPanel vp = new VerticalPanel();
@@ -79,8 +78,6 @@ public class NewFolderCommand extends AbstractCommand {
     final PromptDialogBox newFolderDialog =
         new PromptDialogBox(
             Messages.getString( "newFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ), false, true, vp );
-    newFolderDialog.setFocusWidget( folderNameTextBox );
-    folderNameTextBox.setFocus( true );
 
     final IDialogCallback callback = new IDialogCallback() {
 

@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.toolbar;
@@ -34,8 +34,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pentaho.gwt.widgets.client.text.ToolTip;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.contains;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class ToolbarButtonTest {
@@ -94,6 +107,9 @@ public class ToolbarButtonTest {
     button.currentImage = currentImage;
     final Image image = mock( Image.class );
     button.image = image;
+    button.eventWrapper = mock( FocusPanel.class );
+    final Element eventWrapperElement = mock( Element.class );
+    when( button.eventWrapper.getElement() ).thenReturn( eventWrapperElement );
 
     button.setEnabled( true );
     verify( button.button ).removeStyleName( contains( "disabled" ) );
@@ -133,7 +149,10 @@ public class ToolbarButtonTest {
   @Test
   public void testSetVisible() throws Exception {
     doCallRealMethod().when( button ).setVisible( anyBoolean() );
-
+    button.eventWrapper = mock( FocusPanel.class );
+    final Element eventWrapperElement = mock( Element.class );
+    when( button.eventWrapper.getElement() ).thenReturn( eventWrapperElement );
+    doNothing().when( button.eventWrapper ).setTabIndex( anyInt() );
     final boolean visible = true;
     button.setVisible( visible );
     verify( button.button ).setVisible( visible );
@@ -154,6 +173,33 @@ public class ToolbarButtonTest {
     verify( button.button ).add( calcImage, DockPanel.CENTER );
     verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
     verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
+  }
+
+  @Test
+  public void testSetImageAltText() throws Exception {
+    // SETUP
+    String altText = "Test Some Alternative Text";
+    Image mockImage = mock( Image.class );
+    ToolbarButton testInstance = new ToolbarButton( mockImage );
+
+    // EXECUTE
+    testInstance.setImageAltText( altText );
+
+    // VERIFY
+    verify( mockImage ).setAltText( altText );
+  }
+
+  @Test
+  public void testSetImageAltText_nullImage() throws Exception {
+    // SETUP
+    Image mockImage = mock( Image.class );
+    ToolbarButton testInstance = new ToolbarButton( null );
+
+    // EXECUTE
+    testInstance.setImageAltText( "testSomeText" );
+
+    // VERIFY
+    verify( mockImage, never() ).setAltText(  anyString() );
   }
 
   @Test
@@ -240,5 +286,25 @@ public class ToolbarButtonTest {
     verify( disabledImage ).addMouseOutHandler( any( MouseOutHandler.class ) );
     verify( disabledImage ).addMouseDownHandler( any( MouseDownHandler.class ) );
     verify( disabledImage ).addMouseUpHandler( any( MouseUpHandler.class ) );
+  }
+
+  @Test
+  public void testGetImageAltText() throws Exception {
+
+    // SETUP 1 : null image
+    ToolbarButton testInstance1 = new ToolbarButton( null );
+
+    // EXECUTE & VERIFY
+    assertNull( testInstance1.getImageAltText() );
+
+    // SETUP 2: non null image
+    String altText = "Test Some Alternative Text";
+    Image mockImage = mock( Image.class );
+    ToolbarButton testInstance2 = new ToolbarButton( mockImage );
+    when( mockImage.getAltText() ).thenReturn( altText );
+
+    // EXECUTE & VERIFY
+    assertEquals( altText, testInstance2.getImageAltText() );
+
   }
 }

@@ -40,13 +40,14 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 
 /**
  * 
  * User: Nick Baker Date: Mar 9, 2009 Time: 11:28:45 AM
  */
-public class DefaultListItem extends HorizontalPanel implements ListItem<Object> {
+public class DefaultListItem extends HorizontalFlexPanel implements ListItem<Object> {
 
   private static final String DROP_INVALID_PNG = "drop_invalid.png"; //$NON-NLS-1$
   private static final String DROP_VALID_PNG = "drop_valid.png"; //$NON-NLS-1$
@@ -78,6 +79,10 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
   private void init() {
     createWidgets();
     this.sinkEvents( Event.MOUSEEVENTS );
+
+    // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
+    // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.
+    this.setStyleName( "" );
     this.setStylePrimaryName( styleName );
   }
 
@@ -94,6 +99,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
     this.value = this.text;
     this.img = img;
     createWidgets();
+    this.setStyleName( "" );
     this.setStylePrimaryName( styleName );
   }
 
@@ -101,14 +107,16 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
     this.text = str;
     this.extraWidget = widget;
     createWidgets();
+    this.setStyleName( "" );
     this.setStylePrimaryName( styleName );
   }
 
   public void setStylePrimaryName( String style ) {
     baseStyleName = style;
-    dropWidget.setStylePrimaryName( style + "-item" ); //$NON-NLS-1$
+    dropWidget.setStylePrimaryName( style + "-item" );
+    dropWidget.addStyleName( HorizontalFlexPanel.STYLE_NAME );//$NON-NLS-1$
     super.setStylePrimaryName( style + "-item" ); //$NON-NLS-1$
-
+    super.addStyleName( HorizontalFlexPanel.STYLE_NAME );
   }
 
   /**
@@ -148,6 +156,7 @@ public class DefaultListItem extends HorizontalPanel implements ListItem<Object>
     label.setWidth( "100%" ); //$NON-NLS-1$
     SimplePanel sp = new SimplePanel();
     sp.getElement().getStyle().setProperty( "overflowX", "auto" ); //$NON-NLS-1$ //$NON-NLS-2$
+    sp.addStyleName( "flex-row" );
     sp.add( label );
 
     panel.add( sp );
