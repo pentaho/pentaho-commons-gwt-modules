@@ -176,7 +176,8 @@ input:focus-visible:focus-visible:focus-visible,
 }
 
 :focus-visible .active-descendant {
-  border: var(--focus-ring);
+  outline: var(--focus-ring);
+  outline-offset: -2px;
 }
 
 a, a:link {
