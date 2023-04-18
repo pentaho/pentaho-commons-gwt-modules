@@ -18,6 +18,8 @@
 package org.pentaho.mantle.client.dialogs.scheduling;
 
 import org.pentaho.gwt.widgets.client.controls.TimePicker;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.CronExpression;
@@ -62,14 +64,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.UIObject;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
@@ -77,7 +77,7 @@ import org.pentaho.mantle.client.environment.EnvironmentHelper;
 /**
  * @author Steven Barkdull
  */
-public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
+public class ScheduleEditor extends VerticalFlexPanel implements IChangeHandler {
 
   private static final int DEFAULT_START_HOUR = 12; //$NON-NLS-1$
   private static final int DEFAULT_START_MINUTE = 0; //$NON-NLS-1$
@@ -308,7 +308,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       minutesLabel.addStyleName( BLOCKOUT_LABEL );
       minutesLabel.getElement().setAttribute( "for", minutesListBox.getElement().getId() ); //$NON-NLS-1$
 
-      final HorizontalPanel durationPanel = new HorizontalPanel();
+      final HorizontalFlexPanel durationPanel = new HorizontalFlexPanel();
       durationPanel.setVerticalAlignment( HasVerticalAlignment.ALIGN_MIDDLE );
       durationPanel.setSpacing( blockoutEndTimePicker.getSpacing() );
       durationPanel.add( daysListBox );
@@ -396,14 +396,14 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       } );
 
       // Radio Buttons Panel
-      HorizontalPanel radioButtonsPanel = new HorizontalPanel();
+      HorizontalFlexPanel radioButtonsPanel = new HorizontalFlexPanel();
       radioButtonsPanel.setVerticalAlignment( HasVerticalAlignment.ALIGN_MIDDLE );
       radioButtonsPanel.getElement().setId( "radio-buttons-panel" );
       radioButtonsPanel.add( durationRadioButton );
       radioButtonsPanel.add( endTimeRadioButton );
 
       // Ends Panel
-      VerticalPanel endsPanel = new VerticalPanel();
+      VerticalFlexPanel endsPanel = new VerticalFlexPanel();
       endsPanel.add( radioButtonsPanel );
       endsPanel.add( blockoutEndTimePicker );
       endsPanel.add( durationPanel );
@@ -411,7 +411,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       // Blockout period
       CaptionPanel blockoutStartCaptionPanel = new CaptionPanel( Messages.getString( "schedule.startTime" ) );
       blockoutStartCaptionPanel.setStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
-      HorizontalPanel blockoutStartPanel = new HorizontalPanel();
+      HorizontalFlexPanel blockoutStartPanel = new HorizontalFlexPanel();
       blockoutStartPanel.getElement().setId( "blockout-start-panel" );
       blockoutStartPanel.add( getStartTimePicker() );
       configureTimeZonePicker();
@@ -426,7 +426,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       endCaptionPanel.setStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
       endCaptionPanel.add( endsPanel );
 
-      VerticalPanel blockoutPanel = new VerticalPanel();
+      VerticalFlexPanel blockoutPanel = new VerticalFlexPanel();
       blockoutPanel.setWidth( "100%" ); //$NON-NLS-1$
       blockoutPanel.add( blockoutStartCaptionPanel );
       blockoutPanel.add( endCaptionPanel );
@@ -434,7 +434,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
       add( blockoutPanel );
     }
 
-    VerticalPanel vp = new VerticalPanel();
+    VerticalFlexPanel vp = new VerticalFlexPanel();
     vp.setWidth( "100%" ); //$NON-NLS-1$
     add( vp );
     setCellHeight( vp, "100%" ); //$NON-NLS-1$
@@ -462,7 +462,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
     if ( !isBlockoutDialog ) {
       vp.add( cronEditor );
 
-      VerticalPanel blockoutButtonPanel = new VerticalPanel();
+      VerticalFlexPanel blockoutButtonPanel = new VerticalFlexPanel();
       blockoutButtonPanel.setWidth( "100%" ); //$NON-NLS-1$
       // blockoutButtonPanel.setHeight("30%");
       blockoutButtonPanel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_CENTER );
@@ -684,7 +684,7 @@ public class ScheduleEditor extends VerticalPanel implements IChangeHandler {
   protected Widget createStartTimePanel() {
     CaptionPanel startTimeGB = new CaptionPanel( Messages.getString( "schedule.startTime" ) );
     startTimeGB.setStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
-    HorizontalPanel scheduleStartPanel = new HorizontalPanel();
+    HorizontalFlexPanel scheduleStartPanel = new HorizontalFlexPanel();
     scheduleStartPanel.getElement().setId( "schedule-start-panel" );
     scheduleStartPanel.add( getStartTimePicker() );
 

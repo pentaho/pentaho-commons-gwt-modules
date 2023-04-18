@@ -532,7 +532,7 @@ table#email-schedule-panel {
 table#email-schedule-panel input,
 table#email-schedule-panel textarea {
   margin-bottom: 20px;
-  width: 644px;
+  width: 100%;
 }
 
 table#email-schedule-panel tr:nth-child(2) input {
@@ -581,7 +581,7 @@ div.parameter div.parameter-label {
 }
 
 div#promptPanel div.parameter {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 div#reportControlPanel {
@@ -598,6 +598,7 @@ fieldset.schedule-editor-caption-panel {
 
 fieldset.schedule-editor-caption-panel table {
   border-spacing: 0;
+  flex-wrap: wrap;
 }
 
 fieldset.schedule-editor-caption-panel legend {
@@ -677,6 +678,11 @@ table#radio-buttons-panel {
   margin-bottom: 10px;
 }
 
+#schedule-start-panel {
+  flex-wrap: wrap;
+  --flex-items: 1 1 0;
+}
+
 table#schedule-start-panel td,
 table#blockout-start-panel td {
   padding-top: 0 !important;
@@ -722,6 +728,9 @@ div.schedule-name-info {
   margin-top: 1px;
   font-size: 14px;
   color: #666666;
+  flex-wrap: wrap;
+  flex: auto;
+  display: flex;
 }
 
 div.cron-label {
