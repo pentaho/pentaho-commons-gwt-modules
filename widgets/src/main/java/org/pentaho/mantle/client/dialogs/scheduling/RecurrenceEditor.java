@@ -25,18 +25,18 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.controls.DateRangeEditor;
 import org.pentaho.gwt.widgets.client.controls.ErrorLabel;
 import org.pentaho.gwt.widgets.client.controls.TimePicker;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.CronParseException;
@@ -65,7 +65,7 @@ import java.util.Map;
  */
 
 @SuppressWarnings( "deprecation" )
-public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
+public class RecurrenceEditor extends VerticalFlexPanel implements IChangeHandler {
   public static final int VALUE_OF_SUNDAY = 1;
 
   private static final String SCHEDULE_EDITOR_CAPTION_PANEL = "schedule-editor-caption-panel"; //$NON-NLS-1$
@@ -369,14 +369,14 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     temporalPanelMap.put( TemporalValue.YEARLY, yearlyEditor );
   }
 
-  public class SimpleRecurrencePanel extends VerticalPanel implements IChangeHandler {
+  public class SimpleRecurrencePanel extends VerticalFlexPanel implements IChangeHandler {
     private TextBox valueTb = new TextBox();
     private ErrorLabel valueLabel = null;
     private ICallback<IChangeHandler> onChangeHandler;
 
     public SimpleRecurrencePanel( String strLabel ) {
 
-      HorizontalPanel hp = new HorizontalPanel();
+      HorizontalFlexPanel hp = new HorizontalFlexPanel();
       hp.setStyleName( RECUR_PATTERN_HP );
       Label l = new Label( Messages.getString( "schedule.every" ) );
       l.setStyleName( "startLabel" ); //$NON-NLS-1$
@@ -459,7 +459,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     }
   }
 
-  public class DailyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
+  public class DailyRecurrenceEditor extends VerticalFlexPanel implements IChangeHandler {
 
     private TextBox dailyRepeatValueTb = new TextBox();
     protected RadioButton everyNDaysRb = new RadioButton( DAILY_RB_GROUP, Messages.getString( "schedule.every" ) );
@@ -473,7 +473,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       everyWeekdayRb.setStyleName( "dailyRecurrenceRadioButton" ); //$NON-NLS-1$
       add( everyWeekdayRb );
 
-      HorizontalPanel hp = new HorizontalPanel();
+      HorizontalFlexPanel hp = new HorizontalFlexPanel();
       hp.setStyleName( RECUR_PATTERN_HP );
       hp.getElement().setId( "daily-recur-hp" );
       everyNDaysRb.setStyleName( "dailyRecurrenceRadioButton" ); //$NON-NLS-1$
@@ -602,7 +602,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     }
   }
 
-  public class WeeklyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
+  public class WeeklyRecurrenceEditor extends VerticalFlexPanel implements IChangeHandler {
 
     protected Map<DayOfWeek, CheckBox> dayToCheckBox = new HashMap<DayOfWeek, CheckBox>();
     private ErrorLabel everyWeekOnLabel = null;
@@ -747,7 +747,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     }
   }
 
-  public class MonthlyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
+  public class MonthlyRecurrenceEditor extends VerticalFlexPanel implements IChangeHandler {
 
     protected RadioButton dayNOfMonthRb = new RadioButton( MONTHLY_RB_GROUP, Messages.getString( "schedule.day" ) );
     protected RadioButton nthDayNameOfMonthRb = new RadioButton( MONTHLY_RB_GROUP, Messages.getString( "schedule.the" ) );
@@ -762,7 +762,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       this.setStyleName( RECUR_PATTERN_HP );
       getElement().removeAttribute( "cellpadding" );
 
-      HorizontalPanel hp = new HorizontalPanel();
+      HorizontalFlexPanel hp = new HorizontalFlexPanel();
       hp.getElement().setId( "day-n-of-month-radio" );
       dayNOfMonthRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       dayNOfMonthRb.setChecked( true );
@@ -776,7 +776,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       dayNOfMonthLabel = new ErrorLabel( hp );
       add( dayNOfMonthLabel );
 
-      hp = new HorizontalPanel();
+      hp = new HorizontalFlexPanel();
       nthDayNameOfMonthRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       hp.add( nthDayNameOfMonthRb );
       hp.add( whichWeekLb );
@@ -889,7 +889,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
     }
   }
 
-  public class YearlyRecurrenceEditor extends VerticalPanel implements IChangeHandler {
+  public class YearlyRecurrenceEditor extends VerticalFlexPanel implements IChangeHandler {
 
     protected RadioButton everyMonthOnNthDayRb = new RadioButton( YEARLY_RB_GROUP,
       Messages.getString( "schedule.every" ) );
@@ -909,7 +909,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       this.setStyleName( RECUR_PATTERN_HP );
       getElement().removeAttribute( "cellpadding" );
 
-      HorizontalPanel p = new HorizontalPanel();
+      HorizontalFlexPanel p = new HorizontalFlexPanel();
       p.getElement().setId( "every-month-on-nth-day-radio" );
       everyMonthOnNthDayRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       everyMonthOnNthDayRb.setChecked( true );
@@ -922,7 +922,7 @@ public class RecurrenceEditor extends VerticalPanel implements IChangeHandler {
       dayOfMonthLabel = new ErrorLabel( p );
       add( dayOfMonthLabel );
 
-      p = new HorizontalPanel();
+      p = new HorizontalFlexPanel();
       nthDayNameOfMonthNameRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       p.add( nthDayNameOfMonthNameRb );
       p.add( whichWeekLb );

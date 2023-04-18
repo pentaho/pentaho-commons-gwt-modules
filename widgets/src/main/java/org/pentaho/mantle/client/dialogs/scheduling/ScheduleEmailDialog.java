@@ -76,6 +76,9 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
     wizardDeckPanel.setHeight( "100%" ); //$NON-NLS-1$
     setSize( "650px", "450px" );
     addStyleName( "schedule-email-dialog" );
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   public boolean onKeyDownPreview( char key, int modifiers ) {

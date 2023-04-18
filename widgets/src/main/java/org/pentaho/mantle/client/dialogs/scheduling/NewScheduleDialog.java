@@ -23,6 +23,8 @@ import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.formatter.JSDateTextFormatter;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.ScheduleDialogType;
@@ -59,7 +61,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class NewScheduleDialog extends PromptDialogBox {
 
@@ -106,6 +107,9 @@ public class NewScheduleDialog extends PromptDialogBox {
     this.callback = callback;
     this.isEmailConfValid = isEmailConfValid;
     createUI();
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   public NewScheduleDialog( String filePath, IDialogCallback callback, boolean isEmailConfValid ) {
@@ -116,12 +120,16 @@ public class NewScheduleDialog extends PromptDialogBox {
     this.callback = callback;
     this.isEmailConfValid = isEmailConfValid;
     createUI();
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   private void createUI() {
-    VerticalPanel content = new VerticalPanel();
+    addStyleName("schedule-output-location-dialog");
+    VerticalFlexPanel content = new VerticalFlexPanel();
 
-    HorizontalPanel scheduleNameLabelPanel = new HorizontalPanel();
+    HorizontalFlexPanel scheduleNameLabelPanel = new HorizontalFlexPanel();
     Label scheduleNameLabel = new Label( Messages.getString( "scheduleNameColon" ) );
     scheduleNameLabel.addStyleName( "schedule-name" );
     scheduleNameLabel.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_LEFT );
@@ -158,7 +166,8 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     timestampLB.setVisible( false );
 
-    HorizontalPanel scheduleNamePanel = new HorizontalPanel();
+    HorizontalFlexPanel scheduleNamePanel = new HorizontalFlexPanel();
+    scheduleNamePanel.addStyleName( "schedule-name-panel" );
     scheduleNamePanel.add( scheduleNameTextBox );
     scheduleNamePanel.setCellVerticalAlignment( scheduleNameTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
     scheduleNamePanel.add( timestampLB );
@@ -233,7 +242,7 @@ public class NewScheduleDialog extends PromptDialogBox {
     scheduleNameTextBox.addChangeHandler( ch );
 
     scheduleLocationTextBox.getElement().setId( "generated-content-location" );
-    HorizontalPanel locationPanel = new HorizontalPanel();
+    HorizontalFlexPanel locationPanel = new HorizontalFlexPanel();
     scheduleLocationTextBox.setEnabled( false );
     locationPanel.add( scheduleLocationTextBox );
     locationPanel.setCellVerticalAlignment( scheduleLocationTextBox, HasVerticalAlignment.ALIGN_MIDDLE );
@@ -273,7 +282,7 @@ public class NewScheduleDialog extends PromptDialogBox {
     content.getParent().setHeight( "100%" );
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
 
-    okButton.getParent().getParent().setStyleName( "button-panel" );
+    okButton.getParent().getParent().addStyleName( "button-panel" );
 
     updateButtonState();
     setSize( "650px", "450px" );

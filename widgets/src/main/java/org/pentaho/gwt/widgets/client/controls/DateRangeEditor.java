@@ -20,14 +20,14 @@ package org.pentaho.gwt.widgets.client.controls;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RadioButton;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DateBox.DefaultFormat;
 import org.pentaho.gwt.widgets.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 
@@ -60,10 +60,10 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     this.addStyleName( SCHEDULE_EDITOR_CAPTION_PANEL );
     uniqueInstanceNumber += 1;
 
-    HorizontalPanel outerHP = new HorizontalPanel();
+    HorizontalFlexPanel outerHP = new HorizontalFlexPanel();
     add( outerHP );
 
-    HorizontalPanel hp = new HorizontalPanel();
+    HorizontalFlexPanel hp = new HorizontalFlexPanel();
     hp.getElement().setId( ROR_INNER_HP );
     Label l = new Label( Messages.getString( "DateRangeEditor.startLabel" ) );
     l.setStyleName( "startLabel" ); //$NON-NLS-1$
@@ -150,7 +150,7 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
     endDatePanel.setOnChangeHandler( handler );
   }
 
-  private class EndDatePanel extends VerticalPanel implements IChangeHandler {
+  private class EndDatePanel extends VerticalFlexPanel implements IChangeHandler {
 
     private DatePickerEx endDatePicker = null;
     private RadioButton noEndDateRb = null;
@@ -169,10 +169,10 @@ public class DateRangeEditor extends CaptionPanel implements IChangeHandler {
       noEndDateRb.setStyleName( "recurrenceRadioButton" ); //$NON-NLS-1$
       noEndDateRb.setValue( true );
       add( noEndDateRb );
-      HorizontalPanel hp = new HorizontalPanel();
+      HorizontalFlexPanel hp = new HorizontalFlexPanel();
       add( hp );
 
-      HorizontalPanel endByPanel = new HorizontalPanel();
+      HorizontalFlexPanel endByPanel = new HorizontalFlexPanel();
       endByRb =
           new RadioButton( END_DATE_RB_GROUP + uniqueInstanceNumber, Messages.getString(
               "DateRangeEditor.endByLabel" ) );
