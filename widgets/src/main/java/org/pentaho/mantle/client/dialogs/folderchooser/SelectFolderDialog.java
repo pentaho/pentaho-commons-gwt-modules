@@ -12,14 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
 
+import com.google.gwt.user.client.ui.SimplePanel;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
 import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
@@ -32,7 +34,6 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
@@ -59,14 +60,18 @@ public class SelectFolderDialog extends PromptDialogBox {
       } catch ( Throwable t ) {
         // Window.alert(t);
       }
-    };
+    }
   }
 
   private static MySolutionTree tree = new MySolutionTree( false );
 
   public SelectFolderDialog() {
-    super(
-        Messages.getString( "selectFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    super( Messages.getString( "selectFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ),
+      false, true );
+
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
+    setWidthCategory( DialogWidthCategory.SMALL );
 
     if ( tree == null ) {
       tree = new MySolutionTree( false );
@@ -78,14 +83,16 @@ public class SelectFolderDialog extends PromptDialogBox {
     tree.getElement().getStyle().setMargin( 0d, Unit.PX );
 
     Toolbar bar = new Toolbar();
-    bar.setStyleName( "select-folder-toolbar" );
+    bar.addStyleName( "select-folder-toolbar" );
     bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
+
     bar.add( Toolbar.GLUE );
 
     Image image = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
     image.addStyleName( "icon-small" );
+    image.addStyleName( "icon-zoomable" );
     image.addStyleName( "pentaho-addbutton" );
-    ToolbarButton add = new ToolbarButton( image ); //ImageUtil.getThemeableImage( "icon-small", "pentaho-addbutton" ) );
+    ToolbarButton add = new ToolbarButton( image );
     add.setToolTip( Messages.getString( "createNewFolder" ) );
     add.setCommand( new Command() {
       public void execute() {
@@ -115,7 +122,8 @@ public class SelectFolderDialog extends PromptDialogBox {
     } );
     bar.add( add );
 
-    VerticalPanel content = new VerticalPanel();
+    VerticalPanel content = new VerticalFlexPanel();
+    content.addStyleName( "with-layout-gap-none" );
     content.add( bar );
     content.add( treeWrapper );
 

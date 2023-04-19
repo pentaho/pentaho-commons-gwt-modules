@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2005 - 2017 Hitachi Vantara.  All rights reserved.
+* Copyright 2005 - 2023 Hitachi Vantara.  All rights reserved.
 */
 
 html, body {
@@ -159,7 +159,7 @@ input[type='text']#paramValueTextBox {
     cursor: default;
 }
 
-.IE .pentaho-button.disabled, .IE .bootstrap .pentaho-button.disabled,  {
+.IE .pentaho-button.disabled, .IE .bootstrap .pentaho-button.disabled  {
     background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
     border: inherit;
@@ -175,10 +175,6 @@ input[type='text']#paramValueTextBox {
     background: url('images/bg_btn_disabled.png') repeat-x left center;
     cursor: default;
     border: inherit;
-}
-
-.schedule-dialog-content-onyx {
-  padding: 5px 10px 10px 10px;
 }
 
 .pentaho-toggle-button {
@@ -402,11 +398,6 @@ has no buttons add an addition class to your element, pentaho-dialog-buttonless,
 .IE .pentaho-dialog {
     border: 1px solid #000000;
     background: url('../images/wt_transparent.png') repeat;
-}
-
-
-.IE8 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 425px !important;
 }
 
 .IE8 #browse-properties-dialog.new-schedule-dialog{

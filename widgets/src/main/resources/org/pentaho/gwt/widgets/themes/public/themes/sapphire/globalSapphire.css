@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2005 - 2021 Hitachi Vantara.  All rights reserved.
+* Copyright 2005 - 2023 Hitachi Vantara.  All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -389,10 +389,6 @@ div.filterCondition table {
   background-color: #CCDFED !important;
 }
 
-div.filterConditionAdd {
-  margin-top: 14px !important;
-}
-
 #editFilterDateRestriction, #editFilterPropDateFormat {
   margin-bottom: 5px !important;
 }
@@ -635,7 +631,12 @@ button.pentaho-button:visited,
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
-span.button-add-condition {
+.pentaho-button-like,
+.pentaho-button-like:link,
+.pentaho-button-like:visited,
+.pentaho-button-like:hover,
+.pentaho-button-like:active,
+.pentaho-button-like:focus {
   background: #005DA6;
   filter: none;
   font-size: 14px;
@@ -659,9 +660,9 @@ span.button-add-condition {
 button.pentaho-button:hover,
 button.pentaho-button:active,
 button.pentaho-button:focus,
-span.button-add-condition:hover,
-span.button-add-condition:active,
-span.button-add-condition:focus {
+.pentaho-button-like:hover,
+.pentaho-button-like:active,
+.pentaho-button-like:focus {
   background: #0F2B5B;
 }
 
@@ -677,7 +678,13 @@ button.pentaho-button[disabled]:link,
 button.pentaho-button[disabled]:visited,
 button.pentaho-button[disabled]:hover,
 button.pentaho-button[disabled]:active,
-button.pentaho-button[disabled]:focus {
+button.pentaho-button[disabled]:focus,
+.pentaho-button-like.disabled,
+.pentaho-button-like.disabled:link,
+.pentaho-button-like.disabled:visited,
+.pentaho-button-like.disabled:hover,
+.pentaho-button-like.disabled:active,
+.pentaho-button-like.disabled:focus {
   background: #E4E4E4 !important;
   color: #999 !important;
   text-decoration: none !important;
@@ -879,39 +886,15 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   background: url('../images/wt_transparent.png') repeat;*/
 }
 
-.IE8 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content {
-  height: 425px !important;
-}
-
 .IE9 #browse-properties-dialog.new-schedule-dialog {
   height: 500px !important;
-}
-
-.IE9 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content {
-  height: 415px !important;
 }
 
 .IE9 .schedule-recurrence-dialog {
   height: 500px !important;
 }
 
-.IE9 .schedule-recurrence-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
 .IE9 .schedule-params-dialog {
-  height: 500px !important;
-}
-
-.IE9 .schedule-params-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
-.IE9 .schedule-email-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
-.IE10 #browse-properties-dialog.new-schedule-dialog {
   height: 500px !important;
 }
 
@@ -919,20 +902,8 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   height: 500px !important;
 }
 
-.IE10 .schedule-recurrence-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
 .IE10 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE10 .schedule-params-dialog .schedule-dialog-content {
-  height: 430px !important;
-}
-
-.IE10 .schedule-email-dialog .schedule-dialog-content {
-  height: 430px !important;
 }
 
 .IE .schedule-recurrence-dialog {
@@ -1072,7 +1043,12 @@ button#schedule-dialog-select-button {
   z-index: 2100;
 }
 
-/**/
+/* region Schedule Wizard Dialogs */
+.schedule-params-dialog .dialog-content {
+  height: 100% !important;
+}
+/* endregion */
+
 .glasspane {
 
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
@@ -1113,21 +1089,6 @@ button#schedule-dialog-select-button {
 .pentaho-tabWidget .pentaho-closebutton {
   position: relative;
   top: 3px;
-}
-
-input#FT_rankCount,
-input#FT_condOp1,
-input#FT_condOp2,
-select#FT_condOp,
-select#FT_condMetric,
-select#FT_rankMetric,
-select#FT_rankType,
-select#FT_attribute {
-  height: 24px;
-}
-
-input#FT_rankCount {
-  width: 40px;
 }
 
 .pentaho-tabWidget .pentaho-tabWidgetLabel {
@@ -3743,100 +3704,120 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/trash_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon::before {
-  background-image: url("images/file_generic.png");
+.fileBrowserColumn .body .file .icon {
+  background: url("images/file_generic.png") no-repeat;
+  margin: 0 5px;
 }
 
-.fileBrowserColumn .body .file.icon.selected::before {
-  background-image: url("images/file_generic_white.png");
+.fileBrowserColumn .body .file.selected .icon {
+  background: url("images/file_generic_white.png") no-repeat;
+  margin: 0 5px;
 }
 
-.fileBrowserColumn .body .file.icon.url::before {
-  background-image: url("images/file_url.png");
+.fileBrowserColumn .body .file .icon.url {
+  background: url("images/file_url.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.url::before {
-  background-image: url("images/file_url_white.png");
+.fileBrowserColumn .body .file.selected .icon.url {
+  background: url("images/file_url_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.xanalyzer::before {
-  background-image: url("images/file_analysis.png");
+.fileBrowserColumn .body .file .icon.xanalyzer {
+  background: url("images/file_analysis.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.xanalyzer::before {
-  background-image: url("images/file_analysis_white.png");
+.fileBrowserColumn .body .file.selected .icon.xanalyzer {
+  background: url("images/file_analysis_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.xdash::before {
-  background-image: url("images/file_dashboard.png");
+.fileBrowserColumn .body .file .icon.xdash,
+.fileBrowserColumn .body .file .xdash {
+  background: url("images/file_dashboard.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.xdash::before {
-  background-image: url("images/file_dashboard_white.png");
+.fileBrowserColumn .body .file.selected .icon.xdash,
+.fileBrowserColumn .body .file.selected .xdash {
+  background: url("images/file_dashboard_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.ktr::before {
-  background-image: url("images/kettle_transformation.png");
-  background-position: 4px center;
+.fileBrowserColumn .body .file .icon.ktr,
+.fileBrowserColumn .body .file .ktr,
+.fileBrowserColumn .body .file:hover .icon.ktr,
+.fileBrowserColumn .body .file:hover .ktr {
+  background: url("images/kettle_transformation.png") no-repeat 3px;
 }
 
-.fileBrowserColumn .body .file.icon.selected.ktr::before {
-  background-image: url("images/kettle_transformation.png");
-  background-position: 4px center;
+.fileBrowserColumn .body .file.selected .icon.ktr,
+.fileBrowserColumn .body .file.selected .ktr {
+  background: url("images/kettle_transformation.png") no-repeat -15px;
+  margin-left: 7px;
 }
 
-.fileBrowserColumn .body .file.icon.kjb::before {
-  background-image: url("images/kettle_job.png");
-  background-position: 4px center;
+.fileBrowserColumn .body .file .icon.kjb,
+.fileBrowserColumn .body .file .kjb,
+.fileBrowserColumn .body .file:hover .icon.kjb,
+.fileBrowserColumn .body .file:hover .kjb {
+  background: url("images/kettle_job.png") no-repeat 3px;
 }
 
-.fileBrowserColumn .body .file.icon.selected.kjb::before {
-  background-image: url("images/kettle_job.png");
-  background-position: 4px center;
+.fileBrowserColumn .body .file.selected .icon.kjb,
+.fileBrowserColumn .body .file.selected .kjb {
+  background: url("images/kettle_job.png") no-repeat -15px;
+  margin-left: 7px;
 }
 
-.fileBrowserColumn .body .file.icon.xaction::before {
-  background-image: url("images/file_action.png");
+.fileBrowserColumn .body .file .icon.xaction,
+.fileBrowserColumn .body .file .xaction {
+  background: url("images/file_action.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.xaction::before {
-  background-image: url("images/file_action_white.png");
+.fileBrowserColumn .body .file.selected .icon.xaction,
+.fileBrowserColumn .body .file.selected .xaction {
+  background: url("images/file_action_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.prpt::before {
-  background-image: url("images/prptFile.png");
+.fileBrowserColumn .body .file .icon.prpt,
+.fileBrowserColumn .body .file .prpt {
+  background: url("images/prptFile.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.prpt::before {
-  background-image: url("images/prptFile_white.png");
+.fileBrowserColumn .body .file.selected .icon.prpt,
+.fileBrowserColumn .body .file.selected .prpt {
+  background: url("images/prptFile_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.prpti::before {
-  background-image: url("images/prptiFile.png");
+.fileBrowserColumn .body .file .icon.prpti,
+.fileBrowserColumn .body .file .prpti {
+  background: url("images/prptiFile.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.prpti::before {
-  background-image: url("images/prptiFile_white.png");
+.fileBrowserColumn .body .file.selected .icon.prpti,
+.fileBrowserColumn .body .file.selected .prpti {
+  background: url("images/prptiFile_white.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.trashFolder::before {
-  background-image: url("images/folder_closed.png");
+.fileBrowserColumn .body .file .icon.trashFolder {
+  background: url("images/folder_closed.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.cda.cda::before {
-  background-image: url("images/cda_20.png");
+.fileBrowserColumn .body .file .icon.cda.cda,
+.fileBrowserColumn .body .file .cda.cda {
+  background: url("images/cda_20.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.wcdf.wcdf::before {
-  background-image: url("images/cde_20.png");
+.fileBrowserColumn .body .file .icon.wcdf.wcdf,
+.fileBrowserColumn .body .file .wcdf.wcdf {
+  background: url("images/cde_20.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.xcdf.xcdf::before {
-  background-image: url("images/cdf_20.png");
+.fileBrowserColumn .body .file .icon.xcdf.xcdf,
+.fileBrowserColumn .body .file .xcdf.xcdf {
+  background: url("images/cdf_20.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.selected.xcdf.xcdf::before {
-  background-image: url("images/cdf_20_white.png");
+.fileBrowserColumn .body .file.selected .icon.xcdf.xcdf,
+.fileBrowserColumn .body .file.selected .xcdf.xcdf {
+  background: url("images/cdf_20_white.png") no-repeat;
 }
 
 .fileBrowserColumn .body div.folder > div.element > div.expandCollapse {
@@ -4024,7 +4005,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileBrowserColumn .body .file.selected {
-  background-color: #0F2B5B;
+  background: #0F2B5B;
   color: #FFF;
 }
 
@@ -5846,8 +5827,11 @@ span.gwt-RadioButton label {
 }
 
 #standardDialog .filterConditionDelete {
-  background: url('images/remove_16.png') no-repeat;
-  background-position: center;
+  background-image: url('images/remove_16.png');
+}
+
+#standardDialog .filterConditionEdit {
+  background-image: url('images/edit_16.png');
 }
 
 #filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed,
@@ -6486,12 +6470,14 @@ div.listbox .pentaho-listbox {
   background: url("images/table_fact.png");
 }
 
-.fileBrowserColumn .body .file.icon.cda::before {
-  background-image: url("../images/cda_20.png");
+.fileBrowserColumn .body .file .icon.cda,
+.fileBrowserColumn .body .file .cda {
+  background: url("../images/cda_20.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.wcdf::before {
-  background-image: url("../images/cde_20.png");
+.fileBrowserColumn .body .file .icon.wcdf,
+.fileBrowserColumn .body .file .wcdf {
+  background: url("../images/cde_20.png") no-repeat;
 }
 
 .file-cda {

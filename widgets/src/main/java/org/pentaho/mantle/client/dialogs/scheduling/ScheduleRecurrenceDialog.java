@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -223,9 +223,6 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       finishButton.setText( Messages.getString( "finish" ) ); //$NON-NLS-1$
     }
     setupExisting( jsJob );
-
-    wizardDeckPanel.getElement().getParentElement().addClassName( "schedule-dialog-content" );
-    wizardDeckPanel.getElement().getParentElement().removeClassName( "dialog-content" );
 
     //setHeight("100%"); //$NON-NLS-1$
     setSize( "650px", "450px" );

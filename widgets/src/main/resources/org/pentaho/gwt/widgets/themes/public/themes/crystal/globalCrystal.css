@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright 2005 - 2021 Hitachi Vantara.  All rights reserved.
+* Copyright 2005 - 2023 Hitachi Vantara. All rights reserved.
 */
 @font-face {
   font-family: 'OpenSansRegular';
@@ -174,10 +174,6 @@ input, input[type="password"]{
 .pentaho-page-background {
   background: url('images/bg_page.png') repeat-x top left;
   background-color: #FFF;
-}
-
-.schedule-dialog-content-crystal {
-  padding: 5px 10px 10px 10px;
 }
 
 #pucHeader {
@@ -505,37 +501,16 @@ div#data-controlproperties-spacer {
   background: url('../images/wt_transparent.png') repeat;*/
 }
 
-
-.IE8 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 425px !important;
-}
-
 .IE9 #browse-properties-dialog.new-schedule-dialog{
   height: 500px !important;
-}
-
-.IE9 #browse-properties-dialog.new-schedule-dialog .schedule-dialog-content{
-  height: 415px !important;
 }
 
 .IE9 .schedule-recurrence-dialog{
   height: 500px !important;
 }
 
-.IE9 .schedule-recurrence-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
 .IE9 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE9 .schedule-params-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
-.IE9 .schedule-email-dialog .schedule-dialog-content{
-  height: 430px !important;
 }
 
 .IE10 #browse-properties-dialog.new-schedule-dialog{
@@ -546,20 +521,8 @@ div#data-controlproperties-spacer {
   height: 500px !important;
 }
 
-.IE10 .schedule-recurrence-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
 .IE10 .schedule-params-dialog {
   height: 500px !important;
-}
-
-.IE10 .schedule-params-dialog .schedule-dialog-content{
-  height: 430px !important;
-}
-
-.IE10 .schedule-email-dialog .schedule-dialog-content{
-  height: 430px !important;
 }
 
 .IE .schedule-recurrence-dialog {
@@ -677,7 +640,19 @@ div#data-controlproperties-spacer {
   z-index: 2100;
 }
 
-  /**/
+/* region Schedule Wizard Dialogs */
+.schedule-params-dialog .dialog-content {
+  height: 100% !important;
+}
+
+:is(
+  .schedule-recurrence-dialog,
+  .schedule-params-dialog,
+  .schedule-email-dialog) .dialog-content {
+  padding: 0 !important;
+  width: auto !important;
+}
+/* endregion */
 
 .glasspane {
   /* Make sure to update .modal-backdrop style in bootstrap-namespaced.css with the changes below */
@@ -2915,11 +2890,8 @@ padding: 10px 0 10px 0;
 background: url("images/folder_open.png") no-repeat;
 width: 22px;
 }
-
-.fileBrowserColumn .body .file.icon::before {
-  background-image: url("images/file_generic.png");
-  height: calc(1em * 20/ 16);
-  width: calc(1em * 20/ 16);
+.fileBrowserColumn .body .file .icon{
+  background: url("images/file_generic.png") no-repeat;
 }
 .fileBrowserColumn .body div.folder > div.element > div.icon, .fileBrowserColumn .body div.folder.empty > div.element > div.icon, .fileBrowserColumn .body div.folder.open.empty > div.element > div.icon {
   background: url("images/folder_closed.png") no-repeat;
@@ -2928,49 +2900,64 @@ width: 22px;
 .fileBrowserColumn .body div.trash > div.element > div.icon, .fileBrowserColumn .body div.trash.empty > div.element > div.icon, .fileBrowserColumn .body div.trash.open.empty > div.element > div.icon{
   background: url("images/trash.png") no-repeat;
 }
-.fileBrowserColumn .body .file.icon.url::before {
-  background-image: url("images/file_url.png");
+.fileBrowserColumn .body .file .icon.url{
+  background: url("images/file_url.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.xanalyzer::before {
-  background-image: url("images/file_analysis.png");
+.fileBrowserColumn .body .file .icon.xanalyzer{
+  background: url("images/file_analysis.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.xdash,
+.fileBrowserColumn .body .file .xdash{
+   background: url("images/file_dashboard.png") no-repeat;
 }
 
-.fileBrowserColumn .body .file.icon.xdash::before {
-  background-image: url("images/file_dashboard.png");
+.fileBrowserColumn .body .file .icon.ktr,
+.fileBrowserColumn .body .file .ktr {
+  background: url("images/kettle_transformation.png") no-repeat 4px;
 }
 
-.fileBrowserColumn .body .file.icon.ktr::before {
-  background-image: url("images/kettle_transformation.png");
-  background-position: 4px center;
+.fileBrowserColumn .body .file:hover .icon.ktr,
+.fileBrowserColumn .body .file:hover .ktr,
+.fileBrowserColumn .body .file.selected .icon.ktr,
+.fileBrowserColumn .body .file.selected .ktr {
+  background: url("images/kettle_transformation.png") no-repeat 4px;
 }
 
-.fileBrowserColumn .body .file.icon.kjb::before {
-  background-image: url("images/kettle_job.png");
-  background-position: 4px center;
+.fileBrowserColumn .body .file .icon.kjb,
+.fileBrowserColumn .body .file .kjb {
+  background: url("images/kettle_job.png") no-repeat 4px;
 }
 
-.fileBrowserColumn .body .file.icon.xaction::before {
-  background-image: url("images/file_action.png");
-}
-.fileBrowserColumn .body .file.icon.prpt::before {
-  background-image: url("images/prptFile.png");
-}
-
-.fileBrowserColumn .body .file.icon.prpti::before {
-  background-image: url("images/prptiFile.png");
+.fileBrowserColumn .body .file:hover .icon.kjb,
+.fileBrowserColumn .body .file:hover .kjb,
+.fileBrowserColumn .body .file.selected .icon.kjb,
+.fileBrowserColumn .body .file.selected .kjb {
+  background: url("images/kettle_job.png") no-repeat 4px;
 }
 
-.fileBrowserColumn .body .file.icon.trashFolder::before {
-  background-image: url("images/folder_closed.png");
+.fileBrowserColumn .body .file .icon.xaction,
+.fileBrowserColumn .body .file .xaction{
+   background: url("images/file_action.png") no-repeat;
 }
-
-.fileBrowserColumn .body .file.icon.cda::before {
-  background-image: url("images/cda_20.png");
+.fileBrowserColumn .body .file .icon.prpt,
+.fileBrowserColumn .body .file .prpt {
+  background: url("images/prptFile.png") no-repeat;
 }
-
-.fileBrowserColumn .body .file.icon.wcdf::before {
-  background-image: url("images/cde_20.png");
+.fileBrowserColumn .body .file .icon.prpti,
+.fileBrowserColumn .body .file .prpti{
+  background: url("images/prptiFile.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.trashFolder{
+ background: url("images/folder_closed.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.cda,
+.fileBrowserColumn .body .file .cda{
+  background: url("images/cda_20.png") no-repeat;
+}
+.fileBrowserColumn .body .file .icon.wcdf,
+.fileBrowserColumn .body .file .wcdf{
+  background: url("images/cde_20.png") no-repeat;
 }
 
 .fileBrowserColumn .body div.folder.open > div.element > div.expandCollapse {
@@ -3102,7 +3089,6 @@ background: transparent;
   padding: 6px;
   font-size: 16px;
   font-family: opensanslight, Helvetica, Arial, Sans serif;
-  width: fit-content !important;
 }
 /* remove trasnstion for preformance but will revisit */
 
@@ -3122,7 +3108,7 @@ background: transparent;
 }
 
 .fileBrowserColumn .body .file.selected{
-  background-color: #d7e9cd !important;
+  background: #d7e9cd;
   font-weight: normal;
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
@@ -4570,7 +4556,9 @@ background: url("images/connector_top.png") no-repeat top left;
 .pentaho-addcombobutton{
   background: url('images/add_combo.png') no-repeat;
 }
-
+#standardDialog .filterConditionEdit {
+  background-image: url('images/edit_16.png');
+}
 #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-pressed, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-over, #filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button,
 #editPovContainerPanel #povTableEditSelected img.disabled-image-button-pressed, #editPovContainerPanel #povTableEditSelected img.disabled-image-button-over, #editPovContainerPanel #povTableEditSelected img.disabled-image-button {
   background: url('images/edit_16_disabled.png') no-repeat;
@@ -4583,7 +4571,9 @@ background: url("images/connector_top.png") no-repeat top left;
 #editPovContainerPanel #povTableAdd img.image-button-pressed, #editPovContainerPanel #povTableAdd img.image-button-over, #editPovContainerPanel #povTableAdd img.image-button{
   background: url('images/add_16.png') no-repeat;
 }
-#standardDialog .filterConditionDelete,
+#standardDialog .filterConditionDelete {
+  background-image: url('images/remove_16.png');
+}
 #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-pressed, #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-over, #filterTypeDeck #staticSelectionTableRemoveSelected img.image-button,
 #editPovContainerPanel #povTableRemoveSelected img.image-button-pressed, #editPovContainerPanel #povTableRemoveSelected img.image-button-over, #editPovContainerPanel #povTableRemoveSelected img.image-button {
   background: url('images/remove_16.png') no-repeat;
@@ -5162,12 +5152,13 @@ div.listbox .pentaho-listbox {
   background: url("images/table_fact.png");
 }
 
-.fileBrowserColumn .body .file.icon.cda::before {
-  background-image: url("../images/cda_20.png");
+.fileBrowserColumn .body .file .icon.cda,
+.fileBrowserColumn .body .file .cda{
+  background: url("../images/cda_20.png") no-repeat;
 }
-
-.fileBrowserColumn .body .file.icon.wcdf::before {
-  background-image: url("../images/cde_20.png");
+.fileBrowserColumn .body .file .icon.wcdf,
+.fileBrowserColumn .body .file .wcdf{
+  background: url("../images/cde_20.png") no-repeat;
 }
 
 .file-cda {

@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -269,11 +269,6 @@ public class NewScheduleDialog extends PromptDialogBox {
 
 
     setContent( content );
-    content.getElement().getParentElement().addClassName( "schedule-dialog-content" );
-    content.getElement().getParentElement().addClassName( "schedule-dialog-content-crystal" );
-    content.getElement().getParentElement().addClassName( "schedule-dialog-content-onyx" );
-    content.getElement().getParentElement().removeClassName( "dialog-content" );
-    content.getElement().getParentElement().getStyle().clearPadding();
     content.getElement().getStyle().clearHeight();
     content.getParent().setHeight( "100%" );
     content.getElement().getParentElement().getStyle().setVerticalAlign( VerticalAlign.TOP );
