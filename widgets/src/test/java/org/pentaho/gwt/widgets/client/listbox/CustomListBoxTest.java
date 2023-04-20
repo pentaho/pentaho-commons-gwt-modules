@@ -426,13 +426,13 @@ public class CustomListBoxTest {
 
     customListBox.multiSelect = true;
     customListBox.itemSelected( listItem, event );
-    verify( customListBox.fPanel ).setFocus( true );
+    verify( customListBox ).setFocus( true );
     verify( customListBox ).handleSelection( listItem, event );
     verify( customListBox, never() ).setSelectedItem( any( ListItem.class ) );
 
     customListBox.multiSelect = false;
     customListBox.itemSelected( listItem, event );
-    verify( customListBox.fPanel, times( 2 ) ).setFocus( true );
+    verify( customListBox, times( 2 ) ).setFocus( true );
     verify( customListBox ).handleSelection( listItem, event );
     verify( customListBox ).setSelectedItem( any( ListItem.class ) );
   }
