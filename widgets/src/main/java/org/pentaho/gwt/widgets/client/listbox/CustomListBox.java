@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.user.client.ui.Focusable;
 import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
@@ -81,7 +82,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 @SuppressWarnings( "deprecation" )
 public class CustomListBox extends HorizontalFlexPanel implements ChangeListener, PopupListener, MouseListener,
-    FocusListener, KeyboardListener, ListItemListener {
+    FocusListener, KeyboardListener, ListItemListener, Focusable {
   protected List<ListItem> items = new ArrayList<ListItem>();
   protected int selectedIndex = -1;
   protected DropDownArrow arrow = new DropDownArrow();
@@ -167,19 +168,29 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
 
         switch ( DOM.eventGetType( event ) ) {
           case Event.ONKEYUP:
-            onChange( editableTextBox );
-            val = editableTextBox.getText();
+            String newVal = editableTextBox.getText();
+            if ( !newVal.equals( getAcceptedText() ) ) {
+              val = newVal;
+              onChange( editableTextBox );
+            }
             // event.cancelBubble(true);
             break;
+
           case Event.ONMOUSEUP:
             super.onBrowserEvent( event );
             event.cancelBubble( true );
+            break;
+
           default:
             return;
         }
       }
     };
     editableTextBox.setStylePrimaryName( "custom-list-textbox" );
+
+    editableTextBox.setWidth( "100%" ); //$NON-NLS-1$
+    editableTextBox.sinkEvents( Event.KEYEVENTS );
+    editableTextBox.sinkEvents( Event.MOUSEEVENTS );
   }
 
   public void setTableLayout( String tableLayout ) {
@@ -409,46 +420,47 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
 
   protected void updateSelectedDropWidget() {
     Widget selectedWidget = new Label( "" ); //Default to show in case of empty sets? //$NON-NLS-1$
-    boolean updateMade = true;
-    if ( editable == false ) { // only show their widget if editable is false
+    if ( !editable ) { // only show their widget if editable is false
       if ( selectedIndex >= 0 ) {
         selectedWidget = items.get( selectedIndex ).getWidgetForDropdown();
-      } else if ( items.size() > 0 ) {
+      } else if ( !items.isEmpty() ) {
         selectedWidget = items.get( 0 ).getWidgetForDropdown();
       }
     } else {
       String previousVal = editableTextBox.getText();
-      String newVal = "";
-
-      if ( this.val != null ) {
-        newVal = this.val;
-      } else if ( selectedIndex >= 0 ) {
-        newVal = items.get( selectedIndex ).getValue().toString();
-      } else if ( items.size() > 0 ) {
-        newVal = items.get( 0 ).getValue().toString();
+      String newVal = getAcceptedText();
+      if ( newVal == null ) {
+        if ( !items.isEmpty() ) {
+          newVal = items.get( 0 ).getValue().toString();
+        } else {
+          newVal = "";
+        }
       }
 
-      if ( previousVal.equals( newVal ) == false ) {
+      if ( !previousVal.equals( newVal ) ) {
         editableTextBox.setText( newVal );
       }
-      if ( previousVal != null && previousVal.equals( newVal ) ) {
-        updateMade = false;
-      }
-      editableTextBox.setWidth( "100%" ); //$NON-NLS-1$
-      editableTextBox.sinkEvents( Event.KEYEVENTS );
-      editableTextBox.sinkEvents( Event.MOUSEEVENTS );
       selectedWidget = editableTextBox;
 
     }
     this.setTdStyles( selectedWidget.getElement() );
-    // selectedItemWrapper.getElement().getStyle().setProperty("overflow", "hidden"); //$NON-NLS-1$ //$NON-NLS-2$
-    selectedItemWrapper.clear();
-    selectedItemWrapper.add( selectedWidget );
-    dropGrid.setWidget( 0, 0, selectedItemWrapper );
-    if ( editable && updateMade ) {
-      editableTextBox.setFocus( true );
-      editableTextBox.selectAll();
+
+    if ( !selectedWidget.equals( selectedItemWrapper.getWidget() ) ) {
+      selectedItemWrapper.setWidget( selectedWidget );
     }
+
+    if ( dropGrid.getWidget( 0, 0 ) == null ) {
+      dropGrid.setWidget( 0, 0, selectedItemWrapper );
+    }
+  }
+
+  private String getAcceptedText() {
+    if ( this.val != null ) {
+      return this.val;
+    } else if ( selectedIndex >= 0 ) {
+      return items.get( selectedIndex ).getValue().toString();
+    }
+    return null;
   }
 
   /**
@@ -501,6 +513,16 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     // Update Shown selection in grid
     updateSelectedDropWidget();
 
+    if ( editable ) {
+      editableTextBox.setTabIndex( 0 );
+      fPanel.addStyleName( "focus-container" );
+      fPanel.setTabIndex( -1 );
+    } else {
+      editableTextBox.setTabIndex( -1 );
+      fPanel.removeStyleName( "focus-container" );
+      fPanel.setTabIndex( 0 );
+    }
+
     // Update popup panel,
     // Calculate the size of the largest list item.
     popupVbox.clear();
@@ -546,7 +568,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
 
     }
 
-    // Store the the size of the popup to respect MaxDropVisible now that we know the item height
+    // Store the size of the popup to respect MaxDropVisible now that we know the item height
     // This cannot be set here as the popup is not visible :(
 
     if ( maxDropVisible > 0 && items.size() > maxDropVisible ) {
@@ -558,6 +580,31 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     }
 
   }
+
+  protected Focusable getFocusableWidget() {
+    return visible != 1 || !editable ? fPanel : editableTextBox;
+  }
+
+  @Override
+  public int getTabIndex() {
+    return getFocusableWidget().getTabIndex();
+  }
+
+  @Override
+  public void setAccessKey( char key ) {
+    getFocusableWidget().setAccessKey( key );
+  }
+
+  @Override
+  public void setFocus( boolean focused ) {
+    getFocusableWidget().setFocus( focused );
+  }
+
+  @Override
+  public void setTabIndex( int index ) {
+    getFocusableWidget().setTabIndex( index );
+  }
+
 
   /**
    * Used internally to hide/show drop-down popup.
@@ -1004,6 +1051,9 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
             setSelectedIndex( selectedIndex - 1 );
             scrollSelectedItemIntoView();
           }
+          if ( editable ) {
+            editableTextBox.selectAll();
+          }
         }
 
         break;
@@ -1048,6 +1098,9 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
             setSelectedIndex( selectedIndex + 1 );
             scrollSelectedItemIntoView();
           }
+          if ( editable ) {
+            editableTextBox.selectAll();
+          }
         }
         break;
       case 13: // Enter
@@ -1081,11 +1134,14 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   // ====================================== Listener Implementations =========================== //
 
   public void itemSelected( ListItem listItem, Event event ) {
-    fPanel.setFocus( true );
+    setFocus( true );
     if ( multiSelect ) {
       handleSelection( listItem, event );
     } else {
       setSelectedItem( listItem );
+    }
+    if ( editable ) {
+      editableTextBox.selectAll();
     }
   }
 
