@@ -629,6 +629,7 @@ public class FileChooser extends VerticalFlexPanel {
         switch ( event.getKeyCode() ) {
           case KeyCodes.KEY_ENTER:
             handleFileClicked( item, isDir, event, this.getElement() );
+            event.preventDefault();
             break;
           case KeyCodes.KEY_UP:
             if ( row > 0 && row <= size - 1 ) {
@@ -791,11 +792,7 @@ public class FileChooser extends VerticalFlexPanel {
     if ( ( DOM.eventGetType( event ) & Event.ONDBLCLICK ) == Event.ONDBLCLICK
       || event.getKeyCode() == KeyCodes.KEY_ENTER ) {
       if ( isDir ) {
-        if ( !isLazy ) {
-          initUI();
-        } else {
-          loadDirectory( this.selectedPath );
-        }
+        changeToPath( this.selectedPath );
       } else {
         fireFileSelected();
       }
@@ -986,6 +983,10 @@ public class FileChooser extends VerticalFlexPanel {
     if ( !isLazy ) {
       initUI();
       fireFileSelectionChanged();
+
+      if ( treeListener != null ) {
+        treeListener.loaded();
+      }
     } else {
       loadDirectory( path );
     }
