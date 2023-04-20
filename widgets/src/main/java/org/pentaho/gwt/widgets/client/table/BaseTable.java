@@ -400,16 +400,18 @@ public class BaseTable extends Composite {
         break;
       }
       case KeyCodes.KEY_SPACE: {
-        event.preventDefault();
-        int focusedRow = getFocusedRow();
-        if (selectionPolicy == SelectionGrid.SelectionPolicy.MULTI_ROW) {
-          boolean shiftKey = DOM.eventGetShiftKey(event);
-          boolean ctrlKey = DOM.eventGetCtrlKey(event)
-                  || DOM.eventGetMetaKey(event);
-          // Select the rows
-          dataGrid.selectRow(focusedRow, ctrlKey, shiftKey);
-        } else if ( selectionPolicy == SelectionGrid.SelectionPolicy.ONE_ROW ) {
-          dataGrid.selectRow( focusedRow, true );
+        if ( !DOM.eventGetTarget( event ).getTagName().equalsIgnoreCase( "input" ) ) {
+          event.preventDefault();
+          int focusedRow = getFocusedRow();
+          if ( selectionPolicy == SelectionGrid.SelectionPolicy.MULTI_ROW ) {
+            boolean shiftKey = DOM.eventGetShiftKey( event );
+            boolean ctrlKey = DOM.eventGetCtrlKey( event )
+                    || DOM.eventGetMetaKey( event );
+            // Select the rows
+            dataGrid.selectRow( focusedRow, ctrlKey, shiftKey );
+          } else if ( selectionPolicy == SelectionGrid.SelectionPolicy.ONE_ROW ) {
+            dataGrid.selectRow( focusedRow, true );
+          }
         }
         break;
       }
@@ -566,7 +568,7 @@ public class BaseTable extends Composite {
     }
 
     for ( int j = 0; j < tableHeader.getColumnCount(); j++ ) {
-      tableHeader.getCellFormatter().getElement(0, j ).setTabIndex( j == 0 ? 0 : -1 );
+      tableHeader.getCellFormatter().getElement( 0, j ).setTabIndex( j == 0 && isColumnSortable( j ) ? 0 : -1 );
     }
 
     // Set column widths
