@@ -4908,6 +4908,10 @@ div.dijitDateTextBox.dijitComboBox {
   text-decoration: underline;
 }
 
+.bootstrap #fileBrowserButtons.fileBrowserColumn .btn:focus-visible {
+  box-shadow: 0 0 transparent;
+}
+
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled],
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:link,
 .bootstrap #fileBrowserButtons.fileBrowserColumn .btn[disabled]:visited,
