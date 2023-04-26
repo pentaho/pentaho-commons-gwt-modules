@@ -137,6 +137,9 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     setCallback( callback );
     this.parentDialog = parentDialog;
     constructDialog( filePath, outputLocation, scheduleName, dateFormat, overwriteFile, hasParams, isEmailConfValid,  null );
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, ScheduleDialogType type, String title,
@@ -147,6 +150,9 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     setCallback( callback );
     this.parentDialog = parentDialog;
     constructDialog( filePath, outputLocation, scheduleName, null, false, hasParams, isEmailConfValid, null );
+    setResponsive( true );
+    setSizingMode( DialogSizingMode.FILL_VIEWPORT );
+    setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   @Override
