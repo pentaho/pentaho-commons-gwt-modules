@@ -98,6 +98,7 @@ public class FileChooserDialog extends PromptDialogBox implements FileChooserLis
 
     setCallback( callback );
     fileChooser.addFileChooserListener( this );
+    fileChooser.setTreeListener( () -> center() );
   }
 
   private static native String getDefaultFolderLocation()
