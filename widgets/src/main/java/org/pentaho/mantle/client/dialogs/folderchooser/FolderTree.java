@@ -468,6 +468,10 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
     return trashItems;
   }
 
+  public void setSelectedPath( String path ) {
+    selectedPath = path;
+  }
+
   public void select( String path ) {
     this.selectedPath = path;
     List<String> pathSegments = new ArrayList<String>();
@@ -545,31 +549,23 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
 
   private void selectFromList( List<TreeItem> parents ) {
     TreeItem pathDown = null;
+
     for ( int i = 0; i < parents.size(); i++ ) {
       TreeItem parent = parents.get( i );
-      if ( pathDown == null ) {
-        for ( int j = 0; j < getItemCount(); j++ ) {
-          TreeItem possibleItem = getItem( j );
-          if ( ( possibleItem instanceof FolderTreeItem ) && ( parent instanceof FolderTreeItem )
-              && ( (FolderTreeItem) parent ).getFileName().equals( ( (FolderTreeItem) possibleItem ).getFileName() ) ) {
-            pathDown = possibleItem;
-            pathDown.setState( true, true );
-            pathDown.setSelected( true );
-            break;
-          }
-        }
-      } else {
-        for ( int j = 0; j < pathDown.getChildCount(); j++ ) {
-          TreeItem possibleItem = pathDown.getChild( j );
-          if ( ( possibleItem instanceof FolderTreeItem ) && ( parent instanceof FolderTreeItem )
-              && ( (FolderTreeItem) parent ).getFileName().equals( ( (FolderTreeItem) possibleItem ).getFileName() ) ) {
-            pathDown = possibleItem;
-            pathDown.setState( true, true );
-            break;
-          }
+
+      int itemCount = pathDown != null ? pathDown.getChildCount() : getItemCount();
+      for ( int j = 0; j < itemCount; j++ ) {
+        TreeItem possibleItem = pathDown != null ? pathDown.getChild( j ) : getItem( j );
+
+        if ( ( possibleItem instanceof FolderTreeItem ) && ( parent instanceof FolderTreeItem )
+          && ( (FolderTreeItem) parent ).getFileName().equals( ( (FolderTreeItem) possibleItem ).getFileName() ) ) {
+          pathDown = possibleItem;
+          pathDown.setState( true, true );
+          break;
         }
       }
     }
+
     if ( pathDown != null ) {
       setSelectedItem( pathDown );
       pathDown.setState( true, true );

@@ -63,9 +63,11 @@ public class SelectFolderDialog extends PromptDialogBox {
     }
   }
 
-  private static MySolutionTree tree = new MySolutionTree( false );
+  private static final MySolutionTree tree = new MySolutionTree( false );
 
-  public SelectFolderDialog() {
+  private String defaultSelectedPath = FolderTree.getHomeFolder();
+
+  public SelectFolderDialog( String selectedPath ) {
     super( Messages.getString( "selectFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ),
       false, true );
 
@@ -73,8 +75,9 @@ public class SelectFolderDialog extends PromptDialogBox {
     setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
     setWidthCategory( DialogWidthCategory.SMALL );
 
-    if ( tree == null ) {
-      tree = new MySolutionTree( false );
+    if ( selectedPath != null ) {
+      tree.setSelectedPath( selectedPath );
+      defaultSelectedPath = selectedPath;
     }
     tree.localThis = this;
 
@@ -101,22 +104,20 @@ public class SelectFolderDialog extends PromptDialogBox {
         nfc.setCallback( new ICallback<String>() {
           public void onHandle( final String path ) {
             tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
-
               @Override
               public void onSuccess( RepositoryFileTree result ) {
-                // TODO Auto-generated method stub
                 tree.select( path );
               }
 
               @Override
               public void onFailure( Throwable caught ) {
-                // TODO Auto-generated method stub
-
+                // noop
               }
             }, null, null, false );
 
           }
         } );
+
         nfc.execute();
       }
     } );
@@ -136,9 +137,13 @@ public class SelectFolderDialog extends PromptDialogBox {
     }
   }
 
+  public void cancelSelection() {
+    tree.select( defaultSelectedPath );
+  }
+
   public String getSelectedPath() {
     final FolderTreeItem selectedItem = (FolderTreeItem) tree.getSelectedItem();
-    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : FolderTree.getHomeFolder();
+    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : defaultSelectedPath;
   }
 
   private void fetchRepository( final String selectedPath ) {
