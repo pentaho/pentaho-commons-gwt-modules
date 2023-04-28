@@ -577,7 +577,7 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
       this.@com.google.gwt.user.client.ui.PopupPanel::eventTargetsPartner(Lcom/google/gwt/dom/client/NativeEvent;)(event);
   }-*/;
 
-  private boolean eventTargetIsFocusable( NativeEvent event ) {
+  boolean eventTargetIsFocusable( NativeEvent event ) {
     EventTarget target = event.getEventTarget();
     return Element.is( target ) && ElementUtils.isFocusable( Element.as( target ) );
   }
