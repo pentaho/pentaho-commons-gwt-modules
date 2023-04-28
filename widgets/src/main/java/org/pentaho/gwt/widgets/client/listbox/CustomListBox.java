@@ -670,19 +670,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
       return;
     }
 
-    // if the position of the selected item is greater than the height of the scroll area plus it's scroll offset
-    if ( ( ( this.selectedIndex + 1 ) * this.averageHeight ) > popupScrollPanel.getOffsetHeight()
-        + popupScrollPanel.getScrollPosition() ) {
-      popupScrollPanel.setScrollPosition( ( ( ( this.selectedIndex ) * this.averageHeight ) - popupScrollPanel
-          .getOffsetHeight() )
-          + averageHeight );
-      return;
-    }
-
-    // if the position of the selected item is Less than the scroll offset
-    if ( ( ( this.selectedIndex ) * this.averageHeight ) < popupScrollPanel.getScrollPosition() ) {
-      popupScrollPanel.setScrollPosition( ( ( this.selectedIndex ) * this.averageHeight ) );
-    }
+    popupScrollPanel.ensureVisible( items.get( selectedIndex ).getWidget() );
   }
 
   /**
@@ -699,11 +687,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     if ( selectedIndex > -1 ) {
       items.get( selectedIndex ).onDeselect();
     }
-    if ( visible == 1 ) { // Drop-down mode
-      if ( popupShowing ) {
-        togglePopup();
-      }
-    }
+
     setSelectedIndex( items.indexOf( item ) );
 
   }
@@ -1140,6 +1124,12 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     } else {
       setSelectedItem( listItem );
     }
+
+    // Drop-down mode
+    if ( visible == 1 && popupShowing ) {
+      togglePopup();
+    }
+
     if ( editable ) {
       editableTextBox.selectAll();
     }
