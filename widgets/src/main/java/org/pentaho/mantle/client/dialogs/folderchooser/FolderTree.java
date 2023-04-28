@@ -73,7 +73,7 @@ public class FolderTree extends Tree {
 
   private FocusPanel focusable = new FocusPanel();
 
-  public FolderTree() {
+  public FolderTree( boolean showTrash ) {
     super();
 
     setAnimationEnabled( true );
@@ -96,9 +96,9 @@ public class FolderTree extends Tree {
     DOM.appendChild( element, focusableElement );
     DOM.sinkEvents( focusableElement, Event.FOCUSEVENTS );
 
-    this.addSelectionHandler(this::handleItemSelection);
-    this.addOpenHandler(this::handleOpen);
-    this.addCloseHandler(this::handleClose);
+    this.addSelectionHandler( this::handleItemSelection );
+    this.addOpenHandler( this::handleOpen );
+    this.addCloseHandler( this::handleClose );
 
     beforeFetchRepositoryFileTree();
     fetchRepositoryFileTree( null, null, null, showHiddenFiles );

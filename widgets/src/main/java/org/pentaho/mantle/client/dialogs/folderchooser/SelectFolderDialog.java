@@ -44,7 +44,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     public SelectFolderDialog localThis;
 
     public MySolutionTree() {
-      super();
+      super( false );
       super.setScrollOnSelectEnabled( false );
     }
 
@@ -66,6 +66,10 @@ public class SelectFolderDialog extends PromptDialogBox {
   private static final MySolutionTree tree = new MySolutionTree();
 
   private String defaultSelectedPath = FolderTree.getHomeFolder();
+
+  public SelectFolderDialog() {
+    this( FolderTree.getHomeFolder() );
+  }
 
   public SelectFolderDialog( String selectedPath ) {
     super( Messages.getString( "selectFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ),
