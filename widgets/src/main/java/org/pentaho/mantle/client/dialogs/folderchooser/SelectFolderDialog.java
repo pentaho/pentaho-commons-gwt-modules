@@ -20,15 +20,13 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 import com.google.gwt.user.client.ui.SimplePanel;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
 import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
 import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
-import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.mantle.client.messages.Messages;
 
-import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -38,13 +36,15 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
+import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
+
 public class SelectFolderDialog extends PromptDialogBox {
 
   private static class MySolutionTree extends FolderTree {
     public SelectFolderDialog localThis;
 
-    public MySolutionTree( boolean showTrash ) {
-      super( showTrash );
+    public MySolutionTree() {
+      super();
       super.setScrollOnSelectEnabled( false );
     }
 
@@ -63,7 +63,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     }
   }
 
-  private static final MySolutionTree tree = new MySolutionTree( false );
+  private static final MySolutionTree tree = new MySolutionTree();
 
   private String defaultSelectedPath = FolderTree.getHomeFolder();
 
@@ -83,43 +83,37 @@ public class SelectFolderDialog extends PromptDialogBox {
 
     SimplePanel treeWrapper = new SimplePanel( tree );
     treeWrapper.getElement().addClassName( "select-folder-tree" );
-    tree.getElement().getStyle().setMargin( 0d, Unit.PX );
+    setStyleProperty( tree.getElement(), "margin", "0" );
 
     Toolbar bar = new Toolbar();
     bar.addStyleName( "select-folder-toolbar" );
     bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
-
     bar.add( Toolbar.GLUE );
 
     Image image = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
     image.addStyleName( "icon-small" );
     image.addStyleName( "icon-zoomable" );
     image.addStyleName( "pentaho-addbutton" );
+
     ToolbarButton add = new ToolbarButton( image );
     add.setToolTip( Messages.getString( "createNewFolder" ) );
-    add.setCommand( new Command() {
-      public void execute() {
-        final NewFolderCommand nfc =
-            new NewFolderCommand( ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile() );
-        nfc.setCallback( new ICallback<String>() {
-          public void onHandle( final String path ) {
-            tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
-              @Override
-              public void onSuccess( RepositoryFileTree result ) {
-                tree.select( path );
-              }
+    add.setCommand( () -> {
+      RepositoryFile repositoryFile = ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile();
+      final NewFolderCommand newFolderCommand = new NewFolderCommand( repositoryFile );
 
-              @Override
-              public void onFailure( Throwable caught ) {
-                // noop
-              }
-            }, null, null, false );
+      newFolderCommand.setCallback( path -> tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
+        @Override
+        public void onSuccess( RepositoryFileTree result ) {
+          tree.select( path );
+        }
 
-          }
-        } );
+        @Override
+        public void onFailure( Throwable caught ) {
+          // noop
+        }
+      }, null, null, false ) );
 
-        nfc.execute();
-      }
+      newFolderCommand.execute();
     } );
     bar.add( add );
 

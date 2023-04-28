@@ -32,13 +32,11 @@ import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.WaitPopup;
 import org.pentaho.mantle.client.messages.Messages;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
-import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
-import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
@@ -54,12 +52,12 @@ import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
-public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, UserSettingsLoadedEventHandler,
-    IRepositoryFileProvider*/ {
+import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
 
+public class FolderTree extends Tree {
   private static final String SELECTED_STYLE_NAME = "selected";
-
   private static final String HIDDEN_STYLE_NAME = "hidden";
+  private static final String OPEN_STYLE_NAME = "open";
 
   private boolean showLocalizedFileNames = true;
   private boolean showHiddenFiles = false;
@@ -75,97 +73,35 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
 
   private FocusPanel focusable = new FocusPanel();
 
-  public FolderTree( boolean showTrash ) {
+  public FolderTree() {
     super();
+
     setAnimationEnabled( true );
     sinkEvents( Event.ONDBLCLICK );
-    DOM.setElementAttribute( getElement(), "oncontextmenu", "return false;" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setStyleAttribute( focusable.getElement(), "fontSize", "0" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setStyleAttribute( focusable.getElement(), "position", "absolute" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setStyleAttribute( focusable.getElement(), "outline", "0px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setStyleAttribute( focusable.getElement(), "width", "1px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setStyleAttribute( focusable.getElement(), "height", "1px" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setElementAttribute( focusable.getElement(), "hideFocus", "true" ); //$NON-NLS-1$ //$NON-NLS-2$
-    DOM.setIntStyleAttribute( focusable.getElement(), "zIndex", -1 ); //$NON-NLS-1$
-    DOM.appendChild( getElement(), focusable.getElement() );
-    DOM.sinkEvents( focusable.getElement(), Event.FOCUSEVENTS );
 
-    this.addSelectionHandler( new SelectionHandler<TreeItem>() {
+    Element element = getElement();
+    element.setId( "solutionTree" );
+    element.setAttribute( "oncontextmenu", "return false;" );
+    setStyleProperty( element, "margin", "29px 0 10px 0" );
 
-      @Override
-      public void onSelection( SelectionEvent<TreeItem> event ) {
-        if ( selectedItem != null ) {
-          Widget treeItemWidget = selectedItem.getWidget();
-          if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-            ( (LeafItemWidget) treeItemWidget ).getParent().removeStyleName( SELECTED_STYLE_NAME );
-          } else {
-            selectedItem.removeStyleName( SELECTED_STYLE_NAME );
-          }
-        }
-        selectedItem = event.getSelectedItem();
-        if ( selectedItem != null ) {
-          Widget treeItemWidget = selectedItem.getWidget();
-          if ( selectedItem instanceof FolderTreeItem ) {
-            RepositoryFile repositoryFile = ( (FolderTreeItem) selectedItem ).getRepositoryFile();
-            if ( repositoryFile != null && repositoryFile.isHidden() && !isShowHiddenFiles() ) {
-              if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-                ( (LeafItemWidget) treeItemWidget ).getParent().removeStyleName( HIDDEN_STYLE_NAME );
-                ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
-              } else {
-                selectedItem.addStyleName( HIDDEN_STYLE_NAME );
-                selectedItem.addStyleName( SELECTED_STYLE_NAME );
-              }
-            } else {
-              if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-                ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
-              } else {
-                selectedItem.addStyleName( SELECTED_STYLE_NAME );
-              }
-            }
-          } else {
-            if ( treeItemWidget != null && treeItemWidget instanceof LeafItemWidget ) {
-              ( (LeafItemWidget) treeItemWidget ).getParent().addStyleName( SELECTED_STYLE_NAME );
-            } else {
-              selectedItem.addStyleName( SELECTED_STYLE_NAME );
-            }
-          }
-        }
-      }
-    } );
-    // By default, expanding a node does not select it. Add that in here
-    this.addOpenHandler( new OpenHandler<TreeItem>() {
-      public void onOpen( OpenEvent<TreeItem> event ) {
-        FolderTree.this.setSelectedItem( event.getTarget() );
-        selectedItem.addStyleName( "open" );
-      }
-    } );
+    Element focusableElement = focusable.getElement();
+    focusableElement.setAttribute( "hideFocus", "true" );
+    setStyleProperty( focusableElement, "fontSize", "0" );
+    setStyleProperty( focusableElement, "position", "absolute" );
+    setStyleProperty( focusableElement, "outline", "0" );
+    setStyleProperty( focusableElement, "width", "1px" );
+    setStyleProperty( focusableElement, "height", "1px" );
+    setStyleProperty( focusableElement, "zIndex", "-1" );
 
-    this.addCloseHandler( new CloseHandler<TreeItem>() {
-      @Override
-      public void onClose( CloseEvent<TreeItem> event ) {
-        event.getTarget().removeStyleName( "open" );
-      }
-    } );
+    DOM.appendChild( element, focusableElement );
+    DOM.sinkEvents( focusableElement, Event.FOCUSEVENTS );
 
-    getElement().setId( "solutionTree" ); //$NON-NLS-1$
-    getElement().getStyle().setProperty( "margin", "29px 0px 10px 0px" ); //$NON-NLS-1$ //$NON-NLS-2$
+    this.addSelectionHandler(this::handleItemSelection);
+    this.addOpenHandler(this::handleOpen);
+    this.addCloseHandler(this::handleClose);
 
     beforeFetchRepositoryFileTree();
-
     fetchRepositoryFileTree( null, null, null, showHiddenFiles );
-
-   // onFetchRepositoryFileTree( repositoryFileTree, Collections.<RepositoryFile>emptyList() );
-    //RepositoryFileTreeManager.getInstance().addRepositoryFileTreeListener( this, null, null, showHiddenFiles );
-    /*EventBusUtil.EVENT_BUS.addHandler( UserSettingsLoadedEvent.TYPE, this );
-    UserSettingsManager.getInstance().getUserSettings( new AsyncCallback<JsArray<JsSetting>>() {
-
-      public void onSuccess( JsArray<JsSetting> settings ) {
-        onUserSettingsLoaded( new UserSettingsLoadedEvent( settings ) );
-      }
-
-      public void onFailure( Throwable caught ) {
-      }
-    }, false );*/
   }
 
   public void fetchRepositoryFileTree( final AsyncCallback<RepositoryFileTree> callback, Integer depth, String filter,
@@ -250,28 +186,6 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
     }
   }
 
-/*
-  @Override
-  public void onUserSettingsLoaded( UserSettingsLoadedEvent event ) {
-    JsArray<JsSetting> settings = event.getSettings();
-    if ( settings != null ) {
-      for ( int i = 0; i < settings.length(); i++ ) {
-        JsSetting setting = settings.get( i );
-        if ( IMantleUserSettingsConstants.MANTLE_SHOW_LOCALIZED_FILENAMES.equals( setting.getName() ) ) {
-          boolean showLocalizedFileNames = "true".equals( setting.getName() ); //$NON-NLS-1$
-          setShowLocalizedFileNames( showLocalizedFileNames );
-        } else if ( IMantleUserSettingsConstants.MANTLE_SHOW_DESCRIPTIONS_FOR_TOOLTIPS.equals( setting.getName() ) ) {
-          boolean useDescriptions = "true".equals( setting.getValue() ); //$NON-NLS-1$
-          setUseDescriptionsForTooltip( useDescriptions );
-        } else if ( IMantleUserSettingsConstants.MANTLE_SHOW_HIDDEN_FILES.equals( setting.getName() ) ) {
-          boolean showHiddenFiles = "true".equals( setting.getValue() ); //$NON-NLS-1$
-          setShowHiddenFiles( showHiddenFiles );
-        }
-      }
-    }
-    RepositoryFileTreeManager.getInstance().addRepositoryFileTreeListener( this, null, null, showHiddenFiles );
-  }
-*/
   public void onBrowserEvent( Event event ) {
     int eventType = DOM.eventGetType( event );
     switch ( eventType ) {
@@ -474,33 +388,42 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
 
   public void select( String path ) {
     this.selectedPath = path;
-    List<String> pathSegments = new ArrayList<String>();
-    if ( path != null ) {
-      if ( path.startsWith( "/" ) ) { //$NON-NLS-1$
-        path = path.substring( 1 );
+
+    selectedItem  = getTreeItem( path );
+    if ( selectedItem != null ) {
+      ArrayList<TreeItem> parents = new ArrayList<>();
+
+      TreeItem item = selectedItem;
+      setSelectedItem( item, false );
+
+      while ( item != null ) {
+        parents.add( item );
+        item = item.getParentItem();
       }
-      StringTokenizer st = new StringTokenizer( path, '/' );
+
+      Collections.reverse( parents );
+      selectFromList( parents );
+    } else if ( path != null && !path.equals( getHomeFolder() ) ) {
+      select( getHomeFolder() );
+    }
+  }
+
+  private FolderTreeItem getTreeItem( String path ) {
+    List<String> pathSegments = new ArrayList<>();
+
+    if ( path != null ) {
+      String normalizedPath = path.startsWith( "/" )
+        ? path.substring( 1 )
+        : path;
+
+      StringTokenizer st = new StringTokenizer( normalizedPath, '/' );
       for ( int i = 0; i < st.countTokens(); i++ ) {
         String token = st.tokenAt( i );
         pathSegments.add( token );
       }
     }
-    TreeItem item = getTreeItem( pathSegments );
-    selectedItem = item;
-    ArrayList<TreeItem> parents = new ArrayList<TreeItem>();
-    if ( item != null ) {
-      this.setSelectedItem( item, false );
-      parents.add( item );
-      item = item.getParentItem();
-      while ( item != null ) {
-        parents.add( item );
-        item = item.getParentItem();
-      }
-      Collections.reverse( parents );
-      selectFromList( parents );
-    } else if ( path != null &&  !path.equals( getHomeFolder() ) ) {
-      select( getHomeFolder() );
-    }
+
+    return getTreeItem( pathSegments );
   }
 
   public FolderTreeItem getTreeItem( final List<String> pathSegments ) {
@@ -570,6 +493,58 @@ public class FolderTree extends Tree /*implements IRepositoryFileTreeListener, U
       setSelectedItem( pathDown );
       pathDown.setState( true, true );
     }
+  }
+
+  private void handleItemSelection( SelectionEvent<TreeItem> event ) {
+    if ( selectedItem != null ) {
+      Widget treeItemWidget = selectedItem.getWidget();
+      if ( treeItemWidget instanceof LeafItemWidget ) {
+        treeItemWidget.getParent().removeStyleName( SELECTED_STYLE_NAME );
+      } else {
+        selectedItem.removeStyleName( SELECTED_STYLE_NAME );
+      }
+    }
+    selectedItem = event.getSelectedItem();
+    if ( selectedItem != null ) {
+      Widget treeItemWidget = selectedItem.getWidget();
+      if ( selectedItem instanceof FolderTreeItem ) {
+        RepositoryFile repositoryFile = ( (FolderTreeItem) selectedItem ).getRepositoryFile();
+        if ( repositoryFile != null && repositoryFile.isHidden() && !isShowHiddenFiles() ) {
+          if ( treeItemWidget instanceof LeafItemWidget ) {
+            treeItemWidget.getParent().removeStyleName( HIDDEN_STYLE_NAME );
+            treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
+          } else {
+            selectedItem.addStyleName( HIDDEN_STYLE_NAME );
+            selectedItem.addStyleName( SELECTED_STYLE_NAME );
+          }
+        } else {
+          if ( treeItemWidget instanceof LeafItemWidget ) {
+            treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
+          } else {
+            selectedItem.addStyleName( SELECTED_STYLE_NAME );
+          }
+        }
+      } else {
+        if ( treeItemWidget instanceof LeafItemWidget ) {
+          treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
+        } else {
+          selectedItem.addStyleName( SELECTED_STYLE_NAME );
+        }
+      }
+    }
+  }
+
+  private void handleOpen( OpenEvent<TreeItem> event ) {
+    TreeItem target = event.getTarget();
+
+    // By default, expanding a node does not select it. Add that in here
+    this.setSelectedItem( target );
+
+    target.addStyleName( OPEN_STYLE_NAME );
+  }
+
+  private void handleClose( CloseEvent<TreeItem> event ) {
+    event.getTarget().removeStyleName( OPEN_STYLE_NAME );
   }
 
   private void buildSolutionTree( FolderTreeItem parentTreeItem, RepositoryFileTree repositoryFileTree ) {
