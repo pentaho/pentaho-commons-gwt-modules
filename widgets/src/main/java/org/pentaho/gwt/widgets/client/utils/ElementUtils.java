@@ -285,6 +285,15 @@ public class ElementUtils {
   }-*/;
 
   /**
+   * Gets a value that indicates if the element can currently receive focus, via keyboard or code.
+   * @param elem The element.
+   * @return <code>true</code> if it can receive focus; <code>false</code>, otherwise.
+   */
+  public static native boolean isFocusable( Element elem )/*-{
+    return $wnd.pho.util._focus.isTabbable(elem, {focusable: true});
+  }-*/;
+
+  /**
    * Sets focus on a given element.
    * <p>
    *   On some user agents, e.g. <code>safari</code>,
