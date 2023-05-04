@@ -228,13 +228,10 @@ public class CustomListBoxTest {
     customListBox.selectedIndex = index;
     final ListItem selectedItem = mock( ListItem.class );
     when( customListBox.items.get( index ) ).thenReturn( selectedItem );
-    customListBox.visible = 1;
-    customListBox.popupShowing = true;
     final Integer selectionIndex = 5;
     when( customListBox.items.indexOf( item ) ).thenReturn( selectionIndex );
     customListBox.setSelectedItem( item );
     verify( selectedItem ).onDeselect();
-    verify( customListBox ).togglePopup();
     verify( customListBox ).setSelectedIndex( selectionIndex );
   }
 
@@ -426,15 +423,19 @@ public class CustomListBoxTest {
 
     customListBox.multiSelect = true;
     customListBox.itemSelected( listItem, event );
-    verify( customListBox.fPanel ).setFocus( true );
+    verify( customListBox ).setFocus( true );
     verify( customListBox ).handleSelection( listItem, event );
     verify( customListBox, never() ).setSelectedItem( any( ListItem.class ) );
+    verify( customListBox, never() ).togglePopup();
 
     customListBox.multiSelect = false;
+    customListBox.visible = 1;
+    customListBox.popupShowing = true;
     customListBox.itemSelected( listItem, event );
-    verify( customListBox.fPanel, times( 2 ) ).setFocus( true );
+    verify( customListBox, times( 2 ) ).setFocus( true );
     verify( customListBox ).handleSelection( listItem, event );
     verify( customListBox ).setSelectedItem( any( ListItem.class ) );
+    verify( customListBox ).togglePopup();
   }
 
   @Test
