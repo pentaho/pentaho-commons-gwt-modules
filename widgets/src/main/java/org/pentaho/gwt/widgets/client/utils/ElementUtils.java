@@ -408,4 +408,22 @@ public class ElementUtils {
   public static native void focusSync( Element elem )/*-{
     elem.focus();
   }-*/;
+
+  public static native void scrollVerticallyIntoView( Element elem ) /*-{
+    var item = elem;
+    var container = elem.offsetParent;
+
+    // In the coordinates of `container`.
+    var offsetTop = 0;
+    if (item !== container) {
+      offsetTop = item.offsetTop;
+    }
+
+    var elemRect = elem.getBoundingClientRect();
+    if (offsetTop < container.scrollTop) {
+      container.scrollTop = offsetTop;
+    } else if ( offsetTop + elemRect.height > container.scrollTop + container.clientHeight ) {
+      container.scrollTop = offsetTop +  elemRect.height - container.clientHeight;
+    }
+  }-*/;
 }

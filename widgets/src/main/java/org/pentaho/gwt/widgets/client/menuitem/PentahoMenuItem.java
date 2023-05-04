@@ -17,6 +17,8 @@
 
 package org.pentaho.gwt.widgets.client.menuitem;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.safehtml.shared.annotations.IsSafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuItem;
 
@@ -27,7 +29,11 @@ public class PentahoMenuItem extends MenuItem {
   private boolean checked = false;
 
   public PentahoMenuItem( String text, Command cmd ) {
-    super( text, cmd );
+    this( text, false, cmd );
+  }
+
+  public PentahoMenuItem( @IsSafeHtml String text, boolean asHTML, Scheduler.ScheduledCommand cmd ) {
+    super( text, asHTML, cmd );
     setEnabled( enabled );
   }
 
