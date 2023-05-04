@@ -1660,6 +1660,7 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
 :where(.responsive).parameter-ui {
   height: auto;
   padding: var(--focus-ring-padding) !important;
+  box-sizing: border-box;
 }
 /* endregion */
 
@@ -1796,12 +1797,8 @@ button#schedule-dialog-select-button {
   border: 0;
   padding: 0;
 
-  height: auto !important;
-
-  /* This will fail when --frame-content-height is not set,
-     falling back to previous declaration with auto.
-   */
-  height: calc(var(--frame-content-height, auto) - 2 * var(--focus-ring-padding)) !important;
+  /* This will fallback to auto when --frame-content-height is not set */
+  height: calc(var(--frame-content-height, auto)) !important;
 }
 
 /* endregion */
