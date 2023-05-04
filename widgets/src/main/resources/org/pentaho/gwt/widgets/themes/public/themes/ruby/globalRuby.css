@@ -1798,7 +1798,7 @@ button#schedule-dialog-select-button {
   padding: 0;
 
   /* This will fallback to auto when --frame-content-height is not set */
-  height: calc(var(--frame-content-height, auto)) !important;
+  height: var(--frame-content-height, auto) !important;
 }
 
 /* endregion */
