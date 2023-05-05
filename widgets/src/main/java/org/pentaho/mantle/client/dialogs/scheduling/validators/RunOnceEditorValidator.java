@@ -18,6 +18,7 @@
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.mantle.client.dialogs.scheduling.RunOnceEditor;
 
 import java.util.Date;
@@ -35,12 +36,24 @@ public class RunOnceEditorValidator implements IUiValidator {
     if ( null == editor.getStartDate() ) {
       isValid = false;
     } else {
-      final DateTimeFormat format = DateTimeFormat.getFormat( "MM-dd-yyyy" ); //$NON-NLS-1$
-      final String date = format.format( editor.getStartDate() );
-      final String dateTime = date + " " + editor.getStartTime(); //$NON-NLS-1$
 
-      if ( DateTimeFormat.getFormat( "MM-dd-yyyy HH:mm:ss a" ).parse( normalizeDateEn( dateTime ) ).before( new Date() ) ) { //$NON-NLS-1$
-        isValid = false;
+      final DateTimeFormat format = DateTimeFormat.getFormat( "MM-dd-yyyy" );
+
+      if (editor.getStartDate().before( new Date() )){
+       isValid=false;
+      } else {
+
+        final String date = format.format( editor.getStartDate() );
+        String time = editor.getStartTime();  //format of time is "hh:mm:ss a"
+
+        time = normalizeTime( time );
+
+        final String dateTime = date + " " + time; //$NON-NLS-1$
+
+        if ( DateTimeFormat.getFormat( "MM-dd-yyyy hh:mm:ss a" ).parse( dateTime ).before( new Date() ) ) {
+          isValid = false;
+        }
+
       }
     }
     return isValid;
@@ -49,11 +62,15 @@ public class RunOnceEditorValidator implements IUiValidator {
   public void clear() {
   }
 
-  private String normalizeDateEn (String dateString){
-    if(dateString != null && !dateString.isEmpty()){
-      return dateString.replaceAll( "vorm." , "am").replaceAll( "nachm." , "pm") ;
-    }else {
-      return dateString;
+  private String normalizeTime( String time ) {
+    if ( time == null || time.isEmpty() ) {
+      return null;
     }
+    if ( time.endsWith( TimeUtil.TimeOfDay.AM.toString() ) ) {
+      time = time.replace( TimeUtil.TimeOfDay.AM.toString(), "am" );
+    } else if ( time.endsWith( TimeUtil.TimeOfDay.PM.toString() ) ) {
+      time = time.replace( TimeUtil.TimeOfDay.PM.toString(), "pm" );
+    }
+    return time;
   }
 }
