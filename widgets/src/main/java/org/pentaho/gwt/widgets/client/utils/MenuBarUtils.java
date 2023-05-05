@@ -24,27 +24,54 @@ import com.google.gwt.user.client.ui.UIObject;
 
 import java.util.List;
 
+/**
+ * The <code>MenuBarUtils</code> class contains utility methods for
+ * dealing with GWT's {@link MenuBar} class.
+ * <p>
+ *   Most of the methods exist for the purpose of gaining access to this class' private fields or methods,
+ *   via JSNI.
+ * </p>
+ */
 public class MenuBarUtils {
   // "Static" class. Prevent instantiation.
   private MenuBarUtils() {
   }
 
-  // Access to private field allItems
+  /**
+   * Gets all items of a given menu bar.
+   * <p>
+   *   Includes both {@link MenuItem} and {@link com.google.gwt.user.client.ui.MenuItemSeparator} items.
+   * </p>
+   * <p>
+   *   This method returns the value of a menu bar's private field <code>allItems</code>.
+   * </p>
+   * @param menuBar A menu bar.
+   * @return A list of items.
+   */
   public static native List<UIObject> getAllItems( MenuBar menuBar ) /*-{
     return menuBar.@com.google.gwt.user.client.ui.MenuBar::allItems;
   }-*/;
 
-  // Access to private field items
-  public static native List<MenuItem> getItems( MenuBar menuBar ) /*-{
-    return menuBar.@com.google.gwt.user.client.ui.MenuBar::items;
-  }-*/;
-
-  // Access to private field popup
+  /**
+   * Gets the popup panel of a given menu bar.
+   * <p>
+   *   This method returns the value of a menu bar's private field <code>popup</code>.
+   * </p>
+   * @param menuBar A menu bar.
+   * @return The popup panel, if any; <code>null</code>, otherwise.
+   */
   public static native DecoratedPopupPanel getPopup( MenuBar menuBar ) /*-{
     return menuBar.@com.google.gwt.user.client.ui.MenuBar::popup;
   }-*/;
 
-  // Access to private field parentMenu
+  /**
+   * Gets the parent menu bar of a given menu bar.
+   * <p>
+   *   This method returns the value of a menu bar's private field <code>parentMenu</code>.
+   * </p>
+   * @param menuBar A menu bar.
+   * @return The parent menu bar, if any; <code>null</code>, otherwise.
+   */
   public static native MenuBar getParentMenu( MenuBar menuBar ) /*-{
     return menuBar.@com.google.gwt.user.client.ui.MenuBar::parentMenu;
   }-*/;
