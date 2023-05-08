@@ -408,4 +408,32 @@ public class ElementUtils {
   public static native void focusSync( Element elem )/*-{
     elem.focus();
   }-*/;
+
+  /**
+   * Scrolls an element's scroll container so that it is in view.
+   * <p>
+   *   The element's scroll container is scrolled down,
+   *   if the element is off view, below the container's bottom position.
+   *   Conversely, the scroll container is scrolled up,
+   *   if the element is off view, above the container's top position.
+   * </p>
+   * @param elem The element to scroll into view.
+   */
+  public static native void scrollVerticallyIntoView( Element elem ) /*-{
+    var item = elem;
+    var container = elem.offsetParent;
+
+    // In the coordinates of `container`.
+    var offsetTop = 0;
+    if (item !== container) {
+      offsetTop = item.offsetTop;
+    }
+
+    var elemRect = elem.getBoundingClientRect();
+    if (offsetTop < container.scrollTop) {
+      container.scrollTop = offsetTop;
+    } else if ( offsetTop + elemRect.height > container.scrollTop + container.clientHeight ) {
+      container.scrollTop = offsetTop +  elemRect.height - container.clientHeight;
+    }
+  }-*/;
 }
