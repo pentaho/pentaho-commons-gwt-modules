@@ -77,8 +77,8 @@ public class MenuBarUtils {
   }-*/;
 
   /**
-   * Provides access to MenuBar's doItemAction:
-   * @link com.google.gwt.user.client.ui.MenuBar#doItemAction(MenuItem, boolean, boolean)
+   * Provides access to MenuBar's {@link com.google.gwt.user.client.ui.MenuBar#doItemAction(MenuItem, boolean, boolean)
+   * doItemAction}
    */
   public static native void doItemActionLocalSuper( MenuItem item, boolean fireCommand, boolean focus ) /*-{
     this.@com.google.gwt.user.client.ui.MenuBar::doItemAction(Lcom/google/gwt/user/client/ui/MenuItem;ZZ)(item,
