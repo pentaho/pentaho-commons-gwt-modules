@@ -75,4 +75,13 @@ public class MenuBarUtils {
   public static native MenuBar getParentMenu( MenuBar menuBar ) /*-{
     return menuBar.@com.google.gwt.user.client.ui.MenuBar::parentMenu;
   }-*/;
+
+  /**
+   * Provides access to MenuBar's doItemAction:
+   * @link com.google.gwt.user.client.ui.MenuBar#doItemAction(MenuItem, boolean, boolean)
+   */
+  public static native void doItemActionLocalSuper( MenuItem item, boolean fireCommand, boolean focus ) /*-{
+    this.@com.google.gwt.user.client.ui.MenuBar::doItemAction(Lcom/google/gwt/user/client/ui/MenuItem;ZZ)(item,
+        fireCommand, focus);
+  }-*/;
 }
