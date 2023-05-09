@@ -658,7 +658,10 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     }
   }
 
-  protected void scrollSelectedItemIntoView() {
+  /**
+   * Scroll to view currently selected widget, if any.
+   */
+  public void scrollSelectedItemIntoView() {
 
     // Scroll to view currently selected widget
     // DOM.scrollIntoView(this.getSelectedItem().getWidget().getElement());
