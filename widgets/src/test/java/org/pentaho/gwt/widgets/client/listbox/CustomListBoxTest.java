@@ -478,6 +478,7 @@ public class CustomListBoxTest {
     customListBox.editableTextBox = mock( TextBox.class );
     final String test = "test";
     customListBox.selectedIndex = 5;
+    when( customListBox.isTextSame( test ) ).thenReturn( false );
     customListBox.setValue( test );
     verify( customListBox.editableTextBox ).setText( test );
     assertEquals( -1, customListBox.selectedIndex );
