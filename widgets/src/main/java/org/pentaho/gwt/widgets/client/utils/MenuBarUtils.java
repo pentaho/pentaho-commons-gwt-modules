@@ -77,11 +77,15 @@ public class MenuBarUtils {
   }-*/;
 
   /**
-   * Provides access to MenuBar's {@link com.google.gwt.user.client.ui.MenuBar#doItemAction(MenuItem, boolean, boolean)
-   * doItemAction}
+   * Provides access to MenuBar's
+   * <code>com.google.gwt.user.client.ui.MenuBar#doItemAction(MenuItem, boolean, boolean)</code>.
+   * @param menuBar A menu bar.
+   * @param item A menu item.
+   * @param fireCommand Indicates whether the menu item's command, if any, should be fired.
+   * @param focus Indicates whether focus should be placed in the sub-menu, if one exists and is opened.
    */
-  public static native void doItemAction( MenuItem item, boolean fireCommand, boolean focus ) /*-{
-    this.@com.google.gwt.user.client.ui.MenuBar::doItemAction(Lcom/google/gwt/user/client/ui/MenuItem;ZZ)(item,
+  public static native void doItemAction( MenuBar menuBar, MenuItem item, boolean fireCommand, boolean focus ) /*-{
+    menuBar.@com.google.gwt.user.client.ui.MenuBar::doItemAction(Lcom/google/gwt/user/client/ui/MenuItem;ZZ)(item,
         fireCommand, focus);
   }-*/;
 }
