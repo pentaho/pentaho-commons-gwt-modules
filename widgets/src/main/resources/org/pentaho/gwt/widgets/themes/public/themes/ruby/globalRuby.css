@@ -5063,6 +5063,10 @@ div.dijitDateTextBox.dijitComboBox {
   width: 100%;
 }
 
+.fileChooserCellFileName:focus-visible {
+  --focus-ring-offset: -2px;
+}
+
 /* file icon td */
 .fileChooserCellFileName > tbody > tr > td:first-child {
   flex: none;
