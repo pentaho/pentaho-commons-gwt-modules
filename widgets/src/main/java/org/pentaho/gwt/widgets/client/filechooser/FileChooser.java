@@ -559,14 +559,14 @@ public class FileChooser extends VerticalFlexPanel {
       RepositoryFile repositoryFile = repositoryFileTree.getFile();
       if ( repositoryFile.isFolder()
         && !( repositoryFile.getName() != null && repositoryFile.getName().equals( ETC_FOLDER ) ) ) {
-        addFileToList( repositoryFileTree, childItem, filesListTable, row++, treeItems.size() );
+        addFileToList( repositoryFileTree, childItem, filesListTable, row++, treeItems.size(), filesScroller );
       }
     }
     for ( final TreeItem childItem : treeItems ) {
       RepositoryFileTree repositoryFileTree = (RepositoryFileTree) childItem.getUserObject();
       RepositoryFile repositoryFile = repositoryFileTree.getFile();
       if ( !repositoryFile.isFolder() ) {
-        addFileToList( repositoryFileTree, childItem, filesListTable, row++, treeItems.size() );
+        addFileToList( repositoryFileTree, childItem, filesListTable, row++, treeItems.size(), filesScroller );
       }
     }
 
@@ -579,7 +579,7 @@ public class FileChooser extends VerticalFlexPanel {
   }
 
   private void addFileToList( final RepositoryFileTree repositoryFileTree, final TreeItem item,
-                             final FlexTable filesListTable, int row, int size ) {
+                             final FlexTable filesListTable, int row, int size, ScrollFlexPanel fileScroller ) {
     Label myDateLabel = null;
     RepositoryFile file = repositoryFileTree.getFile();
     Date lastModDate = file.getLastModifiedDate();
@@ -637,11 +637,8 @@ public class FileChooser extends VerticalFlexPanel {
               Widget previousFileNamePanel = filesListTable.getWidget( row, 0 );
               previousFileNamePanel.getElement().setTabIndex( 0 );
               previousFileNamePanel.getElement().focus();
-            } else {
-              this.getElement().removeAttribute( "tabindex" );
-              Widget lastFileNamePanel = filesListTable.getWidget( size, 0 );
-              lastFileNamePanel.getElement().setTabIndex( 0 );
-              lastFileNamePanel.getElement().focus();
+              event.preventDefault();
+              fileScroller.ensureVisible( previousFileNamePanel );
             }
             break;
           case KeyCodes.KEY_DOWN:
@@ -650,12 +647,25 @@ public class FileChooser extends VerticalFlexPanel {
               Widget nextFileNamePanel = filesListTable.getWidget( row + 2, 0 );
               nextFileNamePanel.getElement().setTabIndex( 0 );
               nextFileNamePanel.getElement().focus();
-            } else {
-              this.getElement().removeAttribute( "tabindex" );
-              Widget firstFileNamePanel = filesListTable.getWidget( 1, 0 );
-              firstFileNamePanel.getElement().setTabIndex( 0 );
-              firstFileNamePanel.getElement().focus();
+              event.preventDefault();
+              fileScroller.ensureVisible( nextFileNamePanel );
             }
+            break;
+          case KeyCodes.KEY_HOME:
+            this.getElement().removeAttribute( "tabindex" );
+            Widget firstFileNamePanel = filesListTable.getWidget( 1, 0 );
+            firstFileNamePanel.getElement().setTabIndex( 0 );
+            firstFileNamePanel.getElement().focus();
+            event.preventDefault();
+            fileScroller.ensureVisible( firstFileNamePanel );
+            break;
+          case KeyCodes.KEY_END:
+            this.getElement().removeAttribute( "tabindex" );
+            Widget lastFileNamePanel = filesListTable.getWidget( size, 0 );
+            lastFileNamePanel.getElement().setTabIndex( 0 );
+            lastFileNamePanel.getElement().focus();
+            event.preventDefault();
+            fileScroller.ensureVisible( lastFileNamePanel );
             break;
         }
       }
