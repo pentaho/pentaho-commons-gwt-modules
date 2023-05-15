@@ -390,13 +390,17 @@ public class BaseTable extends Composite {
   private void onDataGridKeyDown( Event event ) {
     switch (event.getKeyCode()) {
       case KeyCodes.KEY_DOWN: {
-        event.preventDefault();
-        moveFocusedRow( true );
+        if ( !ElementUtils.isEventDefaultPrevented( event ) ) {
+          event.preventDefault();
+          moveFocusedRow( true );
+        }
         break;
       }
       case KeyCodes.KEY_UP: {
-        event.preventDefault();
-        moveFocusedRow( false );
+        if ( !ElementUtils.isEventDefaultPrevented( event ) ) {
+          event.preventDefault();
+          moveFocusedRow( false );
+        }
         break;
       }
       case KeyCodes.KEY_SPACE: {
