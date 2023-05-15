@@ -19,6 +19,7 @@ package org.pentaho.gwt.widgets.client.listbox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.Focusable;
@@ -170,8 +171,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
           case Event.ONKEYUP:
             String newVal = editableTextBox.getText();
             if ( !newVal.equals( getAcceptedText() ) ) {
-              val = newVal;
-              onChange( editableTextBox );
+              CustomListBox.this.setValue( newVal );
             }
             // event.cancelBubble(true);
             break;
@@ -638,15 +638,22 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
 
       popup.show();
 
+      updateDropDown();
+
       // Set the size of the popup calculated in updateDropDown().
       if ( this.popupHeight != null ) {
-        this.popupScrollPanel.getElement().getStyle().setProperty( "height", this.popupHeight ); //$NON-NLS-1$
+        this.popupScrollPanel.getElement().getStyle().setProperty( "height", this.popupHeight );
+      } else {
+        this.popupScrollPanel.getElement().getStyle().clearProperty( "height" );
       }
 
       if ( this.popupWidth != null ) {
         String w = Math.max( this.getElement().getOffsetWidth() - 2, this.maxWidth + 10 ) + "px";
-        this.popupScrollPanel.getElement().getStyle().setProperty( "width", w ); //$NON-NLS-1$ //$NON-NLS-2$
+        this.popupScrollPanel.getElement().getStyle().setProperty( "width", w );
         popup.getElement().getStyle().setProperty( "width", w );
+      } else {
+        this.popupScrollPanel.getElement().getStyle().clearProperty( "width" );
+        popup.getElement().getStyle().clearProperty( "width" );
       }
 
       scrollSelectedItemIntoView();
@@ -667,6 +674,10 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     // DOM.scrollIntoView(this.getSelectedItem().getWidget().getElement());
     // Side effect of the previous call scrolls the scrollpanel to the right. Compensate here
     // popupScrollPanel.setHorizontalScrollPosition(0);
+
+    if ( selectedIndex < 0 ) {
+      return;
+    }
 
     if ( this.visible > 1 ) {
       this.listScrollPanel.ensureVisible( items.get( selectedIndex ).getWidget() );
@@ -1250,8 +1261,17 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     }
   }
 
+  boolean isTextSame( String text ) {
+    return Objects.equals( this.val, text );
+  }
+
   public void setValue( String text ) {
+    if ( isTextSame( text ) ) {
+      return;
+    }
+
     this.val = text;
+
     if ( editable ) {
       editableTextBox.setText( text );
       selectedIndex = -1;

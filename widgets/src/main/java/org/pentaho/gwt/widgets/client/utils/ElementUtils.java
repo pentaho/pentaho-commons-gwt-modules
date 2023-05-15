@@ -21,6 +21,7 @@ import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Property;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.user.client.DOM;
@@ -398,5 +399,14 @@ public class ElementUtils {
    */
   public static native void focusSync( Element elem )/*-{
     elem.focus();
+  }-*/;
+
+  /**
+   * Indicates whether the call to <code>Event.preventDefault()</code> canceled the event.
+   * @param evt The NativeEvent.
+   * @return <code>true</code> if the default event was prevented; <code>false</code>, otherwise.
+   */
+  public static native boolean isEventDefaultPrevented( NativeEvent evt ) /*-{
+    return evt.defaultPrevented;
   }-*/;
 }
