@@ -359,10 +359,12 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
       // switched from drop-down to list
       fPanel.remove( dropGrid );
       fPanel.add( listScrollPanel );
+      addStyleName( "list-mode" );
     } else if ( visible == 1 && prevCount > 1 ) {
       // switched from list to drop-down
       fPanel.remove( listScrollPanel );
       fPanel.add( dropGrid );
+      removeStyleName( "list-mode" );
     }
 
     if ( suppressLayout == false ) {

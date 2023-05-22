@@ -999,9 +999,13 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 /* region flex-row / flex-column */
 :where(.responsive):is(.flex-column, .flex-row),
 :where(.responsive) :is(.flex-column, .flex-row) {
-  flex: auto;
+  --flex-item: initial;
+  flex: var(--flex-item, auto);
   display: flex;
-  gap: var(--layout-gap-v) var(--layout-gap-h);
+
+  --layout-gap-h-local: initial;
+  --layout-gap-v-local: initial;
+  gap: var(--layout-gap-v-local, var(--layout-gap-v)) var(--layout-gap-h-local, var(--layout-gap-h));
 }
 
 :where(.responsive).flex-row,
@@ -1037,7 +1041,8 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 :where(.responsive) .flex-row > :where(.flex-row),
 :where(.responsive).flex-column > :where(.flex-column),
 :where(.responsive) .flex-column > :where(.flex-column) {
-  flex: inherit;
+  --flex-item: initial;
+  flex: var(--flex-item, inherit);
 }
 /* endregion */
 
@@ -1103,7 +1108,198 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   flex: var(--priv-flex-items, inherit);
 }
 
+/* When container items have e.g. a width:100%, that used to refer to the old layout parent,
+   before display:contents was used, which if having a fixed width would cause the item to not shrink enough
+   if needed, compared to other items. */
+:where(.responsive) .gwt-h-panel > * > * > * > :where(.flex-row, .flex-column) {
+  width: auto !important;
+}
+
+:where(.responsive) .gwt-v-panel > * > * > * > :where(.flex-row, .flex-column) {
+  height: auto !important;
+}
+
 /* endregion */
+
+/* region XUL/GWT VBox, HBox
+   XUL adds a wrapper div to each flex item.
+   table.flex-row.gwt-h-v-panel.gwt-h-panel.hbox
+       colgroup        ; display: none
+       tbody           ; display: contents
+         tr            ; display: contents
+           td...       ; display: contents
+             div       ; display: contents - wrapper
+               item
+  */
+:where(.responsive.pentaho-xul-gwt) :is(.hbox, .vbox) > * > * > * > div {
+  display: contents;
+  flex: inherit;
+}
+
+:where(.responsive.pentaho-xul-gwt) :is(.hbox, .vbox) {
+  --flex-item: initial;
+  flex: var(--flex-item, auto);
+}
+
+/* Regular items (not flex containers) don't flex by default.
+   Keep in sync with corresponding gwt-h-v-panel rule.
+*/
+:where(.responsive.pentaho-xul-gwt) :is(.hbox, .vbox) > * > * > * > * > :where(:not(.flex-row, .flex-column)) {
+  --flex-item: initial;
+  flex: var(--flex-item, var(--priv-flex-items, none));
+}
+
+/* Container items having same direction of the panel inherit its flex by default.
+   When changing direction, the child container's default flex of auto is used by default.
+   Keep in sync with corresponding gwt-h-v-panel rule.
+  */
+:where(.responsive.pentaho-xul-gwt) .hbox > * > * > * > * > :where(.flex-row),
+:where(.responsive.pentaho-xul-gwt) .vbox > * > * > * > * > :where(.flex-column) {
+  --flex-item: initial;
+  flex: var(--flex-item, var(--priv-flex-items, inherit));
+}
+
+/* Do not flex vertically / stretch horizontally */
+:where(.responsive.pentaho-xul-gwt .vbox) > * > * > * > * > .flex-item-h {
+  --flex-item: none;
+  align-self: stretch;
+}
+/* Do not stretch vertically / flex horizontally */
+:where(.responsive.pentaho-xul-gwt .hbox) > * > * > * > * > .flex-item-h {
+  --flex-item: auto;
+  align-self: center;
+}
+
+/* Ignore the cross size of items which are flex containers or which can flex in the cross axis */
+:where(.responsive.pentaho-xul-gwt) .hbox > * > * > * > * > :where(.flex-row, .flex-column, .flex-item-v) {
+  height: auto !important;
+}
+
+:where(.responsive.pentaho-xul-gwt) .vbox > * > * > * > * > :where(.flex-row, .flex-column, .flex-item-h) {
+  width: auto !important;
+}
+
+/* Ignore the main size of items which are flex containers or which can flex in the main axis
+
+   When container items have e.g. a width:100%, that used to refer to the old layout parent,
+   before display:contents was used, which if having a fixed width would cause the item to not shrink enough
+   if needed, compared to other items.
+
+   On flex-wrap containers, ignore the main size of the box's container items,
+   so that items shrink until min-size before wrapping happens.
+ */
+:where(.responsive.pentaho-xul-gwt) .hbox > * > * > * > * > :where(.flex-row, .flex-column, .flex-item-h) {
+  width: auto !important;
+}
+
+/* Input text elements do not respect min-width when width is auto.
+   Using 100% will result in the preferred size on an unbounded (100%) ancestor hierarchy (fit-to-content dialog),
+   while still respect the min-width when space is not available or in fill-viewport-width mode.
+ */
+:where(.responsive) .hbox > * > * > * > * > :where(.xul-textbox) {
+  width: 100% !important;
+}
+
+:where(.responsive.pentaho-xul-gwt) .vbox > * > * > * > * > :where(.flex-row, .flex-column, .flex-item-v) {
+  height: auto !important;
+}
+/* endregion XUL/GWT VBox, HBox */
+
+/* region XUL/GWT GwtDeck */
+:where(.responsive.pentaho-xul-gwt) .deck-panel {
+  min-width: 0;
+}
+
+:where(.responsive.pentaho-xul-gwt) .deck-panel > div {
+  display: contents;
+  flex: inherit;
+}
+
+:where(.responsive.pentaho-xul-gwt) .deck-panel > * > * {
+  flex: inherit;
+  width: 100% !important;
+  height: auto !important;
+}
+/* endregion XUL/GWT GwtDeck */
+
+/* region XUL/GWT GwtGrid */
+:where(.responsive.pentaho-xul-gwt) .gwt-grid {
+  display: grid;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+
+  --grid-template-columns: initial;
+  grid-template-columns: var(--grid-template-columns);
+}
+
+:where(.responsive.pentaho-xul-gwt) .gwt-grid > colgroup {
+  display: none;
+}
+
+:where(.responsive.pentaho-xul-gwt) :is(
+  .gwt-grid > tbody,
+  .gwt-grid > tbody > tr,
+  .gwt-grid > tbody > tr > td) {
+  display: contents;
+  flex: inherit;
+}
+
+:where(.responsive.pentaho-xul-gwt) .gwt-grid > * > * > * > * {
+  --grid-row: initial;
+  --grid-column: initial;
+  grid-row: var(--grid-row);
+  grid-column: var(--grid-column);
+}
+/* endregion XUL/GWT GwtGrid */
+
+/* region XUL/GWT GwtLabel */
+.xul-label-disabled {
+  color: #666 !important;
+}
+
+:where(.responsive.pentaho-xul-gwt) .xul-label.multiline {
+  --min-height: initial;
+  --max-height: intial;
+}
+
+:where(.responsive.pentaho-xul-gwt) .xul-label.multiline > .label-scroll-panel {
+  width: auto !important;
+  height: auto !important;
+  min-height: var(--min-height, auto);
+  max-height: var(--max-height, auto);
+}
+
+:where(.responsive.pentaho-xul-gwt) .xul-label.multiline > .label-scroll-panel > .xul-pre {
+  flex: auto;
+  width: auto !important;
+  height: auto !important;
+}
+/* endregion XUL/GWT GwtLabel */
+
+/* region XUL/GWT Classes */
+:where(.responsive.pentaho-xul-gwt) .gwt-menu-list > :is(.custom-list, .custom-list-disabled) {
+  flex: auto;
+  width: auto !important;
+  min-width: 15ch;
+}
+
+:where(.responsive.pentaho-xul-gwt) .radio {
+  --layout-gap-h: 3px;
+}
+
+:where(.responsive.pentaho-xul-gwt) .radio .gwt-TextBox {
+  flex: auto;
+  padding: 0 10px;
+  line-height: 22px;
+  margin-top: -3px;
+  min-width: 3ch;
+  max-width: 10ch;
+}
+
+:where(.responsive) fieldset.xul-fieldset {
+  padding: var(--layout-gap-v) var(--layout-gap-h);
+  min-width: 0;
+}
+/* endregion XUL/GWT Classes */
 
 /* region Modifiers: gap-, flex-, ... */
 /* Placed after other primitives, to override them. */
@@ -5590,6 +5786,10 @@ td.tab-spacer-wrapper {
   border-radius: var(--custom-list-boder-radius);
 }
 
+:where(.responsive) :is(.custom-list, .custom-list-disabled):not(.list-mode) .pentaho-gwt-FocusPanel {
+  width: auto !important;
+}
+
 /* .custom-list-drop-grid */
 :where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
   width: 0 !important;
@@ -9220,10 +9420,6 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
 .hyperlink {
   color: #7C0B2B;
-}
-
-.xul-label-disabled{
-  color: #666 !important;
 }
 
 .is-hidden {

@@ -360,10 +360,10 @@ public class ElementUtils {
    *   allows setting properties with its camel-case name.
    * </p>
    * @param elem The element.
-   * @param cssPropertyName The name of the CSS style property.
+   * @param name The name of the CSS style property.
    * @param value The value of the property.
    */
-  public static native void setStyleProperty( Element elem, String cssPropertyName, String value ) /*-{
+  public static native void setStyleProperty( Element elem, String name, String value ) /*-{
     elem.style.setProperty(name, value);
   }-*/;
 
