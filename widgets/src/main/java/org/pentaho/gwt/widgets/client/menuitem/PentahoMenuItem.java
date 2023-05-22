@@ -39,14 +39,7 @@ public class PentahoMenuItem extends MenuItem {
 
   public void setEnabled( boolean enabled ) {
     this.enabled = enabled;
-    if ( enabled ) {
-      setStyleName( "gwt-MenuItem" ); //$NON-NLS-1$
-    } else {
-      setStyleName( "disabledMenuItem" ); //$NON-NLS-1$
-    }
-    if ( useCheckUI ) {
-      setChecked( checked );
-    }
+    updateStyles();
   }
 
   public boolean isEnabled() {
@@ -55,15 +48,7 @@ public class PentahoMenuItem extends MenuItem {
 
   public void setChecked( boolean checked ) {
     this.checked = checked;
-    if ( enabled ) {
-      if ( checked ) {
-        setStyleName( "gwt-MenuItem-checkbox-checked" ); //$NON-NLS-1$
-      } else {
-        setStyleName( "gwt-MenuItem-checkbox-unchecked" ); //$NON-NLS-1$
-      }
-    } else {
-      setStyleName( "disabledMenuItem" ); //$NON-NLS-1$
-    }
+    updateStyles();
   }
 
   public boolean isChecked() {
@@ -76,6 +61,23 @@ public class PentahoMenuItem extends MenuItem {
 
   public void setUseCheckUI( boolean useCheckUI ) {
     this.useCheckUI = useCheckUI;
+    updateStyles();
+  }
+
+  protected void updateStyles() {
+    if ( enabled ) {
+      if ( useCheckUI ) {
+        if ( checked ) {
+          setStyleName( "gwt-MenuItem-checkbox-checked" );
+        } else {
+          setStyleName( "gwt-MenuItem-checkbox-unchecked" );
+        }
+      } else {
+        setStyleName( "gwt-MenuItem" );
+      }
+    } else {
+      setStyleName( "disabledMenuItem" );
+    }
   }
 
   @Override
