@@ -5811,7 +5811,7 @@ td.tab-spacer-wrapper {
   white-space: break-spaces;
 }
 
-#datasourceInfoBox .custom-list-item {
+#datatypeMenuList .custom-list-item {
   background-color: transparent;
 }
 
@@ -5950,6 +5950,7 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 
 /* Data Source Wizard styles */
 #addFileButton {
+  max-width: 10ch;
   font-size: 12px;
   padding: 4px 10px;
 }
@@ -6011,6 +6012,14 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   text-decoration: underline;
 }
 
+#main_box {
+  column-gap: var(--dialog-padding);
+}
+
+:is(#datatypeMenuList, #encodingTypeMenuList) {
+  max-width: 25ch;
+}
+
 #csvDeckPanel .custom-list-textbox,
 #datasourceName,
 #uploadedFile,
@@ -6020,10 +6029,34 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 }
 
 #datasourceName {
-  margin-bottom: 10px;
   padding: 0 10px;
   line-height: 22px;
-  width: 206px !important;
+  width: auto !important;
+  max-width: 25ch;
+}
+
+:is(#datasourceDialogDeck, #csvDeckPanel) {
+  height: auto !important;
+}
+
+#csvDescriptionLabel {
+  white-space: normal !important;
+  height: auto !important;
+}
+
+#delimiterRadioGroup .gwt-grid {
+  max-width: 400px;
+}
+
+@media (max-width: 560px) {
+  #delimiterRadioGroup .gwt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #delimiterRadioGroup .gwt-grid > * > * > * > * {
+    grid-row: auto;
+    grid-column: auto;
+  }
 }
 
 #uploadedFile.xul-textbox {
@@ -6031,6 +6064,12 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   margin-right: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
+  max-width: 290px;
+  min-width: 10ch;
+}
+
+#csvTextPreview {
+  --min-height: calc(5 * var(--typ-body-line-height));
 }
 
 #queryDeckPanel .xul-label {
@@ -6057,9 +6096,7 @@ span.gwt-RadioButton label {
 }
 
 #otherRadio .gwt-TextBox {
-  padding: 0 10px;
-  line-height: 22px;
-  margin-top: -3px;
+  width: 100%;
 }
 
 .caption .captionIcon {
@@ -6824,7 +6861,8 @@ span.gwt-RadioButton label {
   background-repeat: no-repeat;
   width: 16px;
   height: 16px;
-  background-position: 0px 2px;
+  background-origin: content-box;
+  background-position: 0 2px;
 }
 
 .pentaho-filechooseupbutton {
@@ -7592,10 +7630,63 @@ div.listbox .pentaho-listbox {
 }
 
 #stepsPanel {
-  border-right: 0px solid black;
-  background-image: url(images/bg_steps.png);
+  border-right: 1px solid #CCC;
+  width: 30% !important;
+  max-width: fit-content;
+}
+
+#step_grid {
+  position: sticky;
+  top: calc(-1 * var(--focus-ring-padding) - 1px);
+  background: white;
+  z-index: 1;
+}
+
+#step_grid td > div.xul-label {
+  padding-right: 20px !important;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: break-spaces !important;
+  word-wrap: normal !important;
+  word-break: keep-all !important;
+}
+
+#step_grid .gwt-grid :is(.xul-image, .xul-label) {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+#step_grid .gwt-grid {
+  --layout-gap-h: 3px;
+}
+
+#steps_image_spacer {
+  min-height: var(--layout-gap-v);
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: auto !important;
+}
+
+#steps_image_spacer::after {
+  display: block;
+  content: "";
+
+  flex: none;
+  aspect-ratio: 125 / 308;
+  width: 100%;
+  height: auto;
+
+  background-image: url(images/bg_steps_2.png);
   background-repeat: no-repeat;
-  overflow: hidden;
+  background-origin: border-box;
+  background-position: right -2px bottom;
+  background-size: 100% auto;
+
+  opacity: 0.5;
+
+  position: sticky;
+  bottom: 0;
 }
 
 /* instaview fiel type icon? */
