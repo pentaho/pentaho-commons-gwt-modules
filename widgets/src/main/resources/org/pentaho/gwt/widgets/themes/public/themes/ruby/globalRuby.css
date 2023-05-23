@@ -2952,6 +2952,8 @@ body.IE>table {
 
 .fieldList .fieldListTop .clearSearchField {
   background-image: url('images/remove.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
   top: 0;
   right: 0;
