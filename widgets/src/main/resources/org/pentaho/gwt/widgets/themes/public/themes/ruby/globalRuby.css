@@ -3127,7 +3127,9 @@ body.IE>table {
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
 
-  background: url('images/edit_22.png') no-repeat center;
+  background-image: url('images/edit_22.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
 }
 
@@ -3138,17 +3140,19 @@ body.IE>table {
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
 
-  background: url('images/edit_22_disabled.png') no-repeat center;
+  background-image: url('images/edit_22_disabled.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: default;
 }
 
 .fieldList .fieldListTop .clearSearchField {
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
-  background: url('images/remove.png') no-repeat center;
+  background-image: url('images/remove.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
   top: 0;
+  right: 0;
 }
 
 /* region Pentaho Buttons */
@@ -6897,100 +6901,106 @@ span.gwt-RadioButton label {
 }
 
 .reportMain .trashcan {
-  background: url('images/trashcan.png') no-repeat 4px 2px;
+  background-image: url('images/trashcan.png');
+  background-repeat: no-repeat;
+  background-position: 4px 2px;
 }
 
 .reportMain .trashActive {
-  background: url('images/trashcan_full.png') no-repeat 4px 2px;
+  background-image: url('images/trashcan_full.png');
+  background-repeat: no-repeat;
+  background-position: 4px 2px;
 }
 
 /* analyzer icons  */
+:is(.gem-bar-level, .gem-bar-measure) {
+  --icon-height: 16;
+  --icon-width: 16;
+  background-repeat: no-repeat;
+}
+
 .gem-bar-level {
-  background: url('images/gemBar_level.png') no-repeat;
-  height: 16px;
-  width: 16px;
+  background-image: url('images/gemBar_level.png');
 }
 
 .gem-bar-measure {
-  background: url('images/gemBar_measure.png') no-repeat;
-  height: 16px;
-  width: 16px;
+  background-image: url('images/gemBar_measure.png');
 }
 
 .gem-bar-filter {
-  background: url('images/gemBar_filter.png') no-repeat;
+  background-image: url('images/gemBar_filter.png');
+  background-repeat: no-repeat;
   width: 35px;
 }
 
+:is(.field-panel-icon, .field-layout-icon, .pentaho-filterbutton, .auto-refresh-icon, .more-menu-icon, .show-pivot-icon, .show-chart-icon) {
+  --icon-height: 22;
+  --icon-width: 22;
+  background-repeat: no-repeat;
+}
+
 .field-panel-icon {
-  background: url('images/field_panel.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/field_panel.png');
 }
 
 .field-layout-icon {
-  background: url('images/layoutpanel.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/layoutpanel.png');
 }
 
 .pentaho-filterbutton {
-  background: url('images/filter.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/filter.png');
 }
 
 .auto-refresh-icon {
-  background: url('images/autoRefresh.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/autoRefresh.png');
 }
 
 .more-menu-icon {
-  background: url('images/more_menu.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/more_menu.png');
 }
 
 .show-pivot-icon {
-  background: url('images/btn_table.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/btn_table.png');
   border: 1px solid transparent;
 }
 
 .show-chart-icon {
-  background: url('images/btn_chart.png') no-repeat;
-  width: 22px;
-  height: 22px;
+  background-image: url('images/btn_chart.png');
   border: 1px solid transparent;
 }
 
 .textfield-icon {
-  background: url('images/prompt_controls/textfield.png') no-repeat;
-  width: 32px;
-  height: 32px;
+  background-image: url('images/prompt_controls/textfield.png');
+  background-repeat: no-repeat;
+  --icon-height: 32;
+  --icon-width: 32;
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
 }
 
 .format-wrapper .textfield-icon {
   background-position: -4px -4px;
-  width: 24px;
-  height: 24px;
+  --icon-height: 24;
+  --icon-width: 24;
 }
 
 #arrow-menu,
 .arrow-menu-icon {
-  background: url('images/arrow_menu.png') no-repeat;
+  background-image: url('images/arrow_menu.png');
+  background-repeat: no-repeat;
 }
 
 .tundra .pentaho-titled-toolbar.dijitClosed .dijitArrowNode,
 .filterPaneToggle {
-  background: url('images/arrow_closed.png') no-repeat;
+  background-image: url('images/arrow_closed.png');
+  background-repeat: no-repeat;
 }
 
 .tundra .pentaho-titled-toolbar .dijitArrowNode,
 .filterSummary .hide {
-  background: url('images/arrow_open.png') no-repeat center left;
+  background-image: url('images/arrow_open.png');
+  background-repeat: no-repeat;
+  background-position: center left;
 }
 
 .fieldListTree .folder {
@@ -6998,15 +7008,18 @@ span.gwt-RadioButton label {
 }
 
 .folderClose {
-  background: url('images/arrow_closed.png') no-repeat;
+  background-image: url('images/arrow_closed.png');
+  background-repeat: no-repeat;
 }
 
 .folderOpen {
-  background: url('images/arrow_open.png') no-repeat;
+  background-image: url('images/arrow_open.png');
+  background-repeat: no-repeat;
 }
 
 .helpIcon {
-  background: url('images/help_link.png') no-repeat;
+  background-image: url('images/help_link.png');
+  background-repeat: no-repeat;
 }
 
 /* ---------- PIR icons ----------  */
@@ -8596,19 +8609,23 @@ treecontrol.tree-classic li .tree-selected {
 }
 
 .fieldListTree .attribute {
-  background: url('images/gemBar_level.png') no-repeat;
+  background-image: url('images/gemBar_level.png');
+  background-repeat: no-repeat;
 }
 
 .fieldListTree .attribute:hover {
-  background: url('images/gemBar_level.png') no-repeat;
+  background-image: url('images/gemBar_level.png');
+  background-repeat: no-repeat;
 }
 
 .fieldListTree .measure {
-  background: url('images/gemBar_measure.png') no-repeat;
+  background-image: url('images/gemBar_measure.png');
+  background-repeat: no-repeat;
 }
 
 .fieldListTree .measure:hover {
-  background: url('images/gemBar_measure.png') no-repeat;
+  background-image: url('images/gemBar_measure.png');
+  background-repeat: no-repeat;
 }
 
 /* styling for formatCombo */
