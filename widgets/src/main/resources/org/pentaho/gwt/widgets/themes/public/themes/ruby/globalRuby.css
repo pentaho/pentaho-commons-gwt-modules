@@ -4277,8 +4277,8 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-zoomable {
-  height: calc(1em * var(--icon-height)/14);
-  width: calc(1em * var(--icon-width)/14);
+  height: calc(1em * var(--icon-height)/14) !important;
+  width: calc(1em * var(--icon-width)/14) !important;
 
   background-position: center;
   background-size: contain;
@@ -6717,148 +6717,134 @@ span.gwt-RadioButton label {
   background: transparent url(images/bottom_arrow.png);
 }
 
-/*
- * Toolbar buttons
- */
+/* region Toolbar buttons */
+.pentaho-smallmeasurebutton, .pentaho-smalldimensionbutton, .pentaho-smallhierarchybutton,
+.pentaho-smalllevelbutton, .pentaho-smallmemberpropbutton, .pentaho-smallcategorybutton,
+.pentaho-fieldbutton, .pentaho-autopopulatebutton, .pentaho-addfieldbutton,
+.pentaho-refreshbutton, .pentaho-helpbutton, .pentaho-clearmodelbutton,
+.pentaho-smallremovebutton, .pentaho-expandallbutton, .pentaho-collapseallbutton,
+.penatho-smalleditbutton, .pentaho-warningbutton, .pentaho-updatebutton,
+.pentaho-smallmodelbutton, .pentaho-column, .pentaho-movearrowbutton,
+.pentaho-movearrowbackbutton {
+  --icon-height: 16;
+  --icon-width: 16;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
 .pentaho-smallmeasurebutton {
-  width: 16px;
-  height: 16px;
   background-image: url("images/gemBar_measure.png");
 }
 
 .pentaho-smalldimensionbutton {
   background-image: url("images/sm_dim_icon.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-smallhierarchybutton {
+  --icon-height: 13;
+  --icon-width: 13;
+
   background-image: url("images/sm_hierarchy_icon.png");
-  width: 13px;
-  height: 13px;
 }
 
 .pentaho-smalllevelbutton {
   background-image: url("images/gemBar_level.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-smallmemberpropbutton {
   background-image: url("images/sm_member_prop_icon.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-smallcategorybutton {
   background-image: url("images/folder_16.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-fieldbutton {
   background-image: url("images/list_16.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-autopopulatebutton {
   background-image: url("images/auto_model.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-addfieldbutton {
   background-image: url("images/add_to_model.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-refreshbutton {
   background-image: url("../images/refresh.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-helpbutton {
   background-image: url("../images/help_link.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-clearmodelbutton {
   background-image: url("images/clear_model_16.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-smallremovebutton {
   background-image: url("images/remove16x16.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-expandallbutton {
+  --icon-height: 15;
+  --icon-width: 15;
+
   background-image: url("images/ExpandAll.png");
-  width: 15px;
-  height: 15px;
 }
 
 .pentaho-collapseallbutton {
+  --icon-height: 15;
+  --icon-width: 15;
+
   background-image: url("images/CollapseAll.png");
-  width: 15px;
-  height: 15px;
 }
 
 .penatho-smalleditbutton {
   background-image: url("images/edit_16.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-warningbutton {
   background-image: url("../images/warning.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-updatebutton {
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
+
   background-image: url("images/edit_22.png");
-  width: 22px;
-  height: 22px;
 }
 
 .pentaho-smallmodelbutton {
   background-image: url("../images/sm_model_icon.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-column {
   background-image: url("images/column.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-updatebutton.pentaho-imagebutton-disabled {
+  --icon-height: 16;
+  --icon-width: 16;
+
   background-image: url("../images/updateDisabled.png");
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-movearrowbutton {
   background-image: url("images/accum_add.png");
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
 }
 
 .pentaho-movearrowbackbutton {
   background-image: url("images/accum_remove.png");
   background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
 }
+/* endregion Toolbar buttons */
 
 .pentaho-chevron {
   background-image: url("images/16x16_right.png");
