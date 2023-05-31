@@ -2138,18 +2138,19 @@ button#schedule-dialog-select-button {
 /* endregion - Replacing existing image border with CSS border for Tabs - End */
 
 .pentaho-tabBar {
-  background: url('images/bg_admin_tab_panel.png') repeat-x top left;
+  background-image: url('images/bg_admin_tab_panel.png');
+  background-repeat: repeat-x;
+  background-position: top left;
   height: 35px;
 }
 
-#sidepanelinner .pentaho-tabBar,
-#editContainer .pentaho-tabBar {
-  background: url('images/bg_admin_tab_panel.png') repeat-x bottom left;
+:is(#sidepanelinner, #editContainer) .pentaho-tabBar {
+  background-position: bottom left;
   height: 38px;
 }
 
 #props-deck-1 .pentaho-tabBar {
-  background: url('images/bg_admin_tab_panel.png') repeat-x bottom left;
+  background-position: bottom left;
   height: 18px;
 }
 
@@ -2177,12 +2178,10 @@ button#schedule-dialog-select-button {
   .pentaho-tab-deck-panel > div {
     height: auto !important;
   }
-  #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel>DIV {
+
+  #solutionNavigatorAndContentPanel .pentaho-tab-deck-panel > div {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
+    inset: 0;
   }
 }
 
@@ -2190,11 +2189,6 @@ button#schedule-dialog-select-button {
 #filePropertiesPermissionsTab,
 #filePropertiesGeneralTab {
   padding: 8px;
-}
-
-.pucContentDeck .pentaho-tab-deck-panel {
-
-  /*background: url('../images/tab_panel_bg.png');*/
 }
 
 .pentaho-tabWidget-close {
@@ -5666,6 +5660,10 @@ td.tab-spacer-wrapper {
   background-color: rgba(204, 0, 0, 0.2);
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
+}
+
+:where(.responsive) .tree-item-custom-widget:where(.flex-row) {
+  align-items: center;
 }
 
 .tree-item-custom-widget-selected, .tree-item-custom-widget-selected:hover {
