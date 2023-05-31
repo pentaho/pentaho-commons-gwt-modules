@@ -232,6 +232,7 @@ input[type='radio'] {
 
 input[type='text'],
 textarea,
+textarea.gwt-TextArea,
 .bootstrap .pentaho-dialog input[type='text'] {
   border: var(--input-border-width) solid #CCC;
   padding: 0 10px;
@@ -1034,6 +1035,11 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   min-height: 0;
 }
 
+:where(.responsive):is(.flex-column,.flex-row):where(.with-scroll-v-child),
+:where(.responsive) :is(.flex-column,.flex-row):where(.with-scroll-v-child) {
+  min-height: 0;
+}
+
 /* Items having same direction of the container inherit its flex by default.
    When changing direction, the container's default flex of auto is used by default.
  */
@@ -1170,6 +1176,23 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   align-self: center;
 }
 
+/* Do not flex vertically / stretch horizontally */
+:where(.responsive.pentaho-xul-gwt) .vbox > * > * > * > * > :where(button, .pentaho-button, .pentaho-button.disabled) {
+  --flex-item: none;
+  align-self: start;
+}
+/* Do not stretch vertically / flex horizontally */
+:where(.responsive.pentaho-xul-gwt) .hbox > * > * > * > * > :where(button, .pentaho-button, .pentaho-button.disabled) {
+  --flex-item: 0 1 auto;
+  align-self: center;
+}
+
+:where(.responsive.pentaho-xul-gwt) :is(.hbox, .vbox) > * > * > * > * > :where(button, .pentaho-button, .pentaho-button.disabled) {
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
 /* Ignore the cross size of items which are flex containers or which can flex in the cross axis */
 :where(.responsive.pentaho-xul-gwt) .hbox > * > * > * > * > :where(.flex-row, .flex-column, .flex-item-v) {
   height: auto !important;
@@ -1298,6 +1321,11 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 :where(.responsive) fieldset.xul-fieldset {
   padding: var(--layout-gap-v) var(--layout-gap-h);
   min-width: 0;
+}
+
+:where(.responsive.pentaho-xul-gwt) .xul-textbox.gwt-TextArea {
+  flex: auto;
+  height: auto !important;
 }
 /* endregion XUL/GWT Classes */
 
@@ -5790,13 +5818,23 @@ td.tab-spacer-wrapper {
   border-radius: var(--custom-list-boder-radius);
 }
 
-:where(.responsive) :is(.custom-list, .custom-list-disabled):not(.list-mode) .pentaho-gwt-FocusPanel {
+:where(.responsive) :is(.custom-list, .custom-list-disabled) .pentaho-gwt-FocusPanel {
   width: auto !important;
+}
+
+:where(.responsive) :is(.custom-list.list-mode, .custom-list-disabled.list-mode) .pentaho-gwt-FocusPanel {
+  height: auto !important;
+  min-height: 0;
+  min-width: 0;
+}
+
+:where(.responsive) :is(.custom-list.list-mode, .custom-list-disabled.list-mode) .pentaho-gwt-ScrollFlexPanel {
+  height: 0 !important;
 }
 
 /* .custom-list-drop-grid */
 :where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid {
-  width: 0 !important;
+  width: auto !important;
   /* H-space between label and combo-arrow */
   --layout-gap-h: 1px;
   /* V-align center */
@@ -5811,8 +5849,23 @@ td.tab-spacer-wrapper {
   box-sizing: border-box;
 }
 
-:where(.responsive) .custom-list-item .gwt-Label {
+:where(.responsive) :is(.custom-list-list-panel, .custom-list-list-panel .custom-list-item) {
+  flex: none;
+}
+
+:where(.responsive) .custom-list-item .flex-row {
+  width: 100% !important;
+}
+
+:where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-item .gwt-Label {
   white-space: break-spaces;
+}
+
+:where(.responsive) :is(.custom-list.list-mode, .custom-list-disabled.list-mode) .custom-list-item .gwt-Label {
+  width: 100% !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #datatypeMenuList .custom-list-item {
@@ -6081,6 +6134,32 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   margin-right: 3px;
 }
 
+:is(#queryBox,#connectionColumn) {
+  min-width: 0;
+}
+
+#query {
+  min-height: 6em;
+  max-height: 27em;
+}
+
+#connectionToolbar {
+  align-items: center;
+}
+
+#connectionList.custom-list {
+  min-height: 7em;
+}
+
+#connectionList .custom-list-list-panel {
+  row-gap: 2px;
+}
+
+#connectionLabel {
+  white-space: normal !important;
+  line-height: 1.6em !important;
+}
+
 #encodingTypeMenuList .custom-list-textbox {
   padding: 3px 10px;
 }
@@ -6097,6 +6176,11 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
 span.gwt-RadioButton label {
   top: -2px;
   position: relative;
+  white-space: normal !important;
+}
+
+:where(.responsive) .gwt-RadioButton {
+  flex: 0 1 auto;
 }
 
 #otherRadio .gwt-TextBox {
@@ -7646,6 +7730,8 @@ div.listbox .pentaho-listbox {
   border-right: 1px solid #CCC;
   width: 30% !important;
   max-width: fit-content;
+  /* When overflowing, make sure the right border extends to and covers the dialog-content's bottom padding area. */
+  margin-bottom: calc(-1 * var(--dialog-padding));
 }
 
 #step_grid {
@@ -7686,9 +7772,8 @@ div.listbox .pentaho-listbox {
   content: "";
 
   flex: none;
-  aspect-ratio: 125 / 308;
   width: 100%;
-  height: auto;
+  height: 100%;
 
   background-image: url(images/bg_steps_2.png);
   background-repeat: no-repeat;
@@ -7697,9 +7782,6 @@ div.listbox .pentaho-listbox {
   background-size: 100% auto;
 
   opacity: 0.5;
-
-  position: sticky;
-  bottom: 0;
 }
 
 /* instaview fiel type icon? */
