@@ -8693,6 +8693,22 @@ div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitAr
   border-bottom: 1px solid #e0e0e0;
 }
 
+:where(.responsive#general-datasource-window) #sql-label {
+  white-space: break-spaces !important;
+}
+
+:where(.responsive#general-datasource-window) #general-settings-box {
+  box-sizing: border-box;
+}
+
+:where(.responsive#general-datasource-window) #deck-options-list {
+  min-height: 450px;
+}
+
+:where(.responsive#general-datasource-window) #deck-options-list div {
+  height: auto !important;
+}
+
 html.bootstrap .popover {
   border-radius: 4px;
   border: 1px solid #CCC;
