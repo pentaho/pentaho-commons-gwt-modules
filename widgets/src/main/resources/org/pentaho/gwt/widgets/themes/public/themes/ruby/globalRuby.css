@@ -3605,6 +3605,10 @@ body.IE>table {
   margin: 0 0 0 4px;
 }
 
+#queryOptionsMenuButton .dijitArrowButtonInner {
+  background: none;
+}
+
 #measure-properties-dialog .dijitArrowButtonInner {
   background: url('images/arrow_down_gray.svg') no-repeat;
   background-size: 12px 12px;
@@ -7213,11 +7217,7 @@ span.gwt-RadioButton label {
 }
 
 .closeIcon {
-  background: url('images/closeTab_off.png') no-repeat top left;
-}
-
-.closeIcon:hover {
-  background: url('images/closeTab_active.png')no-repeat top left;
+  background: url('images/closeTab_active.png') no-repeat top left;
 }
 
 .tundra .dijitTooltipContainer .pentaho-tabWidget {
