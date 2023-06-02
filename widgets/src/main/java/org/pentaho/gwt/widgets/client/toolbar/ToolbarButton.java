@@ -367,11 +367,12 @@ public class ToolbarButton {
   /**
    * Sets the image displayed on this button.
    * 
-   * @param img
-   *          GWT Image
+   * @param image GWT Image
    */
-  public void setImage( Image img ) {
-    this.image = img;
+  public void setImage( Image image ) {
+    image.addStyleName( "icon-zoomable" );
+    this.image = image;
+
     button.remove( currentImage );
     Image curImage = calculateApporiateImage();
     button.add( curImage, DockPanel.CENTER );
