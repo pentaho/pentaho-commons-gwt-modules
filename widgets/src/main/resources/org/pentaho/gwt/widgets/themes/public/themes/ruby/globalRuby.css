@@ -2137,21 +2137,40 @@ button#schedule-dialog-select-button {
 }
 /* endregion - Replacing existing image border with CSS border for Tabs - End */
 
-.pentaho-tabBar {
+.xul-tabbox {
+  --tab-bar-height-px: 35;
+  --tab-bar-height: calc(1em * var(--tab-bar-height-px)/var(--typ-body-font-size-px));
+}
+
+:where(.xul-tabbox) .pentaho-tabBar {
+  height: calc(1px * var(--tab-bar-height-px));
+
   background-image: url('images/bg_admin_tab_panel.png');
   background-repeat: repeat-x;
   background-position: top left;
-  height: 35px;
 }
 
-:is(#sidepanelinner, #editContainer) .pentaho-tabBar {
-  background-position: bottom left;
-  height: 38px;
+:where(.responsive .xul-tabbox) .pentaho-tabBar {
+  height: var(--tab-bar-height);
+  background-size: contain;
+}
+:where(.responsive .xul-tabbox) .pentaho-tabBar .pentaho-tabWidget {
+  height: var(--tab-bar-height) !important;
+}
+:where(.responsive .xul-tabbox .pentaho-tabBar) .gwt-TabBarFirst {
+  display: none;
 }
 
-#props-deck-1 .pentaho-tabBar {
+:where(.xul-tabbox) :is(#sidepanelinner, #editContainer) .pentaho-tabBar {
+  --tab-bar-height-px: 38;
+
   background-position: bottom left;
-  height: 18px;
+}
+
+:where(.xul-tabbox) #props-deck-1 .pentaho-tabBar {
+  --tab-bar-height-px: 18;
+
+  background-position: bottom left;
 }
 
 .pentaho-tabPanel {
@@ -2431,8 +2450,11 @@ padding: 0;
 table.toolbar {
   width: 100%;
   height: 100%;
+
+  padding: var(--focus-ring-padding);
   vertical-align: middle;
   background-color: #fff;
+
   border-top: none;
   border-left: none;
   border-bottom-width: 1px;
@@ -2448,7 +2470,24 @@ table.toolbar {
   border-bottom-color: #CCC;
 }
 
-.xul-editPanel-title {
+.toolbar > * > * > * > .flex-row {
+  flex: auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.xul-editPanel {
+  --edit-panel-title-height-px: 28;
+  --edit-panel-title-height: calc(1em * var(--edit-panel-title-height-px)/var(--typ-body-font-size-px));
+}
+:where(.xul-editPanel) .xul-editPanel-title {
+  display: flex;
+  align-items: center;
+
+  height: var(--edit-panel-title-height);
+  padding: 0 4px;
+  box-sizing: border-box;
+
   background-color: #F8F8F8;
   border-bottom: 1px solid #b5b5b5;
 }
@@ -2605,7 +2644,8 @@ table.toolbar {
   height: 22px;
 }
 
-.toolbar-button-disabled {
+.toolbar-button.toolbar-button-disabled {
+  opacity: 0.4;
   background-color: transparent;
 }
 
