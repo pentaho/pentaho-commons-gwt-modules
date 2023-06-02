@@ -1261,6 +1261,10 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   --max-height: intial;
 }
 
+:where(.responsive.pentaho-xul-gwt) .xul-label:not(.multiline, .pre) {
+  white-space: break-spaces !important;
+}
+
 :where(.responsive.pentaho-xul-gwt) .xul-label.multiline > .label-scroll-panel {
   width: auto !important;
   height: auto !important;
@@ -8693,20 +8697,12 @@ div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitAr
   border-bottom: 1px solid #e0e0e0;
 }
 
-:where(.responsive#general-datasource-window) #sql-label {
-  white-space: break-spaces !important;
-}
-
 :where(.responsive#general-datasource-window) #general-settings-box {
   box-sizing: border-box;
 }
 
 :where(.responsive#general-datasource-window) #deck-options-list {
-  min-height: 450px;
-}
-
-:where(.responsive#general-datasource-window) #deck-options-list div {
-  height: auto !important;
+  min-height: calc(1em * 450/14);
 }
 
 html.bootstrap .popover {
