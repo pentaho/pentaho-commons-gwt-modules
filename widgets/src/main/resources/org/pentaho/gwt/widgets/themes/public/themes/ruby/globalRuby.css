@@ -1261,8 +1261,8 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   --max-height: intial;
 }
 
-:where(.responsive.pentaho-xul-gwt) .xul-label:not(.multiline, .pre) {
-  white-space: break-spaces !important;
+:where(.responsive.pentaho-xul-gwt) .xul-label:not(.multiline-specified) {
+  white-space: normal !important;
 }
 
 :where(.responsive.pentaho-xul-gwt) .xul-label.multiline > .label-scroll-panel {
