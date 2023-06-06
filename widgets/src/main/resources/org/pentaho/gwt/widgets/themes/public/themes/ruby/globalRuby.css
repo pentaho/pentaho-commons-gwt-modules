@@ -1284,6 +1284,10 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   --max-height: intial;
 }
 
+:where(.responsive.pentaho-xul-gwt) .xul-label:not(.multiline-specified) {
+  white-space: normal !important;
+}
+
 :where(.responsive.pentaho-xul-gwt) .xul-label.multiline > .label-scroll-panel {
   width: auto !important;
   height: auto !important;
@@ -8797,6 +8801,14 @@ div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitAr
 /* end styling for formatCombo */
 #datasourcesListTable > table {
   border-bottom: 1px solid #e0e0e0;
+}
+
+:where(.responsive#general-datasource-window) #general-settings-box {
+  box-sizing: border-box;
+}
+
+:where(.responsive#general-datasource-window) #deck-options-list {
+  min-height: calc(1em * 450/14);
 }
 
 html.bootstrap .popover {
