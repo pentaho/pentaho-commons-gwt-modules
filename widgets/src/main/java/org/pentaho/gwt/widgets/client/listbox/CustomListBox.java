@@ -25,6 +25,8 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.Focusable;
 import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.ScrollFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -82,7 +84,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings( "deprecation" )
-public class CustomListBox extends HorizontalFlexPanel implements ChangeListener, PopupListener, MouseListener,
+public class CustomListBox extends VerticalFlexPanel implements ChangeListener, PopupListener, MouseListener,
     FocusListener, KeyboardListener, ListItemListener, Focusable {
   protected List<ListItem> items = new ArrayList<ListItem>();
   protected int selectedIndex = -1;
@@ -90,8 +92,8 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   protected int visible = 1;
   private int maxDropVisible = 15;
   protected boolean editable = false;
-  private VerticalPanel listPanel = new VerticalPanel();
-  protected ScrollPanel listScrollPanel = new ScrollPanel();
+  private VerticalPanel listPanel = new VerticalFlexPanel();
+  protected ScrollPanel listScrollPanel = new ScrollFlexPanel();
 
   // Members for drop-down style
   protected FlexTable dropGrid = new FlexTable();
@@ -136,6 +138,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     listScrollPanel.setWidth( "100%" ); //$NON-NLS-1$
     listScrollPanel.getElement().getStyle().setProperty( "overflowX", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
     // listScrollPanel.getElement().getStyle().setProperty("padding",spacing+"px");
+    listPanel.addStyleName( "custom-list-list-panel" );
     listPanel.setSpacing( spacing );
     listPanel.setWidth( "100%" ); //$NON-NLS-1$
 
@@ -152,7 +155,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     fPanel.addMouseListener( this );
     fPanel.addFocusListener( this );
     fPanel.addKeyboardListener( this );
-    fPanel.addStyleName( "flex-row" );
+    fPanel.addStyleName( "flex-column" );
 
     // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
     // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.
@@ -894,7 +897,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   @Override
   public void setStylePrimaryName( String s ) {
     super.setStylePrimaryName( s );
-    addStyleName( HorizontalFlexPanel.STYLE_NAME );
+    addStyleName( VerticalFlexPanel.STYLE_NAME );
     this.primaryStyleName = s;
 
     // This may have came in late. Update ListItems
