@@ -9091,6 +9091,26 @@ input#csvSeparator {
   padding-top: 2px;
 }
 
+.layoutItem-group .gemMenuHandle,
+.layoutItem-column .gemMenuHandle {
+  outline-offset: 0;
+}
+
+.layoutItem-group.gem,
+.layoutItem-column.gem {
+  flex: 0 1 auto;
+}
+
+#layoutPanelGroupList,
+#layoutPanelColumnList {
+  display: flex;
+}
+
+.groupItem {
+  background: #DDF4FC;
+  border: 1px solid #7EC9F2;
+}
+
 .reportControlSectionTitle {
   padding: 0 10px 0 0;
   line-height: 26px;
