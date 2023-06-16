@@ -1127,8 +1127,8 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 
 /* endregion */
 
-/* region XUL/GWT VBox, HBox
-   XUL adds a wrapper div to each flex item.
+/* region XUL/GWT VBox, HBox */
+/* XUL adds a wrapper div to each flex item.
    table.flex-row.gwt-h-v-panel.gwt-h-panel.hbox
        colgroup        ; display: none
        tbody           ; display: contents
@@ -1327,9 +1327,13 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   min-width: 0;
 }
 
-:where(.responsive.pentaho-xul-gwt) .xul-textbox.gwt-TextArea {
+:where(.responsive) .xul-textbox.gwt-TextArea {
   flex: auto;
   height: auto !important;
+}
+
+:where(.responsive) :is(.xul-tree, .xul-tree > *, .xul-tree .gwt-ScrollTable) {
+  width: 100% !important;
 }
 /* endregion XUL/GWT Classes */
 
@@ -5680,7 +5684,7 @@ td.tab-spacer-wrapper {
 }
 
 .gwt-ScrollTable .dataTable tr:focus-visible {
-  outline-offset: -2px;
+  --focus-ring-offset: -2px;
 }
 
 .gwt-ScrollTable .dataTable td {
@@ -5726,6 +5730,12 @@ td.tab-spacer-wrapper {
 .gwt-ScrollTable .pagingOptions .errorLabel {
   color: red;
 }
+
+/* region GWT ScrollTable Responsive */
+:where(.responsive) .gwt-ScrollTable :is(.headerWrapper .headerTable, .dataWrapper .dataTable) {
+  width: 0 !important;
+}
+/* endregion GWT ScrollTable Responsive */
 
 .gwt-CellEditor {
   background: white none repeat scroll 0% 0%;
@@ -5905,13 +5915,13 @@ td.tab-spacer-wrapper {
 
 :where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-item .gwt-Label {
   white-space: break-spaces;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 :where(.responsive) :is(.custom-list.list-mode, .custom-list-disabled.list-mode) .custom-list-item .gwt-Label {
   width: 100% !important;
-  overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 
 #datatypeMenuList .custom-list-item {
@@ -7574,7 +7584,7 @@ span.gwt-RadioButton label {
 }
 
 #datasource-button-bar {
-  padding: 0 10px;
+  align-items: center;
 }
 
 .trashcan:hover {
@@ -8799,6 +8809,10 @@ div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitAr
 }
 
 /* end styling for formatCombo */
+#datasourcesListTable {
+  padding: 0;
+}
+
 #datasourcesListTable > table {
   border-bottom: 1px solid #e0e0e0;
 }
@@ -9100,6 +9114,10 @@ input#csvSeparator {
   padding-top: 4px;
   padding-bottom: 4px;
   margin-left: 5px;
+}
+
+#csvModelDataTable {
+  min-width: 640px;
 }
 
 #csvModelDataTable input {

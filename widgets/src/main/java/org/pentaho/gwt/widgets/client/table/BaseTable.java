@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.table;
@@ -52,17 +52,17 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.SourcesTableEvents;
 import com.google.gwt.user.client.ui.TableListener;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 
 /**
  * <p>
  * Core reusable, table widget for displaying tabular data that is based on a composite of a ScrollTable and a
  * FixedWidthGrid.
- * 
+ *
  * <p>
  * Usage Notes:
- * 
+ *
  * <p>
  * <ul>
  * <li>You must call the populateTable or populateTableWithSimpleMessage method AFTER having instanciated it.
@@ -80,7 +80,9 @@ public class BaseTable extends Composite {
       .getInstance( ColumnComparatorTypes.STRING_NOCASE );
   public static final String TABLE_NO_FILL = "table-no-fill";
 
-  protected Panel parentPanel = new VerticalPanel();
+  private static final AbstractScrollTable.ResizePolicy DEFAULT_RESIZE_POLICY = AbstractScrollTable.ResizePolicy.FILL_WIDTH;
+
+  protected Panel parentPanel = new VerticalFlexPanel();
 
   protected ScrollTable scrollTable;
 
@@ -151,7 +153,7 @@ public class BaseTable extends Composite {
 
   /**
    * Main constructor.
-   * 
+   *
    * Note: For column width values, use -1 to not specify a column width. Note: For column comparators individually, a
    * null value will disable sorting for that column. If you set the columnComparators array to null, all columns will
    * be populated with the default column comparator.
@@ -180,11 +182,10 @@ public class BaseTable extends Composite {
         this.columnComparators = columnComparators;
       }
 
-      createTable( tableHeaderNames, columnWidths, new Object[0][0], AbstractScrollTable.ResizePolicy.FIXED_WIDTH,
-          selectionPolicy );
+      createTable( tableHeaderNames, columnWidths, new Object[0][0], DEFAULT_RESIZE_POLICY, selectionPolicy );
 
       this.parentPanel.add( scrollTable );
-      scrollTable.fillWidth();
+      fillWidth();
 
       initWidget( parentPanel );
 
@@ -220,8 +221,7 @@ public class BaseTable extends Composite {
    */
   @SuppressWarnings( "unused" )
   private void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues ) {
-    createTable( tableHeaderNames, columnWidths, rowAndColumnValues, ScrollTable.ResizePolicy.FIXED_WIDTH,
-        selectionPolicy );
+    createTable( tableHeaderNames, columnWidths, rowAndColumnValues, DEFAULT_RESIZE_POLICY, selectionPolicy );
   }
 
   /**
@@ -229,7 +229,7 @@ public class BaseTable extends Composite {
    */
   protected void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues,
       AbstractScrollTable.ResizePolicy resizePolicy, SelectionGrid.SelectionPolicy selectionPolicy ) {
-    createTableHeader( tableHeaderNames, columnWidths );
+    createTableHeader( tableHeaderNames );
     createDataGrid( selectionPolicy, tableHeaderNames.length );
     createScrollTable( resizePolicy );
     populateDataGrid( columnWidths, rowAndColumnValues );
@@ -238,7 +238,7 @@ public class BaseTable extends Composite {
   /**
    * Creates and initializes the header for the table.
    */
-  private void createTableHeader( String[] tableHeaderNames, final int[] columnWidths ) {
+  private void createTableHeader( String[] tableHeaderNames ) {
 
     tableHeader = new FixedWidthFlexTable() {
       @Override
@@ -493,10 +493,18 @@ public class BaseTable extends Composite {
       }
     };
 
-    scrollTable.setResizePolicy( AbstractScrollTable.ResizePolicy.FLOW );
+    scrollTable.addStyleName( "flex-column" );
+    // Access ScrollTable's absoluteElem.
+    scrollTable.getElement().getFirstChildElement().addClassName( "flex-column" );
+
+    scrollTable.setResizePolicy( resizePolicy );
     scrollTable.setCellPadding( 0 );
     scrollTable.setCellSpacing( 0 );
-    scrollTable.setScrollPolicy( ScrollTable.ScrollPolicy.BOTH );
+
+    // Implement scrolling using CSS alone to circumvent the issues raised by `ScrollPolicy.BOTH`
+    // causing detection of the scrollbar width, and then affecting the header table's padding-right,
+    // resulting in inconsistent consecutive layouts (non-idempotent).
+    scrollTable.setScrollPolicy( ScrollTable.ScrollPolicy.DISABLED );
 
     // Set column comparators
     if ( columnComparators != null ) {
@@ -515,17 +523,8 @@ public class BaseTable extends Composite {
       this.setHeight( scrollTableHeight );
     }
 
-    if ( columnWidths != null && columnWidths.length > 0 ) {
-      for ( int i = 0; i < columnWidths.length; i++ ) {
-        if ( columnWidths[i] > 0 ) {
-          scrollTable.setColumnWidth( i, columnWidths[i] );
-        }
-      }
-    }
-    if ( scrollTableWidth != null ) {
-      scrollTable.setWidth( scrollTableWidth );
-    }
-    scrollTable.fillWidth();
+    setColumnWidths( columnWidths );
+    fillWidth();
   }
 
   /**
@@ -576,14 +575,7 @@ public class BaseTable extends Composite {
     }
 
     // Set column widths
-    if ( columnWidths != null ) {
-      for ( int i = 0; i < columnWidths.length; i++ ) {
-        if ( columnWidths[i] >= 0 ) {
-          dataGrid.setColumnWidth( i, columnWidths[i] );
-          scrollTable.setColumnWidth( i, columnWidths[i] );
-        }
-      }
-    }
+    setColumnWidths( columnWidths );
 
     // Set cell styles/tooltip for data grid cells
     final HTMLTable.CellFormatter cellFormatter = dataGrid.getCellFormatter();
@@ -622,6 +614,26 @@ public class BaseTable extends Composite {
     scrollTable.redraw();
   }
 
+  private void setColumnWidths( int[] columnWidths ) {
+    if ( columnWidths != null ) {
+      for ( int i = 0; i < columnWidths.length; i++ ) {
+        int columnWidth = columnWidths[i];
+        if ( columnWidth >= 0 ) {
+          // Prevent redistribution of diff column width to subsequent columns.
+          dataGrid.setColumnWidth( i, columnWidth );
+
+          if ( columnWidth > 0 ) {
+            // Store original widths as preferred, so that, when resizing,
+            // column widths converge to these proportions.
+            scrollTable.setPreferredColumnWidth( i, columnWidth );
+          }
+
+          scrollTable.setColumnWidth( i, columnWidth );
+        }
+      }
+    }
+  }
+
   /**
    * Makes this table fill all available width.
    */
@@ -644,7 +656,7 @@ public class BaseTable extends Composite {
 
   /**
    * Makes this table display a message instead of the column data.
-   * 
+   *
    * @param message
    *          The message to display.
    */
@@ -656,7 +668,7 @@ public class BaseTable extends Composite {
     String[][] simpleMessageRowAndColumnValues = new String[][] { { message, "&nbsp;" } }; //$NON-NLS-1$
 
     createTable( simpleMessageHeaderValues, null, simpleMessageRowAndColumnValues,
-        AbstractScrollTable.ResizePolicy.FIXED_WIDTH, selectionPolicy );
+        DEFAULT_RESIZE_POLICY, selectionPolicy );
 
     parentPanel.add( scrollTable );
 
@@ -812,21 +824,21 @@ public class BaseTable extends Composite {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see com.google.gwt.user.client.ui.UIObject#setWidth(java.lang.String)
    */
   @Override
   public void setWidth( final String width ) {
     super.setWidth( width );
     this.scrollTableWidth = width;
-
+    scrollTable.setWidth( width );
     scrollTable.getHeaderTable().setWidth( width );
     scrollTable.getDataTable().setWidth( width );
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see com.google.gwt.user.client.ui.UIObject#setHeight(java.lang.String)
    */
   @Override
@@ -870,8 +882,15 @@ public class BaseTable extends Composite {
     }
   }
 
+  /**
+   * Suppresses the horizontal scrollbar.
+   *
+   * @deprecated The horizontal scrollbar is never shown and horizontal overflow is always hidden.
+   * Showing the horizontal scrollbar would reveal that data rows always overflow horizontally when the vertical
+   * scrollbar is displayed.
+   */
+  @Deprecated
   public void suppressHorizontalScrolling() {
-    dataGrid.addStyleName( "hide-h-scrolling" );
   }
 
   public boolean isSortingEnabled() {

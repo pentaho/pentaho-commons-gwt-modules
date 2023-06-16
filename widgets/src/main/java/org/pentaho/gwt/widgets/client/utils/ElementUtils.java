@@ -446,4 +446,12 @@ public class ElementUtils {
   public static native boolean isEventDefaultPrevented( NativeEvent evt ) /*-{
     return evt.defaultPrevented;
   }-*/;
+
+  /**
+   * This method is used for providing a log text on the browser console
+   * @param text The Text to be logged on console.
+   */
+  public static native void log( String text ) /*-{
+    $wnd.console.log( text );
+  }-*/;
 }
