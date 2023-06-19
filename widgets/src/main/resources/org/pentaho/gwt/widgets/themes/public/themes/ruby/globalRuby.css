@@ -1022,6 +1022,11 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   min-width: 0;
 }
 
+:where(.responsive):is(.flex-column,.flex-row):where(.with-scroll-h-child),
+:where(.responsive) :is(.flex-column,.flex-row):where(.with-scroll-h-child) {
+  min-width: 0;
+}
+
 :where(.responsive).flex-column,
 :where(.responsive) .flex-column {
   flex-direction: column;
@@ -1288,6 +1293,11 @@ div#FilterPanel div.pentaho-toggle-button-up button {
   white-space: normal !important;
 }
 
+:where(.responsive.pentaho-xul-gwt) .xul-label.multiline-specified:not(.multiline) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 :where(.responsive.pentaho-xul-gwt) .xul-label.multiline > .label-scroll-panel {
   width: auto !important;
   height: auto !important;
@@ -1377,6 +1387,46 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 
 .flex-wrap {
   flex-wrap: wrap;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+:is(.flex-column.flex-center-v, .flex-row.flex-center-h) {
+  justify-content: center;
+}
+
+:is(.flex-row.flex-center-v, .flex-column.flex-center-h) {
+  align-items: center;
+}
+
+/* Align the content at bottom, when using the flex-row */
+.flex-row.flex-bottom {
+  align-items: flex-end;
+}
+
+/* Align the content at bottom, when using the flex-column */
+.flex-column.flex-bottom {
+  justify-content: flex-end;
+}
+
+/* Other instances of this media query should have the comment: flex-column-sm breakpoint */
+@media (max-width: 640px) {
+  :where(.flex-row).flex-column-sm {
+    flex-direction: column;
+  }
+
+  :where(.flex-row).flex-column-sm.flex-center-v {
+    justify-content: center;
+    align-items: unset;
+  }
+
+  :where(.flex-row).flex-column-sm.flex-center-h {
+    align-items: center;
+    justify-content: unset;
+  }
 }
 /* endregion */
 
@@ -5905,6 +5955,10 @@ td.tab-spacer-wrapper {
   box-sizing: border-box;
 }
 
+:where(.responsive) .custom-list-list-panel {
+  row-gap: 2px;
+}
+
 :where(.responsive) :is(.custom-list-list-panel, .custom-list-list-panel .custom-list-item) {
   flex: none;
 }
@@ -5922,6 +5976,17 @@ td.tab-spacer-wrapper {
 :where(.responsive) :is(.custom-list.list-mode, .custom-list-disabled.list-mode) .custom-list-item .gwt-Label {
   width: 100% !important;
   white-space: nowrap;
+}
+
+/* Setting up the min-height for the 3.5 custom list items to show by default
+   5.25em * font-size of 14px / ( measured-line-height of 19px - row-gap of 2px ) ~= 3.5 items */
+:where(.responsive) :is(.custom-list.list-mode, .custom-list-disabled.list-mode) {
+  min-height: 5.25em;
+}
+
+:where(.responsive) :is(.custom-list, .custom-list-disabled) .custom-list-drop-grid .custom-list-item .gwt-Label {
+  word-break: break-word;
+  white-space: break-spaces;
 }
 
 #datatypeMenuList .custom-list-item {
@@ -6190,12 +6255,7 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   margin-right: 3px;
 }
 
-:is(#queryBox,#connectionColumn) {
-  min-width: 0;
-}
-
 #query {
-  min-height: 6em;
   max-height: 27em;
 }
 
@@ -6203,17 +6263,28 @@ div.prompt-panel .pentaho-toggle-button-container > DIV {
   align-items: center;
 }
 
-#connectionList.custom-list {
-  min-height: 7em;
-}
-
-#connectionList .custom-list-list-panel {
-  row-gap: 2px;
+/* flex-column-sm breakpoint */
+@media (max-width: 640px) {
+  :where(.flex-row) .picklistPanel {
+    transform: rotate(90deg);
+  }
 }
 
 #connectionLabel {
   white-space: normal !important;
   line-height: 1.6em !important;
+}
+
+:is(#selectionButtonPanelSpacer,#factTableSpacer) {
+  display: none;
+}
+
+#factTableHbox {
+  justify-content: end;
+}
+
+#factTableVbox {
+  max-width: 100% !important;
 }
 
 #encodingTypeMenuList .custom-list-textbox {
@@ -9840,4 +9911,8 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+.templatePickerImg {
+  margin-top: var(--focus-ring-padding);
 }
