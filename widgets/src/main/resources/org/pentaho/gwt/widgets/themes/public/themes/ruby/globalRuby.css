@@ -8497,10 +8497,14 @@ div.dijitDateTextBox input.dijitInputInner[type='text'] {
   text-align: left;
 }
 
-#widget_DP_range1_lookup_dropdown,
-#widget_DP_range2_lookup_dropdown {
-  margin-top: 10px !important;
+#widget_DP_range1_lookup_dropdown, #widget_DP_range2_lookup_dropdown {
+  --widget-margin-top: 10px;
+
+  margin-top: var(--widget-margin-top) !important;
   margin-left: -34px !important;
+
+  max-height: calc(100vh - var(--widget-margin-top));
+  overflow-y: auto;
 }
 
 div.dijitPopup.dijitCalendarPopup {
