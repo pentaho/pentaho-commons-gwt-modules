@@ -12,11 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.menuitem;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.safehtml.shared.annotations.IsSafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuItem;
 
@@ -25,8 +27,12 @@ public class CheckBoxMenuItem extends MenuItem {
   boolean checked = true;
 
   public CheckBoxMenuItem( String text, Command cmd ) {
-    super( text, cmd );
-    setChecked( checked );
+    this( text, false, cmd );
+  }
+
+  public CheckBoxMenuItem( @IsSafeHtml String text, boolean asHTML, Scheduler.ScheduledCommand cmd ) {
+    super( text, asHTML, cmd );
+    setChecked( true );
   }
 
   public void setChecked( boolean checked ) {

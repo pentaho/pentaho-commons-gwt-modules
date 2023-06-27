@@ -17,6 +17,7 @@
 
 package org.pentaho.gwt.widgets.client.toolbar;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
@@ -139,13 +140,18 @@ public class ToolbarButton {
   public ToolbarButton( Image img ) {
     this.image = img;
     this.currentImage = img;
+
     button.add( this.image, DockPanel.CENTER );
     button.setCellHorizontalAlignment( this.image, DockPanel.ALIGN_CENTER );
     button.setCellVerticalAlignment( this.image, DockPanel.ALIGN_MIDDLE );
 
     button.setStyleName( stylePrimaryName );
+    Roles.getPresentationRole().set( button.getElement() );
+
     eventWrapper.add( button );
     eventWrapper.addStyleName( stylePrimaryName + "-focus-panel" );
+    Roles.getButtonRole().set( eventWrapper.getElement() );
+
     addStyleMouseListener();
   }
 

@@ -12,11 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.menuitem;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.safehtml.shared.annotations.IsSafeHtml;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuItem;
 
@@ -27,20 +29,17 @@ public class PentahoMenuItem extends MenuItem {
   private boolean checked = false;
 
   public PentahoMenuItem( String text, Command cmd ) {
-    super( text, cmd );
-    setEnabled( enabled );
+    this( text, false, cmd );
+  }
+
+  public PentahoMenuItem( @IsSafeHtml String text, boolean asHTML, Scheduler.ScheduledCommand cmd ) {
+    super( text, asHTML, cmd );
+    setEnabled( true );
   }
 
   public void setEnabled( boolean enabled ) {
     this.enabled = enabled;
-    if ( enabled ) {
-      setStyleName( "gwt-MenuItem" ); //$NON-NLS-1$
-    } else {
-      setStyleName( "disabledMenuItem" ); //$NON-NLS-1$
-    }
-    if ( useCheckUI ) {
-      setChecked( checked );
-    }
+    updateStyles();
   }
 
   public boolean isEnabled() {
@@ -49,15 +48,7 @@ public class PentahoMenuItem extends MenuItem {
 
   public void setChecked( boolean checked ) {
     this.checked = checked;
-    if ( enabled ) {
-      if ( checked ) {
-        setStyleName( "gwt-MenuItem-checkbox-checked" ); //$NON-NLS-1$
-      } else {
-        setStyleName( "gwt-MenuItem-checkbox-unchecked" ); //$NON-NLS-1$
-      }
-    } else {
-      setStyleName( "disabledMenuItem" ); //$NON-NLS-1$
-    }
+    updateStyles();
   }
 
   public boolean isChecked() {
@@ -70,6 +61,23 @@ public class PentahoMenuItem extends MenuItem {
 
   public void setUseCheckUI( boolean useCheckUI ) {
     this.useCheckUI = useCheckUI;
+    updateStyles();
+  }
+
+  protected void updateStyles() {
+    if ( enabled ) {
+      if ( useCheckUI ) {
+        if ( checked ) {
+          setStyleName( "gwt-MenuItem-checkbox-checked" );
+        } else {
+          setStyleName( "gwt-MenuItem-checkbox-unchecked" );
+        }
+      } else {
+        setStyleName( "gwt-MenuItem" );
+      }
+    } else {
+      setStyleName( "disabledMenuItem" );
+    }
   }
 
   @Override

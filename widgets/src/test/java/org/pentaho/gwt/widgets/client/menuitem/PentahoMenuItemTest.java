@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.menuitem;
@@ -39,6 +39,7 @@ public class PentahoMenuItemTest {
   @Test
   public void testSetEnabled() throws Exception {
     doCallRealMethod().when( item ).setEnabled( anyBoolean() );
+    doCallRealMethod().when( item ).updateStyles();
 
     item.setEnabled( true );
     verify( item ).setStyleName( anyString() );
@@ -46,12 +47,12 @@ public class PentahoMenuItemTest {
     item.useCheckUI = true;
     item.setEnabled( false );
     verify( item, times( 2 ) ).setStyleName( anyString() );
-    verify( item ).setChecked( anyBoolean() );
   }
 
   @Test
   public void testSetChecked() throws Exception {
     doCallRealMethod().when( item ).setChecked( anyBoolean() );
+    doCallRealMethod().when( item ).updateStyles();
 
     item.enabled = true;
     item.setChecked( true );
