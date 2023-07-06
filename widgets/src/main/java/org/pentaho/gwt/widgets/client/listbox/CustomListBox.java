@@ -274,6 +274,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
    *          ListItem
    */
   public void addItem( ListItem item ) {
+    item.setStylePrimaryName( this.primaryStyleName );
     items.add( item );
 
     item.setListItemListener( this );
@@ -324,6 +325,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
    */
   public void addItem( String label ) {
     DefaultListItem item = new DefaultListItem( label );
+    item.setStylePrimaryName( this.primaryStyleName );
     items.add( item );
     item.setListItemListener( this );
 
@@ -526,7 +528,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     } else {
       editableTextBox.setTabIndex( -1 );
       fPanel.removeStyleName( "focus-container" );
-      fPanel.setTabIndex( 0 );
+      fPanel.setTabIndex( this.enabled ? 0 : -1 );
     }
 
     // Update popup panel,
@@ -1304,6 +1306,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
       editableTextBox.setEnabled( enabled );
     }
     arrow.setEnabled( enabled );
+    fPanel.setTabIndex( this.enabled ? 0 : -1 );
     this.setStylePrimaryName( ( this.enabled ) ? "custom-list" : "custom-list-disabled" ); //$NON-NLS-1$ //$NON-NLS-2$
   }
 

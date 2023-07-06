@@ -541,7 +541,7 @@ table#email-schedule-panel tr:nth-child(2) input {
 }
 
 div#reportControlPanel select {
-  margin: 0;
+  margin: var(--focus-ring-padding);
 }
 div#reportControlPanel select[style*="overflow-y: scroll"] {
   height: auto;

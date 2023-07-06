@@ -174,6 +174,10 @@ public class ImageButton extends Image implements Focusable {
     }
   }
 
+  private void updateTabIndex() {
+    this.setTabIndex( isEnabled ? 0 : -1);
+  }
+
   public ImageButton( String enabledUrl, String disabledUrl, String tooltip, int width, int height ) {
     super( enabledUrl );
 
@@ -236,6 +240,7 @@ public class ImageButton extends Image implements Focusable {
       this.setSrc( disabledUrl );
     }
     this.updateStyles();
+    this.updateTabIndex();
   }
 
   /**
