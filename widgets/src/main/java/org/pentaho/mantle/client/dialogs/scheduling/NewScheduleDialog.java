@@ -12,13 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.ui.VerticalPanel;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
@@ -57,7 +58,6 @@ import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -71,6 +71,8 @@ public class NewScheduleDialog extends PromptDialogBox {
 
   private ScheduleRecurrenceDialog recurrenceDialog = null;
 
+  private TextBox scheduleOwnerTextBox = new TextBox();
+  private Label scheduleOwnerErrorLabel = new Label();
   private TextBox scheduleNameTextBox = new TextBox();
   private static TextBox scheduleLocationTextBox = new TextBox();
   private CheckBox appendTimeChk = new CheckBox();
@@ -80,7 +82,6 @@ public class NewScheduleDialog extends PromptDialogBox {
   private CheckBox overrideExistingChk = new CheckBox();
   private static HandlerRegistration changeHandlerReg = null;
   private static HandlerRegistration keyHandlerReg = null;
-
 
   static {
     scheduleLocationTextBox.setText( getDefaultSaveLocation() );
@@ -96,30 +97,37 @@ public class NewScheduleDialog extends PromptDialogBox {
       array.splice(index, count);
   }-*/;
 
+
+
   /**
    * @deprecated Need to set callback
    */
   public NewScheduleDialog( JsJob jsJob, IDialogCallback callback, boolean isEmailConfValid ) {
-    super(
-        Messages.getString( "newSchedule" ), Messages.getString( "next" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    super( Messages.getString( "editSchedule" ), Messages.getString( "next" ),
+      Messages.getString( "cancel" ), false, true );
+
     this.jsJob = jsJob;
     this.filePath = jsJob.getFullResourceName();
     this.callback = callback;
     this.isEmailConfValid = isEmailConfValid;
+
     createUI();
+
     setResponsive( true );
     setSizingMode( DialogSizingMode.FILL_VIEWPORT );
     setWidthCategory( DialogWidthCategory.SMALL );
   }
 
   public NewScheduleDialog( String filePath, IDialogCallback callback, boolean isEmailConfValid ) {
+    super( Messages.getString( "newSchedule" ), Messages.getString( "next" ),
+      Messages.getString( "cancel" ), false, true );
 
-    super(
-        Messages.getString( "newSchedule" ), Messages.getString( "next" ), Messages.getString( "cancel" ), false, true ); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     this.filePath = filePath;
     this.callback = callback;
     this.isEmailConfValid = isEmailConfValid;
+
     createUI();
+
     setResponsive( true );
     setSizingMode( DialogSizingMode.FILL_VIEWPORT );
     setWidthCategory( DialogWidthCategory.SMALL );
@@ -251,6 +259,8 @@ public class NewScheduleDialog extends PromptDialogBox {
     content.add( locationPanel );
     content.add( overrideExistingChk );
 
+    content.add( createScheduleOwnerUI() );
+
     if ( jsJob != null ) {
       scheduleNameTextBox.setText( jsJob.getJobName() );
       scheduleLocationTextBox.setText( jsJob.getOutputPath() );
@@ -276,7 +286,6 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     refreshAppendedTimestamp( appendTimeChk.getValue().booleanValue() );
 
-
     setContent( content );
     content.getElement().getStyle().clearHeight();
     content.getParent().setHeight( "100%" );
@@ -289,6 +298,82 @@ public class NewScheduleDialog extends PromptDialogBox {
 
     validateScheduleLocationTextBox();
     addStyleName( "new-schedule-dialog" );
+  }
+
+  private VerticalPanel createScheduleOwnerUI() {
+    VerticalPanel panel = new VerticalFlexPanel();
+
+    Label label = new Label( Messages.getString( "owner" ) );
+    label.addStyleName( "schedule-owner" );
+    label.setStyleName( ScheduleEditor.SCHEDULE_LABEL );
+    panel.add( label );
+
+    scheduleOwnerTextBox.getElement().setId( "schedule-owner-input" );
+
+    final JavaScriptObject ownerCallback = ScheduleHelper.debounce( this::validateScheduleOwner, 300 );
+    scheduleOwnerTextBox.addKeyUpHandler( event -> ScheduleHelper.callDebounce( ownerCallback ) );
+
+    if ( jsJob == null ) {
+      scheduleOwnerTextBox.setEnabled( false );
+
+      final String currentUserUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/session/userName";
+      final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, currentUserUrl );
+
+      try {
+        RequestCallback rc = new RequestCallback() {
+          @Override
+          public void onResponseReceived( final Request request, final Response response ) {
+            if ( response.getStatusCode() == 200 ) {
+              scheduleOwnerTextBox.setText( response.getText() );
+              updateButtonState();
+            }
+          }
+
+          @Override
+          public void onError( Request request, Throwable exception ) {
+            // noop
+          }
+        };
+        builder.sendRequest( "", rc );
+
+      } catch ( RequestException e ) {
+        // noop
+      }
+    } else {
+      scheduleOwnerTextBox.setText( jsJob.getUserName() );
+
+      final String isAdminUserUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/mantle/isAdministrator";
+      final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, isAdminUserUrl );
+
+      try {
+        RequestCallback rc = new RequestCallback() {
+          @Override
+          public void onResponseReceived( final Request request, final Response response ) {
+            if ( response.getStatusCode() == 200 ) {
+              boolean isAdmin = Boolean.parseBoolean( response.getText() );
+              scheduleOwnerTextBox.setEnabled( isAdmin );
+            }
+          }
+
+          @Override
+          public void onError( Request request, Throwable exception ) {
+            scheduleOwnerTextBox.setEnabled( false );
+          }
+        };
+        builder.sendRequest( "", rc );
+
+      } catch ( RequestException e ) {
+        scheduleOwnerTextBox.setEnabled( false );
+      }
+    }
+
+    scheduleOwnerErrorLabel.addStyleName( "schedule-owner-error" );
+    scheduleOwnerErrorLabel.setVisible( false );
+
+    panel.add( scheduleOwnerTextBox );
+    panel.add( scheduleOwnerErrorLabel );
+
+    return panel;
   }
 
   protected void onOk() {
@@ -352,14 +437,32 @@ public class NewScheduleDialog extends PromptDialogBox {
             } else {
               hasParams = Boolean.parseBoolean( response.getText() );
             }
+
             boolean overwriteFile = overrideExistingChk.getValue().booleanValue();
             String dateFormat = null;
             if ( appendTimeChk.getValue().booleanValue() ) {
               dateFormat = timestampLB.getValue( timestampLB.getSelectedIndex() );
             }
+
             if ( jsJob != null ) {
               jsJob.setJobName( scheduleNameTextBox.getText() );
               jsJob.setOutputPath( scheduleLocationTextBox.getText(), scheduleNameTextBox.getText() );
+
+              String scheduleOwner = scheduleOwnerTextBox.getText().trim();
+              if ( !StringUtils.isEmpty( scheduleOwner ) && !scheduleOwner.equalsIgnoreCase( jsJob.getUserName() ) ) {
+                JsJobParam actionUser = jsJob.getJobParam( "ActionAdapterQuartzJob-ActionUser" );
+
+                if ( actionUser != null ) {
+                  if ( !scheduleOwner.equalsIgnoreCase( actionUser.getValue() ) ) {
+                    actionUser.setValue( scheduleOwner );
+                  }
+                } else {
+                  JsJobParam jjp = JavaScriptObject.createObject().cast();
+                  jjp.setName( "ActionAdapterQuartzJob-ActionUser" );
+                  jjp.setValue( scheduleOwner );
+                  jsJob.getJobParams().push( jjp );
+                }
+              }
 
               if ( jsJob.getJobParamValue( "appendDateFormat" ) != null ) {
                 if ( dateFormat != null ) {
@@ -394,21 +497,19 @@ public class NewScheduleDialog extends PromptDialogBox {
                 jsJob.getJobParams().set( jsJob.getJobParams().length(), jjp );
               }
 
-
               if ( recurrenceDialog == null ) {
-                recurrenceDialog =
-                    new ScheduleRecurrenceDialog( NewScheduleDialog.this, jsJob, callback, hasParams, isEmailConfValid,
-                        ScheduleDialogType.SCHEDULER );
+                recurrenceDialog = new ScheduleRecurrenceDialog( NewScheduleDialog.this, jsJob, callback,
+                  hasParams, isEmailConfValid, ScheduleDialogType.SCHEDULER );
               }
             } else if ( recurrenceDialog == null ) {
-
-              recurrenceDialog =
-                  new ScheduleRecurrenceDialog( NewScheduleDialog.this, filePath, scheduleLocationTextBox.getText(),
-                      scheduleNameTextBox.getText(), dateFormat, overwriteFile, callback, hasParams, isEmailConfValid );
+              recurrenceDialog = new ScheduleRecurrenceDialog( NewScheduleDialog.this, filePath,
+                scheduleLocationTextBox.getText(), scheduleNameTextBox.getText(), dateFormat, overwriteFile, callback,
+                hasParams, isEmailConfValid );
             } else {
               recurrenceDialog.scheduleName = scheduleNameTextBox.getText();
               recurrenceDialog.outputLocation = scheduleLocationTextBox.getText();
             }
+
             recurrenceDialog.setParentDialog( NewScheduleDialog.this );
             recurrenceDialog.center();
             NewScheduleDialog.super.onOk();
@@ -424,7 +525,10 @@ public class NewScheduleDialog extends PromptDialogBox {
   private void updateButtonState() {
     boolean hasLocation = !StringUtils.isEmpty( scheduleLocationTextBox.getText() );
     boolean hasName = !StringUtils.isEmpty( scheduleNameTextBox.getText() );
-    okButton.setEnabled( hasLocation && hasName );
+    boolean hasOwner = !StringUtils.isEmpty( scheduleOwnerTextBox.getText() );
+    boolean hasOwnerError = scheduleOwnerErrorLabel.isVisible();
+
+    okButton.setEnabled( hasLocation && hasName && hasOwner && !hasOwnerError );
   }
 
   public void setFocus() {
@@ -450,7 +554,7 @@ public class NewScheduleDialog extends PromptDialogBox {
       @Override
       public void execute() {
         String previousPath = OutputLocationUtils.getPreviousLocationPath( scheduleLocationTextBox.getText() );
-        if ( previousPath != null && !previousPath.isEmpty() ) {
+        if ( !previousPath.isEmpty() ) {
           scheduleLocationTextBox.setText( previousPath );
           validateScheduleLocationTextBox();
         } else {
@@ -459,6 +563,48 @@ public class NewScheduleDialog extends PromptDialogBox {
       }
     };
     OutputLocationUtils.validateOutputLocation( scheduleLocationTextBox.getText(), null, errorCallback );
+  }
+
+  private void validateScheduleOwner() {
+    String owner = scheduleOwnerTextBox.getText();
+    if (StringUtils.isEmpty( owner ) ) {
+      scheduleOwnerErrorLabel.setVisible( false );
+      updateButtonState();
+      return;
+    }
+
+    String currentUserUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/userrolelist/getRolesForUser?user=" + owner;
+    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, currentUserUrl );
+
+    try {
+      RequestCallback requestCallback = new RequestCallback() {
+        @Override
+        public void onResponseReceived( final Request request, final Response response ) {
+          if ( response.getStatusCode() == 200 ) {
+            // all users have at least one role (Authenticated or Anonymous),
+            // so if no roles are returned, the user doesn't exist.
+            boolean userExists = StringUtils.countMatches( response.getText(), "<role>" ) > 0;
+            if ( !userExists ) {
+              scheduleOwnerErrorLabel.setText( Messages.getString( "schedule.invalidOwner" ) );
+            }
+
+            scheduleOwnerErrorLabel.setVisible( !userExists );
+            updateButtonState();
+          }
+        }
+
+        @Override
+        public void onError( Request request, Throwable exception ) {
+          scheduleOwnerErrorLabel.setVisible( true );
+          updateButtonState();
+        }
+      };
+      builder.sendRequest( "", requestCallback );
+
+    } catch ( RequestException e ) {
+      scheduleOwnerErrorLabel.setVisible( true );
+      updateButtonState();
+    }
   }
 
   /**

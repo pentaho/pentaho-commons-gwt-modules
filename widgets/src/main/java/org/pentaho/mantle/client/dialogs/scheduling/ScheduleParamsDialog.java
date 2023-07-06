@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -20,6 +20,7 @@ package org.pentaho.mantle.client.dialogs.scheduling;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog;
 import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
 import org.pentaho.mantle.client.messages.Messages;
@@ -48,10 +49,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author wseyler
- *
- */
 public class ScheduleParamsDialog extends AbstractWizardDialog {
   String moduleBaseURL = GWT.getModuleBaseURL();
   String moduleName = GWT.getModuleName();
@@ -77,24 +74,31 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   private boolean newSchedule = true;
 
   public ScheduleParamsDialog( ScheduleRecurrenceDialog parentDialog, boolean isEmailConfValid, JsJob editJob ) {
-    super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
+    super( ScheduleDialogType.SCHEDULER, Messages.getString( editJob == null ? "newSchedule" : "editSchedule" ),
+      null, false, true );
+
     this.parentDialog = parentDialog;
-    filePath = parentDialog.filePath;
-    jobSchedule = parentDialog.getSchedule();
+    this.filePath = parentDialog.filePath;
+    this.jobSchedule = parentDialog.getSchedule();
     this.isEmailConfValid = isEmailConfValid;
     this.editJob = editJob;
+
     initDialog();
+
     if ( isEmailConfValid ) {
       finishButton.setText( Messages.getString( "next" ) );
     }
   }
 
   public ScheduleParamsDialog( String filePath, JSONObject schedule, boolean isEmailConfValid ) {
-    super( ScheduleDialogType.SCHEDULER, Messages.getString( "runInBackground" ), null, false, true ); //$NON-NLS-1$
+    super( ScheduleDialogType.SCHEDULER, Messages.getString( "runInBackground" ), null, false, true );
+
     this.filePath = filePath;
-    jobSchedule = schedule;
+    this.jobSchedule = schedule;
     this.isEmailConfValid = isEmailConfValid;
+
     initDialog();
+
     if ( isEmailConfValid ) {
       finishButton.setText( Messages.getString( "next" ) );
     }
@@ -153,7 +157,13 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
   @Override
   protected boolean onFinish() {
     scheduleParams = getScheduleParams( false );
-    setLineageIdParam();
+
+    if ( editJob != null ) {
+      scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateActionUser( editJob ) );
+
+      scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateLineageId( editJob ) );
+    }
+
     if ( isEmailConfValid ) {
       showScheduleEmailDialog( scheduleParams );
     } else {
@@ -195,10 +205,14 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
                 afterResponseCallback.onResponse( jobSchedule.get( "runInBackground" ) );
               }
             } else {
-              MessageDialogBox dialogBox =
-                  new MessageDialogBox( Messages.getString( "error" ),
-                      Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode(), //$NON-NLS-1$
-                      false, false, true );
+              String message = response.getText();
+              if ( StringUtils.isEmpty( message) ) {
+                message = Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode();
+              }
+
+              MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), message,
+                false, false, true );
+
               dialogBox.center();
               setDone( false );
             }
@@ -214,13 +228,6 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
       setDone( true );
     }
     return false;
-  }
-
-  private void setLineageIdParam() {
-    if ( editJob != null ) {
-      String lineageId = editJob.getJobParamValue( "lineage-id" );
-      scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateLineageId( lineageId ) );
-    }
   }
 
   private void showScheduleEmailDialog( final JSONArray scheduleParams ) {

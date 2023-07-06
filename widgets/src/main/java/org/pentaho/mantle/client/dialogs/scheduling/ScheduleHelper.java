@@ -12,12 +12,14 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.user.client.Command;
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
@@ -273,4 +275,21 @@ public class ScheduleHelper {
     return $wnd.location.protocol + "//" + $wnd.location.host + $wnd.CONTEXT_PATH
   }-*/;
 
+  public static native JavaScriptObject debounce( Command callback, int timeout )
+    /*-{
+      var debounce = { timer: null };
+
+      debounce.execute = function() {
+        clearTimeout(debounce.timer);
+
+        debounce.timer = setTimeout(function() {
+          callback.@com.google.gwt.user.client.Command::execute()();
+        }, timeout);
+      }
+
+      return debounce;
+    }-*/;
+
+  public static native void callDebounce( JavaScriptObject debounce )
+    /*-{ debounce.execute(); }-*/;
 }

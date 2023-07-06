@@ -720,7 +720,7 @@ table#weekly-recur tbody tr td:not(:first-child) span.day-of-week-checkbox input
   margin-left: 15px;
 }
 
-div.schedule-name {
+div.schedule-name, div.schedule-owner {
   margin: 0 4px 5px 0;
 }
 
@@ -1704,9 +1704,11 @@ For IE 9 and IE10, need to add padding to the bottom of some dialogs generated w
   color: #666666;
 }
 
+:is(#schedule-name-input, #schedule-owner-input) {
+  margin-bottom: unset;
+}
 #schedule-name-input {
   width: unset;
-  margin-bottom: unset;
   flex: 4 1 0;
 }
 
@@ -5453,8 +5455,9 @@ td.tab-spacer-wrapper {
   border-top: 1px solid #848484;
 }
 
+.schedule-owner-error,
 .gwt-ScrollTable .pagingOptions .errorLabel {
-  color: red;
+  color: #CC0000;
 }
 
 .gwt-CellEditor {

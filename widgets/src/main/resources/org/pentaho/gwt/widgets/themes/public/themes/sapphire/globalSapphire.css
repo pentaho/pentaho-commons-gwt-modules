@@ -607,7 +607,7 @@ table#weekly-recur tbody tr td:not(:first-child) span.day-of-week-checkbox input
   margin-left: 15px;
 }
 
-div.schedule-name {
+div.schedule-name, div.schedule-owner {
   margin: 0 4px 5px 0;
 }
 

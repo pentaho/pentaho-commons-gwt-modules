@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -25,9 +25,7 @@ import org.pentaho.mantle.client.messages.Messages;
 import org.pentaho.mantle.client.workspace.JsJob;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -59,12 +57,15 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
 
   public ScheduleEmailDialog( AbstractWizardDialog parentDialog, String filePath, JSONObject jobSchedule,
       JSONArray scheduleParams, JsJob editJob ) {
-    super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
+    super( ScheduleDialogType.SCHEDULER, Messages.getString( editJob == null ? "newSchedule" : "editSchedule" ),
+      null, false, true );
+
     this.parentDialog = parentDialog;
     this.filePath = filePath;
     this.jobSchedule = jobSchedule;
     this.scheduleParams = scheduleParams;
     this.editJob = editJob;
+
     initDialog();
   }
 
@@ -101,6 +102,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
     if ( scheduleParams == null ) {
       scheduleParams = new JSONArray();
     }
+
     if ( emailParams != null ) {
       int index = scheduleParams.size();
       for ( int i = 0; i < emailParams.length(); i++ ) {
@@ -109,14 +111,9 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
     }
 
     if ( editJob != null ) {
-      String lineageId = editJob.getJobParamValue( "lineage-id" );
-      JsArrayString lineageIdValue = (JsArrayString) JavaScriptObject.createArray().cast();
-      lineageIdValue.push( lineageId );
-      JsSchedulingParameter p = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-      p.setName( "lineage-id" );
-      p.setType( "string" );
-      p.setStringValue( lineageIdValue );
-      scheduleParams.set( scheduleParams.size(), new JSONObject( p ) );
+      scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateActionUser( editJob ) );
+
+      scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateLineageId( editJob ) );
     }
 
     scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    

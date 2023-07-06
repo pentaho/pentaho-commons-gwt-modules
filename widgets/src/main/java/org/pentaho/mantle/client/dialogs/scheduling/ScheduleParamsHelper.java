@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2021-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -21,6 +21,7 @@ import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
+import org.pentaho.mantle.client.workspace.JsJob;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,20 @@ public class ScheduleParamsHelper {
 
   private static final String APPEND_DATE_FORMAT_KEY = "appendDateFormat";
   private static final String OVERWRITE_FILE_KEY = "overwriteFile";
+  private static final String ACTION_USER_KEY = "ActionAdapterQuartzJob-ActionUser";
   private static final String JOB_PARAMETERS_KEY = "jobParameters";
+
+  public static JSONObject buildScheduleParam( String name, String value, String type ) {
+    JsArrayString paramValue = JavaScriptObject.createArray().cast();
+    paramValue.push( value );
+
+    JsSchedulingParameter param = JavaScriptObject.createObject().cast();
+    param.setName( name );
+    param.setType( type );
+    param.setStringValue( paramValue );
+
+    return new JSONObject( param );
+  }
 
   public static JSONArray getScheduleParams( JSONObject jobSchedule ) {
     List<JSONObject> schedulingParams = new ArrayList<JSONObject>();
@@ -57,44 +71,30 @@ public class ScheduleParamsHelper {
     if ( jobSchedule.get( APPEND_DATE_FORMAT_KEY ) != null ) {
       String dateFormat = jobSchedule.get( APPEND_DATE_FORMAT_KEY ).toString();
       dateFormat = dateFormat.substring( 1, dateFormat.length() - 1 ); // get rid of ""
-      JsArrayString appendDateFormat = (JsArrayString) JavaScriptObject.createArray().cast();
-      appendDateFormat.push( dateFormat );
-      JsSchedulingParameter jspDateFormat = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-      jspDateFormat.setName( APPEND_DATE_FORMAT_KEY );
-      jspDateFormat.setStringValue( appendDateFormat );
-      jspDateFormat.setType( "string" );
 
-      params.set( params.size(), new JSONObject( jspDateFormat ) );
+      params.set( params.size(), buildScheduleParam( APPEND_DATE_FORMAT_KEY, dateFormat, "string" ) );
     }
 
     if ( jobSchedule.get( OVERWRITE_FILE_KEY ) != null ) {
       String overwriteFile = jobSchedule.get( OVERWRITE_FILE_KEY ).toString();
       overwriteFile = overwriteFile.substring( 1, overwriteFile.length() - 1 );
+
       boolean overwrite = Boolean.parseBoolean( overwriteFile );
-
       if ( overwrite ) {
-        JsArrayString autoCreateUniqueFilenameValue = (JsArrayString) JavaScriptObject.createArray().cast();
-        autoCreateUniqueFilenameValue.push( String.valueOf( !overwrite ) );
-
-        JsSchedulingParameter jspOverwrite = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-        jspOverwrite.setName( AUTO_CREATE_UNIQUE_FILENAME_KEY );
-        jspOverwrite.setStringValue( autoCreateUniqueFilenameValue );
-        jspOverwrite.setType( "boolean" );
-        params.set( params.size(), new JSONObject( jspOverwrite ) );
+        params.set( params.size(), buildScheduleParam( AUTO_CREATE_UNIQUE_FILENAME_KEY, "false",  "boolean" ) );
       }
     }
 
     return params;
   }
 
-  public static JSONObject generateLineageId( String lineageId ) {
-    JsArrayString lineageIdValue = (JsArrayString) JavaScriptObject.createArray().cast();
-    lineageIdValue.push( lineageId );
-    JsSchedulingParameter p = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-    p.setName( "lineage-id" );
-    p.setType( "string" );
-    p.setStringValue( lineageIdValue );
+  public static JSONObject generateLineageId( JsJob job ) {
+    return buildScheduleParam( "lineage-id", job.getJobParamValue( "lineage-id" ), "string" );
+  }
 
-    return new JSONObject( p );
+  public static JSONObject generateActionUser( JsJob job ) {
+    String actionUser = job.getJobParamValue( ACTION_USER_KEY );
+
+    return buildScheduleParam( ACTION_USER_KEY, actionUser, "string" );
   }
 }

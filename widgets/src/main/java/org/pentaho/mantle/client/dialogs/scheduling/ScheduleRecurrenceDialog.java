@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -48,7 +48,6 @@ import org.pentaho.mantle.login.client.MantleLoginDialog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayInteger;
-import com.google.gwt.core.client.JsArrayString;
 import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -73,10 +72,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-/**
- * @author wseyler
- *
- */
 public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   private static final String HOUR_MINUTE_SECOND = "h:mm:ss a";
@@ -112,9 +107,10 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, JsJob jsJob, IDialogCallback callback,
       boolean hasParams, boolean isEmailConfValid, final ScheduleDialogType type ) {
-    super( type, type != ScheduleDialogType.BLOCKOUT
-        ? Messages.getString( "editSchedule" ) : Messages.getString( "editBlockoutSchedule" ), null, false, true ); //$NON-NLS-1$ //$NON-NLS-2$
-    isBlockoutDialog = ( type == ScheduleDialogType.BLOCKOUT );
+    super( type, Messages.getString( type != ScheduleDialogType.BLOCKOUT ? "editSchedule" : "editBlockoutSchedule" ),
+      null, false, true );
+
+    isBlockoutDialog = type == ScheduleDialogType.BLOCKOUT;
     setCallback( callback );
     editJob = jsJob;
     this.parentDialog = parentDialog;
@@ -130,9 +126,10 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
   }
 
   public ScheduleRecurrenceDialog( PromptDialogBox parentDialog, String filePath, String outputLocation,
-                                   String scheduleName, String dateFormat, boolean overwriteFile, IDialogCallback callback, boolean hasParams, boolean isEmailConfValid ) {
+                                   String scheduleName, String dateFormat, boolean overwriteFile,
+                                   IDialogCallback callback, boolean hasParams, boolean isEmailConfValid ) {
+    super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true );
 
-    super( ScheduleDialogType.SCHEDULER, Messages.getString( "newSchedule" ), null, false, true ); //$NON-NLS-1$
     isBlockoutDialog = false;
     setCallback( callback );
     this.parentDialog = parentDialog;
@@ -441,7 +438,6 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
       schedule.put( "appendDateFormat", new JSONString( appendDateFormat ) ); //$NON-NLS-1$
     }
     schedule.put( "overwriteFile", new JSONString( String.valueOf( overwriteFile ) ) ); //$NON-NLS-1$
-
     if ( scheduleType == ScheduleType.RUN_ONCE ) { // Run once types
       schedule.put( "simpleJobTrigger", getJsonSimpleTrigger( 0, 0, startDateTime, null ) ); //$NON-NLS-1$
     } else if ( ( scheduleType == ScheduleType.SECONDS ) || ( scheduleType == ScheduleType.MINUTES )
@@ -896,13 +892,9 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
         for ( int i = 0; i < editJob.getJobParams().length(); i++ ) {
           JsJobParam param = editJob.getJobParams().get( i );
-          JsArrayString paramValue = (JsArrayString) JavaScriptObject.createArray().cast();
-          paramValue.push( param.getValue() );
-          JsSchedulingParameter p = (JsSchedulingParameter) JavaScriptObject.createObject().cast();
-          p.setName( param.getName() );
-          p.setType( "string" ); //$NON-NLS-1$
-          p.setStringValue( paramValue );
-          scheduleParams.set( i, new JSONObject( p ) );
+
+          scheduleParams.set( i,
+            ScheduleParamsHelper.buildScheduleParam( param.getName(), param.getValue(), "string" ) );
         }
 
         scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$

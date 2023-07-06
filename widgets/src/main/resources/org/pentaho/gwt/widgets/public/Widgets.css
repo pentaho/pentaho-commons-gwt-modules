@@ -952,7 +952,7 @@ div.schedule-name-preview {
   color: #999999;
 }
 
-#schedule-name-input {
+#schedule-name-input, #schedule-owner-input {
   margin-bottom: 15px;
 }
 
