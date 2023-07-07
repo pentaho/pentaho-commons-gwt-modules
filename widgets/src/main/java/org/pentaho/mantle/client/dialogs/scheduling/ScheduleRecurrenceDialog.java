@@ -45,7 +45,6 @@ import org.pentaho.mantle.client.workspace.JsJobParam;
 import org.pentaho.mantle.client.workspace.JsJobTrigger;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArrayInteger;
 import com.google.gwt.core.client.JsonUtils;
@@ -75,10 +74,6 @@ import com.google.gwt.user.client.ui.Widget;
 public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
   private static final String HOUR_MINUTE_SECOND = "h:mm:ss a";
-
-  private final String moduleBaseURL = GWT.getModuleBaseURL();
-  private final String moduleName = GWT.getModuleName();
-  private final String contextURL = moduleBaseURL.substring( 0, moduleBaseURL.lastIndexOf( moduleName ) );
 
   protected String filePath;
   protected String outputLocation;
@@ -115,8 +110,8 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     editJob = jsJob;
     this.parentDialog = parentDialog;
     newSchedule = false;
-    String dateFormat = jsJob.getJobParamValue( "appendDateFormat" );
-    String autoCreateUniqueFilename = jsJob.getJobParamValue( "autoCreateUniqueFilename" );
+    String dateFormat = jsJob.getJobParamValue( ScheduleParamsHelper.APPEND_DATE_FORMAT_KEY );
+    String autoCreateUniqueFilename = jsJob.getJobParamValue( ScheduleParamsHelper.AUTO_CREATE_UNIQUE_FILENAME_KEY );
     boolean overwrite = false;
     if ( autoCreateUniqueFilename != null ) {
       overwrite = !Boolean.valueOf( autoCreateUniqueFilename ).booleanValue();
@@ -433,11 +428,11 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
     WeekOfMonth weekOfMonth = scheduleEditor.getRecurrenceEditor().getSelectedWeekOfMonth();
 
     JSONObject schedule = new JSONObject();
-    schedule.put( "jobName", new JSONString( scheduleName ) ); //$NON-NLS-1$
+    schedule.put( "jobName", new JSONString( scheduleName ) );
     if ( appendDateFormat != null ) {
-      schedule.put( "appendDateFormat", new JSONString( appendDateFormat ) ); //$NON-NLS-1$
+      schedule.put( ScheduleParamsHelper.APPEND_DATE_FORMAT_KEY, new JSONString( appendDateFormat ) );
     }
-    schedule.put( "overwriteFile", new JSONString( String.valueOf( overwriteFile ) ) ); //$NON-NLS-1$
+    schedule.put( ScheduleParamsHelper.OVERWRITE_FILE_KEY, new JSONString( String.valueOf( overwriteFile ) ) );
     if ( scheduleType == ScheduleType.RUN_ONCE ) { // Run once types
       schedule.put( "simpleJobTrigger", getJsonSimpleTrigger( 0, 0, startDateTime, null ) ); //$NON-NLS-1$
     } else if ( ( scheduleType == ScheduleType.SECONDS ) || ( scheduleType == ScheduleType.MINUTES )
@@ -897,7 +892,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
             ScheduleParamsHelper.buildScheduleParam( param.getName(), param.getValue(), "string" ) );
         }
 
-        scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$
+        scheduleRequest.put( ScheduleParamsHelper.JOB_PARAMETERS_KEY, scheduleParams );
 
         String actionClass = editJob.getJobParamValue( "ActionAdapterQuartzJob-ActionClass" ); //$NON-NLS-1$
         if ( !StringUtils.isEmpty( actionClass ) ) {
@@ -908,7 +903,7 @@ public class ScheduleRecurrenceDialog extends AbstractWizardDialog {
 
       // Handle Schedule Parameters
       JSONArray scheduleParams = ScheduleParamsHelper.getScheduleParams( scheduleRequest );
-      scheduleRequest.put( "jobParameters", scheduleParams );
+      scheduleRequest.put( ScheduleParamsHelper.JOB_PARAMETERS_KEY, scheduleParams );
 
       RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 

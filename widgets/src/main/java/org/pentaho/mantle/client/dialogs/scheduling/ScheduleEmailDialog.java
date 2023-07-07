@@ -24,7 +24,6 @@ import org.pentaho.gwt.widgets.client.wizards.IWizardPanel;
 import org.pentaho.mantle.client.messages.Messages;
 import org.pentaho.mantle.client.workspace.JsJob;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Request;
@@ -37,9 +36,6 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 
 public class ScheduleEmailDialog extends AbstractWizardDialog {
-  String moduleBaseURL = GWT.getModuleBaseURL();
-  String moduleName = GWT.getModuleName();
-  String contextURL = moduleBaseURL.substring( 0, moduleBaseURL.lastIndexOf( moduleName ) );
 
   IDialogCallback callback;
 
@@ -74,7 +70,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
     IWizardPanel[] wizardPanels = { scheduleEmailWizardPanel };
     this.setWizardPanels( wizardPanels );
     setPixelSize( 635, 375 );
-    wizardDeckPanel.setHeight( "100%" ); //$NON-NLS-1$
+    wizardDeckPanel.setHeight( "100%" );
     setSize( "650px", "450px" );
     addStyleName( "schedule-email-dialog" );
     setResponsive( true );
@@ -116,7 +112,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
       scheduleParams.set( scheduleParams.size(), ScheduleParamsHelper.generateLineageId( editJob ) );
     }
 
-    scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$    
+    scheduleRequest.put( ScheduleParamsHelper.JOB_PARAMETERS_KEY, scheduleParams );
 
     RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 
@@ -126,7 +122,7 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
         @Override
         public void onError( Request request, Throwable exception ) {
           MessageDialogBox dialogBox =
-              new MessageDialogBox( Messages.getString( "error" ), exception.toString(), false, false, true ); //$NON-NLS-1$
+              new MessageDialogBox( Messages.getString( "error" ), exception.toString(), false, false, true );
           dialogBox.center();
           setDone( false );
         }
@@ -140,17 +136,17 @@ public class ScheduleEmailDialog extends AbstractWizardDialog {
               callback.okPressed();
             }
           } else {
-            MessageDialogBox dialogBox =
-                new MessageDialogBox( Messages.getString( "error" ),
-                    Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-2$
-                    false, false, true );
+            String errorMessage = Messages.getString( "serverErrorColon" ) + " " + response.getStatusCode();
+
+            MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), errorMessage,
+              false, false, true );
             dialogBox.center();
             setDone( false );
           }
         }
       } );
     } catch ( RequestException e ) {
-      MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), e.toString(), //$NON-NLS-1$
+      MessageDialogBox dialogBox = new MessageDialogBox( Messages.getString( "error" ), e.toString(),
           false, false, true );
       dialogBox.center();
       setDone( false );

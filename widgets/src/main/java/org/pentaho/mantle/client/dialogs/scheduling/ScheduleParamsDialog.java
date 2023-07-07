@@ -29,7 +29,6 @@ import org.pentaho.mantle.client.workspace.JsJob;
 import org.pentaho.mantle.client.workspace.JsJobParam;
 import org.pentaho.mantle.login.client.MantleLoginDialog;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.http.client.Request;
@@ -50,9 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleParamsDialog extends AbstractWizardDialog {
-  String moduleBaseURL = GWT.getModuleBaseURL();
-  String moduleName = GWT.getModuleName();
-  String contextURL = moduleBaseURL.substring( 0, moduleBaseURL.lastIndexOf( moduleName ) );
 
   IDialogCallback callback;
   IAfterResponse afterResponseCallback;
@@ -169,15 +165,15 @@ public class ScheduleParamsDialog extends AbstractWizardDialog {
     } else {
       hide();
 
-      if ( jobSchedule.containsKey( "appendDateFormat" ) ) {
-        jobSchedule.put( "appendDateFormat", null ); // will be stored in 'jobParameters'
+      if ( jobSchedule.containsKey( ScheduleParamsHelper.APPEND_DATE_FORMAT_KEY ) ) {
+        jobSchedule.put( ScheduleParamsHelper.APPEND_DATE_FORMAT_KEY, null ); // will be stored in 'jobParameters'
       }
-      if ( jobSchedule.containsKey( "overwriteFile" ) ) {
-        jobSchedule.put( "overwriteFile", null );
+      if ( jobSchedule.containsKey( ScheduleParamsHelper.OVERWRITE_FILE_KEY ) ) {
+        jobSchedule.put( ScheduleParamsHelper.OVERWRITE_FILE_KEY, null );
       }
 
       JSONObject scheduleRequest = (JSONObject) JSONParser.parseStrict( jobSchedule.toString() );
-      scheduleRequest.put( "jobParameters", scheduleParams ); //$NON-NLS-1$
+      scheduleRequest.put( ScheduleParamsHelper.JOB_PARAMETERS_KEY, scheduleParams );
 
       RequestBuilder scheduleFileRequestBuilder = ScheduleHelper.buildRequestForJob( editJob, scheduleRequest );
 

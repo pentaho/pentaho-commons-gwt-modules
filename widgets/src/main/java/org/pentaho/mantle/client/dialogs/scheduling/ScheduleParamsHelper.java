@@ -29,13 +29,12 @@ import java.util.List;
 public class ScheduleParamsHelper {
 
   public static final String AUTO_CREATE_UNIQUE_FILENAME_KEY = "autoCreateUniqueFilename";
+  public static final String APPEND_DATE_FORMAT_KEY = "appendDateFormat";
+  public static final String OVERWRITE_FILE_KEY = "overwriteFile";
+  public static final String ACTION_USER_KEY = "ActionAdapterQuartzJob-ActionUser";
+  public static final String JOB_PARAMETERS_KEY = "jobParameters";
 
   private ScheduleParamsHelper() { }
-
-  private static final String APPEND_DATE_FORMAT_KEY = "appendDateFormat";
-  private static final String OVERWRITE_FILE_KEY = "overwriteFile";
-  private static final String ACTION_USER_KEY = "ActionAdapterQuartzJob-ActionUser";
-  private static final String JOB_PARAMETERS_KEY = "jobParameters";
 
   public static JSONObject buildScheduleParam( String name, String value, String type ) {
     JsArrayString paramValue = JavaScriptObject.createArray().cast();
@@ -50,7 +49,7 @@ public class ScheduleParamsHelper {
   }
 
   public static JSONArray getScheduleParams( JSONObject jobSchedule ) {
-    List<JSONObject> schedulingParams = new ArrayList<JSONObject>();
+    List<JSONObject> schedulingParams = new ArrayList<>();
     JSONArray jobParameters = (JSONArray) jobSchedule.get( JOB_PARAMETERS_KEY );
     if ( jobParameters != null ) {
       for ( int i = 0; i < jobParameters.size(); i++ ) {
