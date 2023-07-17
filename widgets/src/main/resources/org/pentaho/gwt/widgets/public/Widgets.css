@@ -761,16 +761,13 @@ input[type=password]:focus {
   width: 100% !important;
   height: 100% !important;
   position: relative;
-  overflow-x: hidden !important;
+  overflow-x: auto !important;
   overflow-y: auto !important;
   flex: auto;
 }
 
-#previewResultsTable .gwt-ScrollTable .dataWrapper {
-  width: 100% !important;
-  position:relative;
-  overflow:scroll !important;
-  height:100%;
+.gwt-ScrollTable:not(.fixed-column-widths) .dataWrapper {
+  overflow-x: hidden !important;
 }
 
 #previewTreeContainer .gwt-ScrollTable .dataWrapper {

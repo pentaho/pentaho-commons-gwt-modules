@@ -70,7 +70,9 @@ public class BaseTableTest {
     baseTable.showMessage( "message" );
     verify( baseTable.parentPanel ).clear();
     verify( baseTable.parentPanel ).add( baseTable.scrollTable );
-    verify( baseTable ).createTable( any( String[].class ), any( int[].class ), any( Object[][].class ), eq( AbstractScrollTable.ResizePolicy.FILL_WIDTH ), any( SelectionGrid.SelectionPolicy.class ) );
+    verify( baseTable ).createTable( any( String[].class ), any( int[].class ), any( Object[][].class ),
+            eq( AbstractScrollTable.ResizePolicy.FIXED_WIDTH ), any( SelectionGrid.SelectionPolicy.class ),
+            eq( AbstractScrollTable.ScrollPolicy.BOTH ) );
     verify( baseTable ).fillWidth();
   }
 
