@@ -70,7 +70,6 @@
             <module>org.pentaho.gwt.widgets.Widgets</module>
             <module>org.pentaho.gwt.widgets.client.filechooser.FileChooser</module>
             <module>org.pentaho.gwt.widgets.client.formatter.JSTextFormatter</module>
-            <module>org.pentaho.mantle.SchedulingDialogs</module>
           </modules>
         </configuration>
       </plugin>
