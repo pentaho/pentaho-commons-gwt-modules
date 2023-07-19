@@ -30,6 +30,15 @@ public class PentahoTabPanel extends VerticalPanel {
   protected PentahoTab selectedTab;
 
   public PentahoTabPanel() {
+    initialize();
+  }
+
+  public PentahoTabPanel( FlowPanel flowPanel ) {
+    tabBar = flowPanel;
+    initialize();
+  }
+
+  private void initialize() {
     setStylePrimaryName( "pentaho-tab-panel" );
     tabBar.setStylePrimaryName( "pentaho-tab-bar" );
     add( tabBar );
