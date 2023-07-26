@@ -80,8 +80,6 @@ public class BaseTable extends Composite {
       .getInstance( ColumnComparatorTypes.STRING_NOCASE );
   public static final String TABLE_NO_FILL = "table-no-fill";
 
-  private static final AbstractScrollTable.ResizePolicy DEFAULT_RESIZE_POLICY = AbstractScrollTable.ResizePolicy.FILL_WIDTH;
-
   protected Panel parentPanel = new VerticalFlexPanel();
 
   protected ScrollTable scrollTable;
@@ -146,9 +144,20 @@ public class BaseTable extends Composite {
   }
 
   public BaseTable( String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators,
-      SelectionGrid.SelectionPolicy selectionPolicy, TableColumnSortListener sortListener ) {
-    this( tableHeaderNames, columnWidths, columnComparators, selectionPolicy );
+                    SelectionGrid.SelectionPolicy selectionPolicy, TableColumnSortListener sortListener ) {
+    this( tableHeaderNames, columnWidths, true, columnComparators, selectionPolicy, sortListener );
+  }
+
+  public BaseTable( String[] tableHeaderNames, int[] columnWidths, boolean fixedColumnWidths,
+                    BaseColumnComparator[] columnComparators, SelectionGrid.SelectionPolicy selectionPolicy,
+                    TableColumnSortListener sortListener ) {
+    this( tableHeaderNames, columnWidths, fixedColumnWidths, columnComparators, selectionPolicy );
     baseTableColumnSorter.setTableColumnSortListener( sortListener );
+  }
+
+  public BaseTable( String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators,
+                    SelectionGrid.SelectionPolicy selectionPolicy ) {
+    this( tableHeaderNames, columnWidths, true,  columnComparators, selectionPolicy );
   }
 
   /**
@@ -158,8 +167,8 @@ public class BaseTable extends Composite {
    * null value will disable sorting for that column. If you set the columnComparators array to null, all columns will
    * be populated with the default column comparator.
    */
-  public BaseTable( String[] tableHeaderNames, int[] columnWidths, BaseColumnComparator[] columnComparators,
-      SelectionGrid.SelectionPolicy selectionPolicy ) {
+  public BaseTable( String[] tableHeaderNames, int[] columnWidths, boolean fixedColumnWidths,
+                   BaseColumnComparator[] columnComparators, SelectionGrid.SelectionPolicy selectionPolicy ) {
 
     if ( tableHeaderNames != null ) {
       this.columnWidths = columnWidths;
@@ -182,7 +191,18 @@ public class BaseTable extends Composite {
         this.columnComparators = columnComparators;
       }
 
-      createTable( tableHeaderNames, columnWidths, new Object[0][0], DEFAULT_RESIZE_POLICY, selectionPolicy );
+      AbstractScrollTable.ResizePolicy resizePolicy = fixedColumnWidths
+              ? AbstractScrollTable.ResizePolicy.FLOW
+              : AbstractScrollTable.ResizePolicy.FILL_WIDTH;
+
+      // For variable column widths, implement scrolling using CSS alone to circumvent the issues raised by
+      // `ScrollPolicy.BOTH` causing detection of the scrollbar width, and then affecting the header table's
+      // padding-right, resulting in inconsistent consecutive layouts (non-idempotent).
+      AbstractScrollTable.ScrollPolicy scrollPolicy = fixedColumnWidths
+              ? AbstractScrollTable.ScrollPolicy.BOTH
+              : AbstractScrollTable.ScrollPolicy.DISABLED;
+
+      createTable( tableHeaderNames, columnWidths, new Object[0][0], resizePolicy, selectionPolicy, scrollPolicy );
 
       this.parentPanel.add( scrollTable );
       fillWidth();
@@ -216,22 +236,15 @@ public class BaseTable extends Composite {
   }
 
   /**
-   * Creates a table with the given headers, column widths, and row/column values using the default resize policy of
-   * RESIZE_POLICY_FIXED_WIDTH.
-   */
-  @SuppressWarnings( "unused" )
-  private void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues ) {
-    createTable( tableHeaderNames, columnWidths, rowAndColumnValues, DEFAULT_RESIZE_POLICY, selectionPolicy );
-  }
-
-  /**
    * Creates a table with the given headers, column widths, row/column values, and resize policy.
    */
   protected void createTable( String[] tableHeaderNames, int[] columnWidths, Object[][] rowAndColumnValues,
-      AbstractScrollTable.ResizePolicy resizePolicy, SelectionGrid.SelectionPolicy selectionPolicy ) {
+                             AbstractScrollTable.ResizePolicy resizePolicy,
+                             SelectionGrid.SelectionPolicy selectionPolicy,
+                             AbstractScrollTable.ScrollPolicy scrollPolicy ) {
     createTableHeader( tableHeaderNames );
     createDataGrid( selectionPolicy, tableHeaderNames.length );
-    createScrollTable( resizePolicy );
+    createScrollTable( resizePolicy, scrollPolicy );
     populateDataGrid( columnWidths, rowAndColumnValues );
   }
 
@@ -479,7 +492,8 @@ public class BaseTable extends Composite {
   /**
    * Creates and initializes the scroll table.
    */
-  private void createScrollTable( AbstractScrollTable.ResizePolicy resizePolicy ) {
+  private void createScrollTable( AbstractScrollTable.ResizePolicy resizePolicy,
+                                  AbstractScrollTable.ScrollPolicy scrollPolicy ) {
 
     scrollTable = new ScrollTable( dataGrid, tableHeader, (BaseTableImages) GWT.create( BaseTableImages.class ) ) {
       protected void resizeTablesVerticallyNow() {
@@ -501,10 +515,10 @@ public class BaseTable extends Composite {
     scrollTable.setCellPadding( 0 );
     scrollTable.setCellSpacing( 0 );
 
-    // Implement scrolling using CSS alone to circumvent the issues raised by `ScrollPolicy.BOTH`
-    // causing detection of the scrollbar width, and then affecting the header table's padding-right,
-    // resulting in inconsistent consecutive layouts (non-idempotent).
-    scrollTable.setScrollPolicy( ScrollTable.ScrollPolicy.DISABLED );
+    scrollTable.setScrollPolicy( scrollPolicy );
+    if ( !scrollPolicy.equals( AbstractScrollTable.ScrollPolicy.DISABLED ) ) {
+      scrollTable.addStyleName( "fixed-column-widths" );
+    }
 
     // Set column comparators
     if ( columnComparators != null ) {
@@ -668,7 +682,7 @@ public class BaseTable extends Composite {
     String[][] simpleMessageRowAndColumnValues = new String[][] { { message, "&nbsp;" } }; //$NON-NLS-1$
 
     createTable( simpleMessageHeaderValues, null, simpleMessageRowAndColumnValues,
-        DEFAULT_RESIZE_POLICY, selectionPolicy );
+        AbstractScrollTable.ResizePolicy.FIXED_WIDTH, selectionPolicy, AbstractScrollTable.ScrollPolicy.BOTH );
 
     parentPanel.add( scrollTable );
 

@@ -7893,6 +7893,15 @@ div.listbox .pentaho-listbox {
   opacity: 0.5;
 }
 
+#fileUpload {
+  max-width: 480px;
+  width: auto !important;
+}
+
+#fileImportEditorWindow {
+  max-width: 480px;
+}
+
 /* instaview fiel type icon? */
 .pentaho-selectlist-item-data {
   background-image: url("images/database.png");
