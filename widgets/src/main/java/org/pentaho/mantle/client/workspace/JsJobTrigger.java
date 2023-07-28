@@ -197,6 +197,16 @@ public class JsJobTrigger extends JavaScriptObject {
   private final native JsArrayString getDayOfWeekRecurrencesRaw()
   /*-{
     if ('dayOfWeekRecurrences' in this && this.dayOfWeekRecurrences != null) {
+      if ('sequentialRecurrence' in this.dayOfWeekRecurrences) {
+        var result = [];
+        result.push( this.dayOfWeekRecurrences.sequentialRecurrence.firstValue );
+        var i = parseInt( this.dayOfWeekRecurrences.sequentialRecurrence.firstValue );
+        while( i < parseInt( this.dayOfWeekRecurrences.sequentialRecurrence.lastValue ) ){
+            i++;
+          result.push( '' + i );
+        }
+        return result;
+      }
       if ('recurrenceList' in this.dayOfWeekRecurrences) {
         return this.dayOfWeekRecurrences.recurrenceList.values;
       }
@@ -420,8 +430,14 @@ public class JsJobTrigger extends JavaScriptObject {
           } else {
 
             int variance = 0;
-            if (DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ssZZZ").parseStrict(getNativeStartTime()) != null) {
-              variance = TimeUtil.getDayVariance(getStartTime().getHours(), getStartTime().getMinutes(), getNativeStartTime());
+            if( getNativeStartTime().indexOf( '.' ) < 0 ){
+              if (DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ssZZZ").parse(getNativeStartTime()) != null) {
+                variance = TimeUtil.getDayVariance(getStartTime().getHours(), getStartTime().getMinutes(), getNativeStartTime());
+              }
+            } else{
+              if (DateTimeFormat.getFormat("yyyy-MM-dd'T'HH:mm:ss").parse(getNativeStartTime().substring(0, getNativeStartTime().indexOf('.') )) != null) {
+                variance = TimeUtil.getDayVariance(getStartTime().getHours(), getStartTime().getMinutes(), getNativeStartTime());
+              }
             }
 
             int adjustedDayOfWeek = TimeUtil.getDayOfWeek(DayOfWeek.get(getDayOfWeekRecurrences()[0] - 1), variance);
@@ -440,7 +456,7 @@ public class JsJobTrigger extends JavaScriptObject {
         DateTimeFormat timeFormat = DateTimeFormat.getFormat(PredefinedFormat.TIME_MEDIUM);
         trigDesc += " " + Messages.getString("at") + " " + timeFormat.format(getStartTime());
       } catch(Throwable th) {
-        if(getUiPassParamRaw().equals("DAILY")) {
+        if(getUiPassParamRaw() != null && getUiPassParamRaw().equals("DAILY")) {
           trigDesc += getCronDesc();
         } else {
           trigDesc += getCronDescription();
