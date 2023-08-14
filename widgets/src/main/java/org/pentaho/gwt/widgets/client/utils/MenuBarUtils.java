@@ -100,4 +100,13 @@ public class MenuBarUtils {
   public static native MenuItem findItem( MenuBar menuBar, Element hItem) /*-{
     return menuBar.@com.google.gwt.user.client.ui.MenuBar::findItem(*)(hItem);
   }-*/;
+
+  /**
+   * Calculates the height of the MenuBar popup
+   * @param menuBar
+   * @return
+   */
+  public static int calculatePopupHeight( MenuBar menuBar ){
+    return MenuBarUtils.getAllItems( menuBar ).stream().mapToInt( UIObject::getOffsetHeight ).sum();
+  }
 }
