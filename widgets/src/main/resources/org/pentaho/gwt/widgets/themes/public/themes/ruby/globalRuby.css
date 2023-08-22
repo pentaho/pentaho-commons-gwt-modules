@@ -3767,6 +3767,7 @@ div.dijitDateTextBox.dijitComboBox {
   border: 1px solid #CCC;
   border-radius: 4px;
   overflow: hidden;
+  margin: var(--focus-ring-padding);
 }
 
 .tundra .dijitSelect .dijitArrowButton {
@@ -9187,6 +9188,7 @@ input#csvSeparator {
 .layoutItem-group,
 .layoutItem-column {
   padding-top: 2px;
+  margin: 4px;
 }
 
 .reportControlSectionTitle {
