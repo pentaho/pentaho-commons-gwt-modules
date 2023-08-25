@@ -1111,7 +1111,10 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
         break;
       case 13: // Enter
       case 32: // Space
-        this.togglePopup();
+        // Popup should be only shown for drop-down
+        if ( this.getVisibleRowCount() == 1 ) {
+          this.togglePopup();
+        }
         break;
       case 65: // A
         if ( Event.getCurrentEvent().getCtrlKey() ) {
