@@ -104,7 +104,7 @@ public class MenuBarUtils {
   /**
    * Calculates the height of the MenuBar popup
    * @param menuBar
-   * @return
+   * @return int
    */
   public static int calculatePopupHeight( MenuBar menuBar ){
     return MenuBarUtils.getAllItems( menuBar ).stream().mapToInt( UIObject::getOffsetHeight ).sum();
