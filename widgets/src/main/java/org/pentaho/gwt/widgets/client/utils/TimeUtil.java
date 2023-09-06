@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2020 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.utils;
@@ -94,7 +94,7 @@ public class TimeUtil {
    */
   public enum DayOfWeek {
     SUN( 0, "sunday" ), MON( 1, "monday" ), TUE( 2, "tuesday" ), WED( 3, "wednesday" ), THU( 4,
-        "thursday" ), FRI( 5, "friday" ), SAT( 6, "saturday" );
+            "thursday" ), FRI( 5, "friday" ), SAT( 6, "saturday" );
 
     DayOfWeek( int value, String name ) {
       this.value = value;
@@ -129,6 +129,46 @@ public class TimeUtil {
 
     public int getPrevious() {
       return ( this == SUN ) ? SAT.ordinal() : ordinal() - 1;
+    }
+  } /* end enum */
+
+  public enum LogLevel {
+    NOTHING( 0, "Nothing" ), ERROR( 1, "Error" ), MINIMAL( 2, "Minimal" ), BASIC( 3, "Basic" ), DETAILED( 4,
+        "Detailed" ), DEBUG( 5, "Debug" ), ROWLEVEL( 6, "Row Level(very detailed)" );
+
+    LogLevel( int value, String name ) {
+      this.value = value;
+      this.name = name;
+    }
+
+    private final int value;
+
+    private final String name;
+
+    private static LogLevel[] log = { NOTHING, ERROR, MINIMAL, BASIC, DETAILED, DEBUG, ROWLEVEL };
+
+    public int value() {
+      return value;
+    }
+
+    public String toString() {
+      return name;
+    }
+
+    public static LogLevel get( int idx ) {
+      return log[idx];
+    }
+
+    public static int length() {
+      return log.length;
+    }
+
+    public int getNext() {
+      return ( ordinal() + 1 ) % values().length;
+    }
+
+    public int getPrevious() {
+      return ( this == NOTHING ) ? ROWLEVEL.ordinal() : ordinal() - 1;
     }
   } /* end enum */
 
@@ -639,6 +679,15 @@ public class TimeUtil {
     }
     return ( dayVariance > 0 ) ? currentDay.getNext() : currentDay.getPrevious();
   }
+
+  public static int getLogLevel( LogLevel currentLog, int logVariance ) {
+
+    if ( logVariance == 0 ) {
+      return currentLog.ordinal();
+    }
+    return ( logVariance > 0 ) ? currentLog.getNext() : currentLog.getPrevious();
+  }
+
 
   public static native double getClientOffsetTimeZone() /*-{
       return new Date().getTimezoneOffset();

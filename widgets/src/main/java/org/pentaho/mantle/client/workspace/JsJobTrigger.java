@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.workspace;
@@ -671,4 +671,16 @@ public class JsJobTrigger extends JavaScriptObject {
   public final native Date getNextFireTime() /*-{ return this.nextFireTime; }-*/;
 
   public final native String getName() /*-{ return this.name; }-*/;
+
+  public final native boolean getEnableSafeMode() /*-{ return this.enableSafeMode; }-*/;
+
+  public final native void setEnableSafeMode(  boolean enableSafeMode) /*-{ this.enableSafeMode = enableSafeMode; }-*/;
+
+  public final native boolean getGatherMetrics() /*-{ return this.gatherMetrics; }-*/;
+
+  public final native void setGatherMetrics(  boolean gatherMetrics) /*-{ this.gatherMetrics = gatherMetrics; }-*/;
+
+  public final native String getLogLevel() /*-{ return this.logLevel; }-*/;
+
+  public final native void setLogLevel(  boolean logLevel) /*-{ this.logLevel = logLevel; }-*/;
 }
