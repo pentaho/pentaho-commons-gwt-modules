@@ -17,7 +17,12 @@
 
 package org.pentaho.gwt.widgets.client.toolbar;
 
+import com.google.gwt.aria.client.Roles;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
@@ -25,6 +30,7 @@ import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 import java.util.ArrayList;
@@ -68,6 +74,47 @@ public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener
     super.add( bar );
     super.setCellWidth( bar, "100%" );
     setWidth( "100%" ); //$NON-NLS-1$
+    Roles.getToolbarRole().set( bar.getElement() );
+    this.addKeyDownHandler( event -> {
+      Element activeElement = Element.as( event.getNativeEvent().getEventTarget() );
+      Element nextElement = null;
+      switch ( event.getNativeKeyCode() ) {
+        case KeyCodes.KEY_RIGHT:
+          nextElement = ElementUtils.findNextKeyboardFocusableElement( activeElement, bar.getElement() );
+          break;
+        case KeyCodes.KEY_LEFT:
+          nextElement = ElementUtils.findPreviousKeyboardFocusableElement( activeElement, bar.getElement() );
+          break;
+        case KeyCodes.KEY_HOME:
+          nextElement = ElementUtils.findFirstKeyboardFocusableDescendant( bar.getElement() );
+          break;
+        case KeyCodes.KEY_END:
+          nextElement = ElementUtils.findLastKeyboardFocusableDescendant( bar.getElement() );
+          break;
+        case KeyCodes.KEY_TAB:
+          Element node;
+          if ( event.isShiftKeyDown() ) {
+            node = ElementUtils.findFirstKeyboardFocusableDescendant( bar.getElement() );
+            ElementUtils.tabPrevious( node );
+          } else {
+            node = ElementUtils.findLastKeyboardFocusableDescendant( bar.getElement() );
+            ElementUtils.tabNext( node );
+          }
+          break;
+        default:
+          return;
+      }
+
+      event.preventDefault();
+
+      if ( nextElement != null ) {
+        nextElement.focus();
+      }
+    } );
+  }
+
+  public void addKeyDownHandler( KeyDownHandler handler ) {
+    this.addDomHandler( handler, KeyDownEvent.getType() );
   }
 
   /**

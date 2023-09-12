@@ -268,6 +268,15 @@ public class ElementUtils {
   }-*/;
 
   /**
+   * Gets the last descendant element of the given element which can currently receive keyboard focus.
+   * @param root The root element.
+   * @return The last keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findLastKeyboardFocusableDescendant( Element root )/*-{
+    return $wnd.pho.util._focus.lastTabbable(root);
+  }-*/;
+
+  /**
    * Gets the element after the given one which can currently receive keyboard focus.
    * @param elem The initial element.
    * @return The next keyboard-focusable descendant, if any; <code>null</code>, otherwise.
@@ -277,12 +286,32 @@ public class ElementUtils {
   }-*/;
 
   /**
+   * Under a specified scope, gets the element after the given one which can currently receive keyboard focus.
+   * @param elem The initial element.
+   * @param root The root element.
+   * @return The next keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findNextKeyboardFocusableElement( Element elem, Element root )/*-{
+    return $wnd.pho.util._focus.nextTabbable(elem,{root: root});
+  }-*/;
+
+  /**
    * Gets the element before the given one which can currently receive keyboard focus.
    * @param elem The initial element.
    * @return The previous keyboard-focusable descendant, if any; <code>null</code>, otherwise.
    */
   public static native Element findPreviousKeyboardFocusableElement( Element elem )/*-{
     return $wnd.pho.util._focus.previousTabbable(elem);
+  }-*/;
+
+  /**
+   * Under a specified scope, gets the element before the given one which can currently receive keyboard focus.
+   * @param elem The initial element.
+   * @param root The root element.
+   * @return The previous keyboard-focusable descendant, if any; <code>null</code>, otherwise.
+   */
+  public static native Element findPreviousKeyboardFocusableElement( Element elem, Element root )/*-{
+    return $wnd.pho.util._focus.previousTabbable(elem,{root: root});
   }-*/;
 
   /**
