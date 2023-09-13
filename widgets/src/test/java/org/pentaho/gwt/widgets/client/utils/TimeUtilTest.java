@@ -60,18 +60,18 @@ public class TimeUtilTest {
   public void testGetNextLogTest() {
     TimeUtil.LogLevel logLevel = TimeUtil.LogLevel.MINIMAL;
     int log = logLevel.getNext();
-    assertEquals( TimeUtil.LogLevel.BASIC.value(), log );
+    assertEquals( TimeUtil.LogLevel.NOTHING.value(), log );
   }
 
   @Test
   public void testGetNextLog_next() {
-    int nextLogLevel = TimeUtil.getLogLevel( TimeUtil.LogLevel.BASIC, 3 );
+    int nextLogLevel = TimeUtil.getLogLevel( TimeUtil.LogLevel.NOTHING, 3 );
     assertEquals( TimeUtil.LogLevel.DETAILED.ordinal(), nextLogLevel );
   }
 
   @Test
   public void testGetNextLog_previous() {
-    int nextLogLevel = TimeUtil.getLogLevel( TimeUtil.LogLevel.BASIC, -1 );
+    int nextLogLevel = TimeUtil.getLogLevel( TimeUtil.LogLevel.NOTHING, -1 );
     assertEquals( TimeUtil.LogLevel.MINIMAL.ordinal(), nextLogLevel );
   }
 
