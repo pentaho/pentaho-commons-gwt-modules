@@ -133,7 +133,7 @@ public class TimeUtil {
   } /* end enum */
 
   public enum LogLevel {
-    NOTHING( 0, "Nothing" ), ERROR( 1, "Error" ), MINIMAL( 2, "Minimal" ), BASIC( 3, "Basic" ), DETAILED( 4,
+    BASIC( 0, "Basic" ), ERROR( 1, "Error" ), MINIMAL( 2, "Minimal" ), NOTHING( 3, "Nothing" ), DETAILED( 4,
         "Detailed" ), DEBUG( 5, "Debug" ), ROWLEVEL( 6, "Row Level(very detailed)" );
 
     LogLevel( int value, String name ) {
@@ -145,7 +145,7 @@ public class TimeUtil {
 
     private final String name;
 
-    private static LogLevel[] log = { NOTHING, ERROR, MINIMAL, BASIC, DETAILED, DEBUG, ROWLEVEL };
+    private static LogLevel[] log = { BASIC, ERROR, MINIMAL, NOTHING, DETAILED, DEBUG, ROWLEVEL };
 
     public int value() {
       return value;
@@ -168,7 +168,7 @@ public class TimeUtil {
     }
 
     public int getPrevious() {
-      return ( this == NOTHING ) ? ROWLEVEL.ordinal() : ordinal() - 1;
+      return ( this == BASIC ) ? ROWLEVEL.ordinal() : ordinal() - 1;
     }
   } /* end enum */
 
