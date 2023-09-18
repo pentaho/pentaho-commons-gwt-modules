@@ -64,6 +64,7 @@ public class AdditionalDetailsPanel extends Composite  implements IChangeHandler
     gatherMetrics = new CheckBox();
     gatherMetrics.setText( Messages.getString( "schedule.performanceMetrics" ) );
     gatherMetrics.setStyleName( "gatherPerfmnceMetricsCheckbox" );
+    gatherMetrics.setValue( true );
     gatherMetrics.addClickHandler(new ClickHandler() {
       @Override
       public void onClick( ClickEvent event ) {
