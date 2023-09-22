@@ -12,14 +12,16 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
 
 import org.pentaho.gwt.widgets.client.controls.DatePickerEx;
+import org.pentaho.gwt.widgets.client.controls.ErrorLabel;
 import org.pentaho.gwt.widgets.client.controls.TimePicker;
 import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.ui.IChangeHandler;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
@@ -46,20 +48,58 @@ public class RunOnceEditor extends VerticalPanel implements IChangeHandler {
   private DefaultFormat format = new DefaultFormat( DateTimeFormat.getFormat( PredefinedFormat.DATE_SHORT ) );
   protected DatePickerEx startDatePicker = new DatePickerEx( format );
   private ICallback<IChangeHandler> onChangeHandler = null;
+
+  private ErrorLabel startLabel = null;
+  private ErrorLabel detailLabel = null;
+
+  private AdditionalDetailsPanel detailsPanel;
+
   private final MessageDialogBox errorBox =
       new MessageDialogBox( Messages.getString( "error" ), "", false, false, true );
 
   public RunOnceEditor( final TimePicker startTimePicker ) {
     setWidth( "100%" ); //$NON-NLS-1$
 
+    VerticalFlexPanel outerVP = new VerticalFlexPanel();
+    add( outerVP );
+    detailsPanel = new AdditionalDetailsPanel();
+
     CaptionPanel startDateCaptionPanel = new CaptionPanel( Messages.getString( "schedule.startDate" ) );
     startDateCaptionPanel.setStyleName( SCHEDULER_CAPTION_PANEL );
     startDateCaptionPanel.getElement().setId( SCHEDULE_START_DATE_INPUT );
     startDateCaptionPanel.add( startDatePicker.getDatePicker() );
-    add( startDateCaptionPanel );
+    startLabel = new ErrorLabel( startDateCaptionPanel );
+    outerVP.add( startLabel );
+
+    detailLabel = new ErrorLabel( detailsPanel );
+    outerVP.add( detailLabel );
 
     this.startTimePicker = startTimePicker;
     configureOnChangeHandler();
+  }
+
+  public boolean getEnableSafeMode() {
+    return detailsPanel.getEnableSafeMode();
+  }
+
+  public void setEnableSafeMode( boolean enableSafeMode ) {
+    detailsPanel.setEnableSafeMode( enableSafeMode );
+  }
+
+  public boolean getGatherMetrics() {
+    return detailsPanel.getGatherMetrics();
+  }
+
+  public void setGatherMetrics( boolean gatherMetrics ) {
+    detailsPanel.setGatherMetrics( gatherMetrics );
+  }
+
+  public String getLogLevel() {
+    return detailsPanel.getLogLevel();
+  }
+
+  public void setLogLevel( String logLevel ) {
+    detailsPanel.setLogLevel( logLevel );
   }
 
   public Date getStartDate() {

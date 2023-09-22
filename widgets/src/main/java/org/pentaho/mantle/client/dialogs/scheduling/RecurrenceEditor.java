@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -102,6 +102,10 @@ public class RecurrenceEditor extends VerticalFlexPanel implements IChangeHandle
 
   protected Map<TemporalValue, Panel> temporalPanelMap = new LinkedHashMap<TemporalValue, Panel>();
 
+  private ErrorLabel detailLabel = null;
+
+  protected AdditionalDetailsPanel detailsPanel;
+
   public enum TemporalValue {
     SECONDS( 0, Messages.getString( "schedule.seconds" ) ),
       MINUTES( 1, Messages.getString( "schedule.minutes" ) ),
@@ -162,6 +166,9 @@ public class RecurrenceEditor extends VerticalFlexPanel implements IChangeHandle
     Date now = new Date();
     dateRangeEditor = new DateRangeEditor( now );
     add( dateRangeEditor );
+
+    detailsPanel = new AdditionalDetailsPanel();
+    add( detailsPanel );
 
     this.startTimePicker = startTimePicker;
 
@@ -1455,6 +1462,30 @@ public class RecurrenceEditor extends VerticalFlexPanel implements IChangeHandle
 
   public void setOnChangeHandler( ICallback<IChangeHandler> handler ) {
     this.onChangeHandler = handler;
+  }
+
+  public boolean getEnableSafeMode() {
+    return detailsPanel.getEnableSafeMode();
+  }
+
+  public void setEnableSafeMode( boolean enableSafeMode ) {
+    detailsPanel.setEnableSafeMode( enableSafeMode );
+  }
+
+  public boolean getGatherMetrics() {
+    return detailsPanel.getGatherMetrics();
+  }
+
+  public void setGatherMetrics( boolean gatherMetrics ) {
+    detailsPanel.setGatherMetrics( gatherMetrics );
+  }
+
+  public String getLogLevel() {
+    return detailsPanel.getLogLevel();
+  }
+
+  public void setLogLevel( String logLevel ) {
+    detailsPanel.setLogLevel( logLevel );
   }
 
   private void changeHandler() {

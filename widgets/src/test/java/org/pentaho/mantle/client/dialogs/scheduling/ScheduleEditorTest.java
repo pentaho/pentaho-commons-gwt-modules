@@ -305,6 +305,129 @@ public class ScheduleEditorTest {
   }
 
   @Test
+  public void testGetEnableSafeMode() throws Exception {
+    doCallRealMethod().when( scheduleEditor ).getEnableSafeMode();
+
+    final boolean enableSafeModeROE = true;
+    scheduleEditor.runOnceEditor = mock( RunOnceEditor.class );
+    when( scheduleEditor.runOnceEditor.getEnableSafeMode() ).thenReturn( enableSafeModeROE );
+    final boolean enableSafeModeRE = false;
+    scheduleEditor.recurrenceEditor = mock( RecurrenceEditor.class );
+    when( scheduleEditor.recurrenceEditor.getEnableSafeMode() ).thenReturn( enableSafeModeRE );
+    final boolean enableSafeModeCE = false;
+    scheduleEditor.cronEditor = mock( CronEditor.class );
+    when( scheduleEditor.cronEditor.getEnableSafeMode() ).thenReturn( enableSafeModeCE );
+
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.RUN_ONCE );
+    assertEquals( enableSafeModeROE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.SECONDS );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.MINUTES );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.HOURS );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.DAILY );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.WEEKLY );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.MONTHLY );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.YEARLY );
+    assertEquals( enableSafeModeRE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.CRON );
+    assertEquals( enableSafeModeCE, scheduleEditor.getEnableSafeMode() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( null );
+    try {
+      scheduleEditor.getEnableSafeMode();
+      fail();
+    } catch ( RuntimeException e ) {
+      // expected
+    }
+  }
+
+  @Test
+  public void testGetGatherMetrics() throws Exception {
+    doCallRealMethod().when( scheduleEditor ).getGatherMetrics();
+
+    final boolean gatherMetricsROE = true;
+    scheduleEditor.runOnceEditor = mock( RunOnceEditor.class );
+    when( scheduleEditor.runOnceEditor.getGatherMetrics() ).thenReturn( gatherMetricsROE );
+    final boolean gatherMetricsRE = false;
+    scheduleEditor.recurrenceEditor = mock( RecurrenceEditor.class );
+    when( scheduleEditor.recurrenceEditor.getGatherMetrics() ).thenReturn( gatherMetricsRE );
+    final boolean gatherMetricsCE = false;
+    scheduleEditor.cronEditor = mock( CronEditor.class );
+    when( scheduleEditor.cronEditor.getGatherMetrics() ).thenReturn( gatherMetricsCE );
+
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.RUN_ONCE );
+    assertEquals( gatherMetricsROE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.SECONDS );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.MINUTES );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.HOURS );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.DAILY );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.WEEKLY );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.MONTHLY );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.YEARLY );
+    assertEquals( gatherMetricsRE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.CRON );
+    assertEquals( gatherMetricsCE, scheduleEditor.getGatherMetrics() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( null );
+    try {
+      scheduleEditor.getGatherMetrics();
+      fail();
+    } catch ( RuntimeException e ) {
+      // expected
+    }
+  }
+
+  @Test
+  public void testGetLogLevel() throws Exception {
+    doCallRealMethod().when( scheduleEditor ).getLogLevel();
+
+    final String logLevelROE = "Basic";
+    scheduleEditor.runOnceEditor = mock( RunOnceEditor.class );
+    when( scheduleEditor.runOnceEditor.getLogLevel() ).thenReturn( logLevelROE );
+    final String logLevelRE = "Detailed";
+    scheduleEditor.recurrenceEditor = mock( RecurrenceEditor.class );
+    when( scheduleEditor.recurrenceEditor.getLogLevel() ).thenReturn( logLevelRE );
+    final String logLevelCE = "Debug";
+    scheduleEditor.cronEditor = mock( CronEditor.class );
+    when( scheduleEditor.cronEditor.getLogLevel() ).thenReturn( logLevelCE );
+
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.RUN_ONCE );
+    assertEquals( logLevelROE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.SECONDS );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.MINUTES );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.HOURS );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.DAILY );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.WEEKLY );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.MONTHLY );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.YEARLY );
+    assertEquals( logLevelRE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( ScheduleEditor.ScheduleType.CRON );
+    assertEquals( logLevelCE, scheduleEditor.getLogLevel() );
+    when( scheduleEditor.getScheduleType() ).thenReturn( null );
+    try {
+      scheduleEditor.getLogLevel();
+      fail();
+    } catch ( RuntimeException e ) {
+      // expected
+    }
+  }
+
+  @Test
   public void testSetStartDate() throws Exception {
     doCallRealMethod().when( scheduleEditor ).setStartDate( any( Date.class ) );
 

@@ -39,8 +39,9 @@ public class RunOnceEditorValidator implements IUiValidator {
 
       final DateTimeFormat format = DateTimeFormat.getFormat( "MM-dd-yyyy" );
 
-      if (editor.getStartDate().before( new Date() )){
-       isValid=false;
+      //BISERVER-14912 - Date.before() does not work as expected in GWT, so we need a custom validation to check the day
+      if ( isBefore( editor.getStartDate(), new Date() ) ) {
+        isValid = false;
       } else {
 
         final String date = format.format( editor.getStartDate() );
@@ -57,6 +58,10 @@ public class RunOnceEditorValidator implements IUiValidator {
       }
     }
     return isValid;
+  }
+
+  private static boolean isBefore( Date a, Date b ) {
+    return a.getYear() < b.getYear() && a.getMonth() < b.getMonth() && a.getDay() < b.getDay();
   }
 
   public void clear() {

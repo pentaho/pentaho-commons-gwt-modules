@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -158,4 +158,15 @@ public class ScheduleEditorWizardPanel extends AbstractWizardPanel {
     return scheduleEditor.getRepeatInSecs().toString();
   }
 
+  public boolean getEnableSafeMode() {
+    return scheduleEditor.getEnableSafeMode();
+  }
+
+  public boolean getGatherMetrics() {
+    return scheduleEditor.getGatherMetrics();
+  }
+
+  public String getLogLevel() {
+    return scheduleEditor.getLogLevel();
+  }
 }

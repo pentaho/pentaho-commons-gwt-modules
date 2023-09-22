@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2022 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling;
@@ -850,6 +850,24 @@ public class ScheduleEditor extends VerticalFlexPanel implements IChangeHandler 
     return runOnceEditor;
   }
 
+  public void setEnableSafeMode( boolean enableSafeMode ) {
+    runOnceEditor.setEnableSafeMode( enableSafeMode );
+    recurrenceEditor.setEnableSafeMode( enableSafeMode );
+    cronEditor.setEnableSafeMode( enableSafeMode );
+  }
+
+  public void setGatherMetrics( boolean gatherMetrics ) {
+    runOnceEditor.setGatherMetrics( gatherMetrics );
+    recurrenceEditor.setGatherMetrics( gatherMetrics );
+    cronEditor.setGatherMetrics( gatherMetrics );
+  }
+
+  public void setLogLevel( String logLevel ) {
+    runOnceEditor.setLogLevel( logLevel );
+    recurrenceEditor.setLogLevel( logLevel );
+    cronEditor.setLogLevel( logLevel );
+  }
+
   public void setStartTime( String startTime ) {
     runOnceEditor.setStartTime( startTime );
     recurrenceEditor.setStartTime( startTime );
@@ -882,6 +900,63 @@ public class ScheduleEditor extends VerticalFlexPanel implements IChangeHandler 
     runOnceEditor.setStartDate( startDate );
     recurrenceEditor.setStartDate( startDate );
     cronEditor.setStartDate( startDate );
+  }
+
+  public boolean getEnableSafeMode() {
+    switch ( getScheduleType() ) {
+      case RUN_ONCE:
+        return runOnceEditor.getEnableSafeMode();
+      case SECONDS: // fall through
+      case MINUTES: // fall through
+      case HOURS: // fall through
+      case DAILY: // fall through
+      case WEEKLY: // fall through
+      case MONTHLY: // fall through
+      case YEARLY:
+        return recurrenceEditor.getEnableSafeMode();
+      case CRON:
+        return cronEditor.getEnableSafeMode();
+      default:
+        throw new RuntimeException( Messages.getString( "schedule.invalidRunType", getScheduleType().toString() ) );
+    }
+  }
+
+  public boolean getGatherMetrics() {
+    switch ( getScheduleType() ) {
+      case RUN_ONCE:
+        return runOnceEditor.getGatherMetrics();
+      case SECONDS: // fall through
+      case MINUTES: // fall through
+      case HOURS: // fall through
+      case DAILY: // fall through
+      case WEEKLY: // fall through
+      case MONTHLY: // fall through
+      case YEARLY:
+        return recurrenceEditor.getGatherMetrics();
+      case CRON:
+        return cronEditor.getGatherMetrics();
+      default:
+        throw new RuntimeException( Messages.getString( "schedule.invalidRunType", getScheduleType().toString() ) );
+    }
+  }
+
+  public String getLogLevel() {
+    switch ( getScheduleType() ) {
+      case RUN_ONCE:
+        return runOnceEditor.getLogLevel();
+      case SECONDS: // fall through
+      case MINUTES: // fall through
+      case HOURS: // fall through
+      case DAILY: // fall through
+      case WEEKLY: // fall through
+      case MONTHLY: // fall through
+      case YEARLY:
+        return recurrenceEditor.getLogLevel();
+      case CRON:
+        return cronEditor.getLogLevel();
+      default:
+        throw new RuntimeException( Messages.getString( "schedule.invalidRunType", getScheduleType().toString() ) );
+    }
   }
 
   @SuppressWarnings( "deprecation" )
