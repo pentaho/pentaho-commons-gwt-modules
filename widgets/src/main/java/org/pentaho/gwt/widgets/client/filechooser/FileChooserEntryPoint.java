@@ -69,17 +69,6 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
     addFileChooserListener( dialog, callback );
   }
 
-  public void openFolderChooserDialog( final JavaScriptObject callback, String selectedPath ) {
-    FileChooserDialog dialog = new FileChooserDialog( FileChooserMode.OPEN, selectedPath, false, true );
-    addFileChooserListener( dialog, callback );
-
-    dialog.setFileFilter( new FileFilter() {
-      @Override
-      public boolean accept( String name, boolean isDirectory, boolean isVisible ) {
-        return isDirectory;
-      }
-    } );
-  }
 
   public void saveFileChooserDialog( final JavaScriptObject callback, String selectedPath ) {
     FileChooserDialog dialog = null;
@@ -131,9 +120,6 @@ public class FileChooserEntryPoint implements EntryPoint, IResourceBundleLoadCal
   /*-{
     $wnd.openFileChooserDialog = function(callback, selectedPath) {
       fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::openFileChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
-    }
-    $wnd.openFolderChooserDialog = function(callback, selectedPath) {
-      fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::openFolderChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
     }
     $wnd.saveFileChooserDialog = function(callback, selectedPath) {
       fileChooserEntryPoint.@org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint::saveFileChooserDialog(Lcom/google/gwt/core/client/JavaScriptObject;Ljava/lang/String;)(callback, selectedPath);
