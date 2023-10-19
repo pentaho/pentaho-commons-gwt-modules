@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <themes root-folder="resources/themes">
-  <ruby display-name="Ruby" system="true">
+  <ruby display-name="Ruby" system="true" responsive="true">
+    <file>../base.css</file>
     <file>globalRuby.css</file>
     <file>bootstrap/css/bootstrap-namespaced.css</file>
   </ruby>
@@ -9,10 +10,12 @@
     <file>bootstrap/css/bootstrap-namespaced.css</file>
   </onyx>
   <crystal display-name="Crystal" system="true">
+    <file>../base.css</file>
     <file>globalCrystal.css</file>
     <file>bootstrap/css/bootstrap-namespaced.css</file>
   </crystal>
   <sapphire display-name="Sapphire" system="true">
+    <file>../base.css</file>
     <file>globalSapphire.css</file>
     <file>bootstrap/css/bootstrap-namespaced.css</file>
   </sapphire>
