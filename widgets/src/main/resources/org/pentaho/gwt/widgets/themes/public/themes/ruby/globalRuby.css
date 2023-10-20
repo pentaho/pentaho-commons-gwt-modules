@@ -9819,3 +9819,13 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 .templatePickerImg {
   margin-top: var(--focus-ring-padding);
 }
+
+/* region pentaho-common-dialog */
+
+.responsive.pentaho-common-dialog .dijitDialogPaneContent {
+  width: unset !important;
+  height: unset !important;
+  overflow: unset !important;
+}
+
+/* endregion */
