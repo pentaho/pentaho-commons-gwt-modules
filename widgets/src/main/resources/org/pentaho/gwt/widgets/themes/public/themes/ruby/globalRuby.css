@@ -199,6 +199,11 @@ label {
   font-size: 13px;
 }
 
+label,
+.gwt-Label {
+  color: #414141;
+}
+
 div.pentaho-dialog.schedule-recurrence-dialog label {
   font-size: 14px;
 }
@@ -363,10 +368,6 @@ select option:hover {
 
 .IE .scheduleEditor FIELDSET TD {
   padding-top: 0px !important;
-}
-
-.gwt-Label {
-  color: #414141;
 }
 
 .adminField {
