@@ -83,6 +83,11 @@ label {
   font-size: 13px;
 }
 
+label,
+.gwt-Label {
+  color: #666;
+}
+
 div.pentaho-dialog.schedule-recurrence-dialog label {
   font-size: 14px;
 }
@@ -225,10 +230,6 @@ select option,
 
 .IE .scheduleEditor FIELDSET TD {
   padding-top: 0px !important;
-}
-
-.gwt-Label {
-  color: #666;
 }
 
 *:focus {
