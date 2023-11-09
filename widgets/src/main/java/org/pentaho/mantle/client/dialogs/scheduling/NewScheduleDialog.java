@@ -200,21 +200,23 @@ public class NewScheduleDialog extends PromptDialogBox {
     content.add( scheduleLocationLabel );
 
     Button browseButton = new Button( Messages.getString( "select" ) );
-    browseButton.addClickHandler( new ClickHandler() {
+    browseButton.addClickHandler(event -> {
+      String selectedPath = scheduleLocationTextBox.getText();
 
-      public void onClick( ClickEvent event ) {
-        final SelectFolderDialog selectFolder = new SelectFolderDialog();
-        selectFolder.setCallback( new IDialogCallback() {
-          public void okPressed() {
-            scheduleLocationTextBox.setText( selectFolder.getSelectedPath() );
-          }
+      final SelectFolderDialog selectFolder = new SelectFolderDialog( selectedPath );
+      selectFolder.setCallback( new IDialogCallback() {
+        public void okPressed() {
+          scheduleLocationTextBox.setText( selectFolder.getSelectedPath() );
+        }
 
-          public void cancelPressed() {
-          }
-        } );
-        selectFolder.center();
-      }
-    } );
+        public void cancelPressed() {
+          selectFolder.cancelSelection();
+        }
+      } );
+
+      selectFolder.center();
+    });
+
     browseButton.setStyleName( "pentaho-button" );
     browseButton.getElement().setId( "schedule-dialog-select-button" );
 
