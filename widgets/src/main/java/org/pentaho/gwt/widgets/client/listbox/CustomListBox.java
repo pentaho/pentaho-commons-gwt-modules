@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.listbox;
@@ -25,6 +25,8 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.Focusable;
 import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.ScrollFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -82,7 +84,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 @SuppressWarnings( "deprecation" )
-public class CustomListBox extends HorizontalFlexPanel implements ChangeListener, PopupListener, MouseListener,
+public class CustomListBox extends VerticalFlexPanel implements ChangeListener, PopupListener, MouseListener,
     FocusListener, KeyboardListener, ListItemListener, Focusable {
   protected List<ListItem> items = new ArrayList<ListItem>();
   protected int selectedIndex = -1;
@@ -90,8 +92,8 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   protected int visible = 1;
   private int maxDropVisible = 15;
   protected boolean editable = false;
-  private VerticalPanel listPanel = new VerticalPanel();
-  protected ScrollPanel listScrollPanel = new ScrollPanel();
+  private VerticalPanel listPanel = new VerticalFlexPanel();
+  protected ScrollPanel listScrollPanel = new ScrollFlexPanel();
 
   // Members for drop-down style
   protected FlexTable dropGrid = new FlexTable();
@@ -119,6 +121,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   public CustomListBox() {
 
     selectedItemWrapper.addStyleName( "flex-row" );
+    selectedItemWrapper.addStyleName( "with-scroll-child" );
     dropGrid.addStyleName( "custom-list-drop-grid" );
     dropGrid.addStyleName( HorizontalFlexPanel.STYLE_NAME );
 
@@ -136,6 +139,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     listScrollPanel.setWidth( "100%" ); //$NON-NLS-1$
     listScrollPanel.getElement().getStyle().setProperty( "overflowX", "hidden" ); //$NON-NLS-1$ //$NON-NLS-2$
     // listScrollPanel.getElement().getStyle().setProperty("padding",spacing+"px");
+    listPanel.addStyleName( "custom-list-list-panel" );
     listPanel.setSpacing( spacing );
     listPanel.setWidth( "100%" ); //$NON-NLS-1$
 
@@ -152,7 +156,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     fPanel.addMouseListener( this );
     fPanel.addFocusListener( this );
     fPanel.addKeyboardListener( this );
-    fPanel.addStyleName( "flex-row" );
+    fPanel.addStyleName( "flex-column" );
 
     // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
     // because it is composed of multiple classes... Base style is added back from within setStylePrimaryName.
@@ -270,6 +274,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
    *          ListItem
    */
   public void addItem( ListItem item ) {
+    item.setStylePrimaryName( this.primaryStyleName );
     items.add( item );
 
     item.setListItemListener( this );
@@ -320,6 +325,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
    */
   public void addItem( String label ) {
     DefaultListItem item = new DefaultListItem( label );
+    item.setStylePrimaryName( this.primaryStyleName );
     items.add( item );
     item.setListItemListener( this );
 
@@ -359,10 +365,12 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
       // switched from drop-down to list
       fPanel.remove( dropGrid );
       fPanel.add( listScrollPanel );
+      addStyleName( "list-mode" );
     } else if ( visible == 1 && prevCount > 1 ) {
       // switched from list to drop-down
       fPanel.remove( listScrollPanel );
       fPanel.add( dropGrid );
+      removeStyleName( "list-mode" );
     }
 
     if ( suppressLayout == false ) {
@@ -520,7 +528,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
     } else {
       editableTextBox.setTabIndex( -1 );
       fPanel.removeStyleName( "focus-container" );
-      fPanel.setTabIndex( 0 );
+      fPanel.setTabIndex( this.enabled ? 0 : -1 );
     }
 
     // Update popup panel,
@@ -892,7 +900,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
   @Override
   public void setStylePrimaryName( String s ) {
     super.setStylePrimaryName( s );
-    addStyleName( HorizontalFlexPanel.STYLE_NAME );
+    addStyleName( VerticalFlexPanel.STYLE_NAME );
     this.primaryStyleName = s;
 
     // This may have came in late. Update ListItems
@@ -1103,7 +1111,10 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
         break;
       case 13: // Enter
       case 32: // Space
-        this.togglePopup();
+        // Popup should be only shown for drop-down
+        if ( this.getVisibleRowCount() == 1 ) {
+          this.togglePopup();
+        }
         break;
       case 65: // A
         if ( Event.getCurrentEvent().getCtrlKey() ) {
@@ -1298,6 +1309,7 @@ public class CustomListBox extends HorizontalFlexPanel implements ChangeListener
       editableTextBox.setEnabled( enabled );
     }
     arrow.setEnabled( enabled );
+    fPanel.setTabIndex( this.enabled ? 0 : -1 );
     this.setStylePrimaryName( ( this.enabled ) ? "custom-list" : "custom-list-disabled" ); //$NON-NLS-1$ //$NON-NLS-2$
   }
 

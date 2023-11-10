@@ -515,6 +515,7 @@ public class CustomListBoxTest {
 
     customListBox.editableTextBox = mock( TextBox.class );
     customListBox.arrow = mock( CustomListBox.DropDownArrow.class );
+    customListBox.fPanel = mock( PentahoFocusPanel.class );
 
     verifySetEnabled( true, 1 );
     verifySetEnabled( false, 2 );

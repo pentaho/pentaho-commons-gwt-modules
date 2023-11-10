@@ -18,13 +18,17 @@
 package org.pentaho.gwt.widgets.client.toolbar;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 import java.util.ArrayList;
@@ -33,7 +37,7 @@ import java.util.List;
 /**
  * Displays a collection of buttons in a standard toolbar view. Also supports ToolbarGroup objects that manage related
  * buttons.
- * 
+ *
  * @author nbaker
  */
 public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener, ToolbarPopupSource {
@@ -53,6 +57,8 @@ public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener
 
   protected List<ToolbarPopupListener> popupListeners = new ArrayList<ToolbarPopupListener>();
 
+  private JavaScriptObject jsToolbarController;
+
   public Toolbar() {
     // Clear base style first. Otherwise, calling setStylePrimaryName would only partially clear the base style,
     // because it is composed of multiple classes... Base style is added back right after.
@@ -70,9 +76,53 @@ public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener
     setWidth( "100%" ); //$NON-NLS-1$
   }
 
+  @Override
+  protected void onAttach() {
+    super.onAttach();
+
+    jsToolbarController = createJsToolbarController( this, getElement() );
+  }
+
+  @Override
+  protected void onDetach() {
+    if ( jsToolbarController != null ) {
+      destroyJsToolbarController( jsToolbarController );
+      jsToolbarController = null;
+    }
+
+    super.onDetach();
+  }
+
+  private static native JavaScriptObject createJsToolbarController( Toolbar toolbar, Element container )/*-{
+    return $wnd.pho.util._a11y.makeAccessibleToolbar( container, {
+      itemSelector: ".toolbar-button-focus-panel",
+      itemFilter: function(itemElem) {
+        return toolbar.@org.pentaho.gwt.widgets.client.toolbar.Toolbar::itemFilter(Lcom/google/gwt/dom/client/Element;)( itemElem );
+      }
+    });
+  }-*/;
+
+
+  private boolean itemFilter( Element element ) {
+    Widget button = ElementUtils.getWidgetOfRootElement( element );
+    if ( button != null ) {
+      for ( ToolbarButton toolbarButton : buttons ) {
+        if ( toolbarButton.getPushButton().equals( button ) ) {
+          return toolbarButton.isEnabled() && toolbarButton.isVisible();
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private static native void destroyJsToolbarController( JavaScriptObject jsToolbarController )/*-{
+    jsToolbarController.destroy();
+  }-*/;
+
   /**
    * Add in a collection of buttons assembled as a ToolbarGroup
-   * 
+   *
    * @param group
    *          ToolbarGroup to add.
    */
