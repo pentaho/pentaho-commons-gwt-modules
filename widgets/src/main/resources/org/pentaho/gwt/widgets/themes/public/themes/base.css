@@ -104,9 +104,13 @@
 /* region flex-row / flex-column */
 :where(.responsive-theme .responsive, .responsive-content):is(.flex-column, .flex-row),
 :where(.responsive-theme .responsive, .responsive-content) :is(.flex-column, .flex-row) {
-  flex: auto;
+  --flex-item: initial;
+  flex: var(--flex-item, auto);
   display: flex;
-  gap: var(--layout-gap-v) var(--layout-gap-h);
+
+  --layout-gap-h-local: initial;
+  --layout-gap-v-local: initial;
+  gap: var(--layout-gap-v-local, var(--layout-gap-v)) var(--layout-gap-h-local, var(--layout-gap-h));
 }
 
 :where(.responsive-theme .responsive, .responsive-content).flex-row,
@@ -119,6 +123,11 @@
  */
 :where(.responsive-theme .responsive, .responsive-content).flex-row:where(.with-scroll-child),
 :where(.responsive-theme .responsive, .responsive-content) .flex-row:where(.with-scroll-child) {
+  min-width: 0;
+}
+
+:where(.responsive-theme .responsive, .responsive-content):is(.flex-column,.flex-row):where(.with-scroll-h-child),
+:where(.responsive-theme .responsive, .responsive-content) :is(.flex-column,.flex-row):where(.with-scroll-h-child) {
   min-width: 0;
 }
 
@@ -135,6 +144,12 @@
   min-height: 0;
 }
 
+
+:where(.responsive-theme .responsive, .responsive-content):is(.flex-column,.flex-row):where(.with-scroll-v-child),
+:where(.responsive-theme .responsive, .responsive-content) :is(.flex-column,.flex-row):where(.with-scroll-v-child) {
+  min-height: 0;
+}
+
 /* Items having same direction of the container inherit its flex by default.
    When changing direction, the container's default flex of auto is used by default.
  */
@@ -142,7 +157,8 @@
 :where(.responsive-theme .responsive, .responsive-content) .flex-row > :where(.flex-row),
 :where(.responsive-theme .responsive, .responsive-content).flex-column > :where(.flex-column),
 :where(.responsive-theme .responsive, .responsive-content) .flex-column > :where(.flex-column) {
-  flex: inherit;
+  --flex-item: initial;
+  flex: var(--flex-item, inherit);
 }
 /* endregion Responsive Primitives */
 
