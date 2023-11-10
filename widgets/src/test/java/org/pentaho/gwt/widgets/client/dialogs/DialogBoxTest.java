@@ -19,11 +19,8 @@ package org.pentaho.gwt.widgets.client.dialogs;
 
 import com.google.gwt.aria.client.Role;
 import com.google.gwt.aria.client.Roles;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Element;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.Focusable;
@@ -75,116 +72,11 @@ public class DialogBoxTest {
   @Test
   public void testOnKeyDownPreview() {
     DialogBox boxMock = mock( DialogBox.class );
-    doCallRealMethod().when( boxMock ).onPreviewNativeEvent( any( Event.NativePreviewEvent.class ) );
+    doCallRealMethod().when( boxMock ).onKeyDownPreview( anyChar(), anyInt() );
 
-    NativeEvent nativeKeyDownEventMock = mock( NativeEvent.class );
-    doReturn( KeyCodes.KEY_ESCAPE ).when( nativeKeyDownEventMock ).getKeyCode();
-
-    Event.NativePreviewEvent keyDownEventMock = mock( Event.NativePreviewEvent.class );
-    doReturn( Event.ONKEYDOWN ).when( keyDownEventMock ).getTypeInt();
-    doReturn( nativeKeyDownEventMock ).when( keyDownEventMock ).getNativeEvent();
-
-    boxMock.onPreviewNativeEvent( keyDownEventMock );
-
+    boxMock.onKeyDownPreview( (char) KeyboardListener.KEY_ESCAPE, 0 );
     verify( boxMock, times( 1 ) ).hide();
   }
-
-  // region focus trapping when clicking on an element
-  @Test
-  public void testClickOnNonFocusableDialogElementPreventsDefault() {
-    DialogBox boxMock = mock( DialogBox.class );
-    doCallRealMethod().when( boxMock ).onPreviewNativeEvent( any() );
-    doReturn( true ).when( boxMock ).eventTargetsPopupOrPartner( any() );
-    doReturn( false ).when( boxMock ).eventTargetIsFocusable( any() );
-
-    NativeEvent nativeMouseDownEventMock = mock( NativeEvent.class );
-
-    Event.NativePreviewEvent mouseDownEventMock = mock( Event.NativePreviewEvent.class );
-    doReturn( Event.ONMOUSEDOWN ).when( mouseDownEventMock ).getTypeInt();
-    doReturn( false ).when( mouseDownEventMock ).isCanceled();
-    doReturn( nativeMouseDownEventMock ).when( mouseDownEventMock ).getNativeEvent();
-
-    boxMock.onPreviewNativeEvent( mouseDownEventMock );
-
-    verify( nativeMouseDownEventMock, times( 1 ) ).preventDefault();
-  }
-
-  @Test
-  public void testClickOnNonFocusableDialogElementAndAlreadyCanceledEventDoesNotPreventDefault() {
-    DialogBox boxMock = mock( DialogBox.class );
-    doCallRealMethod().when( boxMock ).onPreviewNativeEvent( any() );
-    doReturn( true ).when( boxMock ).eventTargetsPopupOrPartner( any() );
-    doReturn( false ).when( boxMock ).eventTargetIsFocusable( any() );
-
-    NativeEvent nativeMouseDownEventMock = mock( NativeEvent.class );
-
-    Event.NativePreviewEvent mouseDownEventMock = mock( Event.NativePreviewEvent.class );
-    doReturn( Event.ONMOUSEDOWN ).when( mouseDownEventMock ).getTypeInt();
-    doReturn( true ).when( mouseDownEventMock ).isCanceled();
-    doReturn( nativeMouseDownEventMock ).when( mouseDownEventMock ).getNativeEvent();
-
-    boxMock.onPreviewNativeEvent( mouseDownEventMock );
-
-    verify( nativeMouseDownEventMock, never() ).preventDefault();
-  }
-
-  @Test
-  public void testClickOnFocusableDialogElementDoesNotPreventDefault() {
-    DialogBox boxMock = mock( DialogBox.class );
-    doCallRealMethod().when( boxMock ).onPreviewNativeEvent( any() );
-    doReturn( true ).when( boxMock ).eventTargetsPopupOrPartner( any() );
-    doReturn( true ).when( boxMock ).eventTargetIsFocusable( any() );
-
-    NativeEvent nativeMouseDownEventMock = mock( NativeEvent.class );
-
-    Event.NativePreviewEvent mouseDownEventMock = mock( Event.NativePreviewEvent.class );
-    doReturn( Event.ONMOUSEDOWN ).when( mouseDownEventMock ).getTypeInt();
-    doReturn( false ).when( mouseDownEventMock ).isCanceled();
-    doReturn( nativeMouseDownEventMock ).when( mouseDownEventMock ).getNativeEvent();
-
-    boxMock.onPreviewNativeEvent( mouseDownEventMock );
-
-    verify( nativeMouseDownEventMock, never() ).preventDefault();
-  }
-
-  @Test
-  public void testClickOnFocusableElementOutsideDialogDoesNotPreventDefault() {
-    DialogBox boxMock = mock( DialogBox.class );
-    doCallRealMethod().when( boxMock ).onPreviewNativeEvent( any() );
-    doReturn( false ).when( boxMock ).eventTargetsPopupOrPartner( any() );
-    doReturn( true ).when( boxMock ).eventTargetIsFocusable( any() );
-
-    NativeEvent nativeMouseDownEventMock = mock( NativeEvent.class );
-
-    Event.NativePreviewEvent mouseDownEventMock = mock( Event.NativePreviewEvent.class );
-    doReturn( Event.ONMOUSEDOWN ).when( mouseDownEventMock ).getTypeInt();
-    doReturn( false ).when( mouseDownEventMock ).isCanceled();
-    doReturn( nativeMouseDownEventMock ).when( mouseDownEventMock ).getNativeEvent();
-
-    boxMock.onPreviewNativeEvent( mouseDownEventMock );
-
-    verify( nativeMouseDownEventMock, never() ).preventDefault();
-  }
-
-  @Test
-  public void testClickNonFocusableElementOutsideDialogDoesNotPreventDefault() {
-    DialogBox boxMock = mock( DialogBox.class );
-    doCallRealMethod().when( boxMock ).onPreviewNativeEvent( any() );
-    doReturn( false ).when( boxMock ).eventTargetsPopupOrPartner( any() );
-    doReturn( false ).when( boxMock ).eventTargetIsFocusable( any() );
-
-    NativeEvent nativeMouseDownEventMock = mock( NativeEvent.class );
-
-    Event.NativePreviewEvent mouseDownEventMock = mock( Event.NativePreviewEvent.class );
-    doReturn( Event.ONMOUSEDOWN ).when( mouseDownEventMock ).getTypeInt();
-    doReturn( false ).when( mouseDownEventMock ).isCanceled();
-    doReturn( nativeMouseDownEventMock ).when( mouseDownEventMock ).getNativeEvent();
-
-    boxMock.onPreviewNativeEvent( mouseDownEventMock );
-
-    verify( nativeMouseDownEventMock, never() ).preventDefault();
-  }
-  // endregion
 
   // region focus
   @Test

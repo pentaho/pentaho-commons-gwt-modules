@@ -154,7 +154,6 @@ public class DefaultListItem extends HorizontalFlexPanel implements ListItem<Obj
     Label label = new Label( text );
     label.getElement().getStyle().setProperty( "cursor", "pointer" ); //$NON-NLS-1$ //$NON-NLS-2$
     label.setWidth( "100%" ); //$NON-NLS-1$
-    label.setTitle( text );
     SimplePanel sp = new SimplePanel();
     sp.getElement().getStyle().setProperty( "overflowX", "auto" ); //$NON-NLS-1$ //$NON-NLS-2$
     sp.addStyleName( "flex-row" );

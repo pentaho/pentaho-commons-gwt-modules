@@ -34,8 +34,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pentaho.gwt.widgets.client.text.ToolTip;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyInt;
@@ -60,7 +58,6 @@ public class ToolbarButtonTest {
   public void setUp() throws Exception {
     button = mock( ToolbarButton.class );
     button.button = mock( DockPanel.class );
-    button.imageRegistrations = new ArrayList<>();
   }
 
   @Test
@@ -176,8 +173,6 @@ public class ToolbarButtonTest {
     verify( button.button ).add( calcImage, DockPanel.CENTER );
     verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
     verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
-
-    verify( button ).updateImages();
   }
 
   @Test
@@ -222,8 +217,6 @@ public class ToolbarButtonTest {
     verify( button.button ).add( calcImage, DockPanel.CENTER );
     verify( button.button ).setCellHorizontalAlignment( calcImage, DockPanel.ALIGN_CENTER );
     verify( button.button ).setCellVerticalAlignment( calcImage, DockPanel.ALIGN_MIDDLE );
-
-    verify( button ).updateImages();
   }
 
   @Test
@@ -273,8 +266,6 @@ public class ToolbarButtonTest {
   @Test
   public void testAddClassName() throws Exception {
     doCallRealMethod().when( button ).addClassName( anyString() );
-    doCallRealMethod().when( button ).updateImages();
-    doCallRealMethod().when( button ).updateImg( any( Image.class ), anyBoolean() );
 
     final Image image = mock( Image.class );
     button.image = image;
@@ -282,7 +273,6 @@ public class ToolbarButtonTest {
     button.disabledImage = disabledImage;
     final String className = "name";
     button.addClassName( className );
-
     verify( image ).addStyleName( className );
     verify( image ).removeStyleName( contains( "disabled" ) );
     verify( image ).addMouseOverHandler( any( MouseOverHandler.class ) );

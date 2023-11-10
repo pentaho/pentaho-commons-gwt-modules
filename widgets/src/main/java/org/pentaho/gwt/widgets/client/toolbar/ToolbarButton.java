@@ -42,10 +42,6 @@ import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.text.ToolTip;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Manages a PushButton in the common toolbar {@link Toolbar}.
@@ -91,8 +87,6 @@ public class ToolbarButton {
 
   String className = ""; //$NON-NLS-1$
 
-  protected List<HandlerRegistration> imageRegistrations = new ArrayList<>();
-
   /**
    * Constructs a toolbar button with an image and a label
    * 
@@ -129,6 +123,8 @@ public class ToolbarButton {
    *          GWT Image object
    * @param disabledImage
    *          GWT Image object
+   * @param label
+   *          String containing an option label
    */
   public ToolbarButton( Image img, Image disabledImage ) {
     this( img );
@@ -367,19 +363,16 @@ public class ToolbarButton {
   /**
    * Sets the image displayed on this button.
    * 
-   * @param image GWT Image
+   * @param img
+   *          GWT Image
    */
-  public void setImage( Image image ) {
-    image.addStyleName( "icon-zoomable" );
-    this.image = image;
-
+  public void setImage( Image img ) {
+    this.image = img;
     button.remove( currentImage );
     Image curImage = calculateApporiateImage();
     button.add( curImage, DockPanel.CENTER );
     button.setCellHorizontalAlignment( curImage, DockPanel.ALIGN_CENTER );
     button.setCellVerticalAlignment( curImage, DockPanel.ALIGN_MIDDLE );
-
-    updateImages();
   }
 
   /**
@@ -407,8 +400,6 @@ public class ToolbarButton {
       button.add( curImage, DockPanel.CENTER );
       button.setCellHorizontalAlignment( curImage, DockPanel.ALIGN_CENTER );
       button.setCellVerticalAlignment( curImage, DockPanel.ALIGN_MIDDLE );
-
-      updateImages();
     }
   }
 
@@ -513,20 +504,6 @@ public class ToolbarButton {
   public void addClassName( String className ) {
     this.className = className;
 
-    updateImages();
-  }
-
-  /**
-   * Updates images to have appropriate CSS class names.
-   * <p>
-   *   To be called whenever any of the fields <code>image</code>, <code>disabledImage</code>, or <code>className</code>
-   *   change.
-   * </p>
-   */
-  protected void updateImages() {
-
-    disposeImageRegistrations();
-
     updateImg( this.image, true );
 
     if ( this.disabledImage != null ) {
@@ -534,9 +511,9 @@ public class ToolbarButton {
     }
   }
 
-  void updateImg( final Image img, boolean enabled ) {
+  private void updateImg( final Image img, boolean enabled ) {
 
-    if ( !StringUtils.isEmpty( className ) ) {
+    if ( !className.isEmpty() ) {
       img.addStyleName( className );
     }
 
@@ -550,50 +527,43 @@ public class ToolbarButton {
     final String overStyle = "pentaho-imagebutton-hover"; //$NON-NLS-1$
 
     // Mouse over
-    imageRegistrations.add( img.addMouseOverHandler( new MouseOverHandler() {
+    img.addMouseOverHandler( new MouseOverHandler() {
 
       @Override
       public void onMouseOver( MouseOverEvent event ) {
         img.addStyleName( overStyle );
 
       }
-    } ) );
+    } );
 
     // Mouse Out
-    imageRegistrations.add( img.addMouseOutHandler( new MouseOutHandler() {
+    img.addMouseOutHandler( new MouseOutHandler() {
 
       @Override
       public void onMouseOut( MouseOutEvent event ) {
         img.removeStyleName( overStyle );
       }
-    } ) );
+    } );
 
     final String downStyle = "pentaho-imagebutton-down"; //$NON-NLS-1$
 
     // Mouse Down
-    imageRegistrations.add( img.addMouseDownHandler( new MouseDownHandler() {
+    img.addMouseDownHandler( new MouseDownHandler() {
 
       @Override
       public void onMouseDown( MouseDownEvent event ) {
         img.addStyleName( downStyle );
       }
-    } ) );
+    } );
 
     // Mouse Up
-    imageRegistrations.add( img.addMouseUpHandler( new MouseUpHandler() {
+    img.addMouseUpHandler( new MouseUpHandler() {
 
       @Override
       public void onMouseUp( MouseUpEvent event ) {
         img.removeStyleName( downStyle );
       }
-    } ) );
-  }
+    } );
 
-  private void disposeImageRegistrations() {
-    for ( HandlerRegistration registration : imageRegistrations ) {
-      registration.removeHandler();
-    }
-
-    imageRegistrations.clear();
   }
 }

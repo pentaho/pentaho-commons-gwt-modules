@@ -17,7 +17,6 @@
 
 package org.pentaho.gwt.widgets.client.utils;
 
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.ui.DecoratedPopupPanel;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
@@ -89,24 +88,4 @@ public class MenuBarUtils {
     menuBar.@com.google.gwt.user.client.ui.MenuBar::doItemAction(Lcom/google/gwt/user/client/ui/MenuItem;ZZ)(item,
         fireCommand, focus);
   }-*/;
-
-  /**
-   * Provides access to MenuBar's
-   * <code>com.google.gwt.user.client.ui.MenuBar#findItem(Element)</code>.
-   * @param menuBar
-   * @param hItem
-   * @return MenuItem
-   */
-  public static native MenuItem findItem( MenuBar menuBar, Element hItem) /*-{
-    return menuBar.@com.google.gwt.user.client.ui.MenuBar::findItem(*)(hItem);
-  }-*/;
-
-  /**
-   * Calculates the height of the MenuBar popup
-   * @param menuBar
-   * @return int
-   */
-  public static int calculatePopupHeight( MenuBar menuBar ){
-    return MenuBarUtils.getAllItems( menuBar ).stream().mapToInt( UIObject::getOffsetHeight ).sum();
-  }
 }

@@ -21,22 +21,18 @@ import com.google.gwt.aria.client.Id;
 import com.google.gwt.aria.client.Role;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.EventTarget;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.Focusable;
+import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.PopupListener;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.FrameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
@@ -538,48 +534,15 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
   }
   // endregion
 
-  @Override
-  protected void onPreviewNativeEvent( Event.NativePreviewEvent event ) {
-    switch ( event.getTypeInt() ) {
-      case Event.ONKEYDOWN: {
-        switch ( event.getNativeEvent().getKeyCode() ) {
-          // Close the dialog when escape is pressed.
-          case KeyCodes.KEY_ESCAPE:
-            event.cancel();
-            hide();
-            break;
-        }
+  public boolean onKeyDownPreview( char key, int modifiers ) {
+    // Use the popup's key preview hooks to close the dialog when either
+    // enter or escape is pressed.
+    switch ( key ) {
+      case KeyboardListener.KEY_ESCAPE:
+        hide();
         break;
-      }
-
-      // Fix PopupPanel's focus trapping which still loses focus to the body when clicking on a non-focusable element
-      // contained in the dialog.
-      // See also the super implementation of onPreviewNativeEvent (GWT's ui.DialogBox), which handles preventing text
-      // selection on the dialog's caption, using a similar technique.
-      case Event.ONMOUSEDOWN:
-      case Event.ONTOUCHSTART: {
-        NativeEvent nativeEvent = event.getNativeEvent();
-        if ( !event.isCanceled()
-          && eventTargetsPopupOrPartner( nativeEvent )
-          && !eventTargetIsFocusable( nativeEvent ) ) {
-          // Calling event.cancel() has a broader effect and it would prevent drag & drop of the dialog (by dragging the caption area).
-          nativeEvent.preventDefault();
-        }
-        break;
-      }
     }
-
-    super.onPreviewNativeEvent( event );
-  }
-
-  protected native boolean eventTargetsPopupOrPartner( NativeEvent event ) /*-{
-    return this.@com.google.gwt.user.client.ui.PopupPanel::eventTargetsPopup(Lcom/google/gwt/dom/client/NativeEvent;)(event) ||
-      this.@com.google.gwt.user.client.ui.PopupPanel::eventTargetsPartner(Lcom/google/gwt/dom/client/NativeEvent;)(event);
-  }-*/;
-
-  boolean eventTargetIsFocusable( NativeEvent event ) {
-    EventTarget target = event.getEventTarget();
-    return Element.is( target ) && ElementUtils.isFocusable( Element.as( target ) );
+    return true;
   }
 
   protected void initializePageBackground() {

@@ -286,15 +286,6 @@ public class ElementUtils {
   }-*/;
 
   /**
-   * Gets a value that indicates if the element can currently receive focus, via keyboard or code.
-   * @param elem The element.
-   * @return <code>true</code> if it can receive focus; <code>false</code>, otherwise.
-   */
-  public static native boolean isFocusable( Element elem )/*-{
-    return $wnd.pho.util._focus.isTabbable(elem, {focusable: true});
-  }-*/;
-
-  /**
    * Sets focus on a given element.
    * <p>
    *   On some user agents, e.g. <code>safari</code>,
@@ -360,10 +351,10 @@ public class ElementUtils {
    *   allows setting properties with its camel-case name.
    * </p>
    * @param elem The element.
-   * @param name The name of the CSS style property.
+   * @param cssPropertyName The name of the CSS style property.
    * @param value The value of the property.
    */
-  public static native void setStyleProperty( Element elem, String name, String value ) /*-{
+  public static native void setStyleProperty( Element elem, String cssPropertyName, String value ) /*-{
     elem.style.setProperty(name, value);
   }-*/;
 
@@ -411,6 +402,15 @@ public class ElementUtils {
   }-*/;
 
   /**
+   * Indicates whether the call to <code>Event.preventDefault()</code> canceled the event.
+   * @param evt The NativeEvent.
+   * @return <code>true</code> if the default event was prevented; <code>false</code>, otherwise.
+   */
+  public static native boolean isEventDefaultPrevented( NativeEvent evt ) /*-{
+    return evt.defaultPrevented;
+  }-*/;
+
+  /**
    * Scrolls an element's scroll container so that it is in view.
    * <p>
    *   The element's scroll container is scrolled down,
@@ -436,22 +436,5 @@ public class ElementUtils {
     } else if ( offsetTop + elemRect.height > container.scrollTop + container.clientHeight ) {
       container.scrollTop = offsetTop +  elemRect.height - container.clientHeight;
     }
-  }-*/;
-
-  /**
-   * Indicates whether the call to <code>Event.preventDefault()</code> canceled the event.
-   * @param evt The NativeEvent.
-   * @return <code>true</code> if the default event was prevented; <code>false</code>, otherwise.
-   */
-  public static native boolean isEventDefaultPrevented( NativeEvent evt ) /*-{
-    return evt.defaultPrevented;
-  }-*/;
-
-  /**
-   * This method is used for providing a log text on the browser console
-   * @param text The Text to be logged on console.
-   */
-  public static native void log( String text ) /*-{
-    $wnd.console.log( text );
   }-*/;
 }

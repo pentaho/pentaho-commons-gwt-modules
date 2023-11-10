@@ -729,27 +729,18 @@ input[type=password]:focus {
 /* GWT Date Picker - END */
 
 /* ======================= GWT Scroll Table =========================== */
-
-.headerTable > tbody > tr > td {
+.headerTable >tbody > tr > td {
   padding: 2px 2px 2px 4px;
 }
 
 .gwt-ScrollTable {
   border: 1px solid #848484;
   overflow: auto;
-  height: 100% !important;
-}
-
-.gwt-ScrollTable > .flex-column {
-  row-gap: 0;
-  height: 100%;
 }
 
 .gwt-ScrollTable .headerWrapper {
   background: #d2d2d2 scroll left bottom;
-  padding-right: 0;
-  height: auto !important;
-  flex: none;
+  padding-right: 0px;
 }
 
 .gwt-ScrollTable .footerWrapper {
@@ -759,15 +750,16 @@ input[type=password]:focus {
 
 .gwt-ScrollTable .dataWrapper {
   width: 100% !important;
-  height: 100% !important;
-  position: relative;
-  overflow-x: auto !important;
-  overflow-y: auto !important;
-  flex: auto;
+  position:relative;
+  overflow-x: hidden !important;
+  height:100%;
 }
 
-.gwt-ScrollTable:not(.fixed-column-widths) .dataWrapper {
-  overflow-x: hidden !important;
+#previewResultsTable .gwt-ScrollTable .dataWrapper {
+  width: 100% !important;
+  position:relative;
+  overflow:scroll !important;
+  height:100%;
 }
 
 #previewTreeContainer .gwt-ScrollTable .dataWrapper {
@@ -781,15 +773,6 @@ input[type=password]:focus {
 /*  font-size: 13px; */
   overflow: hidden;
   white-space: nowrap;
-}
-
-.gwt-ScrollTable :is(.headerWrapper .headerTable td, .dataWrapper .dataTable td .gwt-HTML) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.gwt-ScrollTable .dataWrapper .dataTable td > input {
-  box-sizing: border-box;
 }
 
 .gwt-ScrollTable .headerTable {
@@ -895,22 +878,6 @@ input[type=password]:focus {
   overflow:auto;
   height:100%;
   width:100%;
-}
-
-.gwt-ScrollTable :is(.headerWrapper .headerTable, .dataWrapper .dataTable) td:last-child {
-  padding-right: 20px;
-}
-
-.xul-tree.flex-column,
-.xul-tree .flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.xul-tree > table > tbody,
-.xul-tree > table > tbody > tr,
-.xul-tree > table > tbody > tr > td {
-  display: contents;
 }
 
 /* ======================= GWT Scroll Table =========================== */
