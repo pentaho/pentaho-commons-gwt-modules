@@ -42,8 +42,11 @@ public class ScrollFlexPanel extends com.google.gwt.user.client.ui.ScrollPanel {
   private void init() {
     addStyleName( "pentaho-gwt-ScrollFlexPanel" );
     addStyleName( "flex-column" );
+    addStyleName( "with-scroll-child" );
 
     // Access base class' containerElem
-    getElement().getFirstChildElement().addClassName( "flex-column" );
+    Element localContainerElem = getElement().getFirstChildElement();
+    localContainerElem.addClassName( "flex-column" );
+    localContainerElem.addClassName( "with-scroll-child" );
   }
 }
