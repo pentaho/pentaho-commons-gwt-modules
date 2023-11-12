@@ -80,7 +80,7 @@ public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener
   protected void onAttach() {
     super.onAttach();
 
-    jsToolbarController = createJsToolbarController( this, getElement() );
+    //jsToolbarController = createJsToolbarController( this, getElement() );
   }
 
   @Override
@@ -92,16 +92,6 @@ public class Toolbar extends HorizontalFlexPanel implements ToolbarPopupListener
 
     super.onDetach();
   }
-
-  private static native JavaScriptObject createJsToolbarController( Toolbar toolbar, Element container )/*-{
-    return $wnd.pho.util._a11y.makeAccessibleToolbar( container, {
-      itemSelector: ".toolbar-button-focus-panel",
-      itemFilter: function(itemElem) {
-        return toolbar.@org.pentaho.gwt.widgets.client.toolbar.Toolbar::itemFilter(Lcom/google/gwt/dom/client/Element;)( itemElem );
-      }
-    });
-  }-*/;
-
 
   private boolean itemFilter( Element element ) {
     Widget button = ElementUtils.getWidgetOfRootElement( element );
