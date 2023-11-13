@@ -25,6 +25,8 @@
     <javassist.version>3.20.0-GA</javassist.version>
     <htmlunit.version>2.19</htmlunit.version>
     <tapestry-framework.version>4.1.6</tapestry-framework.version>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <dependencies>
