@@ -9829,3 +9829,27 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 }
 
 /* endregion */
+
+/* region TemplatePicker Dialog */
+
+#templatePickerDialog .pentaho-selection-dialog-inner {
+  height: auto !important;
+}
+
+.template-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.template-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 33%;
+}
+
+.template-div div {
+  line-height: 50px;
+}
+
+/* endregion */

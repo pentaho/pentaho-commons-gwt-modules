@@ -5672,3 +5672,27 @@ for the rebranding on the Ruby theme cause a smaller impact on the other themes 
 .pentaho-page-background#pageLoading .page-loading-icon {
   margin-right: 10px;
 }
+
+/* region TemplatePicker Dialog */
+
+#templatePickerDialog .pentaho-selection-dialog-inner {
+  height: auto !important;
+}
+
+.template-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.template-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 33%;
+}
+
+.template-div div {
+  line-height: 50px;
+}
+
+/* endregion */
