@@ -100,7 +100,7 @@
    */
   --input-border-width: 1px;
   /* V-padding should be 11px. With a line-height of 17px, height equals 30px, like the normal input */
-  --input-padding-v: calc(1em * 5.5/14);
+  --input-padding-v: calc(1em * 5.5/var(--typ-body-font-size-px));
   --input-outer-height: calc(
       2 * var(--input-border-width) +
       2 * var(--input-padding-v) +
@@ -2115,6 +2115,7 @@ button#schedule-dialog-select-button {
   border-top: solid 1px transparent;
   border-left: solid 1px transparent;
   border-right: solid 1px transparent;
+  border-bottom: solid 1px #ccc;
 }
 
 /* Due to relative positioning and use of z-index, focus-ring would not appear in Firefox.
@@ -2165,6 +2166,7 @@ button#schedule-dialog-select-button {
   border-top: solid 1px #CCC;
   border-left: solid 1px #CCC;
   border-right: solid 1px #CCC;
+  border-bottom: solid 1px transparent;
   -moz-border-radius-topleft: 1px;
   -moz-border-radius-topright: 1px;
   -webkit-border-top-left-radius: 1px;
@@ -3282,7 +3284,7 @@ body.IE>table {
 .pentaho-datasourcebutton, .pentaho-deletebutton, .pentaho-editbutton,
 .pentaho-exportbutton, .pentaho-newbutton-small, .pentaho-openbutton-small,
 .pentaho-redobutton, .pentaho-saveasbutton-small, .pentaho-savebutton-small,
-.pentaho-undobutton {
+.pentaho-undobutton, .pentaho-optionsbutton {
   --icon-height: var(--icon-height-root);
   --icon-width: var(--icon-width-root);
 
@@ -3386,7 +3388,7 @@ body.IE>table {
 .pentaho-backcolorbutton, .pentaho-closebutton, .pentaho-contextmenubutton,
 .pentaho-downbutton, .pentaho-filterbutton, .pentaho-forecolorbutton,
 .pentaho-layoutbutton, .pentaho-pagebackbutton, .pentaho-pagenextbutton,
-.pentaho-optionsbutton, .pentaho-upbutton {
+.pentaho-upbutton, .treenode-open, .treenode-closed {
   --icon-height: 16;
   --icon-width: 16;
 
@@ -3479,7 +3481,6 @@ body.IE>table {
 .pentaho-pagenextbutton.pentaho-imagebutton-disabled {
   background-image: url('../images/page_forward_disabled.png');
 }
-
 .pentaho-upbutton {
   background-image: url('images/16x16-up.png');
 }
@@ -3500,45 +3501,71 @@ body.IE>table {
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
 
-  background: url('images/lg_arrow_left_on.png') no-repeat center;
+  background-image: url('images/lg_arrow_left_on.png');
+  background-position: center;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
 
 .prevTemplateIconOff, .pentaho-left-lgbutton.pentaho-imagebutton-disabled {
-  background: url('images/lg_arrow_left_off.png') no-repeat center;
+  background-image: url('images/lg_arrow_left_off.png');
+  background-position: center;
+  background-repeat: no-repeat;
   cursor: default;
 }
 
 .nextTemplateIconOn, .pentaho-right-lgbutton {
-  width: 26px;
-  height: 33px;
-  background: url('images/lg_arrow_right_on.png') no-repeat center;
+  --icon-height: 26;
+  --icon-width: 33;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/lg_arrow_right_on.png');
+  background-position: center;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
 
 .nextTemplateIconOff, .pentaho-right-lgbutton.pentaho-imagebutton-disabled {
-  background: url('images/lg_arrow_right_off.png') no-repeat center;
+  background-image: url('images/lg_arrow_right_off.png');
+  background-position: center;
+  background-repeat: no-repeat;
   cursor: default;
 }
 
 .trashcan,
 .pentaho-trashbutton {
-  width: 128px;
-  height: 150px;
-  background: url('images/trashcan.png') no-repeat center;
+  --icon-height: 150;
+  --icon-width: 128;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/trashcan.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .trashcan:hover,
 .trashcan.dojoDndContainerOver,
 .pentaho-trashbutton.pentaho-imagebutton-hover {
-  background: url('images/trashcan_full.png') no-repeat center;
+  background-image: url('images/trashcan_full.png');
+  background-position: center;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
 
 .pentaho-toolbar-separator {
-  width: 1px;
-  height: 18px;
-  background: url('../images/toolbar_separator.png') no-repeat center;
+  --icon-height: 18;
+  --icon-width: 1;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('../images/toolbar_separator.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .pentaho-table {
@@ -3580,19 +3607,13 @@ body.IE>table {
 }
 
 .treenode-open {
-  background: url('images/arrow_open.png');
-  width: 16px;
-  height: 16px;
+  background-image: url('images/arrow_open.png');
   float: left;
-  background-position: 0px 1px;
 }
 
 .treenode-closed {
-  background: url('images/arrow_closed.png');
-  width: 16px;
-  height: 16px;
+  background-image: url('images/arrow_closed.png');
   float: left;
-  background-position: 0px 1px;
 }
 
 .treenode-leaf-label {
@@ -3719,7 +3740,9 @@ body.IE>table {
 }
 
 .tundra .dijitArrowButtonInner {
-  background: url("images/arrow_down_gray.svg") no-repeat left center;
+  background-image: url("images/arrow_down_gray.svg");
+  background-position: left center;
+  background-repeat: no-repeat;
   width: 12px;
   height: 16px;
   margin: 0 0 0 4px;
@@ -3730,7 +3753,8 @@ body.IE>table {
 }
 
 #measure-properties-dialog .dijitArrowButtonInner {
-  background: url('images/arrow_down_gray.svg') no-repeat;
+  background-image: url('images/arrow_down_gray.svg');
+  background-repeat: no-repeat;
   background-size: 12px 12px;
   background-position: 1px center;
 }
@@ -4402,8 +4426,8 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-zoomable {
-  height: calc(1em * var(--icon-height)/14) !important;
-  width: calc(1em * var(--icon-width)/14) !important;
+  height: calc(1em * var(--icon-height)/var(--typ-body-font-size-px)) !important;
+  width: calc(1em * var(--icon-width)/var(--typ-body-font-size-px)) !important;
 
   background-position: center;
   background-size: contain;
@@ -4658,7 +4682,7 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .fileChooser .icon-small {
-  width: calc(1em * 22/14);
+  width: calc(1em * 22/var(--typ-body-font-size-px));
   height: auto;
   background-size: 100%;
 }
@@ -4758,11 +4782,11 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .sidePanelIconOpen {
-  background: url('images/16x16_right.png') no-repeat;
+  background-image: url('images/16x16_right.png');
 }
 
 .sidePanelIconClose {
-  background: url('images/16x16_left.png') no-repeat;
+  background-image: url('images/16x16_left.png');
 }
 
 .fileBrowserColumn .body div.folder.open > div.element > div.icon {
@@ -4831,16 +4855,16 @@ div.dijitDateTextBox.dijitComboBox {
 
 .fileBrowserColumn .body .file .icon.ktr {
   background-image: url("images/kettle_transformation.png");
-  background-position: calc(1em * 2/ 14) center;
-  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
-  width: calc(1em * 18/ 14);
+  background-position: calc(1em * 2/ var(--typ-body-font-size-px)) center;
+  background-size: calc(1em * 31/ var(--typ-body-font-size-px)) calc(1em * 15/ var(--typ-body-font-size-px));
+  width: calc(1em * 18/ var(--typ-body-font-size-px));
 }
 
 .fileBrowserColumn .body .file .icon.kjb {
   background-image: url("images/kettle_job.png");
-  background-position: calc(1em * 2/ 14) center;
-  background-size: calc(1em * 31/ 14) calc(1em * 15/ 14);
-  width: calc(1em * 18/ 14);
+  background-position: calc(1em * 2/ var(--typ-body-font-size-px)) center;
+  background-size: calc(1em * 31/ var(--typ-body-font-size-px)) calc(1em * 15/ var(--typ-body-font-size-px));
+  width: calc(1em * 18/ var(--typ-body-font-size-px));
 }
 
 .fileBrowserColumn .body .file .icon.xaction {
@@ -5158,9 +5182,9 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 #fileBrowserFolders .body .folder .element > .expandCollapse {
-  width: calc(1em * 20/14);
-  height: calc(1em * 20/14);
-  background-size: calc(1em * 40/14) calc(1em * 40/14);
+  width: calc(1em * 20/var(--typ-body-font-size-px));
+  height: calc(1em * 20/var(--typ-body-font-size-px));
+  background-size: calc(1em * 40/var(--typ-body-font-size-px)) calc(1em * 40/var(--typ-body-font-size-px));
 }
 
 .fileBrowserColumn .body .folder .element > .title {
@@ -5182,7 +5206,7 @@ div.dijitDateTextBox.dijitComboBox {
 
 #fileBrowserFolders .body .folder .icon {
   margin: 0 4px;
-  width: calc(1em * 22/14);
+  width: calc(1em * 22/var(--typ-body-font-size-px));
   height: auto;
   background-size: contain;
 }
@@ -6007,7 +6031,7 @@ td.tab-spacer-wrapper {
 }
 
 :where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) {
-  padding: calc(1em * 4/14);
+  padding: calc(1em * 4/var(--typ-body-font-size-px));
   font-size: inherit;
   flex: none;
   width: auto !important;
@@ -6035,8 +6059,8 @@ td.tab-spacer-wrapper {
 }
 
 :where(.responsive) :is(.combo-arrow, .combo-arrow-disabled) div {
-  height: calc(1em * 8/14);
-  width: calc(1em * 12/14);
+  height: calc(1em * 8/var(--typ-body-font-size-px));
+  width: calc(1em * 12/var(--typ-body-font-size-px));
   font-size: inherit;
 }
 
@@ -6937,7 +6961,7 @@ span.gwt-RadioButton label {
 .pentaho-smallremovebutton, .pentaho-expandallbutton, .pentaho-collapseallbutton,
 .penatho-smalleditbutton, .pentaho-warningbutton, .pentaho-updatebutton,
 .pentaho-smallmodelbutton, .pentaho-column, .pentaho-movearrowbutton,
-.pentaho-movearrowbackbutton {
+.pentaho-movearrowbackbutton, .sidePanelIconCommon {
   --icon-height: 16;
   --icon-width: 16;
 
@@ -7071,7 +7095,7 @@ span.gwt-RadioButton label {
   background-image: url("images/up.png");
   margin: 0 !important;
   /* 22px on 14px font */
-  width: calc(1em * 22/14);
+  width: calc(1em * 22/var(--typ-body-font-size-px));
   height: auto;
   cursor: pointer;
   background-repeat: no-repeat;
@@ -7134,6 +7158,10 @@ span.gwt-RadioButton label {
 :is(.field-panel-icon, .field-layout-icon, .pentaho-filterbutton, .auto-refresh-icon, .more-menu-icon, .show-pivot-icon, .show-chart-icon) {
   --icon-height: 22;
   --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
   background-repeat: no-repeat;
 }
 
@@ -7222,196 +7250,312 @@ span.gwt-RadioButton label {
 
 /* ---------- PIR icons ----------  */
 .tundra .dijitEditorIcon.dijitEditorIconUndo {
-  background: url('images/undo.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/undo.png');
+  background-position: initial;
 }
 
 .tundra .dijitDisabled .dijitEditorIconUndo {
-  background: url('images/undo_disable.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/undo_disable.png');
+  background-position: initial;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconRedo {
-  background: url('images/redo.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/redo.png');
+  background-position: initial;
 }
 
 .tundra .dijitDisabled .dijitEditorIconRedo {
-  background: url('images/redo-disabled.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/redo-disabled.png');
+  background-position: initial;
 }
 
 .tundra .dijitEditorIconIndent {
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
   background-image: url(images/busy_thin.gif);
   background-size: contain;
   background-position: 0;
-  height: 22px;
-  width: 22px;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconBold {
-  background: url('images/bold.png') no-repeat;
+  background-image: url('images/bold.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconBold {
-  background: url('images/bold_disabled.png') no-repeat;
+  background-image: url('images/bold_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconItalic {
-  background: url('images/italic.png') no-repeat;
+  background-image: url('images/italic.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconItalic {
-  background: url('images/italic_disabled.png') no-repeat;
+  background-image: url('images/italic_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconForeColor {
-  background: url('images/font_color.png') no-repeat;
+  background-image: url('images/font_color.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconForeColor {
-  background: url('images/font_color_disabled.png') no-repeat;
+  background-image: url('images/font_color_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconBackColor {
-  background: url('images/back_color.png') no-repeat;
+  background-image: url('images/back_color.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconBackColor {
-  background: url('images/back_color_disabled.png') no-repeat;
+  background-image: url('images/back_color_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconCopy {
-  background: url('images/copy_format.png') no-repeat;
+  background-image: url('images/copy_format.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconCopy {
-  background: url('images/copy_format_disabled.png') no-repeat;
+  background-image: url('images/copy_format_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconPaste {
-  background: url('images/paste_format.png') no-repeat;
+  background-image: url('images/paste_format.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconPaste {
-  background: url('images/paste_format_disabled.png') no-repeat;
+  background-image: url('images/paste_format_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconDelete {
-  background: url('images/remove_format.png') no-repeat;
+  background-image: url('images/remove_format.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconDelete {
-  background: url('images/remove_format_disabled.png') no-repeat;
+  background-image: url('images/remove_format_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconJustifyLeft {
-  background: url('images/align_left.png') no-repeat;
+  background-image: url('images/align_left.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled  .dijitEditorIconJustifyLeft {
-  background: url('images/align_left_disabled.png') no-repeat;
+  background-image: url('images/align_left_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconJustifyCenter {
-  background: url('images/align_center.png') no-repeat;
+  background-image: url('images/align_center.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconJustifyCenter {
-  background: url('images/align_center_disabled.png') no-repeat;
+  background-image: url('images/align_center_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconJustifyRight {
-  background: url('images/align_right.png') no-repeat;
+  background-image: url('images/align_right.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconJustifyRight {
-  background: url('images/align_right_disabled.png') no-repeat;
+  background-image: url('images/align_right_disabled.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconSelectAll {
-  background: url('images/select_all.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/select_all.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconFilter {
-  background: url('images/filter.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/filter.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconCut {
-  background: url('images/layoutpanel.png');
-  width: 22px;
-  height: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/layoutpanel.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_1 {
-  background: url("images/filter_indicators/num_filter_bg_1.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_1.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_2 {
-  background: url("images/filter_indicators/num_filter_bg_2.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_2.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_3 {
-  background: url("images/filter_indicators/num_filter_bg_3.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_3.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_4 {
-  background: url("images/filter_indicators/num_filter_bg_4.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_4.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_5 {
-  background: url("images/filter_indicators/num_filter_bg_5.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_5.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_6 {
-  background: url("images/filter_indicators/num_filter_bg_6.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_6.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_7 {
-  background: url("images/filter_indicators/num_filter_bg_7.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_7.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_8 {
-  background: url("images/filter_indicators/num_filter_bg_8.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_8.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_9 {
-  background: url("images/filter_indicators/num_filter_bg_9.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_9.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_9_plus {
-  background: url("images/filter_indicators/num_filter_bg_9p.png") no-repeat;
+  background-image: url("images/filter_indicators/num_filter_bg_9p.png");
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconIndent {
+  --icon-height: 20;
+  --icon-width: 20;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
   background-image: url("images/indicator_circle_ball_stop.png");
   background-position: 0;
-  height: 20px;
-  width: 20px;
   margin: 1px;
 }
 
 .pentaho_dijitEditorIconExport {
-  background: url('images/file_export.png') no-repeat;
-  height: 22px;
-  width: 22px;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/file_export.png');
+  background-position: initial;
+  background-repeat: no-repeat;
 }
 
 .dijitTooltipBelow .dijitTooltipConnector {
-  background: url("images/connector_top.png") no-repeat top left;
+  background-image: url("images/connector_top.png");
+  background-position: top left;
+  background-repeat: no-repeat;
   display: none;
 }
 
 .closeIcon {
-  background: url('images/closeTab_active.png') no-repeat top left;
+  background-image: url('images/closeTab_active.png');
+  background-position: top left;
+  background-repeat: no-repeat;
 }
 
 .tundra .dijitTooltipContainer .pentaho-tabWidget {
@@ -7420,64 +7564,97 @@ span.gwt-RadioButton label {
 
 .pc_pagePrev,
 .dijitToolbar .pc_pagePrev {
-  background: url('images/page_back.png') no-repeat !important;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/page_back.png') !important;
+  background-repeat: no-repeat;
   background-position: 1px 3px !important;
-  height: 22px;
-  width: 22px;
 }
 
 .pc_pagePrevDisabled,
 .dijitToolbar .pc_pagePrevDisabled {
-  background: url('images/page_back_disabled.png') no-repeat !important;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/page_back_disabled.png') !important;
+  background-repeat: no-repeat;
   background-position: 1px 3px !important;
-  height: 22px;
-  width: 22px;
 }
 
 .pc_pageNext,
 .dijitToolbar .pc_pageNext {
-  background: url('images/page_forward.png') no-repeat !important;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/page_forward.png') !important;
+  background-repeat: no-repeat;
   background-position: 1px 3px !important;
-  height: 22px;
-  width: 22px;
 }
 
 .pc_pageNextDisabled,
 .dijitToolbar .pc_pageNextDisabled {
-  background: url('images/page_forward_disabled.png') no-repeat !important;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/page_forward_disabled.png') !important;
+  background-repeat: no-repeat;
   background-position: 1px 3px !important;
-  height: 22px;
-  width: 22px;
 }
 
 .pentaho-optionsbutton {
-  background: url('images/options.png') no-repeat !important;
-  background-position: center !important;
-  height: 22px;
-  width: 22px;
-  padding: 2px;
-  border: 1px solid transparent;
+  background-image: url('images/options.png');
 }
 
 .pentaho-optionsdatasourcebutton {
-  width: 32px;
-  height: 32px;
-  background: url('images/options.png') no-repeat center;
+  --icon-height: 32;
+  --icon-width: 32;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/options.png');
+  background-repeat: no-repeat;
+  background-position: center;
   cursor: pointer;
 }
 
 .dijitEditorIconParameters,
 .dijitToolbar .dijitEditorIconParameters {
-  background: url('images/list_22x22.png') no-repeat !important;
-  height: 22px !important;
-  width: 22px !important;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/list_22x22.png') !important;
+  background-repeat: no-repeat;
+  background-position: initial !important;
 }
 
 .dijitEditorIconParameters,
 .dijitToolbar .dijitEditorIconRefresh {
-  background: url('images/refresh_report.png') no-repeat !important;
-  height: 22px !important;
-  width: 22px !important;
+  --icon-height: 22;
+  --icon-width: 22;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-image: url('images/refresh_report.png') !important;
+  background-repeat: no-repeat;
+  background-position: initial !important;
 }
 
 .tundra .dijitToolbar .dijitButtonChecked,
@@ -7588,7 +7765,12 @@ span.gwt-RadioButton label {
 }
 
 .flag {
-  background: transparent url('images/flag-right.png') no-repeat scroll top right;
+  background-image: url('images/flag-right.png');
+  background-position-x: right;
+  background-position-y: top;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-color: transparent;
 }
 
 #toppanelinner {
@@ -8092,14 +8274,14 @@ div.listbox .pentaho-listbox {
 
 #getting-started .pentaho-button {
   font-size: 14px;
-  padding-right: calc(0.5ch + (1em * 16/14) + 14px);
+  padding-right: calc(0.5ch + (1em * 16/var(--typ-body-font-size-px)) + 14px);
   padding-top: 9px;
   padding-bottom: 9px;
   background: #CC0000 url("images/open_new_window.png") no-repeat right 14px center;
   border-radius: 4px;
   width: 220px;
   color: #FFF;
-  background-size: auto calc(1em * 16/14);
+  background-size: auto calc(1em * 16/var(--typ-body-font-size-px));
   text-overflow: ellipsis;
   overflow: hidden;
 }
@@ -8677,8 +8859,8 @@ treecontrol.tree-classic li .tree-selected {
   .tree-item-collapsed,
   .leaf-widget.parent-widget
 ) > table > tbody > tr > td > img {
-  height: calc(1em * 16/14) !important;
-  width: calc(1em * 16/14) !important;
+  height: calc(1em * 16/var(--typ-body-font-size-px)) !important;
+  width: calc(1em * 16/var(--typ-body-font-size-px)) !important;
 
   background-size: contain !important;
 }
@@ -8795,7 +8977,7 @@ div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitAr
 }
 
 :where(.responsive#general-datasource-window) #deck-options-list {
-  min-height: calc(1em * 450/14);
+  min-height: calc(1em * 450/var(--typ-body-font-size-px));
 }
 
 html.bootstrap .popover {
@@ -9060,7 +9242,6 @@ input#csvSeparator {
   cursor: pointer;
   margin-bottom: 5px;
   margin-top: 5px;
-  padding: 2px 5px;
 }
 
 .sortTableCell {
@@ -9773,7 +9954,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
     width: 100%;
     background-size: contain;
     background-position: center;
-    padding-bottom: calc(1em * 10/14);
+    padding-bottom: calc(1em * 10/var(--typ-body-font-size-px));
   }
 
   #getting-started div.card.selected {
@@ -9799,7 +9980,7 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 
   /* targets the tabs in the getting started */
   .bootstrap .widget-panel#getting-started ul.nav-tabs > li > a:link {
-    padding: calc(1em * 6 / 14);
+    padding: calc(1em * 6 / var(--typ-body-font-size-px));
   }
 
   /* targets the samples and tutorials tab in the getting started */
