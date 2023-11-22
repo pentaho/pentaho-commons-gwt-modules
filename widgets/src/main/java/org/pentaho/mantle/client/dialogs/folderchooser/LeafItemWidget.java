@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -24,8 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
 
 /**
- * @author wseyler
- * 
+ * Used on leaf folder nodes, so that these do not show the expand/collapse arrow icon.
  */
 public class LeafItemWidget extends Composite {
   Image leafImage;
@@ -35,7 +34,8 @@ public class LeafItemWidget extends Composite {
     HorizontalPanel widget = new HorizontalPanel();
     initWidget( widget );
 
-    leafImage = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" ); //ImageUtil.getThemeableImage( styleName );
+    leafImage =
+      new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
     for ( String style : styleName ) {
       leafImage.addStyleName( style );
     }

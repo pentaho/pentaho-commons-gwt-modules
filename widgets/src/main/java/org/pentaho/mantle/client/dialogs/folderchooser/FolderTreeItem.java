@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -20,15 +20,16 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class FolderTreeItem extends TreeItem {
-  public String fileName;
-  public String url;
-  private RepositoryFile repositoryFile;
-
   public FolderTreeItem() {
-    super();
   }
 
   public FolderTreeItem( Widget widget ) {
@@ -43,27 +44,76 @@ public class FolderTreeItem extends TreeItem {
     getElement().setId( string );
   }
 
+
+  @Override
+  public GenericFileTree getUserObject() {
+    return (GenericFileTree) super.getUserObject();
+  }
+
+  @Override
+  public void setUserObject( Object userObject ) {
+    if ( !( userObject instanceof GenericFileTree ) ) {
+      throw new IllegalArgumentException( "Must be an instance of " + GenericFileTree.class.getSimpleName() );
+    }
+
+    super.setUserObject( userObject );
+  }
+
+  public GenericFileTree getFileTreeModel() {
+    return getUserObject();
+  }
+
+  public void setFileTreeModel( GenericFileTree fileTreeModel ) {
+    setUserObject( fileTreeModel );
+  }
+
   public String getFileName() {
-    return fileName;
+    GenericFile fileModel = getFileModel();
+    return fileModel != null ? fileModel.getName() : null;
   }
 
-  public void setFileName( String fileName ) {
-    this.fileName = fileName;
+  public GenericFile getFileModel() {
+    GenericFileTree fileTreeModel = getFileTreeModel();
+    return fileTreeModel != null ? fileTreeModel.getFile() : null;
   }
 
-  public String getURL() {
-    return url;
+  @NonNull
+  public Iterable<FolderTreeItem> getChildItems() {
+    return new FolderTreeItemIterable( this );
   }
 
-  public void setURL( String url ) {
-    this.url = url;
-  }
+  private static class FolderTreeItemIterable implements Iterable<FolderTreeItem> {
+    @NonNull
+    private final TreeItem parentTreeItem;
 
-  public RepositoryFile getRepositoryFile() {
-    return this.repositoryFile;
-  }
+    public FolderTreeItemIterable( @NonNull TreeItem parentTreeItem ) {
+      Objects.requireNonNull( parentTreeItem );
+      this.parentTreeItem = parentTreeItem;
+    }
 
-  public void setRepositoryFile( RepositoryFile repositoryFile ) {
-    this.repositoryFile = repositoryFile;
+    @Override @NonNull
+    public Iterator<FolderTreeItem> iterator() {
+      return new FolderTreeItemIterator();
+    }
+
+    private class FolderTreeItemIterator implements Iterator<FolderTreeItem> {
+      private int index;
+
+      public FolderTreeItemIterator() {
+        this.index = 0;
+      }
+
+      public boolean hasNext() {
+        return index < FolderTreeItemIterable.this.parentTreeItem.getChildCount();
+      }
+
+      public FolderTreeItem next() {
+        if ( index >= FolderTreeItemIterable.this.parentTreeItem.getChildCount() ) {
+          throw new NoSuchElementException();
+        }
+
+        return (FolderTreeItem) FolderTreeItemIterable.this.parentTreeItem.getChild( index++ );
+      }
+    }
   }
 }
