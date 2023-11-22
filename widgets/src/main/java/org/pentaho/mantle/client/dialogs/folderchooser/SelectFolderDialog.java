@@ -44,7 +44,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     public SelectFolderDialog localThis;
 
     public MySolutionTree() {
-      super( false );
+      super();
       super.setScrollOnSelectEnabled( false );
     }
 

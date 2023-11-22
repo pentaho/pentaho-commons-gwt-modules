@@ -64,16 +64,13 @@ public class FolderTree extends Tree {
   private boolean createRootNode = false;
   private boolean useDescriptionsForTooltip = false;
   public RepositoryFileTree repositoryFileTree;
-  public List<RepositoryFile> trashItems;
-  public FolderTreeItem trashItem;
-
   private TreeItem selectedItem = null;
   private String selectedPath = null;
   private static String homeFolder = null;
 
   private FocusPanel focusable = new FocusPanel();
 
-  public FolderTree( boolean showTrash ) {
+  public FolderTree() {
     super();
 
     setAnimationEnabled( true );
@@ -135,54 +132,22 @@ public class FolderTree extends Tree {
 
       public void onResponseReceived( Request request, Response response ) {
         if ( response.getStatusCode() == Response.SC_OK ) {
-          String json = response.getText();
-          System.out.println( json );
-
           final JsonToRepositoryFileTreeConverter converter =
-              new JsonToRepositoryFileTreeConverter( response.getText() );
+            new JsonToRepositoryFileTreeConverter( response.getText() );
           final RepositoryFileTree fileTree = converter.getTree();
 
-          String deletedFilesUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/deleted?ts=" + System.currentTimeMillis();
-          RequestBuilder deletedFilesRequestBuilder = new RequestBuilder( RequestBuilder.GET, deletedFilesUrl );
-          deletedFilesRequestBuilder.setHeader( "Accept", "application/json" );
-          deletedFilesRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-          try {
-            deletedFilesRequestBuilder.sendRequest( null, new RequestCallback() {
-
-              public void onError( Request request, Throwable exception ) {
-                onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
-                Window.alert( exception.toString() );
-              }
-
-              public void onResponseReceived( Request delRequest, Response delResponse ) {
-                if ( delResponse.getStatusCode() == Response.SC_OK ) {
-                  try {
-                    trashItems = JsonToRepositoryFileTreeConverter.getTrashFiles( delResponse.getText() );
-                  } catch ( Throwable t ) {
-                    // apparently this happens when you have no trash
-                  }
-                  onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
-                } else {
-                  onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
-                }
-                if ( callback != null ) {
-                  callback.onSuccess( fileTree );
-                }
-              }
-
-            } );
-          } catch ( Exception e ) {
-            onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
+          onFetchRepositoryFileTree( fileTree );
+          if ( callback != null ) {
+            callback.onSuccess( fileTree );
           }
         }
       }
-
     };
+
     try {
       builder.sendRequest( null, innerCallback );
     } catch ( RequestException e ) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      Window.alert( e.toString() );
     }
   }
 
@@ -257,13 +222,6 @@ public class FolderTree extends Tree {
   protected void onLoad() {
     super.onLoad();
     fixLeafNodes();
-    if ( trashItem != null ) {
-      try {
-        DOM.setStyleAttribute( trashItem.getElement(), "paddingLeft", "0px" ); //$NON-NLS-1$//$NON-NLS-2$
-      } catch ( NullPointerException e ) {
-        // This is sometimes thrown because the dom does not yet contain the trash items or the leaf nodes.
-      }
-    }
   }
 
   public void beforeFetchRepositoryFileTree() {
@@ -276,14 +234,14 @@ public class FolderTree extends Tree {
     WaitPopup.getInstance().setVisible( false );
   }
 
-  public void onFetchRepositoryFileTree( RepositoryFileTree fileTree, List<RepositoryFile> repositoryTrashItems ) {
+  public void onFetchRepositoryFileTree( RepositoryFileTree fileTree ) {
 
     if ( fileTree == null ) {
       WaitPopup.getInstance().setVisible( false );
       return;
     }
     repositoryFileTree = fileTree;
-    trashItems = repositoryTrashItems;
+
     // remember selectedItem, so we can reselect it after the tree is loaded
     clear();
     // get document root item
@@ -372,14 +330,6 @@ public class FolderTree extends Tree {
       nodeList.add( child );
       getAllNodes( child, nodeList );
     }
-  }
-
-  public FolderTreeItem getTrashItem() {
-    return trashItem;
-  }
-
-  public List<RepositoryFile> getTrashItems() {
-    return trashItems;
   }
 
   public void setSelectedPath( String path ) {
@@ -667,7 +617,7 @@ public class FolderTree extends Tree {
 
   public void setUseDescriptionsForTooltip( boolean useDescriptionsForTooltip ) {
     this.useDescriptionsForTooltip = useDescriptionsForTooltip;
-    onFetchRepositoryFileTree( repositoryFileTree, trashItems );
+    onFetchRepositoryFileTree( repositoryFileTree );
   }
 
   public boolean isCreateRootNode() {
