@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -20,12 +20,12 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
 
 public class FolderTreeItem extends TreeItem {
   public String fileName;
   public String url;
-  private RepositoryFile repositoryFile;
+  private GenericFile fileModel;
 
   public FolderTreeItem() {
     super();
@@ -59,11 +59,11 @@ public class FolderTreeItem extends TreeItem {
     this.url = url;
   }
 
-  public RepositoryFile getRepositoryFile() {
-    return this.repositoryFile;
+  public GenericFile getFileModel() {
+    return this.fileModel;
   }
 
-  public void setRepositoryFile( RepositoryFile repositoryFile ) {
-    this.repositoryFile = repositoryFile;
+  public void setFileModel( GenericFile fileModel ) {
+    this.fileModel = fileModel;
   }
 }

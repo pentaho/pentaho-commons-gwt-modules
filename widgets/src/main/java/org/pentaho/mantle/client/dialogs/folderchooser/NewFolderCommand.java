@@ -12,21 +12,10 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2021 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
-
-import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
-import org.pentaho.gwt.widgets.client.filechooser.FileChooserDialog;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.utils.NameUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-import org.pentaho.mantle.client.commands.AbstractCommand;
-import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -37,21 +26,31 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.filechooser.FileChooserDialog;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileNameUtils;
+import org.pentaho.gwt.widgets.client.ui.ICallback;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
+import org.pentaho.mantle.client.messages.Messages;
 
 public class NewFolderCommand extends AbstractCommand {
   private static final String ERROR = "error";
   private String solutionPath = null;
   private String contextURL = EnvironmentHelper.getFullyQualifiedURL();
 
-  private RepositoryFile parentFolder;
+  private GenericFile parentFolder;
 
   private ICallback<String> callback;
 
   public NewFolderCommand() {
   }
 
-  public NewFolderCommand( RepositoryFile parentFolder ) {
+  public NewFolderCommand( GenericFile parentFolder ) {
     this.parentFolder = parentFolder;
   }
 
@@ -76,8 +75,9 @@ public class NewFolderCommand extends AbstractCommand {
     vp.add( new Label( Messages.getString( "newFolderName" ) ) );
     vp.add( folderNameTextBox );
     final PromptDialogBox newFolderDialog =
-        new PromptDialogBox(
-            Messages.getString( "newFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ), false, true, vp );
+      new PromptDialogBox(
+        Messages.getString( "newFolder" ), Messages.getString( "ok" ), Messages.getString( "cancel" ), false, true,
+        vp );
 
     final IDialogCallback callback = new IDialogCallback() {
 
@@ -86,30 +86,34 @@ public class NewFolderCommand extends AbstractCommand {
       }
 
       public void okPressed() {
-        if ( !NameUtils.isValidFolderName( folderNameTextBox.getText() ) ) {
+
+        // TODO: validate name on the server as part of create?
+        if ( !GenericFileNameUtils.isValidFolderName( folderNameTextBox.getText() ) ) {
           MessageDialogBox dialogBox =
-              new MessageDialogBox(
-                  Messages.getString( ERROR ), Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ),
-                  false, false, true );
+            new MessageDialogBox(
+              Messages.getString( ERROR ),
+              Messages.getString( "containsIllegalCharacters", folderNameTextBox.getText() ),
+              false, false, true );
           dialogBox.center();
           return;
         }
 
-        solutionPath = parentFolder.getPath() + "/" + folderNameTextBox.getText();
+        solutionPath = GenericFileNameUtils.buildPath( parentFolder.getPath(), folderNameTextBox.getText() );
 
-        String createDirUrl = contextURL + "api/repo/dirs/" + pathToId( solutionPath );
+        String createDirUrl = contextURL + "plugin/scheduler-plugin/api/generic-files/create";
         RequestBuilder createDirRequestBuilder = new RequestBuilder( RequestBuilder.PUT, createDirUrl );
 
         try {
           createDirRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-          createDirRequestBuilder.sendRequest( "", new RequestCallback() {
+          createDirRequestBuilder.sendRequest( GenericFileNameUtils.encodePath( solutionPath ), new RequestCallback() {
 
             @Override
             public void onError( Request createFolderRequest, Throwable exception ) {
               MessageDialogBox dialogBox =
-                  new MessageDialogBox(
-                      Messages.getString( ERROR ), Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ),
-                      false, false, true );
+                new MessageDialogBox(
+                  Messages.getString( ERROR ),
+                  Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() ),
+                  false, false, true );
               dialogBox.center();
             }
 
@@ -117,16 +121,17 @@ public class NewFolderCommand extends AbstractCommand {
             public void onResponseReceived( Request createFolderRequest, Response createFolderResponse ) {
               if ( createFolderResponse.getStatusCode() == 200 ) {
                 NewFolderCommand.this.callback.onHandle( solutionPath );
+
                 FileChooserDialog.setIsDirty( Boolean.TRUE );
                 setBrowseRepoDirty( Boolean.TRUE );
               } else {
                 String errorMessage = StringUtils.isEmpty( createFolderResponse.getText() )
-                    || Messages.getString( createFolderResponse.getText() ) == null
-                    ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() )
-                    : Messages.getString( createFolderResponse.getText(), folderNameTextBox.getText() );
+                  || Messages.getString( createFolderResponse.getText() ) == null
+                  ? Messages.getString( "couldNotCreateFolder", folderNameTextBox.getText() )
+                  : Messages.getString( createFolderResponse.getText(), folderNameTextBox.getText() );
                 MessageDialogBox dialogBox =
-                    new MessageDialogBox(
-                        Messages.getString( ERROR ), errorMessage, false, false, true );
+                  new MessageDialogBox(
+                    Messages.getString( ERROR ), errorMessage, false, false, true );
                 dialogBox.center();
               }
             }
@@ -142,11 +147,6 @@ public class NewFolderCommand extends AbstractCommand {
     newFolderDialog.center();
   }
 
-  @SuppressWarnings( "nls" )
-  public static String pathToId( String path ) {
-    String id = NameUtils.encodeRepositoryPath( path );
-    return NameUtils.URLEncode( id );
-  }
   public ICallback<String> getCallback() {
     return callback;
   }
@@ -155,9 +155,7 @@ public class NewFolderCommand extends AbstractCommand {
     this.callback = callback;
   }
 
-  private static native void setBrowseRepoDirty( boolean isDirty )
-  /*-{
-    $wnd.mantle_isBrowseRepoDirty=isDirty;
+  private static native void setBrowseRepoDirty( boolean isDirty ) /*-{
+    $wnd.mantle_isBrowseRepoDirty = isDirty;
   }-*/;
-
 }

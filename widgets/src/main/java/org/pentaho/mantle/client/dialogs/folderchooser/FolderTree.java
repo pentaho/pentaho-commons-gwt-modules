@@ -19,13 +19,12 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import org.pentaho.gwt.widgets.client.filechooser.JsonToRepositoryFileTreeConverter;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
-import org.pentaho.gwt.widgets.client.filechooser.TreeItemComparator;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeComparator;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeJsonParser;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -63,7 +62,7 @@ public class FolderTree extends Tree {
   private boolean showHiddenFiles = false;
   private boolean createRootNode = false;
   private boolean useDescriptionsForTooltip = false;
-  public RepositoryFileTree repositoryFileTree;
+  public GenericFileTree fileTreeModel;
   private TreeItem selectedItem = null;
   private String selectedPath = null;
   private static String homeFolder = null;
@@ -97,17 +96,19 @@ public class FolderTree extends Tree {
     this.addOpenHandler( this::handleOpen );
     this.addCloseHandler( this::handleClose );
 
-    beforeFetchRepositoryFileTree();
-    fetchRepositoryFileTree( null, null, null, showHiddenFiles );
+    onModelFetching();
+    fetchModel( null, null, null, showHiddenFiles );
   }
 
-  public void fetchRepositoryFileTree( final AsyncCallback<RepositoryFileTree> callback, Integer depth, String filter,
-      Boolean showHidden ) {
+  public void fetchModel( final AsyncCallback<GenericFileTree> callback, Integer depth, String filter,
+                          Boolean showHidden ) {
     // notify listeners that we are about to talk to the server (in case there's anything they want to do
     // such as busy cursor or tree loading indicators)
-    beforeFetchRepositoryFileTree();
+    onModelFetching();
+
     RequestBuilder builder = null;
-    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/:/tree?"; //$NON-NLS-1$
+    String url = EnvironmentHelper.getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folderTree?";
+
     if ( depth == null ) {
       depth = -1;
     }
@@ -119,7 +120,7 @@ public class FolderTree extends Tree {
     }
     url =
         url
-            + "depth=" + depth + "&filter=" + filter + "&showHidden=" + showHidden + "&ts=" + System.currentTimeMillis(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            + "depth=" + depth + "&filter=" + filter + "&showHidden=" + showHidden + "&ts=" + System.currentTimeMillis();
     builder = new RequestBuilder( RequestBuilder.GET, url );
     builder.setHeader( "Accept", "application/json" );
     builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
@@ -132,13 +133,12 @@ public class FolderTree extends Tree {
 
       public void onResponseReceived( Request request, Response response ) {
         if ( response.getStatusCode() == Response.SC_OK ) {
-          final JsonToRepositoryFileTreeConverter converter =
-            new JsonToRepositoryFileTreeConverter( response.getText() );
-          final RepositoryFileTree fileTree = converter.getTree();
+          final GenericFileTreeJsonParser parser = new GenericFileTreeJsonParser( response.getText() );
+          final GenericFileTree fileTreeModel = parser.getTree();
 
-          onFetchRepositoryFileTree( fileTree );
+          onModelFetched( fileTreeModel );
           if ( callback != null ) {
-            callback.onSuccess( fileTree );
+            callback.onSuccess( fileTreeModel );
           }
         }
       }
@@ -224,7 +224,7 @@ public class FolderTree extends Tree {
     fixLeafNodes();
   }
 
-  public void beforeFetchRepositoryFileTree() {
+  public void onModelFetching() {
     WaitPopup.getInstance().setVisible( true );
     if ( getSelectedItem() != null ) {
       selectedItem = getSelectedItem();
@@ -234,50 +234,42 @@ public class FolderTree extends Tree {
     WaitPopup.getInstance().setVisible( false );
   }
 
-  public void onFetchRepositoryFileTree( RepositoryFileTree fileTree ) {
+  public void onModelFetched( GenericFileTree fileTreeModel ) {
 
-    if ( fileTree == null ) {
+    if ( fileTreeModel == null ) {
       WaitPopup.getInstance().setVisible( false );
       return;
     }
-    repositoryFileTree = fileTree;
+
+    this.fileTreeModel = fileTreeModel;
 
     // remember selectedItem, so we can reselect it after the tree is loaded
     clear();
     // get document root item
-    RepositoryFile rootRepositoryFile = repositoryFileTree.getFile();
-    if ( !rootRepositoryFile.isHidden() || isShowHiddenFiles() ) {
+    GenericFile fileModel = this.fileTreeModel.getFile();
+    if ( !fileModel.isHidden() || isShowHiddenFiles() ) {
       FolderTreeItem rootItem = null;
       if ( createRootNode ) {
         rootItem = new FolderTreeItem();
-        rootItem.setText( rootRepositoryFile.getPath() );
-        rootItem.setTitle( rootRepositoryFile.getPath() );
-        rootItem.getElement().setId( rootRepositoryFile.getPath() );
+        rootItem.setText( fileModel.getPath() );
+        rootItem.setTitle( fileModel.getPath() );
+        rootItem.getElement().setId( fileModel.getPath() );
         // added so we can traverse the true names
         rootItem.setFileName( "/" ); //$NON-NLS-1$
-        rootItem.setRepositoryFile( rootRepositoryFile );
+        rootItem.setFileModel( fileModel );
         addItem( rootItem );
-        buildSolutionTree( rootItem, repositoryFileTree );
+        buildSolutionTree( rootItem, this.fileTreeModel );
       } else {
-        buildSolutionTree( null, repositoryFileTree );
-        // sort the root elements
-        ArrayList<TreeItem> roots = new ArrayList<TreeItem>();
-        for ( int i = 0; i < getItemCount(); i++ ) {
-          roots.add( getItem( i ) );
-        }
-        Collections.sort( roots, new TreeItemComparator() ); // BISERVER-9599 - Custom Sort
-        clear();
-        for ( TreeItem myRootItem : roots ) {
-          addItem( myRootItem );
-        }
+        buildSolutionTree( null, this.fileTreeModel );
       }
     }
+
     fixLeafNodes();
 
     if ( selectedPath != null ) {
       select( selectedPath );
     } else if ( selectedItem != null ) {
-      ArrayList<TreeItem> parents = new ArrayList<TreeItem>();
+      ArrayList<TreeItem> parents = new ArrayList<>();
       while ( selectedItem != null ) {
         parents.add( selectedItem );
         selectedItem = selectedItem.getParentItem();
@@ -300,7 +292,7 @@ public class FolderTree extends Tree {
     for ( FolderTreeItem treeItem : allNodes ) {
       LeafItemWidget leafWidget;
       String itemText = treeItem.getText();
-      RepositoryFileTree userObject = (RepositoryFileTree) treeItem.getUserObject();
+      GenericFileTree userObject = (GenericFileTree) treeItem.getUserObject();
 
       if (userObject != null && userObject.getChildren().isEmpty()) {
         leafWidget = new LeafItemWidget(
@@ -458,8 +450,8 @@ public class FolderTree extends Tree {
     if ( selectedItem != null ) {
       Widget treeItemWidget = selectedItem.getWidget();
       if ( selectedItem instanceof FolderTreeItem ) {
-        RepositoryFile repositoryFile = ( (FolderTreeItem) selectedItem ).getRepositoryFile();
-        if ( repositoryFile != null && repositoryFile.isHidden() && !isShowHiddenFiles() ) {
+        GenericFile fileModel = ( (FolderTreeItem) selectedItem ).getFileModel();
+        if ( fileModel != null && fileModel.isHidden() && !isShowHiddenFiles() ) {
           if ( treeItemWidget instanceof LeafItemWidget ) {
             treeItemWidget.getParent().removeStyleName( HIDDEN_STYLE_NAME );
             treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
@@ -497,38 +489,31 @@ public class FolderTree extends Tree {
     event.getTarget().removeStyleName( OPEN_STYLE_NAME );
   }
 
-  private void buildSolutionTree( FolderTreeItem parentTreeItem, RepositoryFileTree repositoryFileTree ) {
-    List<RepositoryFileTree> children = repositoryFileTree.getChildren();
+  private void buildSolutionTree( FolderTreeItem treeItem, GenericFileTree treeModel ) {
+    List<GenericFileTree> childTreeModels = treeModel.getChildren();
 
     // BISERVER-9599 - Custom Sort
-    Collections.sort( children, new Comparator<RepositoryFileTree>() {
-      @Override
-      public int compare( RepositoryFileTree repositoryFileTree, RepositoryFileTree repositoryFileTree2 ) {
-        return ( new TreeItemComparator() ).compare( repositoryFileTree.getFile().getTitle(), repositoryFileTree2
-            .getFile().getTitle() );
-      }
-    } );
+    Collections.sort( childTreeModels, new GenericFileTreeComparator( showLocalizedFileNames ) );
 
-    for ( RepositoryFileTree treeItem : children ) {
-      RepositoryFile file = treeItem.getFile();
-      boolean isDirectory = file.isFolder();
-      String fileName = file.getName();
-      if ( ( !file.isHidden() || isShowHiddenFiles() ) && !StringUtils.isEmpty( fileName ) ) {
+    for ( GenericFileTree childTreeModel : childTreeModels ) {
+      GenericFile childFileModel = childTreeModel.getFile();
+      boolean isDirectory = childFileModel.isFolder();
+      String fileName = childFileModel.getName();
+      if ( ( !childFileModel.isHidden() || isShowHiddenFiles() ) && !StringUtils.isEmpty( fileName ) ) {
 
-        // TODO Mapping Title to LocalizedName
-        String localizedName = file.getTitle();
-        String description = file.getDescription();
+        String title = childFileModel.getTitleOrName();
+        String description = childFileModel.getDescription();
         FolderTreeItem childTreeItem = new FolderTreeItem();
         childTreeItem.setStylePrimaryName( "leaf-widget" );
-        childTreeItem.getElement().setAttribute( "id", file.getPath() ); //$NON-NLS-1$
-        childTreeItem.setUserObject( treeItem );
-        childTreeItem.setRepositoryFile( file );
-        if ( file.isHidden() && file.isFolder() ) {
+        childTreeItem.getElement().setAttribute( "id", childFileModel.getPath() ); //$NON-NLS-1$
+        childTreeItem.setUserObject( childTreeModel );
+        childTreeItem.setFileModel( childFileModel );
+        if ( childFileModel.isHidden() && childFileModel.isFolder() ) {
           childTreeItem.addStyleDependentName( HIDDEN_STYLE_NAME );
         }
 
-        if ( treeItem != null && treeItem.getChildren() != null ) {
-          for ( RepositoryFileTree childItem : treeItem.getChildren() ) {
+        if ( childTreeModel != null && childTreeModel.getChildren() != null ) {
+          for ( GenericFileTree childItem : childTreeModel.getChildren() ) {
             if ( childItem.getFile().isFolder() ) {
               childTreeItem.addStyleName( "parent-widget" );
               break;
@@ -539,7 +524,7 @@ public class FolderTree extends Tree {
         ElementUtils.killAllTextSelection( childTreeItem.getElement() );
         childTreeItem.setURL( fileName );
         if ( showLocalizedFileNames ) {
-          childTreeItem.setText( localizedName );
+          childTreeItem.setText( title );
           if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
             childTreeItem.setTitle( description );
           } else {
@@ -550,14 +535,14 @@ public class FolderTree extends Tree {
           if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
             childTreeItem.setTitle( description );
           } else {
-            childTreeItem.setTitle( localizedName );
+            childTreeItem.setTitle( title );
           }
         }
         childTreeItem.setFileName( fileName );
-        if ( parentTreeItem == null && isDirectory ) {
+        if ( treeItem == null && isDirectory ) {
           addItem( childTreeItem );
         } else {
-          parentTreeItem.addItem( childTreeItem );
+          treeItem.addItem( childTreeItem );
         }
         FolderTreeItem tmpParent = childTreeItem;
         String pathToChild = tmpParent.getFileName();
@@ -566,15 +551,15 @@ public class FolderTree extends Tree {
           pathToChild = tmpParent.getFileName() + "/" + pathToChild; //$NON-NLS-1$
         }
         /*
-         * TODO Not sure what to do here if (parentTreeItem != null) { ArrayList<FileChooserRepositoryFile> files =
-         * (ArrayList<FileChooserRepositoryFile>) parentTreeItem.getUserObject(); if (files == null) { files = new
-         * ArrayList<FileChooserRepositoryFile>(); parentTreeItem.setUserObject(files); } files.add(file); }
+         * TODO Not sure what to do here if (treeItem != null) { ArrayList<FileChooserRepositoryFile> files =
+         * (ArrayList<FileChooserRepositoryFile>) treeItem.getUserObject(); if (files == null) { files = new
+         * ArrayList<FileChooserRepositoryFile>(); treeItem.setUserObject(files); } files.add(file); }
          */
         if ( isDirectory ) {
-          buildSolutionTree( childTreeItem, treeItem );
+          buildSolutionTree( childTreeItem, childTreeModel );
         } else {
-          if ( parentTreeItem != null ) {
-            parentTreeItem.removeItem( childTreeItem );
+          if ( treeItem != null ) {
+            treeItem.removeItem( childTreeItem );
           }
         }
       }
@@ -617,17 +602,17 @@ public class FolderTree extends Tree {
 
   public void setUseDescriptionsForTooltip( boolean useDescriptionsForTooltip ) {
     this.useDescriptionsForTooltip = useDescriptionsForTooltip;
-    onFetchRepositoryFileTree( repositoryFileTree );
+    onModelFetched( fileTreeModel );
   }
 
   public boolean isCreateRootNode() {
     return createRootNode;
   }
 
-  public List<RepositoryFile> getRepositoryFiles() {
+  public List<GenericFile> getFiles() {
     final FolderTreeItem selectedTreeItem = (FolderTreeItem) getSelectedItem();
-    List<RepositoryFile> values = new ArrayList<RepositoryFile>();
-    values.add( ( (RepositoryFileTree) selectedTreeItem.getUserObject() ).getFile() );
+    List<GenericFile> values = new ArrayList<>();
+    values.add( ( (GenericFileTree) selectedTreeItem.getUserObject() ).getFile() );
     return values;
   }
 

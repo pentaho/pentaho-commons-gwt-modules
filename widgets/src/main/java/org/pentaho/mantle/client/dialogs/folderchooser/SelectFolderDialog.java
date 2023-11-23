@@ -12,29 +12,28 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
-
-import com.google.gwt.user.client.ui.SimplePanel;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
-import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
-import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
-import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
-import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
-import org.pentaho.mantle.client.messages.Messages;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
+import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
+import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
+import org.pentaho.mantle.client.messages.Messages;
 
 import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
 
@@ -94,7 +93,8 @@ public class SelectFolderDialog extends PromptDialogBox {
     bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
     bar.add( Toolbar.GLUE );
 
-    Image image = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
+    Image image =
+      new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
     image.addStyleName( "icon-small" );
     image.addStyleName( "icon-zoomable" );
     image.addStyleName( "pentaho-addbutton" );
@@ -102,12 +102,12 @@ public class SelectFolderDialog extends PromptDialogBox {
     ToolbarButton add = new ToolbarButton( image );
     add.setToolTip( Messages.getString( "createNewFolder" ) );
     add.setCommand( () -> {
-      RepositoryFile repositoryFile = ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile();
-      final NewFolderCommand newFolderCommand = new NewFolderCommand( repositoryFile );
+      GenericFile fileModel = ( (FolderTreeItem) tree.getSelectedItem() ).getFileModel();
+      final NewFolderCommand newFolderCommand = new NewFolderCommand( fileModel );
 
-      newFolderCommand.setCallback( path -> tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
+      newFolderCommand.setCallback( path -> tree.fetchModel( new AsyncCallback<GenericFileTree>() {
         @Override
-        public void onSuccess( RepositoryFileTree result ) {
+        public void onSuccess( GenericFileTree fileTreeModel ) {
           tree.select( path );
         }
 
@@ -127,7 +127,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     content.add( treeWrapper );
 
     setContent( content );
-    fetchRepository( getSelectedPath() );
+    fetchModel( getSelectedPath() );
 
     TreeItem selItem = tree.getSelectedItem();
     if ( selItem != null ) {
@@ -141,22 +141,26 @@ public class SelectFolderDialog extends PromptDialogBox {
 
   public String getSelectedPath() {
     final FolderTreeItem selectedItem = (FolderTreeItem) tree.getSelectedItem();
-    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : defaultSelectedPath;
+    return selectedItem != null ? selectedItem.getFileModel().getPath() : defaultSelectedPath;
   }
 
-  private void fetchRepository( final String selectedPath ) {
+  private void fetchModel( final String selectedPath ) {
 
-    tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
+    tree.fetchModel( new AsyncCallback<GenericFileTree>() {
 
       @Override
-      public void onSuccess( RepositoryFileTree result ) {
+      public void onSuccess( GenericFileTree fileTreeModel ) {
         tree.select( selectedPath );
       }
 
       @Override
       public void onFailure( Throwable caught ) {
-        MessageDialogBox dialogBox =
-                new MessageDialogBox( Messages.getString( "error" ), Messages.getString( "refreshRepository" ), false, false, true );
+        MessageDialogBox dialogBox = new MessageDialogBox(
+          Messages.getString( "error" ),
+          Messages.getString( "refreshRepository" ),
+          false,
+          false,
+          true );
         dialogBox.center();
       }
     }, null, null, false );
