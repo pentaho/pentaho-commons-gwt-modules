@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gwt.user.client.ui.HasTreeItems;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeComparator;
@@ -113,7 +115,7 @@ public class FolderTree extends Tree {
       depth = -1;
     }
     if ( filter == null ) {
-      filter = "*"; //$NON-NLS-1$
+      filter = "*";
     }
     if ( showHidden == null ) {
       showHidden = Boolean.FALSE;
@@ -169,7 +171,7 @@ public class FolderTree extends Tree {
           int[] scrollOffsets = ElementUtils.calculateScrollOffsets( getElement() );
           int[] offsets = ElementUtils.calculateOffsets( getElement() );
           DOM.setStyleAttribute( focusable.getElement(),
-              "top", ( event.getClientY() + scrollOffsets[1] - offsets[1] ) + "px" ); //$NON-NLS-1$ //$NON-NLS-2$
+              "top", ( event.getClientY() + scrollOffsets[1] - offsets[1] ) + "px" );  //$NON-NLS-2$
         } catch ( Exception ignored ) {
           // ignore any exceptions fired by this. Most likely a result of the element
           // not being on the DOM
@@ -230,7 +232,7 @@ public class FolderTree extends Tree {
       selectedItem = getSelectedItem();
     }
     clear();
-    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) ); //$NON-NLS-1$
+    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) );
     WaitPopup.getInstance().setVisible( false );
   }
 
@@ -255,12 +257,12 @@ public class FolderTree extends Tree {
         rootItem.setTitle( fileModel.getPath() );
         rootItem.getElement().setId( fileModel.getPath() );
         // added so we can traverse the true names
-        rootItem.setFileName( "/" ); //$NON-NLS-1$
+        rootItem.setFileName( "/" );
         rootItem.setFileModel( fileModel );
         addItem( rootItem );
         buildSolutionTree( rootItem, this.fileTreeModel );
       } else {
-        buildSolutionTree( null, this.fileTreeModel );
+        buildSolutionTree( this, this.fileTreeModel );
       }
     }
 
@@ -489,7 +491,7 @@ public class FolderTree extends Tree {
     event.getTarget().removeStyleName( OPEN_STYLE_NAME );
   }
 
-  private void buildSolutionTree( FolderTreeItem treeItem, GenericFileTree treeModel ) {
+  private void buildSolutionTree( @NonNull HasTreeItems treeItem, @NonNull GenericFileTree treeModel ) {
     List<GenericFileTree> childTreeModels = treeModel.getChildren();
 
     // BISERVER-9599 - Custom Sort
@@ -497,73 +499,66 @@ public class FolderTree extends Tree {
 
     for ( GenericFileTree childTreeModel : childTreeModels ) {
       GenericFile childFileModel = childTreeModel.getFile();
-      boolean isDirectory = childFileModel.isFolder();
-      String fileName = childFileModel.getName();
-      if ( ( !childFileModel.isHidden() || isShowHiddenFiles() ) && !StringUtils.isEmpty( fileName ) ) {
 
-        String title = childFileModel.getTitleOrName();
-        String description = childFileModel.getDescription();
-        FolderTreeItem childTreeItem = new FolderTreeItem();
-        childTreeItem.setStylePrimaryName( "leaf-widget" );
-        childTreeItem.getElement().setAttribute( "id", childFileModel.getPath() ); //$NON-NLS-1$
-        childTreeItem.setUserObject( childTreeModel );
-        childTreeItem.setFileModel( childFileModel );
-        if ( childFileModel.isHidden() && childFileModel.isFolder() ) {
-          childTreeItem.addStyleDependentName( HIDDEN_STYLE_NAME );
-        }
+      if ( ( !childFileModel.isHidden() || isShowHiddenFiles() )
+        && !StringUtils.isEmpty( childFileModel.getName() )
+        && ( childFileModel.isFolder() ) ) {
+          FolderTreeItem childTreeItem = buildFolderTreeItem( childTreeModel );
 
-        if ( childTreeModel != null && childTreeModel.getChildren() != null ) {
-          for ( GenericFileTree childItem : childTreeModel.getChildren() ) {
-            if ( childItem.getFile().isFolder() ) {
-              childTreeItem.addStyleName( "parent-widget" );
-              break;
-            }
-          }
-        }
-
-        ElementUtils.killAllTextSelection( childTreeItem.getElement() );
-        childTreeItem.setURL( fileName );
-        if ( showLocalizedFileNames ) {
-          childTreeItem.setText( title );
-          if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
-            childTreeItem.setTitle( description );
-          } else {
-            childTreeItem.setTitle( fileName );
-          }
-        } else {
-          childTreeItem.setText( fileName );
-          if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
-            childTreeItem.setTitle( description );
-          } else {
-            childTreeItem.setTitle( title );
-          }
-        }
-        childTreeItem.setFileName( fileName );
-        if ( treeItem == null && isDirectory ) {
-          addItem( childTreeItem );
-        } else {
           treeItem.addItem( childTreeItem );
-        }
-        FolderTreeItem tmpParent = childTreeItem;
-        String pathToChild = tmpParent.getFileName();
-        while ( tmpParent.getParentItem() != null ) {
-          tmpParent = (FolderTreeItem) tmpParent.getParentItem();
-          pathToChild = tmpParent.getFileName() + "/" + pathToChild; //$NON-NLS-1$
-        }
-        /*
-         * TODO Not sure what to do here if (treeItem != null) { ArrayList<FileChooserRepositoryFile> files =
-         * (ArrayList<FileChooserRepositoryFile>) treeItem.getUserObject(); if (files == null) { files = new
-         * ArrayList<FileChooserRepositoryFile>(); treeItem.setUserObject(files); } files.add(file); }
-         */
-        if ( isDirectory ) {
+
           buildSolutionTree( childTreeItem, childTreeModel );
-        } else {
-          if ( treeItem != null ) {
-            treeItem.removeItem( childTreeItem );
-          }
-        }
       }
     }
+  }
+
+  @NonNull
+  private FolderTreeItem buildFolderTreeItem( @NonNull GenericFileTree childTreeModel ) {
+    GenericFile childFileModel = childTreeModel.getFile();
+    String childFileName = childFileModel.getName();
+    String title = childFileModel.getTitleOrName();
+    String description = childFileModel.getDescription();
+
+    FolderTreeItem childTreeItem = new FolderTreeItem();
+    //noinspection GWTStyleCheck
+    childTreeItem.setStylePrimaryName( "leaf-widget" );
+    childTreeItem.getElement().setAttribute( "id", childFileModel.getPath() );
+    childTreeItem.setUserObject( childTreeModel );
+    childTreeItem.setFileModel( childFileModel );
+    if ( childFileModel.isHidden() ) {
+      childTreeItem.addStyleDependentName( HIDDEN_STYLE_NAME );
+    }
+
+    if ( hasChildFolders( childTreeModel ) ) {
+      //noinspection GWTStyleCheck
+      childTreeItem.addStyleName( "parent-widget" );
+    }
+
+    ElementUtils.killAllTextSelection( childTreeItem.getElement() );
+    childTreeItem.setURL( childFileName );
+    if ( showLocalizedFileNames ) {
+      childTreeItem.setText( title );
+      if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
+        childTreeItem.setTitle( description );
+      } else {
+        childTreeItem.setTitle( childFileName );
+      }
+    } else {
+      childTreeItem.setText( childFileName );
+      if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
+        childTreeItem.setTitle( description );
+      } else {
+        childTreeItem.setTitle( title );
+      }
+    }
+
+    childTreeItem.setFileName( childFileName );
+    return childTreeItem;
+  }
+
+  private static boolean hasChildFolders( @NonNull GenericFileTree treeModel ) {
+    return treeModel.getChildren() != null
+        && treeModel.getChildren().stream().anyMatch( child -> child.getFile().isFolder() );
   }
 
   public void setShowLocalizedFileNames( boolean showLocalizedFileNames ) {
