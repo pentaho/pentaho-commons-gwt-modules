@@ -20,15 +20,16 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.Widget;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class FolderTreeItem extends TreeItem {
-  public String fileName;
-  public String url;
-  private GenericFile fileModel;
-
   public FolderTreeItem() {
-    super();
   }
 
   public FolderTreeItem( Widget widget ) {
@@ -43,27 +44,76 @@ public class FolderTreeItem extends TreeItem {
     getElement().setId( string );
   }
 
+
+  @Override
+  public GenericFileTree getUserObject() {
+    return (GenericFileTree) super.getUserObject();
+  }
+
+  @Override
+  public void setUserObject( Object userObject ) {
+    if ( !( userObject instanceof GenericFileTree ) ) {
+      throw new IllegalArgumentException( "Must be an instance of " + GenericFileTree.class.getSimpleName() );
+    }
+
+    super.setUserObject( userObject );
+  }
+
+  public GenericFileTree getFileTreeModel() {
+    return getUserObject();
+  }
+
+  public void setFileTreeModel( GenericFileTree fileTreeModel ) {
+    setUserObject( fileTreeModel );
+  }
+
   public String getFileName() {
-    return fileName;
-  }
-
-  public void setFileName( String fileName ) {
-    this.fileName = fileName;
-  }
-
-  public String getURL() {
-    return url;
-  }
-
-  public void setURL( String url ) {
-    this.url = url;
+    GenericFile fileModel = getFileModel();
+    return fileModel != null ? fileModel.getName() : null;
   }
 
   public GenericFile getFileModel() {
-    return this.fileModel;
+    GenericFileTree fileTreeModel = getFileTreeModel();
+    return fileTreeModel != null ? fileTreeModel.getFile() : null;
   }
 
-  public void setFileModel( GenericFile fileModel ) {
-    this.fileModel = fileModel;
+  @NonNull
+  public Iterable<FolderTreeItem> getChildItems() {
+    return new FolderTreeItemIterable( this );
+  }
+
+  private static class FolderTreeItemIterable implements Iterable<FolderTreeItem> {
+    @NonNull
+    private final TreeItem parentTreeItem;
+
+    public FolderTreeItemIterable( @NonNull TreeItem parentTreeItem ) {
+      Objects.requireNonNull( parentTreeItem );
+      this.parentTreeItem = parentTreeItem;
+    }
+
+    @Override @NonNull
+    public Iterator<FolderTreeItem> iterator() {
+      return new FolderTreeItemIterator();
+    }
+
+    private class FolderTreeItemIterator implements Iterator<FolderTreeItem> {
+      private int index;
+
+      public FolderTreeItemIterator() {
+        this.index = 0;
+      }
+
+      public boolean hasNext() {
+        return index < FolderTreeItemIterable.this.parentTreeItem.getChildCount();
+      }
+
+      public FolderTreeItem next() {
+        if ( index >= FolderTreeItemIterable.this.parentTreeItem.getChildCount() ) {
+          throw new NoSuchElementException();
+        }
+
+        return (FolderTreeItem) FolderTreeItemIterable.this.parentTreeItem.getChild( index++ );
+      }
+    }
   }
 }

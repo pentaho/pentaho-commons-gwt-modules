@@ -17,6 +17,8 @@
 
 package org.pentaho.gwt.widgets.client.genericfile;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,5 +53,9 @@ public class GenericFileTree {
 
   public void addChild( GenericFileTree tree ) {
     children.add( tree );
+  }
+
+  public boolean hasChildFolders() {
+    return children != null && children.stream().anyMatch( child -> child.getFile().isFolder() );
   }
 }

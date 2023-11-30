@@ -21,7 +21,7 @@ import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -40,6 +40,6 @@ public class FolderTreeTest {
     tree.select( path );
 
     verify( tree ).select( path );
-    verify( tree ).getTreeItem( any() );
+    verify( tree ).findTreeItem( anyString() );
   }
 }

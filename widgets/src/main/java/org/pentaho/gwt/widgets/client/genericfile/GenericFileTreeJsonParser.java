@@ -84,8 +84,12 @@ public class GenericFileTreeJsonParser {
     file.setPath( getFieldValueAsString( fileJSON, "path" ) );
     file.setParentPath( getFieldValueAsString( fileJSON, "parentPath" ) );
     file.setType( getFieldValueAsString( fileJSON, "type" ) );
-    file.setLastModifiedDate( getFieldValueAsDate( fileJSON, "lastModifiedDate" ) );
+    file.setModifiedDate( getFieldValueAsDate( fileJSON, "modifiedDate" ) );
     file.setHidden( getFieldValueAsBoolean( fileJSON, "hidden", false ) );
+
+    if ( file.isFolder() ) {
+      file.setCanAddChildren( getFieldValueAsBoolean( fileJSON, "canAddChildren", false ) );
+    }
 
     return file;
   }

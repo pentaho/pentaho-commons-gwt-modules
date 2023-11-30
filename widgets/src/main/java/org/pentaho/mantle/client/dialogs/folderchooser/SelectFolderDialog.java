@@ -45,6 +45,14 @@ public class SelectFolderDialog extends PromptDialogBox {
     public MySolutionTree() {
       super();
       super.setScrollOnSelectEnabled( false );
+
+      addSelectionHandler( event -> {
+        TreeItem selectedItem = event.getSelectedItem();
+        if ( selectedItem instanceof FolderTreeItem ) {
+          GenericFile file = ( (FolderTreeItem) selectedItem ).getFileModel();
+          localThis.add.setEnabled( file.isCanAddChildren() );
+        }
+      } );
     }
 
     public void onBrowserEvent( Event event ) {
@@ -63,6 +71,8 @@ public class SelectFolderDialog extends PromptDialogBox {
   }
 
   private static final MySolutionTree tree = new MySolutionTree();
+
+  private final ToolbarButton add;
 
   private String defaultSelectedPath = FolderTree.getHomeFolder();
 
@@ -99,23 +109,13 @@ public class SelectFolderDialog extends PromptDialogBox {
     image.addStyleName( "icon-zoomable" );
     image.addStyleName( "pentaho-addbutton" );
 
-    ToolbarButton add = new ToolbarButton( image );
+    add = new ToolbarButton( image );
     add.setToolTip( Messages.getString( "createNewFolder" ) );
     add.setCommand( () -> {
       GenericFile fileModel = ( (FolderTreeItem) tree.getSelectedItem() ).getFileModel();
-      final NewFolderCommand newFolderCommand = new NewFolderCommand( fileModel );
+      NewFolderCommand newFolderCommand = new NewFolderCommand( fileModel );
 
-      newFolderCommand.setCallback( path -> tree.fetchModel( new AsyncCallback<GenericFileTree>() {
-        @Override
-        public void onSuccess( GenericFileTree fileTreeModel ) {
-          tree.select( path );
-        }
-
-        @Override
-        public void onFailure( Throwable caught ) {
-          // noop
-        }
-      }, null, null, false ) );
+      newFolderCommand.setCallback( this::fetchModel );
 
       newFolderCommand.execute();
     } );
@@ -131,7 +131,7 @@ public class SelectFolderDialog extends PromptDialogBox {
 
     TreeItem selItem = tree.getSelectedItem();
     if ( selItem != null ) {
-      DOM.scrollIntoView( selItem.getElement() );
+      selItem.getElement().scrollIntoView();
     }
   }
 
@@ -163,6 +163,6 @@ public class SelectFolderDialog extends PromptDialogBox {
           true );
         dialogBox.center();
       }
-    }, null, null, false );
+    } );
   }
 }

@@ -31,7 +31,8 @@ public class GenericFile {
   private String path;
   private String parentPath;
   private String provider;
-  private Date lastModifiedDate;
+  private Date modifiedDate;
+  private boolean canAddChildren;
 
   /**
    * The type of file node. One of <code>file</code>, <code>folder</code>.
@@ -83,6 +84,32 @@ public class GenericFile {
     this.parentPath = parentPath;
   }
 
+  /**
+   * Indicates if the file is a group folder.
+   * <p>
+   * Group folders have no {@link #getPath() path} and serve only logical/presentational
+   * grouping purposes.
+   *
+   * @return <code>true</code>, if the file is a group folder;
+   * <code>false</code>, otherwise.
+   */
+  public boolean isGroupFolder() {
+    return path == null;
+  }
+
+  /**
+   * Indicates if the file is a provider root folder.
+   * <p>
+   * Provider root folders have a {@link #getPath() path}, such as <code>/</code>,
+   * or <code>pvfs://</code>, yet have no {@link #getParentPath() parent path}.
+   *
+   * @return <code>true</code>, if the file is a file system root;
+   * <code>false</code>, otherwise.
+   */
+  public boolean isProviderRootFolder() {
+    return path != null && parentPath == null;
+  }
+
   public String getProvider() {
     return provider;
   }
@@ -91,12 +118,12 @@ public class GenericFile {
     this.provider = provider;
   }
 
-  public Date getLastModifiedDate() {
-    return lastModifiedDate;
+  public Date getModifiedDate() {
+    return modifiedDate;
   }
 
-  public void setLastModifiedDate( Date lastModifiedDate ) {
-    this.lastModifiedDate = lastModifiedDate;
+  public void setModifiedDate( Date modifiedDate ) {
+    this.modifiedDate = modifiedDate;
   }
 
   public String getType() {
@@ -121,5 +148,13 @@ public class GenericFile {
 
   public void setHidden( boolean hidden ) {
     this.hidden = hidden;
+  }
+
+  public boolean isCanAddChildren() {
+    return canAddChildren;
+  }
+
+  public void setCanAddChildren( boolean canAddChildren ) {
+    this.canAddChildren = canAddChildren;
   }
 }

@@ -16,11 +16,20 @@
  */
 package org.pentaho.gwt.widgets.client.genericfile;
 
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import org.pentaho.gwt.widgets.client.utils.NameUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GenericFileNameUtils {
+
+  private static final RegExp pathWithProtocolPattern = RegExp.compile( "^(\\w+://)(.*)$" );
+
   private GenericFileNameUtils() {
   }
 
@@ -41,5 +50,34 @@ public class GenericFileNameUtils {
 
   public static boolean isValidFolderName( @Nullable String name ) {
     return NameUtils.isValidFolderName( name );
+  }
+
+  @NonNull
+  public static List<String> splitPath( @Nullable String path ) {
+    List<String> segments = new ArrayList<>();
+
+    if ( path != null ) {
+      String normalizedPath = path;
+
+      // Extract the root of the path and add as first segment.
+      if ( path.startsWith( "/" ) ) {
+        segments.add( "/" );
+        normalizedPath = normalizedPath.substring( 1 );
+      } else {
+        MatchResult match = pathWithProtocolPattern.exec( normalizedPath );
+        if ( match != null ) {
+          segments.add( match.getGroup( 1 ) );
+          normalizedPath = match.getGroup( 2 );
+        }
+      }
+
+      StringTokenizer st = new StringTokenizer( normalizedPath, '/' );
+      for ( int i = 0; i < st.countTokens(); i++ ) {
+        String token = st.tokenAt( i );
+        segments.add( token );
+      }
+    }
+
+    return segments;
   }
 }
