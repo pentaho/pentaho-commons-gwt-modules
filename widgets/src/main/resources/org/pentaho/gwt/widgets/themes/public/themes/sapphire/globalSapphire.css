@@ -608,14 +608,6 @@ table#weekly-recur tbody tr td:not(:first-child) span.day-of-week-checkbox input
   margin-left: 15px;
 }
 
-div.schedule-name {
-  margin: 0 4px 5px 0;
-}
-
-div.schedule-name-info {
-  margin-top: 1px;
-}
-
 div.cron-label {
   margin: 0 0 5px 0;
 }
@@ -1180,6 +1172,14 @@ button#schedule-dialog-select-button {
 }
 
 /* region Schedule Wizard Dialogs */
+.schedule-input, .schedule-button {
+  height: 33px;
+}
+
+.schedule-input, .schedule-dialog-custom-list {
+  width: 350px;
+}
+
 .schedule-params-dialog .dialog-content {
   height: 100% !important;
 }

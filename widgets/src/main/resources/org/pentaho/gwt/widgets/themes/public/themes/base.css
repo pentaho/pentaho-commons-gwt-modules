@@ -50,6 +50,35 @@
 
   --layout-gap-h: var(--layout-gap-h-root);
   --layout-gap-v: var(--layout-gap-v-root);
+
+  /* Icon size to resize with text zoom  */
+  --icon-height-root: 22;
+  --icon-width-root: 22;
+
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
+
+
+  /* COLORS - from DS style guide */
+  /* Atmosphere colors - Main color group */
+  --color-atmo1: #FBFCFC;
+  --color-atmo2: #F4F5F5;
+  --color-atmo3: #E8E8E8;
+  --color-atmo4: #CCCED0;
+
+  /* Accent colors - Core aspects of the interface as actions, buttons, ... */
+  --color-primary: #2064b4;
+  --color-primary-80: #1775E0;
+  --color-secondary: #414141;
+  --color-secondary-80: #6C6B6B;
+  --color-secondary-60: #999999;
+  --color-brand: #CC0000;
+
+  /* Semantic colors - Status & system feedback colors */
+  --color-neutral: #4D8AC0;
+  --color-positive: #478B1A;
+  --color-warning: #F9C846;
+  --color-negative: #D43136;
 }
 
 @media (max-height: 720px) {
