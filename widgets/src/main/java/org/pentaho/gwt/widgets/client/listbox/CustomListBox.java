@@ -20,6 +20,7 @@ package org.pentaho.gwt.widgets.client.listbox;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.ui.Focusable;
@@ -27,6 +28,7 @@ import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.panel.ScrollFlexPanel;
 import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
+import org.pentaho.gwt.widgets.client.text.SearchTextBox;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.Rectangle;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
@@ -79,19 +81,19 @@ import com.google.gwt.user.client.ui.Widget;
  *   }
  * } );
  * </pre>
- * 
- * User: NBaker Date: Mar 9, 2009 Time: 11:01:57 AM
- * 
  */
 @SuppressWarnings( "deprecation" )
 public class CustomListBox extends VerticalFlexPanel implements ChangeListener, PopupListener, MouseListener,
     FocusListener, KeyboardListener, ListItemListener, Focusable {
-  protected List<ListItem> items = new ArrayList<ListItem>();
+  protected List<ListItem> items = new ArrayList<>();
   protected int selectedIndex = -1;
+  private boolean defaultSelectionEnabled = true;
+
   protected DropDownArrow arrow = new DropDownArrow();
   protected int visible = 1;
   private int maxDropVisible = 15;
   protected boolean editable = false;
+  private boolean searchable = false;
   private VerticalPanel listPanel = new VerticalFlexPanel();
   protected ScrollPanel listScrollPanel = new ScrollFlexPanel();
 
@@ -99,11 +101,12 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
   protected FlexTable dropGrid = new FlexTable();
   protected boolean popupShowing = false;
   private DropPopupPanel popup;
+  private SearchTextBox searchTextBox = new SearchTextBox();
   private PopupList popupVbox = new PopupList();
   protected PentahoFocusPanel fPanel = new PentahoFocusPanel();
   private ScrollPanel popupScrollPanel = new ScrollPanel();
 
-  protected List<ChangeListener> listeners = new ArrayList<ChangeListener>();
+  protected List<ChangeListener> listeners = new ArrayList<>();
   private final int spacing = 1;
   protected int maxHeight, maxWidth, averageHeight; // height and width of largest ListItem
   private String primaryStyleName;
@@ -192,9 +195,11 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     };
     editableTextBox.setStylePrimaryName( "custom-list-textbox" );
 
-    editableTextBox.setWidth( "100%" ); //$NON-NLS-1$
+    editableTextBox.setWidth( "100%" );
     editableTextBox.sinkEvents( Event.KEYEVENTS );
     editableTextBox.sinkEvents( Event.MOUSEEVENTS );
+
+    selectedItemPlaceholder.addStyleName( "placeholder-label" );
   }
 
   public void setTableLayout( String tableLayout ) {
@@ -206,17 +211,19 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
   }
 
   private native void setTdStyles( Element ele )/*-{
-                                                var tds = ele.getElementsByTagName("td");
-                                                for( var i=0; i< tds.length; i++){
-                                                var td = tds[i];
-                                                if(!td.style){
-                                                td.className = "customListBoxTdFix";
-                                                } else {
-                                                td.style.padding = "0px";
-                                                td.style.border = "none";
-                                                }
-                                                }
-                                                }-*/;
+    var tds = ele.getElementsByTagName("td");
+
+    for(var i = 0; i < tds.length; i++) {
+      var td = tds[i];
+
+      if (!td.style) {
+        td.className = "customListBoxTdFix";
+      } else {
+        td.style.padding = "0px";
+        td.style.border = "none";
+      }
+    }
+  }-*/;
 
   /**
    * Removes the passed in ListItem
@@ -280,10 +287,11 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     item.setListItemListener( this );
 
     // If first one added, set selectedIndex to 0
-    if ( items.size() == 1 && this.visible == 1 ) {
+    if ( isDefaultSelectionEnabled() && items.size() == 1 && this.visible == 1 ) {
       setSelectedIndex( 0 );
     }
-    if ( suppressLayout == false ) {
+
+    if ( !suppressLayout ) {
       updateUI();
     }
 
@@ -330,15 +338,34 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     item.setListItemListener( this );
 
     // If first one added, set selectedIndex to 0
-    if ( items.size() == 1 ) {
+    if ( isDefaultSelectionEnabled() && items.size() == 1 ) {
       setSelectedIndex( 0 );
     }
-    if ( suppressLayout == false ) {
+
+    if ( !suppressLayout ) {
       updateUI();
     }
+
     if ( dragController != null ) {
       dragController.makeDraggable( item.getWidget() );
     }
+  }
+
+  /**
+   * Returns a list of current ListItems that match {@code search}.
+   *
+   * @param search - value to filter ListItems
+   *
+   * @return list of filtered ListItems
+   */
+  public List<ListItem> findItems( String search ) {
+    if ( StringUtils.isEmpty( search ) ) {
+      return this.items;
+    }
+
+    return this.items.stream()
+      .filter( item -> item.getText().contains( search ) )
+      .collect( Collectors.toList() );
   }
 
   /**
@@ -425,20 +452,31 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
 
   protected TextBox editableTextBox;
   private SimplePanel selectedItemWrapper = new SimplePanel();
+  private final Label selectedItemPlaceholder = new Label();
+
+  /* Visible for testing */
+  Label getSelectedItemPlaceholder() {
+    return this.selectedItemPlaceholder;
+  }
+
+  public void setSelectedItemPlaceholderText( String placeholder ) {
+    this.getSelectedItemPlaceholder().setText( placeholder );
+  }
 
   protected void updateSelectedDropWidget() {
-    Widget selectedWidget = new Label( "" ); //Default to show in case of empty sets? //$NON-NLS-1$
+    Widget selectedWidget = getSelectedItemPlaceholder(); // Default to show in case of empty sets?
+
     if ( !editable ) { // only show their widget if editable is false
       if ( selectedIndex >= 0 ) {
         selectedWidget = items.get( selectedIndex ).getWidgetForDropdown();
-      } else if ( !items.isEmpty() ) {
+      } else if ( isDefaultSelectionEnabled() && !items.isEmpty() ) {
         selectedWidget = items.get( 0 ).getWidgetForDropdown();
       }
     } else {
       String previousVal = editableTextBox.getText();
       String newVal = getAcceptedText();
       if ( newVal == null ) {
-        if ( !items.isEmpty() ) {
+        if ( isDefaultSelectionEnabled() && !items.isEmpty() ) {
           newVal = items.get( 0 ).getValue().toString();
         } else {
           newVal = "";
@@ -448,9 +486,10 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
       if ( !previousVal.equals( newVal ) ) {
         editableTextBox.setText( newVal );
       }
-      selectedWidget = editableTextBox;
 
+      selectedWidget = editableTextBox;
     }
+
     this.setTdStyles( selectedWidget.getElement() );
 
     if ( !selectedWidget.equals( selectedItemWrapper.getWidget() ) ) {
@@ -479,8 +518,10 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     maxHeight = 0;
     maxWidth = 0;
 
+    List<ListItem> listItems = findItems( searchTextBox.getValue() );
+
     // actually going to average up the heights
-    for ( ListItem li : this.items ) {
+    for ( ListItem li : listItems ) {
       Widget w = li.getWidget();
 
       Rectangle rect = ElementUtils.getSize( w.getElement() );
@@ -492,25 +533,26 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
 
       // Add it to the dropdown
       listPanel.add( w );
-      listPanel.setCellWidth( w, "100%" ); //$NON-NLS-1$
-    }
-    if ( height == null && this.items.size() > 0 ) {
-      maxHeight = Math.round( maxHeight / this.items.size() );
+      listPanel.setCellWidth( w, "100%" );
     }
 
-    // we only care about this if the user has specified a visible row count and no heihgt
+    if ( height == null && !listItems.isEmpty() ) {
+      maxHeight = Math.round( maxHeight / listItems.size() );
+    }
+
+    // we only care about this if the user has specified a visible row count and no height
     if ( height == null ) {
       int h = ( this.visible * ( maxHeight + spacing ) );
-      this.listScrollPanel.setHeight( h + "px" ); //$NON-NLS-1$
+      this.listScrollPanel.setHeight( h + "px" );
       fPanel.setHeight( h + "px" );
     } else {
       this.listScrollPanel.setHeight( height );
       fPanel.setHeight( height );
     }
-    if ( width == null ) {
-      this.fPanel.setWidth( maxWidth + 40 + "px" ); //20 is scrollbar space //$NON-NLS-1$
-    }
 
+    if ( width == null ) {
+      this.fPanel.setWidth( maxWidth + 40 + "px" ); // 20 is scrollbar space
+    }
   }
 
   /**
@@ -538,8 +580,10 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     averageHeight = 0; // Actually used to set the width of the arrow
     popupHeight = null;
 
+    List<ListItem> listItems = findItems( searchTextBox.getValue() );
+
     int totalHeight = 0;
-    for ( ListItem li : this.items ) {
+    for ( ListItem li : listItems ) {
       Widget w = li.getWidget();
 
       Rectangle rect = ElementUtils.getSize( w.getElement() );
@@ -549,42 +593,42 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
 
       // Add it to the dropdown
       popupVbox.add( w );
-      popupVbox.setCellWidth( w, "100%" ); //$NON-NLS-1$
+      popupVbox.setCellWidth( w, "100%" );
     }
 
     // Average the height of the items
-    if ( items.size() > 0 ) {
-      averageHeight = Math.round( totalHeight / items.size() );
+    if ( !items.isEmpty() ) {
+      averageHeight = Math.round( totalHeight / listItems.size() );
     }
 
     // Set the size of the drop-down based on the largest list item
     if ( width == null ) {
       dropGrid.setWidth( ( maxWidth + 60 ) + "px" );
-      this.popupWidth = maxWidth + 60 + "px"; //$NON-NLS-1$
-    } else if ( width.equals( "100%" ) ) { //$NON-NLS-1$
-      dropGrid.setWidth( "100%" ); //$NON-NLS-1$
-      this.popupWidth = maxWidth + ( spacing * 4 ) + maxHeight + "px"; //$NON-NLS-1$
+      this.popupWidth = maxWidth + 60 + "px";
+    } else if ( width.equals( "100%" ) ) {
+      dropGrid.setWidth( "100%" );
+      this.popupWidth = maxWidth + ( spacing * 4 ) + maxHeight + "px";
     } else {
-      dropGrid.setWidth( "100%" ); //$NON-NLS-1$
+      dropGrid.setWidth( "100%" );
       int w = -1;
-      if ( width.indexOf( "px" ) > 0 ) { //$NON-NLS-1$
-        w = Integer.parseInt( this.width.replace( "px", "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
-      } else if ( width.indexOf( "%" ) > 0 ) { //$NON-NLS-1$
-        w = Integer.parseInt( this.width.replace( "%", "" ) ); //$NON-NLS-1$ //$NON-NLS-2$
+      if ( width.indexOf( "px" ) > 0 ) {
+        w = Integer.parseInt( this.width.replace( "px", "" ) );
+      } else if ( width.indexOf( "%" ) > 0 ) {
+        w = Integer.parseInt( this.width.replace( "%", "" ) );
       }
-      selectedItemWrapper.setWidth( ( w - ( averageHeight + ( this.spacing * 6 ) ) ) + "px" ); //$NON-NLS-1$
 
+      selectedItemWrapper.setWidth( ( w - ( averageHeight + ( this.spacing * 6 ) ) ) + "px" );
     }
 
     // Store the size of the popup to respect MaxDropVisible now that we know the item height
     // This cannot be set here as the popup is not visible :(
 
-    if ( maxDropVisible > 0 && items.size() > maxDropVisible ) {
+    if ( maxDropVisible > 0 && listItems.size() > maxDropVisible ) {
       // (Lesser of maxDropVisible or items size) * (Average item height + spacing value)
       this.popupHeight =
-          ( Math.min( this.maxDropVisible, this.items.size() ) * ( averageHeight + ( this.spacing * 2 ) ) ) + "px"; //$NON-NLS-1$
+          ( Math.min( this.maxDropVisible, listItems.size() ) * ( averageHeight + ( this.spacing * 2 ) ) ) + "px";
     } else {
-      this.popupHeight = null; //ElementUtils.getSize(popupVbox.getElement()).height+ "px";
+      this.popupHeight = null;
     }
 
   }
@@ -624,9 +668,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
       // throw errors positioning when the GWT app is loaded in a frame that's not visible.
 
       if ( popup == null ) {
-        popup = new DropPopupPanel();
-        popup.addPopupListener( this );
-        popup.add( popupScrollPanel );
+        popup = createPopupPanel();
       }
 
       int x = this.getElement().getAbsoluteLeft();
@@ -669,8 +711,31 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
       popupShowing = true;
     } else {
       popup.hide();
-      // fPanel.setFocus(true);
     }
+  }
+
+  /* Visible for testing */
+  DropPopupPanel createPopupPanel() {
+    DropPopupPanel panel = new DropPopupPanel();
+    panel.addPopupListener( this );
+
+    VerticalPanel content = new VerticalFlexPanel();
+    if ( isSearchable() ) {
+      SearchTextBox search = getSearchTextBox();
+
+      search.addChangeListener( widget -> updateUI() );
+      content.add( search );
+    }
+
+    content.add( popupScrollPanel );
+    panel.add( content );
+
+    return panel;
+  }
+
+  /* Visible for testing */
+  SearchTextBox getSearchTextBox() {
+    return this.searchTextBox;
   }
 
   /**
@@ -834,11 +899,18 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     }
   }
 
+  public boolean isDefaultSelectionEnabled() {
+    return this.defaultSelectionEnabled;
+  }
+
+  public void setDefaultSelectionEnabled( boolean value ) {
+    this.defaultSelectionEnabled = value;
+  }
+
   /**
    * Registers a ChangeListener with the list.
    * 
-   * @param listener
-   *          ChangeListner
+   * @param listener ChangeListener
    */
   public void addChangeListener( ChangeListener listener ) {
     listeners.add( listener );
@@ -947,6 +1019,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
   // ======================================= Listener methods ===================================== //
 
   public void onPopupClosed( PopupPanel popupPanel, boolean b ) {
+    this.getSearchTextBox().clearText();
     this.popupShowing = false;
   }
 
@@ -1174,7 +1247,9 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
   private class DropPopupPanel extends PopupPanel {
     public DropPopupPanel() {
       super( true );
-      setStyleName( "drop-popup" ); //$NON-NLS-1$
+
+      setStyleName( "drop-popup" );
+      addStyleName( "responsive" );
     }
 
     @Override
@@ -1310,11 +1385,19 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     }
     arrow.setEnabled( enabled );
     fPanel.setTabIndex( this.enabled ? 0 : -1 );
-    this.setStylePrimaryName( ( this.enabled ) ? "custom-list" : "custom-list-disabled" ); //$NON-NLS-1$ //$NON-NLS-2$
+    this.setStylePrimaryName( this.enabled ? "custom-list" : "custom-list-disabled" );
   }
 
   public boolean isEnabled() {
     return this.enabled;
+  }
+
+  public void setSearchable( boolean searchable ) {
+    this.searchable = searchable;
+  }
+
+  public boolean isSearchable() {
+    return this.searchable;
   }
 
   public Widget createProxy() {

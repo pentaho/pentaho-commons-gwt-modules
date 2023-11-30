@@ -2,6 +2,35 @@
 Please, please comment all entries so that it is clear
 which java class/code the style is associated with */
 
+/* region Pentaho Widget buttons */
+.pentaho-clear-button, .pentaho-error-button, .pentaho-search-button {
+  /* Design system extra-small and small size
+     icon actual size is 12px and 16px respectively,
+     but both sizes need a container with 32px
+  */
+  --icon-height: 32;
+  --icon-width: 32;
+
+  height: calc(1px * var(--icon-height));
+  width: calc(1px * var(--icon-width));
+
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.pentaho-clear-button {
+  background-image: url("./images/close.XS.svg");
+}
+
+.pentaho-error-button {
+  background-image: url("./images/fail.red.S.svg");
+}
+
+.pentaho-search-button {
+  background-image: url("./images/search.S.svg");
+}
+/* endregion Pentaho Widget buttons */
+
 /* killing some intermediate styles for tabs that aren't desired */
 .gwt-TabBarFirst-wrapper{
   display: none;
@@ -50,8 +79,6 @@ which java class/code the style is associated with */
   background-color: #EEEEEE;
   border: 1px dotted black;
 }
-.progressPopupPanel\.label {
-}
 .addBtn {
   width: 22px;
 }
@@ -73,8 +100,7 @@ which java class/code the style is associated with */
   font-size: 13px;
 }
 
-/* end menubar/menuitem styles ------------------------------------------------------*/
-
+/* region menubar/menuitem styles */
 .gwt-MenuBar-vertical .gwt-MenuItem-checkbox-checked-selected:hover {
   background-color: #cbefa3;
 }
@@ -141,14 +167,11 @@ background-color: #cbefa3;
 .gwt-MenuBar .gwt-MenuItem-selected {
   color: black;
 }
-.gwt-MenuBar-horizontal {
-}
 .gwt-MenuBar-horizontal .gwt-MenuItem {
   color: white;
   padding: 3px 6px 5px;
   vertical-align: bottom;
   border: 1px;
-  
 }
 .gwt-MenuBar-horizontal .gwt-MenuItem-selected {
   border: 1px solid #000000;
@@ -217,26 +240,6 @@ background-color: #cbefa3;
   margin: 0px 0px 0px 0px;
   z-index: 110;
 }
-.gwt-MenuBarPopup .menuPopupTopCenter {
-}
-html>body .gwt-MenuBarPopup .menuPopupBottomCenter {
-}
-* html .gwt-MenuBarPopup .menuPopupBottomCenter {
-}
-.gwt-MenuBarPopup .menuPopupMiddleLeft {
-}
-html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
-}
-* html .gwt-MenuBarPopup .menuPopupMiddleRight {
-}
-.gwt-MenuBarPopup .menuPopupTopLeftInner {
-}
-.gwt-MenuBarPopup .menuPopupTopRightInner {
-}
-.gwt-MenuBarPopup .menuPopupBottomLeftInner {
-}
-.gwt-MenuBarPopup .menuPopupBottomRightInner {
-}
 * html .gwt-MenuBarPopup .menuPopupTopLeftInner {
   width: 5px;
   height: 41px;
@@ -263,8 +266,7 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
   margin-top: -41px;
   overflow: hidden;
 }
-
-/* end menubar/menuitem styles ------------------------------------------------------*/
+/* endregion menubar/menuitem styles */
 
 /* begin dialog styles ------------------------------------------------------*/
 
@@ -281,7 +283,7 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
   margin-left: 3px
 }
 
-/* Begin Wizard Styles ------------------------------------------------------ */
+/* region Wizard Styles */
 .pentaho-wizard-deck-panel {
 	height: 80%;
 	width: 100%;
@@ -315,16 +317,13 @@ html>body .gwt-MenuBarPopup .menuPopupMiddleRight {
 	horizontal-align: right;
 	vertical-align: bottom;
 }
+/* endregion Wizard Styles */
 
-/* End Wizard Styles -------------------------------------------------------- */
-
-body{
-}
 .nowrap{
   white-space: nowrap;
 }
 
-/* begin file chooser styles ------------------------------------------------ */
+/* region file chooser styles */
 .fileChooserHeader {
   background-color: #f0f0f0;
   border-bottom: 1px solid #848484;
@@ -346,16 +345,10 @@ body{
   padding-right: 5px;
   font-size: 14px;
 }
+/* endregion file chooser styles */
 
-/* end file chooser styles ------------------------------------------------ */
 
-
-/* begin resizable dialogbox styles ------------------------------------------------ */
-
-.dragdrop-handle {
-  /* cursor: ; */
-}
-
+/* region resizable dialogbox styles */
 .dragdrop-draggable {
   zoom: 1; /* IE gain hasLayout */
 }
@@ -519,61 +512,63 @@ body{
   font-size:0px;
 }
 
-.custom-list{
- padding: 0px;
-  margin: 0px;
-  border: 1px solid #333;
-  background-color: white;
+.custom-list {
+  border: 1px solid var(--color-secondary);
+  background-color: var(--color-atmo1);
 }
 
-
-.custom-list-disabled{
- padding: 0px;
-  margin: 0px;
-  border: 1px solid gray;
-  background-color: #ddd;
+.custom-list-disabled {
+  border: 1px solid var(--color-secondary-60);
+  background-color: var(--color-atmo3);
 }
 
-.custom-list-textbox{
+:is(.custom-list, .custom-list-disabled) {
+  padding: 0;
+  margin: 0;
+}
+
+:is(.custom-list, .custom-list-disabled) .placeholder-label {
+  color: var(--color-secondary-80);
+  padding: 0 10px;
+}
+
+.custom-list-textbox {
   border: none !important;
-  overflow:hidden;
+  overflow: hidden;
 }
 
-.drop-popup{
-  background: white;
+.drop-popup {
+  background: var(--color-atmo1);
   z-index: 1350;
   width: auto;
 }
 
-.custom-list-item{
-  background-color: white;
+.custom-list-item {
+  background-color: var(--color-atmo1);
   font-size: 13px;
 }
 
-.custom-list-disabled-item{
-  background-color: #ddd;
+.custom-list-disabled-item {
+  background-color: var(--color-atmo3);
 }
 
-.custom-list-item-hover{
+.custom-list-item-hover {
   background-color: #cbefa3;
 }
 
-.custom-list-item-selected{
+.custom-list-item-selected {
   background-color: #dbdbdb;
 }
 
-.custom-list-item-proxy{
+.custom-list-item-proxy {
   opacity: 0.85;
   filter: alpha(opacity=85);
   font-size: 13px;
-  border: 1px dashed #999 !important;
+  border: 1px dashed var(--color-secondary-60) !important;
   background: transparent;
   z-index:1500 !important;
 }
-.custom-list-item-proxy-valid{
-}
-
-/* end resizable dialogbox styles ------------------------------------------------ */
+/* endregion resizable dialogbox styles */
 
 .customListBoxTdFix{
   padding: 0px;
@@ -630,8 +625,7 @@ body{
   }
 
 
-/* GWT Date Picker - BEGIN */
-
+/* region GWT Date Picker */
 .gwt-DateBox input {
   width: 8em;
 }
@@ -725,11 +719,9 @@ input[type=text]:focus,
 input[type=password]:focus {
   outline: 0 none;
 }
+/* endregion GWT Date Picker */
 
-/* GWT Date Picker - END */
-
-/* ======================= GWT Scroll Table =========================== */
-
+/* region GWT Scroll Table */
 .headerTable > tbody > tr > td {
   padding: 2px 2px 2px 4px;
 }
@@ -912,8 +904,7 @@ input[type=password]:focus {
 .xul-tree > table > tbody > tr > td {
   display: contents;
 }
-
-/* ======================= GWT Scroll Table =========================== */
+/*  endregion GWT Scroll Table */
 
 .table-scroll-panel {
   position:relative;
@@ -964,7 +955,8 @@ input[type=password]:focus {
    width: 18px;
 }
 
-div.schedule-name-preview {
+/* region schedule dialogs */
+.schedule-name-preview {
   text-align: center;
   margin-bottom: 9px;
   font-style: italic;
@@ -985,17 +977,57 @@ div.schedule-name-preview {
   color: #999999;
 }
 
-#schedule-name-input {
-  margin-bottom: 15px;
+.schedule-label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #666666;
+}
+.schedule-label:where(.schedule-name) {
+  margin-top: 0;
+}
+.schedule-label:where(.schedule-name-info) {
+  margin-left: 5px;
+  margin-top: 1px;
 }
 
-#generated-content-location {
-  margin-bottom: 15px;
+.schedule-input, .schedule-button, .schedule-custom-list {
+  box-sizing: border-box;
+  height: 35px;
 }
 
-.validation-textbox-image-panel {
-
+.schedule-input, .schedule-custom-list {
+  width: 360px;
 }
+
+.gwt-Label.schedule-error {
+  padding: 6px 0;
+
+  color: var(--color-negative);
+}
+
+.schedule-custom-list {
+  padding: 5px 0;
+}
+:where(.schedule-custom-list) .custom-list-drop-grid {
+  width: auto !important;
+}
+
+button.pentaho-button:is(
+  .schedule-button,
+  .schedule-button:hover
+) {
+  margin-left: 10px;
+}
+
+:where(.new-schedule-dialog) .gwt-CheckBox {
+  display: block;
+  margin-top: 5px;
+}
+
+:where(.new-schedule-dialog) .schedule-error {
+  padding: 6px 0;
+}
+/* endregion schedule dialogs */
 
 .validation-textbox-image-panel-valid {
    background-image:url(images/valid.png);
@@ -1120,3 +1152,36 @@ div.schedule-name-preview {
   white-space: normal;
   width: 262px;
 }
+
+/* region Search Text Box */
+.gwt-search-text-box {
+  --icon-right-pos: 0;
+  --input-icon-padding: calc(1px * var(--icon-width) + var(--icon-right-pos));
+
+  position: relative;
+  border-bottom: 1px solid var(--color-atmo4);
+
+  width: 100%;
+  font-size: var(--typ-body-font-size);
+  background-color: var(--color-atmo1);
+}
+
+.gwt-search-text-box .gwt-TextBox {
+  width: 100%;
+
+  text-overflow: ellipsis;
+  padding-right: var(--input-icon-padding);
+  background-color: var(--color-atmo1);
+}
+
+:where(.gwt-search-text-box) .gwt-TextBox::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+.gwt-search-text-box .gwt-Image {
+  position: absolute;
+  right: var(--icon-right-pos);
+  top: 50%;
+  transform: translateY(-50%);
+}
+/* endregion Search Text Box */

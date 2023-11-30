@@ -5589,11 +5589,6 @@ treecontrol.tree-classic li .tree-selected {
     padding-bottom: 0px;
 }
 
-.schedule-dialog-button-panel tr td button.pentaho-button{
-	margin-left:2px;
-	margin-right:2px;
-}
-
 .bootstrap DIV select {
   border: 1px solid #CBDDE8;
   --webkit-border-radius: 0px;
