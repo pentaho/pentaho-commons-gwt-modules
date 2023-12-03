@@ -101,7 +101,7 @@ public class GenericFile {
    * Indicates if the file is a provider root folder.
    * <p>
    * Provider root folders have a {@link #getPath() path}, such as <code>/</code>,
-   * or <code>pvfs://</code>, yet have no {@link #getParentPath() parent path}.
+   * yet have no {@link #getParentPath() parent path}.
    *
    * @return <code>true</code>, if the file is a file system root;
    * <code>false</code>, otherwise.

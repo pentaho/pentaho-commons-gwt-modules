@@ -71,6 +71,7 @@ public class GenericFileNameUtils {
         }
       }
 
+      // Tokenizer already strips a hanging /.
       StringTokenizer st = new StringTokenizer( normalizedPath, '/' );
       for ( int i = 0; i < st.countTokens(); i++ ) {
         String token = st.tokenAt( i );

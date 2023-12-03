@@ -371,7 +371,14 @@ public class FolderTree extends Tree {
       return findTreeItemRecursive( childTreeItem, pathSegments, level );
     }
 
-    if ( childFileModel.getName().equalsIgnoreCase( pathSegments.get( level ) ) ) {
+    String pathSegment = pathSegments.get( level );
+    if ( childFileModel.isProviderRootFolder() ) {
+      // The names of provider root folders do not match the path segment (e.g. "Repository" vs "/").
+      if ( childFileModel.getPath().equals( pathSegment ) ) {
+        // Matched. Continue with next level.
+        return findTreeItemRecursive( childTreeItem, pathSegments, level + 1 );
+      }
+    } else if ( childFileModel.getName().equalsIgnoreCase( pathSegment ) ) {
       // Matched. Continue with next level.
       return findTreeItemRecursive( childTreeItem, pathSegments, level + 1 );
     }
