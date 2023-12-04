@@ -682,14 +682,12 @@ public class FolderTree extends Tree {
 
   @NonNull
   public Iterable<FolderTreeItem> getChildItems() {
-    return getChildItems( null );
+    return new FolderTreeItemIterable( this );
   }
 
   @NonNull
   protected Iterable<FolderTreeItem> getChildItems( @Nullable FolderTreeItem parentTreeItem ) {
-    return parentTreeItem != null
-      ? parentTreeItem.getChildItems()
-      : new FolderTreeItemIterable( this );
+    return parentTreeItem != null ? parentTreeItem.getChildItems() : getChildItems();
   }
 
   private static class FolderTreeItemIterable implements Iterable<FolderTreeItem> {

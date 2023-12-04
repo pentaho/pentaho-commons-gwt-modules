@@ -51,6 +51,7 @@ public class SelectFolderDialog extends PromptDialogBox {
         if ( selectedItem instanceof FolderTreeItem ) {
           GenericFile file = ( (FolderTreeItem) selectedItem ).getFileModel();
           localThis.add.setEnabled( file.isCanAddChildren() );
+          localThis.okButton.setEnabled( file.isCanAddChildren() );
         }
       } );
     }
