@@ -23,6 +23,8 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -31,22 +33,51 @@ import com.google.gwtmockito.WithClassesToStub;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
+import org.pentaho.gwt.widgets.client.text.SearchTextBox;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@SuppressWarnings( "deprecation" )
 @RunWith( GwtMockitoTestRunner.class )
 @WithClassesToStub( DefaultListItem.class )
 public class CustomListBoxTest {
+  @Mock
   private CustomListBox customListBox;
+
+  @Mock
+  private SearchTextBox searchTextBox;
+  @Mock
+  private Label selectedItemPlaceholder;
 
   @Before
   public void setUp() throws Exception {
-    customListBox = mock( CustomListBox.class );
+    MockitoAnnotations.initMocks( this );
+
+    when( customListBox.isDefaultSelectionEnabled() ).thenReturn( true );
+    when( customListBox.isSearchable() ).thenReturn( false );
+    when( customListBox.getSearchTextBox() ).thenReturn( searchTextBox );
+    when( customListBox.getSelectedItemPlaceholder() ).thenReturn( selectedItemPlaceholder );
+
     customListBox.items = mock( List.class );
   }
 
@@ -122,15 +153,136 @@ public class CustomListBoxTest {
     verify( customListBox ).updateUI();
   }
 
+  // region addItem( ListItem )
   @Test
-  public void testAddItem_ListItem() throws Exception {
+  public void testAddItem_ListItem() {
     doCallRealMethod().when( customListBox ).addItem( any( ListItem.class ) );
 
     final ListItem listItem = mock( ListItem.class );
     customListBox.addItem( listItem );
 
-    verify( customListBox.items ).add( listItem );
+    verify( customListBox.items, times( 1 ) ).add( listItem );
+
+    verify( customListBox, never() ).setSelectedIndex( 0 );
+    verify( customListBox, times( 1 ) ).updateUI();
   }
+
+  @Test
+  public void testAddItem_ListItemWithSuppressLayout() {
+    doCallRealMethod().when( customListBox ).addItem( any( ListItem.class ) );
+    customListBox.suppressLayout = true;
+
+    final ListItem listItem = mock( ListItem.class );
+    customListBox.addItem( listItem );
+
+    verify( customListBox.items, times( 1 ) ).add( listItem );
+    verify( customListBox, never() ).updateUI();
+  }
+
+  @Test
+  public void testAddItem_ListItemWithDragController() {
+    doCallRealMethod().when( customListBox ).addItem( any( ListItem.class ) );
+    customListBox.dragController = mock( DragController.class );
+
+    final ListItem listItem = mock( ListItem.class );
+    customListBox.addItem( listItem );
+
+    verify( customListBox.items, times( 1 ) ).add( listItem );
+    verify( customListBox.dragController, times( 1 ) ).makeDraggable( any( Widget.class ) );
+  }
+
+  @Test
+  public void testAddItem_ListItemFirstWithDefaultSelection() {
+    doCallRealMethod().when( customListBox ).addItem( any( ListItem.class ) );
+
+    // make this first item
+    when( customListBox.items.size() ).thenReturn( 1 );
+    customListBox.visible = 1;
+
+    final ListItem listItem = mock( ListItem.class );
+    customListBox.addItem( listItem );
+
+    verify( customListBox.items, times( 1 ) ).add( listItem );
+    verify( customListBox, times( 1 ) ).setSelectedIndex( 0 );
+  }
+
+  @Test
+  public void testAddItem_ListItemFirstWithDefaultSelectionDisabled() {
+    doCallRealMethod().when( customListBox ).addItem( any( ListItem.class ) );
+
+    // make this first item
+    when( customListBox.items.size() ).thenReturn( 1 );
+    when( customListBox.isDefaultSelectionEnabled() ).thenReturn( false );
+
+    final ListItem listItem = mock( ListItem.class );
+    customListBox.addItem( listItem );
+
+    verify( customListBox.items ).add( listItem );
+    verify( customListBox, never() ).setSelectedIndex( 0 );
+  }
+  // endregion addItem( ListItem )
+
+  // region addItem( String )
+  @Test
+  public void testAddItem_String() {
+    doCallRealMethod().when( customListBox ).addItem( anyString() );
+
+    customListBox.addItem( "item" );
+
+    verify( customListBox.items, times( 1 ) ).add( any( DefaultListItem.class ) );
+    verify( customListBox, never() ).setSelectedIndex( 0 );
+    verify( customListBox, times( 1 ) ).updateUI();
+  }
+
+  @Test
+  public void testAddItem_StringWithSuppressLayout() {
+    doCallRealMethod().when( customListBox ).addItem( anyString() );
+    customListBox.suppressLayout = true;
+
+    customListBox.addItem( "item" );
+
+    verify( customListBox.items, times( 1 ) ).add( any( DefaultListItem.class ) );
+    verify( customListBox, never() ).updateUI();
+  }
+
+  @Test
+  public void testAddItem_StringWithDragController() {
+    doCallRealMethod().when( customListBox ).addItem( anyString() );
+    customListBox.dragController = mock( DragController.class );
+
+    customListBox.addItem( "item" );
+
+    verify( customListBox.items, times( 1 ) ).add( any( DefaultListItem.class ) );
+    verify( customListBox.dragController, times( 1 ) ).makeDraggable( any( Widget.class ) );
+  }
+
+  @Test
+  public void testAddItem_StringFirstWithDefaultSelection() {
+    doCallRealMethod().when( customListBox ).addItem( anyString() );
+
+    // make this first item
+    when( customListBox.items.size() ).thenReturn( 1 );
+
+    customListBox.addItem( "item" );
+
+    verify( customListBox.items, times( 1 ) ).add( any( DefaultListItem.class ) );
+    verify( customListBox, times( 1 ) ).setSelectedIndex( 0 );
+  }
+
+  @Test
+  public void testAddItem_StringFirstWithDefaultSelectionDisabled() {
+    doCallRealMethod().when( customListBox ).addItem( anyString() );
+
+    // make this first item
+    when( customListBox.items.size() ).thenReturn( 1 );
+    when( customListBox.isDefaultSelectionEnabled() ).thenReturn( false );
+
+    customListBox.addItem( "item" );
+
+    verify( customListBox.items, times( 1 ) ).add( any( DefaultListItem.class ) );
+    verify( customListBox, never() ).setSelectedIndex( 0 );
+  }
+  // endregion addItem( String )
 
   @Test
   public void testSetSuppressLayout() throws Exception {
@@ -148,25 +300,11 @@ public class CustomListBoxTest {
     customListBox.selectedIndex = 1;
     final ChangeListener changeListener = mock( ChangeListener.class );
     customListBox.listeners = new LinkedList<ChangeListener>() { {
-        add( changeListener );
-      } };
+      add( changeListener );
+    } };
     customListBox.setSuppressLayout( false );
     verify( customListBox, times( 2 ) ).updateUI();
     verify( changeListener ).onChange( customListBox );
-  }
-
-  @Test
-  public void testAddItem_String() throws Exception {
-    doCallRealMethod().when( customListBox ).addItem( anyString() );
-
-    customListBox.dragController = mock( DragController.class );
-    when( customListBox.items.size() ).thenReturn( 1 );
-    customListBox.suppressLayout = false;
-    customListBox.addItem( "item" );
-    verify( customListBox.items ).add( any( DefaultListItem.class ) );
-    verify( customListBox ).setSelectedIndex( 0 );
-    verify( customListBox ).updateUI();
-    verify( customListBox.dragController ).makeDraggable( any( Widget.class ) );
   }
 
   @Test
@@ -236,7 +374,6 @@ public class CustomListBoxTest {
   }
 
   @Test
-  @SuppressWarnings( "deprecation" )
   public void testSetSelectedIndex() throws Exception {
     doCallRealMethod().when( customListBox ).setSelectedIndex( anyInt() );
 
@@ -510,6 +647,37 @@ public class CustomListBoxTest {
   }
 
   @Test
+  public void testFindItems() {
+    doCallRealMethod().when( customListBox ).findItems( anyString() );
+    String searchText = "item1";
+
+    ListItem item1 = mock( ListItem.class );
+    when( item1.getText() ).thenReturn( searchText );
+    ListItem item2 = mock( ListItem.class );
+    when( item2.getText() ).thenReturn( "item2" );
+
+    customListBox.items = new ArrayList<ListItem>() { {
+      add( item1 );
+      add( item2 );
+    } };
+
+    List<ListItem> actual = customListBox.findItems( searchText );
+    assertEquals( 1, actual.size() );
+  }
+
+  @Test
+  public void testOnPopupClosed() {
+    doCallRealMethod().when( customListBox ).onPopupClosed( any(), anyBoolean() );
+    customListBox.popupShowing = true;
+
+    boolean booleanValue = true; // it does nothing inside "onPopupClosed" method
+    customListBox.onPopupClosed( mock( PopupPanel.class ), booleanValue );
+
+    verify( customListBox.getSearchTextBox(), times( 1 ) ).clearText();
+    assertFalse( customListBox.popupShowing );
+  }
+
+  @Test
   public void testSetEnabled() throws Exception {
     doCallRealMethod().when( customListBox ).setEnabled( anyBoolean() );
 
@@ -548,11 +716,43 @@ public class CustomListBoxTest {
     final ListItem item = mock( ListItem.class );
     when( item.getWidget() ).thenReturn( mock( Widget.class ) );
     customListBox.items = new LinkedList<ListItem>() { {
-        add( item );
-        add( item );
-      } };
+      add( item );
+      add( item );
+    } };
     customListBox.setDragController( dragController );
 
     verify( dragController, times( 2 ) ).makeDraggable( item.getWidget() );
+  }
+
+  @Test
+  public void testSetSelectedItemPlaceholderText() {
+    doCallRealMethod().when( customListBox ).setSelectedItemPlaceholderText( anyString() );
+
+    String value = "mock placeholder value";
+    customListBox.setSelectedItemPlaceholderText( value );
+
+    verify( customListBox.getSelectedItemPlaceholder(), times( 1 ) ).setText( value );
+  }
+
+  @Test
+  public void testCreatePopupPanel_notSearchable() {
+    doCallRealMethod().when( customListBox ).createPopupPanel();
+
+    customListBox.createPopupPanel();
+
+    // verify search was not queried and setup
+    verify( customListBox, never() ).getSearchTextBox();
+    verify( customListBox.getSearchTextBox(), never() ).addChangeListener( any() );
+  }
+
+  @Test
+  public void testCreatePopupPanel_searchable() {
+    doCallRealMethod().when( customListBox ).createPopupPanel();
+    when( customListBox.isSearchable() ).thenReturn( true );
+
+    customListBox.createPopupPanel();
+
+    verify( customListBox, times( 1 ) ).getSearchTextBox();
+    verify( customListBox.getSearchTextBox(), times( 1 ) ).addChangeListener( any( ChangeListener.class ) );
   }
 }
