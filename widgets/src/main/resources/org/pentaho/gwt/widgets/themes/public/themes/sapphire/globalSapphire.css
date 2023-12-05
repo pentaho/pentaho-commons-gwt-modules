@@ -3387,13 +3387,13 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-small.icon-run {
-  background: url('images/start-scheduler-small.png');
+  background: url('images/start_button_sapphire.png');
   height: 22px;
   width: 22px;
 }
 
 .icon-small.icon-run.disabled {
-  background: url('images/start-scheduler-small.png');
+  background: url('images/start_button_sapphire.png');
   height: 22px;
   width: 22px;
 }
@@ -3506,19 +3506,19 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-small.icon-stop {
-  background: url('images/stop_scheduler.png') no-repeat;
+  background: url('images/stop_button_sapphire.png') no-repeat;
   height: 22px;
   width: 22px;
 }
 
 .icon-small.icon-stop-scheduler {
-  background: url('images/power-on.png');
+  background: url('images/stop_scheduler.png');
   height: 22px;
   width: 22px;
 }
 
 .icon-small.icon-start-scheduler {
-  background: url('images/power-off.png');
+  background: url('images/start_scheduler.png');
   height: 22px;
   width: 22px;
 }
