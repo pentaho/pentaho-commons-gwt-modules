@@ -4431,11 +4431,11 @@ div.dijitDateTextBox.dijitComboBox {
   --icon-height: 22;
   --icon-width: 22;
 
-  background-image: url('images/start-scheduler-small.png');
+  background-image: url('images/start_button_ruby.png');
 }
 
 .icon-small.icon-run.disabled {
-  background: url('images/start-scheduler-small.png');
+  background: url('images/start_button_ruby.png');
 }
 
 .icon-small.icon-open-folder {
@@ -4575,7 +4575,7 @@ div.dijitDateTextBox.dijitComboBox {
   --icon-height: var(--icon-height-root);
   --icon-width: var(--icon-width-root);
 
-  background-image: url('images/stop_scheduler.png');
+  background-image: url('images/stop_button_ruby.png');
   background-repeat: no-repeat;
 }
 
@@ -4583,14 +4583,14 @@ div.dijitDateTextBox.dijitComboBox {
   --icon-height: var(--icon-height-root);
   --icon-width: var(--icon-width-root);
 
-  background-image: url('images/power-on.png');
+  background-image: url('images/stop_scheduler.png');
 }
 
 .icon-small.icon-start-scheduler {
   --icon-height: var(--icon-height-root);
   --icon-width: var(--icon-width-root);
 
-  background-image: url('images/power-off.png');
+  background-image: url('images/start_scheduler.png');
 }
 
 .icon-small.icon-execute {
