@@ -116,12 +116,11 @@ public class NewFolderCommand extends AbstractCommand {
 
     String folderPath = GenericFileNameUtils.buildPath( parentFolder.getPath(), folderName );
 
-    String createDirUrl = getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/create";
+    String createDirUrl = buildCreateFolderUrl( folderPath );
 
-    RequestBuilder createDirRequestBuilder = new RequestBuilder( RequestBuilder.PUT, createDirUrl );
+    RequestBuilder createDirRequestBuilder = new RequestBuilder( RequestBuilder.POST, createDirUrl );
     try {
-      createDirRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-      createDirRequestBuilder.sendRequest( GenericFileNameUtils.encodePath( folderPath ), new RequestCallback() {
+      createDirRequestBuilder.sendRequest( null, new RequestCallback() {
         @Override
         public void onError( Request createFolderRequest, Throwable exception ) {
           showCreateFolderResponseError( null, folderName );
@@ -139,6 +138,13 @@ public class NewFolderCommand extends AbstractCommand {
     } catch ( RequestException e ) {
       Window.alert( e.getLocalizedMessage() );
     }
+  }
+
+  @NonNull
+  private static String buildCreateFolderUrl( @NonNull String folderPath ) {
+    return getFullyQualifiedURL()
+      + "plugin/scheduler-plugin/api/generic-files/folders/"
+      + GenericFileNameUtils.encodePath( folderPath );
   }
 
   private void onFolderCreated( @NonNull String folderPath ) {

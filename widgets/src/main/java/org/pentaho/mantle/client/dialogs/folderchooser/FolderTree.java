@@ -59,6 +59,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
+import static org.pentaho.mantle.client.environment.EnvironmentHelper.getFullyQualifiedURL;
 
 public class FolderTree extends Tree {
   private static final String SELECTED_STYLE_NAME = "selected";
@@ -89,8 +90,6 @@ public class FolderTree extends Tree {
   private final FocusPanel focusable = new FocusPanel();
 
   public FolderTree() {
-    super();
-
     setAnimationEnabled( true );
     sinkEvents( Event.ONDBLCLICK );
 
@@ -167,7 +166,7 @@ public class FolderTree extends Tree {
   }
 
   private String buildFetchUrl() {
-    String url = EnvironmentHelper.getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folderTree?";
+    String url = getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folders/tree?";
 
     return url + "depth=" + depth + "&showHidden=" + showHiddenFiles + "&ts=" + System.currentTimeMillis();
   }
@@ -648,7 +647,7 @@ public class FolderTree extends Tree {
 
   private static String refreshHomeFolder() {
 
-    final String userHomeDirUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/session/userWorkspaceDir";
+    final String userHomeDirUrl = getFullyQualifiedURL() + "api/session/userWorkspaceDir";
     final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, userHomeDirUrl );
 
     try {
