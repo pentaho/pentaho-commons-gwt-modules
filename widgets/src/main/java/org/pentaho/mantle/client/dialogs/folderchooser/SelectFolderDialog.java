@@ -19,16 +19,13 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
-import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
 import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
 import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
@@ -39,19 +36,16 @@ import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty
 
 public class SelectFolderDialog extends PromptDialogBox {
 
-  private static class MySolutionTree extends FolderTree {
-    public SelectFolderDialog localThis;
-
+  private class MySolutionTree extends FolderTree {
     public MySolutionTree() {
-      super();
       super.setScrollOnSelectEnabled( false );
 
       addSelectionHandler( event -> {
         TreeItem selectedItem = event.getSelectedItem();
         if ( selectedItem instanceof FolderTreeItem ) {
           GenericFile file = ( (FolderTreeItem) selectedItem ).getFileModel();
-          localThis.add.setEnabled( file.isCanAddChildren() );
-          localThis.okButton.setEnabled( file.isCanAddChildren() );
+          SelectFolderDialog.this.add.setEnabled( file.isCanAddChildren() );
+          SelectFolderDialog.this.okButton.setEnabled( file.isCanAddChildren() );
         }
       } );
     }
@@ -59,26 +53,26 @@ public class SelectFolderDialog extends PromptDialogBox {
     public void onBrowserEvent( Event event ) {
       try {
         if ( DOM.eventGetType( event ) == Event.ONDBLCLICK && getSelectedItem().getChildCount() == 0 ) {
-          localThis.onOk();
+          SelectFolderDialog.this.onOk();
           event.stopPropagation();
           event.preventDefault();
         } else {
           super.onBrowserEvent( event );
         }
-      } catch ( Throwable t ) {
-        // Window.alert(t);
+      } catch ( Exception ex ) {
+        // Window.alert(ex);
       }
     }
   }
 
-  private static final MySolutionTree tree = new MySolutionTree();
+  private final MySolutionTree tree;
 
   private final ToolbarButton add;
 
-  private String defaultSelectedPath = FolderTree.getHomeFolder();
+  private static String defaultSelectedPath = FolderTree.getHomeFolder();
 
   public SelectFolderDialog() {
-    this( FolderTree.getHomeFolder() );
+    this( null );
   }
 
   public SelectFolderDialog( String selectedPath ) {
@@ -89,11 +83,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
     setWidthCategory( DialogWidthCategory.SMALL );
 
-    if ( selectedPath != null ) {
-      tree.setSelectedPath( selectedPath );
-      defaultSelectedPath = selectedPath;
-    }
-    tree.localThis = this;
+    tree = new MySolutionTree();
 
     SimplePanel treeWrapper = new SimplePanel( tree );
     treeWrapper.getElement().addClassName( "select-folder-tree" );
@@ -128,42 +118,31 @@ public class SelectFolderDialog extends PromptDialogBox {
     content.add( treeWrapper );
 
     setContent( content );
-    fetchModel( getSelectedPath() );
 
-    TreeItem selItem = tree.getSelectedItem();
-    if ( selItem != null ) {
-      selItem.getElement().scrollIntoView();
-    }
-  }
-
-  public void cancelSelection() {
-    tree.select( defaultSelectedPath );
+    fetchModel( selectedPath != null ? selectedPath : defaultSelectedPath );
   }
 
   public String getSelectedPath() {
-    final FolderTreeItem selectedItem = (FolderTreeItem) tree.getSelectedItem();
-    return selectedItem != null ? selectedItem.getFileModel().getPath() : defaultSelectedPath;
+    String selectedPath = tree.getSelectedPath();
+    return selectedPath != null ? selectedPath : defaultSelectedPath;
   }
 
-  private void fetchModel( final String selectedPath ) {
+  private void fetchModel( String selectedPath ) {
+    tree.fetchModel( null, selectedPath );
+  }
 
-    tree.fetchModel( new AsyncCallback<GenericFileTree>() {
+  @Override
+  protected void onOkValid() {
+    // Accept the selected path as the default selected path.
+    String selectedPath = tree.getSelectedPath();
+    if ( selectedPath != null ) {
+      setDefaultSelectedPath( selectedPath );
+    }
 
-      @Override
-      public void onSuccess( GenericFileTree fileTreeModel ) {
-        tree.select( selectedPath );
-      }
+    super.onOkValid();
+  }
 
-      @Override
-      public void onFailure( Throwable caught ) {
-        MessageDialogBox dialogBox = new MessageDialogBox(
-          Messages.getString( "error" ),
-          Messages.getString( "refreshRepository" ),
-          false,
-          false,
-          true );
-        dialogBox.center();
-      }
-    } );
+  private static void setDefaultSelectedPath( String selectedPath ) {
+    defaultSelectedPath = selectedPath;
   }
 }

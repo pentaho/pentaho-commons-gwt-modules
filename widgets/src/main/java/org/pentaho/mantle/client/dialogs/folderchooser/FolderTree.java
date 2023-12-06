@@ -17,16 +17,19 @@
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
@@ -50,7 +53,6 @@ import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.client.messages.Messages;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -70,8 +72,18 @@ public class FolderTree extends Tree {
   private int depth = -1;
   private boolean useDescriptionsForTooltip;
   private GenericFileTree rootTreeModel;
-  private FolderTreeItem selectedItem;
-  private String selectedPath;
+
+  /**
+   * Stores the currently selected item in duplication of the base class' private field,
+   * obtained via {@link #getSelectedItem()}. This is because the selection changed event
+   * as exposed by {@link #addSelectionHandler(SelectionHandler)} occurs after selection has changed and
+   * does not provide the previously selected item, which is needed for CSS style maintenance.
+   * <p>
+   * This field is updated only from within {@link #handleItemSelection(SelectionEvent)}, in response to an actual
+   * change of {@link #getSelectedItem()}.
+   */
+  private FolderTreeItem selectedItemLag;
+
   private static String homeFolder;
 
   private final FocusPanel focusable = new FocusPanel();
@@ -99,14 +111,29 @@ public class FolderTree extends Tree {
     DOM.appendChild( element, focusableElement );
     DOM.sinkEvents( focusableElement, Event.FOCUSEVENTS );
 
+    // TODO: Is this always null??
+    selectedItemLag = (FolderTreeItem) getSelectedItem();
     addSelectionHandler( this::handleItemSelection );
+
     addOpenHandler( this::handleOpen );
     addCloseHandler( this::handleClose );
   }
 
-  public void fetchModel( final AsyncCallback<GenericFileTree> callback ) {
-    // notify listeners that we are about to talk to the server (in case there's anything they want to do
-    // such as busy cursor or tree loading indicators)
+  public void fetchModel() {
+    fetchModel( null );
+  }
+
+  public void fetchModel( @Nullable AsyncCallback<GenericFileTree> callback ) {
+    fetchModel( callback, null );
+  }
+
+  public void fetchModel( @Nullable final AsyncCallback<GenericFileTree> callback,
+                          @Nullable String initialSelectedPath ) {
+
+    // Preserve currently selected path, if none is specified.
+    // Must do this before calling clear, from within onModelFetching, which also clears selection.
+    final String initialOrPreviousSelectedPath = initialSelectedPath != null ? initialSelectedPath : getSelectedPath();
+
     onModelFetching();
 
     RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, buildFetchUrl() );
@@ -124,7 +151,7 @@ public class FolderTree extends Tree {
           final GenericFileTreeJsonParser parser = new GenericFileTreeJsonParser( response.getText() );
           final GenericFileTree fileTreeModel = parser.getTree();
 
-          onModelFetched( fileTreeModel );
+          onModelFetched( fileTreeModel, initialOrPreviousSelectedPath );
           if ( callback != null ) {
             callback.onSuccess( fileTreeModel );
           }
@@ -159,6 +186,7 @@ public class FolderTree extends Tree {
         break;
 
       case Event.ONCLICK:
+        // TODO: Is this achieving anything?
         try {
           int[] scrollOffsets = ElementUtils.calculateScrollOffsets( getElement() );
           int[] offsets = ElementUtils.calculateOffsets( getElement() );
@@ -183,13 +211,9 @@ public class FolderTree extends Tree {
     } catch ( Exception ignored ) {
       // death to this browser event
     }
-
-    TreeItem selItem = getSelectedItem();
-    if ( selItem != null ) {
-      selItem.getElement().scrollIntoView();
-    }
   }
 
+  // region Tree item mouse hit test
   @Nullable
   private TreeItem findTreeItemAtPosition( int x, int y ) {
     return findTreeItemAtPosition( null, x, y );
@@ -215,61 +239,55 @@ public class FolderTree extends Tree {
 
     return null;
   }
+  // endregion
 
   @Override
   protected void onLoad() {
     super.onLoad();
+    // TODO: Is this really needed on load?
     fixLeafNodes();
   }
 
   public void onModelFetching() {
     WaitPopup.getInstance().setVisible( true );
 
-    if ( getSelectedItem() != null ) {
-      selectedItem = (FolderTreeItem) getSelectedItem();
-    }
-
     clear();
+    assert selectedItemLag == null : "Clear should have reset currently selected item";
+
     addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) );
   }
 
-  public void onModelFetched( GenericFileTree treeModel ) {
+  public void onModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
 
-    setModel( treeModel );
+    setModel( treeModel, initialSelectedPath );
 
     WaitPopup.getInstance().setVisible( false );
   }
 
-  private void setModel( GenericFileTree treeModel ) {
-    if ( treeModel == null ) {
-      return;
-    }
+  private void setModel( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
 
     this.rootTreeModel = treeModel;
 
-    // Remember selectedPath and selectedItem, so we can reselect it after the tree is loaded
-    onModelChanged();
+    onModelChanged( initialSelectedPath );
   }
 
-  private void onModelChanged() {
+  private void onModelChanged( @Nullable String initialSelectedPath ) {
+
+    // Preserve currently selected path, if none is specified.
+    // Do this before calling buildSolutionTree, below, which clears the tree, including selection.
+    if ( initialSelectedPath == null ) {
+      initialSelectedPath = getSelectedPath();
+    }
+
     buildSolutionTree();
 
-    // Restore selection
-    if ( selectedPath != null ) {
-      select( selectedPath );
-    } else if ( selectedItem != null ) {
-      selectFromList( getTreeItemPath( selectedItem ) );
+    if ( initialSelectedPath != null ) {
+      select( initialSelectedPath );
     } else {
-      // Or, open all "root" nodes.
-      for ( int i = 0; i < getItemCount(); i++ ) {
-        getItem( i ).setState( true );
-      }
+      openRootTreeItems();
     }
   }
 
-  /**
-   *
-   */
   private void fixLeafNodes() {
     List<FolderTreeItem> allNodes = getAllNodes();
     for ( FolderTreeItem treeItem : allNodes ) {
@@ -307,20 +325,17 @@ public class FolderTree extends Tree {
     }
   }
 
-  public void setSelectedPath( String path ) {
-    selectedPath = path;
+  @Nullable
+  public String getSelectedPath() {
+    final FolderTreeItem selectedItem = (FolderTreeItem) getSelectedItem();
+    return selectedItem != null ? selectedItem.getFileModel().getPath() : null;
   }
 
   public void select( @Nullable String path ) {
-
-    selectedPath = path;
-
-    selectedItem = findTreeItem( selectedPath );
-
-    if ( selectedItem != null ) {
-      ensureTreeItemVisible( selectedItem );
-      setSelectedItem( selectedItem, true );
-    } else if ( selectedPath != null && !selectedPath.equals( getHomeFolder() ) ) {
+    TreeItem newSelectedItem = findTreeItem( path );
+    if ( newSelectedItem != null ) {
+      setSelectedItem( newSelectedItem, true );
+    } else if ( path != null && !path.equals( getHomeFolder() ) ) {
       // If the given path did not exist, then select the home folder (recursive call).
       select( getHomeFolder() );
     }
@@ -333,6 +348,13 @@ public class FolderTree extends Tree {
     while ( parentTreeItem != null ) {
       parentTreeItem.setState( true );
       parentTreeItem = parentTreeItem.getParentItem();
+    }
+  }
+
+  protected void openRootTreeItems() {
+    // Or, open all "root" nodes.
+    for ( int i = 0; i < getItemCount(); i++ ) {
+      getItem( i ).setState( true );
     }
   }
 
@@ -366,10 +388,7 @@ public class FolderTree extends Tree {
 
     GenericFile childFileModel = childTreeItem.getFileModel();
 
-    if ( childFileModel.isGroupFolder() ) {
-      // These do not contribute to the path, so just pass-through the same depth and keep looking.
-      return findTreeItemRecursive( childTreeItem, pathSegments, level );
-    }
+    assert !childFileModel.isGroupFolder() : "Folder tree item should not be mapped to group folder";
 
     String pathSegment = pathSegments.get( level );
     if ( childFileModel.isProviderRootFolder() ) {
@@ -387,88 +406,53 @@ public class FolderTree extends Tree {
   }
   // endregion
 
-  @NonNull
-  private static List<FolderTreeItem> getTreeItemPath( @Nullable FolderTreeItem treeItem ) {
-    List<FolderTreeItem> treeItemPath = new ArrayList<>();
-    while ( treeItem != null ) {
-      treeItemPath.add( treeItem );
-      treeItem = (FolderTreeItem) treeItem.getParentItem();
+  @Override
+  public void setSelectedItem( TreeItem item, boolean fireEvents ) {
+    if ( item != null ) {
+      ensureTreeItemVisible( item );
     }
 
-    Collections.reverse( treeItemPath );
+    super.setSelectedItem( item, fireEvents );
 
-    return treeItemPath;
-  }
-
-  private void selectFromList( @NonNull List<FolderTreeItem> oldTreeItemPath ) {
-    if ( oldTreeItemPath.isEmpty() ) {
-      return;
+    if ( fireEvents && getSelectedItem() != selectedItemLag ) {
+      // Unfortunately, the base class never fires the selection event when selection is cleared (null),
+      // causing the local handler, handleItemSelection, to not be called.
+      // So, call the local handler here, explicitly, with a locally instantiated event object.
+      handleItemSelection( new SelectionEvent<TreeItem>( getSelectedItem() ) {
+      } );
     }
-
-    FolderTreeItem recoveredTreeItem = recoverTreeItem( oldTreeItemPath );
-    if ( recoveredTreeItem == null ) {
-      return;
-    }
-
-    ensureTreeItemVisible( recoveredTreeItem );
-    setSelectedItem( recoveredTreeItem );
-  }
-
-  @Nullable
-  private FolderTreeItem recoverTreeItem( @NonNull List<FolderTreeItem> oldTreeItemPath ) {
-    if ( oldTreeItemPath.isEmpty() ) {
-      return null;
-    }
-
-    // Recovered tree item of path.
-    FolderTreeItem newParentTreeItem = null;
-
-    for ( FolderTreeItem oldTreeItem : oldTreeItemPath ) {
-      newParentTreeItem = getChildTreeItemByFileName( newParentTreeItem, oldTreeItem.getFileName() );
-      if ( newParentTreeItem == null ) {
-        return null;
-      }
-    }
-
-    // If execution got here, then at least one path segment was resolved.
-    return newParentTreeItem;
-  }
-
-  @Nullable
-  private FolderTreeItem getChildTreeItemByFileName( @Nullable FolderTreeItem parentTreeItem,
-                                                     @NonNull String fileName ) {
-
-    for ( FolderTreeItem childTreeItem : getChildItems( parentTreeItem ) ) {
-      if ( fileName.equals( childTreeItem.getFileName() ) ) {
-        return childTreeItem;
-      }
-    }
-
-    return null;
   }
 
   private void handleItemSelection( SelectionEvent<TreeItem> event ) {
 
-    if ( selectedItem != null ) {
-      UIObject styleUIObject = getSelectionStyleUIObject( selectedItem );
+    if ( selectedItemLag != null ) {
+      UIObject styleUIObject = getSelectionStyleUIObject( selectedItemLag );
 
       styleUIObject.removeStyleName( SELECTED_STYLE_NAME );
 
-      if ( selectedItem.getFileModel().isHidden() ) {
+      if ( selectedItemLag.getFileModel().isHidden() ) {
         styleUIObject.addStyleDependentName( HIDDEN_STYLE_NAME );
       }
     }
 
-    selectedItem = (FolderTreeItem) event.getSelectedItem();
+    selectedItemLag = (FolderTreeItem) event.getSelectedItem();
 
-    if ( selectedItem != null ) {
-      UIObject styleUIObject = getSelectionStyleUIObject( selectedItem );
+    if ( selectedItemLag != null ) {
+      UIObject styleUIObject = getSelectionStyleUIObject( selectedItemLag );
 
       styleUIObject.addStyleName( SELECTED_STYLE_NAME );
 
-      if ( selectedItem.getFileModel().isHidden() ) {
+      if ( selectedItemLag.getFileModel().isHidden() ) {
         styleUIObject.removeStyleDependentName( HIDDEN_STYLE_NAME );
       }
+
+      // TODO: Still not working in all cases. Just on arrow keys... Not working on initial loading.
+      Scheduler.get().scheduleDeferred( (Command) () -> {
+        FolderTreeItem selectedItem = (FolderTreeItem) getSelectedItem();
+        if ( selectedItem != null ) {
+          selectedItem.getElement().scrollIntoView();
+        }
+      } );
     }
   }
 
@@ -480,12 +464,7 @@ public class FolderTree extends Tree {
   }
 
   private void handleOpen( OpenEvent<TreeItem> event ) {
-    TreeItem target = event.getTarget();
-
-    // By default, expanding a node does not select it. Add that in here
-    setSelectedItem( target );
-
-    target.addStyleName( OPEN_STYLE_NAME );
+   event.getTarget().addStyleName( OPEN_STYLE_NAME );
   }
 
   private void handleClose( CloseEvent<TreeItem> event ) {
@@ -495,7 +474,9 @@ public class FolderTree extends Tree {
   // region buildSolutionTree et al.
   private void buildSolutionTree() {
 
+    // Includes getting rid of the "Loading" tree item, if any.
     clear();
+    assert selectedItemLag == null : "Clear should have reset currently selected item";
 
     if ( shouldShowFileTreeModel( rootTreeModel ) ) {
       buildSolutionTree( this, rootTreeModel );
@@ -530,6 +511,8 @@ public class FolderTree extends Tree {
   @NonNull
   private FolderTreeItem buildFolderTreeItem( @NonNull GenericFileTree fileTreeModel ) {
     GenericFile fileModel = fileTreeModel.getFile();
+
+    assert !fileModel.isGroupFolder() : "Folder tree item should not be mapped to group folder";
 
     String name = fileModel.getName();
     String title = fileModel.getTitleOrName();
@@ -619,7 +602,8 @@ public class FolderTree extends Tree {
 
   public void setUseDescriptionsForTooltip( boolean useDescriptionsForTooltip ) {
     this.useDescriptionsForTooltip = useDescriptionsForTooltip;
-    onModelFetched( rootTreeModel );
+
+    setModel( rootTreeModel, null );
   }
 
   public int getDepth() {
@@ -699,7 +683,8 @@ public class FolderTree extends Tree {
       this.parentTree = parentTree;
     }
 
-    @Override @NonNull
+    @Override
+    @NonNull
     public Iterator<FolderTreeItem> iterator() {
       return new FolderTreeItemIterator();
     }
