@@ -80,11 +80,12 @@ public class SelectFolderDialog extends PromptDialogBox {
 
     Toolbar bar = new Toolbar();
     bar.addStyleName( "select-folder-toolbar" );
-    bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
     bar.add( Toolbar.GLUE );
 
     addButton = createToolbarButtonAdd();
     bar.add( addButton );
+
+    bar.add( createToolbarButtonRefresh() );
 
     VerticalPanel content = new VerticalFlexPanel();
     content.addStyleName( "with-layout-gap-none" );
@@ -99,7 +100,7 @@ public class SelectFolderDialog extends PromptDialogBox {
   // region Create Toolbar Helpers
   @NonNull
   private ToolbarButton createToolbarButtonAdd() {
-    ToolbarButton button = new ToolbarButton( createToolbarButtonImage() );
+    ToolbarButton button = new ToolbarButton( createToolbarButtonImage( "pentaho-addbutton") );
 
     button.setToolTip( Messages.getString( "createNewFolder" ) );
 
@@ -116,14 +117,31 @@ public class SelectFolderDialog extends PromptDialogBox {
   }
 
   @NonNull
-  private static Image createToolbarButtonImage() {
+  private ToolbarButton createToolbarButtonRefresh() {
+    ToolbarButton button = new ToolbarButton( createToolbarButtonImage( "icon-refresh" ) );
+
+    button.setToolTip( Messages.getString( "refreshTooltip" ) );
+
+    button.setCommand( () -> {
+      GenericFile selectedFileModel = tree.getSelectedFileModel();
+      if ( selectedFileModel != null ) {
+        RefreshFolderTreeCommand refreshFolderCommand = new RefreshFolderTreeCommand();
+        refreshFolderCommand.setCallback( nothing -> fetchModel( null ) );
+        refreshFolderCommand.execute();
+      }
+    } );
+
+    return button;
+  }
+
+  @NonNull
+  private static Image createToolbarButtonImage( @NonNull String styleName ) {
     Image image = new Image(
       EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
 
     image.addStyleName( "icon-small" );
     image.addStyleName( "icon-zoomable" );
-    image.addStyleName( "pentaho-addbutton" );
-
+    image.addStyleName( styleName );
     return image;
   }
   // endregion
