@@ -22,8 +22,9 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TreeItem;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
 import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
@@ -37,19 +38,6 @@ import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty
 public class SelectFolderDialog extends PromptDialogBox {
 
   private class MySolutionTree extends FolderTree {
-    public MySolutionTree() {
-      super.setScrollOnSelectEnabled( false );
-
-      addSelectionHandler( event -> {
-        TreeItem selectedItem = event.getSelectedItem();
-        if ( selectedItem instanceof FolderTreeItem ) {
-          GenericFile file = ( (FolderTreeItem) selectedItem ).getFileModel();
-          SelectFolderDialog.this.add.setEnabled( file.isCanAddChildren() );
-          SelectFolderDialog.this.okButton.setEnabled( file.isCanAddChildren() );
-        }
-      } );
-    }
-
     public void onBrowserEvent( Event event ) {
       try {
         if ( DOM.eventGetType( event ) == Event.ONDBLCLICK && getSelectedItem().getChildCount() == 0 ) {
@@ -67,7 +55,7 @@ public class SelectFolderDialog extends PromptDialogBox {
 
   private final MySolutionTree tree;
 
-  private final ToolbarButton add;
+  private final ToolbarButton addButton;
 
   private static String defaultSelectedPath = FolderTree.getHomeFolder();
 
@@ -84,6 +72,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     setWidthCategory( DialogWidthCategory.SMALL );
 
     tree = new MySolutionTree();
+    tree.addSelectionHandler( event -> onSelectionChanged( tree.getSelectedFileModel() ) );
 
     SimplePanel treeWrapper = new SimplePanel( tree );
     treeWrapper.getElement().addClassName( "select-folder-tree" );
@@ -94,23 +83,8 @@ public class SelectFolderDialog extends PromptDialogBox {
     bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
     bar.add( Toolbar.GLUE );
 
-    Image image =
-      new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
-    image.addStyleName( "icon-small" );
-    image.addStyleName( "icon-zoomable" );
-    image.addStyleName( "pentaho-addbutton" );
-
-    add = new ToolbarButton( image );
-    add.setToolTip( Messages.getString( "createNewFolder" ) );
-    add.setCommand( () -> {
-      GenericFile fileModel = ( (FolderTreeItem) tree.getSelectedItem() ).getFileModel();
-      NewFolderCommand newFolderCommand = new NewFolderCommand( fileModel );
-
-      newFolderCommand.setCallback( this::fetchModel );
-
-      newFolderCommand.execute();
-    } );
-    bar.add( add );
+    addButton = createToolbarButtonAdd();
+    bar.add( addButton );
 
     VerticalPanel content = new VerticalFlexPanel();
     content.addStyleName( "with-layout-gap-none" );
@@ -120,6 +94,45 @@ public class SelectFolderDialog extends PromptDialogBox {
     setContent( content );
 
     fetchModel( selectedPath != null ? selectedPath : defaultSelectedPath );
+  }
+
+  // region Create Toolbar Helpers
+  @NonNull
+  private ToolbarButton createToolbarButtonAdd() {
+    ToolbarButton button = new ToolbarButton( createToolbarButtonImage() );
+
+    button.setToolTip( Messages.getString( "createNewFolder" ) );
+
+    button.setCommand( () -> {
+      GenericFile selectedFileModel = tree.getSelectedFileModel();
+      if ( selectedFileModel != null ) {
+        NewFolderCommand newFolderCommand = new NewFolderCommand( selectedFileModel );
+        newFolderCommand.setCallback( this::fetchModel );
+        newFolderCommand.execute();
+      }
+    } );
+
+    return button;
+  }
+
+  @NonNull
+  private static Image createToolbarButtonImage() {
+    Image image = new Image(
+      EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
+
+    image.addStyleName( "icon-small" );
+    image.addStyleName( "icon-zoomable" );
+    image.addStyleName( "pentaho-addbutton" );
+
+    return image;
+  }
+  // endregion
+
+  protected void onSelectionChanged( @Nullable GenericFile selectedFileModel ) {
+    boolean canAddChildren = selectedFileModel != null && selectedFileModel.isCanAddChildren();
+
+    addButton.setEnabled( canAddChildren );
+    okButton.setEnabled( canAddChildren );
   }
 
   public String getSelectedPath() {

@@ -112,7 +112,7 @@ public class FolderTree extends Tree {
     DOM.sinkEvents( focusableElement, Event.FOCUSEVENTS );
 
     // TODO: Is this always null??
-    selectedItemLag = (FolderTreeItem) getSelectedItem();
+    selectedItemLag = getSelectedItem();
     addSelectionHandler( this::handleItemSelection );
 
     addOpenHandler( this::handleOpen );
@@ -325,12 +325,6 @@ public class FolderTree extends Tree {
     }
   }
 
-  @Nullable
-  public String getSelectedPath() {
-    final FolderTreeItem selectedItem = (FolderTreeItem) getSelectedItem();
-    return selectedItem != null ? selectedItem.getFileModel().getPath() : null;
-  }
-
   public void select( @Nullable String path ) {
     TreeItem newSelectedItem = findTreeItem( path );
     if ( newSelectedItem != null ) {
@@ -406,6 +400,12 @@ public class FolderTree extends Tree {
   }
   // endregion
 
+
+  @Override
+  public FolderTreeItem getSelectedItem() {
+    return (FolderTreeItem) super.getSelectedItem();
+  }
+
   @Override
   public void setSelectedItem( TreeItem item, boolean fireEvents ) {
     if ( item != null ) {
@@ -421,6 +421,18 @@ public class FolderTree extends Tree {
       handleItemSelection( new SelectionEvent<TreeItem>( getSelectedItem() ) {
       } );
     }
+  }
+
+  @Nullable
+  public GenericFile getSelectedFileModel() {
+    final FolderTreeItem selectedItem = getSelectedItem();
+    return selectedItem != null ? selectedItem.getFileModel() : null;
+  }
+
+  @Nullable
+  public String getSelectedPath() {
+    final GenericFile fileModel = getSelectedFileModel();
+    return fileModel != null ? fileModel.getPath() : null;
   }
 
   private void handleItemSelection( SelectionEvent<TreeItem> event ) {
@@ -448,7 +460,7 @@ public class FolderTree extends Tree {
 
       // TODO: Still not working in all cases. Just on arrow keys... Not working on initial loading.
       Scheduler.get().scheduleDeferred( (Command) () -> {
-        FolderTreeItem selectedItem = (FolderTreeItem) getSelectedItem();
+        FolderTreeItem selectedItem = getSelectedItem();
         if ( selectedItem != null ) {
           selectedItem.getElement().scrollIntoView();
         }
@@ -619,7 +631,7 @@ public class FolderTree extends Tree {
   }
 
   public List<GenericFile> getFiles() {
-    final FolderTreeItem selectedTreeItem = (FolderTreeItem) getSelectedItem();
+    final FolderTreeItem selectedTreeItem = getSelectedItem();
     List<GenericFile> values = new ArrayList<>();
     values.add( selectedTreeItem.getFileModel() );
     return values;
