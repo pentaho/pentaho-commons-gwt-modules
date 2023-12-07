@@ -34,7 +34,6 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HasTreeItems;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
@@ -49,7 +48,6 @@ import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeJsonParser;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.WaitPopup;
-import org.pentaho.mantle.client.environment.EnvironmentHelper;
 import org.pentaho.mantle.client.messages.Messages;
 
 import java.util.ArrayList;
@@ -85,10 +83,6 @@ public class FolderTree extends Tree {
    */
   private FolderTreeItem selectedItemLag;
 
-  private static String homeFolder;
-
-  private final FocusPanel focusable = new FocusPanel();
-
   public FolderTree() {
     setAnimationEnabled( true );
     sinkEvents( Event.ONDBLCLICK );
@@ -98,26 +92,12 @@ public class FolderTree extends Tree {
     element.setAttribute( "oncontextmenu", "return false;" );
     setStyleProperty( element, "margin", "29px 0 10px 0" );
 
-    Element focusableElement = focusable.getElement();
-    focusableElement.setAttribute( "hideFocus", "true" );
-    setStyleProperty( focusableElement, "fontSize", "0" );
-    setStyleProperty( focusableElement, "position", "absolute" );
-    setStyleProperty( focusableElement, "outline", "0" );
-    setStyleProperty( focusableElement, "width", "1px" );
-    setStyleProperty( focusableElement, "height", "1px" );
-    setStyleProperty( focusableElement, "zIndex", "-1" );
-
-    DOM.appendChild( element, focusableElement );
-    DOM.sinkEvents( focusableElement, Event.FOCUSEVENTS );
-
-    // TODO: Is this always null??
-    selectedItemLag = getSelectedItem();
     addSelectionHandler( this::handleItemSelection );
-
     addOpenHandler( this::handleOpen );
     addCloseHandler( this::handleClose );
   }
 
+  // region fetchModel
   public void fetchModel() {
     fetchModel( null );
   }
@@ -171,10 +151,26 @@ public class FolderTree extends Tree {
     return url + "depth=" + depth + "&showHidden=" + showHiddenFiles + "&ts=" + System.currentTimeMillis();
   }
 
+  protected void onModelFetching() {
+    WaitPopup.getInstance().setVisible( true );
+
+    clear();
+    assert selectedItemLag == null : "Clear should have reset currently selected item";
+
+    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) );
+  }
+
+  protected void onModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
+
+    setModel( treeModel, initialSelectedPath );
+
+    WaitPopup.getInstance().setVisible( false );
+  }
+  // endregion
+
   @Override
   public void onBrowserEvent( Event event ) {
-    int eventType = DOM.eventGetType( event );
-    switch ( eventType ) {
+    switch ( DOM.eventGetType( event ) ) {
       case Event.ONMOUSEDOWN:
         if ( event.getButton() == NativeEvent.BUTTON_RIGHT ) {
           TreeItem treeItem = findTreeItemAtPosition( event.getClientX(), event.getClientY() );
@@ -184,32 +180,18 @@ public class FolderTree extends Tree {
         }
         break;
 
-      case Event.ONCLICK:
-        // TODO: Is this achieving anything?
-        try {
-          int[] scrollOffsets = ElementUtils.calculateScrollOffsets( getElement() );
-          int[] offsets = ElementUtils.calculateOffsets( getElement() );
-          focusable.getElement().getStyle()
-            .setProperty( "top", ( event.getClientY() + scrollOffsets[ 1 ] - offsets[ 1 ] ) + "px" );
-        } catch ( Exception ignored ) {
-          // ignore any exceptions fired by this. Most likely a result of the element
-          // not being on the DOM
+      case Event.ONDBLCLICK:
+        FolderTreeItem selectedItem = getSelectedItem();
+        if ( selectedItem != null ) {
+          selectedItem.setState( !selectedItem.getState(), true );
         }
-        break;
+        return;
 
       default:
         break;
     }
 
-    try {
-      if ( DOM.eventGetType( event ) == Event.ONDBLCLICK ) {
-        getSelectedItem().setState( !getSelectedItem().getState(), true );
-      } else {
-        super.onBrowserEvent( event );
-      }
-    } catch ( Exception ignored ) {
-      // death to this browser event
-    }
+    super.onBrowserEvent( event );
   }
 
   // region Tree item mouse hit test
@@ -240,37 +222,14 @@ public class FolderTree extends Tree {
   }
   // endregion
 
-  @Override
-  protected void onLoad() {
-    super.onLoad();
-    // TODO: Is this really needed on load?
-    fixLeafNodes();
-  }
-
-  public void onModelFetching() {
-    WaitPopup.getInstance().setVisible( true );
-
-    clear();
-    assert selectedItemLag == null : "Clear should have reset currently selected item";
-
-    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) );
-  }
-
-  public void onModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
-
-    setModel( treeModel, initialSelectedPath );
-
-    WaitPopup.getInstance().setVisible( false );
-  }
-
-  private void setModel( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
+  protected void setModel( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
 
     this.rootTreeModel = treeModel;
 
     onModelChanged( initialSelectedPath );
   }
 
-  private void onModelChanged( @Nullable String initialSelectedPath ) {
+  protected void onModelChanged( @Nullable String initialSelectedPath ) {
 
     // Preserve currently selected path, if none is specified.
     // Do this before calling buildSolutionTree, below, which clears the tree, including selection.
@@ -287,6 +246,7 @@ public class FolderTree extends Tree {
     }
   }
 
+  // region fixLeafNodes et al.
   private void fixLeafNodes() {
     List<FolderTreeItem> allNodes = getAllNodes();
     for ( FolderTreeItem treeItem : allNodes ) {
@@ -323,33 +283,7 @@ public class FolderTree extends Tree {
       getAllNodes( child, nodeList );
     }
   }
-
-  public void select( @Nullable String path ) {
-    TreeItem newSelectedItem = findTreeItem( path );
-    if ( newSelectedItem != null ) {
-      setSelectedItem( newSelectedItem, true );
-    } else if ( path != null && !path.equals( getHomeFolder() ) ) {
-      // If the given path did not exist, then select the home folder (recursive call).
-      select( getHomeFolder() );
-    }
-  }
-
-  // Based on Tree#ensureSelectedItemVisible. Allows ensuring a given tree item is visible
-  // before making it selected, so that focus can be changed to it, when selected afterward.
-  protected static void ensureTreeItemVisible( @NonNull TreeItem treeItem ) {
-    TreeItem parentTreeItem = treeItem.getParentItem();
-    while ( parentTreeItem != null ) {
-      parentTreeItem.setState( true );
-      parentTreeItem = parentTreeItem.getParentItem();
-    }
-  }
-
-  protected void openRootTreeItems() {
-    // Or, open all "root" nodes.
-    for ( int i = 0; i < getItemCount(); i++ ) {
-      getItem( i ).setState( true );
-    }
-  }
+  // endregion
 
   // region findTreeItem et al.
   @Nullable
@@ -399,7 +333,7 @@ public class FolderTree extends Tree {
   }
   // endregion
 
-
+  // region Selection
   @Override
   public FolderTreeItem getSelectedItem() {
     return (FolderTreeItem) super.getSelectedItem();
@@ -422,6 +356,16 @@ public class FolderTree extends Tree {
     }
   }
 
+  public void select( @Nullable String path ) {
+    TreeItem newSelectedItem = findTreeItem( path );
+    if ( newSelectedItem != null ) {
+      setSelectedItem( newSelectedItem, true );
+    } else if ( path != null && !path.equals( getHomeFolder() ) ) {
+      // If the given path did not exist, then select the home folder (recursive call).
+      select( getHomeFolder() );
+    }
+  }
+
   @Nullable
   public GenericFile getSelectedFileModel() {
     final FolderTreeItem selectedItem = getSelectedItem();
@@ -434,7 +378,7 @@ public class FolderTree extends Tree {
     return fileModel != null ? fileModel.getPath() : null;
   }
 
-  private void handleItemSelection( SelectionEvent<TreeItem> event ) {
+  private void handleItemSelection( @NonNull SelectionEvent<TreeItem> event ) {
 
     if ( selectedItemLag != null ) {
       UIObject styleUIObject = getSelectionStyleUIObject( selectedItemLag );
@@ -473,9 +417,29 @@ public class FolderTree extends Tree {
       ? treeItem.getWidget().getParent()
       : treeItem;
   }
+  // endregion
+
+  // region Interaction helpers
+  // Based on Tree#ensureSelectedItemVisible. Allows ensuring a given tree item is visible
+  // before making it selected, so that focus can be changed to it, when selected afterward.
+  protected static void ensureTreeItemVisible( @NonNull TreeItem treeItem ) {
+    TreeItem parentTreeItem = treeItem.getParentItem();
+    while ( parentTreeItem != null ) {
+      parentTreeItem.setState( true );
+      parentTreeItem = parentTreeItem.getParentItem();
+    }
+  }
+
+  protected void openRootTreeItems() {
+    // Or, open all "root" nodes.
+    for ( int i = 0; i < getItemCount(); i++ ) {
+      getItem( i ).setState( true );
+    }
+  }
+  // endregion
 
   private void handleOpen( OpenEvent<TreeItem> event ) {
-   event.getTarget().addStyleName( OPEN_STYLE_NAME );
+    event.getTarget().addStyleName( OPEN_STYLE_NAME );
   }
 
   private void handleClose( CloseEvent<TreeItem> event ) {
@@ -629,52 +593,16 @@ public class FolderTree extends Tree {
     this.depth = depth;
   }
 
-  public List<GenericFile> getFiles() {
-    final FolderTreeItem selectedTreeItem = getSelectedItem();
-    List<GenericFile> values = new ArrayList<>();
-    values.add( selectedTreeItem.getFileModel() );
-    return values;
-  }
-
   /**
-   * Retrieves the default home folder.
+   * Gets the default home folder.
    *
    * @return The home folder
    */
-  static String getHomeFolder() {
-    return homeFolder != null ? homeFolder : refreshHomeFolder();
-  }
+  static native String getHomeFolder() /*-{
+    return $wnd.top.HOME_FOLDER;
+  }-*/;
 
-  private static String refreshHomeFolder() {
-
-    final String userHomeDirUrl = getFullyQualifiedURL() + "api/session/userWorkspaceDir";
-    final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, userHomeDirUrl );
-
-    try {
-      // Get user home folder string
-      RequestCallback rc = new RequestCallback() {
-        @Override
-        public void onResponseReceived( final Request request, final Response response ) {
-          if ( response.getStatusCode() == 200 ) {
-            // API returns /user/home_folder/workspace
-            homeFolder = response.getText().replace( "/workspace", "" );
-          }
-        }
-
-        @Override
-        public void onError( Request request, Throwable exception ) {
-          Window.alert( exception.toString() );
-        }
-      };
-      builder.sendRequest( "", rc );
-
-    } catch ( RequestException e ) {
-      Window.alert( e.getMessage() );
-    }
-
-    return homeFolder;
-  }
-
+  // region Child Tree Items
   @NonNull
   public Iterable<FolderTreeItem> getChildItems() {
     return new FolderTreeItemIterable( this );
@@ -720,4 +648,5 @@ public class FolderTree extends Tree {
       }
     }
   }
+  // endregion
 }
