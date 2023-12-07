@@ -2115,7 +2115,6 @@ button#schedule-dialog-select-button {
   border-top: solid 1px transparent;
   border-left: solid 1px transparent;
   border-right: solid 1px transparent;
-  border-bottom: solid 1px #ccc;
 }
 
 /* Due to relative positioning and use of z-index, focus-ring would not appear in Firefox.
@@ -2166,7 +2165,6 @@ button#schedule-dialog-select-button {
   border-top: solid 1px #CCC;
   border-left: solid 1px #CCC;
   border-right: solid 1px #CCC;
-  border-bottom: solid 1px transparent;
   -moz-border-radius-topleft: 1px;
   -moz-border-radius-topright: 1px;
   -webkit-border-top-left-radius: 1px;
@@ -3515,8 +3513,8 @@ body.IE>table {
 }
 
 .nextTemplateIconOn, .pentaho-right-lgbutton {
-  --icon-height: 26;
-  --icon-width: 33;
+  --icon-height: 33;
+  --icon-width: 26;
 
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
@@ -3608,11 +3606,13 @@ body.IE>table {
 
 .treenode-open {
   background-image: url('images/arrow_open.png');
+  background-position: 0px 1px;
   float: left;
 }
 
 .treenode-closed {
   background-image: url('images/arrow_closed.png');
+  background-position: 0px 1px;
   float: left;
 }
 
@@ -7155,16 +7155,6 @@ span.gwt-RadioButton label {
   width: 35px;
 }
 
-:is(.field-panel-icon, .field-layout-icon, .pentaho-filterbutton, .auto-refresh-icon, .more-menu-icon, .show-pivot-icon, .show-chart-icon) {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
-  background-repeat: no-repeat;
-}
-
 .field-panel-icon {
   background-image: url('images/field_panel.png');
 }
@@ -7249,300 +7239,194 @@ span.gwt-RadioButton label {
 }
 
 /* ---------- PIR icons ----------  */
-.tundra .dijitEditorIcon.dijitEditorIconUndo {
+.tundra :is(.dijitEditorIconUndo, .dijitEditorIconRedo, .dijitEditorIconIndent, .dijitEditorIconBold,
+.dijitEditorIconItalic, .dijitEditorIconForeColor, .dijitEditorIconBackColor, .dijitEditorIconCopy,
+.dijitEditorIconPaste, .dijitEditorIconDelete, .dijitEditorIconJustifyLeft, .dijitEditorIconJustifyCenter,
+.dijitEditorIconJustifyRight, .dijitEditorIconSelectAll, .dijitEditorIconFilter, .dijitEditorIconCut),
+:is(.filterIndicatorBackground_1, .filterIndicatorBackground_2, .filterIndicatorBackground_3, .filterIndicatorBackground_4,
+.filterIndicatorBackground_5, .filterIndicatorBackground_6, .filterIndicatorBackground_7, .filterIndicatorBackground_8,
+.filterIndicatorBackground_9, .filterIndicatorBackground_9_plus, .pentaho_dijitEditorIconExport, .field-panel-icon,
+.field-layout-icon, .pentaho-filterbutton, .auto-refresh-icon, .more-menu-icon, .show-pivot-icon, .show-chart-icon) {
+  background-position: initial;
+  background-repeat: no-repeat;
+}
+
+.tundra :is(.dijitEditorIconUndo, .dijitEditorIconRedo, .dijitEditorIconIndent, .dijitEditorIconSelectAll,
+.dijitEditorIconFilter, .dijitEditorIconCut, .pentaho_dijitEditorIconExport, span.dijitEditorIconParameters,
+span.dijitEditorIconRefresh),
+:is(.pc_pagePrev, .pc_pagePrevDisabled, .pc_pageNext, .pc_pageNextDisabled, .field-panel-icon, .field-layout-icon,
+.pentaho-filterbutton, .auto-refresh-icon, .more-menu-icon, .show-pivot-icon, .show-chart-icon,
+.pentaho-optionsdatasourcebutton) {
   --icon-height: 22;
   --icon-width: 22;
 
   height: calc(1px * var(--icon-height));
   width: calc(1px * var(--icon-width));
+}
 
+.tundra .dijitEditorIcon.dijitEditorIconUndo {
   background-image: url('images/undo.png');
-  background-position: initial;
 }
 
 .tundra .dijitDisabled .dijitEditorIconUndo {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/undo_disable.png');
-  background-position: initial;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconRedo {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/redo.png');
-  background-position: initial;
 }
 
 .tundra .dijitDisabled .dijitEditorIconRedo {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/redo-disabled.png');
-  background-position: initial;
 }
 
 .tundra .dijitEditorIconIndent {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
-  background-image: url(images/busy_thin.gif);
+  background-image: url('images/busy_thin.gif');
   background-size: contain;
-  background-position: 0;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconBold {
   background-image: url('images/bold.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconBold {
   background-image: url('images/bold_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconItalic {
   background-image: url('images/italic.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconItalic {
   background-image: url('images/italic_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconForeColor {
   background-image: url('images/font_color.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconForeColor {
   background-image: url('images/font_color_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconBackColor {
   background-image: url('images/back_color.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconBackColor {
   background-image: url('images/back_color_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconCopy {
   background-image: url('images/copy_format.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconCopy {
   background-image: url('images/copy_format_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconPaste {
   background-image: url('images/paste_format.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconPaste {
   background-image: url('images/paste_format_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconDelete {
   background-image: url('images/remove_format.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconDelete {
   background-image: url('images/remove_format_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconJustifyLeft {
   background-image: url('images/align_left.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled  .dijitEditorIconJustifyLeft {
   background-image: url('images/align_left_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconJustifyCenter {
   background-image: url('images/align_center.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconJustifyCenter {
   background-image: url('images/align_center_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconJustifyRight {
   background-image: url('images/align_right.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconJustifyRight {
   background-image: url('images/align_right_disabled.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconSelectAll {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/select_all.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconFilter {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/filter.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitEditorIcon.dijitEditorIconCut {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/layoutpanel.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_1 {
   background-image: url("images/filter_indicators/num_filter_bg_1.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_2 {
   background-image: url("images/filter_indicators/num_filter_bg_2.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_3 {
   background-image: url("images/filter_indicators/num_filter_bg_3.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_4 {
   background-image: url("images/filter_indicators/num_filter_bg_4.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_5 {
   background-image: url("images/filter_indicators/num_filter_bg_5.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_6 {
   background-image: url("images/filter_indicators/num_filter_bg_6.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_7 {
   background-image: url("images/filter_indicators/num_filter_bg_7.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_8 {
   background-image: url("images/filter_indicators/num_filter_bg_8.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_9 {
   background-image: url("images/filter_indicators/num_filter_bg_9.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .filterIndicatorBackground_9_plus {
   background-image: url("images/filter_indicators/num_filter_bg_9p.png");
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .tundra .dijitDisabled .dijitEditorIconIndent {
   --icon-height: 20;
   --icon-width: 20;
 
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url("images/indicator_circle_ball_stop.png");
-  background-position: 0;
   margin: 1px;
 }
 
 .pentaho_dijitEditorIconExport {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/file_export.png');
-  background-position: initial;
-  background-repeat: no-repeat;
 }
 
 .dijitTooltipBelow .dijitTooltipConnector {
@@ -7564,12 +7448,6 @@ span.gwt-RadioButton label {
 
 .pc_pagePrev,
 .dijitToolbar .pc_pagePrev {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/page_back.png') !important;
   background-repeat: no-repeat;
   background-position: 1px 3px !important;
@@ -7577,12 +7455,6 @@ span.gwt-RadioButton label {
 
 .pc_pagePrevDisabled,
 .dijitToolbar .pc_pagePrevDisabled {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/page_back_disabled.png') !important;
   background-repeat: no-repeat;
   background-position: 1px 3px !important;
@@ -7590,12 +7462,6 @@ span.gwt-RadioButton label {
 
 .pc_pageNext,
 .dijitToolbar .pc_pageNext {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/page_forward.png') !important;
   background-repeat: no-repeat;
   background-position: 1px 3px !important;
@@ -7603,12 +7469,6 @@ span.gwt-RadioButton label {
 
 .pc_pageNextDisabled,
 .dijitToolbar .pc_pageNextDisabled {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/page_forward_disabled.png') !important;
   background-repeat: no-repeat;
   background-position: 1px 3px !important;
@@ -7616,14 +7476,13 @@ span.gwt-RadioButton label {
 
 .pentaho-optionsbutton {
   background-image: url('images/options.png');
+  padding: 2px;
+  border: 1px solid transparent;
 }
 
 .pentaho-optionsdatasourcebutton {
   --icon-height: 32;
   --icon-width: 32;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
 
   background-image: url('images/options.png');
   background-repeat: no-repeat;
@@ -7633,25 +7492,13 @@ span.gwt-RadioButton label {
 
 .dijitEditorIconParameters,
 .dijitToolbar .dijitEditorIconParameters {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/list_22x22.png') !important;
   background-repeat: no-repeat;
   background-position: initial !important;
 }
 
-.dijitEditorIconParameters,
+.dijitEditorIconRefresh,
 .dijitToolbar .dijitEditorIconRefresh {
-  --icon-height: 22;
-  --icon-width: 22;
-
-  height: calc(1px * var(--icon-height));
-  width: calc(1px * var(--icon-width));
-
   background-image: url('images/refresh_report.png') !important;
   background-repeat: no-repeat;
   background-position: initial !important;
@@ -7766,8 +7613,7 @@ span.gwt-RadioButton label {
 
 .flag {
   background-image: url('images/flag-right.png');
-  background-position-x: right;
-  background-position-y: top;
+  background-position: top right;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-color: transparent;
@@ -9242,6 +9088,7 @@ input#csvSeparator {
   cursor: pointer;
   margin-bottom: 5px;
   margin-top: 5px;
+  padding: 2px 5px;
 }
 
 .sortTableCell {
