@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenericFileNameUtils {
+  public static final String PATH_SEPARATOR = "/";
 
   private static final RegExp pathWithProtocolPattern = RegExp.compile( "^(\\w+://)(.*)$" );
 
@@ -40,12 +41,12 @@ public class GenericFileNameUtils {
   public static String encodePath( @NonNull String path ) {
     return path
       .replace( ":", "~" )
-      .replace( "/", ":" );
+      .replace( PATH_SEPARATOR, ":" );
   }
 
   @NonNull
   public static String buildPath( @NonNull String basePath, @NonNull String relativePath ) {
-    return basePath + "/" + relativePath;
+    return basePath + PATH_SEPARATOR + relativePath;
   }
 
   public static boolean isValidFolderName( @Nullable String name ) {
@@ -60,8 +61,8 @@ public class GenericFileNameUtils {
       String normalizedPath = path;
 
       // Extract the root of the path and add as first segment.
-      if ( path.startsWith( "/" ) ) {
-        segments.add( "/" );
+      if ( path.startsWith( PATH_SEPARATOR ) ) {
+        segments.add( PATH_SEPARATOR );
         normalizedPath = normalizedPath.substring( 1 );
       } else {
         MatchResult match = pathWithProtocolPattern.exec( normalizedPath );
@@ -72,7 +73,7 @@ public class GenericFileNameUtils {
       }
 
       // Tokenizer already strips a hanging /.
-      StringTokenizer st = new StringTokenizer( normalizedPath, '/' );
+      StringTokenizer st = new StringTokenizer( normalizedPath, PATH_SEPARATOR );
       for ( int i = 0; i < st.countTokens(); i++ ) {
         String token = st.tokenAt( i );
         segments.add( token );
@@ -80,5 +81,14 @@ public class GenericFileNameUtils {
     }
 
     return segments;
+  }
+
+  @NonNull
+  public static String getParentPath( @NonNull String path ) {
+    if ( path.endsWith( PATH_SEPARATOR ) ) {
+      path = path.substring( 0, path.length() - 1 );
+    }
+
+    return path.substring( 0, path.lastIndexOf( PATH_SEPARATOR ) );
   }
 }
