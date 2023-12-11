@@ -115,18 +115,17 @@ public class GenericFileTreeJsonParser {
   }
 
   @Nullable
-  private static Date getFieldValueAsDate( @NonNull JSONObject jso, @NonNull String fieldName ) {
-    String value = getFieldValueAsString( jso, fieldName );
-    return value != null ? parseDateTime( value ) : null;
+  private static Long getFieldValueAsLong( @NonNull JSONObject jso, @NonNull String fieldName ) {
+    JSONValue jsonValue = jso.get( fieldName );
+    return jsonValue != null && jsonValue.isNumber() != null
+      ? (long) jsonValue.isNumber().doubleValue()
+      : null;
   }
 
   @Nullable
-  private static Date parseDateTime( String dateTimeMillisString ) {
-    try {
-      return dateTimeMillisString != null ? new Date( Long.parseLong( dateTimeMillisString ) ) : null;
-    } catch ( Exception e ) {
-      return null;
-    }
+  private static Date getFieldValueAsDate( @NonNull JSONObject jso, @NonNull String fieldName ) {
+    Long value = getFieldValueAsLong( jso, fieldName );
+    return value != null ? new Date( value ) : null;
   }
 
   private static boolean getFieldValueAsBoolean( @NonNull JSONObject jso, @NonNull String fieldName,
