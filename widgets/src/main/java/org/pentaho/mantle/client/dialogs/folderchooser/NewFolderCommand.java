@@ -36,6 +36,7 @@ import org.pentaho.gwt.widgets.client.genericfile.GenericFileNameUtils;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.commands.AbstractCommand;
+import org.pentaho.mantle.client.csrf.CsrfRequestBuilder;
 import org.pentaho.mantle.client.messages.Messages;
 
 import java.util.Objects;
@@ -118,7 +119,7 @@ public class NewFolderCommand extends AbstractCommand {
 
     String createDirUrl = buildCreateFolderUrl( folderPath );
 
-    RequestBuilder createDirRequestBuilder = new RequestBuilder( RequestBuilder.POST, createDirUrl );
+    RequestBuilder createDirRequestBuilder = new CsrfRequestBuilder( RequestBuilder.POST, createDirUrl );
     try {
       createDirRequestBuilder.sendRequest( null, new RequestCallback() {
         @Override
