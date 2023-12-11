@@ -40,7 +40,9 @@ public class SelectFolderDialog extends PromptDialogBox {
   private class MySolutionTree extends FolderTree {
     public void onBrowserEvent( Event event ) {
       try {
-        if ( DOM.eventGetType( event ) == Event.ONDBLCLICK && getSelectedItem().getChildCount() == 0 ) {
+        if ( DOM.eventGetType( event ) == Event.ONDBLCLICK
+          && getSelectedItem().getChildCount() == 0
+          && getSelectedItem().getFileModel().isCanAddChildren() ) {
           SelectFolderDialog.this.onOk();
           event.stopPropagation();
           event.preventDefault();
