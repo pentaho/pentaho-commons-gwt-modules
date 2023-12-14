@@ -157,7 +157,23 @@ public class FolderTree extends Tree {
     clear();
     assert selectedItemLag == null : "Clear should have reset currently selected item";
 
-    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) );
+    addItem( buildLoadingTreeItem() );
+  }
+
+  @NonNull
+  private static FolderTreeItem buildLoadingTreeItem() {
+    String loadingText = Messages.getString( "loadingEllipsis" );
+
+    FolderTreeItem loadingTreeItem = new FolderTreeItem( loadingText );
+    GenericFileTree treeModel = new GenericFileTree();
+    GenericFile fileModel = new GenericFile();
+    treeModel.setFile( fileModel );
+    fileModel.setName( loadingText );
+    fileModel.setCanAddChildren( false );
+
+    loadingTreeItem.setFileTreeModel( treeModel );
+
+    return loadingTreeItem;
   }
 
   protected void onModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
