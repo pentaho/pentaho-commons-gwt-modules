@@ -17,65 +17,73 @@
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.pentaho.gwt.widgets.client.filechooser.JsonToRepositoryFileTreeConverter;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
-import org.pentaho.gwt.widgets.client.filechooser.TreeItemComparator;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
-import org.pentaho.gwt.widgets.client.utils.string.StringTokenizer;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-import org.pentaho.mantle.client.dialogs.WaitPopup;
-import org.pentaho.mantle.client.messages.Messages;
-
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FocusPanel;
+import com.google.gwt.user.client.ui.HasTreeItems;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.mantle.client.environment.EnvironmentHelper;
+import com.google.gwt.user.client.ui.UIObject;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileNameUtils;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeComparator;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeJsonParser;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+import org.pentaho.mantle.client.dialogs.WaitPopup;
+import org.pentaho.mantle.client.messages.Messages;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
+import static org.pentaho.mantle.client.environment.EnvironmentHelper.getFullyQualifiedURL;
 
 public class FolderTree extends Tree {
   private static final String SELECTED_STYLE_NAME = "selected";
   private static final String HIDDEN_STYLE_NAME = "hidden";
   private static final String OPEN_STYLE_NAME = "open";
+  private static final String LEAF_WIDGET_STYLE_NAME = "leaf-widget";
+  private static final String PARENT_WIDGET_STYLE_NAME = "parent-widget";
 
   private boolean showLocalizedFileNames = true;
-  private boolean showHiddenFiles = false;
-  private boolean createRootNode = false;
-  private boolean useDescriptionsForTooltip = false;
-  public RepositoryFileTree repositoryFileTree;
-  public List<RepositoryFile> trashItems;
-  public FolderTreeItem trashItem;
+  private boolean showHiddenFiles;
+  private int depth = -1;
+  private boolean useDescriptionsForTooltip;
+  private GenericFileTree rootTreeModel;
 
-  private TreeItem selectedItem = null;
-  private String selectedPath = null;
-  private static String homeFolder = null;
+  /**
+   * Stores the currently selected item in duplication of the base class' private field,
+   * obtained via {@link #getSelectedItem()}. This is because the selection changed event
+   * as exposed by {@link #addSelectionHandler(SelectionHandler)} occurs after selection has changed and
+   * does not provide the previously selected item, which is needed for CSS style maintenance.
+   * <p>
+   * This field is updated only from within {@link #handleItemSelection(SelectionEvent)}, in response to an actual
+   * change of {@link #getSelectedItem()}.
+   */
+  private FolderTreeItem selectedItemLag;
 
-  private FocusPanel focusable = new FocusPanel();
-
-  public FolderTree( boolean showTrash ) {
-    super();
-
+  public FolderTree() {
     setAnimationEnabled( true );
     sinkEvents( Event.ONDBLCLICK );
 
@@ -84,46 +92,30 @@ public class FolderTree extends Tree {
     element.setAttribute( "oncontextmenu", "return false;" );
     setStyleProperty( element, "margin", "29px 0 10px 0" );
 
-    Element focusableElement = focusable.getElement();
-    focusableElement.setAttribute( "hideFocus", "true" );
-    setStyleProperty( focusableElement, "fontSize", "0" );
-    setStyleProperty( focusableElement, "position", "absolute" );
-    setStyleProperty( focusableElement, "outline", "0" );
-    setStyleProperty( focusableElement, "width", "1px" );
-    setStyleProperty( focusableElement, "height", "1px" );
-    setStyleProperty( focusableElement, "zIndex", "-1" );
-
-    DOM.appendChild( element, focusableElement );
-    DOM.sinkEvents( focusableElement, Event.FOCUSEVENTS );
-
-    this.addSelectionHandler( this::handleItemSelection );
-    this.addOpenHandler( this::handleOpen );
-    this.addCloseHandler( this::handleClose );
-
-    beforeFetchRepositoryFileTree();
-    fetchRepositoryFileTree( null, null, null, showHiddenFiles );
+    addSelectionHandler( this::handleItemSelection );
+    addOpenHandler( this::handleOpen );
+    addCloseHandler( this::handleClose );
   }
 
-  public void fetchRepositoryFileTree( final AsyncCallback<RepositoryFileTree> callback, Integer depth, String filter,
-      Boolean showHidden ) {
-    // notify listeners that we are about to talk to the server (in case there's anything they want to do
-    // such as busy cursor or tree loading indicators)
-    beforeFetchRepositoryFileTree();
-    RequestBuilder builder = null;
-    String url = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/:/tree?"; //$NON-NLS-1$
-    if ( depth == null ) {
-      depth = -1;
-    }
-    if ( filter == null ) {
-      filter = "*"; //$NON-NLS-1$
-    }
-    if ( showHidden == null ) {
-      showHidden = Boolean.FALSE;
-    }
-    url =
-        url
-            + "depth=" + depth + "&filter=" + filter + "&showHidden=" + showHidden + "&ts=" + System.currentTimeMillis(); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-    builder = new RequestBuilder( RequestBuilder.GET, url );
+  // region fetchModel
+  public void fetchModel() {
+    fetchModel( null );
+  }
+
+  public void fetchModel( @Nullable AsyncCallback<GenericFileTree> callback ) {
+    fetchModel( callback, null );
+  }
+
+  public void fetchModel( @Nullable final AsyncCallback<GenericFileTree> callback,
+                          @Nullable String initialSelectedPath ) {
+
+    // Preserve currently selected path, if none is specified.
+    // Must do this before calling clear, from within onModelFetching, which also clears selection.
+    final String initialOrPreviousSelectedPath = initialSelectedPath != null ? initialSelectedPath : getSelectedPath();
+
+    onModelFetching();
+
+    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, buildFetchUrl() );
     builder.setHeader( "Accept", "application/json" );
     builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
 
@@ -135,230 +127,164 @@ public class FolderTree extends Tree {
 
       public void onResponseReceived( Request request, Response response ) {
         if ( response.getStatusCode() == Response.SC_OK ) {
-          String json = response.getText();
-          System.out.println( json );
+          final GenericFileTreeJsonParser parser = new GenericFileTreeJsonParser( response.getText() );
+          final GenericFileTree fileTreeModel = parser.getTree();
 
-          final JsonToRepositoryFileTreeConverter converter =
-              new JsonToRepositoryFileTreeConverter( response.getText() );
-          final RepositoryFileTree fileTree = converter.getTree();
-
-          String deletedFilesUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/repo/files/deleted?ts=" + System.currentTimeMillis();
-          RequestBuilder deletedFilesRequestBuilder = new RequestBuilder( RequestBuilder.GET, deletedFilesUrl );
-          deletedFilesRequestBuilder.setHeader( "Accept", "application/json" );
-          deletedFilesRequestBuilder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
-          try {
-            deletedFilesRequestBuilder.sendRequest( null, new RequestCallback() {
-
-              public void onError( Request request, Throwable exception ) {
-                onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
-                Window.alert( exception.toString() );
-              }
-
-              public void onResponseReceived( Request delRequest, Response delResponse ) {
-                if ( delResponse.getStatusCode() == Response.SC_OK ) {
-                  try {
-                    trashItems = JsonToRepositoryFileTreeConverter.getTrashFiles( delResponse.getText() );
-                  } catch ( Throwable t ) {
-                    // apparently this happens when you have no trash
-                  }
-                  onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
-                } else {
-                  onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
-                }
-                if ( callback != null ) {
-                  callback.onSuccess( fileTree );
-                }
-              }
-
-            } );
-          } catch ( Exception e ) {
-            onFetchRepositoryFileTree( fileTree, Collections.<RepositoryFile>emptyList() );
+          onModelFetched( fileTreeModel, initialOrPreviousSelectedPath );
+          if ( callback != null ) {
+            callback.onSuccess( fileTreeModel );
           }
         }
       }
-
     };
+
     try {
       builder.sendRequest( null, innerCallback );
     } catch ( RequestException e ) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      Window.alert( e.toString() );
     }
   }
 
+  private String buildFetchUrl() {
+    String url = getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folders/tree?";
+
+    return url + "depth=" + depth + "&showHidden=" + showHiddenFiles + "&ts=" + System.currentTimeMillis();
+  }
+
+  protected void onModelFetching() {
+    WaitPopup.getInstance().setVisible( true );
+
+    clear();
+    assert selectedItemLag == null : "Clear should have reset currently selected item";
+
+    addItem( buildLoadingTreeItem() );
+  }
+
+  @NonNull
+  private static FolderTreeItem buildLoadingTreeItem() {
+    String loadingText = Messages.getString( "loadingEllipsis" );
+
+    FolderTreeItem loadingTreeItem = new FolderTreeItem( loadingText );
+    GenericFileTree treeModel = new GenericFileTree();
+    GenericFile fileModel = new GenericFile();
+    treeModel.setFile( fileModel );
+    fileModel.setName( loadingText );
+    fileModel.setCanAddChildren( false );
+
+    loadingTreeItem.setFileTreeModel( treeModel );
+
+    return loadingTreeItem;
+  }
+
+  protected void onModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
+
+    setModel( treeModel, initialSelectedPath );
+
+    WaitPopup.getInstance().setVisible( false );
+  }
+  // endregion
+
+  @Override
   public void onBrowserEvent( Event event ) {
-    int eventType = DOM.eventGetType( event );
-    switch ( eventType ) {
+    switch ( DOM.eventGetType( event ) ) {
       case Event.ONMOUSEDOWN:
-        if ( DOM.eventGetButton( event ) == NativeEvent.BUTTON_RIGHT ) {
-          TreeItem selectedItem = findSelectedItem( null, event.getClientX(), event.getClientY() );
-          if ( selectedItem != null ) {
-            setSelectedItem( selectedItem );
+        if ( event.getButton() == NativeEvent.BUTTON_RIGHT ) {
+          TreeItem treeItem = findTreeItemAtPosition( event.getClientX(), event.getClientY() );
+          if ( treeItem != null ) {
+            setSelectedItem( treeItem );
           }
         }
         break;
-      case Event.ONMOUSEUP:
-        break;
-      case Event.ONCLICK:
-        try {
-          int[] scrollOffsets = ElementUtils.calculateScrollOffsets( getElement() );
-          int[] offsets = ElementUtils.calculateOffsets( getElement() );
-          DOM.setStyleAttribute( focusable.getElement(),
-              "top", ( event.getClientY() + scrollOffsets[1] - offsets[1] ) + "px" ); //$NON-NLS-1$ //$NON-NLS-2$
-        } catch ( Exception ignored ) {
-          // ignore any exceptions fired by this. Most likely a result of the element
-          // not being on the DOM
+
+      case Event.ONDBLCLICK:
+        FolderTreeItem selectedItem = getSelectedItem();
+        if ( selectedItem != null ) {
+          selectedItem.setState( !selectedItem.getState(), true );
         }
+        return;
+
+      default:
         break;
     }
 
-    try {
-
-      if ( DOM.eventGetType( event ) == Event.ONDBLCLICK ) {
-        getSelectedItem().setState( !getSelectedItem().getState(), true );
-      } else {
-        super.onBrowserEvent( event );
-      }
-    } catch ( Throwable t ) {
-      // death to this browser event
-    }
-    TreeItem selItem = getSelectedItem();
-    if ( selItem != null ) {
-      DOM.scrollIntoView( selItem.getElement() );
-    }
+    super.onBrowserEvent( event );
   }
 
-  private TreeItem findSelectedItem( TreeItem item, int x, int y ) {
-    if ( item == null ) {
-      for ( int i = 0; i < getItemCount(); i++ ) {
-        TreeItem selected = findSelectedItem( getItem( i ), x, y );
-        if ( selected != null ) {
-          return selected;
-        }
-      }
-      return null;
-    }
+  // region Tree item mouse hit test
+  @Nullable
+  private TreeItem findTreeItemAtPosition( int x, int y ) {
+    return findTreeItemAtPosition( null, x, y );
+  }
 
-    for ( int i = 0; i < item.getChildCount(); i++ ) {
-      TreeItem selected = findSelectedItem( item.getChild( i ), x, y );
-      if ( selected != null ) {
-        return selected;
+  @Nullable
+  private TreeItem findTreeItemAtPosition( @Nullable FolderTreeItem parentTreeItem, int x, int y ) {
+
+    for ( FolderTreeItem childTreeItem : getChildItems( parentTreeItem ) ) {
+      TreeItem foundTreeItem = findTreeItemAtPosition( childTreeItem, x, y );
+      if ( foundTreeItem != null ) {
+        return foundTreeItem;
       }
     }
 
-    if ( x >= item.getAbsoluteLeft() && x <= item.getAbsoluteLeft() + item.getOffsetWidth()
-        && y >= item.getAbsoluteTop() && y <= item.getAbsoluteTop() + item.getOffsetHeight() ) {
-      return item;
+    if ( parentTreeItem != null
+      && x >= parentTreeItem.getAbsoluteLeft()
+      && x <= parentTreeItem.getAbsoluteLeft() + parentTreeItem.getOffsetWidth()
+      && y >= parentTreeItem.getAbsoluteTop()
+      && y <= parentTreeItem.getAbsoluteTop() + parentTreeItem.getOffsetHeight() ) {
+      return parentTreeItem;
     }
+
     return null;
   }
+  // endregion
 
-  @Override
-  protected void onLoad() {
-    super.onLoad();
-    fixLeafNodes();
-    if ( trashItem != null ) {
-      try {
-        DOM.setStyleAttribute( trashItem.getElement(), "paddingLeft", "0px" ); //$NON-NLS-1$//$NON-NLS-2$
-      } catch ( NullPointerException e ) {
-        // This is sometimes thrown because the dom does not yet contain the trash items or the leaf nodes.
-      }
-    }
+  protected void setModel( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
+
+    this.rootTreeModel = treeModel;
+
+    onModelChanged( initialSelectedPath );
   }
 
-  public void beforeFetchRepositoryFileTree() {
-    WaitPopup.getInstance().setVisible( true );
-    if ( getSelectedItem() != null ) {
-      selectedItem = getSelectedItem();
-    }
-    clear();
-    addItem( new FolderTreeItem( Messages.getString( "loadingEllipsis" ) ) ); //$NON-NLS-1$
-    WaitPopup.getInstance().setVisible( false );
-  }
+  protected void onModelChanged( @Nullable String initialSelectedPath ) {
 
-  public void onFetchRepositoryFileTree( RepositoryFileTree fileTree, List<RepositoryFile> repositoryTrashItems ) {
-
-    if ( fileTree == null ) {
-      WaitPopup.getInstance().setVisible( false );
-      return;
+    // Preserve currently selected path, if none is specified.
+    // Do this before calling buildSolutionTree, below, which clears the tree, including selection.
+    if ( initialSelectedPath == null ) {
+      initialSelectedPath = getSelectedPath();
     }
-    repositoryFileTree = fileTree;
-    trashItems = repositoryTrashItems;
-    // remember selectedItem, so we can reselect it after the tree is loaded
-    clear();
-    // get document root item
-    RepositoryFile rootRepositoryFile = repositoryFileTree.getFile();
-    if ( !rootRepositoryFile.isHidden() || isShowHiddenFiles() ) {
-      FolderTreeItem rootItem = null;
-      if ( createRootNode ) {
-        rootItem = new FolderTreeItem();
-        rootItem.setText( rootRepositoryFile.getPath() );
-        rootItem.setTitle( rootRepositoryFile.getPath() );
-        rootItem.getElement().setId( rootRepositoryFile.getPath() );
-        // added so we can traverse the true names
-        rootItem.setFileName( "/" ); //$NON-NLS-1$
-        rootItem.setRepositoryFile( rootRepositoryFile );
-        addItem( rootItem );
-        buildSolutionTree( rootItem, repositoryFileTree );
-      } else {
-        buildSolutionTree( null, repositoryFileTree );
-        // sort the root elements
-        ArrayList<TreeItem> roots = new ArrayList<TreeItem>();
-        for ( int i = 0; i < getItemCount(); i++ ) {
-          roots.add( getItem( i ) );
-        }
-        Collections.sort( roots, new TreeItemComparator() ); // BISERVER-9599 - Custom Sort
-        clear();
-        for ( TreeItem myRootItem : roots ) {
-          addItem( myRootItem );
-        }
-      }
-    }
-    fixLeafNodes();
 
-    if ( selectedPath != null ) {
-      select( selectedPath );
-    } else if ( selectedItem != null ) {
-      ArrayList<TreeItem> parents = new ArrayList<TreeItem>();
-      while ( selectedItem != null ) {
-        parents.add( selectedItem );
-        selectedItem = selectedItem.getParentItem();
-      }
-      Collections.reverse( parents );
-      selectFromList( parents );
+    buildSolutionTree();
+
+    if ( initialSelectedPath != null ) {
+      select( initialSelectedPath );
     } else {
-      for ( int i = 0; i < getItemCount(); i++ ) {
-        getItem( i ).setState( true );
-      }
+      openRootTreeItems();
     }
-    WaitPopup.getInstance().setVisible( false );
   }
 
-  /**
-   *
-   */
+  // region fixLeafNodes et al.
   private void fixLeafNodes() {
     List<FolderTreeItem> allNodes = getAllNodes();
     for ( FolderTreeItem treeItem : allNodes ) {
       LeafItemWidget leafWidget;
       String itemText = treeItem.getText();
-      RepositoryFileTree userObject = (RepositoryFileTree) treeItem.getUserObject();
+      GenericFileTree fileTreeModel = treeItem.getFileTreeModel();
 
-      if (userObject != null && userObject.getChildren().isEmpty()) {
+      if ( fileTreeModel != null && fileTreeModel.getChildren().isEmpty() ) {
         leafWidget = new LeafItemWidget(
-          itemText,"icon-tree-node", "icon-tree-leaf", "icon-folder", "icon-zoomable" );
+          itemText, "icon-tree-node", "icon-tree-leaf", "icon-folder", "icon-zoomable" );
       } else {
         leafWidget = new LeafItemWidget( itemText, "icon-tree-node", "icon-folder", "icon-zoomable" );
       }
 
       treeItem.setWidget( leafWidget );
 
-      DOM.setStyleAttribute( treeItem.getElement(), "paddingLeft", "0px" );
+      treeItem.getElement().getStyle().setProperty( "paddingLeft", "0px" );
     }
   }
 
   private List<FolderTreeItem> getAllNodes() {
-    List<FolderTreeItem> nodeList = new ArrayList<FolderTreeItem>();
+    List<FolderTreeItem> nodeList = new ArrayList<>();
     for ( int i = 0; i < this.getItemCount(); i++ ) {
       nodeList.add( (FolderTreeItem) this.getItem( i ) );
       getAllNodes( (FolderTreeItem) this.getItem( i ), nodeList );
@@ -373,263 +299,252 @@ public class FolderTree extends Tree {
       getAllNodes( child, nodeList );
     }
   }
+  // endregion
 
-  public FolderTreeItem getTrashItem() {
-    return trashItem;
+  // region findTreeItem et al.
+  @Nullable
+  FolderTreeItem findTreeItem( @Nullable String path ) {
+    return findTreeItemRecursive( null, GenericFileNameUtils.splitPath( path ), 0 );
   }
 
-  public List<RepositoryFile> getTrashItems() {
-    return trashItems;
-  }
+  @Nullable
+  private FolderTreeItem findTreeItemRecursive( @Nullable FolderTreeItem parentTreeItem,
+                                                @NonNull List<String> pathSegments,
+                                                int level ) {
+    if ( level >= pathSegments.size() ) {
+      return parentTreeItem;
+    }
 
-  public void setSelectedPath( String path ) {
-    selectedPath = path;
-  }
-
-  public void select( String path ) {
-    this.selectedPath = path;
-
-    selectedItem  = getTreeItem( path );
-    if ( selectedItem != null ) {
-      ArrayList<TreeItem> parents = new ArrayList<>();
-
-      TreeItem item = selectedItem;
-      setSelectedItem( item, false );
-
-      while ( item != null ) {
-        parents.add( item );
-        item = item.getParentItem();
+    for ( FolderTreeItem childTreeItem : getChildItems( parentTreeItem ) ) {
+      FolderTreeItem foundTreeItem = matchTreeItemRecursive( childTreeItem, pathSegments, level );
+      if ( foundTreeItem != null ) {
+        return foundTreeItem;
       }
+    }
 
-      Collections.reverse( parents );
-      selectFromList( parents );
+    return null;
+  }
+
+  private FolderTreeItem matchTreeItemRecursive( @NonNull FolderTreeItem childTreeItem,
+                                                 @NonNull List<String> pathSegments,
+                                                 int level ) {
+
+    GenericFile childFileModel = childTreeItem.getFileModel();
+
+    assert !childFileModel.isGroupFolder() : "Folder tree item should not be mapped to group folder";
+
+    String pathSegment = pathSegments.get( level );
+    if ( childFileModel.isProviderRootFolder() ) {
+      // The names of provider root folders do not match the path segment (e.g. "Repository" vs "/").
+      if ( childFileModel.getPath().equals( pathSegment ) ) {
+        // Matched. Continue with next level.
+        return findTreeItemRecursive( childTreeItem, pathSegments, level + 1 );
+      }
+    } else if ( childFileModel.getName().equalsIgnoreCase( pathSegment ) ) {
+      // Matched. Continue with next level.
+      return findTreeItemRecursive( childTreeItem, pathSegments, level + 1 );
+    }
+
+    return null;
+  }
+  // endregion
+
+  // region Selection
+  @Override
+  public FolderTreeItem getSelectedItem() {
+    return (FolderTreeItem) super.getSelectedItem();
+  }
+
+  @Override
+  public void setSelectedItem( TreeItem item, boolean fireEvents ) {
+    if ( item != null ) {
+      ensureTreeItemVisible( item );
+    }
+
+    super.setSelectedItem( item, fireEvents );
+
+    if ( fireEvents && getSelectedItem() != selectedItemLag ) {
+      // Unfortunately, the base class never fires the selection event when selection is cleared (null),
+      // causing the local handler, handleItemSelection, to not be called.
+      // So, call the local handler here, explicitly, with a locally instantiated event object.
+      handleItemSelection( new SelectionEvent<TreeItem>( getSelectedItem() ) {
+      } );
+    }
+  }
+
+  public void select( @Nullable String path ) {
+    TreeItem newSelectedItem = findTreeItem( path );
+    if ( newSelectedItem != null ) {
+      setSelectedItem( newSelectedItem, true );
     } else if ( path != null && !path.equals( getHomeFolder() ) ) {
+      // If the given path did not exist, then select the home folder (recursive call).
       select( getHomeFolder() );
     }
   }
 
-  private FolderTreeItem getTreeItem( String path ) {
-    List<String> pathSegments = new ArrayList<>();
-
-    if ( path != null ) {
-      String normalizedPath = path.startsWith( "/" )
-        ? path.substring( 1 )
-        : path;
-
-      StringTokenizer st = new StringTokenizer( normalizedPath, '/' );
-      for ( int i = 0; i < st.countTokens(); i++ ) {
-        String token = st.tokenAt( i );
-        pathSegments.add( token );
-      }
-    }
-
-    return getTreeItem( pathSegments );
+  @Nullable
+  public GenericFile getSelectedFileModel() {
+    final FolderTreeItem selectedItem = getSelectedItem();
+    return selectedItem != null ? selectedItem.getFileModel() : null;
   }
 
-  public FolderTreeItem getTreeItem( final List<String> pathSegments ) {
-    if ( pathSegments.size() > 0 ) {
-      // the first path segment is going to be a 'root' in the tree
-      String rootSegment = pathSegments.get( 0 );
-      for ( int i = 0; i < getItemCount(); i++ ) {
-        FolderTreeItem root = (FolderTreeItem) getItem( i );
-        if ( root.getFileName().equalsIgnoreCase( rootSegment ) ) {
-          return getTreeItem( root, pathSegments.subList( 1, pathSegments.size() ) );
-        }
-      }
-    }
-    return null;
+  @Nullable
+  public String getSelectedPath() {
+    final GenericFile fileModel = getSelectedFileModel();
+    return fileModel != null ? fileModel.getPath() : null;
   }
 
-  private FolderTreeItem getTreeItem( final FolderTreeItem root, final List<String> pathSegments ) {
-    int depth = 0;
-    FolderTreeItem currentItem = root;
-    while ( depth < pathSegments.size() ) {
-      String pathSegment = pathSegments.get( depth );
-      for ( int i = 0; i < currentItem.getChildCount(); i++ ) {
-        FolderTreeItem childItem = (FolderTreeItem) currentItem.getChild( i );
-        if ( childItem.getFileName().equalsIgnoreCase( pathSegment ) ) {
-          currentItem = childItem;
+  private void handleItemSelection( @NonNull SelectionEvent<TreeItem> event ) {
+
+    if ( selectedItemLag != null ) {
+      UIObject styleUIObject = getSelectionStyleUIObject( selectedItemLag );
+
+      styleUIObject.removeStyleName( SELECTED_STYLE_NAME );
+
+      if ( selectedItemLag.getFileModel().isHidden() ) {
+        styleUIObject.addStyleDependentName( HIDDEN_STYLE_NAME );
+      }
+    }
+
+    selectedItemLag = (FolderTreeItem) event.getSelectedItem();
+
+    if ( selectedItemLag != null ) {
+      UIObject styleUIObject = getSelectionStyleUIObject( selectedItemLag );
+
+      styleUIObject.addStyleName( SELECTED_STYLE_NAME );
+
+      if ( selectedItemLag.getFileModel().isHidden() ) {
+        styleUIObject.removeStyleDependentName( HIDDEN_STYLE_NAME );
+      }
+
+      // TODO: Still not working in all cases. Just on arrow keys... Not working on initial loading.
+      Scheduler.get().scheduleDeferred( (Command) () -> {
+        FolderTreeItem selectedItem = getSelectedItem();
+        if ( selectedItem != null ) {
+          selectedItem.getElement().scrollIntoView();
         }
-      }
-      depth++;
-    }
-    // let's check if the currentItem matches our segments (it might point to the last item before
-    // we eventually failed to find the complete match)
-    FolderTreeItem tmpItem = currentItem;
-    depth = pathSegments.size() - 1;
-    while ( tmpItem != null && depth >= 0 ) {
-      if ( tmpItem.getFileName().equalsIgnoreCase( pathSegments.get( depth ) ) ) {
-        tmpItem = (FolderTreeItem) tmpItem.getParentItem();
-        depth--;
-      } else {
-        // every item must match
-        return null;
-      }
-    }
-
-    return currentItem;
-  }
-
-  private void selectFromList( List<TreeItem> parents ) {
-    TreeItem pathDown = null;
-
-    for ( int i = 0; i < parents.size(); i++ ) {
-      TreeItem parent = parents.get( i );
-
-      int itemCount = pathDown != null ? pathDown.getChildCount() : getItemCount();
-      for ( int j = 0; j < itemCount; j++ ) {
-        TreeItem possibleItem = pathDown != null ? pathDown.getChild( j ) : getItem( j );
-
-        if ( ( possibleItem instanceof FolderTreeItem ) && ( parent instanceof FolderTreeItem )
-          && ( (FolderTreeItem) parent ).getFileName().equals( ( (FolderTreeItem) possibleItem ).getFileName() ) ) {
-          pathDown = possibleItem;
-          pathDown.setState( true, true );
-          break;
-        }
-      }
-    }
-
-    if ( pathDown != null ) {
-      setSelectedItem( pathDown );
-      pathDown.setState( true, true );
+      } );
     }
   }
 
-  private void handleItemSelection( SelectionEvent<TreeItem> event ) {
-    if ( selectedItem != null ) {
-      Widget treeItemWidget = selectedItem.getWidget();
-      if ( treeItemWidget instanceof LeafItemWidget ) {
-        treeItemWidget.getParent().removeStyleName( SELECTED_STYLE_NAME );
-      } else {
-        selectedItem.removeStyleName( SELECTED_STYLE_NAME );
-      }
-    }
-    selectedItem = event.getSelectedItem();
-    if ( selectedItem != null ) {
-      Widget treeItemWidget = selectedItem.getWidget();
-      if ( selectedItem instanceof FolderTreeItem ) {
-        RepositoryFile repositoryFile = ( (FolderTreeItem) selectedItem ).getRepositoryFile();
-        if ( repositoryFile != null && repositoryFile.isHidden() && !isShowHiddenFiles() ) {
-          if ( treeItemWidget instanceof LeafItemWidget ) {
-            treeItemWidget.getParent().removeStyleName( HIDDEN_STYLE_NAME );
-            treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
-          } else {
-            selectedItem.addStyleName( HIDDEN_STYLE_NAME );
-            selectedItem.addStyleName( SELECTED_STYLE_NAME );
-          }
-        } else {
-          if ( treeItemWidget instanceof LeafItemWidget ) {
-            treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
-          } else {
-            selectedItem.addStyleName( SELECTED_STYLE_NAME );
-          }
-        }
-      } else {
-        if ( treeItemWidget instanceof LeafItemWidget ) {
-          treeItemWidget.getParent().addStyleName( SELECTED_STYLE_NAME );
-        } else {
-          selectedItem.addStyleName( SELECTED_STYLE_NAME );
-        }
-      }
+  @NonNull
+  private static UIObject getSelectionStyleUIObject( @NonNull FolderTreeItem treeItem ) {
+    return treeItem.getWidget() instanceof LeafItemWidget
+      ? treeItem.getWidget().getParent()
+      : treeItem;
+  }
+  // endregion
+
+  // region Interaction helpers
+  // Based on Tree#ensureSelectedItemVisible. Allows ensuring a given tree item is visible
+  // before making it selected, so that focus can be changed to it, when selected afterward.
+  protected static void ensureTreeItemVisible( @NonNull TreeItem treeItem ) {
+    TreeItem parentTreeItem = treeItem.getParentItem();
+    while ( parentTreeItem != null ) {
+      parentTreeItem.setState( true );
+      parentTreeItem = parentTreeItem.getParentItem();
     }
   }
+
+  protected void openRootTreeItems() {
+    // Or, open all "root" nodes.
+    for ( int i = 0; i < getItemCount(); i++ ) {
+      getItem( i ).setState( true );
+    }
+  }
+  // endregion
 
   private void handleOpen( OpenEvent<TreeItem> event ) {
-    TreeItem target = event.getTarget();
-
-    // By default, expanding a node does not select it. Add that in here
-    this.setSelectedItem( target );
-
-    target.addStyleName( OPEN_STYLE_NAME );
+    event.getTarget().addStyleName( OPEN_STYLE_NAME );
   }
 
   private void handleClose( CloseEvent<TreeItem> event ) {
     event.getTarget().removeStyleName( OPEN_STYLE_NAME );
   }
 
-  private void buildSolutionTree( FolderTreeItem parentTreeItem, RepositoryFileTree repositoryFileTree ) {
-    List<RepositoryFileTree> children = repositoryFileTree.getChildren();
+  // region buildSolutionTree et al.
+  private void buildSolutionTree() {
+
+    // Includes getting rid of the "Loading" tree item, if any.
+    clear();
+    assert selectedItemLag == null : "Clear should have reset currently selected item";
+
+    if ( shouldShowFileTreeModel( rootTreeModel ) ) {
+      buildSolutionTree( this, rootTreeModel );
+
+      fixLeafNodes();
+    }
+  }
+
+  private boolean shouldShowFileTreeModel( @NonNull GenericFileTree fileTreeModel ) {
+    GenericFile fileModel = fileTreeModel.getFile();
+    return fileModel.isFolder() && ( !fileModel.isHidden() || isShowHiddenFiles() );
+  }
+
+  private void buildSolutionTree( @NonNull HasTreeItems treeItem, @NonNull GenericFileTree treeModel ) {
+
+    List<GenericFileTree> childTreeModels = treeModel.getChildren();
 
     // BISERVER-9599 - Custom Sort
-    Collections.sort( children, new Comparator<RepositoryFileTree>() {
-      @Override
-      public int compare( RepositoryFileTree repositoryFileTree, RepositoryFileTree repositoryFileTree2 ) {
-        return ( new TreeItemComparator() ).compare( repositoryFileTree.getFile().getTitle(), repositoryFileTree2
-            .getFile().getTitle() );
-      }
-    } );
+    childTreeModels.sort( new GenericFileTreeComparator( showLocalizedFileNames ) );
 
-    for ( RepositoryFileTree treeItem : children ) {
-      RepositoryFile file = treeItem.getFile();
-      boolean isDirectory = file.isFolder();
-      String fileName = file.getName();
-      if ( ( !file.isHidden() || isShowHiddenFiles() ) && !StringUtils.isEmpty( fileName ) ) {
+    for ( GenericFileTree childTreeModel : childTreeModels ) {
+      // Excludes non-folders and, when !showHiddenFiles, also hidden folders.
+      if ( shouldShowFileTreeModel( childTreeModel ) ) {
+        FolderTreeItem childTreeItem = buildFolderTreeItem( childTreeModel );
+        treeItem.addItem( childTreeItem );
 
-        // TODO Mapping Title to LocalizedName
-        String localizedName = file.getTitle();
-        String description = file.getDescription();
-        FolderTreeItem childTreeItem = new FolderTreeItem();
-        childTreeItem.setStylePrimaryName( "leaf-widget" );
-        childTreeItem.getElement().setAttribute( "id", file.getPath() ); //$NON-NLS-1$
-        childTreeItem.setUserObject( treeItem );
-        childTreeItem.setRepositoryFile( file );
-        if ( file.isHidden() && file.isFolder() ) {
-          childTreeItem.addStyleDependentName( HIDDEN_STYLE_NAME );
-        }
-
-        if ( treeItem != null && treeItem.getChildren() != null ) {
-          for ( RepositoryFileTree childItem : treeItem.getChildren() ) {
-            if ( childItem.getFile().isFolder() ) {
-              childTreeItem.addStyleName( "parent-widget" );
-              break;
-            }
-          }
-        }
-
-        ElementUtils.killAllTextSelection( childTreeItem.getElement() );
-        childTreeItem.setURL( fileName );
-        if ( showLocalizedFileNames ) {
-          childTreeItem.setText( localizedName );
-          if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
-            childTreeItem.setTitle( description );
-          } else {
-            childTreeItem.setTitle( fileName );
-          }
-        } else {
-          childTreeItem.setText( fileName );
-          if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
-            childTreeItem.setTitle( description );
-          } else {
-            childTreeItem.setTitle( localizedName );
-          }
-        }
-        childTreeItem.setFileName( fileName );
-        if ( parentTreeItem == null && isDirectory ) {
-          addItem( childTreeItem );
-        } else {
-          parentTreeItem.addItem( childTreeItem );
-        }
-        FolderTreeItem tmpParent = childTreeItem;
-        String pathToChild = tmpParent.getFileName();
-        while ( tmpParent.getParentItem() != null ) {
-          tmpParent = (FolderTreeItem) tmpParent.getParentItem();
-          pathToChild = tmpParent.getFileName() + "/" + pathToChild; //$NON-NLS-1$
-        }
-        /*
-         * TODO Not sure what to do here if (parentTreeItem != null) { ArrayList<FileChooserRepositoryFile> files =
-         * (ArrayList<FileChooserRepositoryFile>) parentTreeItem.getUserObject(); if (files == null) { files = new
-         * ArrayList<FileChooserRepositoryFile>(); parentTreeItem.setUserObject(files); } files.add(file); }
-         */
-        if ( isDirectory ) {
-          buildSolutionTree( childTreeItem, treeItem );
-        } else {
-          if ( parentTreeItem != null ) {
-            parentTreeItem.removeItem( childTreeItem );
-          }
-        }
+        buildSolutionTree( childTreeItem, childTreeModel );
       }
     }
   }
+
+  @NonNull
+  private FolderTreeItem buildFolderTreeItem( @NonNull GenericFileTree fileTreeModel ) {
+    GenericFile fileModel = fileTreeModel.getFile();
+
+    assert !fileModel.isGroupFolder() : "Folder tree item should not be mapped to group folder";
+
+    String name = fileModel.getName();
+    String title = fileModel.getTitleOrName();
+    String description = fileModel.getDescription();
+
+    FolderTreeItem treeItem = new FolderTreeItem();
+    treeItem.setFileTreeModel( fileTreeModel );
+
+    treeItem.getElement().setAttribute( "id", fileModel.getPath() );
+    treeItem.setStylePrimaryName( LEAF_WIDGET_STYLE_NAME );
+    if ( fileTreeModel.hasChildFolders() ) {
+      treeItem.addStyleName( PARENT_WIDGET_STYLE_NAME );
+    }
+
+    if ( fileModel.isHidden() ) {
+      treeItem.addStyleDependentName( HIDDEN_STYLE_NAME );
+    }
+
+    ElementUtils.killAllTextSelection( treeItem.getElement() );
+
+    if ( showLocalizedFileNames ) {
+      treeItem.setText( title );
+
+      if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
+        treeItem.setTitle( description );
+      } else {
+        treeItem.setTitle( name );
+      }
+    } else {
+      treeItem.setText( name );
+
+      if ( isUseDescriptionsForTooltip() && !StringUtils.isEmpty( description ) ) {
+        treeItem.setTitle( description );
+      } else {
+        treeItem.setTitle( title );
+      }
+    }
+
+    return treeItem;
+  }
+  // endregion
 
   public void setShowLocalizedFileNames( boolean showLocalizedFileNames ) {
     this.showLocalizedFileNames = showLocalizedFileNames;
@@ -642,8 +557,10 @@ public class FolderTree extends Tree {
   private void toggleLocalizedFileNames( FolderTreeItem parentTreeItem ) {
     String title = parentTreeItem.getTitle();
     String text = parentTreeItem.getText();
+
     parentTreeItem.setTitle( text );
     parentTreeItem.setText( title );
+
     for ( int i = 0; i < parentTreeItem.getChildCount(); i++ ) {
       toggleLocalizedFileNames( (FolderTreeItem) parentTreeItem.getChild( i ) );
     }
@@ -653,6 +570,15 @@ public class FolderTree extends Tree {
     return showHiddenFiles;
   }
 
+  /**
+   * Sets if hidden files should be displayed.
+   * <p>
+   * Only takes effect the next time the tree is refreshed.
+   * <p>
+   * Defaults to <code>false</code>.
+   *
+   * @param showHiddenFiles <code>true</code>, to show hidden files, <code>false</code>, to hide them.
+   */
   public void setShowHiddenFiles( boolean showHiddenFiles ) {
     this.showHiddenFiles = showHiddenFiles;
   }
@@ -667,55 +593,76 @@ public class FolderTree extends Tree {
 
   public void setUseDescriptionsForTooltip( boolean useDescriptionsForTooltip ) {
     this.useDescriptionsForTooltip = useDescriptionsForTooltip;
-    onFetchRepositoryFileTree( repositoryFileTree, trashItems );
+
+    setModel( rootTreeModel, null );
   }
 
-  public boolean isCreateRootNode() {
-    return createRootNode;
+  public int getDepth() {
+    return depth;
   }
 
-  public List<RepositoryFile> getRepositoryFiles() {
-    final FolderTreeItem selectedTreeItem = (FolderTreeItem) getSelectedItem();
-    List<RepositoryFile> values = new ArrayList<RepositoryFile>();
-    values.add( ( (RepositoryFileTree) selectedTreeItem.getUserObject() ).getFile() );
-    return values;
+  public void setDepth( int depth ) {
+    if ( depth < 0 ) {
+      depth = -1;
+    }
+
+    this.depth = depth;
   }
 
   /**
-   * Retrieves the default home folder.
+   * Gets the default home folder.
+   *
    * @return The home folder
    */
-  static String getHomeFolder() {
-    return ( homeFolder != null ) ? homeFolder : refreshHomeFolder();
+  static native String getHomeFolder() /*-{
+    return $wnd.top.HOME_FOLDER;
+  }-*/;
+
+  // region Child Tree Items
+  @NonNull
+  public Iterable<FolderTreeItem> getChildItems() {
+    return new FolderTreeItemIterable( this );
   }
 
-  private static String refreshHomeFolder() {
+  @NonNull
+  protected Iterable<FolderTreeItem> getChildItems( @Nullable FolderTreeItem parentTreeItem ) {
+    return parentTreeItem != null ? parentTreeItem.getChildItems() : getChildItems();
+  }
 
-    final String userHomeDirUrl = EnvironmentHelper.getFullyQualifiedURL() + "api/session/userWorkspaceDir";
-    final RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, userHomeDirUrl );
+  private static class FolderTreeItemIterable implements Iterable<FolderTreeItem> {
+    @NonNull
+    private final FolderTree parentTree;
 
-    try {
-      // Get user home folder string
-      RequestCallback rc = new RequestCallback() {
-
-        @Override
-        public void onResponseReceived( final Request request, final Response response ) {
-          if ( response.getStatusCode() == 200 ) {
-            // API returns /user/home_folder/workspace
-            homeFolder = response.getText().replaceAll( "/workspace", "" );
-          }
-        }
-
-        @Override
-        public void onError( Request request, Throwable exception ) {
-          Window.alert( exception.toString() );
-        }
-      };
-      builder.sendRequest( "", rc );
-
-    } catch ( RequestException e ) {
-      Window.alert( e.getMessage() );
+    public FolderTreeItemIterable( @NonNull FolderTree parentTree ) {
+      Objects.requireNonNull( parentTree );
+      this.parentTree = parentTree;
     }
-    return homeFolder;
+
+    @Override
+    @NonNull
+    public Iterator<FolderTreeItem> iterator() {
+      return new FolderTreeItemIterator();
+    }
+
+    private class FolderTreeItemIterator implements Iterator<FolderTreeItem> {
+      private int index;
+
+      public FolderTreeItemIterator() {
+        this.index = 0;
+      }
+
+      public boolean hasNext() {
+        return index < FolderTreeItemIterable.this.parentTree.getItemCount();
+      }
+
+      public FolderTreeItem next() {
+        if ( index >= FolderTreeItemIterable.this.parentTree.getItemCount() ) {
+          throw new NoSuchElementException();
+        }
+
+        return (FolderTreeItem) FolderTreeItemIterable.this.parentTree.getItem( index++ );
+      }
+    }
   }
+  // endregion
 }

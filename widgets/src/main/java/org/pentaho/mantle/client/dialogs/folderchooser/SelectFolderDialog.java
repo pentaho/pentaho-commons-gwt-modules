@@ -12,63 +12,57 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
 
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
-import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFile;
-import org.pentaho.gwt.widgets.client.filechooser.RepositoryFileTree;
+import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
 import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
 import org.pentaho.gwt.widgets.client.toolbar.Toolbar;
 import org.pentaho.gwt.widgets.client.toolbar.ToolbarButton;
-import org.pentaho.mantle.client.messages.Messages;
-
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import org.pentaho.mantle.client.environment.EnvironmentHelper;
+import org.pentaho.mantle.client.messages.Messages;
 
 import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
 
 public class SelectFolderDialog extends PromptDialogBox {
 
-  private static class MySolutionTree extends FolderTree {
-    public SelectFolderDialog localThis;
-
-    public MySolutionTree() {
-      super( false );
-      super.setScrollOnSelectEnabled( false );
-    }
-
+  private class MySolutionTree extends FolderTree {
     public void onBrowserEvent( Event event ) {
       try {
-        if ( DOM.eventGetType( event ) == Event.ONDBLCLICK && getSelectedItem().getChildCount() == 0 ) {
-          localThis.onOk();
+        if ( DOM.eventGetType( event ) == Event.ONDBLCLICK
+          && getSelectedItem().getChildCount() == 0
+          && getSelectedItem().getFileModel().isCanAddChildren() ) {
+          SelectFolderDialog.this.onOk();
           event.stopPropagation();
           event.preventDefault();
         } else {
           super.onBrowserEvent( event );
         }
-      } catch ( Throwable t ) {
-        // Window.alert(t);
+      } catch ( Exception ex ) {
+        // Window.alert(ex);
       }
     }
   }
 
-  private static final MySolutionTree tree = new MySolutionTree();
+  private final MySolutionTree tree;
 
-  private String defaultSelectedPath = FolderTree.getHomeFolder();
+  private final ToolbarButton addButton;
+
+  private static String defaultSelectedPath = FolderTree.getHomeFolder();
 
   public SelectFolderDialog() {
-    this( FolderTree.getHomeFolder() );
+    this( null );
   }
 
   public SelectFolderDialog( String selectedPath ) {
@@ -79,11 +73,8 @@ public class SelectFolderDialog extends PromptDialogBox {
     setSizingMode( DialogSizingMode.FILL_VIEWPORT_WIDTH );
     setWidthCategory( DialogWidthCategory.SMALL );
 
-    if ( selectedPath != null ) {
-      tree.setSelectedPath( selectedPath );
-      defaultSelectedPath = selectedPath;
-    }
-    tree.localThis = this;
+    tree = new MySolutionTree();
+    tree.addSelectionHandler( event -> onSelectionChanged( tree.getSelectedFileModel() ) );
 
     SimplePanel treeWrapper = new SimplePanel( tree );
     treeWrapper.getElement().addClassName( "select-folder-tree" );
@@ -91,35 +82,12 @@ public class SelectFolderDialog extends PromptDialogBox {
 
     Toolbar bar = new Toolbar();
     bar.addStyleName( "select-folder-toolbar" );
-    bar.add( new Label( Messages.getString( "newFolderColon" ), false ) );
     bar.add( Toolbar.GLUE );
 
-    Image image = new Image( EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
-    image.addStyleName( "icon-small" );
-    image.addStyleName( "icon-zoomable" );
-    image.addStyleName( "pentaho-addbutton" );
+    addButton = createToolbarButtonAdd();
+    bar.add( addButton );
 
-    ToolbarButton add = new ToolbarButton( image );
-    add.setToolTip( Messages.getString( "createNewFolder" ) );
-    add.setCommand( () -> {
-      RepositoryFile repositoryFile = ( (FolderTreeItem) tree.getSelectedItem() ).getRepositoryFile();
-      final NewFolderCommand newFolderCommand = new NewFolderCommand( repositoryFile );
-
-      newFolderCommand.setCallback( path -> tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
-        @Override
-        public void onSuccess( RepositoryFileTree result ) {
-          tree.select( path );
-        }
-
-        @Override
-        public void onFailure( Throwable caught ) {
-          // noop
-        }
-      }, null, null, false ) );
-
-      newFolderCommand.execute();
-    } );
-    bar.add( add );
+    bar.add( createToolbarButtonRefresh() );
 
     VerticalPanel content = new VerticalFlexPanel();
     content.addStyleName( "with-layout-gap-none" );
@@ -127,38 +95,87 @@ public class SelectFolderDialog extends PromptDialogBox {
     content.add( treeWrapper );
 
     setContent( content );
-    fetchRepository( getSelectedPath() );
 
-    TreeItem selItem = tree.getSelectedItem();
-    if ( selItem != null ) {
-      DOM.scrollIntoView( selItem.getElement() );
-    }
+    fetchModel( selectedPath != null ? selectedPath : defaultSelectedPath );
   }
 
-  public void cancelSelection() {
-    tree.select( defaultSelectedPath );
+  // region Create Toolbar Helpers
+  @NonNull
+  private ToolbarButton createToolbarButtonAdd() {
+    ToolbarButton button = new ToolbarButton( createToolbarButtonImage( "pentaho-addbutton") );
+
+    button.setToolTip( Messages.getString( "createNewFolder" ) );
+
+    button.setCommand( () -> {
+      GenericFile selectedFileModel = tree.getSelectedFileModel();
+      if ( selectedFileModel != null ) {
+        NewFolderCommand newFolderCommand = new NewFolderCommand( selectedFileModel );
+        newFolderCommand.setCallback( this::fetchModel );
+        newFolderCommand.execute();
+      }
+    } );
+
+    return button;
+  }
+
+  @NonNull
+  private ToolbarButton createToolbarButtonRefresh() {
+    ToolbarButton button = new ToolbarButton( createToolbarButtonImage( "icon-refresh" ) );
+
+    button.setToolTip( Messages.getString( "refreshTooltip" ) );
+
+    button.setCommand( () -> {
+      GenericFile selectedFileModel = tree.getSelectedFileModel();
+      if ( selectedFileModel != null ) {
+        RefreshFolderTreeCommand refreshFolderCommand = new RefreshFolderTreeCommand();
+        refreshFolderCommand.setCallback( nothing -> fetchModel( null ) );
+        refreshFolderCommand.execute();
+      }
+    } );
+
+    return button;
+  }
+
+  @NonNull
+  private static Image createToolbarButtonImage( @NonNull String styleName ) {
+    Image image = new Image(
+      EnvironmentHelper.getFullyQualifiedURL() + "content/common-ui/resources/themes/images/spacer.gif" );
+
+    image.addStyleName( "icon-small" );
+    image.addStyleName( "icon-zoomable" );
+    image.addStyleName( styleName );
+    return image;
+  }
+  // endregion
+
+  protected void onSelectionChanged( @Nullable GenericFile selectedFileModel ) {
+    boolean canAddChildren = selectedFileModel != null && selectedFileModel.isCanAddChildren();
+
+    addButton.setEnabled( canAddChildren );
+    okButton.setEnabled( canAddChildren );
   }
 
   public String getSelectedPath() {
-    final FolderTreeItem selectedItem = (FolderTreeItem) tree.getSelectedItem();
-    return selectedItem != null ? selectedItem.getRepositoryFile().getPath() : defaultSelectedPath;
+    String selectedPath = tree.getSelectedPath();
+    return selectedPath != null ? selectedPath : defaultSelectedPath;
   }
 
-  private void fetchRepository( final String selectedPath ) {
+  private void fetchModel( String selectedPath ) {
+    tree.fetchModel( null, selectedPath );
+  }
 
-    tree.fetchRepositoryFileTree( new AsyncCallback<RepositoryFileTree>() {
+  @Override
+  protected void onOkValid() {
+    // Accept the selected path as the default selected path.
+    String selectedPath = tree.getSelectedPath();
+    if ( selectedPath != null ) {
+      setDefaultSelectedPath( selectedPath );
+    }
 
-      @Override
-      public void onSuccess( RepositoryFileTree result ) {
-        tree.select( selectedPath );
-      }
+    super.onOkValid();
+  }
 
-      @Override
-      public void onFailure( Throwable caught ) {
-        MessageDialogBox dialogBox =
-                new MessageDialogBox( Messages.getString( "error" ), Messages.getString( "refreshRepository" ), false, false, true );
-        dialogBox.center();
-      }
-    }, null, null, false );
+  private static void setDefaultSelectedPath( String selectedPath ) {
+    defaultSelectedPath = selectedPath;
   }
 }
