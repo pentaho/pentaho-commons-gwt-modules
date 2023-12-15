@@ -44,6 +44,10 @@ public class GenericFileNameUtils {
       .replace( PATH_SEPARATOR, ":" );
   }
 
+  public static boolean isRepositoryPath( @NonNull String path ) {
+    return path.startsWith( PATH_SEPARATOR );
+  }
+
   @NonNull
   public static String buildPath( @NonNull String basePath, @NonNull String relativePath ) {
     return basePath + PATH_SEPARATOR + relativePath;
