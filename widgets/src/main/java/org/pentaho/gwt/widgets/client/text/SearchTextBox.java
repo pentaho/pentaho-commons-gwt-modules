@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 import org.pentaho.gwt.widgets.client.utils.ImageUtil;
-import org.pentaho.mantle.client.messages.Messages;
+import org.pentaho.gwt.widgets.client.messages.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
