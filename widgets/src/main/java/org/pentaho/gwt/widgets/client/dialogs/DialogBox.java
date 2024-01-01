@@ -23,6 +23,7 @@ import com.google.gwt.aria.client.Roles;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.OptionElement;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.ResizeEvent;
@@ -579,7 +580,18 @@ public class DialogBox extends com.google.gwt.user.client.ui.DialogBox implement
 
   boolean eventTargetIsFocusable( NativeEvent event ) {
     EventTarget target = event.getEventTarget();
-    return Element.is( target ) && ElementUtils.isFocusable( Element.as( target ) );
+    if ( !Element.is( target ) ) {
+      return false;
+    }
+
+    Element element = Element.as( target );
+    if ( element.getTagName().equalsIgnoreCase( OptionElement.TAG ) ) {
+      // Options are not focusable directly, however clicking an option selects it in the select element,
+      // as well as focuses the select element.
+      return element.getParentElement() != null && ElementUtils.isFocusable( element.getParentElement() );
+    }
+
+    return ElementUtils.isFocusable( element );
   }
 
   protected void initializePageBackground() {
