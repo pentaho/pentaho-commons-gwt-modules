@@ -3523,13 +3523,13 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-small.icon-run {
-  background: url('images/start-scheduler-small.png');
+  background: url('images/start_button_sapphire.png');
   height: 22px;
   width: 22px;
 }
 
 .icon-small.icon-run.disabled {
-  background: url('images/start-scheduler-small.png');
+  background: url('images/start_button_sapphire.png');
   height: 22px;
   width: 22px;
 }
@@ -3642,19 +3642,19 @@ div.dijitDateTextBox.dijitComboBox {
 }
 
 .icon-small.icon-stop {
-  background: url('images/stop_scheduler.png') no-repeat;
+  background: url('images/stop_button_sapphire.png') no-repeat;
   height: 22px;
   width: 22px;
 }
 
 .icon-small.icon-stop-scheduler {
-  background: url('images/power-on.png');
+  background: url('images/stop_scheduler.png');
   height: 22px;
   width: 22px;
 }
 
 .icon-small.icon-start-scheduler {
-  background: url('images/power-off.png');
+  background: url('images/start_scheduler.png');
   height: 22px;
   width: 22px;
 }
@@ -8001,3 +8001,27 @@ for the rebranding on the Ruby theme cause a smaller impact on the other themes 
   height: 70px;
   margin-top: 200px;
 }
+
+/* region TemplatePicker Dialog */
+
+#templatePickerDialog .pentaho-selection-dialog-inner {
+  height: auto !important;
+}
+
+.template-grid {
+  display: flex !important;
+  flex-wrap: wrap;
+}
+
+.template-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 33%;
+}
+
+.template-div div {
+  line-height: 50px;
+}
+
+/* endregion */
