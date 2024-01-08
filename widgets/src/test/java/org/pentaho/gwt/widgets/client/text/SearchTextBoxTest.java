@@ -72,7 +72,7 @@ public class SearchTextBoxTest {
     searchTextBox.createInputUI();
 
     verify( input.getElement() ).setAttribute( "type", "search" );
-    verify( input.getElement() ).setAttribute( "placeholder", "search..." );
+    verify( input.getElement() ).setAttribute( "placeholder", "SearchTextBox.placeholder" );
 
     verify( input ).addKeyUpHandler( any( KeyUpHandler.class ) );
   }
