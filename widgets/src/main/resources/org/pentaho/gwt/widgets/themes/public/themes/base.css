@@ -1,0 +1,235 @@
+:root {
+  /* FOCUS RING */
+  --focus-ring-width: 3px;
+  --focus-ring: var(--focus-ring-width) solid #0075ff;
+
+  /* The default `outline-offset` should cause the outline to hide the border of most elements,
+     and, at the same time, not cause the outline to overflow the parent and be clipped.
+     If needed, adjust the `outline-offset` for specific elements or element types.
+   */
+  --focus-ring-offset: 2px;
+
+  /* How much space the focus ring takes beyond an element's border-box to be fully visible (focus-ring-width + focus-ring-offset).
+  To be used to ensure enough padding for focus outlines on containers having an overflow of hidden or auto. */
+  --focus-ring-padding: 5px;
+
+  /* ACCESSIBILITY */
+  /* Minimum width for a WCAG accessible vertical scrolling layout. */
+  --a11y-min-width: 320px;
+
+  /* Minimum height for a WCAG accessible horizontal scrolling layout. */
+  --a11y-min-height: 256px;
+
+  /* DIALOG GLOBAL variables */
+  --dialog-border-width: 1px;
+
+  /* Padding, on each side */
+  --dialog-padding: 20px;
+
+  /* Design System min/safe margin, on each side */
+  --dialog-ds-min-margin-h: calc(100% / 12);
+  --dialog-ds-min-margin-v: 80px;
+
+  /* LAYOUT GLOBAL */
+  --typ-body-font-size-px: 14;
+  --typ-body-line-height-px: 17;
+  --typ-body-font-size: calc(1px * var(--typ-body-font-size-px));
+  --typ-body-line-height: calc(1px * var(--typ-body-line-height-px));
+
+
+  --text-block-max-width: 75ch;
+
+  /* Set H and V space between layout cols and rows.
+     Or, use the helper classes: .with-layout-gap-... for predefined values.
+     Use current values on CSS properties using .gap-...
+     Root variables should only be changed at root.
+     The other two variables can be changed at any element and will be inherited by all descendants.
+   */
+  --layout-gap-h-root: 8px;
+  --layout-gap-v-root: 6px;
+
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
+
+  /* Icon size to resize with text zoom  */
+  --icon-height-root: 22;
+  --icon-width-root: 22;
+
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
+
+
+  /* COLORS - from DS style guide */
+  /* Atmosphere colors - Main color group */
+  --color-atmo1: #FBFCFC;
+  --color-atmo2: #F4F5F5;
+  --color-atmo3: #E8E8E8;
+  --color-atmo4: #CCCED0;
+
+  /* Accent colors - Core aspects of the interface as actions, buttons, ... */
+  --color-primary: #2064b4;
+  --color-primary-80: #1775E0;
+  --color-secondary: #414141;
+  --color-secondary-80: #6C6B6B;
+  --color-secondary-60: #999999;
+  --color-brand: #CC0000;
+
+  /* Semantic colors - Status & system feedback colors */
+  --color-neutral: #4D8AC0;
+  --color-positive: #478B1A;
+  --color-warning: #F9C846;
+  --color-negative: #D43136;
+}
+
+@media (max-height: 720px) {
+  :root {
+    --dialog-ds-min-margin-v: 40px;
+  }
+}
+
+/* region Responsive Primitives */
+
+/* In below selectors, using * and/or :where(.) where possible to keep specificity as low as possible. */
+
+/* Responsive Classes
+ * - .responsive-theme -- Indicates the theme is responsive.
+ * - .responsive -- Within a `.responsive-theme`, indicates an element subtree which should be rendered responsively.
+ *                  Typically, these are elements whose markup has fixed dimensions, which the responsive styles
+ *                  override.
+ * - .responsive-content -- Indicates content which is "natively" responsive, irrespective of the theme being responsive.
+ */
+
+/* region .with-layout-gap- ... */
+/* Classes for setting the value of the --layout-gap-h and --layout-gap-v variables to predefined values
+   for an element's sub-tree. For _later_ use on the CSS gap, column-gap and row-gap properties, on other rules.
+*/
+.with-layout-gap-none {
+  --layout-gap-h: 0;
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-h-none {
+  --layout-gap-h: 0;
+}
+
+.with-layout-gap-v-none {
+  --layout-gap-v: 0;
+}
+
+.with-layout-gap-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+
+.with-layout-gap-h-normal {
+  --layout-gap-h: var(--layout-gap-h-root);
+}
+
+.with-layout-gap-v-normal {
+  --layout-gap-v: var(--layout-gap-v-root);
+}
+/* endregion */
+
+/* region flex-row / flex-column */
+:where(.responsive-theme .responsive, .responsive-content):is(.flex-column, .flex-row),
+:where(.responsive-theme .responsive, .responsive-content) :is(.flex-column, .flex-row) {
+  --flex-item: initial;
+  flex: var(--flex-item, auto);
+  display: flex;
+
+  --layout-gap-h-local: initial;
+  --layout-gap-v-local: initial;
+  gap: var(--layout-gap-v-local, var(--layout-gap-v)) var(--layout-gap-h-local, var(--layout-gap-h));
+}
+
+:where(.responsive-theme .responsive, .responsive-content).flex-row,
+:where(.responsive-theme .responsive, .responsive-content) .flex-row {
+  flex-direction: row;
+}
+
+/* Add to the flex row element when it has a flex item with a H-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive-theme .responsive, .responsive-content).flex-row:where(.with-scroll-child),
+:where(.responsive-theme .responsive, .responsive-content) .flex-row:where(.with-scroll-child) {
+  min-width: 0;
+}
+
+:where(.responsive-theme .responsive, .responsive-content):is(.flex-column,.flex-row):where(.with-scroll-h-child),
+:where(.responsive-theme .responsive, .responsive-content) :is(.flex-column,.flex-row):where(.with-scroll-h-child) {
+  min-width: 0;
+}
+
+:where(.responsive-theme .responsive, .responsive-content).flex-column,
+:where(.responsive-theme .responsive, .responsive-content) .flex-column {
+  flex-direction: column;
+}
+
+/* Add to the flex column element when it has a flex item with a V-scrollbar,
+   to allow the child's scrollbar to work.
+ */
+:where(.responsive-theme .responsive, .responsive-content).flex-column:where(.with-scroll-child),
+:where(.responsive-theme .responsive, .responsive-content) .flex-column:where(.with-scroll-child) {
+  min-height: 0;
+}
+
+
+:where(.responsive-theme .responsive, .responsive-content):is(.flex-column,.flex-row):where(.with-scroll-v-child),
+:where(.responsive-theme .responsive, .responsive-content) :is(.flex-column,.flex-row):where(.with-scroll-v-child) {
+  min-height: 0;
+}
+
+/* Items having same direction of the container inherit its flex by default.
+   When changing direction, the container's default flex of auto is used by default.
+ */
+:where(.responsive-theme .responsive, .responsive-content).flex-row > :where(.flex-row),
+:where(.responsive-theme .responsive, .responsive-content) .flex-row > :where(.flex-row),
+:where(.responsive-theme .responsive, .responsive-content).flex-column > :where(.flex-column),
+:where(.responsive-theme .responsive, .responsive-content) .flex-column > :where(.flex-column) {
+  --flex-item: initial;
+  flex: var(--flex-item, inherit);
+}
+/* endregion Responsive Primitives */
+
+/* region Modifiers: gap-, flex-, ... */
+/* Placed after other primitives, to override them. */
+
+/* Classes for setting the CSS properties gap, column-gap and/or row-gap
+   with predefined values on the current element.
+ */
+.gap-none {
+  gap: 0;
+}
+
+.gap-h-none {
+  column-gap: 0;
+}
+
+.gap-v-none {
+  row-gap: 0;
+}
+
+.gap-layout {
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+}
+
+.gap-h-layout {
+  column-gap: var(--layout-gap-h);
+}
+
+.gap-v-layout {
+  row-gap: var(--layout-gap-v);
+}
+
+.flex-none {
+  flex: none;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+/* endregion */

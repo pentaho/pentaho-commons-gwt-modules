@@ -30,6 +30,7 @@
 
   <properties>
     <license.licenseName>lgpl_v2_1</license.licenseName>
+    <com.github.spotbugs.annotations.version>4.2.3</com.github.spotbugs.annotations.version>
   </properties>
 
   <scm>
@@ -101,7 +102,13 @@
         <version>1.0.0.GA</version>
         <classifier>sources</classifier>
       </dependency>
-
+      <dependency>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-annotations</artifactId>
+        <version>${com.github.spotbugs.annotations.version}</version>
+        <scope>provided</scope>
+        <optional>true</optional>
+      </dependency>
       <!-- Test -->
       <dependency>
         <groupId>com.google.gwt.gwtmockito</groupId>

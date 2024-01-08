@@ -3671,11 +3671,6 @@ treecontrol.tree-classic li .tree-selected {
   text-shadow: none;
 }
 
-.schedule-dialog-button-panel tr td button.pentaho-button {
-  margin-left:2px;
-  margin-right:2px;
-}
-
 .pentaho-calendar-icon ,
 .angular-dojo.dateTimePicker .pentaho-dropdownbutton-outer {
   padding: 6px;

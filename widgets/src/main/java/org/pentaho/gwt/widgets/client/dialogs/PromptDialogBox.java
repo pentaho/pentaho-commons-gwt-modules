@@ -221,15 +221,19 @@ public class PromptDialogBox extends DialogBox {
   }
 
   protected void onOk() {
-    if ( validatorCallback == null || ( validatorCallback != null && validatorCallback.validate() ) ) {
-      try {
-        if ( callback != null ) {
-          callback.okPressed();
-        }
-      } catch ( Throwable dontCare ) {
-        //ignore
-      }
+    if ( validatorCallback == null || validatorCallback.validate() ) {
+      onOkValid();
       hide();
+    }
+  }
+
+  protected void onOkValid() {
+    try {
+      if ( callback != null ) {
+        callback.okPressed();
+      }
+    } catch ( Throwable dontCare ) {
+      //ignore
     }
   }
 
