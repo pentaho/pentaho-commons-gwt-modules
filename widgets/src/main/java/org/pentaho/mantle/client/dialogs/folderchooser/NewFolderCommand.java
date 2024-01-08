@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -34,7 +34,6 @@ import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFile;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFileNameUtils;
 import org.pentaho.gwt.widgets.client.ui.ICallback;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.commands.AbstractCommand;
 import org.pentaho.mantle.client.csrf.CsrfRequestBuilder;
 import org.pentaho.mantle.client.messages.Messages;
@@ -109,7 +108,7 @@ public class NewFolderCommand extends AbstractCommand {
   }
 
   private void onFolderDialogOk( String folderName ) {
-    // TODO: validate name on the server as part of create?
+    // TODO: validate name on the server as part of create instead, so that logic can depend on provider.
     if ( !GenericFileNameUtils.isValidFolderName( folderName ) ) {
       showInvalidFolderNameError( folderName );
       return;
@@ -124,7 +123,7 @@ public class NewFolderCommand extends AbstractCommand {
       createDirRequestBuilder.sendRequest( null, new RequestCallback() {
         @Override
         public void onError( Request createFolderRequest, Throwable exception ) {
-          showCreateFolderResponseError( null, folderName );
+          showCreateFolderResponseError( -1, folderName );
         }
 
         @Override
@@ -132,7 +131,7 @@ public class NewFolderCommand extends AbstractCommand {
           if ( createFolderResponse.getStatusCode() == Response.SC_CREATED ) {
             onFolderCreated( folderPath );
           } else {
-            showCreateFolderResponseError( createFolderResponse.getText(), folderName );
+            showCreateFolderResponseError( createFolderResponse.getStatusCode(), folderName );
           }
         }
       } );
@@ -166,16 +165,36 @@ public class NewFolderCommand extends AbstractCommand {
   }-*/;
 
   private void showInvalidFolderNameError( String folderName ) {
-    showErrorDialog( Messages.getString( "containsIllegalCharacters", folderName ) );
+    showCreateFolderResponseError( Response.SC_BAD_REQUEST, folderName );
   }
 
-  private void showCreateFolderResponseError( @Nullable String responseText, @NonNull String folderName ) {
-    String errorMessage = StringUtils.isEmpty( responseText )
-      || Messages.getString( responseText ) == null
-      ? Messages.getString( "couldNotCreateFolder", folderName )
-      : Messages.getString( responseText, folderName );
+  private void showCreateFolderResponseError( int statusCode, @NonNull String folderName ) {
+    showErrorDialog( getErrorMessage( statusCode, folderName ) );
+  }
 
-    showErrorDialog( errorMessage );
+  private String getErrorMessage( int statusCode, @NonNull String folderName ) {
+    switch ( statusCode ) {
+      case Response.SC_BAD_REQUEST:
+        // This error message is very specific, referring to illegal characters.
+        // While there are other types of invalid paths / bad requests
+        // (for example, trying to create a folder on a non-existing VFS connection),
+        // they are highly unlikely to occur when the service is used from the UI.
+        return Messages.getString( "containsIllegalCharacters", folderName );
+
+      case Response.SC_FORBIDDEN:
+        // This resource string id is the legacy one and does not reflect the fact that
+        // the text says there is lack of permissions to create the folder.
+        // Keeping the id, due to compatibility with existing translations,
+        // but defined the `couldNotCreateFolderGeneral` for the general error case.
+        return Messages.getString( "couldNotCreateFolder", folderName );
+
+      case Response.SC_CONFLICT:
+        return Messages.getString( "couldNotCreateFolderDuplicate", folderName );
+
+      default:
+        // General error message. Can also pass -1 to surely end up here.
+        return Messages.getString( "couldNotCreateFolderGeneral", folderName );
+    }
   }
 
   private static void showErrorDialog( String errorMessage ) {

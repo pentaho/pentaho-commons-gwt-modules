@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2023 Hitachi Vantara. All rights reserved.
+ * Copyright (c) 2023 - 2024 Hitachi Vantara. All rights reserved.
  */
 package org.pentaho.gwt.widgets.client.genericfile;
 
@@ -50,6 +50,10 @@ public class GenericFileNameUtils {
 
   @NonNull
   public static String buildPath( @NonNull String basePath, @NonNull String relativePath ) {
+    if ( basePath.endsWith( PATH_SEPARATOR ) ) {
+      return basePath + relativePath;
+    }
+
     return basePath + PATH_SEPARATOR + relativePath;
   }
 
