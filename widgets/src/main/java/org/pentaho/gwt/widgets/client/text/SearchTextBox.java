@@ -81,7 +81,7 @@ public class SearchTextBox extends HorizontalFlexPanel implements ChangeListener
 
     Element element = searchInput.getElement();
     element.setAttribute( "type", "search" );
-    element.setAttribute( "placeholder", Messages.getString( "search" ) + "..." );
+    element.setAttribute( "placeholder", Messages.getString( "SearchTextBox.placeholder" ) );
 
     searchInput.addKeyUpHandler( event -> {
       Image searchIcon = getIcon();
