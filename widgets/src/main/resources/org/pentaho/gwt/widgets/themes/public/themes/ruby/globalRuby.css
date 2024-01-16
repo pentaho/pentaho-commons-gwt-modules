@@ -7281,12 +7281,23 @@ div.listbox .pentaho-listbox {
 }
 
 /* Dashboard prompt controls */
-#filterControlsGroupbox #dropDownFilterButton img {
-  background: url("images/prompt_controls/dropdown.png");
+#filterControlsGroupbox :is(
+#dropDownFilterButton,
+#listFilterButton,
+#radioFilterButton,
+#checkboxFilterButton,
+#buttonFilterButton,
+#textfieldFilterButton,
+#datepickerFilterButton) img {
+  --icon-height: 32;
+  --icon-width: 32;
+
   background-position: center;
   background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+}
+
+#filterControlsGroupbox #dropDownFilterButton img {
+  background-image: url("images/prompt_controls/dropdown.png");
 }
 
 #filterControlsGroupbox #dropDownFilterButton .toolbar-toggle-button-down img {
@@ -7294,11 +7305,7 @@ div.listbox .pentaho-listbox {
 }
 
 #filterControlsGroupbox #listFilterButton img {
-  background: url("images/prompt_controls/list.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+  background-image: url("images/prompt_controls/list.png");
 }
 
 #filterControlsGroupbox #listFilterButton .toolbar-toggle-button-down img {
@@ -7306,11 +7313,7 @@ div.listbox .pentaho-listbox {
 }
 
 #filterControlsGroupbox #radioFilterButton img {
-  background: url("images/prompt_controls/radio.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+  background-image: url("images/prompt_controls/radio.png");
 }
 
 #filterControlsGroupbox #radioFilterButton .toolbar-toggle-button-down img {
@@ -7318,11 +7321,7 @@ div.listbox .pentaho-listbox {
 }
 
 #filterControlsGroupbox #checkboxFilterButton img {
-  background: url("images/prompt_controls/checkbox.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+  background-image: url("images/prompt_controls/checkbox.png");
 }
 
 #filterControlsGroupbox #checkboxFilterButton .toolbar-toggle-button-down img {
@@ -7330,11 +7329,7 @@ div.listbox .pentaho-listbox {
 }
 
 #filterControlsGroupbox #buttonFilterButton img {
-  background: url("images/prompt_controls/button.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+  background-image: url("images/prompt_controls/button.png");
 }
 
 #filterControlsGroupbox #buttonFilterButton .toolbar-toggle-button-down img {
@@ -7342,11 +7337,7 @@ div.listbox .pentaho-listbox {
 }
 
 #filterControlsGroupbox #textfieldFilterButton img {
-  background: url("images/prompt_controls/textfield.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+  background-image: url("images/prompt_controls/textfield.png");
 }
 
 #filterControlsGroupbox #textfieldFilterButton .toolbar-toggle-button-down img {
@@ -7354,11 +7345,7 @@ div.listbox .pentaho-listbox {
 }
 
 #filterControlsGroupbox #datepickerFilterButton img {
-  background: url("images/prompt_controls/datepicker.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+  background-image: url("images/prompt_controls/datepicker.png");
 }
 
 #filterControlsGroupbox #datepickerFilterButton .toolbar-toggle-button-down img {
