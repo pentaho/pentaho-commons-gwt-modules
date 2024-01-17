@@ -1052,6 +1052,7 @@ div#FilterPanel div.pentaho-toggle-button-up button {
 
 :where(.responsive.pentaho-xul-gwt) .deck-panel > * > * {
   flex: inherit;
+  box-sizing: border-box;
   width: 100% !important;
   height: auto !important;
 }
