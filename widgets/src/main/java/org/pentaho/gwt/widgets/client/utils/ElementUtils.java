@@ -454,4 +454,23 @@ public class ElementUtils {
   public static native void log( String text ) /*-{
     $wnd.console.log( text );
   }-*/;
+
+  public static boolean isInViewPort( Element element ) {
+    return isInViewPort( element.getOffsetParent(), element, element.getOffsetTop() );
+  }
+
+  private static boolean isInViewPort( Element containerElem, Element element, int offsetTop ) {
+    if ( containerElem != null  ) {
+      int containerElemScrollTop = containerElem.getScrollTop();
+      if ( offsetTop < containerElemScrollTop ||
+              offsetTop + element.getClientHeight() > containerElemScrollTop + containerElem.getClientHeight() ) {
+        return false;
+      }
+
+      return isInViewPort( containerElem.getOffsetParent(), element,
+              offsetTop + containerElem.getOffsetTop() - containerElemScrollTop );
+    }
+
+    return true;
+  }
 }

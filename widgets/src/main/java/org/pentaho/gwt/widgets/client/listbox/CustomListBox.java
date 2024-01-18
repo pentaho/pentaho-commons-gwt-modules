@@ -38,6 +38,7 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -631,6 +632,25 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
       this.popupHeight = null;
     }
 
+    // Set the size of the popup calculated in updateDropDown().
+    if( popup != null && popup.isShowing() ) {
+      if ( this.popupHeight != null ) {
+        this.popupScrollPanel.getElement().getStyle().setProperty( "height", this.popupHeight );
+      } else {
+        this.popupScrollPanel.getElement().getStyle().clearProperty( "height" );
+      }
+
+      if ( this.popupWidth != null ) {
+        String w = Math.max( this.getElement().getOffsetWidth() - 2, this.maxWidth + 10 ) + "px";
+        this.popupScrollPanel.getElement().getStyle().setProperty( "width", w );
+        popup.getElement().getStyle().setProperty( "width", w );
+      } else {
+        this.popupScrollPanel.getElement().getStyle().clearProperty( "width" );
+        popup.getElement().getStyle().clearProperty( "width" );
+      }
+
+      adjustPopupPosition();
+    }
   }
 
   protected Focusable getFocusableWidget() {
@@ -662,57 +682,57 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
    * Used internally to hide/show drop-down popup.
    */
   protected void togglePopup() {
-    if ( popupShowing == false ) {
-
-      // This delayed instantiation works around a problem with the underlying GWT widgets that
-      // throw errors positioning when the GWT app is loaded in a frame that's not visible.
-
-      if ( popup == null ) {
-        popup = createPopupPanel();
-      }
-
-      int x = this.getElement().getAbsoluteLeft();
-      int y = this.getElement().getAbsoluteTop() + this.getElement().getOffsetHeight() + 1;
-      int windowH = Window.getClientHeight();
-      int windowW = Window.getClientWidth();
-
-      Rectangle popupSize = ElementUtils.getSize( popup.getElement() );
-      if ( y + popupSize.height > windowH ) {
-        y = windowH - popupSize.height;
-      }
-      if ( x + popupSize.width > windowW ) {
-        x = windowW - popupSize.width;
-      }
-
-      popup.setPopupPosition( x, y );
-
-      popup.show();
-
-      updateDropDown();
-
-      // Set the size of the popup calculated in updateDropDown().
-      if ( this.popupHeight != null ) {
-        this.popupScrollPanel.getElement().getStyle().setProperty( "height", this.popupHeight );
-      } else {
-        this.popupScrollPanel.getElement().getStyle().clearProperty( "height" );
-      }
-
-      if ( this.popupWidth != null ) {
-        String w = Math.max( this.getElement().getOffsetWidth() - 2, this.maxWidth + 10 ) + "px";
-        this.popupScrollPanel.getElement().getStyle().setProperty( "width", w );
-        popup.getElement().getStyle().setProperty( "width", w );
-      } else {
-        this.popupScrollPanel.getElement().getStyle().clearProperty( "width" );
-        popup.getElement().getStyle().clearProperty( "width" );
-      }
-
-      scrollSelectedItemIntoView();
-
+    if ( !popupShowing ) {
+      showPopup();
       popupShowing = true;
     } else {
       popup.hide();
     }
   }
+
+  private void showPopup() {
+    // This delayed instantiation works around a problem with the underlying GWT widgets that
+    // throw errors positioning when the GWT app is loaded in a frame that's not visible.
+    if ( popup == null ) {
+      popup = createPopupPanel();
+    }
+
+    popup.setPopupPositionAndShow( ( offsetWidth, offsetHeight ) -> {
+      updateDropDown();
+
+      scrollSelectedItemIntoView();
+    });
+  }
+
+  private void adjustPopupPosition() {
+    if ( !ElementUtils.isInViewPort( this.getElement() ) ) {
+      popup.hide();
+      return;
+    }
+
+    int x = this.getElement().getAbsoluteLeft();
+    int y = this.getElement().getAbsoluteTop() + this.getElement().getOffsetHeight() + 1;
+
+    // If bottom would go off-screen, move list box up, disconnecting from the anchor,
+    // so that the user can see the whole list. Unless it would hide the top of the list.
+    // This is necessary because the list box does not have scrollbars.
+    // 0. Anchor list box at the edit box and size it to the number of elements / specified height
+    // 1. Shrink list box and show scrollbar(s) if it would become off-screen.
+    // 2. If reaching minimum size, then disconnect from anchor and move up, but not off-screen in the top.
+    int windowH = Window.getClientHeight();
+    int windowW = Window.getClientWidth();
+
+    Rectangle popupSize = ElementUtils.getSize( popup.getElement() );
+    if ( y + popupSize.height > windowH ) {
+      y = Math.max( 0, windowH - popupSize.height );
+    }
+    if ( x + popupSize.width > windowW ) {
+      x = Math.max( 0, windowW - popupSize.width );
+    }
+
+    popup.setPopupPosition( x, y );
+  }
+
 
   /* Visible for testing */
   DropPopupPanel createPopupPanel() {
@@ -1245,11 +1265,33 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
    * Panel used as a drop-down popup.
    */
   private class DropPopupPanel extends PopupPanel {
+
+    private Timer popupResizeTimer;
+
     public DropPopupPanel() {
       super( true );
 
       setStyleName( "drop-popup" );
       addStyleName( "responsive" );
+      popupResizeTimer = new Timer() {
+        @Override
+        public void run() {
+          adjustPopupPosition();
+        }
+      };
+
+      addCloseHandler( handler -> popupResizeTimer.cancel() );
+    }
+
+    @Override
+    public void show() {
+      if ( isShowing() ) {
+        return;
+      }
+
+      super.show();
+
+      popupResizeTimer.scheduleRepeating( 20 );
     }
 
     @Override
