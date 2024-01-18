@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
+* Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.dialogs;
@@ -28,7 +28,14 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyChar;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class PromptDialogBoxTest {
@@ -55,28 +62,34 @@ public class PromptDialogBoxTest {
   }
 
   @Test
-  public void testOnOk() throws Exception {
+  public void testOnOk() {
     PromptDialogBox box = mock( PromptDialogBox.class );
+
     final IDialogCallback callback = mock( IDialogCallback.class );
     box.callback = callback;
+
     final IDialogValidatorCallback validatorCallback = mock( IDialogValidatorCallback.class );
     box.validatorCallback = validatorCallback;
+
     doCallRealMethod().when( box ).onOk();
+    doCallRealMethod().when( box ).onOkValid();
 
     box.onOk();
 
     verify( callback, never() ).okPressed();
-    verify( validatorCallback ) .validate();
+    verify( validatorCallback ).validate();
+    verify( box, never() ).hide();
 
     when( validatorCallback.validate() ).thenReturn( true );
     box.onOk();
 
     verify( callback ).okPressed();
     verify( validatorCallback, times( 2 ) ).validate();
+    verify( box ).hide();
   }
 
   @Test
-  public void testOnNotOk() throws Exception {
+  public void testOnNotOk() {
     PromptDialogBox box = mock( PromptDialogBox.class );
     final IThreeButtonDialogCallback callback = mock( IThreeButtonDialogCallback.class );
     box.callback = callback;
@@ -85,10 +98,11 @@ public class PromptDialogBoxTest {
     box.onNotOk();
 
     verify( callback ).notOkPressed();
+    verify( box ).hide();
   }
 
   @Test
-  public void testOnCancel() throws Exception {
+  public void testOnCancel() {
     PromptDialogBox box = mock( PromptDialogBox.class );
     final IDialogCallback callback = mock( IDialogCallback.class );
     box.callback = callback;
