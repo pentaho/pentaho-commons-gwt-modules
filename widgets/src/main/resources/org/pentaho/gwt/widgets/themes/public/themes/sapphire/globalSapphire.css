@@ -5590,7 +5590,8 @@ span.gwt-RadioButton label {
 }
 
 .helpIcon {
-  background: url('images/help_link.png') no-repeat;
+  background-image: url('images/help_link.png');
+  background-repeat: no-repeat;
 }
 
 /* ---------- PIR icons ----------  */
