@@ -4576,6 +4576,122 @@ div.dijitDateTextBox.dijitComboBox {
   background: url("images/prptiFile_32.png") no-repeat;
 }
 
+/*!* region PIR Filter Dialog *!*/
+.responsive.pentaho-common-dialog.filter-dialog .dijitDialogPaneContent {
+  width: auto !important;
+  height: auto !important;
+  overflow: auto !important;
+}
+
+:where(.filter-dialog) .filterDialogDetailsContainer {
+  min-height: 120px;
+}
+
+:where(.filter-dialog) .filterDialogMatchComparator {
+  margin: 0 !important;
+}
+
+:where(.filter-dialog) .filterPicklist {
+  display: grid;
+  gap: var(--layout-gap-v) var(--layout-gap-h);
+  grid-template-areas:
+    "title-head"
+    "user-entry"
+    "selectable-lists-available"
+    "list-actions"
+    "title-combo"
+    "dropdown"
+    "selectable-lists-used";
+}
+
+:where(.filter-dialog) .filterDialogPicklistHeadingText {
+  grid-area: title-head;
+}
+
+:where(.filter-dialog) .filterDialogPicklistCombinationTypeTitle {
+  grid-area: title-combo;
+}
+
+:where(.filter-dialog) .filterDialogPicklistCombinationType {
+  grid-area: dropdown;
+}
+
+:where(.filter-dialog) .filterDialogPicklistFindInput {
+  grid-area: user-entry;
+}
+
+:where(.filter-dialog) .picklistAvailable {
+  grid-area: selectable-lists-available;
+}
+
+:where(.filter-dialog) .picklistUsed {
+  grid-area: selectable-lists-used;
+}
+
+:where(.filter-dialog) .selectableListActions {
+  grid-area: list-actions;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+:where(.filter-dialog) .filterDialogPicklistButton {
+  place-self: start;
+  transform: rotate(90deg);
+  width: calc(1em * var(--icon-width)/var(--typ-body-font-size-px)) !important;
+}
+
+@media (min-width: 640px) {
+  :where(.filter-dialog) .filterPicklist {
+    grid-template-columns: 3fr auto 3fr;
+    grid-template-areas:
+    "title-head title-head title-combo"
+    "user-entry user-entry dropdown"
+    "selectable-lists-available list-actions selectable-lists-used";
+  }
+
+  :where(.filter-dialog) .filterDialogPicklistButton {
+    transform: none;
+    margin-top: 0;
+  }
+
+  :where(.filter-dialog) .filterDialogPicklistHeadingText {
+    display: flex;
+  }
+
+  :where(.filter-dialog) .filterDialogPicklistCombinationTypeTitle {
+    display: flex;
+  }
+
+  :where(.filter-dialog) .selectableListActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+:where(.filter-dialog) .filterDialogParameterContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+:where(.filter-dialog) .findButton {
+  grid-area: user-entry;
+}
+
+:where(.filter-dialog.responsive) :is(
+ table:where([role="presentation"]),
+ table:where([role="presentation"]) > *,
+ table:where([role="presentation"]) > * > *,
+ table:where([role="presentation"]) > * > * > *
+) {
+  display: contents;
+  flex: inherit;
+}
+
+/* endregion*/
+
 /* added by brett to override PIR styles */
 .styled >* #reportContent,
 #reportContent {
