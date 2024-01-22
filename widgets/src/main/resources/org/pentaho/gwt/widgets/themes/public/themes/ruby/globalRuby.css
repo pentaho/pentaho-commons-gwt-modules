@@ -477,7 +477,7 @@ table#email-schedule-panel textarea {
 }
 
 table#email-schedule-panel tr:nth-child(2) input {
-  margin-bottom: 18px;
+  margin-bottom: 0px;
 }
 
 div#reportControlPanel select {
