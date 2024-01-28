@@ -20,6 +20,9 @@
 
 package org.pentaho.gwt.widgets.client.utils.string;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.ui.Widget;
+
 import java.util.Arrays;
 
 // The code of this class was adapted from UNBESCAPE. Because this code will all be transpiled to JavaScript
@@ -354,5 +357,22 @@ public class CssUtils {
 
     return strBuilder.toString();
 
+  }
+
+  /**
+   * Used to bypass width unit restrictions without re-wrapping GWT objects
+   * e.g. to use `calc(...)` function or `vw`
+   *
+   * This concept could be generalized further to address, say, height restrictions.
+   * This works for now.
+   */
+  public static void setElementWidth( Widget widget, String widthString){
+    Element element = widget.getElement();
+    // clear the property if it exists
+    String style = widget.getElement().getAttribute( "style" );
+    widget.getElement().getStyle().clearWidth();
+    String styleString = element.getAttribute( "style" );
+    String newStyleString = styleString + " width: " + widthString + ";";
+    element.setAttribute( "style", newStyleString );
   }
 }
