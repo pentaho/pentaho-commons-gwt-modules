@@ -8428,6 +8428,11 @@ treecontrol.tree-classic li .tree-selected {
   background-size: contain !important;
 }
 
+/* Make sure an item which no longer has children does not show the arrow image. */
+.select-folder-tree .leaf-widget:not(.parent-widget) > table > tbody > tr > td > img {
+  display: none;
+}
+
 #sidepanel #sidepaneltabset > div > span {
   overflow: hidden;
   text-overflow: ellipsis;

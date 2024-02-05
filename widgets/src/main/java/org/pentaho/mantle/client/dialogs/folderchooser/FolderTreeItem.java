@@ -29,6 +29,11 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class FolderTreeItem extends TreeItem {
+
+  private static final String LOADING_STYLE_NAME = "loading";
+
+  private boolean isLoading;
+
   public FolderTreeItem() {
   }
 
@@ -82,6 +87,23 @@ public class FolderTreeItem extends TreeItem {
     return new FolderTreeItemIterable( this );
   }
 
+  public boolean isLoading() {
+    return isLoading;
+  }
+
+  public void setLoading( boolean loading ) {
+    if ( this.isLoading != loading ) {
+
+      this.isLoading = loading;
+
+      if ( this.isLoading ) {
+        addStyleName( LOADING_STYLE_NAME );
+      } else {
+        removeStyleName( LOADING_STYLE_NAME );
+      }
+    }
+  }
+
   private static class FolderTreeItemIterable implements Iterable<FolderTreeItem> {
     @NonNull
     private final TreeItem parentTreeItem;
@@ -91,7 +113,8 @@ public class FolderTreeItem extends TreeItem {
       this.parentTreeItem = parentTreeItem;
     }
 
-    @Override @NonNull
+    @Override
+    @NonNull
     public Iterator<FolderTreeItem> iterator() {
       return new FolderTreeItemIterator();
     }

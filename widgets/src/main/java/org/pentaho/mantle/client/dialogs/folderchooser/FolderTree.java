@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.folderchooser;
@@ -29,6 +29,7 @@ import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -50,11 +51,11 @@ import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.WaitPopup;
 import org.pentaho.mantle.client.messages.Messages;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static org.pentaho.gwt.widgets.client.utils.ElementUtils.setStyleProperty;
 import static org.pentaho.mantle.client.environment.EnvironmentHelper.getFullyQualifiedURL;
@@ -71,6 +72,8 @@ public class FolderTree extends Tree {
   private int depth = -1;
   private boolean useDescriptionsForTooltip;
   private GenericFileTree rootTreeModel;
+
+  private GenericFileTree loadingTreeModel;
 
   /**
    * Stores the currently selected item in duplication of the base class' private field,
@@ -97,25 +100,25 @@ public class FolderTree extends Tree {
     addCloseHandler( this::handleClose );
   }
 
-  // region fetchModel
-  public void fetchModel() {
-    fetchModel( null );
+  // region fetchTreeModel
+  public void fetchTreeModel() {
+    fetchTreeModel( null );
   }
 
-  public void fetchModel( @Nullable AsyncCallback<GenericFileTree> callback ) {
-    fetchModel( callback, null );
+  public void fetchTreeModel( @Nullable AsyncCallback<GenericFileTree> callback ) {
+    fetchTreeModel( callback, null );
   }
 
-  public void fetchModel( @Nullable final AsyncCallback<GenericFileTree> callback,
-                          @Nullable String initialSelectedPath ) {
+  public void fetchTreeModel( @Nullable final AsyncCallback<GenericFileTree> callback,
+                              @Nullable String initialSelectedPath ) {
 
     // Preserve currently selected path, if none is specified.
     // Must do this before calling clear, from within onModelFetching, which also clears selection.
     final String initialOrPreviousSelectedPath = initialSelectedPath != null ? initialSelectedPath : getSelectedPath();
 
-    onModelFetching();
+    onTreeModelFetching();
 
-    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, buildFetchUrl() );
+    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, buildFetchTreeModelUrl( initialOrPreviousSelectedPath ) );
     builder.setHeader( "Accept", "application/json" );
     builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
 
@@ -130,7 +133,7 @@ public class FolderTree extends Tree {
           final GenericFileTreeJsonParser parser = new GenericFileTreeJsonParser( response.getText() );
           final GenericFileTree fileTreeModel = parser.getTree();
 
-          onModelFetched( fileTreeModel, initialOrPreviousSelectedPath );
+          onTreeModelFetched( fileTreeModel, initialOrPreviousSelectedPath );
           if ( callback != null ) {
             callback.onSuccess( fileTreeModel );
           }
@@ -145,13 +148,24 @@ public class FolderTree extends Tree {
     }
   }
 
-  private String buildFetchUrl() {
-    String url = getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folders/tree?";
-
-    return url + "depth=" + depth + "&showHidden=" + showHiddenFiles + "&ts=" + System.currentTimeMillis();
+  @NonNull
+  private String getServiceBaseUrl() {
+    return getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folders/";
   }
 
-  protected void onModelFetching() {
+  private String buildFetchTreeModelUrl( @Nullable String expandedPath ) {
+    String url = getServiceBaseUrl() + "tree?"
+      + "depth=" + depth
+      + "&showHidden=" + showHiddenFiles;
+
+    if ( expandedPath != null ) {
+      url += "&expandedPath=" + URL.encodeQueryString( expandedPath );
+    }
+
+    return url + "&ts=" + System.currentTimeMillis();
+  }
+
+  protected void onTreeModelFetching() {
     WaitPopup.getInstance().setVisible( true );
 
     clear();
@@ -160,27 +174,127 @@ public class FolderTree extends Tree {
     addItem( buildLoadingTreeItem() );
   }
 
-  @NonNull
-  private static FolderTreeItem buildLoadingTreeItem() {
-    String loadingText = Messages.getString( "loadingEllipsis" );
+  protected void onTreeModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
 
-    FolderTreeItem loadingTreeItem = new FolderTreeItem( loadingText );
-    GenericFileTree treeModel = new GenericFileTree();
+    setTreeModel( treeModel, initialSelectedPath );
+
+    WaitPopup.getInstance().setVisible( false );
+  }
+  // endregion
+
+  // region fetchSubtreeModel
+  private void fetchSubtreeModel( @NonNull FolderTreeItem treeItem ) {
+
+    onSubtreeModelFetching( treeItem );
+
+    String basePath = treeItem.getFileModel().getPath();
+
+    RequestBuilder builder = new RequestBuilder( RequestBuilder.GET, buildFetchSubtreeModelUrl( basePath ) );
+    builder.setHeader( "Accept", "application/json" );
+    builder.setHeader( "If-Modified-Since", "01 Jan 1970 00:00:00 GMT" );
+
+    RequestCallback innerCallback = new RequestCallback() {
+
+      public void onError( Request request, Throwable exception ) {
+        Window.alert( exception.toString() );
+      }
+
+      public void onResponseReceived( Request request, Response response ) {
+        if ( response.getStatusCode() == Response.SC_OK ) {
+          final GenericFileTreeJsonParser parser = new GenericFileTreeJsonParser( response.getText() );
+          final GenericFileTree fileTreeModel = parser.getTree();
+
+          onSubtreeModelFetched( fileTreeModel, treeItem );
+        } else {
+          onSubtreeModelFetched( null, treeItem );
+        }
+      }
+    };
+
+    try {
+      builder.sendRequest( null, innerCallback );
+    } catch ( RequestException e ) {
+      Window.alert( e.toString() );
+    }
+  }
+
+  private void onSubtreeModelFetching( @NonNull FolderTreeItem treeItem ) {
+    treeItem.setLoading( true );
+  }
+
+  private void onSubtreeModelFetched( @Nullable GenericFileTree fileTreeModel, @NonNull FolderTreeItem treeItem ) {
+    if ( !treeItem.isLoading() ) {
+      return;
+    }
+
+    treeItem.setLoading( false );
+
+    // Failed, or otherwise still did not return the children ?
+    if ( fileTreeModel == null || fileTreeModel.getChildren() == null ) {
+      // Close the item.
+      treeItem.setState( false );
+      return;
+    }
+
+    // Only update the model's children.
+    treeItem.getFileTreeModel().setChildren( fileTreeModel.getChildren() );
+    fileTreeModel = treeItem.getFileTreeModel();
+
+    // Remove the Loading... tree item.
+    treeItem.removeItems();
+
+    buildSolutionTree( treeItem, fileTreeModel );
+
+    fixTreeItemsWidgets( treeItem );
+
+    if ( !fileTreeModel.hasChildren() ) {
+      treeItem.removeStyleName( PARENT_WIDGET_STYLE_NAME );
+
+      treeItem.setState( false );
+    }
+  }
+
+  private String buildFetchSubtreeModelUrl( @NonNull String basePath ) {
+    return getServiceBaseUrl()
+      + GenericFileNameUtils.encodePath( basePath )
+      + "/tree?"
+      + "depth=1"
+      + "&showHidden=" + showHiddenFiles
+      + "&ts=" + System.currentTimeMillis();
+  }
+  // endregion
+
+  // region Loading Tree Item
+  @NonNull
+  private GenericFileTree buildLoadingTreeModel() {
     GenericFile fileModel = new GenericFile();
-    treeModel.setFile( fileModel );
-    fileModel.setName( loadingText );
+    fileModel.setName( Messages.getString( "loadingEllipsis" ) );
     fileModel.setCanAddChildren( false );
 
+    return new GenericFileTree( fileModel );
+  }
+
+  @NonNull
+  private GenericFileTree getLoadingTreeModel() {
+    if ( loadingTreeModel == null ) {
+      loadingTreeModel = buildLoadingTreeModel();
+    }
+
+    return loadingTreeModel;
+  }
+
+  @NonNull
+  private FolderTreeItem buildLoadingTreeItem() {
+    GenericFileTree treeModel = getLoadingTreeModel();
+
+    FolderTreeItem loadingTreeItem = new FolderTreeItem( treeModel.getFile().getName() );
     loadingTreeItem.setFileTreeModel( treeModel );
 
     return loadingTreeItem;
   }
 
-  protected void onModelFetched( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
-
-    setModel( treeModel, initialSelectedPath );
-
-    WaitPopup.getInstance().setVisible( false );
+  private boolean isLoadingTreeItem( @NonNull FolderTreeItem treeItem ) {
+    return loadingTreeModel != null && loadingTreeModel == treeItem.getFileTreeModel();
   }
   // endregion
 
@@ -238,7 +352,7 @@ public class FolderTree extends Tree {
   }
   // endregion
 
-  protected void setModel( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
+  protected void setTreeModel( @NonNull GenericFileTree treeModel, @Nullable String initialSelectedPath ) {
 
     this.rootTreeModel = treeModel;
 
@@ -262,41 +376,46 @@ public class FolderTree extends Tree {
     }
   }
 
-  // region fixLeafNodes et al.
-  private void fixLeafNodes() {
-    List<FolderTreeItem> allNodes = getAllNodes();
-    for ( FolderTreeItem treeItem : allNodes ) {
-      LeafItemWidget leafWidget;
-      String itemText = treeItem.getText();
-      GenericFileTree fileTreeModel = treeItem.getFileTreeModel();
+  // region fixTreeItemsWidgets et al.
+  private void fixTreeItemsWidgets() {
+    traverseTreeItems( this::fixTreeItemWidget );
+  }
 
-      if ( fileTreeModel != null && fileTreeModel.getChildren().isEmpty() ) {
-        leafWidget = new LeafItemWidget(
-          itemText, "icon-tree-node", "icon-tree-leaf", "icon-folder", "icon-zoomable" );
-      } else {
-        leafWidget = new LeafItemWidget( itemText, "icon-tree-node", "icon-folder", "icon-zoomable" );
-      }
+  private void fixTreeItemsWidgets( @NonNull FolderTreeItem treeItem ) {
+    traverseTreeItems( treeItem, this::fixTreeItemWidget );
+  }
 
-      treeItem.setWidget( leafWidget );
+  private void fixTreeItemWidget( @NonNull FolderTreeItem treeItem ) {
+    GenericFileTree fileTreeModel = treeItem.getFileTreeModel();
 
-      treeItem.getElement().getStyle().setProperty( "paddingLeft", "0px" );
+    LeafItemWidget leafWidget;
+    String itemText = treeItem.getText();
+    if ( fileTreeModel != null && ( fileTreeModel.areChildrenLoaded() && !fileTreeModel.hasChildren() ) ) {
+      leafWidget = new LeafItemWidget(
+        itemText, "icon-tree-node", "icon-tree-leaf", "icon-folder", "icon-zoomable" );
+    } else {
+      leafWidget = new LeafItemWidget( itemText, "icon-tree-node", "icon-folder", "icon-zoomable" );
+    }
+
+    treeItem.setWidget( leafWidget );
+
+    treeItem.getElement().getStyle().setProperty( "paddingLeft", "0px" );
+  }
+
+  private void traverseTreeItems( @NonNull Consumer<FolderTreeItem> consumer ) {
+    for ( int i = 0; i < getItemCount(); i++ ) {
+      traverseTreeItems( (FolderTreeItem) getItem( i ), consumer );
     }
   }
 
-  private List<FolderTreeItem> getAllNodes() {
-    List<FolderTreeItem> nodeList = new ArrayList<>();
-    for ( int i = 0; i < this.getItemCount(); i++ ) {
-      nodeList.add( (FolderTreeItem) this.getItem( i ) );
-      getAllNodes( (FolderTreeItem) this.getItem( i ), nodeList );
-    }
-    return nodeList;
-  }
+  private void traverseTreeItems( @NonNull FolderTreeItem treeItem, @NonNull Consumer<FolderTreeItem> consumer ) {
 
-  private void getAllNodes( FolderTreeItem parent, List<FolderTreeItem> nodeList ) {
-    for ( int i = 0; i < parent.getChildCount(); i++ ) {
-      FolderTreeItem child = (FolderTreeItem) parent.getChild( i );
-      nodeList.add( child );
-      getAllNodes( child, nodeList );
+    if ( !isLoadingTreeItem( treeItem ) ) {
+      consumer.accept( treeItem );
+    }
+
+    for ( int i = 0; i < treeItem.getChildCount(); i++ ) {
+      traverseTreeItems( (FolderTreeItem) treeItem.getChild( i ), consumer );
     }
   }
   // endregion
@@ -328,6 +447,10 @@ public class FolderTree extends Tree {
   private FolderTreeItem matchTreeItemRecursive( @NonNull FolderTreeItem childTreeItem,
                                                  @NonNull List<String> pathSegments,
                                                  int level ) {
+
+    if ( isLoadingTreeItem( childTreeItem ) ) {
+      return null;
+    }
 
     GenericFile childFileModel = childTreeItem.getFileModel();
 
@@ -455,7 +578,19 @@ public class FolderTree extends Tree {
   // endregion
 
   private void handleOpen( OpenEvent<TreeItem> event ) {
-    event.getTarget().addStyleName( OPEN_STYLE_NAME );
+    if ( !( event.getTarget() instanceof FolderTreeItem ) ) {
+      return;
+    }
+
+    FolderTreeItem openingTreeItem = (FolderTreeItem) event.getTarget();
+    if ( !openingTreeItem.isLoading() ) {
+      GenericFileTree treeModel = openingTreeItem.getFileTreeModel();
+      if ( treeModel != null && !treeModel.areChildrenLoaded() ) {
+        fetchSubtreeModel( openingTreeItem );
+      }
+    }
+
+    openingTreeItem.addStyleName( OPEN_STYLE_NAME );
   }
 
   private void handleClose( CloseEvent<TreeItem> event ) {
@@ -472,7 +607,7 @@ public class FolderTree extends Tree {
     if ( shouldShowFileTreeModel( rootTreeModel ) ) {
       buildSolutionTree( this, rootTreeModel );
 
-      fixLeafNodes();
+      fixTreeItemsWidgets();
     }
   }
 
@@ -485,17 +620,22 @@ public class FolderTree extends Tree {
 
     List<GenericFileTree> childTreeModels = treeModel.getChildren();
 
-    // BISERVER-9599 - Custom Sort
-    childTreeModels.sort( new GenericFileTreeComparator( showLocalizedFileNames ) );
+    // Children loaded?
+    if ( childTreeModels != null ) {
+      // BISERVER-9599 - Custom Sort
+      childTreeModels.sort( new GenericFileTreeComparator( showLocalizedFileNames ) );
 
-    for ( GenericFileTree childTreeModel : childTreeModels ) {
-      // Excludes non-folders and, when !showHiddenFiles, also hidden folders.
-      if ( shouldShowFileTreeModel( childTreeModel ) ) {
-        FolderTreeItem childTreeItem = buildFolderTreeItem( childTreeModel );
-        treeItem.addItem( childTreeItem );
+      for ( GenericFileTree childTreeModel : childTreeModels ) {
+        // Excludes non-folders and, when !showHiddenFiles, also hidden folders.
+        if ( shouldShowFileTreeModel( childTreeModel ) ) {
+          FolderTreeItem childTreeItem = buildFolderTreeItem( childTreeModel );
+          treeItem.addItem( childTreeItem );
 
-        buildSolutionTree( childTreeItem, childTreeModel );
+          buildSolutionTree( childTreeItem, childTreeModel );
+        }
       }
+    } else {
+      treeItem.addItem( buildLoadingTreeItem() );
     }
   }
 
@@ -514,7 +654,7 @@ public class FolderTree extends Tree {
 
     treeItem.getElement().setAttribute( "id", fileModel.getPath() );
     treeItem.setStylePrimaryName( LEAF_WIDGET_STYLE_NAME );
-    if ( fileTreeModel.hasChildFolders() ) {
+    if ( !fileTreeModel.areChildrenLoaded() || fileTreeModel.hasChildFolders() ) {
       treeItem.addStyleName( PARENT_WIDGET_STYLE_NAME );
     }
 
@@ -594,7 +734,7 @@ public class FolderTree extends Tree {
   public void setUseDescriptionsForTooltip( boolean useDescriptionsForTooltip ) {
     this.useDescriptionsForTooltip = useDescriptionsForTooltip;
 
-    setModel( rootTreeModel, null );
+    setTreeModel( rootTreeModel, null );
   }
 
   public int getDepth() {
