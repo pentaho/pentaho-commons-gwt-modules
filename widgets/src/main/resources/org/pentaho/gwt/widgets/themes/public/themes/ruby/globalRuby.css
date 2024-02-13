@@ -8535,6 +8535,50 @@ div.dijitDateTextBox.dijitTextBox .dijitReset.dijitRight.dijitButtonNode.dijitAr
   border-bottom: 1px solid #e0e0e0;
 }
 
+/* start for styling manage data sources dialog for safari browser */
+.safari #datasourceAdminDialog .gwt-ScrollTable {
+  --scrollbar-width: 0px;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable .headerWrapper .headerTable {
+  width: calc(100% - var(--scrollbar-width)) !important;
+  box-sizing: border-box;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable .headerWrapper {
+  background-color: #666666;
+  border: 1px solid #CCCCCC !important;
+  border-right: 1px solid #99BEDB;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable .headerTable tr > td {
+  border-width: 0;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable .headerTable tr > td:last-of-type {
+  border-left-width: 1px;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable :is(.headerWrapper, .dataWrapper) {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable .dataWrapper .dataTable {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable :is(.headerWrapper .headerTable, .dataWrapper .dataTable) td {
+  width: 50% !important;
+  box-sizing: border-box;
+}
+
+.safari #datasourceAdminDialog .gwt-ScrollTable :is(.headerWrapper .headerTable, .dataWrapper .dataTable) td:last-child {
+  padding-right: 10px;
+}
+/* end for styling manage data sources dialog for safari browser */
+
 :where(.responsive#general-datasource-window) #general-settings-box {
   box-sizing: border-box;
 }
