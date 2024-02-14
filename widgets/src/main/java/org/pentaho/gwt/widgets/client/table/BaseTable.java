@@ -214,6 +214,18 @@ public class BaseTable extends Composite {
     }
   }
 
+  private static native Element getDataWrapper( ScrollTable scrollTable ) /*-{
+    return scrollTable.@com.google.gwt.gen2.table.client.AbstractScrollTable::dataWrapper;
+  }-*/;
+
+  private void syncVerticalScrollbarWidth() {
+    com.google.gwt.dom.client.Element dataWrapper = getDataWrapper( scrollTable );
+    if( dataWrapper != null ) {
+      int scrollbarWidth = dataWrapper.getOffsetWidth() - dataWrapper.getPropertyInt("clientWidth");
+      ElementUtils.setStyleProperty( scrollTable.getElement(), "--scrollbar-width", scrollbarWidth + "px");
+    }
+  }
+
   /**
    * Gets a value that indicates whether a row that receives keyboard focus should be automatically
    * selected.
@@ -489,13 +501,26 @@ public class BaseTable extends Composite {
     }
   }
 
+  protected class MyScrollTable extends ScrollTable {
+
+    public MyScrollTable( FixedWidthGrid dataTable, FixedWidthFlexTable headerTable, ScrollTableImages images ) {
+      super( dataTable, headerTable, images );
+    }
+
+    @Override
+    public void redraw() {
+      super.redraw();
+      syncVerticalScrollbarWidth();
+    }
+  }
+
   /**
    * Creates and initializes the scroll table.
    */
   private void createScrollTable( AbstractScrollTable.ResizePolicy resizePolicy,
                                   AbstractScrollTable.ScrollPolicy scrollPolicy ) {
 
-    scrollTable = new ScrollTable( dataGrid, tableHeader, (BaseTableImages) GWT.create( BaseTableImages.class ) ) {
+    scrollTable = new MyScrollTable( dataGrid, tableHeader, (BaseTableImages) GWT.create( BaseTableImages.class ) ) {
       protected void resizeTablesVerticallyNow() {
 
         // Give the data wrapper all remaining height
