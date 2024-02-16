@@ -12,28 +12,13 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.listbox;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.user.client.ui.Focusable;
-import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
-import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
-import org.pentaho.gwt.widgets.client.panel.ScrollFlexPanel;
-import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
-import org.pentaho.gwt.widgets.client.text.SearchTextBox;
-import org.pentaho.gwt.widgets.client.utils.ElementUtils;
-import org.pentaho.gwt.widgets.client.utils.Rectangle;
-import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
-
 import com.allen_sauer.gwt.dnd.client.DragController;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -43,6 +28,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.ChangeListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusListener;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.KeyboardListener;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.MouseListener;
@@ -53,9 +39,21 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.PentahoFocusPanel;
+import org.pentaho.gwt.widgets.client.panel.ScrollFlexPanel;
+import org.pentaho.gwt.widgets.client.panel.VerticalFlexPanel;
+import org.pentaho.gwt.widgets.client.text.SearchTextBox;
+import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.Rectangle;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
- * 
  * ComplexListBox is a List-style widget can contain custom list-items made (images + text, text + checkboxes) This list
  * is displayed as a drop-down style component by default. If the visibleRowCount property is set higher than 1
  * (default), the list is rendered as a multi-line list box.
@@ -100,7 +98,6 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
 
   // Members for drop-down style
   protected FlexTable dropGrid = new FlexTable();
-  protected boolean popupShowing = false;
   private DropPopupPanel popup;
   private SearchTextBox searchTextBox = new SearchTextBox();
   private PopupList popupVbox = new PopupList();
@@ -682,9 +679,8 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
    * Used internally to hide/show drop-down popup.
    */
   protected void togglePopup() {
-    if ( !popupShowing ) {
+    if ( !isPopupShowing() ) {
       showPopup();
-      popupShowing = true;
     } else {
       popup.hide();
     }
@@ -1040,7 +1036,6 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
 
   public void onPopupClosed( PopupPanel popupPanel, boolean b ) {
     this.getSearchTextBox().clearText();
-    this.popupShowing = false;
   }
 
   public void onMouseDown( Widget widget, int i, int i1 ) {
@@ -1088,13 +1083,25 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
         break;
       case KeyCodes.KEY_TAB:
       case KeyCodes.KEY_ESCAPE:
-        if( popupShowing ){
+        if ( isPopupShowing() ) {
           popup.hide();
         }
         break;
       default:
         break;
     }
+  }
+
+  /**
+   * Indicates if the popup is created and showing.
+   * <p>
+   * Guards against the lazy creation of the drop-down's popup, and, otherwise,
+   * calls its {@link PopupPanel#isShowing()} method.
+   *
+   * @return {@code true} if the popup is open; {@code false}, otherwise.
+   */
+  protected boolean isPopupShowing() {
+    return popup != null && popup.isShowing();
   }
 
   public void onKeyPress( Widget widget, char c, int i ) {
@@ -1244,7 +1251,7 @@ public class CustomListBox extends VerticalFlexPanel implements ChangeListener, 
     }
 
     // Drop-down mode
-    if ( visible == 1 && popupShowing ) {
+    if ( visible == 1 && isPopupShowing() ) {
       togglePopup();
     }
 
