@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2023 Hitachi Vantara. All rights reserved.
+* Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.listbox;
@@ -43,7 +43,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
@@ -558,6 +557,8 @@ public class CustomListBoxTest {
     final ListItem listItem = mock( ListItem.class );
     final Event event = mock( Event.class );
 
+    when( customListBox.isPopupShowing() ).thenReturn( true );
+
     customListBox.multiSelect = true;
     customListBox.itemSelected( listItem, event );
     verify( customListBox ).setFocus( true );
@@ -567,7 +568,6 @@ public class CustomListBoxTest {
 
     customListBox.multiSelect = false;
     customListBox.visible = 1;
-    customListBox.popupShowing = true;
     customListBox.itemSelected( listItem, event );
     verify( customListBox, times( 2 ) ).setFocus( true );
     verify( customListBox ).handleSelection( listItem, event );
@@ -668,13 +668,11 @@ public class CustomListBoxTest {
   @Test
   public void testOnPopupClosed() {
     doCallRealMethod().when( customListBox ).onPopupClosed( any(), anyBoolean() );
-    customListBox.popupShowing = true;
 
     boolean booleanValue = true; // it does nothing inside "onPopupClosed" method
     customListBox.onPopupClosed( mock( PopupPanel.class ), booleanValue );
 
     verify( customListBox.getSearchTextBox(), times( 1 ) ).clearText();
-    assertFalse( customListBox.popupShowing );
   }
 
   @Test
