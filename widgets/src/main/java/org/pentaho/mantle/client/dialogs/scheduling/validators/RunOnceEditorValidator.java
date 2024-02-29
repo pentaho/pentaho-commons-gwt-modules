@@ -21,7 +21,9 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.mantle.client.dialogs.scheduling.RunOnceEditor;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class RunOnceEditorValidator implements IUiValidator {
 
@@ -42,22 +44,40 @@ public class RunOnceEditorValidator implements IUiValidator {
       //BISERVER-14912 - Date.before() does not work as expected in GWT, so we need a custom validation to check the day
       if ( isBefore( editor.getStartDate(), new Date() ) ) {
         isValid = false;
+      } else if ( isBefore( new Date() , editor.getStartDate()) ) {
+        //if the date is after today
+        isValid = true;
       } else {
-
-        final String date = format.format( editor.getStartDate() );
+        //here we are validating current day
         String time = editor.getStartTime();  //format of time is "hh:mm:ss a"
+
+
 
         time = normalizeTime( time );
 
-        final String dateTime = date + " " + time; //$NON-NLS-1$
-
-        if ( DateTimeFormat.getFormat( "MM-dd-yyyy hh:mm:ss a" ).parse( dateTime ).before( new Date() ) ) {
+        if (isBefore( time, new Date() )) {
           isValid = false;
         }
-
       }
     }
     return isValid;
+  }
+
+  private boolean isBefore( String timeOfDay, Date date ) {
+
+    String[] blocks = timeOfDay.split( ":" );
+    Integer hours =  Integer.parseInt( blocks[0]);
+    Integer minutes =  Integer.parseInt( blocks[1]);
+    Integer seconds =  Integer.parseInt( blocks[2].substring( 0,2 ));
+
+    if(timeOfDay.endsWith( "pm" ) || timeOfDay.endsWith( "PM" )) {
+      hours = hours + 12 ; //am pm taken care of
+    }
+
+    int secondsTime = hours * 3600 + minutes * 60 + seconds;
+    int secondsDateNow = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+
+    return secondsTime < secondsDateNow;
   }
 
   private static boolean isBefore( Date a, Date b ) {
