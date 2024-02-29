@@ -44,13 +44,13 @@ public class RunOnceEditorValidatorTest {
     calendar.add( Calendar.SECOND, -1 );
     when( runOnceEditor.getStartDate() ).thenReturn( calendar.getTime() );
     when( runOnceEditor.getStartTime() ).thenReturn( DateTimeFormat.getFormat( "hh:mm:ss a" ).
-        format( calendar.getTime() ) );
+        format( calendar.getTime() ).toLowerCase() );
     assertFalse( validator.isValid() );
 
     calendar.add( Calendar.MINUTE, 1 );
     when( runOnceEditor.getStartDate() ).thenReturn( calendar.getTime() );
     when( runOnceEditor.getStartTime() ).thenReturn( DateTimeFormat.getFormat( "hh:mm:ss a" ).
-        format( calendar.getTime() ) );
+        format( calendar.getTime() ).toLowerCase() );
     assertTrue( validator.isValid() );
   }
 }
