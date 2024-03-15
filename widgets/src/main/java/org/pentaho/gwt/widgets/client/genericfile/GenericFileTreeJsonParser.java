@@ -24,6 +24,7 @@ import com.google.gwt.json.client.JSONValue;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
@@ -59,6 +60,9 @@ public class GenericFileTreeJsonParser {
 
     JSONArray jsonChildren = getFieldValueAsJSONArray( jsonFileTree, "children" );
     if ( jsonChildren != null ) {
+      // Make sure that an empty list is reflected.
+      fileTree.setChildren( new ArrayList<>() );
+
       for ( int i = 0; i < jsonChildren.size(); i++ ) {
         fileTree.addChild( parseFileTree( jsonChildren.get( i ).isObject() ) );
       }
@@ -82,7 +86,7 @@ public class GenericFileTreeJsonParser {
     file.setTitle( getFieldValueAsString( fileJSON, "title" ) );
     file.setDescription( getFieldValueAsString( fileJSON, "description" ) );
     file.setPath( getFieldValueAsString( fileJSON, "path" ) );
-    file.setParentPath( getFieldValueAsString( fileJSON, "parent" ) );
+    file.setParentPath( getFieldValueAsString( fileJSON, "parentPath" ) );
     file.setType( getFieldValueAsString( fileJSON, "type" ) );
     file.setModifiedDate( getFieldValueAsDate( fileJSON, "modifiedDate" ) );
     file.setHidden( getFieldValueAsBoolean( fileJSON, "hidden", false ) );

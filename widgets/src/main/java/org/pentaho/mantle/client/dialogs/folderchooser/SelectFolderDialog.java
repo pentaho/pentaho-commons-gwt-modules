@@ -20,7 +20,6 @@ package org.pentaho.mantle.client.dialogs.folderchooser;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -74,6 +73,7 @@ public class SelectFolderDialog extends PromptDialogBox {
     setWidthCategory( DialogWidthCategory.SMALL );
 
     tree = new MySolutionTree();
+    tree.setDepth( 1 );
     tree.addSelectionHandler( event -> onSelectionChanged( tree.getSelectedFileModel() ) );
 
     SimplePanel treeWrapper = new SimplePanel( tree );
@@ -125,12 +125,10 @@ public class SelectFolderDialog extends PromptDialogBox {
     button.setToolTip( Messages.getString( "refreshTooltip" ) );
 
     button.setCommand( () -> {
-      GenericFile selectedFileModel = tree.getSelectedFileModel();
-      if ( selectedFileModel != null ) {
-        RefreshFolderTreeCommand refreshFolderCommand = new RefreshFolderTreeCommand();
-        refreshFolderCommand.setCallback( nothing -> fetchModel( null ) );
-        refreshFolderCommand.execute();
-      }
+      // Refresh command applies regardless of selection.
+      RefreshFolderTreeCommand refreshFolderCommand = new RefreshFolderTreeCommand();
+      refreshFolderCommand.setCallback( nothing -> fetchModel( null ) );
+      refreshFolderCommand.execute();
     } );
 
     return button;
@@ -161,7 +159,7 @@ public class SelectFolderDialog extends PromptDialogBox {
   }
 
   private void fetchModel( String selectedPath ) {
-    tree.fetchModel( null, selectedPath );
+    tree.fetchTreeModel( null, selectedPath );
   }
 
   @Override

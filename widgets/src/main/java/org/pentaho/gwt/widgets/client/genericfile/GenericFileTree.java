@@ -18,41 +18,52 @@
 package org.pentaho.gwt.widgets.client.genericfile;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GenericFileTree {
 
-  private GenericFile file;
+  @NonNull
+  private final GenericFile file;
 
-  private List<GenericFileTree> children = new ArrayList<>();
+  @Nullable
+  private List<GenericFileTree> children;
 
-  public GenericFileTree() {
+  public GenericFileTree( @NonNull GenericFile file ) {
+    this.file = Objects.requireNonNull( file );
   }
 
-  public GenericFileTree( GenericFile file ) {
-    this.file = file;
-  }
-
+  @NonNull
   public GenericFile getFile() {
     return file;
   }
 
-  public void setFile( GenericFile file ) {
-    this.file = file;
-  }
-
+  @Nullable
   public List<GenericFileTree> getChildren() {
     return children;
   }
 
-  public void setChildren( List<GenericFileTree> children ) {
+  public void setChildren( @Nullable List<GenericFileTree> children ) {
     this.children = children;
   }
 
-  public void addChild( GenericFileTree tree ) {
+  public void addChild( @NonNull GenericFileTree tree ) {
+    if ( children == null ) {
+      children = new ArrayList<>();
+    }
+
     children.add( tree );
+  }
+
+  public boolean areChildrenLoaded() {
+    return children != null;
+  }
+
+  public boolean hasChildren() {
+    return children != null && !children.isEmpty();
   }
 
   public boolean hasChildFolders() {
