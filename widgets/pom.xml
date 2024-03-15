@@ -23,7 +23,7 @@
     <colt.version>1.2.0</colt.version>
     <ant.version>1.10.0</ant.version>
     <javassist.version>3.20.0-GA</javassist.version>
-    <htmlunit.version>2.19</htmlunit.version>
+    <htmlunit.version>2.37.0</htmlunit.version>
     <tapestry-framework.version>4.1.6</tapestry-framework.version>
   </properties>
 
