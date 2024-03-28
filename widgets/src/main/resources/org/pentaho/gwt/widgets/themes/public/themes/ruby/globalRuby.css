@@ -4546,6 +4546,16 @@ div.dijitDateTextBox.dijitComboBox {
   width: 20px;
 }
 
+#fileBrowserFolders.fileBrowserColumn .body div.folder.loading div.expandCollapse {
+  background-image: url("images/indicator_ball.gif");
+  background-size: 20px;
+}
+
+#fileBrowserFolders.fileBrowserColumn .body div.folder.error div.expandCollapse {
+  background-image: url("images/warning-icon.png");
+  background-size: 20px;
+}
+
 .fileBrowserColumn .body div.folder.open.selected > div.element > div.expandCollapse,
 .fileBrowserColumn .body div.folder.open.secondarySelected > div.element > div.expandCollapse {
   background-position: top right;
