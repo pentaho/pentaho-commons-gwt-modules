@@ -73,7 +73,7 @@ public class RefreshFolderTreeCommand extends AbstractCommand {
 
   @NonNull
   private static String buildClearCacheUrl() {
-    return getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folders/tree/cache";
+    return getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/tree/cache";
   }
 
   private void onFolderTreeRefreshed() {
