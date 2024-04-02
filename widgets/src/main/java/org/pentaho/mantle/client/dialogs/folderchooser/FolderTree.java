@@ -150,12 +150,13 @@ public class FolderTree extends Tree {
 
   @NonNull
   private String getServiceBaseUrl() {
-    return getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/folders/";
+    return getFullyQualifiedURL() + "plugin/scheduler-plugin/api/generic-files/";
   }
 
   private String buildFetchTreeModelUrl( @Nullable String expandedPath ) {
     String url = getServiceBaseUrl() + "tree?"
-      + "depth=" + depth
+      + "filter=FOLDERS"
+      + "&depth=" + depth
       + "&showHidden=" + showHiddenFiles;
 
     if ( expandedPath != null ) {
@@ -258,7 +259,8 @@ public class FolderTree extends Tree {
     return getServiceBaseUrl()
       + GenericFileNameUtils.encodePath( basePath )
       + "/tree?"
-      + "depth=1"
+      + "filter=FOLDERS"
+      + "&depth=1"
       + "&showHidden=" + showHiddenFiles
       + "&ts=" + System.currentTimeMillis();
   }
