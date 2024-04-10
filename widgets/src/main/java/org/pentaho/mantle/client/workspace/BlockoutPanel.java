@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.pentaho.gwt.widgets.client.dialogs.IDialogCallback;
+import org.pentaho.gwt.widgets.client.dialogs.MessageDialogBox;
 import org.pentaho.gwt.widgets.client.dialogs.PromptDialogBox;
 import org.pentaho.gwt.widgets.client.table.BaseTable;
 import org.pentaho.gwt.widgets.client.table.ColumnComparators.BaseColumnComparator;
@@ -68,6 +69,7 @@ public class BlockoutPanel extends SimplePanel {
   private VerticalPanel tablePanel;
   private ToolbarButton editButton;
   private ToolbarButton removeButton;
+  private static final String NO_BLOCKOUT_VIEW_PERMISSION = "You do not have permission to view blockout jobs. Contact your administrator for assistance.";
 
   private IDialogCallback refreshCallBack = new IDialogCallback() {
     public void okPressed() {
@@ -262,10 +264,13 @@ public class BlockoutPanel extends SimplePanel {
   }
 
   public void refresh() {
+    final MessageDialogBox errorDialog =
+      new MessageDialogBox(
+        Messages.getString( "error" ), NO_BLOCKOUT_VIEW_PERMISSION, false, false, true );
     makeServiceCall( "blockout/blockoutjobs", RequestBuilder.GET, null, "application/json", new RequestCallback() {
 
       public void onError( Request request, Throwable exception ) {
-        // todo: do something
+        errorDialog.center();
       }
 
       public void onResponseReceived( Request request, Response response ) {
@@ -275,6 +280,8 @@ public class BlockoutPanel extends SimplePanel {
           } else {
             showData( parseJson( JsonUtils.escapeJsonForEval( response.getText() ) ) );
           }
+        } else {
+          errorDialog.center();
         }
       }
     } );
@@ -295,7 +302,10 @@ public class BlockoutPanel extends SimplePanel {
     try {
       builder.sendRequest( requestData, callback );
     } catch ( RequestException e ) {
-      // showError(e);
+      final MessageDialogBox errorDialog =
+        new MessageDialogBox(
+          Messages.getString( "error" ), NO_BLOCKOUT_VIEW_PERMISSION, false, false, true );
+      errorDialog.center();
     }
   }
 
