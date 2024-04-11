@@ -3646,6 +3646,11 @@ div.dijitDateTextBox.dijitComboBox {
   height: 22px;
   width: 22px;
 }
+.icon-small.icon-pause {
+  background: url('images/pause.png');
+  height: 22px;
+  width: 22px;
+}
 
 .icon-small.icon-stop-scheduler {
   background: url('images/stop_scheduler.png');

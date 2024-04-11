@@ -2858,7 +2858,7 @@ padding: 10px 0 10px 0;
   height: 22px;
   width: 22px;
 }
-.fileChooserCellLabel{
+.fileChooserCellLabel {
   padding:2px;
 }
 .icon-small.icon-waqr-report {
@@ -2889,6 +2889,11 @@ padding: 10px 0 10px 0;
 
 .icon-small.icon-stop {
   background: url('images/stop_button_crystal.png') no-repeat;
+  height: 22px;
+  width: 22px;
+}
+.icon-small.icon-pause {
+  background: url('images/pause.png');
   height: 22px;
   width: 22px;
 }

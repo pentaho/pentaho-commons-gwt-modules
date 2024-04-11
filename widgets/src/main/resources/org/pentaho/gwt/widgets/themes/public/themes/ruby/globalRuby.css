@@ -4214,6 +4214,13 @@ div.dijitDateTextBox.dijitComboBox {
   background-repeat: no-repeat;
 }
 
+.icon-small.icon-pause {
+  --icon-height: var(--icon-height-root);
+  --icon-width: var(--icon-width-root);
+
+  background-image: url('images/pause.png');
+}
+
 .icon-small.icon-stop-scheduler {
   --icon-height: var(--icon-height-root);
   --icon-width: var(--icon-width-root);
