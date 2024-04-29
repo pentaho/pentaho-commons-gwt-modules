@@ -34,15 +34,11 @@ public class GenericFileNameUtils {
   private GenericFileNameUtils() {
   }
 
-  // TODO: For repo, NameUtils.encodeRepositoryPath, ~ is converted to \t...
-  // Here, theres pvfs:// prefixes in play as well...
-  // See Common-UI's Encoder.encodeRepositoryPath.
   @NonNull
-  public static String encodePath( @NonNull String path ) {
-    return path
-      .replace( ":", "~" )
-      .replace( PATH_SEPARATOR, ":" );
-  }
+  public static native String encodePath( @NonNull String path )
+  /*-{
+    return $wnd.pho.Encoder.encodeGenericFilePath(path);
+  }-*/;
 
   public static boolean isRepositoryPath( @NonNull String path ) {
     return path.startsWith( PATH_SEPARATOR );
