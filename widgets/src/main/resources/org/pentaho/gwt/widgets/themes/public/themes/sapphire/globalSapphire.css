@@ -5217,10 +5217,6 @@ span.gwt-RadioButton label {
   background-color: #1973bc;
 }
 
-#standardDialog #dialogMessageBar .dlgInfo {
-  background: url(images/info.png) no-repeat;
-}
-
 /* Analyzer drag and drop indicators */
 .dnd-indicator-horizontal-left {
   background: url(images/dnd_left_arrow.png) no-repeat;
@@ -6946,17 +6942,11 @@ treecontrol.tree-classic li .tree-selected {
   box-shadow: none;
 }
 
-#standardDialog .dialogMessageBar span.dlgError {
-  background-image: url("images/no.png");
-  vertical-align: middle;
-  height: auto;
-  padding-left: 29px;
-  padding-top: 0px;
-  color: #333;
-  font-size: 13px;
-  overflow: hidden;
-  max-height: 57px;
-  line-height: 19px;
+:where(.standard-dialog .banner-message) > .dlgInfo {
+  background-image: url(images/info.png);
+}
+:where(.standard-dialog .banner-message) > .dlgError {
+  background-image: url(images/no.png);
 }
 
 #standardDialog .dialogMessageBar {
