@@ -47,6 +47,7 @@ import org.pentaho.gwt.widgets.client.genericfile.GenericFileTree;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeComparator;
 import org.pentaho.gwt.widgets.client.genericfile.GenericFileTreeJsonParser;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
+import org.pentaho.gwt.widgets.client.utils.NameUtils;
 import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 import org.pentaho.mantle.client.dialogs.WaitPopup;
 import org.pentaho.mantle.client.messages.Messages;
@@ -257,7 +258,7 @@ public class FolderTree extends Tree {
 
   private String buildFetchSubtreeModelUrl( @NonNull String basePath ) {
     return getServiceBaseUrl()
-      + GenericFileNameUtils.encodePath( basePath )
+      + NameUtils.URLEncode( GenericFileNameUtils.encodePath( basePath ) )
       + "/tree?"
       + "filter=FOLDERS"
       + "&depth=1"
