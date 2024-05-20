@@ -9641,3 +9641,13 @@ body.bootstrap .modal.confirmationDialog .dialog div.body {
 }
 
 /* endregion */
+
+/* region Schedule Panel dialogs */
+:where(.permission-denied-dialog, .execute-available-dialog) .dialog-content > * {
+  gap: 16px;
+}
+
+:where(.execute-available-dialog) .gwt-banner .typography {
+  flex: auto;
+}
+/* endregion */

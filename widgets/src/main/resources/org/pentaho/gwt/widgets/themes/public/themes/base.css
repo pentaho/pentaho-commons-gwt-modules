@@ -35,6 +35,7 @@
   --typ-body-line-height-px: 17;
   --typ-body-font-size: calc(1px * var(--typ-body-font-size-px));
   --typ-body-line-height: calc(1px * var(--typ-body-line-height-px));
+  --typ-body-font-weight: 400;
 
 
   --text-block-max-width: 75ch;
@@ -64,11 +65,12 @@
   --color-atmo1: #FBFCFC;
   --color-atmo2: #F4F5F5;
   --color-atmo3: #E8E8E8;
-  --color-atmo4: #CCCED0;
+  --color-atmo4: #D1D1D1;
 
   /* Accent colors - Core aspects of the interface as actions, buttons, ... */
   --color-primary: #2064b4;
   --color-primary-80: #1775E0;
+  --color-primary-20: #1775E019;
   --color-secondary: #414141;
   --color-secondary-80: #6C6B6B;
   --color-secondary-60: #999999;
@@ -78,6 +80,7 @@
   --color-neutral: #4D8AC0;
   --color-positive: #478B1A;
   --color-warning: #F9C846;
+  --color-warning-20: #FBF2D8;
   --color-negative: #D43136;
 }
 
@@ -86,6 +89,75 @@
     --dialog-ds-min-margin-v: 40px;
   }
 }
+
+/* region Design System Typography */
+.typography {
+  font-weight: var(--typ-body-font-weight);
+  font-size: calc(1px * var(--typ-body-font-size-px));
+  line-height: calc(1px * var(--typ-body-line-height-px));
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  text-align: left;
+}
+
+:where(.typography).typography-display {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 42;
+  --typ-body-line-height-px: 63;
+}
+
+:where(.typography).typography-title-1 {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 32;
+  --typ-body-line-height-px: 48;
+}
+:where(.typography).typography-title-2 {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 24;
+  --typ-body-line-height-px: 36;
+}
+:where(.typography).typography-title-3 {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 20;
+  --typ-body-line-height-px: 30;
+}
+:where(.typography).typography-title-4 {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 16;
+  --typ-body-line-height-px: 24;
+}
+
+:where(.typography).typography-body {
+  --typ-body-font-weight: 400;
+  --typ-body-font-size-px: 14;
+  --typ-body-line-height-px: 21;
+}
+
+:where(.typography).typography-label {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 14;
+  --typ-body-line-height-px: 21;
+}
+
+:where(.typography).typography-caption-label {
+  --typ-body-font-weight: 600;
+  --typ-body-font-size-px: 12;
+  --typ-body-line-height-px: 18;
+}
+
+:where(.typography).typography-caption-1 {
+  --typ-body-font-weight: 400;
+  --typ-body-font-size-px: 12;
+  --typ-body-line-height-px: 18;
+}
+:where(.typography).typography-caption-2 {
+  --typ-body-font-weight: 400;
+  --typ-body-font-size-px: 10;
+  --typ-body-line-height-px: 16;
+}
+/* endregion */
 
 /* region Responsive Primitives */
 
