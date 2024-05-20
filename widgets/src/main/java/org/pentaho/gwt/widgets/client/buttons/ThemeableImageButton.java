@@ -12,11 +12,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.buttons;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,14 +27,6 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Image;
 import org.pentaho.gwt.widgets.client.utils.ElementUtils;
@@ -45,8 +38,8 @@ import org.pentaho.mantle.client.environment.EnvironmentHelper;
 public class ThemeableImageButton extends Image {
 
   private boolean isEnabled = true;
-  private Set<String> enabledStyles = new HashSet<String>();
-  private Set<String> disabledStyles = new HashSet<String>();
+  private final Set<String> enabledStyles = new HashSet<>();
+  private final Set<String> disabledStyles = new HashSet<>();
 
   private static final String BLANK_IMAGE = EnvironmentHelper.getFullyQualifiedURL()
       + "content/common-ui/resources/themes/images/spacer.gif";
@@ -67,32 +60,33 @@ public class ThemeableImageButton extends Image {
 
   public ThemeableImageButton( String[] enabledStyles, String[] disabledStyles, String tooltip ) {
     super( BLANK_IMAGE );
+
     initStyles();
     Roles.getButtonRole().set( getElement() );
     getElement().setTabIndex( 0 );
+
     if ( enabledStyles != null && enabledStyles.length > 0 ) {
       addEnabledStyle( enabledStyles );
     }
-    if ( disabledStyles != null && enabledStyles.length > 0 ) {
+
+    if ( disabledStyles != null && disabledStyles.length > 0 ) {
       addDisabledStyle( disabledStyles );
     }
-    if ( tooltip != null && tooltip.length() > 0 ) {
+
+    if ( tooltip != null && !tooltip.isEmpty() ) {
       setTitle( tooltip );
     }
+
     enable();
     setUpHandlers();
   }
 
-  public void addEnabledStyle( String... style ) {
-    for ( String s : style ) {
-      enabledStyles.add( s );
-    }
+  public void addEnabledStyle( String... styles ) {
+    Collections.addAll( enabledStyles, styles );
   }
 
-  public void addDisabledStyle( String... style ) {
-    for ( String s : style ) {
-      disabledStyles.add( s );
-    }
+  public void addDisabledStyle( String... styles ) {
+    Collections.addAll( disabledStyles, styles );
   }
 
   private void initStyles() {
@@ -104,76 +98,63 @@ public class ThemeableImageButton extends Image {
   }
 
   private void setUpHandlers() {
-    this.addMouseDownHandler( new MouseDownHandler() {
-      public void onMouseDown( MouseDownEvent event ) {
-        if ( isEnabled ) {
-          removeStyleName( PRESSED_DISABLED_CLASS );
-          addStyleName( PRESSED_CLASS ); //$NON-NLS-1$
-        } else {
-          removeStyleName( PRESSED_CLASS ); //$NON-NLS-1$
-          addStyleName( PRESSED_DISABLED_CLASS );
-        }
-        event.preventDefault();
+    this.addMouseDownHandler( event -> {
+      if ( isEnabled ) {
+        removeStyleName( PRESSED_DISABLED_CLASS );
+        addStyleName( PRESSED_CLASS );
+      } else {
+        removeStyleName( PRESSED_CLASS );
+        addStyleName( PRESSED_DISABLED_CLASS );
       }
-    } );
-    this.addMouseUpHandler( new MouseUpHandler() {
-      public void onMouseUp( MouseUpEvent event ) {
-        updateStyles();
-        event.preventDefault();
-      }
+
+      event.preventDefault();
     } );
 
-    this.addMouseOverHandler( new MouseOverHandler() {
-      public void onMouseOver( MouseOverEvent event ) {
-        if ( isEnabled ) {
-          removeStyleName( MOUSEOVER_DISABLED_CLASS );
-          addStyleName( MOUSEOVER_CLASS );
-        } else {
-          removeStyleName( MOUSEOVER_CLASS );
-          addStyleName( MOUSEOVER_DISABLED_CLASS );
-        }
-        event.preventDefault();
-      }
+    this.addMouseUpHandler( event -> {
+      updateStyles();
+      event.preventDefault();
     } );
 
-    this.addKeyDownHandler ( new KeyDownHandler() {
-      @Override
-      public void onKeyDown( KeyDownEvent keyDownEvent ) {
-        switch ( keyDownEvent.getNativeKeyCode() ) {
-          case KeyCodes.KEY_SPACE:
-            keyDownEvent.preventDefault();
-            break;
-          case KeyCodes.KEY_ENTER:
-            keyDownEvent.preventDefault();
-            ElementUtils.click( ThemeableImageButton.this.getElement() );
-            break;
-        }
+    this.addMouseOverHandler( event -> {
+      if ( isEnabled ) {
+        removeStyleName( MOUSEOVER_DISABLED_CLASS );
+        addStyleName( MOUSEOVER_CLASS );
+      } else {
+        removeStyleName( MOUSEOVER_CLASS );
+        addStyleName( MOUSEOVER_DISABLED_CLASS );
       }
-    });
 
-    this.addKeyUpHandler( new KeyUpHandler() {
-      @Override
-      public void onKeyUp( KeyUpEvent keyUpEvent ) {
-        if ( KeyCodes.KEY_SPACE == keyUpEvent.getNativeKeyCode() ) {
-          keyUpEvent.preventDefault();
+      event.preventDefault();
+    } );
+
+    this.addKeyDownHandler( keyDownEvent -> {
+      switch ( keyDownEvent.getNativeKeyCode() ) {
+        case KeyCodes.KEY_SPACE:
+          keyDownEvent.preventDefault();
+          break;
+        case KeyCodes.KEY_ENTER:
+          keyDownEvent.preventDefault();
           ElementUtils.click( ThemeableImageButton.this.getElement() );
-        }
-      }
-    });
-
-    this.addMouseOutHandler( new MouseOutHandler() {
-      public void onMouseOut( MouseOutEvent event ) {
-        updateStyles();
+          break;
       }
     } );
+
+    this.addKeyUpHandler( keyUpEvent -> {
+      if ( KeyCodes.KEY_SPACE == keyUpEvent.getNativeKeyCode() ) {
+        keyUpEvent.preventDefault();
+        ElementUtils.click( ThemeableImageButton.this.getElement() );
+      }
+    } );
+
+    this.addMouseOutHandler( event -> updateStyles() );
   }
 
-  public HandlerRegistration addKeyDownHandler(KeyDownHandler handler) {
-    return this.addDomHandler(handler, KeyDownEvent.getType());
+  public HandlerRegistration addKeyDownHandler( KeyDownHandler handler ) {
+    return this.addDomHandler( handler, KeyDownEvent.getType() );
   }
 
-  public HandlerRegistration addKeyUpHandler(KeyUpHandler handler) {
-    return this.addDomHandler(handler, KeyUpEvent.getType());
+  public HandlerRegistration addKeyUpHandler( KeyUpHandler handler ) {
+    return this.addDomHandler( handler, KeyUpEvent.getType() );
   }
 
   private void updateStyles() {
@@ -186,6 +167,7 @@ public class ThemeableImageButton extends Image {
 
   private void enable() {
     setStyleName( "" );
+
     for ( String style : enabledStyles ) {
       addStyleName( style );
     }
@@ -193,6 +175,7 @@ public class ThemeableImageButton extends Image {
 
   private void disable() {
     setStyleName( "" );
+
     for ( String style : disabledStyles ) {
       addStyleName( style );
     }
@@ -206,6 +189,7 @@ public class ThemeableImageButton extends Image {
     if ( this.isEnabled == isEnabled ) {
       return;
     }
+
     this.isEnabled = isEnabled;
 
     if ( isEnabled ) {
@@ -214,5 +198,4 @@ public class ThemeableImageButton extends Image {
       disable();
     }
   }
-
 }

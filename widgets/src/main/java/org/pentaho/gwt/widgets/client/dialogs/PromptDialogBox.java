@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2023 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
  */
 
 package org.pentaho.gwt.widgets.client.dialogs;
@@ -20,7 +20,6 @@ package org.pentaho.gwt.widgets.client.dialogs;
 import com.google.gwt.aria.client.Roles;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.Focusable;
@@ -33,6 +32,8 @@ import org.pentaho.gwt.widgets.client.panel.HorizontalFlexPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.pentaho.gwt.widgets.client.wizards.AbstractWizardDialog.PENTAHO_BUTTON;
 
 @SuppressWarnings( "deprecation" )
 public class PromptDialogBox extends DialogBox {
@@ -66,38 +67,26 @@ public class PromptDialogBox extends DialogBox {
 
     okButton = new Button( okText );
     okButton.setTitle( okText );
-    okButton.setStylePrimaryName( "pentaho-button" );
-    okButton.getElement().setAttribute( "id", "okButton" ); //$NON-NLS-1$ //$NON-NLS-2$
-    okButton.addClickListener( new ClickListener() {
-      public void onClick( Widget sender ) {
-        onOk();
-      }
-    } );
+    okButton.setStylePrimaryName( PENTAHO_BUTTON );
+    okButton.getElement().setAttribute( "id", "okButton" );
+    okButton.addClickListener( sender -> onOk() );
     dialogButtonPanel.add( okButton );
 
     if ( notOkText != null ) {
       notOkButton = new Button( notOkText );
       notOkButton.setTitle( notOkText );
-      notOkButton.setStylePrimaryName( "pentaho-button" );
-      notOkButton.getElement().setAttribute( "id", "notOkButton" ); //$NON-NLS-1$ //$NON-NLS-2$
-      notOkButton.addClickListener( new ClickListener() {
-        public void onClick( Widget sender ) {
-          onNotOk();
-        }
-      } );
+      notOkButton.setStylePrimaryName( PENTAHO_BUTTON );
+      notOkButton.getElement().setAttribute( "id", "notOkButton" );
+      notOkButton.addClickListener( sender -> onNotOk() );
       dialogButtonPanel.add( notOkButton );
     }
 
     if ( cancelText != null ) {
       cancelButton = new Button( cancelText );
       cancelButton.setTitle( cancelText );
-      cancelButton.setStylePrimaryName( "pentaho-button" );
-      cancelButton.getElement().setAttribute( "id", "cancelButton" ); //$NON-NLS-1$ //$NON-NLS-2$
-      cancelButton.addClickListener( new ClickListener() {
-        public void onClick( Widget sender ) {
-          onCancel();
-        }
-      } );
+      cancelButton.setStylePrimaryName( PENTAHO_BUTTON );
+      cancelButton.getElement().setAttribute( "id", "cancelButton" );
+      cancelButton.addClickListener( sender -> onCancel() );
       dialogButtonPanel.add( cancelButton );
     }
 
@@ -108,9 +97,11 @@ public class PromptDialogBox extends DialogBox {
     } else {
       dialogButtonPanelWrapper.setHorizontalAlignment( HasHorizontalAlignment.ALIGN_CENTER );
     }
+
     dialogButtonPanelWrapper.addStyleName( "button-panel" );
     dialogButtonPanelWrapper.setWidth( "100%" );
     dialogButtonPanelWrapper.add( dialogButtonPanel );
+
     return dialogButtonPanelWrapper;
   }
 
@@ -119,6 +110,7 @@ public class PromptDialogBox extends DialogBox {
     Roles.getPresentationRole().set( dialogContent.getElement() );
     dialogContent.setCellPadding( 0 );
     dialogContent.setCellSpacing( 0 );
+
     // add button panel
     dialogContent.setWidget( 1, 0, dialogButtonPanelWrapper );
 
@@ -174,14 +166,14 @@ public class PromptDialogBox extends DialogBox {
     setContent( content );
   }
 
+  @Override
   public boolean onKeyDownPreview( char key, int modifiers ) {
     // Use the popup's key preview hooks to close the dialog when either
     // enter or escape is pressed.
-    switch ( key ) {
-      case KeyboardListener.KEY_ESCAPE:
-        onCancel();
-        break;
+    if ( key == KeyboardListener.KEY_ESCAPE ) {
+      onCancel();
     }
+
     return true;
   }
 
@@ -232,8 +224,8 @@ public class PromptDialogBox extends DialogBox {
       if ( callback != null ) {
         callback.okPressed();
       }
-    } catch ( Throwable dontCare ) {
-      //ignore
+    } catch ( Exception ex ) {
+      // ignore
     }
   }
 
@@ -242,9 +234,10 @@ public class PromptDialogBox extends DialogBox {
       if ( callback instanceof IThreeButtonDialogCallback ) {
         ( (IThreeButtonDialogCallback) callback ).notOkPressed();
       }
-    } catch ( Throwable dontCare ) {
-      //ignore
+    } catch ( Exception ex ) {
+      // ignore
     }
+
     hide();
   }
 
@@ -253,10 +246,10 @@ public class PromptDialogBox extends DialogBox {
       if ( callback != null ) {
         callback.cancelPressed();
       }
-    } catch ( Throwable dontCare ) {
-      //ignore
+    } catch ( Exception ex ) {
+      // ignore
     }
+
     hide();
   }
-
 }
