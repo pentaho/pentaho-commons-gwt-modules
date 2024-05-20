@@ -3,7 +3,9 @@ Please, please comment all entries so that it is clear
 which java class/code the style is associated with */
 
 /* region Pentaho Widget buttons */
-.pentaho-clear-button, .pentaho-error-button, .pentaho-search-button {
+.pentaho-clear-button, .pentaho-copy-text-button, .pentaho-error-button,
+.pentaho-search-button, .pentaho-status-error-button, .pentaho-status-success-button,
+.pentaho-warning-button {
   /* Design system extra-small and small size
      icon actual size is 12px and 16px respectively,
      but both sizes need a container with 32px
@@ -22,12 +24,28 @@ which java class/code the style is associated with */
   background-image: url("./images/close.XS.svg");
 }
 
+.pentaho-copy-text-button {
+  background-image: url("./images/copy.S.svg");
+}
+
 .pentaho-error-button {
   background-image: url("./images/fail.red.S.svg");
 }
 
 .pentaho-search-button {
   background-image: url("./images/search.S.svg");
+}
+
+.pentaho-status-error-button {
+  background-image: url("./images/status.error.S.svg");
+}
+
+.pentaho-status-success-button {
+  background-image: url("./images/status.success.S.svg");
+}
+
+.pentaho-warning-button {
+  background-image: url("./images/caution.S.svg");
 }
 /* endregion Pentaho Widget buttons */
 
@@ -1181,3 +1199,85 @@ button.pentaho-button:is(
   transform: translateY(-50%);
 }
 /* endregion Search Text Box */
+
+/* region Banner */
+.gwt-banner {
+  --status-color: var(--color-neutral);
+
+  padding: 8px 16px;
+
+  background-color: var(--status-color);
+}
+:where(.gwt-banner).status-warning {
+  --status-color: var(--color-warning-20);
+}
+/* endregion */
+
+/* region Card */
+.gwt-card {
+  --status-color: var(--color-neutral);
+  --header-background: inital;
+
+  border: 1px solid var(--color-atmo4);
+  border-radius: 0 0 6px 6px;
+  border-top-color: var(--status-color);
+
+  box-shadow: 0 1px 0 0 var(--status-color) inset;
+}
+:where(.gwt-card).status-success {
+  --status-color: var(--color-positive);
+}
+:where(.gwt-card).status-error {
+  --status-color: var(--color-negative);
+}
+
+:where(.gwt-card) .gwt-card-header {
+  background: var(--header-background);
+  padding: 4px 8px 0 16px;
+}
+:where(.gwt-card .gwt-card-header) .typography-caption-1 {
+  color: var(--color-secondary-80);
+}
+
+:where(.gwt-card) .gwt-card-content {
+  padding: 0 16px 8px 16px;
+}
+/* endregion */
+
+/* region Text Copy to Clipboard */
+.gwt-text-copy-to-clipboard {
+  --icon-size-px: 32;
+  --line-height-px: 27;
+
+  position: relative;
+
+  background-color: var(--color-atmo2, #F7F7F5);
+  border-radius: 4px;
+  padding: 4px 0 4px 4px;
+
+  white-space: pre;
+}
+
+:where(.gwt-text-copy-to-clipboard) .pentaho-copy-text-button {
+  position: absolute;
+  right: 15px;
+  z-index: 1;
+}
+:where(.gwt-text-copy-to-clipboard) .pentaho-copy-text-button:hover {
+  cursor: pointer;
+  background-color: var(--color-primary-20);
+}
+
+:where(.gwt-text-copy-to-clipboard) .value-container {
+  --padding-right: calc(8px + (1px * var(--icon-size-px)));
+
+  padding: 4px var(--padding-right) 4px 4px;
+
+  min-height: calc(1px * var(--icon-size-px));
+  max-height: calc(1px * 7 * var(--line-height-px));
+}
+
+:where(.gwt-text-copy-to-clipboard) .value-container .typography-body {
+  --typ-body-line-height-px: var(--line-height-px);
+}
+/* endregion */

@@ -49,7 +49,6 @@ public class PromptDialogBox extends DialogBox {
 
   public PromptDialogBox( String title, String okText, String notOkText, String cancelText, boolean autoHide,
                           boolean modal ) {
-
     super( autoHide, modal );
 
     setText( title );

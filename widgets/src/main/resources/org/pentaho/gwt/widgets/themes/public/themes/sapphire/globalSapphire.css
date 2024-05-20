@@ -8026,3 +8026,44 @@ for the rebranding on the Ruby theme cause a smaller impact on the other themes 
 }
 
 /* endregion */
+
+/* region Schedule Panel dialogs */
+:where(.permission-denied-dialog .gwt-banner) .typography {
+  margin-top: 5px;
+}
+
+:where(.permission-denied-dialog) :is(.gwt-card-header, .dialog-description) {
+  width: 100%;
+}
+
+:where(.permission-denied-dialog) .dialog-description {
+  margin-bottom: 16px;
+}
+
+:where(.permission-denied-dialog) .inner-button-wrapper {
+  float: right;
+}
+
+:where(.execute-available-dialog .gwt-banner) .typography {
+  margin-top: 5px;
+}
+
+:where(.execute-available-dialog) .gwt-card {
+  width: 99%;
+}
+:where(.execute-available-dialog .gwt-card).status-error {
+  float: right;
+}
+
+:where(.execute-available-dialog .gwt-card) .gwt-Image {
+  margin-left: 10px;
+}
+
+:where(.execute-available-dialog) :is(.gwt-card-header, .dialog-description) {
+  width: 100%;
+}
+
+:where(.execute-available-dialog) :is(.gwt-banner, .cards-container, .dialog-description) {
+  margin-bottom: 16px;
+}
+/* endregion */

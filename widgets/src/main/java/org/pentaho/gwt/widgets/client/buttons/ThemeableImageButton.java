@@ -82,11 +82,27 @@ public class ThemeableImageButton extends Image {
   }
 
   public void addEnabledStyle( String... styles ) {
+    addEnabledStyle( false, styles );
+  }
+
+  public void addEnabledStyle( boolean update, String... styles ) {
     Collections.addAll( enabledStyles, styles );
+
+    if ( update ) {
+      updateStyles();
+    }
   }
 
   public void addDisabledStyle( String... styles ) {
+    addDisabledStyle( false, styles );
+  }
+
+  public void addDisabledStyle( boolean update, String... styles ) {
     Collections.addAll( disabledStyles, styles );
+
+    if ( update ) {
+      updateStyles();
+    }
   }
 
   private void initStyles() {
@@ -157,7 +173,8 @@ public class ThemeableImageButton extends Image {
     return this.addDomHandler( handler, KeyUpEvent.getType() );
   }
 
-  private void updateStyles() {
+  /* Visible for testing */
+  void updateStyles() {
     if ( isEnabled ) {
       enable();
     } else {

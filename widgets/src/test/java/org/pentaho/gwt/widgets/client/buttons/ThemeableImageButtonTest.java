@@ -12,7 +12,7 @@
 * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
-* Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+* Copyright (c) 2002-2024 Hitachi Vantara. All rights reserved.
 */
 
 package org.pentaho.gwt.widgets.client.buttons;
@@ -21,24 +21,67 @@ import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 @RunWith( GwtMockitoTestRunner.class )
 public class ThemeableImageButtonTest {
+  private final String enabledStyle = "enSt";
+  private final String disabledStyle = "disSt";
+
+  private ThemeableImageButton button;
 
   @Test
-  public void testSetEnabled() throws Exception {
-    final String enabledStyle = "enSt";
-    final String disabledStyle = "disSt";
-    final String tooltip = "tooltip";
-
-    ThemeableImageButton button = spy( new ThemeableImageButton( enabledStyle, disabledStyle, tooltip ) );
+  public void testSetEnabled() {
+    setupButtonSpy();
 
     button.setEnabled( false );
     verify( button ).addStyleName( disabledStyle );
 
     button.setEnabled( true );
     verify( button ).addStyleName( enabledStyle );
+  }
+
+  @Test
+  public void testAddEnabledStyles() {
+    setupButtonSpy();
+
+    button.addEnabledStyle( enabledStyle );
+
+    verify( button ).addEnabledStyle( false, enabledStyle );
+    verify( button, never() ).updateStyles();
+  }
+
+  @Test
+  public void testAddEnabledStyles_update() {
+    setupButtonSpy();
+
+    button.addEnabledStyle( true, enabledStyle );
+    verify( button ).updateStyles();
+  }
+
+  @Test
+  public void testAddDisabledStyles() {
+    setupButtonSpy();
+
+    button.addDisabledStyle( disabledStyle );
+
+    verify( button ).addDisabledStyle( false, disabledStyle );
+    verify( button, never() ).updateStyles();
+  }
+
+  @Test
+  public void testAddDisabledStyles_update() {
+    setupButtonSpy();
+
+    button.addDisabledStyle( true, disabledStyle );
+    verify( button ).updateStyles();
+  }
+
+  private void setupButtonSpy() {
+    final String tooltip = "tooltip";
+
+    button = spy( new ThemeableImageButton( enabledStyle, disabledStyle, tooltip ) );
   }
 }
