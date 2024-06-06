@@ -48,6 +48,7 @@ public class TreeItemComparator implements Comparator<TreeItem> {
     }
   }-*/;
 
+  // Code should be in sync with Mantle's browser.js, customSort~localeCompare
   public native int compare( String a, String b )
   /*-{
 
