@@ -26,6 +26,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.Window;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

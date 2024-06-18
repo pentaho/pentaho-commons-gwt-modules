@@ -20,7 +20,7 @@ package org.pentaho.gwt.widgets.client.controls;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import org.pentaho.gwt.widgets.client.utils.StringUtils;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 /**
  * @author Steven Barkdull
