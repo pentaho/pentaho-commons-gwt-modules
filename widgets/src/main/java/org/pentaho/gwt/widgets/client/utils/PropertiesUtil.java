@@ -18,6 +18,7 @@
 package org.pentaho.gwt.widgets.client.utils;
 
 import java.util.HashMap;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 /**
  * @deprecated Please use org.pentaho.gwt.widgets.client.utils.localization.PropertiesUtil instead. We are gradually

@@ -21,6 +21,7 @@ import java.util.EnumSet;
 
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessages;
 import org.pentaho.gwt.widgets.client.i18n.WidgetsLocalizedMessagesSingleton;
+import org.pentaho.gwt.widgets.client.utils.string.StringUtils;
 
 /**
  * 
