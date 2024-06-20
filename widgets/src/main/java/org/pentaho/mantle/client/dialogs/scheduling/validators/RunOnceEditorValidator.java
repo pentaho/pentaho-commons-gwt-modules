@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2017 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2024 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.mantle.client.dialogs.scheduling.validators;
@@ -21,9 +21,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import org.pentaho.gwt.widgets.client.utils.TimeUtil;
 import org.pentaho.mantle.client.dialogs.scheduling.RunOnceEditor;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class RunOnceEditorValidator implements IUiValidator {
 
@@ -81,7 +79,14 @@ public class RunOnceEditorValidator implements IUiValidator {
   }
 
   private static boolean isBefore( Date a, Date b ) {
-    return a.getYear() < b.getYear() && a.getMonth() < b.getMonth() && a.getDay() < b.getDay();
+    if ( a.getYear() < b.getYear() ) {
+      return true;
+    } else if ( a.getYear() == b.getYear() && a.getMonth() < b.getMonth() ) {
+      return true;
+    } else if ( a.getYear() == b.getYear() && a.getMonth() == b.getMonth() ) {
+      return a.getDate() < b.getDate();
+    }
+    return false;
   }
 
   public void clear() {
