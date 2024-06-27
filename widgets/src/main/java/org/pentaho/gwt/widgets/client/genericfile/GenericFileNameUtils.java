@@ -40,6 +40,12 @@ public class GenericFileNameUtils {
     return $wnd.pho.Encoder.encodeGenericFilePath(path);
   }-*/;
 
+  //TODO BACKLOG-41091: Decoding would ideally be coming from the back-end (see also, BACKLOG-41089, BACKLOG-41229)
+  public static native String urlDecodePvfsFilePath( String attributeValue )
+  /*-{
+    return $wnd.pho.Encoder.urlDecodePvfsFilePath(attributeValue);
+  }-*/;
+
   public static boolean isRepositoryPath( @NonNull String path ) {
     return path.startsWith( PATH_SEPARATOR );
   }
