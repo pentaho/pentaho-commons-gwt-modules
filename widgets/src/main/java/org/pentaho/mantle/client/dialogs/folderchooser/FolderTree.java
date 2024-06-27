@@ -648,8 +648,9 @@ public class FolderTree extends Tree {
 
     assert !fileModel.isGroupFolder() : "Folder tree item should not be mapped to group folder";
 
-    String name = fileModel.getName();
-    String title = fileModel.getTitleOrName();
+    //TODO BACKLOG-41091: Decoding would ideally be coming from the back-end (see also, BACKLOG-41089, BACKLOG-41229)
+    String name = GenericFileNameUtils.urlDecodePvfsFilePath( fileModel.getName() );
+    String title = GenericFileNameUtils.urlDecodePvfsFilePath( fileModel.getTitleOrName() );
     String description = fileModel.getDescription();
 
     FolderTreeItem treeItem = new FolderTreeItem();
