@@ -83,6 +83,7 @@ public class GenericFileTreeJsonParser {
 
     file.setProvider( getFieldValueAsString( fileJSON, "provider" ) );
     file.setName( getFieldValueAsString( fileJSON, "name" ) );
+    file.setNameDecoded( getFieldValueAsString( fileJSON, "nameDecoded" ) );
     file.setTitle( getFieldValueAsString( fileJSON, "title" ) );
     file.setDescription( getFieldValueAsString( fileJSON, "description" ) );
     file.setPath( getFieldValueAsString( fileJSON, "path" ) );
