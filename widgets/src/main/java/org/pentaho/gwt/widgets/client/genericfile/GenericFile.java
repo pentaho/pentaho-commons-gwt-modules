@@ -26,6 +26,7 @@ public class GenericFile {
   public static final String TYPE_FILE = "file";
 
   private String name;
+  private String nameDecoded;
   private String title;
   private String description;
   private String path;
@@ -48,6 +49,14 @@ public class GenericFile {
     this.name = name;
   }
 
+  public String getNameDecoded() {
+    return StringUtils.isEmpty( nameDecoded ) ? name : nameDecoded;
+  }
+
+  public void setNameDecoded( String nameDecoded ) {
+    this.nameDecoded = nameDecoded;
+  }
+
   public String getTitle() {
     return title;
   }
@@ -56,8 +65,8 @@ public class GenericFile {
     this.title = title;
   }
 
-  public String getTitleOrName() {
-    return StringUtils.isEmpty( title ) ? name : title;
+  public String getTitleOrNameDecoded() {
+    return StringUtils.isEmpty( title ) ? getNameDecoded() : title;
   }
 
   public String getDescription() {

@@ -290,7 +290,7 @@ public class FolderTree extends Tree {
   private FolderTreeItem buildLoadingTreeItem() {
     GenericFileTree treeModel = getLoadingTreeModel();
 
-    FolderTreeItem loadingTreeItem = new FolderTreeItem( treeModel.getFile().getName() );
+    FolderTreeItem loadingTreeItem = new FolderTreeItem( treeModel.getFile().getTitleOrNameDecoded() );
     loadingTreeItem.setFileTreeModel( treeModel );
 
     return loadingTreeItem;
@@ -648,8 +648,8 @@ public class FolderTree extends Tree {
 
     assert !fileModel.isGroupFolder() : "Folder tree item should not be mapped to group folder";
 
-    String name = fileModel.getName();
-    String title = fileModel.getTitleOrName();
+    String name = fileModel.getNameDecoded();
+    String title = fileModel.getTitleOrNameDecoded();
     String description = fileModel.getDescription();
 
     FolderTreeItem treeItem = new FolderTreeItem();

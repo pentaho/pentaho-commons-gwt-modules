@@ -39,7 +39,7 @@ public class GenericFileTreeComparator implements Comparator<GenericFileTree> {
   @NonNull
   private String getSortName( @NonNull GenericFileTree fileTree ) {
     GenericFile file = fileTree.getFile();
-    String sortName = useTitle ? file.getTitleOrName() : file.getName();
+    String sortName = useTitle ? file.getTitleOrNameDecoded() : file.getNameDecoded();
     return sortName == null ? "" : sortName;
   }
 
