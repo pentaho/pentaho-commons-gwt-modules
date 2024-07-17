@@ -93,6 +93,11 @@ public class GenericFileNameUtils {
       path = path.substring( 0, path.length() - 1 );
     }
 
-    return path.substring( 0, path.lastIndexOf( PATH_SEPARATOR ) );
+    int index = path.lastIndexOf( PATH_SEPARATOR );
+    if ( index < 0 ) {
+      return "";
+    }
+
+    return path.substring( 0, index );
   }
 }
