@@ -23,9 +23,9 @@ import java.util.List;
 /**
  * JAXB-safe version of {@code RepositoryFile}. ({@code RepositoryFile} has no zero-arg constructor and no public
  * mutators.)
- * 
+ *
  * @see RepositoryFileAdapter
- * 
+ *
  * @author mlowery
  */
 
@@ -106,7 +106,7 @@ public class RepositoryFile implements Serializable {
 
   private static String JSONValueToString( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null ) {
+    if ( temp != null && temp.isString() != null ) {
       return temp.isString().stringValue();
     }
     return null;
@@ -114,7 +114,7 @@ public class RepositoryFile implements Serializable {
 
   private static Date JSONValueToDate( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null ) {
+    if ( temp != null && temp.isString() != null ) {
       return parseDateTime( temp.isString().stringValue() );
     }
     return null;
@@ -122,24 +122,30 @@ public class RepositoryFile implements Serializable {
 
   private static long JSONValueToLong( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null ) {
+    if ( temp != null  && temp.isString() != null ) {
       return Long.valueOf( temp.isString().stringValue() );
+    } else if ( temp != null && temp.isNumber() != null ) {
+      return Long.valueOf( temp.isNumber().toString() );
     }
     return 0;
   }
 
   private static int JSONValueToInt( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null ) {
+    if ( temp != null && temp.isString() != null ) {
       return Integer.valueOf( temp.isString().stringValue() );
+    } else if ( temp != null && temp.isNumber() != null ) {
+      return Integer.valueOf( temp.isNumber().toString() );
     }
     return 0;
   }
 
   private static boolean JSONValueToBoolean( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null ) {
+    if ( temp != null && temp.isString() != null ) {
       return Boolean.valueOf( temp.isString().stringValue() );
+    } else if ( temp != null && temp.isBoolean() != null ) {
+      return temp.isBoolean().booleanValue();
     }
     return false;
   }
