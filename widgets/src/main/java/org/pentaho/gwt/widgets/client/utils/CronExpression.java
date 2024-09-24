@@ -1,14 +1,30 @@
-/*! ******************************************************************************
+/*
+ ***********************************************************************************************************************
  *
- * Pentaho
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
  *
- * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Use of this software is governed by the Business Source License included
- * in the LICENSE.TXT file.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
  *
- * Change Date: 2028-08-13
- ******************************************************************************/
+ * This file is a copy from the Quartz project - http://quartz-scheduler.org/ from version 1.5.1
+ * with the following changes:
+ *   a- Removed all non-GWT friendly classes (Locale, Calendar, StringTokenizer, ObjectOutputStream, etc.
+ *   b- Re-implemented the buildExpression method using split instead of StringTokenizer
+ *   c- Externalized all strings to the i18n package
+ *   d- Code-formatted to meet Hitachi Vantara standards
+ *   e- Removed extraneous helper methods not needed for cron validation
+ *
+ * These changes were expressly made to allow GWT compilation (read Javascript translation) for validation of
+ * Quartz-specific cron expressions. All other comments and attributions remain intact.
+ *
+ * Copyright 2012 - 2017 Hitachi Vantara.  All rights reserved.
+ *
+ ***********************************************************************************************************************
+ */
 
 package org.pentaho.gwt.widgets.client.utils;
 
