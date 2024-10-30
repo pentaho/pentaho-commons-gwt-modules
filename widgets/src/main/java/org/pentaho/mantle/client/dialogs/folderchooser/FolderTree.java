@@ -373,7 +373,12 @@ public class FolderTree extends Tree {
     buildSolutionTree();
 
     if ( initialSelectedPath != null ) {
-      select( initialSelectedPath );
+      TreeItem selectedItem = select( initialSelectedPath );
+
+      // Expand selected item when loading root tree. Ignored if it has no children.
+      if ( selectedItem != null ) {
+        selectedItem.setState( true );
+      }
     } else {
       openRootTreeItems();
     }
@@ -498,14 +503,19 @@ public class FolderTree extends Tree {
     }
   }
 
-  public void select( @Nullable String path ) {
+  public TreeItem select( @Nullable String path ) {
     TreeItem newSelectedItem = findTreeItem( path );
     if ( newSelectedItem != null ) {
       setSelectedItem( newSelectedItem, true );
-    } else if ( path != null && !path.equals( getHomeFolder() ) ) {
-      // If the given path did not exist, then select the home folder (recursive call).
-      select( getHomeFolder() );
+      return newSelectedItem;
     }
+
+    if ( path != null && !path.equals( getHomeFolder() ) ) {
+      // If the given path did not exist, then select the home folder (recursive call).
+      return select( getHomeFolder() );
+    }
+
+    return null;
   }
 
   @Nullable
