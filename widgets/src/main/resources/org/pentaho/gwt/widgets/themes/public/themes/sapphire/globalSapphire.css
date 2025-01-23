@@ -5928,42 +5928,6 @@ span.gwt-RadioButton label {
   background: url('images/add_combo.png') no-repeat;
 }
 
-#filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-pressed,
-#filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button-over,
-#filterTypeDeck #staticSelectionTableEditSelected img.disabled-image-button,
-#editPovContainerPanel #povTableEditSelected img.disabled-image-button-pressed,
-#editPovContainerPanel #povTableEditSelected img.disabled-image-button-over,
-#editPovContainerPanel #povTableEditSelected img.disabled-image-button {
-  background: url('images/edit_16_disabled.png') no-repeat;
-}
-
-#filterTypeDeck #staticSelectionTableEditSelected img.image-button-pressed,
-#filterTypeDeck #staticSelectionTableEditSelected img.image-button-over,
-#filterTypeDeck #staticSelectionTableEditSelected img.image-button,
-#editPovContainerPanel #povTableEditSelected img.image-button-pressed,
-#editPovContainerPanel #povTableEditSelected img.image-button-over,
-#editPovContainerPanel #povTableEditSelected img.image-button {
-  background: url('images/edit_16.png') no-repeat;
-}
-
-#filterTypeDeck #staticSelectionTableAdd img.image-button-pressed,
-#filterTypeDeck #staticSelectionTableAdd img.image-button-over,
-#filterTypeDeck #staticSelectionTableAdd img.image-button,
-#editPovContainerPanel #povTableAdd img.image-button-pressed,
-#editPovContainerPanel #povTableAdd img.image-button-over,
-#editPovContainerPanel #povTableAdd img.image-button {
-  background: url('images/add_16.png') no-repeat;
-}
-
-#filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-pressed,
-#filterTypeDeck #staticSelectionTableRemoveSelected img.image-button-over,
-#filterTypeDeck #staticSelectionTableRemoveSelected img.image-button,
-#editPovContainerPanel #povTableRemoveSelected img.image-button-pressed,
-#editPovContainerPanel #povTableRemoveSelected img.image-button-over,
-#editPovContainerPanel #povTableRemoveSelected img.image-button {
-  background: url('images/remove_16.png') no-repeat;
-}
-
 #standardDialog .filterConditionDelete {
   background-image: url('images/remove_16.png');
 }
@@ -5972,49 +5936,70 @@ span.gwt-RadioButton label {
   background-image: url('images/edit_16.png');
 }
 
-#filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-pressed,
-#filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button-over,
-#filterTypeDeck #staticSelectionTableRemoveSelected img.disabled-image-button,
-#editPovContainerPanel #povTableRemoveSelected img.disabled-image-button-pressed,
-#editPovContainerPanel #povTableRemoveSelected img.disabled-image-button-over,
-#editPovContainerPanel #povTableRemoveSelected img.disabled-image-button {
-  background: url('images/remove_16_disabled.png') no-repeat;
+:is(#filterTypeDeck, #editPovContainerPanel) img {
+  background-repeat: no-repeat;
+
+  width: 16px;
+  height: 16px;
 }
 
-#filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button-pressed,
-#filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button-over,
-#filterTypeDeck #staticSelectionTableMoveSelectedDown img.disabled-image-button,
-#editPovContainerPanel #povTableMoveSelectedDown img.disabled-image-button-pressed,
-#editPovContainerPanel #povTableMoveSelectedDown img.disabled-image-button-over,
-#editPovContainerPanel #povTableMoveSelectedDown img.disabled-image-button {
-  background: url('images/16x16_down_disabled.png') no-repeat;
+:is(
+  #filterTypeDeck #staticSelectionTableEditSelected,
+  #editPovContainerPanel #povTableEditSelected
+) img {
+  background-image: url('images/edit_16.png');
+}
+:is(
+  #filterTypeDeck #staticSelectionTableEditSelected,
+  #editPovContainerPanel #povTableEditSelected
+) .toolbar-button-disabled img {
+  background-image: url('images/edit_16_disabled.png');
 }
 
-#editPovContainerPanel #povTableMoveSelectedDown img.image-button-pressed,
-#editPovContainerPanel #povTableMoveSelectedDown img.image-button-over,
-#editPovContainerPanel #povTableMoveSelectedDown img.image-button,
-#filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button-pressed,
-#filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button-over,
-#filterTypeDeck #staticSelectionTableMoveSelectedDown img.image-button {
-  background: url('images/16x16_down.png') no-repeat;
+:is(
+  #filterTypeDeck #staticSelectionTableAdd,
+  #editPovContainerPanel #povTableAdd
+) img {
+  background-image: url('images/add_16.png');
 }
 
-#filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button-pressed,
-#filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button-over,
-#filterTypeDeck #staticSelectionTableMoveSelectedUp img.disabled-image-button,
-#editPovContainerPanel #povTableMoveSelectedUp img.disabled-image-button-pressed,
-#editPovContainerPanel #povTableMoveSelectedUp img.disabled-image-button-over,
-#editPovContainerPanel #povTableMoveSelectedUp img.disabled-image-button {
-  background: url('images/16x16-up_disabled.png') no-repeat;
+:is(
+  #filterTypeDeck #staticSelectionTableRemoveSelected,
+  #editPovContainerPanel #povTableRemoveSelected
+) img {
+  background-image: url('images/remove_16.png');
+}
+:is(
+  #filterTypeDeck #staticSelectionTableRemoveSelected,
+  #editPovContainerPanel #povTableRemoveSelected
+) .toolbar-button-disabled img {
+  background-image: url('images/remove_16_disabled.png');
 }
 
-#filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button-pressed,
-#filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button-over,
-#filterTypeDeck #staticSelectionTableMoveSelectedUp img.image-button,
-#editPovContainerPanel #povTableMoveSelectedUp img.image-button-pressed,
-#editPovContainerPanel #povTableMoveSelectedUp img.image-button-over,
-#editPovContainerPanel #povTableMoveSelectedUp img.image-button {
-  background: url('images/16x16-up.png') no-repeat;
+:is(
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown,
+  #editPovContainerPanel #povTableMoveSelectedDown
+) img {
+  background-image: url('images/16x16_down.png');
+}
+:is(
+  #filterTypeDeck #staticSelectionTableMoveSelectedDown,
+  #editPovContainerPanel #povTableMoveSelectedDown
+) .toolbar-button-disabled img {
+  background-image: url('images/16x16_down_disabled.png');
+}
+
+:is(
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp,
+  #editPovContainerPanel #povTableMoveSelectedUp
+) img {
+  background-image: url('images/16x16-up.png');
+}
+:is(
+  #filterTypeDeck #staticSelectionTableMoveSelectedUp,
+  #editPovContainerPanel #povTableMoveSelectedUp
+) .toolbar-button-disabled img {
+  background-image: url('images/16x16-up_disabled.png');
 }
 
 #schemaNameLabel,
@@ -6089,146 +6074,68 @@ div.listbox .pentaho-listbox {
   height: 100px !important;
 }
 
-/* Dashboard prompt controls */
-#filterControlsGroupbox #dropDownFilterButton img.image-button-pressed,
-#filterControlsGroupbox #dropDownFilterButton img.image-button-over,
-#filterControlsGroupbox #dropDownFilterButton img.image-button {
-  background: url("images/prompt_controls/dropdown.png");
+/* region Dashboard prompt controls */
+:where(#filterControlsGroupbox table.toolbar) > * > * > * > table td {
+  width: auto;
+}
+
+#filterControlsGroupbox img {
   background-position: center;
   background-repeat: no-repeat;
+
   height: 32px;
   width: 32px;
 }
 
-#filterControlsGroupbox #dropDownFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #dropDownFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #dropDownFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/dropdown_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #dropDownFilterButton img {
+  background-image: url("images/prompt_controls/dropdown.png");
+}
+#filterControlsGroupbox #dropDownFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/dropdown_selected.png");
 }
 
-#filterControlsGroupbox #listFilterButton img.image-button-pressed,
-#filterControlsGroupbox #listFilterButton img.image-button-over,
-#filterControlsGroupbox #listFilterButton img.image-button {
-  background: url("images/prompt_controls/list.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #listFilterButton img {
+  background-image: url("images/prompt_controls/list.png");
+}
+#filterControlsGroupbox #listFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/list_selected.png");
 }
 
-#filterControlsGroupbox #listFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #listFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #listFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/list_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #radioFilterButton img {
+  background-image: url("images/prompt_controls/radio.png");
+}
+#filterControlsGroupbox #radioFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/radio_selected.png");
 }
 
-#filterControlsGroupbox #radioFilterButton img.image-button-pressed,
-#filterControlsGroupbox #radioFilterButton img.image-button-over,
-#filterControlsGroupbox #radioFilterButton img.image-button {
-  background: url("images/prompt_controls/radio.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #checkboxFilterButton img {
+  background-image: url("images/prompt_controls/checkbox.png");
+}
+#filterControlsGroupbox #checkboxFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/checkbox_selected.png");
 }
 
-#filterControlsGroupbox #radioFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #radioFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #radioFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/radio_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #buttonFilterButton img {
+  background-image: url("images/prompt_controls/button.png");
+}
+#filterControlsGroupbox #buttonFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/button_selected.png");
 }
 
-#filterControlsGroupbox #checkboxFilterButton img.image-button-pressed,
-#filterControlsGroupbox #checkboxFilterButton img.image-button-over,
-#filterControlsGroupbox #checkboxFilterButton img.image-button {
-  background: url("images/prompt_controls/checkbox.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #textfieldFilterButton img {
+  background-image: url("images/prompt_controls/textfield.png");
+}
+#filterControlsGroupbox #textfieldFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/textfield_selected.png");
 }
 
-#filterControlsGroupbox #checkboxFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #checkboxFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #checkboxFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/checkbox_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #datepickerFilterButton img {
+  background-image: url("images/prompt_controls/datepicker.png");
 }
-
-#filterControlsGroupbox #buttonFilterButton img.image-button-pressed,
-#filterControlsGroupbox #buttonFilterButton img.image-button-over,
-#filterControlsGroupbox #buttonFilterButton img.image-button {
-  background: url("images/prompt_controls/button.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
+#filterControlsGroupbox #datepickerFilterButton .toolbar-toggle-button-down img {
+  background-image: url("images/prompt_controls/datepicker_selected.png");
 }
-
-#filterControlsGroupbox #buttonFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #buttonFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #buttonFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/button_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
-}
-
-#filterControlsGroupbox #textfieldFilterButton img.image-button-pressed,
-#filterControlsGroupbox #textfieldFilterButton img.image-button-over,
-#filterControlsGroupbox #textfieldFilterButton img.image-button {
-  background: url("images/prompt_controls/textfield.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
-}
-
-#filterControlsGroupbox #textfieldFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #textfieldFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #textfieldFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/textfield_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
-}
-
-#filterControlsGroupbox #datepickerFilterButton img.image-button-pressed,
-#filterControlsGroupbox #datepickerFilterButton img.image-button-over,
-#filterControlsGroupbox #datepickerFilterButton img.image-button {
-  background: url("images/prompt_controls/datepicker.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
-}
-
-#filterControlsGroupbox #datepickerFilterButton img.disabled-image-button-pressed,
-#filterControlsGroupbox #datepickerFilterButton img.disabled-image-button-over,
-#filterControlsGroupbox #datepickerFilterButton img.disabled-image-button {
-  background: url("images/prompt_controls/datepicker_selected.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 32px;
-  width: 32px;
-}
+/* endregion Dashboard prompt controls */
 
 #stepsPanel {
   border-right: 0px solid black;
