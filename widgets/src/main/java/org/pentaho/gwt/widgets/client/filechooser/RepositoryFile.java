@@ -15,6 +15,9 @@ package org.pentaho.gwt.widgets.client.filechooser;
 
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONNumber;
+import com.google.gwt.json.client.JSONBoolean;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -106,7 +109,7 @@ public class RepositoryFile implements Serializable {
 
   private static String JSONValueToString( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null && temp.isString() != null ) {
+    if ( temp instanceof JSONString ) {
       return temp.isString().stringValue();
     }
     return null;
@@ -114,7 +117,7 @@ public class RepositoryFile implements Serializable {
 
   private static Date JSONValueToDate( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null && temp.isString() != null ) {
+    if ( temp instanceof  JSONString ) {
       return parseDateTime( temp.isString().stringValue() );
     }
     return null;
@@ -122,9 +125,9 @@ public class RepositoryFile implements Serializable {
 
   private static long JSONValueToLong( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null  && temp.isString() != null ) {
+    if ( temp instanceof JSONString ) {
       return Long.valueOf( temp.isString().stringValue() );
-    } else if ( temp != null && temp.isNumber() != null ) {
+    } else if ( temp instanceof JSONNumber ) {
       return Long.valueOf( temp.isNumber().toString() );
     }
     return 0;
@@ -132,9 +135,9 @@ public class RepositoryFile implements Serializable {
 
   private static int JSONValueToInt( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null && temp.isString() != null ) {
+    if ( temp instanceof JSONString ) {
       return Integer.valueOf( temp.isString().stringValue() );
-    } else if ( temp != null && temp.isNumber() != null ) {
+    } else if ( temp instanceof JSONNumber ) {
       return Integer.valueOf( temp.isNumber().toString() );
     }
     return 0;
@@ -142,9 +145,9 @@ public class RepositoryFile implements Serializable {
 
   private static boolean JSONValueToBoolean( JSONObject jso, String fieldName ) {
     JSONValue temp = jso.get( fieldName );
-    if ( temp != null && temp.isString() != null ) {
+    if ( temp instanceof JSONString ) {
       return Boolean.valueOf( temp.isString().stringValue() );
-    } else if ( temp != null && temp.isBoolean() != null ) {
+    } else if ( temp instanceof JSONBoolean ) {
       return temp.isBoolean().booleanValue();
     }
     return false;
