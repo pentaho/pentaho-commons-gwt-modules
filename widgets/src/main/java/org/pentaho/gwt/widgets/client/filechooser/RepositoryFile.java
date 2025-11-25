@@ -91,9 +91,9 @@ public class RepositoryFile implements Serializable {
     this.title = JSONValueToString( repositoryFileJSON, "title" );
     this.versionId = JSONValueToString( repositoryFileJSON, "versionId" );
     this.description = JSONValueToString( repositoryFileJSON, "description" );
+    this.lastModifiedDate = JSONValueToDate( repositoryFileJSON, "lastModifiedDate" );
     if ( !folder ) {
       this.deletedDate = JSONValueToDate( repositoryFileJSON, "deletedDate" );
-      this.lastModifiedDate = JSONValueToDate( repositoryFileJSON, "lastModifiedDate" );
       this.lockDate = JSONValueToDate( repositoryFileJSON, "lockDate" );
       this.lockMessage = JSONValueToString( repositoryFileJSON, "lockMessage" );
       this.lockOwner = JSONValueToString( repositoryFileJSON, "lockOwner" );
