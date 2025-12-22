@@ -4622,12 +4622,6 @@ background: url("images/connector_top.png") no-repeat top left;
   height: 22px;
   width: 22px;
 }
-#queryOptionsMenuButton .dijitArrowButtonInner {
-  background: none !important;
-}
-#queryOptionsMenuContainer .dijitArrowButtonChar {
-  display: none !important;
-}
 .pentaho-optionsdatasourcebutton {
   width: 32px;
   height: 32px;

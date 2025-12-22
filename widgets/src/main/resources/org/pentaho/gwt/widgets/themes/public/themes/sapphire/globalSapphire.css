@@ -5838,14 +5838,6 @@ span.gwt-RadioButton label {
   border: 1px solid transparent;
 }
 
-#queryOptionsMenuButton .dijitArrowButtonInner {
-  background: none !important;
-}
-
-#queryOptionsMenuContainer .dijitArrowButtonChar {
-  display: none !important;
-}
-
 .pentaho-optionsdatasourcebutton {
   width: 32px;
   height: 32px;
