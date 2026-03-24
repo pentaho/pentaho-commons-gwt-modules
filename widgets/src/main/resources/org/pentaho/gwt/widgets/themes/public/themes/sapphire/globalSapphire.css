@@ -4119,6 +4119,7 @@ div.dijitDateTextBox.dijitComboBox {
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
+  white-space: nowrap;
 }
 
 #fileBrowserButtons .body {
