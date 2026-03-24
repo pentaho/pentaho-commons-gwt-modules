@@ -3219,6 +3219,7 @@ background: transparent;
   padding: 6px;
   font-size: 16px;
   font-family: opensanslight, Helvetica, Arial, Sans serif;
+  white-space: nowrap;
 }
 #fileBrowserButtons .body{
   border-top: 4PX solid #f2ce17;
