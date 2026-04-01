@@ -4108,6 +4108,11 @@ div.dijitDateTextBox.dijitComboBox {
   top: 51px;
 }
 
+#fileBrowser .fileBrowserColumn .body .file .title {
+  overflow: visible;
+  white-space: nowrap;
+}
+
 .fileBrowserColumn .body .folder {
   margin-left: 30px;
   margin-top: 0;
