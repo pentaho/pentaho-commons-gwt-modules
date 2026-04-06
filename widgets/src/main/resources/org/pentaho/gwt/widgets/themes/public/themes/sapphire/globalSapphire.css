@@ -4144,6 +4144,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .folder.selected > .element {
   background: #0F2B5B;
   color: #FFF;
+  width: fit-content;
 }
 
 .fileBrowserColumn .body .folder.secondarySelected > .element {
@@ -4154,6 +4155,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file.selected {
   background: #0F2B5B;
   color: #FFF;
+  width: fit-content;
 }
 
 #fileBrowserButtons {
