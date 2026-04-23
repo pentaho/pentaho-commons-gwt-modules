@@ -4108,6 +4108,11 @@ div.dijitDateTextBox.dijitComboBox {
   top: 51px;
 }
 
+#fileBrowser .fileBrowserColumn .body .file .title {
+  overflow: visible;
+  white-space: nowrap;
+}
+
 .fileBrowserColumn .body .folder {
   margin-left: 30px;
   margin-top: 0;
@@ -4119,6 +4124,7 @@ div.dijitDateTextBox.dijitComboBox {
   font-size: 14px;
   font-family: opensansregular, Helvetica, Arial, Sans serif;
   position: relative;
+  white-space: nowrap;
 }
 
 #fileBrowserButtons .body {
@@ -4138,6 +4144,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .folder.selected > .element {
   background: #0F2B5B;
   color: #FFF;
+  width: fit-content;
 }
 
 .fileBrowserColumn .body .folder.secondarySelected > .element {
@@ -4148,6 +4155,7 @@ div.dijitDateTextBox.dijitComboBox {
 .fileBrowserColumn .body .file.selected {
   background: #0F2B5B;
   color: #FFF;
+  width: fit-content;
 }
 
 #fileBrowserButtons {
