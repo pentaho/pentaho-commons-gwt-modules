@@ -1007,6 +1007,10 @@ input[type=password]:focus {
   margin-left: 5px;
   margin-top: 1px;
 }
+.schedule-label:where(.schedule-parameter-defaults-note) {
+  margin-top: 12px;
+  font-style: italic;
+}
 
 .schedule-input, .schedule-button, .schedule-custom-list {
   box-sizing: border-box;
