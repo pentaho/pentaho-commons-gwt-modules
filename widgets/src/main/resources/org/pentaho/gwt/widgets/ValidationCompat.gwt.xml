@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <!--
+    Super-source override for javax.validation.Path.
+
+    Replaces javax.validation.Path with a GWT-translatable version that only exposes the
+    Bean Validation 1.0 API surface (no getKind() / as()). This prevents the GWT compiler
+    from requiring those 1.1.0.Final additions when it compiles gwt-user's own NodeImpl.
+
+    See: super/javax/validation/Path.java
+  -->
+  <super-source path="super"/>
+</module>

@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
 
-      <!-- Inherit the core Web Toolkit stuff.                        -->
-      <inherits name='com.google.gwt.user.User'/>
-	  <inherits name="com.google.gwt.xml.XML"/>
-	  <inherits name="com.google.gwt.json.JSON" />
-      <!-- required for date picker control -->
-      <inherits name='com.google.gwt.widgetideas.WidgetIdeas'/>
-      <inherits name='com.google.gwt.widgetideas.ScrollTable'/>
+    <!-- Inherit the core Web Toolkit stuff.                        -->
+    <inherits name='com.google.gwt.user.User'/>
+    <!--
+      ValidationCompat: GWT compatibility shim for validation-api 1.1.0.Final.
 
-      <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
-      <inherits name="org.adamtacy.GWTEffects"/>
-      <inherits name="org.pentaho.mantle.client.environment.Environment"/>
+      validation-api 1.1.0.Final added Path.Node#getKind() and Path.Node#as(Class) which are not
+      implemented by gwt-user's bundled NodeImpl (written against the 1.0 API). Without this shim
+      the GWT compiler fails with "must implement inherited abstract method" errors when compiling
+      gwt-user's own translatable source.
 
-      <!-- Inherit the default GWT style sheet.  You can change       -->
-      <!-- the theme of your GWT application by uncommenting          -->
-      <!-- any one of the following lines.                            -->
-      <!-- inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
-      <!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
-      <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/>     -->
+      ValidationCompat.gwt.xml uses <super-source> to replace javax.validation.Path with a
+      GWT-only version that exposes only the 1.0 API surface. The JVM classpath is unaffected.
 
-      <!-- Other module inherits                                      -->
+      See: widgets/src/main/resources/org/pentaho/gwt/widgets/super/javax/validation/Path.java
+    -->
+    <inherits name="org.pentaho.gwt.widgets.ValidationCompat"/>
+    <inherits name="com.google.gwt.xml.XML"/>
+    <inherits name="com.google.gwt.json.JSON" />
+    <!-- required for date picker control -->
+    <inherits name='com.google.gwt.widgetideas.WidgetIdeas'/>
+    <inherits name='com.google.gwt.widgetideas.ScrollTable'/>
 
-      <!-- Specify the application specific style sheet.              -->
-      <!-- Specify the app entry point class.                   -->
-	  <entry-point class='org.pentaho.gwt.widgets.client.WidgetModule'/>
+    <inherits name='com.allen_sauer.gwt.dnd.gwt-dnd'/>
+    <inherits name="org.adamtacy.GWTEffects"/>
+    <inherits name="org.pentaho.mantle.client.environment.Environment"/>
+
+    <!-- Inherit the default GWT style sheet.  You can change       -->
+    <!-- the theme of your GWT application by uncommenting          -->
+    <!-- any one of the following lines.                            -->
+    <!-- inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
+    <!-- <inherits name="com.google.gwt.user.theme.chrome.Chrome"/> -->
+    <!-- <inherits name="com.google.gwt.user.theme.dark.Dark"/>     -->
+
+    <!-- Other module inherits                                      -->
+
+    <!-- Specify the application specific style sheet.              -->
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='org.pentaho.gwt.widgets.client.WidgetModule'/>
     <entry-point class='org.pentaho.gwt.widgets.client.filechooser.FileChooserEntryPoint'/>
 
     <public path="public"/>
